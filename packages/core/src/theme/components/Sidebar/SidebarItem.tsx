@@ -41,6 +41,14 @@ export function SidebarItemRaw({
     if (active && ref.current) {
       scrollIntoView(ref.current, {
         scrollMode: 'if-needed',
+        block: 'center',
+        inline: 'center',
+        boundary: element => {
+          const isBoundary =
+            element.classList.contains('rp-doc-layout__sidebar') ||
+            element.classList.contains('rspress-doc');
+          return !isBoundary;
+        },
       });
     }
   }, [active]);

@@ -60,5 +60,5 @@ export function useScrollAfterNav() {
         scrollToTarget(target);
       }
     }
-  }, [location]);
+  }, [location, location.pathname]);
 }

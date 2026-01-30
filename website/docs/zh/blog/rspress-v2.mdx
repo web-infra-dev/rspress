@@ -16,9 +16,9 @@ _2026 年 1 月 30 日_
 
 我们很高兴地宣布 Rspress 2.0 的正式发布！
 
-Rspress 是基于 [Rsbuild](https://rsbuild.rs/) 的静态站点生成器，是一个面向开发者的文档站开发工具。自 Rspress 2023 年正式发布已经过了三年时间。截至 1.47.0 版本，Rspress 共迭代了 **144 个版本**，也收到了社区大量的反馈和贡献，共有 **125 位贡献者** 参与了 Rspress 项目。在社区的贡献和支持下，越来越多的开发者借助 Rspress **极致的编译性能、约定式路由、组件库预览**等功能搭建美观可靠的文档站点。
+Rspress 是基于 [Rsbuild](https://rsbuild.rs/) 的静态站点生成器，面向开发者提供文档站搭建能力。自 2023 年正式发布以来，Rspress 已走过三年。截至 1.47.0 版本，Rspress 累计迭代 **144 个版本**，共有 **125 位贡献者** 参与。越来越多的开发者选择 Rspress，借助其**极致的编译性能、约定式路由和组件库预览**等功能，搭建美观可靠的文档站点。
 
-在此基础上，根据用户的反馈和建议，我们希望在 [**主题美观度**](#brand-new-theme)、 [**AI-native**](#llms-txt-ssg-md)、[**文档开发体验**](#doc-dx)、[**与 Rslib 连用**](#rslib-rspress) 等各方面更进一步。
+在此基础上，根据社区的反馈和建议，我们希望在 [**主题美观度**](#brand-new-theme)、 [**AI-native**](#llms-txt-ssg-md)、[**文档开发体验**](#doc-dx)、[**与 Rslib 连用**](#rslib-rspress) 等各方面更进一步。
 
 ## 为什么是 Rspress 2.0
 
@@ -221,13 +221,13 @@ console.log('Not focused');
 
 > 详见 [代码块](/zh/guide/use-mdx/code-blocks#shiki-transformers)
 
-### 构建性能：lazyCompilation 和持久化缓存 \{#build-performance-lazy-compilation-cache}
+### 构建性能：按需编译和持久化缓存 \{#build-performance-lazy-compilation-cache}
 
-Rspress 2.0 底层由 Rsbuild 和 Rspack 2.0-alpha 驱动，同时默认开启了 [lazyCompilation](https://rspack.rs/zh/config/experiments#experimentslazycompilation) 和 [持久化缓存](https://rsbuild.rs/zh/config/performance/build-cache)。
+Rspress 2.0 底层由 Rsbuild 和 Rspack 2.0 预览版本驱动，同时默认开启了 [按需编译](https://rspack.rs/zh/guide/features/lazy-compilation) 和 [持久化缓存](https://rsbuild.rs/zh/config/performance/build-cache)。
 
-#### lazyCompilation 按需编译
+#### 按需编译
 
-lazyCompilation 会在 dev 模式下按需编译，即只有当你访问某个页面时，该页面才会被编译，大幅提升了开发启动速度，甚至实现毫秒级的冷启动。Rspress 同时实现了路由的 preload 策略，当鼠标悬停在链接上时会预先加载目标路由页面，搭配 lazyCompilation 实现无损的开发体验。
+默认开启 [dev.lazyCompilation](https://rsbuild.rs/zh/config/dev/lazy-compilation)，只有当你访问某个页面时，该页面才会被编译，大幅提升了开发启动速度，甚至实现毫秒级的冷启动。Rspress 同时实现了路由的 preload 策略，当鼠标悬停在链接上时会预先加载目标路由页面，搭配 lazyCompilation 实现无损的开发体验。
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img
@@ -262,6 +262,8 @@ export default defineConfig({
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img src="./imgs/dead-link-check.png" width="600" alt="死链检查功能示例" />
 </div>
+
+> 详见 [链接](/zh/guide/use-mdx/link)
 
 #### 文件代码块
 
@@ -372,11 +374,9 @@ Rspress 2.0 新增了多个官方插件：
 
 ### 移除 `mdxRs` 配置
 
-我们注意到很大一部分 1.x 用户为了使用 Shiki、组件库预览功能和自定义 remark/rehype 插件，而主动关闭 `mdxRs`，并且在开启 lazyCompilation 和持久化缓存后，即使使用 JS 版本的 mdx 解析器，性能优化效果已经非常显著。
+我们注意到很大一部分 1.x 用户为了使用 Shiki、组件库预览功能和自定义 remark/rehype 插件，而主动关闭 `mdxRs`，并且在开启按需编译和持久化缓存后，即使使用 JS 版本的 mdx 解析器，性能优化效果已经非常显著。
 
 为了换取更好的扩展性和维护性，我们决定在 Markdown/MDX 编译流程中不再使用 Rust 版本的 MDX 解析器（`@rspress/mdx-rs`）。这使得 Rspress 能够更好地集成 Shiki 等 JavaScript 生态的工具。
-
-这并不意味着我们放弃 Markdown 相关生态的 Rust 化。未来我们可能会在 Rspack 中继续推进 Rust 版本的 Markdown 解析器集成，在更底层的位置提供性能优化。
 
 ### Node.js 与上游依赖版本要求
 
