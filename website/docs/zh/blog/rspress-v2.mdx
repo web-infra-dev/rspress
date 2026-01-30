@@ -16,13 +16,13 @@ _2026 年 1 月 30 日_
 
 我们很高兴地宣布 Rspress 2.0 的正式发布！
 
-Rspress 是基于 [Rsbuild](https://rsbuild.rs/) 的静态站点生成器，面向开发者提供文档站搭建能力。自 2023 年正式发布以来，Rspress 已走过三年。截至 1.47.0 版本，Rspress 累计迭代 **144 个版本**，共有 **125 位贡献者** 参与。越来越多的开发者选择 Rspress，借助其**极致的编译性能、约定式路由和组件库预览**等功能，搭建美观可靠的文档站点。
+Rspress 是基于 [Rsbuild](https://rsbuild.rs/) 的静态站点生成器，专为开发者打造的文档站工具。自 2023 年正式发布以来，Rspress 1.x 累计迭代 **144 个版本**，共有 **125 位贡献者** 参与项目开发。越来越多的开发者选择 Rspress，借助其**高效的编译性能、约定式路由和组件库预览**等功能，搭建美观可靠的文档站点。
 
-在此基础上，根据社区的反馈和建议，我们希望在 [**主题美观度**](#brand-new-theme)、 [**AI-native**](#llms-txt-ssg-md)、[**文档开发体验**](#doc-dx)、[**与 Rslib 连用**](#rslib-rspress) 等各方面更进一步。
+基于社区的反馈和建议，Rspress 2.0 在 [**主题美观度**](#brand-new-theme)、[**AI-native**](#llms-txt-ssg-md)、[**文档开发体验**](#doc-dx)、[**与 Rslib 一起使用**](#rslib-rspress) 等方面更进一步。
 
 ## 为什么是 Rspress 2.0
 
-Rspress 1.x 已经解决了文档站框架编译性能的问题，但仍存在一些其他问题影响着作为一个文档开发工具的核心体验。2.0 版本将不止于对编译性能的追求，也聚焦于文档站体验的其他方面：
+Rspress 1.x 已经解决了文档站框架编译性能的问题，但仍存在一些问题影响着作为一个文档开发工具的核心体验。2.0 版本将不止于对编译性能的追求，也聚焦于文档站体验的其他方面：
 
 - **主题样式**：一套**更美观的默认主题**，并提供了多种 [自定义主题](/zh/guide/basic/custom-theme) 方式，解决了 1.x 在主题定制上缺乏稳定 API 的问题。
 
@@ -44,7 +44,7 @@ Rspress 1.x 已经解决了文档站框架编译性能的问题，但仍存在�
 
 ### 全新主题 \{#brand-new-theme}
 
-2.0 默认主题迎来了一次系统性升级，它由团队设计师 [@Zovn Wei](https://x.com/wei_zhong41532) 整体设计，在视觉效果和阅读体验上都有较大幅度提升，并且每个组件单一可替换，拥有很高的可定制性。
+2.0 默认主题迎来了一次系统性升级，它由团队设计师 [@Zovn Wei](https://x.com/wei_zhong41532) 整体设计，在视觉效果和阅读体验上都有较大幅度提升，并且每个组件均可独立替换，拥有很高的可定制性。
 
 ![New Theme](./imgs/new-theme.png)
 
@@ -124,7 +124,7 @@ import { Tag } from '@rspress/core/theme';
 
 #### 内置多语言支持
 
-在 1.x 版本中，Rspress 仅内置了英文文本，如果使用其他语言例如 zh，必须对所有的文本都进行配置，使用起来较为繁琐。现在 2.0 主题内置了 zh、en、ja、ko、ru 等多种语言的翻译文本，系统会自动根据语言配置和使用进行 "Tree Shaking"，仅打包你使用到的文本及语言，未内置的语言会兜底到 en 文本。你也可以通过 [`i18nSource`](/zh/api/config/config-basic#i18nsource) 配置项扩展或覆盖翻译文本。
+在 1.x 版本中，Rspress 仅内置了英文文本，如果使用其他语言例如 zh，必须对所有的文本都进行配置，使用起来较为繁琐。现在 2.0 主题内置了 zh、en、ja、ko、ru 等多种语言的翻译文本，系统会根据语言配置自动进行 "Tree Shaking"，仅打包你使用到的文本及语言，未内置的语言会兜底到 en 文本。你也可以通过 [`i18nSource`](/zh/api/config/config-basic#i18nsource) 配置项扩展或覆盖翻译文本。
 
 Rspress 未来会支持更多内置语言，如果你有兴趣，请参考 [这位贡献者的 Pull Request](https://github.com/web-infra-dev/rspress/pull/2827)。
 
@@ -147,7 +147,7 @@ Rspress 现在将 [llms.txt](https://llmstxt.org/) 生成能力集成到 core �
   />
 </div>
 
-相比于将 HTML 转化为 Markdown 等传统方式，SSG-MD 在渲染期间拥有更好的信息源，比如 React 虚拟 DOM，因此拥有更好的静态信息质量和灵活性。
+相比于将 HTML 转化为 Markdown 等传统方式，SSG-MD 在渲染期间拥有更优质的信息源，比如 React 虚拟 DOM，从而保证更高的静态信息质量和灵活性。
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img src="./imgs/ssg-md-flow.jpg" width="600" alt="SSG-MD 渲染流程示意图" />
@@ -175,7 +175,7 @@ doc_build
 └── ...
 ```
 
-若想对自定义组件中的渲染内容进行定制增强，你也可以通过环境变量来进行控制：
+若想定制自定义组件的渲染内容，可通过环境变量控制：
 
 ```tsx
 export function Tab({ label }: { label: string }) {
@@ -239,7 +239,7 @@ Rspress 2.0 底层由 Rsbuild 和 Rspack 2.0 预览版本驱动，同时默认�
 
 #### 持久化缓存
 
-2.0 同时默认开启了 [持久化缓存](https://rsbuild.rs/zh/config/performance/build-cache)，在热启动中复用上次编译的结果，提升 30%-60% 的构建速度。这意味着当你的项目中已经启动过一次 `rspress dev` 或者 `rspress build`，`rspress` 的启动速度都会有明显提升。
+2.0 同时默认开启了 [持久化缓存](https://rsbuild.rs/zh/config/performance/build-cache)，在热启动中复用上次编译的结果，提升 30%-60% 的构建速度。这意味着在首次运行 `rspress dev` 或 `rspress build` 后，后续启动速度都会明显提升。
 
 ### 文档开发体验 \{#doc-dx}
 
@@ -338,7 +338,7 @@ export default App;
 └── rspress.config.ts
 ```
 
-模版中内置了 [rsbuild-plugin-workspace-dev](https://github.com/rstackjs/rsbuild-plugin-workspace-dev) 插件，实现了在 Rspress 开发服务器启动的同时启动 Rslib 的 watch 开发命令。
+模版中内置了 [rsbuild-plugin-workspace-dev](https://github.com/rstackjs/rsbuild-plugin-workspace-dev) 插件，可在启动 Rspress 开发服务器的同时自动运行 Rslib 的 watch 命令。
 
 直接运行 `npm run doc` 启动 Rspress 的开发服务器对 Rslib 组件库进行预览：
 

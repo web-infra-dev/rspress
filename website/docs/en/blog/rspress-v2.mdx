@@ -16,9 +16,9 @@ _January 30, 2026_
 
 We are excited to announce the official release of Rspress 2.0!
 
-Rspress is a static site generator built on [Rsbuild](https://rsbuild.rs/), designed as a developer-oriented documentation site tool. Three years have passed since Rspress was first officially released in 2023. As of version 1.47.0, Rspress has iterated through **144 releases** and received extensive feedback and contributions from the community, with **125 contributors** participating in the Rspress project. With the community's contributions and support, more and more developers have leveraged Rspress's **blazing-fast compilation performance, convention-based routing, and component library previews** to build beautiful and reliable documentation sites.
+Rspress is a static site generator built on [Rsbuild](https://rsbuild.rs/), designed as a documentation site tool for developers. Since its initial release in 2023, Rspress 1.x has gone through **144 releases**, with **125 contributors** participating in the project. More and more developers have chosen Rspress for its **fast compilation performance, convention-based routing, and component library previews** to build beautiful and reliable documentation sites.
 
-Building on this foundation, based on community feedback and suggestions, we aim to make further progress in [**theme aesthetics**](#brand-new-theme), [**AI-native**](#llms-txt-ssg-md), [**documentation development experience**](#doc-dx), [**integration with Rslib**](#rslib-rspress), and more.
+Based on community feedback, Rspress 2.0 brings major improvements to [**theme aesthetics**](#brand-new-theme), [**AI-native**](#llms-txt-ssg-md), [**documentation development experience**](#doc-dx), [**integration with Rslib**](#rslib-rspress), and more.
 
 ## Why Rspress 2.0
 
@@ -44,7 +44,7 @@ This is a comprehensive upgrade to the existing architecture. Below we introduce
 
 ### Brand New Theme \{#brand-new-theme}
 
-The 2.0 default theme has undergone a systematic upgrade, designed by team designer [@Zovn Wei](https://x.com/wei_zhong41532), with significant improvements in visual effects and reading experience. Each component is individually replaceable, providing high customizability.
+The 2.0 default theme has undergone a systematic upgrade, crafted by designer [@Zovn Wei](https://x.com/wei_zhong41532), with significant improvements in visual effects and reading experience. Each component is individually replaceable, providing high customizability.
 
 ![New Theme](./imgs/new-theme.png)
 
@@ -132,12 +132,12 @@ Rspress will support more built-in languages in the future. If you're interested
 
 Rspress now integrates [llms.txt](https://llmstxt.org/) generation into core, and implements the new SSG-MD (Static Site Generation to Markdown) capability.
 
-In React-based dynamic rendering frontend frameworks, there is often the problem of difficulty extracting static information, and Rspress faces the same challenge. Rspress allows users to enhance documentation expressiveness through [MDX fragments](/guide/use-mdx/components), React components, Hooks, and TSX routes. However, this dynamic content faces the following issues when converting to Markdown text:
+In React-based dynamic rendering frontend frameworks, extracting static information is often difficult, and Rspress faces the same challenge. Rspress allows users to enhance documentation expressiveness through [MDX fragments](/guide/use-mdx/components), React components, Hooks, and TSX routes. However, this dynamic content faces the following issues when converting to Markdown text:
 
 - Feeding MDX directly to AI includes a large amount of code syntax noise and loses React component content
 - Converting HTML to Markdown often yields poor results with unreliable information quality
 
-To solve this problem, Rspress 2.0 introduces the [SSG-MD](/guide/basic/ssg-md) feature. This is a brand new capability, similar to [Static Site Generation (SSG)](/guide/basic/ssg), but instead of rendering pages as HTML files, it renders them as Markdown files and generates [llms.txt](https://llmstxt.org/) and llms-full.txt files.
+To solve this problem, Rspress 2.0 introduces the [SSG-MD](/guide/basic/ssg-md) feature. This is a new capability, similar to [Static Site Generation (SSG)](/guide/basic/ssg), but instead of rendering pages as HTML files, it renders them as Markdown files and generates [llms.txt](https://llmstxt.org/) and llms-full.txt files.
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img
@@ -147,7 +147,7 @@ To solve this problem, Rspress 2.0 introduces the [SSG-MD](/guide/basic/ssg-md) 
   />
 </div>
 
-Compared to traditional approaches like converting HTML to Markdown, SSG-MD has access to better information sources during rendering, such as the React virtual DOM, resulting in better static information quality and flexibility.
+Compared to traditional approaches like converting HTML to Markdown, SSG-MD has access to richer information sources during rendering, such as the React virtual DOM, resulting in higher static information quality and flexibility.
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img src="./imgs/ssg-md-flow.jpg" width="600" alt="SSG-MD rendering flow" />
@@ -188,7 +188,7 @@ export function Tab({ label }: { label: string }) {
 }
 ```
 
-This ensures both the interactive documentation experience and helps AI understand the semantic information of components.
+This preserves the interactive documentation experience while helping AI understand the semantic information of components.
 
 > See [SSG-MD Usage Guide](/guide/basic/ssg-md) for details
 
@@ -342,7 +342,7 @@ Run `npm create rslib@latest` and select Rspress to generate the following file 
 └── rspress.config.ts
 ```
 
-The template includes the [rsbuild-plugin-workspace-dev](https://github.com/rstackjs/rsbuild-plugin-workspace-dev) plugin, which starts Rslib's watch command alongside the Rspress development server.
+The template includes the [rsbuild-plugin-workspace-dev](https://github.com/rstackjs/rsbuild-plugin-workspace-dev) plugin, which automatically runs Rslib's watch command alongside the Rspress development server.
 
 Simply run `npm run doc` to start the Rspress development server and preview your Rslib component library:
 
