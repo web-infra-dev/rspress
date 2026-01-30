@@ -1,7 +1,7 @@
 ---
 date: 2026-01-30
 authors: ['sooniter']
-description: 'Rspress 2.0 is officially released, featuring llms.txt (SSG-MD), a brand new theme, eject command, and more.'
+description: 'Rspress 2.0 is officially released, featuring a brand new theme, AI-native SSG-MD and llms.txt generation, Shiki code highlighting, lazyCompilation, an improved documentation development experience, and Rslib template support for Rspress.'
 sidebar: false
 pageType: doc-wide
 ---
@@ -18,7 +18,7 @@ We are excited to announce the official release of Rspress 2.0!
 
 Rspress is a static site generator built on [Rsbuild](https://rsbuild.rs/), designed as a developer-oriented documentation site tool. Three years have passed since Rspress was first officially released in 2023. As of version 1.47.0, Rspress has iterated through **144 releases** and received extensive feedback and contributions from the community, with **125 contributors** participating in the Rspress project. With the community's contributions and support, more and more developers have leveraged Rspress's **blazing-fast compilation performance, convention-based routing, and component library previews** to build beautiful and reliable documentation sites.
 
-Building on this foundation, based on user feedback and suggestions, we aim to make further progress in [**theme aesthetics**](#brand-new-theme), [**AI-native**](#llms-txt-ssg-md), [**documentation development experience**](#doc-dx), [**integration with Rslib**](#rslib-rspress), and more.
+Building on this foundation, based on community feedback and suggestions, we aim to make further progress in [**theme aesthetics**](#brand-new-theme), [**AI-native**](#llms-txt-ssg-md), [**documentation development experience**](#doc-dx), [**integration with Rslib**](#rslib-rspress), and more.
 
 ## Why Rspress 2.0
 
@@ -28,7 +28,7 @@ Rspress 1.x already solved the compilation performance problem for documentation
 
 - **AI-native**: Documentation serves not only human readers but also needs to be better understood and used by Agents. Rspress now has built-in [llms.txt](https://llmstxt.org/) generation and the [**SSG-MD**](/guide/basic/ssg-md) capability derived from SSG, generating high-quality Markdown content for Agents to read.
 
-- **On-demand Compilation, Instant Startup**: [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation) is enabled by default, combined with resource preloading on link hover, building only the required files when visiting specific routes, achieving **instant startup** regardless of project size.
+- **lazyCompilation, Instant Startup**: [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation) is enabled by default, combined with resource preloading on link hover, building only the required files when visiting specific routes, achieving **instant startup** regardless of project size.
 
 - **Shiki Code Highlighting**: Shiki is integrated by default, completing **syntax highlighting at build time**, with support for theme switching and transformer extensions like [@rspress/plugin-twoslash](/plugin/official-plugins/twoslash), delivering richer code block display effects.
 
@@ -36,7 +36,7 @@ Rspress 1.x already solved the compilation performance problem for documentation
 
 - **Rslib Integration**: You can now select Rspress as the documentation tool when creating a component library project with `create-rslib`, quickly setting up a component documentation site.
 
-This is a comprehensive upgrade to the existing architecture. Below we introduce Rspress 2.0 and its **brand new theme, high-quality llms.txt generation, Shiki integration, on-demand compilation**, and other important features.
+This is a comprehensive upgrade to the existing architecture. Below we introduce Rspress 2.0 and its **brand new theme, high-quality llms.txt generation, Shiki integration, lazyCompilation**, and other important features.
 
 ![Rspress 2.0 Features](./imgs/features.png)
 
@@ -223,17 +223,17 @@ console.log('Not focused');
 
 ### Build Performance: lazyCompilation and Persistent Cache \{#build-performance-lazy-compilation-cache}
 
-Rspress 2.0 is powered by Rsbuild and Rspack 2.0-alpha, with [lazyCompilation](https://rspack.rs/config/experiments#experimentslazycompilation) and [persistent cache](https://rsbuild.rs/config/performance/build-cache) enabled by default.
+Rspress 2.0 is powered by Rsbuild and Rspack 2.0 prerelease, with [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation) and [persistent cache](https://rsbuild.rs/config/performance/build-cache) enabled by default.
 
-#### lazyCompilation On-demand Compilation
+#### lazyCompilation
 
-lazyCompilation compiles on-demand in dev mode — pages are only compiled when you visit them, dramatically improving development startup speed and even achieving millisecond-level cold starts. Rspress also implements a route preload strategy that preloads target route pages when hovering over links, working together with lazyCompilation to provide a lossless development experience.
+[dev.lazyCompilation](https://rsbuild.rs/config/dev/lazy-compilation) is enabled by default — pages are only compiled when you visit them, dramatically improving development startup speed and even achieving millisecond-level cold starts. Rspress also implements a route preload strategy that preloads target route pages when hovering over links, working together with lazyCompilation to provide a lossless development experience.
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img
     src="./imgs/lazy-compilation.gif"
     width="600"
-    alt="lazyCompilation on-demand compilation demo"
+    alt="lazyCompilation demo"
   />
 </div>
 
@@ -266,6 +266,8 @@ export default defineConfig({
     alt="Dead link checking example"
   />
 </div>
+
+> See [Links](/guide/use-mdx/link) for details
 
 #### File Code Blocks
 
@@ -379,8 +381,6 @@ You can use the "Copy Markdown" feature on the page and feed it to your preferre
 We noticed that a large portion of 1.x users were actively disabling `mdxRs` to use Shiki, component library preview features, and custom remark/rehype plugins. With lazyCompilation and persistent cache enabled, performance optimization is already quite significant even with the JS version of the MDX parser.
 
 In exchange for better extensibility and maintainability, we decided to stop using the Rust-based MDX parser (`@rspress/mdx-rs`) in the Markdown/MDX compilation pipeline. This enables Rspress to better integrate tools from the JavaScript ecosystem like Shiki.
-
-This doesn't mean we're abandoning Rust for the Markdown ecosystem. In the future, we may continue to advance Rust-based Markdown parser integration in Rspack, providing performance optimization at a lower level.
 
 ### Node.js and Upstream Dependency Version Requirements
 
