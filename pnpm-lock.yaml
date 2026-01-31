@@ -1206,9 +1206,6 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
-      rsbuild-plugin-virtual-module:
-        specifier: 0.4.1
-        version: 0.4.1(@rsbuild/core@1.7.2)
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1249,6 +1246,9 @@ importers:
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@1.7.2)
+      rsbuild-plugin-virtual-module:
+        specifier: 0.4.1
+        version: 0.4.1(@rsbuild/core@1.7.2)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
