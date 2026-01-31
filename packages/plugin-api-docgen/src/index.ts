@@ -39,19 +39,24 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
       if (languages.length === 0) {
         languages = [defaultLang as SupportLanguages];
       }
+      const docgenOptions = {
+        entries,
+        apiParseTool,
+        languages,
+        appDir,
+        parseToolOptions,
+      };
+      // Initial generation so that modifySearchIndexData has data
+      const sourceFiles = await docgen(docgenOptions);
+
       config.builderConfig = config.builderConfig || {};
       config.builderConfig.plugins = [
         ...(config.builderConfig.plugins || []),
         pluginVirtualModule({
           virtualModules: {
             [VIRTUAL_MODULE_NAME]: async ({ addDependency }) => {
-              const sourceFiles = await docgen({
-                entries,
-                apiParseTool,
-                languages,
-                appDir,
-                parseToolOptions,
-              });
+              // Re-generate on HMR (transform re-runs when dependencies change)
+              await docgen(docgenOptions);
               for (const filePath of sourceFiles) {
                 addDependency(filePath);
               }
