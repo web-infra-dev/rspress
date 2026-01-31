@@ -48,6 +48,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
       };
       // Initial generation so that modifySearchIndexData has data
       const sourceFiles = await docgen(docgenOptions);
+      let isFirstTransform = true;
 
       config.builderConfig = config.builderConfig || {};
       config.builderConfig.plugins = [
@@ -55,8 +56,11 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
         pluginVirtualModule({
           virtualModules: {
             [VIRTUAL_MODULE_NAME]: async ({ addDependency }) => {
-              // Re-generate on HMR (transform re-runs when dependencies change)
-              await docgen(docgenOptions);
+              if (isFirstTransform) {
+                isFirstTransform = false;
+              } else {
+                await docgen(docgenOptions);
+              }
               for (const filePath of sourceFiles) {
                 addDependency(filePath);
               }
