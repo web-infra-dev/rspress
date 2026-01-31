@@ -1,5 +1,6 @@
 import { useNavTransparent } from './useNavTransparent';
 import './index.scss';
+import clsx from 'clsx';
 
 function HomeBackground({
   className,
@@ -10,7 +11,10 @@ function HomeBackground({
   return (
     <>
       {styleDom}
-      <div className={`rp-home-background ${className}`} {...otherProps}></div>
+      <div
+        className={clsx('rp-home-background', className)}
+        {...otherProps}
+      ></div>
     </>
   );
 }
