@@ -62,12 +62,6 @@ export type PluginOptions = {
 
 export type DocGenOptions = Required<PluginOptions> & {
   languages: ('zh' | 'en' | 'ru')[];
-  isProd: boolean;
 };
 
 export type SupportLanguages = 'zh' | 'en' | 'ru';
-
-export type WatchFileInfo = {
-  apiParseTool: ApiParseTool;
-  moduleName: string;
-};

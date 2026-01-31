@@ -2,9 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { RspressPlugin } from '@rspress/core';
 import { logger } from '@rspress/core';
+import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import { apiDocMap } from './constants';
 import { docgen } from './docgen';
 import type { PluginOptions, SupportLanguages } from './types';
+
+const VIRTUAL_MODULE_NAME = 'rspress-plugin-api-docgen-map';
 
 /**
  * The plugin is used to generate api doc for files.
@@ -22,7 +25,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
       config.markdown = config.markdown || {};
       return config;
     },
-    async beforeBuild(config, isProd) {
+    async beforeBuild(config) {
       // only support zh , en and ru
       let languages: SupportLanguages[] = (
         config.themeConfig?.locales?.map(locale => locale.lang) ||
@@ -36,21 +39,27 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
       if (languages.length === 0) {
         languages = [defaultLang as SupportLanguages];
       }
-
-      await docgen({
-        entries,
-        apiParseTool,
-        languages,
-        appDir,
-        parseToolOptions,
-        isProd,
-      });
       config.builderConfig = config.builderConfig || {};
-      config.builderConfig.source = config.builderConfig.source || {};
-      config.builderConfig.source.define = {
-        ...config.builderConfig.source.define,
-        RSPRESS_PLUGIN_API_DOCGEN_MAP: JSON.stringify(apiDocMap),
-      };
+      config.builderConfig.plugins = [
+        ...(config.builderConfig.plugins || []),
+        pluginVirtualModule({
+          virtualModules: {
+            [VIRTUAL_MODULE_NAME]: async ({ addDependency }) => {
+              const sourceFiles = await docgen({
+                entries,
+                apiParseTool,
+                languages,
+                appDir,
+                parseToolOptions,
+              });
+              for (const filePath of sourceFiles) {
+                addDependency(filePath);
+              }
+              return `export default ${JSON.stringify(apiDocMap)};`;
+            },
+          },
+        }),
+      ];
     },
     async modifySearchIndexData(pages) {
       // Update the search index of module doc which includes `<API moduleName="foo" />` and `<API moduleName="foo" ></API>

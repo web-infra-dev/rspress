@@ -1,7 +1,5 @@
-import fs from 'node:fs';
 import path from 'node:path';
-import { logger, RSPRESS_TEMP_DIR } from '@rspress/core';
-import chokidar from 'chokidar';
+import { logger } from '@rspress/core';
 import type { ComponentDoc, PropItem } from 'react-docgen-typescript';
 import {
   withCompilerOptions,
@@ -16,7 +14,6 @@ import type {
   Entries,
   SupportLanguages,
   ToolEntries,
-  WatchFileInfo,
 } from './types';
 
 const isToolEntries = (obj: Record<string, unknown>): obj is ToolEntries => {
@@ -29,9 +26,8 @@ export const docgen = async ({
   apiParseTool,
   appDir,
   parseToolOptions,
-  isProd,
-}: DocGenOptions) => {
-  const watchFileMap: Record<string, WatchFileInfo> = {};
+}: DocGenOptions): Promise<string[]> => {
+  const sourceFilePaths: string[] = [];
   const genApiDoc = async (entry: Entries, tool: ApiParseTool) => {
     if (Object.keys(entry).length === 0) {
       return;
@@ -39,10 +35,7 @@ export const docgen = async ({
     await Promise.all(
       Object.entries(entry).map(async ([key, value]) => {
         const moduleSourceFilePath = path.resolve(appDir, value);
-        watchFileMap[moduleSourceFilePath] = {
-          apiParseTool,
-          moduleName: key,
-        };
+        sourceFilePaths.push(moduleSourceFilePath);
         try {
           if (tool === 'documentation') {
             const documentation = await import('documentation');
@@ -129,49 +122,8 @@ export const docgen = async ({
   } else {
     await genApiDoc(entries, apiParseTool);
   }
-  if (!isProd) {
-    const watcher = chokidar.watch(Object.keys(watchFileMap), {
-      ignoreInitial: true,
-      ignorePermissionErrors: true,
-      ignored: [/node_modules/],
-    });
-    let isUpdate = false;
-    watcher.on('change', changed => {
-      if (isUpdate) {
-        return;
-      }
-      isUpdate = true;
-      logger.info('[module-doc-plugin]', 'updating API');
-      const watchFileInfo = watchFileMap[changed];
-      if (watchFileInfo) {
-        const { apiParseTool, moduleName } = watchFileInfo;
-
-        const updateSiteData = () => {
-          const siteDataPath = path.join(
-            process.cwd(),
-            'node_modules',
-            RSPRESS_TEMP_DIR,
-            'runtime',
-            'virtual-site-data.mjs',
-          );
-          import(siteDataPath).then(siteData => {
-            const data = { ...siteData.default };
-            data.pages.forEach((page: Record<string, unknown>) => {
-              page.apiDocMap = apiDocMap;
-            });
-            fs.writeFileSync(
-              siteDataPath,
-              `export default ${JSON.stringify(data)}`,
-            );
-            isUpdate = false;
-          });
-        };
-        genApiDoc({ [moduleName]: changed }, apiParseTool).then(updateSiteData);
-      }
-    });
-  }
-
   logger.success('[module-doc-plugin]', 'Generate API table successfully!');
+  return sourceFilePaths;
 };
 
 function generateTable(

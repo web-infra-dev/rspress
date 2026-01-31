@@ -8,12 +8,10 @@ import remarkGfm from 'remark-gfm';
 import './API.css';
 // biome-ignore lint/style/useImportType: <exact>
 import React from 'react';
+// @ts-expect-error virtual module
+import apiDocMap from 'rspress-plugin-api-docgen-map';
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
-
-declare global {
-  var RSPRESS_PLUGIN_API_DOCGEN_MAP: Record<string, string>;
-}
 
 function headingRank(node: Root | Content): number | null {
   const name =
@@ -103,9 +101,6 @@ const collectHeaderText = (node: Element): string => {
 const API = (props: { moduleName: string }) => {
   const lang = useLang();
   const { moduleName } = props;
-  // some api doc have two languages.
-  const apiDocMap = RSPRESS_PLUGIN_API_DOCGEN_MAP;
-  // avoid error when no page data
   const apiDoc = apiDocMap?.[`${moduleName}-${lang}`] || '';
   return (
     <div className="rspress-plugin-api-docgen">
