@@ -97,6 +97,9 @@ export async function runDevCommand(
       PORT: port.toString(),
       // FIXME: Rspack's buildDependencies should collected the dependencies of rspress.config.ts, plugins change can not trigger the cache invalidate now
       RSPRESS_PERSISTENT_CACHE: 'false',
+
+      // FIXME: disable lazy compilation to avoid windows flaky test in rspack prerelease
+      RSPRESS_LAZY_COMPILATION: 'false',
     },
   });
 }
