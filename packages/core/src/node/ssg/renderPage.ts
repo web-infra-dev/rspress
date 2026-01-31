@@ -24,10 +24,15 @@ export async function renderPage(
 ) {
   let render: SSRBundleExports['render'];
   try {
-    const { default: ssrExports } = await import(
+    let { default: ssrExports } = await import(
       pathToFileURL(ssrBundlePath).toString()
     );
-    render = await ssrExports.render;
+
+    if (ssrExports instanceof Promise) {
+      ssrExports = await ssrExports;
+    }
+
+    render = ssrExports.render;
   } catch (e) {
     if (e instanceof Error) {
       logger.error(
