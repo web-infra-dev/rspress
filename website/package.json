@@ -28,7 +28,7 @@
     "rspress-plugin-file-tree": "^1.0.3",
     "rspress-plugin-font-open-sans": "^1.0.3",
     "rspress-plugin-og": "npm:@soonit/rspress-plugin-og@0.1.2",
-    "tm-themes": "1.10.16",
+    "tm-themes": "1.11.0",
     "twoslash": "^0.3.6",
     "typescript": "^5.8.2"
   }
