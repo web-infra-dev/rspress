@@ -1,0 +1,55 @@
+# Tailwind CSS
+
+Rspress 支持集成 [Tailwind CSS](https://tailwindcss.com/) 来为你的文档站点添加样式。本指南介绍如何在 Rspress 中配置 Tailwind CSS v4。
+
+## 安装依赖
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add tailwindcss @tailwindcss/postcss -D" />
+
+## 创建 PostCSS 配置
+
+在项目根目录创建 `postcss.config.mjs` 文件：
+
+```js title="postcss.config.mjs"
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+};
+```
+
+## 创建 Tailwind CSS 文件
+
+在项目根目录创建 `tailwind.css` 文件：
+
+```css title="tailwind.css"
+@import 'tailwindcss';
+```
+
+## 配置 Rspress
+
+在 `rspress.config.ts` 中，使用 `globalStyles` 选项引入 Tailwind CSS 文件：
+
+```ts title="rspress.config.ts"
+import * as path from 'node:path';
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  root: path.join(__dirname, 'doc'),
+  globalStyles: path.join(__dirname, 'tailwind.css'),
+});
+```
+
+## 使用
+
+现在你可以在 MDX 文件中使用 Tailwind 工具类：
+
+```mdx title="doc/index.mdx"
+<div className="text-red-500 font-bold p-4">使用 Tailwind CSS 设置样式</div>
+```
+
+:::tip
+Rspress v2 的所有内置组件均采用 BEM 命名规范，不会与 Tailwind CSS 类名冲突。你可以自由使用 Tailwind v4 或 v3，无需担心样式冲突问题。
+:::

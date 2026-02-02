@@ -1,0 +1,18 @@
+{
+  "name": "@rspress-fixture/tailwind-v4",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.8.1",
+    "tailwindcss": "^4.0.0"
+  }
+}
