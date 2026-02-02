@@ -1,6 +1,17 @@
 # Tailwind CSS
 
-Rspress 支持集成 [Tailwind CSS](https://tailwindcss.com/) 来为你的文档站点添加样式。本指南介绍如何在 Rspress 中配置 Tailwind CSS v4。
+[Tailwind CSS](https://tailwindcss.com/) 是一个以 utility class 为核心的 CSS 框架，用于快速构建自定义用户界面。
+
+Rspress 基于 [Rsbuild](https://rsbuild.rs/) 构建，Tailwind CSS 的配置方式与 Rsbuild 一致。更多详情请参考：
+
+- [Rsbuild - Tailwind CSS v4](https://rsbuild.rs/zh/guide/styling/tailwindcss)
+- [Rsbuild - Tailwind CSS v3](https://rsbuild.rs/zh/guide/styling/tailwindcss-v3)
+
+下面介绍如何在 Rspress 中集成 Tailwind CSS v4。
+
+:::tip
+Rspress v2 的所有内置组件均采用 BEM 命名规范，不会与 Tailwind CSS 类名冲突。你可以自由使用 Tailwind v4 或 v3，无需担心样式冲突问题。
+:::
 
 ## 安装依赖
 
@@ -28,6 +39,12 @@ export default {
 @import 'tailwindcss';
 ```
 
+:::warning
+Tailwind CSS v4 使用了 [Cascade Layers](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Cascade_layers) 等现代 CSS 特性，使用前请确认[浏览器兼容性](https://tailwindcss.com/docs/compatibility)。
+
+Tailwind CSS v4 不能与 Sass、Less 或 Stylus 一起使用，请将 Tailwind CSS 的导入保留在纯 `.css` 文件中。
+:::
+
 ## 配置 Rspress
 
 在 `rspress.config.ts` 中，使用 `globalStyles` 选项引入 Tailwind CSS 文件：
@@ -47,9 +64,5 @@ export default defineConfig({
 现在你可以在 MDX 文件中使用 Tailwind 工具类：
 
 ```mdx title="doc/index.mdx"
-<div className="text-red-500 font-bold p-4">使用 Tailwind CSS 设置样式</div>
+<div className="text-3xl font-bold underline">Hello world!</div>
 ```
-
-:::tip
-Rspress v2 的所有内置组件均采用 BEM 命名规范，不会与 Tailwind CSS 类名冲突。你可以自由使用 Tailwind v4 或 v3，无需担心样式冲突问题。
-:::

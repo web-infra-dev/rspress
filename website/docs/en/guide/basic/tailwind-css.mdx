@@ -1,6 +1,17 @@
 # Tailwind CSS
 
-Rspress supports integrating [Tailwind CSS](https://tailwindcss.com/) to style your documentation site. This guide covers how to set up Tailwind CSS v4 with Rspress.
+[Tailwind CSS](https://tailwindcss.com/) is a utility-first CSS framework for rapidly building custom user interfaces.
+
+Rspress is built on [Rsbuild](https://rsbuild.rs/), and the Tailwind CSS configuration is consistent with Rsbuild. For more details, see:
+
+- [Rsbuild - Tailwind CSS v4](https://rsbuild.rs/guide/styling/tailwindcss)
+- [Rsbuild - Tailwind CSS v3](https://rsbuild.rs/guide/styling/tailwindcss-v3)
+
+Below is a guide for integrating Tailwind CSS v4 with Rspress.
+
+:::tip
+Rspress v2 uses BEM naming conventions for all built-in components, which avoids conflicts with Tailwind CSS classes. You can freely use Tailwind v4 or v3 without worrying about style collisions.
+:::
 
 ## Install Dependencies
 
@@ -28,6 +39,12 @@ Create a `tailwind.css` file in the root of your project:
 @import 'tailwindcss';
 ```
 
+:::warning
+Tailwind CSS v4 uses [Cascade Layers](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Cascade_layers) and other modern CSS features. Please check [browser compatibility](https://tailwindcss.com/docs/compatibility) before using it.
+
+Tailwind CSS v4 cannot be used with Sass, Less, or Stylus. Please keep Tailwind CSS imports in plain `.css` files.
+:::
+
 ## Configure Rspress
 
 In your `rspress.config.ts`, use the `globalStyles` option to import the Tailwind CSS file:
@@ -47,9 +64,5 @@ export default defineConfig({
 Now you can use Tailwind utility classes in your MDX files:
 
 ```mdx title="doc/index.mdx"
-<div className="text-red-500 font-bold p-4">Styled with Tailwind CSS</div>
+<div className="text-3xl font-bold underline">Hello world!</div>
 ```
-
-:::tip
-Rspress v2 uses BEM naming conventions for all built-in components, which avoids conflicts with Tailwind CSS classes. You can freely use Tailwind v4 or v3 without worrying about style collisions.
-:::
