@@ -1,0 +1,118 @@
+# shadcn/ui
+
+[shadcn/ui](https://ui.shadcn.com/) is a collection of reusable components built with Radix UI and Tailwind CSS. This guide covers how to use shadcn/ui components in your Rspress documentation site.
+
+## Prerequisites
+
+Make sure you have already set up [Tailwind CSS](/guide/basic/tailwind-css) in your project before proceeding.
+
+## Install Dependencies
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add class-variance-authority clsx tailwind-merge lucide-react -D" />
+
+## Configure Path Aliases
+
+Add path aliases to your `rspress.config.ts` so that shadcn/ui components can be resolved correctly:
+
+```ts title="rspress.config.ts"
+import * as path from 'node:path';
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  root: path.join(__dirname, 'doc'),
+  globalStyles: path.join(__dirname, 'tailwind.css'),
+  builderConfig: {
+    source: {
+      alias: {
+        '@': path.join(__dirname, 'src'),
+      },
+    },
+  },
+});
+```
+
+## Add a Utility Function
+
+Create the `cn` utility function used by shadcn/ui components:
+
+```ts title="src/lib/utils.ts"
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+## Add Components
+
+You can manually copy component code from the [shadcn/ui documentation](https://ui.shadcn.com/docs/components) into your `src/components/ui/` directory.
+
+For example, create a Button component:
+
+```tsx title="src/components/ui/button.tsx"
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+
+const buttonVariants = cva(
+  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
+  {
+    variants: {
+      variant: {
+        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        outline:
+          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+      },
+      size: {
+        default: 'h-10 px-4 py-2',
+        sm: 'h-9 rounded-md px-3',
+        lg: 'h-11 rounded-md px-8',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+    },
+  },
+);
+
+export interface ButtonProps
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, ...props }, ref) => {
+    return (
+      <button
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
+Button.displayName = 'Button';
+
+export { Button, buttonVariants };
+```
+
+## Usage in MDX
+
+Import and use components in your MDX files:
+
+```mdx title="doc/index.mdx"
+import { Button } from '@/components/ui/button';
+
+# My Page
+
+<Button>Click me</Button>
+<Button variant="outline">Outline</Button>
+```
+
+:::tip
+Since shadcn/ui is not a traditional npm package but a collection of copy-paste components, you have full control over the component code and can customize them as needed.
+:::

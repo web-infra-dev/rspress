@@ -2,8 +2,6 @@
 description: Methods for customizing page layout, global components, styles, and head tags.
 ---
 
-import { PackageManagerTabs } from '@rspress/core/theme';
-
 # Customizing page
 
 Rspress provides several ways for you to customize the content of your pages, including:
@@ -49,46 +47,6 @@ export default defineConfig({
 import GlobalUIComponents from '@en/fragments/global-ui-components.mdx';
 
 <GlobalUIComponents />
-
-## Tailwind CSS
-
-To use Tailwind CSS in Rspress, you can follow these steps:
-
-1. Install Tailwind CSS:
-
-<PackageManagerTabs command="install tailwindcss -D" />
-
-2. Create a `postcss.config.js` file containing `tailwindcss` plugin:
-
-```js title="postcss.config.js"
-module.exports = {
-  plugins: {
-    tailwindcss: {},
-  },
-};
-```
-
-3. Create a `tailwind.config.js` file and make sure all the content files are included via `content`:
-
-```js title="tailwind.config.js"
-module.exports = {
-  content: ['./src/**/*.tsx', './docs/**/*.mdx'],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
-```
-
-4. Include the Tailwind directives in your CSS styles file, refer to [globalStyles](/api/config/config-basic#globalstyles):
-
-```css title=styles/index.css
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-```
-
-> For most up to date configuration, please refer to the official [Tailwind CSS documentation](https://tailwindcss.com/docs/installation/using-postcss).
 
 ## Custom layout structure
 
