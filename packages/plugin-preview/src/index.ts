@@ -67,6 +67,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
     const rsbuildConfig = mergeRsbuildConfig(
       {
         server: {
+          // allow QR code scan on mobile devices and access through local network
+          host: true,
           port: devPort,
           printUrls: () => undefined,
           strictPort: true,
@@ -181,6 +183,9 @@ export function pluginPreview(options?: Options): RspressPlugin {
     builderConfig: {
       source: {
         include: [join(__dirname, '..')],
+        define: {
+          'process.env.RSPRESS_IFRAME_DEV_PORT': JSON.stringify(devPort),
+        },
       },
       tools: {
         bundlerChain(chain) {
@@ -220,13 +225,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
           },
         },
       ],
-    },
-    extendPageData(pageData, isProd) {
-      if (!isProd) {
-        // Property 'devPort' does not exist on type 'PageIndexInfo'.
-        // @ts-expect-error
-        pageData.devPort = port;
-      }
     },
     markdown: {
       remarkPlugins: [
