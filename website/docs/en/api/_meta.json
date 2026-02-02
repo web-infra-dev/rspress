@@ -1,7 +1,7 @@
 [
   {
     "type": "section-header",
-    "label": "总览"
+    "label": "Overview"
   },
   {
     "type": "file",
@@ -10,7 +10,7 @@
   },
   {
     "type": "section-header",
-    "label": "配置"
+    "label": "Config"
   },
   {
     "type": "dir",
