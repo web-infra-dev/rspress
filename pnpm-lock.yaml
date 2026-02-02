@@ -1736,8 +1736,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@rsbuild/core@2.0.0-beta.0(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
       rspress-plugin-file-tree:
-        specifier: ^1.0.3
-        version: 1.0.3(@rspress/core@packages+core)
+        specifier: ^1.0.4
+        version: 1.0.4(@rspress/core@packages+core)
       rspress-plugin-font-open-sans:
         specifier: ^1.0.3
         version: 1.0.3(@rspress/core@packages+core)
@@ -6347,8 +6347,8 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0-rc.4 || ^2.0.0
 
-  rspress-plugin-file-tree@1.0.3:
-    resolution: {integrity: sha512-+z07cGbtxRELATSdDiM/TzsTfgxnycPgTNBjrzhljz9c4boaXCXX7X8slMBLY/QrZMRzIvV74sijoJT2V4iUhw==}
+  rspress-plugin-file-tree@1.0.4:
+    resolution: {integrity: sha512-VItnE51w/EDOdvliEnLKBNz2VVmOFx1zdZr8HfjII7Tu8/GQg+BtShjZR0Z8oYtP6zyxheY2H81pe2J4Wdwh0g==}
     peerDependencies:
       '@rspress/core': ^2.0.0-rc.4 || ^2.0.0
 
@@ -10282,14 +10282,14 @@ snapshots:
 
   esast-util-from-estree@2.0.0:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       devlop: 1.1.0
       estree-util-visit: 2.0.0
       unist-util-position-from-estree: 2.0.0
 
   esast-util-from-js@2.0.1:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       acorn: 8.15.0
       esast-util-from-estree: 2.0.0
       vfile-message: 4.0.2
@@ -10341,7 +10341,7 @@ snapshots:
 
   estree-util-visit@2.0.0:
     dependencies:
-      '@types/estree-jsx': 1.0.0
+      '@types/estree-jsx': 1.0.5
       '@types/unist': 3.0.3
 
   estree-walker@2.0.2: {}
@@ -12852,7 +12852,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  rspress-plugin-file-tree@1.0.3(@rspress/core@packages+core):
+  rspress-plugin-file-tree@1.0.4(@rspress/core@packages+core):
     dependencies:
       '@rspress/core': link:packages/core
       rspress-plugin-devkit: 1.0.0(@rspress/core@packages+core)
