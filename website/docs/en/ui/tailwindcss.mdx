@@ -1,6 +1,12 @@
 # Tailwind CSS
 
-[Tailwind CSS](https://tailwindcss.com/) is a utility-first CSS framework for rapidly building custom user interfaces.
+[Tailwind CSS](https://tailwindcss.com/) is a utility-first CSS framework for rapidly building custom user interfaces. It can be used with MDX files in Rspress to help you style your documentation more efficiently, for example:
+
+```mdx title="docs/foo.mdx"
+# Foo
+
+<div className="text-3xl font-bold underline">Hello world!</div>
+```
 
 Rspress is built on [Rsbuild](https://rsbuild.rs/), and the Tailwind CSS configuration is consistent with Rsbuild. For more details, see:
 
@@ -10,16 +16,20 @@ Rspress is built on [Rsbuild](https://rsbuild.rs/), and the Tailwind CSS configu
 Below is a guide for integrating Tailwind CSS v4 with Rspress.
 
 :::tip
-Rspress v2 uses BEM naming conventions for all built-in components, which avoids conflicts with Tailwind CSS classes. You can freely use Tailwind v4 or v3 without worrying about style collisions.
+
+All Rspress built-in components use BEM naming conventions and do not use Tailwind CSS internally, which avoids conflicts with Tailwind CSS classes. You can freely use Tailwind v4 or v3 without worrying about style collisions.
+
 :::
 
-## Install Dependencies
+import { PackageManagerTabs, Steps } from '@rspress/core/theme';
 
-import { PackageManagerTabs } from '@theme';
+<Steps>
+
+### Install Dependencies
 
 <PackageManagerTabs command="add tailwindcss @tailwindcss/postcss -D" />
 
-## Create PostCSS Config
+### Create PostCSS Config
 
 Create a `postcss.config.mjs` file in the root of your project:
 
@@ -31,21 +41,22 @@ export default {
 };
 ```
 
-## Create Tailwind CSS File
+### Create Tailwind CSS File
 
 Create a `tailwind.css` file in the root of your project:
 
 ```css title="tailwind.css"
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 ```
 
-:::warning
-Tailwind CSS v4 uses [Cascade Layers](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Cascade_layers) and other modern CSS features. Please check [browser compatibility](https://tailwindcss.com/docs/compatibility) before using it.
+:::tip Dark Mode
 
-Tailwind CSS v4 cannot be used with Sass, Less, or Stylus. Please keep Tailwind CSS imports in plain `.css` files.
+Rspress toggles dark mode by checking the `.dark` class on the `html` element, so you need to configure `@custom-variant`. See [Tailwind Docs - Dark Mode](https://tailwindcss.com/docs/dark-mode) for details.
+
 :::
 
-## Configure Rspress
+### Configure Rspress
 
 In your `rspress.config.ts`, use the `globalStyles` option to import the Tailwind CSS file:
 
@@ -59,10 +70,14 @@ export default defineConfig({
 });
 ```
 
-## Usage
+### Usage
 
 Now you can use Tailwind utility classes in your MDX files:
 
-```mdx title="doc/index.mdx"
+```mdx title="doc/foo.mdx"
+# Foo
+
 <div className="text-3xl font-bold underline">Hello world!</div>
 ```
+
+</Steps>

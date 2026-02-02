@@ -182,12 +182,18 @@ iframe 预览模式中的代码有单独的编译环境和运行环境。
 
 - **处理暗黑模式**：注入 `MutationObserver` 监听 `html.dark` 变化，同步到 `body.dark` 或进行其他暗黑模式处理。
 
+- **使用 Tailwind CSS**：因为 iframe 预览环境是独立的 Rsbuild 实例，所以如果你预览的组件依赖 Tailwind CSS，需要通过 `preEntry` 注入 `@import "tailwindcss";`。
+
 ```ts title="rspress.config.ts"
 pluginPreview({
   iframeOptions: {
     builderConfig: {
       source: {
-        preEntry: ['@vant/touch-emulator', './src/dark-mode-observer.js'],
+        preEntry: [
+          '@vant/touch-emulator',
+          './src/dark-mode-observer.js',
+          './tailwind.css',
+        ],
       },
     },
   },

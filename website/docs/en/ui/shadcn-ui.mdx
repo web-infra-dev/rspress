@@ -1,0 +1,107 @@
+# shadcn/ui
+
+[shadcn/ui](https://ui.shadcn.com/) is a collection of reusable components built with Radix UI / Base UI and Tailwind CSS. This guide covers how to use shadcn/ui components in your Rspress documentation site.
+
+Make sure you have already set up [Tailwind CSS](/en/ui/tailwindcss) in your project before proceeding.
+
+import { PackageManagerTabs, Steps } from '@rspress/core/theme';
+
+<Steps>
+
+### Configure Path Aliases
+
+Add `paths` to the `compilerOptions` in your `tsconfig.json` so that shadcn/ui components can be resolved correctly:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["doc", "src", "rspress.config.ts"]
+}
+```
+
+Also add the corresponding alias configuration in `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import * as path from 'node:path';
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  root: path.join(__dirname, 'doc'),
+  globalStyles: path.join(__dirname, 'tailwind.css'),
+  builderConfig: {
+    source: {
+      alias: {
+        '@': path.join(__dirname, 'src'),
+      },
+    },
+  },
+});
+```
+
+### Create components.json
+
+Create a `components.json` file in your project root to configure the shadcn/ui CLI:
+
+```json title="components.json"
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "tailwind": {
+    "css": "tailwind.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "rsc": false,
+  "tsx": true,
+  "aliases": {
+    "utils": "@/lib/utils",
+    "components": "@/components",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
+```
+
+:::tip
+
+- `tailwind.config` is omitted because Tailwind CSS v4 no longer requires a config file.
+- `rsc` is set to `false` because Rspress does not use React Server Components.
+
+:::
+
+### Initialize
+
+Run `shadcn init` to install dependencies and generate base files like `src/lib/utils.ts`:
+
+<PackageManagerTabs command="shadcn@latest init" dlx />
+
+### Add Components
+
+Use the `shadcn` CLI to add the components you need. For example, to add a Button:
+
+<PackageManagerTabs command="shadcn@latest add button" dlx />
+
+### Usage in MDX
+
+Import and use components in your MDX files:
+
+```mdx title="doc/index.mdx"
+import { Button } from '@/components/ui/button';
+
+# My Page
+
+<Button>Click me</Button>
+<Button variant="outline">Outline</Button>
+```
+
+</Steps>
+
+:::tip
+Since shadcn/ui is not a traditional npm package but a collection of copy-paste components, you have full control over the component code and can customize them as needed.
+:::

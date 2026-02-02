@@ -1,0 +1,81 @@
+# shadcn/ui
+
+[shadcn/ui](https://ui.shadcn.com/) 是一组基于 Radix UI / Base UI 和 Tailwind CSS 构建的可复用组件集合。本指南介绍如何在 Rspress 文档站点中使用 shadcn/ui 组件。
+
+在开始之前，请确保已经在项目中配置好 [Tailwind CSS](/zh/ui/tailwindcss)。
+
+import { PackageManagerTabs, Steps } from '@rspress/core/theme';
+
+<Steps>
+
+### 配置路径别名
+
+在 `tsconfig.json` 的 `compilerOptions` 中添加 `paths`，以便正确解析 shadcn/ui 组件：
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["doc", "src", "rspress.config.ts"]
+}
+```
+
+### 创建 components.json
+
+在项目根目录创建 `components.json` 文件，配置 shadcn/ui CLI：
+
+```json title="components.json"
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "tailwind": {
+    "css": "tailwind.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "rsc": false,
+  "tsx": true,
+  "aliases": {
+    "utils": "@/lib/utils",
+    "components": "@/components",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
+```
+
+### 初始化
+
+运行 `shadcn init` 来安装依赖并生成 `src/lib/utils.ts` 等基础文件：
+
+<PackageManagerTabs command="shadcn@latest init" dlx />
+
+### 添加组件
+
+使用 `shadcn` CLI 添加所需组件，例如 Button：
+
+<PackageManagerTabs command="shadcn@latest add button" dlx />
+
+### 在 MDX 中使用
+
+在 MDX 文件中导入并使用组件：
+
+```mdx title="doc/index.mdx"
+import { Button } from '@/components/ui/button';
+
+# 我的页面
+
+<Button>点击我</Button>
+<Button variant="outline">边框按钮</Button>
+```
+
+</Steps>
+
+:::tip
+shadcn/ui 不是传统的 npm 包，而是一组可复制粘贴的组件集合，你可以完全掌控组件代码并按需自定义。
+:::
