@@ -40,7 +40,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/types": "^7.28.6",
+    "@babel/types": "^7.29.0",
     "@rsbuild/plugin-react": "~1.4.4",
     "@rslib/core": "0.19.3",
     "@rspress/plugin-playground": "workspace:*",
