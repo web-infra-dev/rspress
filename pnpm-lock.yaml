@@ -1745,8 +1745,8 @@ importers:
         specifier: npm:@soonit/rspress-plugin-og@0.1.2
         version: '@soonit/rspress-plugin-og@0.1.2(@rspress/core@packages+core)'
       tm-themes:
-        specifier: 1.10.16
-        version: 1.10.16
+        specifier: 1.11.0
+        version: 1.11.0
       twoslash:
         specifier: ^0.3.6
         version: 0.3.6(typescript@5.8.2)
@@ -6839,8 +6839,8 @@ packages:
     resolution: {integrity: sha512-Zba82s87IFq9A9XmjiX5uZA/ARWDrB03OHlq+Vw1fSdt0I+4/Kutwy8BP4Y/y/aORMo61FQ0vIb5j44vSo5Pkg==}
     engines: {node: ^18.0.0 || >=20.0.0}
 
-  tm-themes@1.10.16:
-    resolution: {integrity: sha512-TqkHDYNogVJ9nnpQtKYZAW50iEOJaXxu1a96wD/WSjeLPWuocSza/ReJI//yXAsVpFR5rS5960E1QknawLxVBg==}
+  tm-themes@1.11.0:
+    resolution: {integrity: sha512-9Ru5WhVznGa9u+7A9WcUpP5SPkafGjGmfXcp9HgVdRf2VJPsLLh8kYVd7f5kNNHFrnamvyZZoyJnuMJR19QxfA==}
 
   tmp@0.2.1:
     resolution: {integrity: sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==}
@@ -13386,7 +13386,7 @@ snapshots:
 
   tinypool@1.1.1: {}
 
-  tm-themes@1.10.16: {}
+  tm-themes@1.11.0: {}
 
   tmp@0.2.1:
     dependencies:
