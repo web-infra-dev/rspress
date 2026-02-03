@@ -31,7 +31,7 @@ test.describe('tailwind-v4', async () => {
     const boldText = page.locator('.font-bold');
     await expect(boldText).toHaveCSS('font-weight', '700');
 
-    const blueBox = page.locator('.bg-blue-500');
+    const blueBox = page.getByText('Blue Box');
     await expect(blueBox).toHaveCSS('padding', '16px');
   });
 
