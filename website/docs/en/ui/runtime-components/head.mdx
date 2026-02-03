@@ -9,17 +9,13 @@ The Head component lets you inject custom head content (built on [unhead](https:
 
 ## Usage
 
-```tsx title="index.tsx"
+```mdx title="index.mdx"
 import { Head } from '@rspress/core/runtime';
 
-export default function Page() {
-  return (
-    <Head>
-      <meta property="og:description" content="Out-of-box Rspack build tools" />
-      <link rel="canonical" href="https://example.com" />
-    </Head>
-  );
-}
+<Head>
+  <meta property="og:description" content="Out-of-box Rspack build tools" />
+  <link rel="canonical" href="https://example.com" />
+</Head>
 ```
 
 import { Head } from '@rspress/core/runtime';
