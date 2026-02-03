@@ -104,8 +104,11 @@ import type { RspressPlugin } from '@rspress/core';
 
 ### 移除的独立包
 
-以下插件已内置到核心包中，无需单独安装：
+以下包已内置到 `@rspress/core` 中，如果从 1.x 升级，请参考上面的导入路径变更表更新导入路径：
 
+- `rspress` - 已重命名为 `@rspress/core`
+- `@rspress/runtime` - 运行时已内置
+- `@rspress/theme-default` - 默认主题已内置
 - `@rspress/plugin-shiki` - 默认使用 Shiki 代码高亮
 - `@rspress/plugin-auto-nav-sidebar` - 导航侧边栏已内置
 - `@rspress/plugin-container-syntax` - 容器语法已内置

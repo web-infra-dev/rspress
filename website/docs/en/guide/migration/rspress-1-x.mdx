@@ -104,8 +104,11 @@ import type { RspressPlugin } from '@rspress/core';
 
 ### Removed standalone packages
 
-The following plugins are now built into the core package and no longer need to be installed separately:
+The following packages are now built into `@rspress/core`. If upgrading from 1.x, please refer to the import path changes table above to update your import paths:
 
+- `rspress` - Renamed to `@rspress/core`
+- `@rspress/runtime` - Runtime is built-in
+- `@rspress/theme-default` - Default theme is built-in
 - `@rspress/plugin-shiki` - Shiki code highlighting is now default
 - `@rspress/plugin-auto-nav-sidebar` - Navigation sidebar is built-in
 - `@rspress/plugin-container-syntax` - Container syntax is built-in
