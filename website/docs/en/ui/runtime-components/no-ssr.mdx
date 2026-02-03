@@ -9,18 +9,12 @@ overviewHeaders: []
 
 ## Usage
 
-```tsx
+```mdx title="index.mdx"
 import { NoSSR } from '@rspress/core/runtime';
 
-const ClientOnly = () => {
-  return (
-    <NoSSR>
-      <div>This content renders only on the client</div>
-    </NoSSR>
-  );
-};
-
-export default ClientOnly;
+<NoSSR>
+  <ThirdPartyWidget />
+</NoSSR>
 ```
 
 Use it when a component depends on browser-only APIs or needs to avoid SSR.
