@@ -7,6 +7,12 @@
   "custom-page",
   {
     "type": "section-header",
+    "label": "Community tooling"
+  },
+  "tailwindcss",
+  "shadcn-ui",
+  {
+    "type": "section-header",
     "label": "Components"
   },
   {

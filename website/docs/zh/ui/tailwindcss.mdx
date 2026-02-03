@@ -1,0 +1,83 @@
+# Tailwind CSS
+
+[Tailwind CSS](https://tailwindcss.com/) 是一个以 utility class 为核心的 CSS 框架，用于快速构建自定义用户界面。它可以配合 Rspress 中的 MDX 文件使用，帮助你更高效地创作文档样式，例如。
+
+```mdx title="docs/foo.mdx"
+# Foo
+
+<div className="text-3xl font-bold underline">Hello world!</div>
+```
+
+Rspress 基于 [Rsbuild](https://rsbuild.rs/) 构建，Tailwind CSS 的配置方式与 Rsbuild 一致。更多详情请参考：
+
+- [Rsbuild - Tailwind CSS v4](https://rsbuild.rs/zh/guide/styling/tailwindcss)
+- [Rsbuild - Tailwind CSS v3](https://rsbuild.rs/zh/guide/styling/tailwindcss-v3)
+
+下面介绍如何在 Rspress 中集成 Tailwind CSS v4。
+
+:::tip
+
+Rspress 所有内置组件均采用 BEM 命名规范，没有内置使用 Tailwind CSS，因此不会与 Tailwind CSS 类名冲突。你可以自由使用 Tailwind v4 或 v3，无需担心样式冲突问题。
+
+:::
+
+import { PackageManagerTabs, Steps } from '@rspress/core/theme';
+
+<Steps>
+
+### 安装依赖
+
+<PackageManagerTabs command="add tailwindcss @tailwindcss/postcss -D" />
+
+### 创建 PostCSS 配置
+
+在项目根目录创建 `postcss.config.mjs` 文件：
+
+```js title="postcss.config.mjs"
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+};
+```
+
+### 创建 Tailwind CSS 文件
+
+在项目根目录创建 `tailwind.css` 文件：
+
+```css title="tailwind.css"
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+:::tip 暗黑模式
+
+Rspress 通过判断 `html` 元素上的 `.dark` 类来实现暗黑模式切换，因此需配置 `@custom-variant`，请参阅 [Tailwind 文档 - Dark Mode](https://tailwindcss.com/docs/dark-mode)。
+
+:::
+
+### 配置 Rspress
+
+在 `rspress.config.ts` 中，使用 `globalStyles` 选项引入 Tailwind CSS 文件：
+
+```ts title="rspress.config.ts"
+import * as path from 'node:path';
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  root: path.join(__dirname, 'doc'),
+  globalStyles: path.join(__dirname, 'tailwind.css'),
+});
+```
+
+### 使用
+
+现在你可以在 MDX 文件中使用 Tailwind 工具类：
+
+```mdx title="doc/foo.mdx"
+# Foo
+
+<div className="text-3xl font-bold underline">Hello world!</div>
+```
+
+</Steps>
