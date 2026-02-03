@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-twoslash",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A plugin for rspress to applies twoslash to code blocks.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -50,7 +50,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.1",
+    "@rspress/core": "workspace:^2.0.2",
     "react": ">=18.0.0",
     "typescript": "^5.8.2"
   },
