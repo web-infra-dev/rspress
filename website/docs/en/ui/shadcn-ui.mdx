@@ -23,26 +23,9 @@ Add `paths` to the `compilerOptions` in your `tsconfig.json` so that shadcn/ui c
 }
 ```
 
-Also add the corresponding alias configuration in `rspress.config.ts`:
+### Create components.json and utility function
 
-```ts title="rspress.config.ts"
-import * as path from 'node:path';
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  root: path.join(__dirname, 'doc'),
-  globalStyles: path.join(__dirname, 'tailwind.css'),
-  builderConfig: {
-    source: {
-      alias: {
-        '@': path.join(__dirname, 'src'),
-      },
-    },
-  },
-});
-```
-
-### Create components.json
+Since `shadcn init` cannot automatically detect the Rspress framework, you need to follow the [manual installation](https://ui.shadcn.com/docs/installation/manual) approach to create the configuration files.
 
 Create a `components.json` file in your project root to configure the shadcn/ui CLI:
 
@@ -51,6 +34,7 @@ Create a `components.json` file in your project root to configure the shadcn/ui 
   "$schema": "https://ui.shadcn.com/schema.json",
   "style": "new-york",
   "tailwind": {
+    "config": "",
     "css": "tailwind.css",
     "baseColor": "neutral",
     "cssVariables": true,
@@ -75,11 +59,18 @@ Create a `components.json` file in your project root to configure the shadcn/ui 
 
 :::
 
-### Initialize
+Then install the dependencies and create the utility function:
 
-Run `shadcn init` to install dependencies and generate base files like `src/lib/utils.ts`:
+<PackageManagerTabs command="install clsx tailwind-merge class-variance-authority" />
 
-<PackageManagerTabs command="shadcn@latest init" dlx />
+```ts title="src/lib/utils.ts"
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
 
 ### Add components
 

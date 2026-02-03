@@ -23,7 +23,9 @@ import { PackageManagerTabs, Steps } from '@rspress/core/theme';
 }
 ```
 
-### 创建 components.json
+### 创建 components.json 和工具函数
+
+由于 `shadcn init` 无法自动识别 Rspress 框架，需要参考 [手动安装](https://ui.shadcn.com/docs/installation/manual) 来创建配置文件。
 
 在项目根目录创建 `components.json` 文件，配置 shadcn/ui CLI：
 
@@ -32,6 +34,7 @@ import { PackageManagerTabs, Steps } from '@rspress/core/theme';
   "$schema": "https://ui.shadcn.com/schema.json",
   "style": "new-york",
   "tailwind": {
+    "config": "",
     "css": "tailwind.css",
     "baseColor": "neutral",
     "cssVariables": true,
@@ -49,11 +52,25 @@ import { PackageManagerTabs, Steps } from '@rspress/core/theme';
 }
 ```
 
-### 初始化
+:::tip
 
-运行 `shadcn init` 来安装依赖并生成 `src/lib/utils.ts` 等基础文件：
+- 省略了 `tailwind.config`，因为 Tailwind CSS v4 不再需要配置文件。
+- `rsc` 设置为 `false`，因为 Rspress 不使用 React Server Components。
 
-<PackageManagerTabs command="shadcn@latest init" dlx />
+:::
+
+然后安装依赖并创建工具函数：
+
+<PackageManagerTabs command="install clsx tailwind-merge class-variance-authority" />
+
+```ts title="src/lib/utils.ts"
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
 
 ### 添加组件
 
