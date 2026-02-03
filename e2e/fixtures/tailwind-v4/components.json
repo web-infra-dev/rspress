@@ -2,6 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema.json",
   "style": "new-york",
   "tailwind": {
+    "config": "",
     "css": "tailwind.css",
     "baseColor": "neutral",
     "cssVariables": true,
