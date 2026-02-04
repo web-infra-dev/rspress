@@ -226,68 +226,124 @@ export function CssPickerEditor() {
     debouncedSetValue(color);
   };
 
-  const tabStyle = (isActive: boolean) => ({
-    padding: '8px 16px',
-    backgroundColor: isActive ? 'var(--rp-c-brand)' : 'var(--rp-c-bg)',
-    color: isActive ? '#fff' : 'var(--rp-c-text-1)',
-    border: '1px solid var(--rp-c-divider-light)',
-    borderRadius: '6px',
-    cursor: 'pointer',
-    fontSize: '14px',
-    fontWeight: isActive ? '500' : '400',
-    transition: 'all 0.2s ease',
-    whiteSpace: 'nowrap' as const,
-    outline: 'none',
-  });
-
   return (
     <div>
-      {/* Tabs and Color Picker */}
       <div
         style={{
           display: 'flex',
           flexWrap: 'wrap',
           alignItems: 'center',
-          gap: '8px',
+          gap: '12px',
+          padding: '12px 16px',
           marginBottom: 16,
+          backgroundColor: 'var(--rp-c-bg-soft)',
+          border: '1px solid var(--rp-c-divider-light)',
+          borderRadius: '8px',
         }}
       >
-        {/* Default/Custom tab */}
         <button
           onClick={() => handleTabChange(0)}
-          style={tabStyle(activeTab === 0)}
+          style={{
+            padding: '4px 12px',
+            borderRadius: '20px',
+            border:
+              !isCustomized && activeTab === 0
+                ? '1px solid var(--rp-c-brand)'
+                : '1px solid var(--rp-c-divider-light)',
+            color:
+              !isCustomized && activeTab === 0
+                ? 'var(--rp-c-brand)'
+                : 'var(--rp-c-text-2)',
+            backgroundColor:
+              !isCustomized && activeTab === 0
+                ? 'var(--rp-c-bg)'
+                : 'transparent',
+            fontSize: '13px',
+            cursor: 'pointer',
+            fontWeight: 500,
+            transition: 'all 0.2s',
+          }}
         >
           {firstTabLabel}
         </button>
 
-        {/* Predefined color tabs */}
-        {PREDEFINED_COLORS.map((tab, index) => (
-          <button
-            key={tab.label}
-            onClick={() => handleTabChange(index + 1)}
-            style={tabStyle(activeTab === index + 1)}
-          >
-            {tab.label}
-          </button>
-        ))}
-
-        {/* Color picker - standalone, not a tab */}
-        <input
-          type="color"
-          value={pickerColor}
-          onChange={handlePickerChange}
+        <div
           style={{
-            width: '32px',
-            height: '32px',
-            padding: 0,
-            border: '1px solid var(--rp-c-divider-light)',
-            borderRadius: '6px',
-            cursor: 'pointer',
+            width: 1,
+            height: 20,
+            backgroundColor: 'var(--rp-c-divider-light)',
           }}
         />
+
+        {PREDEFINED_COLORS.map((tab, index) => {
+          const isActive = activeTab === index + 1;
+          return (
+            <button
+              key={tab.label}
+              onClick={() => handleTabChange(index + 1)}
+              title={tab.label}
+              style={{
+                width: 20,
+                height: 20,
+                borderRadius: '50%',
+                backgroundColor: tab.color,
+                border: '1px solid rgba(0,0,0,0.1)',
+                cursor: 'pointer',
+                padding: 0,
+                boxShadow: isActive
+                  ? `0 0 0 2px var(--rp-c-bg), 0 0 0 4px ${tab.color}`
+                  : 'none',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                transform: isActive ? 'scale(1.1)' : 'scale(1)',
+              }}
+            />
+          );
+        })}
+
+        <div
+          style={{
+            width: 1,
+            height: 20,
+            backgroundColor: 'var(--rp-c-divider-light)',
+          }}
+        />
+
+        <div
+          title="Custom Color"
+          style={{
+            position: 'relative',
+            width: 22,
+            height: 22,
+            borderRadius: '50%',
+            background:
+              'conic-gradient(red, orange, yellow, green, blue, purple, red)',
+            boxShadow:
+              isCustomized && activeTab === 0
+                ? `0 0 0 2px var(--rp-c-bg), 0 0 0 4px ${pickerColor}`
+                : 'inset 0 0 0 1px rgba(0,0,0,0.1)',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+            transform:
+              isCustomized && activeTab === 0 ? 'scale(1.1)' : 'scale(1)',
+            cursor: 'pointer',
+          }}
+        >
+          <input
+            type="color"
+            value={pickerColor}
+            onChange={handlePickerChange}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              opacity: 0,
+              cursor: 'pointer',
+            }}
+          />
+        </div>
       </div>
 
-      {/* CSS Editor */}
       <LiveCodeEditor lang="css" value={value} onChange={handleCodeChange} />
     </div>
   );

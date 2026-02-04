@@ -16,25 +16,32 @@ description: 通过 CSS 变量、BEM 类名覆盖样式，或使用 ESM 重导�
 
 ## CSS 变量 \{#css-variables}
 
-Rspress 暴露了一些常用的 CSS 变量，相比重写 Rspress 内置的 React 组件，覆盖 CSS 变量实现定制化更简单也更易维护。你可以在 [UI - CSS 变量](../../ui/vars.mdx) 页面查看这些 CSS 变量，并通过：
+Rspress 暴露了一些常用的 CSS 变量，相比重写 Rspress 内置的 React 组件，覆盖 CSS 变量实现定制化更简单也更易维护。你可以在 [UI - CSS 变量](../../ui/vars.mdx) 页面查看这些 CSS 变量，并复制到项目中进行样式覆盖，例如：
 
-import { Tabs, Tab } from '@rspress/core/theme';
+```tree
+├── docs
+│   └── index.mdx
+├── theme
+│   ├── index.tsx
+│   └── index.css  <-- 复制 CSS 变量代码到这里来进行样式覆盖
+└── rspress.config.ts
+```
 
-<Tabs>
-<Tab label="theme/index.tsx">
-
-```tsx
+```tsx title="theme/index.tsx"
 import './index.css';
 export * from '@rspress/core/theme-original';
 ```
 
-</Tab>
-<Tab label="theme/index.css">
-```css
-/* 复制 CSS 变量代码到这里来进行样式覆盖 */
+另一种方式是使用 `rspress.config.ts` 中的 [globalStyles](/api/config/config-basic#globalstyles) 配置：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalStyles: path.join(__dirname, 'styles/index.css'), // 指向你创建的 CSS 文件
+});
 ```
-</Tab>
-</Tabs>
 
 ## BEM 类名 \{#bem-classname}
 
@@ -111,6 +118,8 @@ export * from '@rspress/core/theme-original'; //[!code highlight]
 ### Wrap：传 props/插槽 \{#wrap}
 
 Wrap 指在重导出的组件上增加 props。下面是一个例子，在导航栏标题前面插入一些内容：
+
+import { Tabs, Tab } from '@rspress/core/theme';
 
 <Tabs>
 <Tab label="theme/index.tsx">
