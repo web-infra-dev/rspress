@@ -4,40 +4,13 @@ description: List of Rspress built-in CSS variables for customizing brand colors
 
 # CSS variables
 
-Rspress exposes commonly used CSS variables, the simplest and most maintainable approach in [custom themes](/guide/basic/custom-theme). You can edit and preview in real time on this page, then copy the result to your project for style overriding.
+Rspress exposes commonly used CSS variables, the simplest and most maintainable approach in [custom themes](/guide/basic/custom-theme). You can edit and preview in real time on this page, then copy the result to your project for style overriding. See [CSS variables](/guide/basic/custom-theme#css-variables) for how to override these styles.
 
 :::tip
 
 You can use the "Copy Markdown" feature on this page to let your AI Agent help you modify CSS variables.
 
 :::
-
-Here is a simple example of style overriding:
-
-```tree
-├── docs
-│   └── index.mdx
-├── theme
-│   ├── index.tsx
-│   └── index.css  <-- Copy CSS variable code here for style overriding
-└── rspress.config.ts
-```
-
-```tsx title="theme/index.tsx"
-import './index.css';
-export * from '@rspress/core/theme-original';
-```
-
-Another approach is to use the [globalStyles](/api/config/config-basic#globalstyles) config in `rspress.config.ts`:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-import path from 'path';
-
-export default defineConfig({
-  globalStyles: path.join(__dirname, 'styles/index.css'), // Points to your CSS file
-});
-```
 
 Below are some CSS variables provided by Rspress and their default values:
 

@@ -18,23 +18,30 @@ The following will introduce them in order according to the degree of theme cust
 
 Rspress exposes some commonly used CSS variables. Compared to rewriting Rspress built-in React components, overriding CSS variables for customization is simpler and easier to maintain. You can view these CSS variables on the [UI - CSS Variables](../../ui/vars.mdx) page, and override them through:
 
-import { Tabs, Tab } from '@rspress/core/theme';
+```tree
+├── docs
+│   └── index.mdx
+├── theme
+│   ├── index.tsx
+│   └── index.css  <-- Copy CSS variable code here for style overriding
+└── rspress.config.ts
+```
 
-<Tabs>
-<Tab label="theme/index.tsx">
-
-```tsx
+```tsx title="theme/index.tsx"
 import './index.css';
 export * from '@rspress/core/theme-original';
 ```
 
-</Tab>
-<Tab label="theme/index.css">
-```css
-/* Copy CSS variable code here for style overrides */
+Another approach is to use the [globalStyles](/api/config/config-basic#globalstyles) config in `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalStyles: path.join(__dirname, 'styles/index.css'), // Points to your CSS file
+});
 ```
-</Tab>
-</Tabs>
 
 ## BEM classname \{#bem-classname}
 
@@ -111,6 +118,8 @@ By **ESM re-export** to override built-in components, all Rspress internal refer
 ### Wrap: Pass props/slots \{#wrap}
 
 Wrap means adding props to re-exported components. Here's an example of inserting some content before the navbar title:
+
+import { Tabs, Tab } from '@rspress/core/theme';
 
 <Tabs>
 <Tab label="theme/index.tsx">
