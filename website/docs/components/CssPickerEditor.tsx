@@ -25,10 +25,16 @@ function useDebounce<T extends (...args: any[]) => void>(
 
 // Predefined colors
 const PREDEFINED_COLORS = [
-  { label: 'Red', color: '#FF0000' },
-  { label: 'Orange', color: '#FFA500' },
   { label: 'Blue', color: '#0095FF' },
-  { label: 'Green', color: '#00AA55' },
+  { label: 'Purple', color: '#8B5CF6' },
+  { label: 'Pink', color: '#EC4899' },
+  { label: 'Red', color: '#EF4444' },
+  { label: 'Orange', color: '#F97316' },
+  { label: 'Yellow', color: '#EAB308' },
+  { label: 'Green', color: '#22C55E' },
+  { label: 'Teal', color: '#14B8A6' },
+  { label: 'Cyan', color: '#06B6D4' },
+  { label: 'Indigo', color: '#6366F1' },
 ];
 
 function hslString(h: number, s: number, l: number) {
