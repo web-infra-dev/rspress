@@ -104,17 +104,20 @@ export const SidebarMenu = forwardRef(
             >
               {scrolledHeader?.text ? (
                 <span
-                  className="rp-doc"
+                  className="rp-sidebar-menu__right__text rp-doc"
                   {...renderInlineMarkdown(scrolledHeader.text)}
                 />
               ) : (
-                <span>{t('outlineTitle')}</span>
+                <span className="rp-sidebar-menu__right__text">
+                  {t('outlineTitle')}
+                </span>
               )}
               <ReadPercent size={14} strokeWidth={2} />
               {/* TODO: discussion */}
               {headers.length !== 0 && (
                 <SvgWrapper
                   icon={IconArrowRight}
+                  className="rp-sidebar-menu__right__icon"
                   style={{
                     transform: isOutlineOpen ? 'rotate(90deg)' : 'rotate(0deg)',
                     transition: 'transform 0.2s ease-out',
