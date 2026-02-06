@@ -15,13 +15,37 @@
   font-style: normal;
   font-weight: 600;
 
-  &__left,
+  &__left {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    height: 100%;
+    background: transparent;
+    flex-shrink: 0;
+  }
+
   &__right {
     display: flex;
     gap: 8px;
     align-items: center;
     height: 100%;
     background: transparent;
+    min-width: 0;
+    overflow: hidden;
+
+    &__text {
+      overflow: hidden;
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+    }
+
+    &__icon,
+    .rp-progress-circle {
+      flex-shrink: 0;
+    }
   }
 
   @media (min-width: 1280px) {

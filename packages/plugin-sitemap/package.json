@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.56.0",
-    "@rslib/core": "0.19.4",
+    "@rslib/core": "0.19.5",
     "@rspress/config": "workspace:*",
     "rsbuild-plugin-publint": "^0.3.4"
   },
