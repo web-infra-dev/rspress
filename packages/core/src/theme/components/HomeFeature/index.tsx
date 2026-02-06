@@ -26,7 +26,7 @@ const getGridClass = (feature: Feature): string => {
 function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
   const { icon, title, details, link } = feature;
 
-  const { innerProps, outerProps, outerRef, shineDom } = useCardAnimation();
+  const { outerProps, outerRef, shineDom } = useCardAnimation();
   const navigate = useLinkNavigate();
 
   return (
@@ -36,7 +36,7 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
       className={`rp-home-feature__item ${getGridClass(feature)}`}
       ref={outerRef}
     >
-      <div className="rp-home-feature__item-wrapper" {...innerProps}>
+      <div className="rp-home-feature__item-wrapper">
         <article
           key={title}
           className={`rp-home-feature__card ${link ? 'rp-home-feature__card--clickable' : ''}`}
