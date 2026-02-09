@@ -46,16 +46,17 @@
   color: transparent;
   caret-color: #333;
   font: inherit;
-  border: none;
+  border: 1px solid transparent;
   outline: none;
 
-  padding: 16px 20px;
+  padding: 1rem 1.25rem;
   margin: 0;
   z-index: 2;
 
   font-family: var(--rp-font-family-mono);
   font-size: var(--rp-code-font-size);
   line-height: inherit;
+  word-break: break-all;
 
   overflow: hidden;
   pointer-events: auto;
