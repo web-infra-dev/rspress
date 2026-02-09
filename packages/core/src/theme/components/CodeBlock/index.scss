@@ -50,9 +50,8 @@
     // #endregion text
 
     position: relative;
-    width: fit-content;
     margin: 0;
-    padding: 1rem 1.25rem;
+    padding: 1rem 0;
     background: transparent;
     z-index: 1;
   }
@@ -61,6 +60,7 @@
     font-size: var(--rp-code-font-size);
     font-family: var(--rp-font-family-mono);
     display: inline-block;
+    padding: 0 1.25rem;
     min-width: 100%;
     line-height: 1.7;
   }
