@@ -47,7 +47,9 @@
 
 .shiki.has-highlighted {
   .line.highlighted {
-    width: 100%;
+    width: calc(100% + 2.5rem);
+    margin: 0 -1.25rem;
+    padding: 0 1.25rem;
     position: static;
     display: inline-block;
   }
