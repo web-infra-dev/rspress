@@ -46,7 +46,8 @@
   color: transparent;
   caret-color: #333;
   font: inherit;
-  border: 1px solid transparent;
+  border: var(--rp-code-block-border);
+  border-color: transparent;
   outline: none;
 
   padding: 1rem 1.25rem;
