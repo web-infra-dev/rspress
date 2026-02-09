@@ -288,12 +288,16 @@ export default defineConfig({
 
 The following features are enabled by default in V2:
 
-| Feature                        | Description                             |
-| ------------------------------ | --------------------------------------- |
-| `markdown.link.checkDeadLinks` | Dead link checking with stricter logs   |
-| `search.codeBlocks`            | Search results include code blocks      |
-| `dev.lazyCompilation`          | Lazy compilation for faster dev startup |
-| `performance.buildCache`       | Persistent cache for faster builds      |
+| Feature                        | Description                                        |
+| ------------------------------ | -------------------------------------------------- |
+| `markdown.link.checkDeadLinks` | Dead link checking, fix broken links based on logs |
+| `search.codeBlocks`            | Search results include code blocks                 |
+| `dev.lazyCompilation`          | Lazy compilation for faster dev startup            |
+| `performance.buildCache`       | Persistent cache for faster builds                 |
+
+:::tip
+If you encounter dead link errors, try to fix the broken links rather than disabling the `markdown.link.checkDeadLinks` feature.
+:::
 
 To disable lazy compilation:
 

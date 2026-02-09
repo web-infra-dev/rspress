@@ -274,12 +274,16 @@ export default defineConfig({
 
 以下功能在 V2 中默认开启：
 
-| 功能                           | 说明                 |
-| ------------------------------ | -------------------- |
-| `markdown.link.checkDeadLinks` | 死链检查，日志更严格 |
-| `search.codeBlocks`            | 搜索结果包含代码块   |
-| `dev.lazyCompilation`          | 懒编译加速开发启动   |
-| `performance.buildCache`       | 持久化缓存加速构建   |
+| 功能                           | 说明                             |
+| ------------------------------ | -------------------------------- |
+| `markdown.link.checkDeadLinks` | 死链检查，可按日志修复错误的链接 |
+| `search.codeBlocks`            | 搜索结果包含代码块               |
+| `dev.lazyCompilation`          | 懒编译加速开发启动               |
+| `performance.buildCache`       | 持久化缓存加速构建               |
+
+:::tip
+如果遇到死链检查的错误，建议优先修复坏掉的链接，而不是关闭 `markdown.link.checkDeadLinks` 功能。
+:::
 
 如需关闭懒编译：
 
