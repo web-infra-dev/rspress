@@ -36,14 +36,16 @@ import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  pluginClientRedirects({
-    redirects: [
-      {
-        from: '/docs/old1',
-        to: '/docs/new1',
-      },
-    ],
-  }),
+  plugins: [
+    pluginClientRedirects({
+      redirects: [
+        {
+          from: '/docs/old1',
+          to: '/docs/new1',
+        },
+      ],
+    }),
+  ],
 });
 ```
 
