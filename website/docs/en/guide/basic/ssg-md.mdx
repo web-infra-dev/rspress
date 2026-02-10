@@ -69,6 +69,14 @@ In frontend frameworks based on React dynamic rendering, there is often a proble
 
 [Static Site Generation (SSG)](./ssg) can generate static HTML files for crawlers to crawl, improving [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization). SSG-MD also solves similar problems, improving [GEO](https://en.wikipedia.org/wiki/Generative_engine_optimization) and the quality of static information for large language models. Compared to converting HTML to Markdown, React's virtual DOM during rendering has a better source of information.
 
+<div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+  <img
+    src="https://assets.rspack.rs/rspress/assets/ssg-md-flow.jpg"
+    width="600"
+    alt="SSG-MD rendering flow"
+  />
+</div>
+
 ## How to implement SSG-MD?
 
 1. Rspress internally implements a `renderToMarkdownString` method similar to `renderToString` in `react-dom`, which renders React components to Markdown strings:

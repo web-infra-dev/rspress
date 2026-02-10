@@ -69,6 +69,14 @@ doc_build
 
 [静态站点生成（SSG）](./ssg) 可以生成静态的 HTML 文件供爬虫爬取，提升 [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization)。SSG-MD 也是为了解决类似的问题，提升 [GEO](https://en.wikipedia.org/wiki/Generative_engine_optimization) 和面向大模型的静态信息质量。相比将 HTML 转化为 Markdown，React 在渲染期间的虚拟 DOM 拥有更好的信息源。
 
+<div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+  <img
+    src="https://assets.rspack.rs/rspress/assets/ssg-md-flow.jpg"
+    width="600"
+    alt="SSG-MD rendering flow"
+  />
+</div>
+
 ## 怎么实现 SSG-MD？
 
 1. Rspress 内部实现了类似 `react-dom` 中 `renderToString` 的 `renderToMarkdownString` 方法，将 React 组件渲染为 Markdown 字符串：
