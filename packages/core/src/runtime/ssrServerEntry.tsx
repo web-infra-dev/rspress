@@ -1,3 +1,5 @@
+// @ts-expect-error in v7, StaticRouter is exported from the main entry, but in v6 it's exported from 'react-router-dom/server'
+import { StaticRouter } from 'REACT_ROUTER_DOM_SERVER';
 import { PassThrough } from 'node:stream';
 import { text } from 'node:stream/consumers';
 import {
@@ -10,7 +12,6 @@ import {
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import type { ReactNode } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom';
 import { App } from './App';
 import { initPageData } from './initPageData';
 
