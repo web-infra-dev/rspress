@@ -91,6 +91,8 @@ export const Tag = ({ tag }: { tag?: string }) => {
         <span>deprecated</span>
       </Badge>
     );
+  } else if (normalizedTag === 'new') {
+    return <Badge text="new" type="tip" />;
   }
 
   if (BADGE_TAGS[normalizedTag as keyof typeof BADGE_TAGS]) {

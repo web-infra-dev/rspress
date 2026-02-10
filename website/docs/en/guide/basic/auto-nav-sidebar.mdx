@@ -1,5 +1,5 @@
 ---
-tag: new
+tag: updated
 description: Automatically generate navbar and sidebar via _nav.json and _meta.json, supporting files, directories, section headers, custom links, and more.
 ---
 
@@ -251,7 +251,9 @@ This means the sidebar only contains the `getting-started` document. When you cl
 
 :::
 
-### dir-section-header
+import { Tag } from '@rspress/core/theme';
+
+### dir-section-header <Tag tag="new" />
 
 When describing a **directory**, you can also use `dir-section-header`, which only differs from `"type": "dir"` in UI. It is often used at the first level, where the directory title is displayed as a [section header](#section-header) and is at the same level as files under the directory.
 
