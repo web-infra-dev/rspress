@@ -75,6 +75,7 @@ The component has built-in common tags that display with `<Badge />`. All common
 | `new`          | <Tag tag="new" />          |
 | `experimental` | <Tag tag="experimental" /> |
 | `deprecated`   | <Tag tag="deprecated" />   |
+| `updated`      | <Tag tag="updated" />      |
 
 :::tip Extending Common Tags
 
@@ -152,7 +153,7 @@ import { Tag } from '@rspress/core/theme';
 interface TagProps {
   /**
    * Tag content. Supports:
-   * - Common tags: 'tip', 'info', 'warning', 'danger', 'new', 'experimental', 'deprecated'
+   * - Common tags: 'tip', 'info', 'warning', 'danger', 'new', 'experimental', 'deprecated', 'updated'
    * - Multiple common tags: 'new, experimental'
    * - SVG string: '<svg>...</svg>'
    * - Image URL: 'https://...' or 'data:...'

@@ -75,6 +75,7 @@ tag: new, experimental
 | `new`          | <Tag tag="new" />          |
 | `experimental` | <Tag tag="experimental" /> |
 | `deprecated`   | <Tag tag="deprecated" />   |
+| `updated`      | <Tag tag="updated" />      |
 
 :::tip 扩充常用标签
 
@@ -152,7 +153,7 @@ import { Tag } from '@rspress/core/theme';
 interface TagProps {
   /**
    * 标签内容。支持：
-   * - 常用标签：'tip'、'info'、'warning'、'danger'、'new'、'experimental'、'deprecated'
+   * - 常用标签：'tip'、'info'、'warning'、'danger'、'new'、'experimental'、'deprecated'、'updated'
    * - 多个常用标签：'new, experimental'
    * - SVG 字符串：'<svg>...</svg>'
    * - 图片 URL：'https://...' 或 'data:...'
