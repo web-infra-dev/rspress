@@ -28,7 +28,7 @@ export function LiveCodeEditor({
           <textarea
             name="live-code-editor"
             ref={textareaRef}
-            className={styles.codeInput}
+            className={`${styles.codeInput} rp-scrollbar rp-scrollbar--always`}
             value={value}
             onChange={e => onChange(e.target.value)}
             spellCheck={false}
