@@ -1,4 +1,97 @@
+import React from 'react';
 import { MarkdownNode, reconciler, TextNode } from './reconciler.js';
+
+// Access React internals to intercept the hooks dispatcher.
+// React's Fizz server renderer (renderToString) sets useEffect/useLayoutEffect
+// to noop in its HooksDispatcher. We replicate this by intercepting the H
+// property on ReactSharedInternals during our render pass.
+// https://github.com/facebook/react/blob/c3b0e20e4/packages/react/src/ReactSharedInternals.js
+// https://github.com/facebook/react/blob/c3b0e20e4/packages/react-server/src/ReactFizzHooks.js#L817-L822
+const ReactSharedInternals: Record<string, unknown> | null = (
+  React as Record<string, unknown>
+).__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE as Record<
+  string,
+  unknown
+> | null;
+
+function noop(): void {}
+
+/**
+ * Intercept the React hooks dispatcher so that useEffect, useLayoutEffect,
+ * and useInsertionEffect become no-ops — matching React Fizz SSR behavior.
+ *
+ * Uses a refcount so multiple concurrent renderToMarkdownString calls
+ * (e.g. via p-map) safely share a single interceptor and only restore the
+ * original descriptor when the last render completes.
+ *
+ * Returns a cleanup function that decrements the refcount.
+ */
+let interceptorRefCount = 0;
+let originalDescriptor: PropertyDescriptor | undefined;
+let realH: Record<string, unknown> | null = null;
+let cachedTarget: unknown = null;
+let cachedProxy: unknown = null;
+
+function installEffectInterceptor(): () => void {
+  if (!ReactSharedInternals) {
+    return noop;
+  }
+
+  interceptorRefCount++;
+  if (interceptorRefCount === 1) {
+    // First caller — save the original descriptor and install the interceptor.
+    originalDescriptor = Object.getOwnPropertyDescriptor(
+      ReactSharedInternals,
+      'H',
+    );
+    realH = ReactSharedInternals.H as Record<string, unknown> | null;
+    cachedTarget = null;
+    cachedProxy = null;
+
+    Object.defineProperty(ReactSharedInternals, 'H', {
+      get() {
+        if (realH == null) {
+          return realH;
+        }
+        // Cache the proxy per dispatcher identity to avoid creating a new one
+        // on every property access.
+        if (cachedTarget !== realH) {
+          cachedTarget = realH;
+          cachedProxy = new Proxy(realH, {
+            get(target, prop, receiver) {
+              if (
+                prop === 'useEffect' ||
+                prop === 'useLayoutEffect' ||
+                prop === 'useInsertionEffect'
+              ) {
+                return noop;
+              }
+              return Reflect.get(target, prop, receiver);
+            },
+          });
+        }
+        return cachedProxy;
+      },
+      set(value) {
+        realH = value;
+      },
+      configurable: true,
+    });
+  }
+
+  return () => {
+    interceptorRefCount--;
+    if (interceptorRefCount === 0) {
+      // Last caller — restore the original property descriptor.
+      if (originalDescriptor) {
+        Object.defineProperty(ReactSharedInternals, 'H', originalDescriptor);
+      } else {
+        delete (ReactSharedInternals as Record<string, unknown>).H;
+        ReactSharedInternals.H = realH;
+      }
+    }
+  };
+}
 
 // Convert node tree to Markdown string
 function toMarkdown(root: MarkdownNode): string {
@@ -120,7 +213,7 @@ export async function renderToMarkdownString(
 
   const root = reconciler.createContainer(
     container,
-    1, // tag (LegacyRoot = 0)
+    1, // tag (ConcurrentRoot = 1)
     null, // hydrationCallbacks
     false, // isStrictMode
     false, // concurrentUpdatesByDefaultOverride
@@ -142,18 +235,26 @@ export async function renderToMarkdownString(
     null, // onPostPaintCallback
   );
 
-  // Set up a promise that resolves when commit completes
-  let resolveCommit: ((arg: string) => void) | null = null;
-  const commitPromise = new Promise<string>(resolve => {
-    resolveCommit = resolve;
-  });
+  // Intercept the React hooks dispatcher to make useEffect / useLayoutEffect
+  // / useInsertionEffect no-ops, matching React Fizz SSR behavior.
+  const removeInterceptor = installEffectInterceptor();
 
-  reconciler.updateContainer(element, root, null, () => {
-    // This callback is called after commit
-    if (resolveCommit) {
-      resolveCommit(toMarkdown(container));
-    }
-  });
+  try {
+    // Set up a promise that resolves when commit completes
+    let resolveCommit: ((arg: string) => void) | null = null;
+    const commitPromise = new Promise<string>(resolve => {
+      resolveCommit = resolve;
+    });
 
-  return commitPromise;
+    reconciler.updateContainer(element, root, null, () => {
+      // This callback is called after commit
+      if (resolveCommit) {
+        resolveCommit(toMarkdown(container));
+      }
+    });
+
+    return await commitPromise;
+  } finally {
+    removeInterceptor();
+  }
 }
