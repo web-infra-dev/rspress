@@ -39,16 +39,16 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@docsearch/css": "^4.5.3",
-    "@docsearch/react": "^4.5.3"
+    "@docsearch/css": "^4.5.4",
+    "@docsearch/react": "^4.5.4"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.56.0",
+    "@microsoft/api-extractor": "^7.56.3",
     "@rsbuild/plugin-react": "~1.4.5",
     "@rslib/core": "0.19.5",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.10",
+    "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
     "react": "^19.2.4",
     "rsbuild-plugin-publint": "^0.3.4",

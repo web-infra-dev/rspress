@@ -40,14 +40,14 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.56.0",
-    "@rsbuild/core": "2.0.0-beta.1",
+    "@microsoft/api-extractor": "^7.56.3",
+    "@rsbuild/core": "2.0.0-beta.3",
     "@rsbuild/plugin-react": "~1.4.5",
     "@rslib/core": "0.19.5",
     "@rspress/config": "workspace:*",
     "@types/hast": "^3.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.10",
+    "@types/react": "^19.2.13",
     "react": "^19.2.4",
     "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^5.8.2",

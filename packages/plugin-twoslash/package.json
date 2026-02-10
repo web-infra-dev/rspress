@@ -38,13 +38,13 @@
     "twoslash": "^0.3.6"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.56.0",
+    "@microsoft/api-extractor": "^7.56.3",
     "@rslib/core": "0.19.5",
     "@rspress/config": "workspace:*",
     "@shikijs/types": "^3.21.0",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
-    "@types/react": "^19.2.10",
+    "@types/react": "^19.2.13",
     "react": "^19.2.4",
     "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^5.8.2"
