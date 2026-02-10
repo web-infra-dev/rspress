@@ -4,12 +4,13 @@
 
 目前 Rspress 会自动注入以下 Head 标签：
 
-| 标签                                                    | 描述                                                              |
-| ------------------------------------------------------- | ----------------------------------------------------------------- |
-| `<meta name="generator" content="Rspress v${version}">` | 标识站点生成器及版本号                                            |
-| `<meta property="og:type" content="website">`           | Open Graph 类型，固定为 `website`                                 |
-| `<meta property="og:title" content="${title}">`         | Open Graph 标题，使用当前页面标题（如果存在）                     |
-| `<meta name="description" content="${description}">`    | 页面描述，使用 frontmatter 或全局配置中的 description（如果存在） |
+| 标签                                                        | 描述                                                                     |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `<meta name="generator" content="Rspress v${version}">`     | 标识站点生成器及版本号                                                   |
+| `<meta name="description" content="${description}">`        | 页面描述，使用 frontmatter 或全局配置中的 description（如果存在）        |
+| `<meta property="og:type" content="website">`               | Open Graph 类型，固定为 `website`                                        |
+| `<meta property="og:title" content="${title}">`             | Open Graph 标题，使用当前页面标题（如果存在）                            |
+| `<meta property="og:description" content="${description}">` | Open Graph 描述，使用 frontmatter 或全局配置中的 description（如果存在） |
 
 如果想增加 Head 标签可以通过以下几种方式：
 
