@@ -79,12 +79,18 @@ const HeadTags = memo(
               content: title,
             }
           : undefined,
-        description
-          ? {
-              name: 'description',
-              content: description,
-            }
-          : undefined,
+        ...(description
+          ? [
+              {
+                name: 'description',
+                content: description,
+              },
+              {
+                property: 'og:description',
+                content: description,
+              },
+            ]
+          : []),
       ],
     });
 

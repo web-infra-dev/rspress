@@ -4,12 +4,13 @@ Adding head tags (such as meta tags) to web pages is crucial for SEO optimizatio
 
 Currently, Rspress automatically injects the following head tags:
 
-| Tag                                                     | Description                                                                         |
-| ------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `<meta name="generator" content="Rspress v${version}">` | Identifies the site generator and version                                           |
-| `<meta property="og:type" content="website">`           | Open Graph type, fixed as `website`                                                 |
-| `<meta property="og:title" content="${title}">`         | Open Graph title, uses current page title (if available)                            |
-| `<meta name="description" content="${description}">`    | Page description, uses description from frontmatter or global config (if available) |
+| Tag                                                         | Description                                                                               |
+| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `<meta name="generator" content="Rspress v${version}">`     | Identifies the site generator and version                                                 |
+| `<meta name="description" content="${description}">`        | Page description, uses description from frontmatter or global config (if available)       |
+| `<meta property="og:type" content="website">`               | Open Graph type, fixed as `website`                                                       |
+| `<meta property="og:title" content="${title}">`             | Open Graph title, uses current page title (if available)                                  |
+| `<meta property="og:description" content="${description}">` | Open Graph description, uses description from frontmatter or global config (if available) |
 
 If you want to add head tags, you can use the following methods:
 
