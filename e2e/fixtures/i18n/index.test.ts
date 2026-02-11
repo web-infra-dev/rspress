@@ -223,4 +223,77 @@ test.describe('i18n test', async () => {
     expect(overviewContentEn ?? '').toContain('en');
     expect(overviewContentEn ?? '').not.toContain('zh');
   });
+
+  test('Language switch links should have lang and hrefLang attributes in HoverGroup', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    // Hover the language switcher to open the HoverGroup dropdown
+    const languageSwitcher = page.locator(
+      '.rp-nav__others .rp-nav-menu__item__container',
+      { hasText: '简体中文' },
+    );
+    await languageSwitcher.hover();
+
+    // Scope lookups to the hover group associated with this nav container
+    const hoverGroup = languageSwitcher
+      .locator('xpath=ancestor::*[contains(@class, "rp-nav")]')
+      .locator('.rp-hover-group');
+
+    // Verify English link has correct lang/hreflang attributes
+    const englishLink = hoverGroup.locator('.rp-hover-group__item a', {
+      hasText: 'English',
+    });
+    await expect(englishLink).toHaveAttribute('lang', 'en');
+    await expect(englishLink).toHaveAttribute('hreflang', 'en');
+
+    // Verify Chinese link has correct lang/hreflang attributes
+    const chineseLink = page.locator('.rp-hover-group__item a', {
+      hasText: '简体中文',
+    });
+    await expect(chineseLink).toHaveAttribute('lang', 'zh');
+    await expect(chineseLink).toHaveAttribute('hreflang', 'zh');
+  });
+
+  test('NavScreen language links should have lang, hrefLang and rel attributes', async ({
+    page,
+  }) => {
+    // Switch to mobile viewport
+    await page.setViewportSize({ width: 500, height: 800 });
+
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+    // Open the hamburger menu
+    await page.locator('.rp-nav-hamburger').first().click();
+    const navScreen = page.locator('.rp-nav-screen');
+    await expect(navScreen).toBeVisible();
+
+    // Open the language dropdown
+    await navScreen.locator('.rp-nav-screen-langs').click();
+
+    // The active language (简体中文) renders as a <span>, not a link
+    const activeItem = navScreen.locator(
+      '.rp-nav-screen-langs-group__item--active',
+    );
+    await expect(activeItem).toHaveText('简体中文');
+    // Active item should be a <span>, not an <a>
+    const activeTagName = await activeItem.evaluate(el => el.tagName);
+    expect(activeTagName).toBe('SPAN');
+    // Active item should NOT have hreflang/rel attributes (it's not a link)
+    await expect(activeItem).not.toHaveAttribute('hreflang');
+    await expect(activeItem).not.toHaveAttribute('rel');
+
+    // The non-active language (English) should be a link with lang/hrefLang/rel
+    const englishLink = navScreen.locator(
+      'a.rp-nav-screen-langs-group__item:not(.rp-nav-screen-langs-group__item--active)',
+    );
+    await expect(englishLink).toHaveText('English');
+    await expect(englishLink).toHaveAttribute('lang', 'en');
+    await expect(englishLink).toHaveAttribute('hreflang', 'en');
+    await expect(englishLink).toHaveAttribute('rel', 'alternate');
+  });
 });
