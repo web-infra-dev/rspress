@@ -95,15 +95,9 @@
       &__item {
         width: 200px;
         flex: 0 0 200px;
-        min-width: 25%; // 4 columns
-        max-width: 25%; // 4 columns
+        min-width: 33.33%; // 3 columns
+        max-width: 33.33%; // 3 columns
         word-break: break-all;
-
-        @media (min-width: 769px) and (max-width: 1280px) {
-          // 3 columns
-          min-width: 33%;
-          max-width: 33%;
-        }
 
         @media (max-width: 768px) {
           // 2 columns or 1 columns
@@ -135,16 +129,16 @@
   // Grid layout for items without content (no headers/items)
   &__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); // 4 columns by default
     gap: 20px;
     width: 100%;
 
     @media (max-width: 1280px) {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 1fr); // 3 columns for medium screens
     }
 
     @media (max-width: 768px) {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr); // 2 columns for small screens
     }
 
     @media (max-width: 480px) {
