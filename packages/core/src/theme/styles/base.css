@@ -66,6 +66,10 @@ body {
   text-autospace: normal;
 }
 
+pre {
+  text-autospace: no-autospace;
+}
+
 :root #nprogress .bar {
   background: var(--rp-c-brand);
 }
