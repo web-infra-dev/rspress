@@ -46,6 +46,9 @@ function HoverGroupItem({
               href={item.link}
               aria-label={item.text}
               className="rp-hover-group__item__link"
+              lang={item.lang}
+              hrefLang={item.lang}
+              rel={item.rel}
             >
               {item.text}
               {'tag' in item && item.tag && <Tag tag={item.tag} />}
@@ -65,7 +68,7 @@ function HoverGroupItem({
   }
 
   if ('link' in item) {
-    const { text, link } = item;
+    const { text, link, lang, rel } = item;
     const isActiveItem = activeMatcher
       ? activeMatcher(item)
       : matchNavbar(item, pathname);
@@ -84,12 +87,15 @@ function HoverGroupItem({
             href={link}
             aria-label={text}
             className="rp-hover-group__item__link"
+            lang={lang}
+            hrefLang={lang}
+            rel={rel}
           >
             {text}
             {'tag' in item && item.tag && <Tag tag={item.tag} />}
           </Link>
         ) : (
-          <div className="rp-hover-group__item__link">
+          <div className="rp-hover-group__item__link" lang={lang}>
             {text}
             {'tag' in item && item.tag && <Tag tag={item.tag} />}
           </div>

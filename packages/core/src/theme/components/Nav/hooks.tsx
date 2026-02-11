@@ -95,6 +95,7 @@ export function useLangsMenu() {
               cleanUrls,
               pageType === '404',
             ),
+            lang: item.lang,
           };
         }),
         activeValue: localeLanguages.find(item => currentLang === item.lang)

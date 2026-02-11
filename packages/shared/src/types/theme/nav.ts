@@ -13,6 +13,8 @@ export type NavItemWithLink = {
   tag?: string;
   activeMatch?: string;
   position?: 'left' | 'right';
+  lang?: string;
+  rel?: string;
 };
 
 export interface NavItemWithChildren {
@@ -29,4 +31,6 @@ export interface NavItemWithLinkAndChildren {
   tag?: string;
   activeMatch?: string;
   position?: 'left' | 'right';
+  lang?: string;
+  rel?: string;
 }
