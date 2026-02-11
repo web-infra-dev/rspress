@@ -32,7 +32,7 @@ export function NavMenuItemInner({
           className="rp-nav-menu__item__container"
           hrefLang={menuItem.lang}
           lang={menuItem.lang}
-          rel="alternate"
+          rel={menuItem.rel}
         >
           {menuItem.text}
           {menuItem.tag && <Tag tag={menuItem.tag} />}

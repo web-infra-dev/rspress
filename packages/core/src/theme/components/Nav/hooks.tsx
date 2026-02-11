@@ -96,6 +96,7 @@ export function useLangsMenu() {
               pageType === '404',
             ),
             lang: item.lang,
+            rel: 'alternate',
           };
         }),
         activeValue: localeLanguages.find(item => currentLang === item.lang)
