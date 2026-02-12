@@ -44,6 +44,9 @@
     },
     "./_private/react": {
       "default": "./dist/_private/react/index.js"
+    },
+    "./_private/RouteService": {
+      "default": "./dist/_private/RouteService/index.js"
     }
   },
   "main": "./dist/index.js",
