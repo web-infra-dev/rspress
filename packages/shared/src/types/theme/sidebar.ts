@@ -1,10 +1,13 @@
 export interface Sidebar {
-  [path: string]: (
-    | SidebarGroup
-    | SidebarItem
-    | SidebarDivider
-    | SidebarSectionHeader
-  )[];
+  /**
+   * Enable accordion mode - only one top-level section expanded at a time
+   * @default false
+   */
+  accordion?: boolean;
+  [path: string]:
+    | (SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader)[]
+    | boolean
+    | undefined;
 }
 
 export interface SidebarGroup {
@@ -56,5 +59,10 @@ export interface NormalizedSidebarGroup extends Omit<SidebarGroup, 'items'> {
 }
 
 export interface NormalizedSidebar {
-  [path: string]: SidebarData;
+  /**
+   * Enable accordion mode - only one top-level section expanded at a time
+   * @default false
+   */
+  accordion?: boolean;
+  [path: string]: SidebarData | boolean | undefined;
 }

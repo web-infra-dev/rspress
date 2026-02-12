@@ -7,6 +7,7 @@ import {
   type SidebarItem,
   type SidebarSectionHeader,
 } from '@rspress/shared';
+import type React from 'react';
 import { useLayoutEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useActiveMatcher } from './useActiveMatcher';
@@ -34,11 +35,15 @@ export const getSidebarDataGroup = (
    *   ],
    * }
    */
-  const navRoutes = Object.keys(sidebar).sort((a, b) => b.length - a.length);
+  const navRoutes = Object.keys(sidebar)
+    .filter(key => key !== 'accordion')
+    .sort((a, b) => b.length - a.length);
   for (const name of navRoutes) {
     if (matchSidebar(name, currentPathname)) {
       const sidebarGroup = sidebar[name];
-      return sidebarGroup;
+      if (Array.isArray(sidebarGroup)) {
+        return sidebarGroup;
+      }
     }
   }
   return [];
