@@ -27,7 +27,13 @@ export function NavMenuItemInner({
   return (
     <>
       {'link' in menuItem && typeof menuItem.link === 'string' ? (
-        <Link href={menuItem.link} className="rp-nav-menu__item__container">
+        <Link
+          href={menuItem.link}
+          className="rp-nav-menu__item__container"
+          hrefLang={menuItem.lang}
+          lang={menuItem.lang}
+          rel={menuItem.rel}
+        >
           {menuItem.text}
           {menuItem.tag && <Tag tag={menuItem.tag} />}
           {children}

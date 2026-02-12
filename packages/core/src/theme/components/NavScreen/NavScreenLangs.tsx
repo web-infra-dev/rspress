@@ -48,7 +48,14 @@ export function NavScreenLangs() {
                 {item.text}
               </span>
             ) : (
-              <Link key={item.text} href={item.link} className={className}>
+              <Link
+                key={item.text}
+                href={item.link}
+                className={className}
+                hrefLang={item.lang}
+                lang={item.lang}
+                rel="alternate"
+              >
                 {item.text}
               </Link>
             );
