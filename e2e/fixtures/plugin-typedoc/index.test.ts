@@ -6,6 +6,7 @@ import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 test.describe('plugin-typedoc single entry', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
+
   test.beforeAll(async () => {
     const appDir = path.join(__dirname, 'single');
     appPort = await getPort();
@@ -17,6 +18,7 @@ test.describe('plugin-typedoc single entry', async () => {
       await killProcess(app);
     }
   });
+
   test('Should render nav and sidebar correctly', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/api/`, {
       waitUntil: 'networkidle',
@@ -38,11 +40,26 @@ test.describe('plugin-typedoc single entry', async () => {
       ].join(','),
     );
   });
+
+  test('Should render description correctly', async ({ page }) => {
+    await page.goto(
+      `http://localhost:${appPort}/api/functions/mergeMiddlewares.html`,
+      {
+        waitUntil: 'networkidle',
+      },
+    );
+
+    const description = await page.$eval('meta[name="description"]', el =>
+      el.getAttribute('content'),
+    );
+    expect(description).toBe('将多个中间件，合并成一个中间件执行');
+  });
 });
 
 test.describe('plugin-typedoc multi entries', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
+
   test.beforeAll(async () => {
     const appDir = path.join(__dirname, 'multi');
     appPort = await getPort();
@@ -54,6 +71,7 @@ test.describe('plugin-typedoc multi entries', async () => {
       await killProcess(app);
     }
   });
+
   test('Should render nav and sidebar correctly', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/api/`, {
       waitUntil: 'networkidle',
@@ -92,5 +110,19 @@ test.describe('plugin-typedoc multi entries', async () => {
       el => el.textContent,
     );
     expect(rspressUrl).toBe('Rspress site');
+  });
+
+  test('Should render description correctly', async ({ page }) => {
+    await page.goto(
+      `http://localhost:${appPort}/api/functions/middleware.mergeMiddlewares.html`,
+      {
+        waitUntil: 'networkidle',
+      },
+    );
+
+    const description = await page.$eval('meta[name="description"]', el =>
+      el.getAttribute('content'),
+    );
+    expect(description).toBe('将多个中间件，合并成一个中间件执行');
   });
 });
