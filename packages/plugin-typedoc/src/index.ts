@@ -1,10 +1,15 @@
 import path from 'node:path';
 import { cwd } from 'node:process';
 import type { RspressPlugin } from '@rspress/core';
-import { Application } from 'typedoc';
-import { load as loadPluginMarkdown } from 'typedoc-plugin-markdown';
+import { Application, type TypeDocOptions } from 'typedoc';
+import {
+  load as loadPluginMarkdown,
+  type PluginOptions,
+} from 'typedoc-plugin-markdown';
 import { API_DIR } from './constants';
 import { patchGeneratedApiDocs } from './patch';
+
+type TypeDocConfig = TypeDocOptions & PluginOptions;
 
 export interface PluginTypeDocOptions {
   /**
@@ -54,7 +59,6 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
         readme: 'none',
         githubPages: false,
         requiredToBeDocumented: ['Class', 'Function', 'Interface'],
-        // @ts-expect-error - Typedoc does not export a type for this options
         plugin: [loadPluginMarkdown],
         entryFileName: 'index',
         hidePageHeader: true,
@@ -63,7 +67,7 @@ export function pluginTypeDoc(options: PluginTypeDocOptions): RspressPlugin {
           module: '{kind}: {name}', // e.g. "Module: MyModule"
         },
         cleanOutputDir: false,
-      });
+      } as TypeDocConfig);
       app = (await setup(app)) || app;
 
       const project = await app.convert();
