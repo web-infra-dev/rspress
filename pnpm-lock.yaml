@@ -1101,8 +1101,8 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.13)
       '@types/react-reconciler':
-        specifier: ^0.32.3
-        version: 0.32.3(@types/react@19.2.13)
+        specifier: ^0.33.0
+        version: 0.33.0(@types/react@19.2.13)
       '@types/web':
         specifier: ^0.0.330
         version: 0.0.330
@@ -3790,8 +3790,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react-reconciler@0.32.3':
-    resolution: {integrity: sha512-cMi5ZrLG7UtbL7LTK6hq9w/EZIRk4Mf1Z5qHoI+qBh7/WkYkFXQ7gOto2yfUvPzF5ERMAhaXS5eTQ2SAnHjLzA==}
+  '@types/react-reconciler@0.33.0':
+    resolution: {integrity: sha512-HZOXsKT0tGI9LlUw2LuedXsVeB88wFa536vVL0M6vE8zN63nI+sSr1ByxmPToP5K5bukaVscyeCJcF9guVNJ1g==}
     peerDependencies:
       '@types/react': '*'
 
@@ -9793,7 +9793,7 @@ snapshots:
     dependencies:
       '@types/react': 19.2.13
 
-  '@types/react-reconciler@0.32.3(@types/react@19.2.13)':
+  '@types/react-reconciler@0.33.0(@types/react@19.2.13)':
     dependencies:
       '@types/react': 19.2.13
 
