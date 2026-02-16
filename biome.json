@@ -83,7 +83,12 @@
         "useHookAtTopLevel": "off",
         "useUniqueElementIds": "off",
         "noNestedComponentDefinitions": "off",
-        "noUnknownPseudoClass": "off",
+        "noUnknownPseudoClass": {
+          "level": "error",
+          "options": {
+            "ignore": ["global"]
+          }
+        },
         "noUnknownTypeSelector": "off"
       },
       "complexity": {
