@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.0/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -82,7 +82,9 @@
         "useExhaustiveDependencies": "off",
         "useHookAtTopLevel": "off",
         "useUniqueElementIds": "off",
-        "noNestedComponentDefinitions": "off"
+        "noNestedComponentDefinitions": "off",
+        "noUnknownPseudoClass": "off",
+        "noUnknownTypeSelector": "off"
       },
       "complexity": {
         "noImportantStyles": "off",
@@ -108,7 +110,8 @@
         "useKeyWithClickEvents": "off",
         "noLabelWithoutControl": "off",
         "noAriaHiddenOnFocusable": "off",
-        "noStaticElementInteractions": "off"
+        "noStaticElementInteractions": "off",
+        "useHtmlLang": "off"
       }
     }
   }
