@@ -231,8 +231,7 @@ export async function renderToMarkdownString(
         console.log('Reconciler onRecoverable Error:', ...args);
       }
     }, // onRecoverableError
-    () => {}, // transitionCallbacks
-    null, // onPostPaintCallback
+    () => {}, // onDefaultTransitionIndicator
   );
 
   // Intercept the React hooks dispatcher to make useEffect / useLayoutEffect
