@@ -10,8 +10,8 @@ import type {
 import { PLUGIN_REACT_NAME, pluginReact } from '@rsbuild/plugin-react';
 import { version as rspressVersion } from '@rspress/core/package.json';
 import {
+  addTrailingSlash,
   MDX_OR_MD_REGEXP,
-  removeTrailingSlash,
   type UserConfig,
 } from '@rspress/shared';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
@@ -95,12 +95,12 @@ async function createInternalBuildConfig(
     : path.join(cwd(), config.themeDir!);
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
-  const base = config?.base ?? '';
+  const base = config?.base ?? '/';
 
   // In production, we need to add assetPrefix in asset path
   const assetPrefix = isProduction()
-    ? removeTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
-    : '';
+    ? addTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
+    : '/';
 
   const normalizeIcon = (icon: string | URL | undefined) => {
     if (!icon) {
@@ -204,7 +204,7 @@ async function createInternalBuildConfig(
       publicDir: {
         name: path.join(userDocRoot, PUBLIC_DIR),
       },
-      ...(base.length > 0 ? { base: removeTrailingSlash(base) } : {}),
+      ...(base.length > 0 ? { base } : {}),
     },
     dev: {
       lazyCompilation: process.env.RSPRESS_LAZY_COMPILATION !== 'false', // This is an escape hatch for playwright test, playwright does not support lazyCompilation
