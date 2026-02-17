@@ -1,20 +1,34 @@
 # Guide
 
-## Iframe
-
-```jsx
+```jsx preview="internal"
 export default function HelloWorld() {
   return <div>Hello World Internal</div>;
 }
 ```
 
-```jsx file="./component.jsx"
+```jsx file="./component.jsx" preview="internal"
 
 ```
 
-```json
+```json preview="internal"
 {
   "type": "div",
   "children": "Render from JSON"
+}
+```
+
+## CSS
+
+```jsx preview="internal"
+import './a.css';
+export default function HelloWorld() {
+  return <div className="a">Hello World</div>;
+}
+```
+
+```jsx preview="iframe-follow"
+import './a.css';
+export default function HelloWorld() {
+  return <div className="a">Hello World internal </div>;
 }
 ```

@@ -1,24 +1,26 @@
 import net from 'node:net';
 import { join } from 'node:path';
+import { pluginReact } from '@rsbuild/plugin-react';
 import {
   createRsbuild,
   logger,
   mergeRsbuildConfig,
+  type RouteMeta,
   type RsbuildConfig,
   type RsbuildPluginAPI,
-} from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
-import {
-  type RouteMeta,
   type RspressPlugin,
   removeTrailingSlash,
+  rspack,
   type UserConfig,
 } from '@rspress/core';
 import entryContent from '../static/iframe/entry?raw';
 import { STATIC_DIR } from './constants';
 import { generateEntry } from './generateEntry';
-import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
+import { remarkPlugin } from './remarkPlugin';
 import type { Options, StartServerResult } from './types';
+import { VirtualModuleStore } from './virtualModuleStore';
+
+const { VirtualModulesPlugin } = rspack.experiments;
 
 // global variables which need to be initialized in plugin
 let routeMeta: RouteMeta[];
@@ -46,8 +48,12 @@ export function pluginPreview(options?: Options): RspressPlugin {
   let clientConfig: RsbuildConfig;
   const port = devPort;
 
+  const store = new VirtualModuleStore();
+  const mainVMP = new VirtualModulesPlugin();
+  store.mainVMP = mainVMP;
+
   async function rsbuildStartOrBuild(config: UserConfig, isProd: boolean) {
-    if (devServer && !isProd && !isDirtyRef.current) {
+    if (devServer && !isProd && !store.isDirty) {
       return;
     }
 
@@ -58,6 +64,23 @@ export function pluginPreview(options?: Options): RspressPlugin {
         '[@rspress/plugin-preview] Restarting preview server due to demo changes...',
       );
     }
+
+    const { sourceEntry, virtualFiles } = generateEntry(
+      store.demos,
+      framework,
+      customEntry,
+    );
+
+    const allIframeModules = { ...store.getAllModules(), ...virtualFiles };
+    const iframeVMP = new VirtualModulesPlugin(allIframeModules);
+    store.iframeVMP = iframeVMP;
+
+    const entry =
+      Object.keys(sourceEntry).length === 0
+        ? {
+            _index: 'data:text/javascript,console.log("no demo found");',
+          }
+        : sourceEntry;
 
     const outDir = join(config.outDir ?? 'doc_build', '~demo');
     const { source, output, performance, resolve } = clientConfig ?? {};
@@ -84,7 +107,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
         },
         source: {
           ...otherSourceOptions,
-          entry: await generateEntry(globalDemos, framework, customEntry),
+          entry,
           preEntry: [
             join(STATIC_DIR, 'iframe', 'entry.css'),
             ...[builderConfig.source?.preEntry ?? []].flat(),
@@ -115,6 +138,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
         },
         tools: {
           rspack: {
+            plugins: [iframeVMP],
             lazyCompilation: false,
             watchOptions: {
               ignored: /\.git/,
@@ -130,6 +154,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     });
 
     if (framework === 'react') {
+      // @ts-expect-error
       rsbuildInstance.addPlugins([pluginReact()]);
     }
     if (isProd) {
@@ -137,7 +162,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     } else {
       devServer = await rsbuildInstance.startDevServer();
     }
-    isDirtyRef.current = false;
+    store.isDirty = false;
   }
 
   return {
@@ -198,6 +223,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
           chain.resolve.extensions.prepend('.md').prepend('.mdx');
         },
         rspack: {
+          plugins: [mainVMP],
           watchOptions: {
             ignored: /\.git/,
           },
@@ -229,13 +255,14 @@ export function pluginPreview(options?: Options): RspressPlugin {
     markdown: {
       remarkPlugins: [
         [
-          remarkWriteCodeFile,
+          remarkPlugin,
           {
             getRouteMeta,
             defaultPreviewMode,
             defaultRenderMode,
             previewLanguages,
             previewCodeTransform,
+            store,
           },
         ],
       ],

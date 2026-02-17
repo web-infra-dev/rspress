@@ -1,5 +1,6 @@
 import type { RsbuildConfig } from '@rsbuild/core';
 import type { RouteMeta } from '@rspress/core';
+import type { VirtualModuleStore } from './virtualModuleStore';
 
 export type Options = {
   /**
@@ -60,10 +61,10 @@ export type RemarkPluginOptions = Required<
     | 'previewLanguages'
     | 'previewCodeTransform'
   >
-> &
-  Required<IframeOptions> & {
-    getRouteMeta: () => RouteMeta[];
-  };
+> & {
+  getRouteMeta: () => RouteMeta[];
+  store: VirtualModuleStore;
+};
 
 // key: pageName
 export type DemoInfo = Record<

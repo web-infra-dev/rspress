@@ -1,5 +1,14 @@
 // TODO: do not expose so much pubic API
 
+// For @rspress/plugin-preview
+export {
+  createRsbuild,
+  logger as rsbuildLogger,
+  mergeRsbuildConfig,
+  type RsbuildConfig,
+  type RsbuildPluginAPI,
+  rspack,
+} from '@rsbuild/core';
 export type {
   EditLink,
   Feature,

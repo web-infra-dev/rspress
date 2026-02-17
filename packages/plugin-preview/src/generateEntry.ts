@@ -1,4 +1,3 @@
-import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { VIRTUAL_DEMO_DIR } from './constants';
 import type { CustomEntry, DemoInfo } from './types';
@@ -13,14 +12,18 @@ function reactEntry({ demoPath }: CustomEntry) {
     `;
 }
 
-export async function generateEntry(
-  globalDemos: DemoInfo,
+export function generateEntry(
+  demos: DemoInfo,
   framework: 'react' | 'solid',
   customEntry?: (meta: CustomEntry) => string,
-) {
+): {
+  sourceEntry: Record<string, string>;
+  virtualFiles: Record<string, string>;
+} {
   const sourceEntry: Record<string, string> = {};
+  const virtualFiles: Record<string, string> = {};
 
-  const generateEntry = (meta: CustomEntry) => {
+  const generateEntryContent = (meta: CustomEntry) => {
     return customEntry
       ? customEntry(meta)
       : framework === 'react'
@@ -28,35 +31,26 @@ export async function generateEntry(
         : '';
   };
 
-  await mkdir(VIRTUAL_DEMO_DIR, { recursive: true });
+  for (const [pageName, pageDemos] of Object.entries(demos)) {
+    // 'iframe-follow'
+    const followDemos = pageDemos.filter(
+      demo => demo.previewMode === 'iframe-follow',
+    );
 
-  await Promise.all(
-    Object.entries(globalDemos)
-      .map(([pageName, demos]) => {
-        // 'iframe-follow'
-        const followDemos = demos.filter(
-          demo => demo.previewMode === 'iframe-follow',
-        );
+    for (const demo of followDemos) {
+      const { id, path: demoPath } = demo;
+      const entry = join(VIRTUAL_DEMO_DIR, `${id}.entry.tsx`);
+      virtualFiles[entry] = generateEntryContent({ demoPath });
+      sourceEntry[id] = entry;
+    }
 
-        const followPromiseList = followDemos.map(async demo => {
-          const { id, path: demoPath } = demo;
-          const entry = join(VIRTUAL_DEMO_DIR, `${id}.entry.tsx`);
-          const entryContent = generateEntry({ demoPath });
-          await writeFile(entry, entryContent);
-          sourceEntry[id] = entry;
-        });
+    // 'iframe-fixed'
+    const fixedDemos = pageDemos.filter(
+      demo => demo.previewMode === 'iframe-fixed',
+    );
 
-        // 'iframe-fixed'
-        const fixedDemos = demos.filter(
-          demo => demo.previewMode === 'iframe-fixed',
-        );
-
-        const fixedPromise = (async () => {
-          if (fixedDemos.length === 0) {
-            return;
-          }
-
-          const appContent = `
+    if (fixedDemos.length > 0) {
+      const appContent = `
         ${fixedDemos
           .map((demo, index) => {
             return `import Demo_${index} from ${JSON.stringify(demo.path)}`;
@@ -77,29 +71,15 @@ export async function generateEntry(
         export default App;
       `;
 
-          const id = `_${toValidVarName(pageName)}`;
-          const demoPath = join(VIRTUAL_DEMO_DIR, `${id}.app.tsx`);
-          const entryContent = generateEntry({ demoPath });
-          const entry = join(VIRTUAL_DEMO_DIR, `${id}.entry.tsx`);
+      const id = `_${toValidVarName(pageName)}`;
+      const demoPath = join(VIRTUAL_DEMO_DIR, `${id}.app.tsx`);
+      const entry = join(VIRTUAL_DEMO_DIR, `${id}.entry.tsx`);
 
-          await Promise.all([
-            writeFile(demoPath, appContent),
-            writeFile(entry, entryContent),
-          ]);
-          sourceEntry[id] = entry;
-        })();
-
-        return [...followPromiseList, fixedPromise];
-      })
-      .flat(),
-  );
-
-  if (Object.keys(sourceEntry).length === 0) {
-    return {
-      // to ignore rsbuild no entry warning
-      _index: 'data:text/javascript,console.log("no demo found");',
-    };
+      virtualFiles[demoPath] = appContent;
+      virtualFiles[entry] = generateEntryContent({ demoPath });
+      sourceEntry[id] = entry;
+    }
   }
 
-  return sourceEntry;
+  return { sourceEntry, virtualFiles };
 }

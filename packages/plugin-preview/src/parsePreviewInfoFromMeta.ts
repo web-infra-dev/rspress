@@ -1,4 +1,4 @@
-import { logger } from '@rsbuild/core';
+import { logger } from '@rspress/core';
 import type { Options } from './types';
 
 interface PreviewInfo {
