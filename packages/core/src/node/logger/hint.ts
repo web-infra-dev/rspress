@@ -120,16 +120,7 @@ export function hintNavJsonChangeThenPanic(
         return false;
       }
       // Only panic for old v1 nav config
-      return (
-        typeof i === 'object' &&
-        ('activeMatch' in i ||
-          'text' in i ||
-          'link' in i ||
-          'items' in i ||
-          'icon' in i ||
-          'ariaLabel' in i ||
-          'target' in i)
-      );
+      return typeof i === 'object' && ('activeMatch' in i || 'text' in i);
     })
   ) {
     const error = new Error(
