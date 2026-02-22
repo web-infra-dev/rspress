@@ -112,7 +112,11 @@ export function hintNavJsonChangeThenPanic(
   if (
     metaJson.some(i => {
       // Skip custom-link format (v2 new format)
-      if (typeof i === 'object' && 'type' in i && (i as any).type === 'custom-link') {
+      if (
+        typeof i === 'object' &&
+        'type' in i &&
+        (i as any).type === 'custom-link'
+      ) {
         return false;
       }
       // Only panic for old v1 nav config
