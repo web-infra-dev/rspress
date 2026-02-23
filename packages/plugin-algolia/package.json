@@ -39,7 +39,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@docsearch/css": "^4.5.4",
+    "@docsearch/css": "^4.6.0",
     "@docsearch/react": "^4.5.4"
   },
   "devDependencies": {
