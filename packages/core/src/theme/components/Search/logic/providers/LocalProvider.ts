@@ -104,7 +104,7 @@ export class LocalProvider implements Provider {
     }
 
     const { currentLang, currentVersion } = options;
-    const versioned = options.versioned;
+    const versioned = options.versioned ?? true;
 
     this.#fetchPromise = this.#getPages(
       currentLang,
