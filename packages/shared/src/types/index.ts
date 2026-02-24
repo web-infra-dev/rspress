@@ -498,6 +498,7 @@ export type LocalSearchOptions = SearchHooks & {
   mode?: 'local';
   /**
    * Whether to generate separate search index for each version
+   * @default true
    */
   versioned?: boolean;
   /**

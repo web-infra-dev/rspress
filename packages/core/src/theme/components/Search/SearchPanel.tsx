@@ -116,7 +116,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const t = useI18n();
   const navigate = useLinkNavigate();
   const { search, title: siteTitle } = siteData;
-  const versionedSearch = typeof search !== 'boolean' && search?.versioned;
+  const versionedSearch =
+    typeof search !== 'boolean' && (search?.versioned ?? true);
   const DEFAULT_RESULT = [
     { group: siteTitle, result: [], renderType: RenderType.Default },
   ];

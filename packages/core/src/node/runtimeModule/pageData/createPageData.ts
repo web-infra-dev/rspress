@@ -58,7 +58,8 @@ export async function createPageData(context: FactoryContext): Promise<{
   await pluginDriver.modifySearchIndexData(pages);
 
   const versioned =
-    typeof userConfig.search !== 'boolean' && userConfig.search?.versioned;
+    typeof userConfig.search !== 'boolean' &&
+    (userConfig.search?.versioned ?? true);
 
   const groupedPages = groupBy(pages, page => {
     if (page.frontmatter?.pageType === 'home') {
