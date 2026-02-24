@@ -1,6 +1,3 @@
-// biome-ignore lint/suspicious/noTsIgnore: bundleless
-// @ts-ignore
-
 import {
   PageContext,
   pathnameToRouteService,
