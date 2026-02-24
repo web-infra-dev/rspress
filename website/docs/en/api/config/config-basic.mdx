@@ -398,7 +398,7 @@ For specific hook logic, you can read [Customize Search Functions](/guide/advanc
 ### versioned
 
 - **Type**: `boolean`
-- **Default**: `false`
+- **Default**: `true`
 
 When using [`multiVersion`](/guide/basic/multi-version), the search index includes all versions by default. Setting `versioned` to `true` creates a separate search index for each version, so that search results only include pages from the version the user is currently viewing.
 
@@ -407,7 +407,7 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   search: {
-    versioned: true,
+    versioned: false,
   },
 });
 ```

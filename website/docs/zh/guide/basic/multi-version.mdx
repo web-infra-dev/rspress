@@ -62,7 +62,7 @@ export default () => {
 
 ## 按版本搜索
 
-默认情况下，搜索索引包含所有版本的文档，因此搜索结果可能包含任意版本的页面。如需为每个版本创建独立的搜索索引，使用户仅看到当前所选版本的搜索结果，请启用 `search.versioned`：
+默认情况下，`search.versioned` 为 `true`，即搜索仅会查询当前所选版本对应的索引。如果你希望跨版本搜索，可以将其设置为 `false`：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -73,7 +73,7 @@ export default defineConfig({
     versions: ['v1', 'v2'],
   },
   search: {
-    versioned: true,
+    versioned: false,
   },
 });
 ```

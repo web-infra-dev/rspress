@@ -62,7 +62,7 @@ export default () => {
 
 ## Version-specific search
 
-By default, the search index includes documents from all versions, so search results may contain pages from any version. To create separate search indexes for each version so that users only see results from the version they are currently viewing, enable `search.versioned`:
+By default, `search.versioned` is `true`, which means the search will only query the index corresponding to the currently selected version. If you want to search across all versions, you can set it to `false`:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -73,7 +73,7 @@ export default defineConfig({
     versions: ['v1', 'v2'],
   },
   search: {
-    versioned: true,
+    versioned: false,
   },
 });
 ```
