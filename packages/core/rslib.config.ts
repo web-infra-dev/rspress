@@ -21,6 +21,11 @@ const COMMON_EXTERNALS = [
   '@rspress/core/theme',
   '@rspress/core/shiki-transformers',
   '@rspress/shared',
+  // react
+  'react',
+  'react-dom',
+  'react-reconciler',
+  'react-router-dom',
 ];
 
 export default defineConfig({
