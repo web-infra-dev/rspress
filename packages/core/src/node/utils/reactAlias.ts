@@ -24,11 +24,11 @@ async function detectPackageMajorVersion(
   return undefined;
 }
 
-export async function resolveReactRouterDomAlias(): Promise<
-  Record<string, string>
-> {
-  const hasInstalled = await detectPackageMajorVersion('react-router-dom');
-  const basedir = hasInstalled ? process.cwd() : PACKAGE_ROOT;
+export async function resolveReactRouterDomAlias(): Promise<{
+  [key: string]: string;
+}> {
+  const majorVersion = await detectPackageMajorVersion('react-router-dom');
+  const basedir = majorVersion ? process.cwd() : PACKAGE_ROOT;
 
   const alias: Record<string, string> = {};
   const resolver = new Resolver({
@@ -49,8 +49,28 @@ export async function resolveReactRouterDomAlias(): Promise<
     if (!resolved.path) {
       throw Error(`'react-router-dom' resolved to empty path`);
     }
+
+    const routerDomDir = path.dirname(resolved.path);
+
+    // In react-router-dom v6, StaticRouter is exported from
+    // 'react-router-dom/server', not the main entry. For SSR environments,
+    // we create a shim that re-exports everything from the main entry plus
+    // StaticRouter from the server subpath.
+    if (majorVersion && majorVersion < 7) {
+      const serverMjsPath = path.join(routerDomDir, 'server.mjs');
+      const hasServerMjs = await pathExists(serverMjsPath);
+
+      if (hasServerMjs) {
+        return {
+          'react-router-dom': routerDomDir,
+          REACT_ROUTER_DOM_SERVER: path.join(routerDomDir, 'server.mjs'),
+        };
+      }
+    }
+
     return {
-      'react-router-dom': path.dirname(resolved.path),
+      'react-router-dom': routerDomDir,
+      REACT_ROUTER_DOM_SERVER: routerDomDir,
     };
   } catch (e) {
     logger.warn('react-router-dom not found: \n', e);
