@@ -11,7 +11,7 @@
     "@rspress/core": "workspace:*"
   },
   "devDependencies": {
-    "@shikijs/transformers": "^3.21.0",
+    "@shikijs/transformers": "^3.22.0",
     "@types/node": "^22.8.1"
   }
 }
