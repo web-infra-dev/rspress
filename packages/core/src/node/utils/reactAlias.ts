@@ -102,3 +102,45 @@ export async function resolveReactAlias(isSSR: boolean) {
   );
   return alias;
 }
+
+export async function resolveReactRenderToMarkdownAlias(): Promise<
+  Record<string, string>
+> {
+  const hasInstalled = await detectPackageMajorVersion(
+    'react-render-to-markdown',
+  );
+
+  if (!hasInstalled) {
+    // No alias needed — rspack will resolve from @rspress/core's dependencies
+    return {};
+  }
+
+  // User has installed react-render-to-markdown in their project,
+  // use user's version (e.g., react-render-to-markdown@18 for React 18 compatibility)
+  const alias: Record<string, string> = {};
+  const resolver = new Resolver({
+    extensions: ['.js'],
+    alias,
+    conditionNames: ['import', 'require', 'node', 'default'],
+  });
+
+  try {
+    const resolved = await resolver.async(
+      process.cwd(),
+      'react-render-to-markdown',
+    );
+    if (resolved.error) {
+      throw Error(resolved.error);
+    }
+
+    if (!resolved.path) {
+      throw Error(`'react-render-to-markdown' resolved to empty path`);
+    }
+    return {
+      'react-render-to-markdown': resolved.path,
+    };
+  } catch (e) {
+    logger.warn('react-render-to-markdown not found: \n', e);
+  }
+  return {};
+}

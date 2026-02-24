@@ -1,6 +1,6 @@
 // biome-ignore lint/suspicious/noTsIgnore: bundleless
 // @ts-ignore
-import { renderToMarkdownString } from '@rspress/core/_private/react';
+
 import {
   PageContext,
   pathnameToRouteService,
@@ -9,6 +9,7 @@ import {
   withBase,
 } from '@rspress/core/runtime';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
+import { renderToMarkdownString } from 'react-render-to-markdown';
 import { StaticRouter } from 'react-router-dom';
 import { App } from './App';
 import { initPageData } from './initPageData';

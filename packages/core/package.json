@@ -41,9 +41,6 @@
     "./shiki-transformers": {
       "types": "./dist/shiki-transformers.d.ts",
       "default": "./dist/shiki-transformers.js"
-    },
-    "./_private/react": {
-      "default": "./dist/_private/react/index.js"
     }
   },
   "main": "./dist/index.js",
@@ -131,6 +128,7 @@
     "memfs": "^4.51.1",
     "p-map": "^7.0.4",
     "postcss": "8.5.6",
+    "react-render-to-markdown": "19.0.1",
     "remark-directive": "^4.0.0",
     "rsbuild-plugin-publint": "^0.3.4",
     "rsbuild-plugin-virtual-module": "0.4.1",

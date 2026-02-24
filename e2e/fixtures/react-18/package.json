@@ -11,6 +11,7 @@
     "@rspress/core": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-render-to-markdown": "18.3.1",
     "react-router-dom": "^7.13.1"
   },
   "devDependencies": {

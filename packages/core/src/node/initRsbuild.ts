@@ -55,6 +55,7 @@ import { rsbuildPluginSSGMD } from './ssg-md/rsbuildPluginSSGMD';
 import {
   createError,
   resolveReactAlias,
+  resolveReactRenderToMarkdownAlias,
   resolveReactRouterDomAlias,
 } from './utils';
 
@@ -121,13 +122,19 @@ async function createInternalBuildConfig(
 
   await hintThemeBreakingChange(CUSTOM_THEME_DIR);
 
-  const [reactCSRAlias, reactSSRAlias, reactRouterDomAlias] = await Promise.all(
-    [
-      resolveReactAlias(false),
-      enableSSG ? resolveReactAlias(true) : Promise.resolve({}),
-      resolveReactRouterDomAlias(),
-    ],
-  );
+  const [
+    reactCSRAlias,
+    reactSSRAlias,
+    reactRouterDomAlias,
+    reactRenderToMarkdownAlias,
+  ] = await Promise.all([
+    resolveReactAlias(false),
+    enableSSG ? resolveReactAlias(true) : Promise.resolve({}),
+    resolveReactRouterDomAlias(),
+    enableSSG && config.llms
+      ? resolveReactRenderToMarkdownAlias()
+      : Promise.resolve({}),
+  ]);
 
   const context: Omit<FactoryContext, 'alias'> = {
     userDocRoot,
@@ -478,6 +485,7 @@ async function createInternalBuildConfig(
                 alias: {
                   ...reactSSRAlias,
                   ...reactRouterDomAlias,
+                  ...reactRenderToMarkdownAlias,
                 },
               },
               tools: {
