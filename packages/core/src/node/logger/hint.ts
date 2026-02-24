@@ -85,7 +85,12 @@ ${picocolors.greenBright(`  builderConfig: {
 /**
  * Possible reasons for printing "ssg: false" and some troubleshooting guidelines for users.
  */
+let isSSGFailedLogged = false;
 export function hintSSGFailed() {
+  if (isSSGFailedLogged) {
+    return;
+  }
+  isSSGFailedLogged = true;
   logger.info(`[Rspress v2] \`ssg: true\` requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
     1. Fix code to make it SSR-compatible.
     2. Set \`ssg: false\` if the code in node_modules may be difficult to fix, but the SSG feature will be lost.`);
