@@ -12,6 +12,7 @@ import { version as rspressVersion } from '@rspress/core/package.json';
 import {
   addTrailingSlash,
   MDX_OR_MD_REGEXP,
+  removeTrailingSlash,
   type UserConfig,
 } from '@rspress/shared';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
@@ -204,7 +205,7 @@ async function createInternalBuildConfig(
       publicDir: {
         name: path.join(userDocRoot, PUBLIC_DIR),
       },
-      ...(base.length > 0 ? { base } : {}),
+      ...(base.length > 0 ? { base: removeTrailingSlash(base) } : {}),
     },
     dev: {
       lazyCompilation: process.env.RSPRESS_LAZY_COMPILATION !== 'false', // This is an escape hatch for playwright test, playwright does not support lazyCompilation
