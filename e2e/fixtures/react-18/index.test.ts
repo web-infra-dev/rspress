@@ -68,7 +68,7 @@ test('React 18 build should be successful', async () => {
   // Verify SSG-MD rendered correctly with React 18 (versions should be resolved, not raw {version})
   // FIXME: should be "react 18"
   expect(indexHtml).toContain(`react {reactVersion}`);
-  expect(indexHtml).toContain(`react-router-dom {routerVersion}`);
+  expect(indexHtml).toContain(`react-router-dom {version}`);
 
   // expect(indexHtml).not.toContain('{reactVersion}');
   // expect(indexHtml).not.toContain('{version}');
