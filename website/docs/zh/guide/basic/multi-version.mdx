@@ -60,9 +60,9 @@ export default () => {
 };
 ```
 
-## 仅搜索当前版本
+## 按版本搜索
 
-可以配置 `search.versioned` 来仅搜索当前版本的文档。
+默认情况下，搜索索引包含所有版本的文档，因此搜索结果可能包含任意版本的页面。如需为每个版本创建独立的搜索索引，使用户仅看到当前所选版本的搜索结果，请启用 `search.versioned`：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

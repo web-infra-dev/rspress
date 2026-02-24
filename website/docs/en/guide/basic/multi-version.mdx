@@ -1,5 +1,5 @@
 ---
-description: Manage multi-version documentation with simple configuration, intuitive directory structure, and version selector in the navbar.
+description: Manage multi-version documentation with simple configuration, intuitive directory structure, version selector in the navbar, and version-specific search.
 ---
 
 # Multi version
@@ -60,9 +60,9 @@ export default () => {
 };
 ```
 
-## Limit search to current version only
+## Version-specific search
 
-You can configure `search.versioned` to only search through the current version's documents.
+By default, the search index includes documents from all versions, so search results may contain pages from any version. To create separate search indexes for each version so that users only see results from the version they are currently viewing, enable `search.versioned`:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

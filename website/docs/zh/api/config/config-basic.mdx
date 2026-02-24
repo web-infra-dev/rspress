@@ -400,7 +400,7 @@ export default defineConfig({
 - **类型**： `boolean`
 - **默认值**： `false`
 
-如果你配置了 `multiVersion`，可以使用 `versioned` 参数为文档的每个版本创建单独的搜索索引。开启该选项后，搜索将仅会查询当前所选版本对应的索引。
+配置 [`multiVersion`](/zh/guide/basic/multi-version) 后，搜索索引默认包含所有版本的文档。将 `versioned` 设为 `true` 会为每个版本创建独立的搜索索引，使搜索结果仅包含用户当前所选版本的页面。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

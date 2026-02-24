@@ -400,8 +400,7 @@ For specific hook logic, you can read [Customize Search Functions](/guide/advanc
 - **Type**: `boolean`
 - **Default**: `false`
 
-If you are using `multiVersion`, the `versioned` parameter allows you to create a separate search index for each version of your documentation.
-When enabled, the search will only query the index corresponding to the currently selected version.
+When using [`multiVersion`](/guide/basic/multi-version), the search index includes all versions by default. Setting `versioned` to `true` creates a separate search index for each version, so that search results only include pages from the version the user is currently viewing.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
