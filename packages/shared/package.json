@@ -38,7 +38,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "2.0.0-beta.4",
+    "@rsbuild/core": "2.0.0-beta.5",
     "@shikijs/rehype": "^3.22.0",
     "gray-matter": "4.0.3",
     "lodash-es": "^4.17.23",
