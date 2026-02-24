@@ -179,7 +179,23 @@ doc_build
 
 `llms` 为实验性功能，可能存在不稳定或兼容性问题。如果由于代码不兼容 SSR，无法开启此功能，请使用 [@rspress/plugin-llms](/plugin/official-plugins/llms)。
 
-SSG-MD 仅支持 React 19 及以上版本。如果你使用的是 React 18 或更低版本，请使用 [@rspress/plugin-llms](/plugin/official-plugins/llms)。
+:::
+
+:::info React 18 支持
+
+SSG-MD 默认使用 `react-render-to-markdown@19`，仅支持 React 19。如果你使用的是 React 18，需要在 `package.json` 中额外安装 `react-render-to-markdown@18`：
+
+```json title="package.json"
+{
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-render-to-markdown": "18.3.1"
+  }
+}
+```
+
+安装后，Rspress 会自动检测并使用你项目中的 `react-render-to-markdown@18` 版本。
 
 :::
 

@@ -179,7 +179,23 @@ Access pages by replacing the `.html` suffix with `.md`, e.g., `/guide/start/int
 
 `llms` is an experimental feature and may have stability or compatibility issues. If SSG-MD cannot be enabled due to SSR incompatibility, please use [@rspress/plugin-llms](/plugin/official-plugins/llms).
 
-SSG-MD requires React 19 or above. If you are using React 18 or below, please use [@rspress/plugin-llms](/plugin/official-plugins/llms) instead.
+:::
+
+:::info React 18 Support
+
+SSG-MD uses `react-render-to-markdown@19` by default, which only supports React 19. If you are using React 18, you need to install `react-render-to-markdown@18` in your `package.json`:
+
+```json title="package.json"
+{
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-render-to-markdown": "18.3.1"
+  }
+}
+```
+
+Once installed, Rspress will automatically detect and use the `react-render-to-markdown@18` version from your project.
 
 :::
 
