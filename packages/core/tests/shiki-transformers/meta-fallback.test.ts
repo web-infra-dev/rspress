@@ -1,7 +1,9 @@
 import { describe, expect, it } from '@rstest/core';
 import type { Element } from 'hast';
+import type { ShikiTransformer } from 'shiki';
 import {
   transformerAddLineNumbers,
+  transformerAddTitle,
   transformerAddWrapCode,
 } from '../../src/node/mdx/rehypePlugins/transformers';
 
@@ -14,8 +16,8 @@ function createPreElement(): Element {
   };
 }
 
-function callTransformerPre(
-  transformer: ReturnType<typeof transformerAddLineNumbers>,
+function runTransformers(
+  transformers: ShikiTransformer[],
   pre: Element,
   rawMeta?: string,
 ): Element {
@@ -24,81 +26,67 @@ function callTransformerPre(
       meta: rawMeta !== undefined ? { __raw: rawMeta } : undefined,
     },
   };
-  return transformer.pre!.call(context as any, pre) as Element;
+  let result = pre;
+  for (const t of transformers) {
+    result = t.pre!.call(context as any, result) as Element;
+  }
+  return result;
 }
 
-describe('transformerAddLineNumbers', () => {
-  it('should apply default showLineNumbers when meta has no lineNumbers keyword', () => {
-    const transformer = transformerAddLineNumbers({
-      defaultShowLineNumbers: true,
-    });
+describe('combined transformers with meta fallback', () => {
+  it('should apply both global showLineNumbers and wrapCode when meta only has title', () => {
+    const transformers = [
+      transformerAddTitle(),
+      transformerAddLineNumbers({ defaultShowLineNumbers: true }),
+      transformerAddWrapCode({ defaultWrapCode: true }),
+    ];
     const pre = createPreElement();
-    const result = callTransformerPre(transformer, pre, 'title="foo.js"');
+    const result = runTransformers(transformers, pre, 'title="foo.js"');
+    expect(result.properties.title).toBe('foo.js');
     expect(result.properties.lineNumbers).toBe(true);
+    expect(result.properties.wrapCode).toBe(true);
   });
 
-  it('should apply default showLineNumbers when meta is undefined', () => {
-    const transformer = transformerAddLineNumbers({
-      defaultShowLineNumbers: true,
-    });
+  it('should apply global defaults when meta has highlight ranges', () => {
+    const transformers = [
+      transformerAddTitle(),
+      transformerAddLineNumbers({ defaultShowLineNumbers: true }),
+      transformerAddWrapCode({ defaultWrapCode: true }),
+    ];
     const pre = createPreElement();
-    const result = callTransformerPre(transformer, pre, undefined);
+    const result = runTransformers(transformers, pre, '{1,3-5}');
+    expect(result.properties.title).toBeUndefined();
     expect(result.properties.lineNumbers).toBe(true);
+    expect(result.properties.wrapCode).toBe(true);
   });
 
-  it('should respect lineNumbers keyword in meta over default', () => {
-    const transformer = transformerAddLineNumbers({
-      defaultShowLineNumbers: false,
-    });
+  it('should respect per-block meta keywords alongside title', () => {
+    const transformers = [
+      transformerAddTitle(),
+      transformerAddLineNumbers({ defaultShowLineNumbers: false }),
+      transformerAddWrapCode({ defaultWrapCode: false }),
+    ];
     const pre = createPreElement();
-    const result = callTransformerPre(transformer, pre, 'lineNumbers');
+    const result = runTransformers(
+      transformers,
+      pre,
+      'title="example.ts" lineNumbers wrapCode',
+    );
+    expect(result.properties.title).toBe('example.ts');
     expect(result.properties.lineNumbers).toBe(true);
+    expect(result.properties.wrapCode).toBe(true);
   });
 
-  it('should not add lineNumbers when default is false and meta has no keyword', () => {
-    const transformer = transformerAddLineNumbers({
-      defaultShowLineNumbers: false,
-    });
+  it('should not apply features when defaults are false and meta only has title', () => {
+    const transformers = [
+      transformerAddTitle(),
+      transformerAddLineNumbers({ defaultShowLineNumbers: false }),
+      transformerAddWrapCode({ defaultWrapCode: false }),
+    ];
     const pre = createPreElement();
-    const result = callTransformerPre(transformer, pre, 'title="foo.js"');
+    const result = runTransformers(transformers, pre, 'title="foo.js"');
+    expect(result.properties.title).toBe('foo.js');
     expect(result.properties.lineNumbers).toBeUndefined();
-  });
-});
-
-describe('transformerAddWrapCode', () => {
-  it('should apply default wrapCode when meta has no wrapCode keyword', () => {
-    const transformer = transformerAddWrapCode({
-      defaultWrapCode: true,
-    });
-    const pre = createPreElement();
-    const result = callTransformerPre(transformer, pre, 'title="foo.js"');
-    expect(result.properties.wrapCode).toBe(true);
-  });
-
-  it('should apply default wrapCode when meta is undefined', () => {
-    const transformer = transformerAddWrapCode({
-      defaultWrapCode: true,
-    });
-    const pre = createPreElement();
-    const result = callTransformerPre(transformer, pre, undefined);
-    expect(result.properties.wrapCode).toBe(true);
-  });
-
-  it('should respect wrapCode keyword in meta over default', () => {
-    const transformer = transformerAddWrapCode({
-      defaultWrapCode: false,
-    });
-    const pre = createPreElement();
-    const result = callTransformerPre(transformer, pre, 'wrapCode');
-    expect(result.properties.wrapCode).toBe(true);
-  });
-
-  it('should not add wrapCode when default is false and meta has no keyword', () => {
-    const transformer = transformerAddWrapCode({
-      defaultWrapCode: false,
-    });
-    const pre = createPreElement();
-    const result = callTransformerPre(transformer, pre, 'title="foo.js"');
     expect(result.properties.wrapCode).toBeUndefined();
   });
 });
