@@ -18,7 +18,7 @@ function hasWrapCodeInMeta(meta: string | undefined): boolean | undefined {
     return undefined;
   }
   const kvList = meta.split(' ').filter(Boolean);
-  return kvList.includes('wrapCode');
+  return kvList.includes('wrapCode') || undefined;
 }
 
 /**

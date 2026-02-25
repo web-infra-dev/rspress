@@ -19,7 +19,7 @@ function hasLineNumbersInMeta(meta: string | undefined): boolean | undefined {
     return undefined;
   }
   const kvList = meta.split(' ').filter(Boolean);
-  return kvList.includes('lineNumbers');
+  return kvList.includes('lineNumbers') || undefined;
 }
 
 /**
