@@ -47,6 +47,69 @@ docs
 
 :::
 
+## 配合国际化使用
+
+多版本文档可以和[国际化](/guide/basic/i18n)一起使用。同时开启时，目录结构以**版本为顶层目录，语言为子目录**：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  lang: 'en',
+  locales: [
+    {
+      lang: 'en',
+      label: 'English',
+    },
+    {
+      lang: 'zh',
+      label: '简体中文',
+    },
+  ],
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+文档目录结构如下：
+
+```tree
+docs
+├── v1
+│   ├── en
+│   │   ├── _nav.json
+│   │   ├── index.md
+│   │   └── guide
+│   │       └── index.md
+│   └── zh
+│       ├── _nav.json
+│       ├── index.md
+│       └── guide
+│           └── index.md
+└── v2
+    ├── en
+    │   ├── _nav.json
+    │   ├── index.md
+    │   └── guide
+    │       └── index.md
+    └── zh
+        ├── _nav.json
+        ├── index.md
+        └── guide
+            └── index.md
+```
+
+生成的路由遵循 `/{version}/{lang}/` 的规则：
+
+| 文件路径         | 路由                                       |
+| ---------------- | ------------------------------------------ |
+| `v1/en/index.md` | `/`（默认版本 + 默认语言，两个前缀均省略） |
+| `v1/zh/index.md` | `/zh/`                                     |
+| `v2/en/index.md` | `/v2/`                                     |
+| `v2/zh/index.md` | `/v2/zh/`                                  |
+
 ## 组件中获取当前版本
 
 在组件中，你可以通过 [`useVersion`](/ui/hooks/use-version) 获取当前版本，比如：

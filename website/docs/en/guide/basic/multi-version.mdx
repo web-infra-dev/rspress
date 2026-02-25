@@ -47,6 +47,69 @@ For links in the document, you do not need to manually add the version prefix. R
 
 :::
 
+## Using with i18n
+
+Multi-version can be used together with [internationalization](/guide/basic/i18n). When both are enabled, the directory structure uses **version as the top level, then language subdirectories** within each version:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  lang: 'en',
+  locales: [
+    {
+      lang: 'en',
+      label: 'English',
+    },
+    {
+      lang: 'zh',
+      label: '简体中文',
+    },
+  ],
+  multiVersion: {
+    default: 'v1',
+    versions: ['v1', 'v2'],
+  },
+});
+```
+
+The document directory structure should be organized as follows:
+
+```tree
+docs
+├── v1
+│   ├── en
+│   │   ├── _nav.json
+│   │   ├── index.md
+│   │   └── guide
+│   │       └── index.md
+│   └── zh
+│       ├── _nav.json
+│       ├── index.md
+│       └── guide
+│           └── index.md
+└── v2
+    ├── en
+    │   ├── _nav.json
+    │   ├── index.md
+    │   └── guide
+    │       └── index.md
+    └── zh
+        ├── _nav.json
+        ├── index.md
+        └── guide
+            └── index.md
+```
+
+The generated routes follow the pattern `/{version}/{lang}/`:
+
+| File path        | Route                                                           |
+| ---------------- | --------------------------------------------------------------- |
+| `v1/en/index.md` | `/` (default version + default language, both prefixes omitted) |
+| `v1/zh/index.md` | `/zh/`                                                          |
+| `v2/en/index.md` | `/v2/`                                                          |
+| `v2/zh/index.md` | `/v2/zh/`                                                       |
+
 ## Get the current version in components
 
 In components, you can get the current version through [`useVersion`](/ui/hooks/use-version), for example:
