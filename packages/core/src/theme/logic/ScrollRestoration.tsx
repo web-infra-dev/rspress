@@ -1,5 +1,5 @@
+import { useLocation, useNavigationType } from '@rspress/core/runtime';
 import { useLayoutEffect, useRef } from 'react';
-import { useLocation, useNavigationType } from 'react-router-dom';
 
 const STORAGE_KEY = 'rspress-scroll-positions';
 const MAX_SCROLL_ENTRIES = 100;
@@ -95,7 +95,6 @@ function persistSavedPositions(): void {
 // Also handles hash anchor scrolling since scrollRestoration is 'manual'.
 const inlineScript = `(function(){
   try {
-    // Ensure history.state.key exists (React Router behavior)
     if (!window.history.state || !window.history.state.key) {
       var key = Math.random().toString(32).slice(2);
       window.history.replaceState({ key: key }, "");
@@ -104,16 +103,14 @@ const inlineScript = `(function(){
     var positions = JSON.parse(sessionStorage.getItem('${STORAGE_KEY}') || '{}');
     var y = positions[window.history.state.key];
     
-    // Check for hash anchor first
     var hash = window.location.hash;
     if (hash && hash.length > 1) {
       window.history.scrollRestoration = 'manual';
-      var target = document.getElementById(hash.slice(1));
+      var target = document.getElementById(decodeURIComponent(hash.slice(1)));
       if (target) {
         var scrollPaddingTop = parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('scroll-padding-top')) || 0;
         var offsetTop = target.getBoundingClientRect().top + window.scrollY - scrollPaddingTop;
-        window.scrollTo(0, Math.round(offsetTop));
-        return;
+        y = Math.round(offsetTop);
       }
     }
     
