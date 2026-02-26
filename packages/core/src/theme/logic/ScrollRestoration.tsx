@@ -166,6 +166,8 @@ function useScrollRestoration() {
 }
 
 /**
+ * Scroll restoration component inspired by React Router's ScrollRestoration.
+ * @see https://reactrouter.com/api/components/ScrollRestoration
  * @private
  * @unstable
  */
