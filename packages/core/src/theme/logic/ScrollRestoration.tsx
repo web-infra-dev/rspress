@@ -122,6 +122,22 @@ function useScrollRestoration() {
   useLayoutEffect(() => {
     loadSavedPositions();
     window.history.scrollRestoration = 'manual';
+
+    // Handle hashchange for same-page anchor navigation
+    // This is needed because clicking an anchor link doesn't trigger
+    // React Router navigation (no PUSH/REPLACE), but we need to scroll
+    // since scrollRestoration is 'manual'
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash.length > 0) {
+        scrollToHashTarget(hash);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
 
   // Save positions on pagehide for tab close / page refresh scenarios.
