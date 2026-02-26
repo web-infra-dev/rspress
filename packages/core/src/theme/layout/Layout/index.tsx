@@ -218,7 +218,6 @@ export function Layout(props: LayoutProps) {
         frontmatter={frontmatter}
       />
 
-      <ScrollRestoration />
       {top}
       {pageType !== 'blank' && showNavbar && (
         <>
@@ -236,6 +235,7 @@ export function Layout(props: LayoutProps) {
 
       {getContentLayout()}
       {bottom}
+      <ScrollRestoration />
     </>
   );
 }
