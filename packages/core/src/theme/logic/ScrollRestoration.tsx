@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { useLocation, useNavigationType } from 'react-router-dom';
 
 const STORAGE_KEY = 'rspress-scroll-positions';
+const MAX_SCROLL_ENTRIES = 100;
 
 // Module-level state for scroll positions
 let savedScrollPositions: Record<string, number> = {};
@@ -70,20 +71,22 @@ function loadSavedPositions(): void {
 
 /**
  * Persist scroll positions to sessionStorage.
+ * Prunes oldest entries if exceeding MAX_SCROLL_ENTRIES.
  */
 function persistSavedPositions(): void {
   try {
+    const keys = Object.keys(savedScrollPositions);
+    if (keys.length > MAX_SCROLL_ENTRIES) {
+      // Remove oldest entries (first inserted keys)
+      const excess = keys.length - MAX_SCROLL_ENTRIES;
+      for (let i = 0; i < excess; i++) {
+        delete savedScrollPositions[keys[i]];
+      }
+    }
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(savedScrollPositions));
   } catch {
     // Ignore errors
   }
-}
-
-/**
- * Generate a random key for history state if missing.
- */
-function generateKey(): string {
-  return Math.random().toString(32).slice(2);
 }
 
 // The inline script that runs before React hydration.
@@ -114,7 +117,6 @@ function useScrollRestoration() {
   const location = useLocation();
   const navigationType = useNavigationType();
   const prevKeyRef = useRef<string | undefined>(undefined);
-  const isRestoringRef = useRef(false);
 
   // Initialize: load from sessionStorage, take control of scroll restoration
   useLayoutEffect(() => {
@@ -122,14 +124,16 @@ function useScrollRestoration() {
     window.history.scrollRestoration = 'manual';
   }, []);
 
-  // Save positions on pagehide (React Router's approach)
-  // This is the ONLY place we save positions, ensuring accuracy
+  // Save positions on pagehide for tab close / page refresh scenarios.
+  // Reads key from history.state directly so this effect only runs once.
   useLayoutEffect(() => {
     const onPageHide = () => {
-      // Save current position before the page is hidden
-      const key = getScrollRestorationKey(location);
-      savedScrollPositions[key] = window.scrollY;
-      persistSavedPositions();
+      const state = window.history.state;
+      const key = state?.key;
+      if (key) {
+        savedScrollPositions[key] = window.scrollY;
+        persistSavedPositions();
+      }
       // Let browser handle scroll restoration on page refresh
       window.history.scrollRestoration = 'auto';
     };
@@ -138,19 +142,20 @@ function useScrollRestoration() {
     return () => {
       window.removeEventListener('pagehide', onPageHide);
     };
-  }, [location]);
+  }, []);
 
   // Handle scroll on navigation
   useLayoutEffect(() => {
-    // Skip if we're in the middle of a restore
-    if (isRestoringRef.current) {
-      isRestoringRef.current = false;
-      return;
-    }
-
     const prevKey = prevKeyRef.current;
     const currentKey = getScrollRestorationKey(location);
     prevKeyRef.current = currentKey;
+
+    // Save the previous page's scroll position before handling the new page.
+    // This is essential for SPA navigation where pagehide does not fire.
+    if (prevKey) {
+      savedScrollPositions[prevKey] = window.scrollY;
+      persistSavedPositions();
+    }
 
     // For POP navigation (back/forward), restore saved position
     if (navigationType === 'POP') {
@@ -158,9 +163,7 @@ function useScrollRestoration() {
 
       if (typeof savedY === 'number') {
         // Use requestAnimationFrame to ensure DOM is ready
-        // This handles cases where content is dynamically loaded
         requestAnimationFrame(() => {
-          isRestoringRef.current = true;
           window.scrollTo(0, savedY);
         });
       }
