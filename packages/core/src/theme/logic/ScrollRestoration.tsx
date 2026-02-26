@@ -128,7 +128,7 @@ function useScrollRestoration() {
     // React Router navigation (no PUSH/REPLACE), but we need to scroll
     // since scrollRestoration is 'manual'
     const handleHashChange = () => {
-      const hash = window.location.hash;
+      const hash = decodeURIComponent(window.location.hash);
       if (hash.length > 0) {
         scrollToHashTarget(hash);
       }
