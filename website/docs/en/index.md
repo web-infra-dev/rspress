@@ -7,6 +7,9 @@ hero:
   name: Rspress
   text: Lightning Fast Static Site Generator
   tagline: Simple, efficient and easy to extend
+  badge:
+    text: Rspress 2.0 is out!
+    link: ./blog/rspress-v2
   actions:
     - theme: brand
       text: Introduction

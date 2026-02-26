@@ -9,6 +9,9 @@ hero:
     快如闪电的
     静态站点生成器
   tagline: 简单、高性能、易于扩展
+  badge:
+    text: Rspress 2.0 正式发布！
+    link: ./blog/rspress-v2
   image:
     src: https://assets.rspack.rs/rspress/rspress-logo.svg
     alt: Rspress Logo
