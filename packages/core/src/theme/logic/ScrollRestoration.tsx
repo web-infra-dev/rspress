@@ -26,6 +26,42 @@ function persistToSessionStorage() {
   }
 }
 
+/**
+ * Parse CSS length value to number (in pixels).
+ * Supports: px
+ */
+function parseCSSLength(value: string): number {
+  if (!value || value === 'auto' || value === 'none') {
+    return 0;
+  }
+
+  const numValue = Number.parseFloat(value);
+  if (Number.isNaN(numValue)) {
+    return 0;
+  }
+
+  return numValue;
+}
+
+function scrollToHashTarget(hash: string) {
+  const target = document.getElementById(hash.slice(1));
+  if (!target) {
+    return;
+  }
+
+  const scrollPaddingTop = parseCSSLength(
+    window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue('scroll-padding-top'),
+  );
+
+  const offsetTop = Math.round(
+    window.scrollY + target.getBoundingClientRect().top - scrollPaddingTop,
+  );
+
+  window.scrollTo({ left: 0, top: offsetTop });
+}
+
 // The inline script that runs before React hydration.
 // It reads the saved scroll position from sessionStorage and restores it immediately,
 // preventing a flash of wrong scroll position.
@@ -119,11 +155,13 @@ function useScrollRestoration() {
       if (typeof savedY === 'number') {
         window.scrollTo(0, savedY);
       }
-    } else if (hash.length === 0) {
+    } else if (hash.length > 0) {
+      // New navigation with hash: scroll to anchor (respecting scroll-padding-top)
+      scrollToHashTarget(hash);
+    } else {
       // New navigation without hash: scroll to top
       window.scrollTo(0, 0);
     }
-    // With hash: do nothing here, let useScrollAfterNav handle it
   }, [location, navigationType]);
 }
 

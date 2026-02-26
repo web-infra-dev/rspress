@@ -109,7 +109,6 @@ export { ScrollRestoration } from './logic/ScrollRestoration';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
-export { useScrollAfterNav } from './logic/useScrollAfterNav';
 export { useSetup } from './logic/useSetup';
 export { useStorageValue } from './logic/useStorageValue';
 export { useThemeState } from './logic/useThemeState';
