@@ -14,8 +14,8 @@ import {
   type DocLayoutProps,
   Nav,
   type NavProps,
+  ScrollRestoration,
   useRedirect4FirstVisit,
-  useScrollReset,
   useSetup,
 } from '@theme';
 import { Head, useHead } from '@unhead/react';
@@ -203,7 +203,6 @@ export function Layout(props: LayoutProps) {
   }
 
   useSetup();
-  useScrollReset();
   useRedirect4FirstVisit();
 
   const {
@@ -219,6 +218,7 @@ export function Layout(props: LayoutProps) {
         frontmatter={frontmatter}
       />
 
+      <ScrollRestoration />
       {top}
       {pageType !== 'blank' && showNavbar && (
         <>

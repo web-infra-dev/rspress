@@ -1,5 +1,6 @@
 import { useLocation } from '@rspress/core/runtime';
 import { useLayoutEffect } from 'react';
+import { useNavigationType } from 'react-router-dom';
 
 /**
  * Parse CSS length value to number (in pixels)
@@ -48,9 +49,14 @@ function scrollToTarget(target: HTMLElement) {
  */
 export function useScrollAfterNav() {
   const location = useLocation();
+  const navigationType = useNavigationType();
 
   useLayoutEffect(() => {
     if (typeof window === 'undefined') {
+      return;
+    }
+    // On POP (back/forward), scroll position is restored by ScrollRestoration
+    if (navigationType === 'POP') {
       return;
     }
     const decodedHash = decodeURIComponent(window.location.hash);
@@ -60,5 +66,5 @@ export function useScrollAfterNav() {
         scrollToTarget(target);
       }
     }
-  }, [location, location.pathname]);
+  }, [location, location.pathname, navigationType]);
 }
