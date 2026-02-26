@@ -92,6 +92,7 @@ function persistSavedPositions(): void {
 // The inline script that runs before React hydration.
 // It reads the saved scroll position from sessionStorage and restores it immediately,
 // preventing a flash of wrong scroll position.
+// Also handles hash anchor scrolling since scrollRestoration is 'manual'.
 const inlineScript = `(function(){
   try {
     // Ensure history.state.key exists (React Router behavior)
@@ -102,6 +103,20 @@ const inlineScript = `(function(){
     
     var positions = JSON.parse(sessionStorage.getItem('${STORAGE_KEY}') || '{}');
     var y = positions[window.history.state.key];
+    
+    // Check for hash anchor first
+    var hash = window.location.hash;
+    if (hash && hash.length > 1) {
+      window.history.scrollRestoration = 'manual';
+      var target = document.getElementById(hash.slice(1));
+      if (target) {
+        var scrollPaddingTop = parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('scroll-padding-top')) || 0;
+        var offsetTop = target.getBoundingClientRect().top + window.scrollY - scrollPaddingTop;
+        window.scrollTo(0, Math.round(offsetTop));
+        return;
+      }
+    }
+    
     if (typeof y === 'number') {
       window.history.scrollRestoration = 'manual';
       window.scrollTo(0, y);
