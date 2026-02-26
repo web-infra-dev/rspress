@@ -76,7 +76,6 @@
     & .line::before {
       content: counter(step);
       counter-increment: step;
-      width: 1rem;
       margin-right: 1rem;
       display: inline-block;
       text-align: right;
