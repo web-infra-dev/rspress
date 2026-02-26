@@ -54,7 +54,7 @@
         background-color 0.2s ease-out;
       cursor: pointer;
 
-      border-radius: var(--rp-radius);
+      border-radius: calc(1.5 * var(--rp-radius-small));
 
       &:last-child {
         margin-right: 0;
