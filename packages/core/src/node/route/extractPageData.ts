@@ -134,7 +134,7 @@ const SKIP_NODE_TYPES = new Set([
  * Regex to match the start of a container directive (:::tip, :::info, etc.)
  * Used to filter out container directive content from descriptions
  */
-const CONTAINER_DIRECTIVE_REGEX = /^\s*:::\s*\w+/;
+const CONTAINER_DIRECTIVE_REGEX = /^\s*:::\s*(\w+)\s*(.*)?/;
 
 /**
  * Remove container directive blocks (:::tip ... :::) from text
@@ -157,6 +157,11 @@ function stripContainerDirectives(text: string): string {
       continue;
     }
     result.push(line);
+  }
+  // If we reached the end while still inside a directive, the directive was never closed.
+  // In that malformed case, fall back to the original text to avoid dropping content.
+  if (insideDirective) {
+    return text;
   }
   return result.join('\n');
 }
