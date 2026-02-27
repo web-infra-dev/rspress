@@ -5,7 +5,10 @@ const STORAGE_KEY = 'rspress-scroll-positions';
 const MAX_SCROLL_ENTRIES = 100;
 
 // Module-level state for scroll positions
-let savedScrollPositions: Record<string, number> = {};
+const savedScrollPositions: Record<string, number> =
+  typeof window === 'undefined'
+    ? {}
+    : JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}');
 
 /**
  * Parse CSS length value to number (in pixels).
@@ -56,20 +59,6 @@ function getScrollRestorationKey(location: { key: string }): string {
 }
 
 /**
- * Load scroll positions from sessionStorage.
- */
-function loadSavedPositions(): void {
-  try {
-    const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      savedScrollPositions = JSON.parse(stored);
-    }
-  } catch {
-    // Ignore errors
-  }
-}
-
-/**
  * Persist scroll positions to sessionStorage.
  * Prunes oldest entries if exceeding MAX_SCROLL_ENTRIES.
  */
@@ -103,17 +92,6 @@ const inlineScript = `(function(){
     var positions = JSON.parse(sessionStorage.getItem('${STORAGE_KEY}') || '{}');
     var y = positions[window.history.state.key];
     
-    var hash = window.location.hash;
-    if (hash && hash.length > 1) {
-      window.history.scrollRestoration = 'manual';
-      var target = document.getElementById(decodeURIComponent(hash.slice(1)));
-      if (target) {
-        var scrollPaddingTop = parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('scroll-padding-top')) || 0;
-        var offsetTop = target.getBoundingClientRect().top + window.scrollY - scrollPaddingTop;
-        y = Math.round(offsetTop);
-      }
-    }
-    
     if (typeof y === 'number') {
       window.history.scrollRestoration = 'manual';
       window.scrollTo(0, y);
@@ -129,28 +107,6 @@ function useScrollRestoration() {
   const location = useLocation();
   const navigationType = useNavigationType();
   const prevKeyRef = useRef<string | undefined>(undefined);
-
-  // Initialize: load from sessionStorage, take control of scroll restoration
-  useLayoutEffect(() => {
-    loadSavedPositions();
-    window.history.scrollRestoration = 'manual';
-
-    // Handle hashchange for same-page anchor navigation
-    // This is needed because clicking an anchor link doesn't trigger
-    // React Router navigation (no PUSH/REPLACE), but we need to scroll
-    // since scrollRestoration is 'manual'
-    const handleHashChange = () => {
-      const hash = decodeURIComponent(window.location.hash);
-      if (hash.length > 0) {
-        scrollToHashTarget(hash);
-      }
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-    return () => {
-      window.removeEventListener('hashchange', handleHashChange);
-    };
-  }, []);
 
   // Save positions on pagehide for tab close / page refresh scenarios.
   // Reads key from history.state directly so this effect only runs once.
@@ -187,14 +143,15 @@ function useScrollRestoration() {
 
     // For POP navigation (back/forward), restore saved position
     if (navigationType === 'POP') {
-      const savedY = savedScrollPositions[currentKey];
+      // console.log(`[ScrollRestoration] POP navigation detected. Restoring scroll position for key: ${currentKey}`);
+      // const savedY = savedScrollPositions[currentKey];
 
-      if (typeof savedY === 'number') {
-        // Use requestAnimationFrame to ensure DOM is ready
-        requestAnimationFrame(() => {
-          window.scrollTo(0, savedY);
-        });
-      }
+      // if (typeof savedY === 'number') {
+      //   // Use requestAnimationFrame to ensure DOM is ready
+      //   requestAnimationFrame(() => {
+      //     window.scrollTo(0, savedY);
+      //   });
+      // }
       // If no saved position, let browser handle it naturally
       return;
     }
@@ -212,7 +169,7 @@ function useScrollRestoration() {
       // Scroll to top for new navigation
       window.scrollTo(0, 0);
     }
-  }, [location, navigationType]);
+  }, [location.search, location.hash, location.pathname, navigationType]);
 }
 
 /**
