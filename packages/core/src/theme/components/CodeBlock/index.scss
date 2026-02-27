@@ -74,6 +74,7 @@
     counter-reset: step;
     counter-increment: step 0;
     & .line::before {
+      width: 2ch;
       content: counter(step);
       counter-increment: step;
       margin-right: 1rem;
