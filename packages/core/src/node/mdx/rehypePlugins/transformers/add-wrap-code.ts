@@ -18,7 +18,13 @@ function hasWrapCodeInMeta(meta: string | undefined): boolean | undefined {
     return undefined;
   }
   const kvList = meta.split(' ').filter(Boolean);
-  return kvList.includes('wrapCode') || undefined;
+  if (kvList.includes('wrapCode=false')) {
+    return false;
+  }
+  if (kvList.includes('wrapCode') || kvList.includes('wrapCode=true')) {
+    return true;
+  }
+  return undefined;
 }
 
 /**
@@ -36,10 +42,10 @@ export function transformerAddWrapCode(
       const metaHasWrapCode = hasWrapCodeInMeta(this.options.meta?.__raw);
       const shouldWrapCode = metaHasWrapCode ?? defaultWrapCode;
 
-      if (shouldWrapCode) {
+      if (metaHasWrapCode !== undefined || shouldWrapCode) {
         pre.properties = {
           ...pre.properties,
-          wrapCode: true,
+          wrapCode: shouldWrapCode,
         };
       }
       return pre;

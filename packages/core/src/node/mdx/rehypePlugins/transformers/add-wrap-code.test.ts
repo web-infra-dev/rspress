@@ -60,4 +60,44 @@ describe('transformerAddWrapCode', () => {
     const result = callTransformerPre(transformer, pre, 'title="foo.js"');
     expect(result.properties.wrapCode).toBeUndefined();
   });
+
+  it('should respect wrapCode=true in meta over default false', () => {
+    const transformer = transformerAddWrapCode({
+      defaultWrapCode: false,
+    });
+    const pre = createPreElement();
+    const result = callTransformerPre(transformer, pre, 'wrapCode=true');
+    expect(result.properties.wrapCode).toBe(true);
+  });
+
+  it('should respect wrapCode=false in meta to override default true', () => {
+    const transformer = transformerAddWrapCode({
+      defaultWrapCode: true,
+    });
+    const pre = createPreElement();
+    const result = callTransformerPre(transformer, pre, 'wrapCode=false');
+    expect(result.properties.wrapCode).toBe(false);
+  });
+
+  it('should respect wrapCode=false in meta when default is false', () => {
+    const transformer = transformerAddWrapCode({
+      defaultWrapCode: false,
+    });
+    const pre = createPreElement();
+    const result = callTransformerPre(transformer, pre, 'wrapCode=false');
+    expect(result.properties.wrapCode).toBe(false);
+  });
+
+  it('should respect wrapCode=false in meta with other meta keywords', () => {
+    const transformer = transformerAddWrapCode({
+      defaultWrapCode: true,
+    });
+    const pre = createPreElement();
+    const result = callTransformerPre(
+      transformer,
+      pre,
+      'title="foo.js" wrapCode=false',
+    );
+    expect(result.properties.wrapCode).toBe(false);
+  });
 });

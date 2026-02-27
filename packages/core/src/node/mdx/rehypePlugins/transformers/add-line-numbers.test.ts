@@ -60,4 +60,35 @@ describe('transformerAddLineNumbers', () => {
     const result = callTransformerPre(transformer, pre, 'title="foo.js"');
     expect(result.properties.lineNumbers).toBeUndefined();
   });
+
+  it('should respect lineNumbers=false in meta to override default true', () => {
+    const transformer = transformerAddLineNumbers({
+      defaultShowLineNumbers: true,
+    });
+    const pre = createPreElement();
+    const result = callTransformerPre(transformer, pre, 'lineNumbers=false');
+    expect(result.properties.lineNumbers).toBe(false);
+  });
+
+  it('should respect lineNumbers=false in meta when default is false', () => {
+    const transformer = transformerAddLineNumbers({
+      defaultShowLineNumbers: false,
+    });
+    const pre = createPreElement();
+    const result = callTransformerPre(transformer, pre, 'lineNumbers=false');
+    expect(result.properties.lineNumbers).toBe(false);
+  });
+
+  it('should respect lineNumbers=false in meta with other meta keywords', () => {
+    const transformer = transformerAddLineNumbers({
+      defaultShowLineNumbers: true,
+    });
+    const pre = createPreElement();
+    const result = callTransformerPre(
+      transformer,
+      pre,
+      'title="foo.js" lineNumbers=false',
+    );
+    expect(result.properties.lineNumbers).toBe(false);
+  });
 });
