@@ -1,4 +1,4 @@
-import { useFrontmatter } from '@rspress/core/runtime';
+import { useFrontmatter, useLocation } from '@rspress/core/runtime';
 import {
   DocContent,
   DocFooter,
@@ -8,6 +8,7 @@ import {
   useWatchToc,
 } from '@theme';
 import clsx from 'clsx';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
 import './index.scss';
 
@@ -77,6 +78,30 @@ export function DocLayout(props: DocLayoutProps) {
 
   const { rspressDocRef } = useWatchToc();
 
+  // Defer main content rendering on client-side navigation so the sidebar
+  // commits to the DOM first, avoiding jank when pages are content-heavy.
+  const { pathname } = useLocation();
+  const [, startTransition] = useTransition();
+  const [contentVisible, setContentVisible] = useState(true);
+  const prevPathname = useRef(pathname);
+
+  if (prevPathname.current !== pathname) {
+    prevPathname.current = pathname;
+    if (contentVisible) {
+      setContentVisible(false);
+    }
+  }
+
+  useEffect(() => {
+    if (!contentVisible) {
+      startTransition(() => {
+        setContentVisible(true);
+      });
+    }
+  }, [contentVisible]);
+
+  const docContent = <DocContent components={components} />;
+
   return (
     <>
       <div className="rp-doc-layout__menu">{sidebarMenu}</div>
@@ -104,35 +129,39 @@ export function DocLayout(props: DocLayoutProps) {
         )}
 
         {/* Main document content */}
-        {isOverviewPage ? (
-          <>
-            <main className="rp-doc-layout__overview">
-              {beforeDocContent}
-              <Overview
-                content={<DocContent components={components} isOverviewPage />}
-              />
-              {afterDocContent}
-            </main>
-          </>
-        ) : (
-          <div
-            className={clsx(
-              'rp-doc-layout__doc',
-              isDocWide && 'rp-doc-layout__doc--wide',
-            )}
-          >
-            <main className="rp-doc-layout__doc-container">
-              {beforeDocContent}
-              <div className="rp-doc rspress-doc" ref={rspressDocRef}>
-                <DocContent components={components} />
-              </div>
-              {afterDocContent}
-              {beforeDocFooter}
-              {showDocFooter && <DocFooter />}
-              {afterDocFooter}
-            </main>
-          </div>
-        )}
+        {contentVisible ? (
+          isOverviewPage ? (
+            <>
+              <main className="rp-doc-layout__overview">
+                {beforeDocContent}
+                <Overview
+                  content={
+                    <DocContent components={components} isOverviewPage />
+                  }
+                />
+                {afterDocContent}
+              </main>
+            </>
+          ) : (
+            <div
+              className={clsx(
+                'rp-doc-layout__doc',
+                isDocWide && 'rp-doc-layout__doc--wide',
+              )}
+            >
+              <main className="rp-doc-layout__doc-container">
+                {beforeDocContent}
+                <div className="rp-doc rspress-doc" ref={rspressDocRef}>
+                  {docContent}
+                </div>
+                {afterDocContent}
+                {beforeDocFooter}
+                {showDocFooter && <DocFooter />}
+                {afterDocFooter}
+              </main>
+            </div>
+          )
+        ) : null}
 
         {/* Right outline */}
         {isOverviewPage ? null : showOutline ? (
