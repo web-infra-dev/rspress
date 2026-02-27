@@ -222,7 +222,15 @@ export default {
 };
 ```
 
-当全局启用 `showLineNumbers` 时，所有代码块默认都会显示行号。
+当全局启用 `showLineNumbers` 时，所有代码块默认都会显示行号。你可以使用 `lineNumbers=false` 为特定代码块禁用行号：
+
+````mdx
+```ts lineNumbers=false
+function hello() {
+  console.log('此代码块禁用了行号');
+}
+```
+````
 
 ## 代码换行
 
@@ -253,7 +261,14 @@ export default {
 };
 ```
 
-当全局启用 `defaultWrapCode` 时，所有代码块默认都会换行显示长代码。
+当全局启用 `defaultWrapCode` 时，所有代码块默认都会换行显示长代码。你可以使用 `wrapCode=false` 为特定代码块禁用代码换行：
+
+{/* prettier-ignore */}
+````mdx
+```ts wrapCode=false
+const longLine = '此代码块不会换行，即使全局启用了 defaultWrapCode';
+```
+````
 
 ## 组合使用 meta 属性
 

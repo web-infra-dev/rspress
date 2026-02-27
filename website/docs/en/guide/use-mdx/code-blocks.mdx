@@ -222,7 +222,15 @@ export default {
 };
 ```
 
-When `showLineNumbers` is enabled globally, all code blocks will show line numbers by default.
+When `showLineNumbers` is enabled globally, all code blocks will show line numbers by default. You can disable line numbers for a specific code block by using `lineNumbers=false`:
+
+````mdx
+```ts lineNumbers=false
+function hello() {
+  console.log('Line numbers disabled for this block');
+}
+```
+````
 
 ## Wrap code
 
@@ -253,7 +261,14 @@ export default {
 };
 ```
 
-When `defaultWrapCode` is enabled globally, all code blocks will wrap long lines by default.
+When `defaultWrapCode` is enabled globally, all code blocks will wrap long lines by default. You can disable code wrapping for a specific code block by using `wrapCode=false`:
+
+{/* prettier-ignore */}
+````mdx
+```ts wrapCode=false
+const longLine = 'This code block will not wrap even if defaultWrapCode is enabled globally';
+```
+````
 
 ## Combining meta attributes
 
