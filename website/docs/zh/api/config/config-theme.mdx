@@ -535,12 +535,13 @@ type LlmsUI =
         | { title: string; icon?: React.ReactNode; onClick?: () => void }
         | { title: string; href: string; icon?: React.ReactNode }
       >;
+      placement?: 'title' | 'outline';
     };
 ```
 
 - **默认值**：`false`（当配置 `llms: true` 时自动设置为 `true`）
 
-LLMS UI 组件配置。启用后，会自动在所有 H1 标题下方添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件。
+LLMS UI 组件配置。启用后，会自动在所有 H1 标题下方（默认）或右侧大纲面板中添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件。
 
 这在使用 [llms](/guide/basic/ssg-md) 功能生成 llms.txt 文件时非常有用，允许用户轻松复制或在 AI 工具中打开 markdown 内容。
 
@@ -558,6 +559,7 @@ export default defineConfig({
     // 或者使用自定义选项：
     // llmsUI: {
     //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    //   placement: 'outline',
     // },
   },
 });
@@ -575,3 +577,26 @@ LlmsViewOptions 下拉菜单的选项。内置选项包括：
 - `'claude'`: 在 Claude 中打开
 
 你也可以提供自定义选项，包含 `title`、`href` 或 `onClick`，以及可选的 `icon`。
+
+### placement
+
+- **类型**：`'title' | 'outline'`
+- **默认值**：`'title'`
+
+控制 LLMS UI 组件的显示位置。
+
+- `'title'`：在 H1 标题下方以按钮形式显示（默认行为）
+- `'outline'`：在右侧大纲面板中以独立行形式显示
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      placement: 'outline',
+    },
+  },
+});
+```

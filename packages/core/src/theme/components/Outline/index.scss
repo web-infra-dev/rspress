@@ -54,5 +54,46 @@
   &__bottom {
     padding-left: var(--rp-outline-padding-x);
     padding-right: var(--rp-outline-padding-x);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__action-row {
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--rp-c-text-2);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    padding: 0;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--rp-c-text-1);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+  }
+
+  &__open-in-wrapper {
+    position: relative;
+
+    .rp-llms-view-options__menu {
+      bottom: calc(100% + 6px);
+      top: auto;
+      left: 0;
+      transform-origin: bottom left;
+    }
   }
 }

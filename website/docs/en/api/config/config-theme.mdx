@@ -548,12 +548,13 @@ type LlmsUI =
         | { title: string; icon?: React.ReactNode; onClick?: () => void }
         | { title: string; href: string; icon?: React.ReactNode }
       >;
+      placement?: 'title' | 'outline';
     };
 ```
 
 - **Default**: `false` (automatically set to `true` when `llms: true` is configured)
 
-Configuration for LLMS UI components. When enabled, `LlmsCopyButton` and `LlmsViewOptions` components will be automatically added below all H1 headers.
+Configuration for LLMS UI components. When enabled, `LlmsCopyButton` and `LlmsViewOptions` components will be automatically added below all H1 headers (default), or as rows in the outline panel.
 
 This is useful when using the [llms](/guide/basic/ssg-md) feature to generate llms.txt files, allowing users to easily copy or open the markdown content in AI tools.
 
@@ -571,6 +572,7 @@ export default defineConfig({
     // Or with custom options:
     // llmsUI: {
     //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    //   placement: 'outline',
     // },
   },
 });
@@ -588,3 +590,26 @@ Options for the LlmsViewOptions dropdown menu. Built-in options include:
 - `'claude'`: Open in Claude
 
 You can also provide custom options with `title`, `href` or `onClick`, and optional `icon`.
+
+### placement
+
+- **Type**: `'title' | 'outline'`
+- **Default**: `'title'`
+
+Controls where the LLMS UI components are displayed.
+
+- `'title'`: Show as buttons below the H1 title (default behavior)
+- `'outline'`: Show as separate rows in the right-side outline panel
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      placement: 'outline',
+    },
+  },
+});
+```
