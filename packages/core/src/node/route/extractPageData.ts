@@ -131,9 +131,41 @@ const SKIP_NODE_TYPES = new Set([
 ]);
 
 /**
+ * Regex to match the start of a container directive (:::tip, :::info, etc.)
+ * Used to filter out container directive content from descriptions
+ */
+const CONTAINER_DIRECTIVE_REGEX = /^\s*:::\s*\w+/;
+
+/**
+ * Remove container directive blocks (:::tip ... :::) from text
+ * These blocks are parsed as plain text by remark-parse (without directive plugins)
+ */
+function stripContainerDirectives(text: string): string {
+  const lines = text.split('\n');
+  const result: string[] = [];
+  let insideDirective = false;
+
+  for (const line of lines) {
+    if (!insideDirective && CONTAINER_DIRECTIVE_REGEX.test(line)) {
+      insideDirective = true;
+      continue;
+    }
+    if (insideDirective) {
+      if (/^\s*:::$/.test(line.trimEnd())) {
+        insideDirective = false;
+      }
+      continue;
+    }
+    result.push(line);
+  }
+  return result.join('\n');
+}
+
+/**
  * Extract description from all text content between h1 and h2
  * Collects text from paragraph and list nodes after h1 and before any h2 heading
  * Skips code blocks, HTML, imports, tables following Docusaurus createExcerpt strategy
+ * Also strips container directive blocks (:::tip, :::info, etc.)
  */
 function extractDescription(tree: Root): string {
   const textParts: string[] = [];
@@ -155,7 +187,8 @@ function extractDescription(tree: Root): string {
     }
     // Collect text from content nodes after h1
     if (foundH1) {
-      const text = extractTextFromNode(node).trim();
+      const rawText = extractTextFromNode(node);
+      const text = stripContainerDirectives(rawText).trim();
       if (text) {
         textParts.push(text);
       }

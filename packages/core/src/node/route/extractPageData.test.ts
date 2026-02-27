@@ -638,6 +638,24 @@ describe('getPageIndexInfoByRoute', async () => {
     expect(pageIndexInfo.frontmatter.description).toBeUndefined();
   });
 
+  it('should skip container directives (:::tip, :::info, etc.) when extracting description', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-container-directive.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    // Container directive content should be stripped from description
+    expect(pageIndexInfo.description).toBe(
+      'This is the actual description. More description text after the tip.',
+    );
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
+  });
+
   it('should not extract description when extractDescription is false', async () => {
     const pageIndexInfo = await getPageIndexInfoByRoute(
       createRoute('with-description.mdx', fixtureContentProcessingDir),
