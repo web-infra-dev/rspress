@@ -10,6 +10,7 @@
   &__title {
     padding-left: var(--rp-outline-padding-x);
     padding-right: var(--rp-outline-padding-x);
+    flex-shrink: 0;
 
     font-size: 14px;
     font-weight: 700;
@@ -17,7 +18,6 @@
     line-height: 32px;
     font-style: normal;
     color: var(--rp-c-text-1);
-    margin-bottom: 4px;
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -29,6 +29,7 @@
   &__divider {
     margin-left: var(--rp-outline-padding-x);
     margin-right: var(--rp-outline-padding-x);
+    flex-shrink: 0;
 
     height: 1px;
     background: var(--rp-c-divider-light);
@@ -37,23 +38,28 @@
   }
 
   &__toc {
-    padding-left: var(--rp-outline-padding-x);
-    padding-right: var(--rp-outline-padding-x);
+    padding: 4px var(--rp-outline-padding-x);
 
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-height: 0;
+    max-height: 70vh;
+    overflow: auto scroll;
+    scrollbar-width: none;
 
-    // allow scroll when there are too many toc items
+    mask-image: linear-gradient(#0000, #fff 12px calc(100% - 12px), #0000);
+
+    // limit height on mobile where outline is a floating panel
     @media (max-width: 1280px) {
       max-height: 60vh;
-      overflow: auto scroll;
     }
   }
 
   &__bottom {
     padding-left: var(--rp-outline-padding-x);
     padding-right: var(--rp-outline-padding-x);
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
