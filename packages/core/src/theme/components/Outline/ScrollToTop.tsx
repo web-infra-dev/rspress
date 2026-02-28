@@ -1,5 +1,5 @@
 import { useI18n } from '@rspress/core/runtime';
-import { IconScrollToTop, SvgWrapper } from '@theme';
+import { IconScrollToTop, SvgWrapper, useReadPercent } from '@theme';
 
 export function ScrollToTop() {
   const scrollToTop = () => {
@@ -10,6 +10,12 @@ export function ScrollToTop() {
   };
 
   const t = useI18n();
+
+  const [, scrollTop] = useReadPercent();
+
+  if (scrollTop < 100) {
+    return null;
+  }
 
   return (
     <button className="rp-outline__action-row" onClick={scrollToTop}>
