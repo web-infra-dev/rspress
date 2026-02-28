@@ -132,36 +132,47 @@ const SKIP_NODE_TYPES = new Set([
 
 /**
  * Regex to match the start of a container directive (:::tip, :::info, etc.)
- * Used to filter out container directive content from descriptions
+ * Aligned with REGEX_BEGIN in containerSyntax.ts
  */
 const CONTAINER_DIRECTIVE_REGEX = /^\s*:::\s*(\w+)\s*(.*)?/;
 
 /**
- * Remove container directive blocks (:::tip ... :::) from text
- * These blocks are parsed as plain text by remark-parse (without directive plugins)
+ * Regex to match a closing container directive marker (:::)
+ */
+const CONTAINER_DIRECTIVE_END_REGEX = /^\s*:::\s*$/;
+
+/**
+ * Remove container directive blocks (:::tip ... :::) from text.
+ * Handles directives that span multiple lines, including cases where
+ * remark-parse splits them across multiple AST nodes (with blank lines).
+ * If a directive is never closed, only the opening line is stripped
+ * to avoid silently dropping content.
  */
 function stripContainerDirectives(text: string): string {
   const lines = text.split('\n');
   const result: string[] = [];
-  let insideDirective = false;
+  let directiveStartIndex = -1;
 
-  for (const line of lines) {
-    if (!insideDirective && CONTAINER_DIRECTIVE_REGEX.test(line)) {
-      insideDirective = true;
+  for (let i = 0; i < lines.length; i++) {
+    if (
+      directiveStartIndex === -1 &&
+      CONTAINER_DIRECTIVE_REGEX.test(lines[i])
+    ) {
+      directiveStartIndex = i;
       continue;
     }
-    if (insideDirective) {
-      if (/^\s*:::$/.test(line.trimEnd())) {
-        insideDirective = false;
+    if (directiveStartIndex !== -1) {
+      if (CONTAINER_DIRECTIVE_END_REGEX.test(lines[i])) {
+        directiveStartIndex = -1;
       }
       continue;
     }
-    result.push(line);
+    result.push(lines[i]);
   }
-  // If we reached the end while still inside a directive, the directive was never closed.
-  // In that malformed case, fall back to the original text to avoid dropping content.
-  if (insideDirective) {
-    return text;
+  // If directive was never closed, only strip the opening :::directive line
+  // and keep all subsequent content to avoid dropping text.
+  if (directiveStartIndex !== -1) {
+    result.push(...lines.slice(directiveStartIndex + 1));
   }
   return result.join('\n');
 }
@@ -192,14 +203,23 @@ function extractDescription(tree: Root): string {
     }
     // Collect text from content nodes after h1
     if (foundH1) {
-      const rawText = extractTextFromNode(node);
-      const text = stripContainerDirectives(rawText).trim();
+      const text = extractTextFromNode(node).trim();
       if (text) {
         textParts.push(text);
       }
     }
   }
-  return textParts.join(' ');
+
+  // Strip container directives from the concatenated text.
+  // This is done after collecting all text because remark-parse may split
+  // directives with blank lines into multiple sibling AST nodes (e.g.,
+  // ":::tip", "content", ":::" become three separate paragraph nodes).
+  const joined = textParts.join('\n');
+  return stripContainerDirectives(joined)
+    .split('\n')
+    .map(l => l.trim())
+    .filter(Boolean)
+    .join(' ');
 }
 
 async function getPageIndexInfoByRoute(
