@@ -8,8 +8,8 @@ export const Tag = ({ tag }: { tag?: string }) => {
     return null;
   }
 
-  if (tag === 'eject-only') {
-    return <BasicBadge text="eject-only" type="warning" />;
+  if (tag === 'theme-only') {
+    return <BasicBadge text="theme-only" type="warning" />;
   }
   if (tag === 'non-ejectable') {
     return <BasicBadge text="non-ejectable" type="danger" />;

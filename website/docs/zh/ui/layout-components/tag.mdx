@@ -81,7 +81,7 @@ tag: new, experimental
 
 Tag 组件是 ejectable 的，当你想扩充常用标签时，可使用 wrap/eject 来对 Tag 组件进行修改，tag 的值会作为 props 传递给 Tag 组件。
 
-以下是一个本站通过 wrap 增加 `eject-only` 自定义标签的使用示例：
+以下是一个本站通过 wrap 增加 `theme-only` 自定义标签的使用示例：
 
 ```tsx title="theme/components/Tag/index.tsx"
 import {
@@ -90,8 +90,8 @@ import {
 } from '@rspress/core/theme-original';
 
 export const Tag = ({ tag }: { tag: string }) => {
-  if (tag === 'eject-only') {
-    return <BasicBadge text="eject-only" type="warning" />;
+  if (tag === 'theme-only') {
+    return <BasicBadge text="theme-only" type="warning" />;
   }
   return <BasicTag tag={tag} />;
 };
@@ -99,7 +99,7 @@ export const Tag = ({ tag }: { tag: string }) => {
 
 ```mdx title="index.mdx"
 ---
-tag: new, eject-only
+tag: new, theme-only
 ---
 ```
 

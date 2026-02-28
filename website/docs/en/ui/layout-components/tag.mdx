@@ -81,7 +81,7 @@ The component has built-in common tags that display with `<Badge />`. All common
 
 The Tag component is ejectable. When you want to extend common tags, you can use wrap/eject to modify the Tag component. The tag value is passed as props to the Tag component.
 
-Here's an example from this site adding a custom `eject-only` tag through wrap:
+Here's an example from this site adding a custom `theme-only` tag through wrap:
 
 ```tsx title="theme/components/Tag/index.tsx"
 import {
@@ -90,8 +90,8 @@ import {
 } from '@rspress/core/theme-original';
 
 export const Tag = ({ tag }: { tag: string }) => {
-  if (tag === 'eject-only') {
-    return <BasicBadge text="eject-only" type="warning" />;
+  if (tag === 'theme-only') {
+    return <BasicBadge text="theme-only" type="warning" />;
   }
   return <BasicTag tag={tag} />;
 };
@@ -99,7 +99,7 @@ export const Tag = ({ tag }: { tag: string }) => {
 
 ```mdx title="index.mdx"
 ---
-tag: new, eject-only
+tag: new, theme-only
 ---
 ```
 
