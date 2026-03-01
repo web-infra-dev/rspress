@@ -638,6 +638,86 @@ describe('getPageIndexInfoByRoute', async () => {
     expect(pageIndexInfo.frontmatter.description).toBeUndefined();
   });
 
+  it('should skip container directives (:::tip, :::info, etc.) when extracting description', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-container-directive.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    // Container directive content should be stripped from description
+    expect(pageIndexInfo.description).toBe(
+      'This is the actual description. More description text after the tip.',
+    );
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
+  });
+
+  it('should skip container directives with blank lines (split across AST nodes)', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute(
+        'with-container-directive-blank-lines.mdx',
+        fixtureContentProcessingDir,
+      ),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo.description).toBe(
+      'This is the description. More text after.',
+    );
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
+  });
+
+  it('should skip multiple consecutive container directives', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute(
+        'with-container-directive-multiple.mdx',
+        fixtureContentProcessingDir,
+      ),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo.description).toBe(
+      'Description before directives. Description after directives.',
+    );
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
+  });
+
+  it('should handle unclosed container directives without dropping content', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute(
+        'with-container-directive-unclosed.mdx',
+        fixtureContentProcessingDir,
+      ),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    // The :::tip line and its inline content are stripped,
+    // but "More text" is kept since the directive was never closed
+    expect(pageIndexInfo.description).toBe(
+      'Description text. This directive is never closed. More text that should still appear.',
+    );
+    expect(pageIndexInfo.frontmatter.description).toBeUndefined();
+  });
+
   it('should not extract description when extractDescription is false', async () => {
     const pageIndexInfo = await getPageIndexInfoByRoute(
       createRoute('with-description.mdx', fixtureContentProcessingDir),

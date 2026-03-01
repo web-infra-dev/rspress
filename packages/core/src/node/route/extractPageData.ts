@@ -131,9 +131,57 @@ const SKIP_NODE_TYPES = new Set([
 ]);
 
 /**
+ * Regex to match the start of a container directive (:::tip, :::info, etc.)
+ * Aligned with REGEX_BEGIN in containerSyntax.ts
+ */
+const CONTAINER_DIRECTIVE_REGEX = /^\s*:::\s*(\w+)\s*(.*)?/;
+
+/**
+ * Regex to match a closing container directive marker (:::)
+ */
+const CONTAINER_DIRECTIVE_END_REGEX = /^\s*:::\s*$/;
+
+/**
+ * Remove container directive blocks (:::tip ... :::) from text.
+ * Handles directives that span multiple lines, including cases where
+ * remark-parse splits them across multiple AST nodes (with blank lines).
+ * If a directive is never closed, only the opening line is stripped
+ * to avoid silently dropping content.
+ */
+function stripContainerDirectives(text: string): string {
+  const lines = text.split('\n');
+  const result: string[] = [];
+  let directiveStartIndex = -1;
+
+  for (let i = 0; i < lines.length; i++) {
+    if (
+      directiveStartIndex === -1 &&
+      CONTAINER_DIRECTIVE_REGEX.test(lines[i])
+    ) {
+      directiveStartIndex = i;
+      continue;
+    }
+    if (directiveStartIndex !== -1) {
+      if (CONTAINER_DIRECTIVE_END_REGEX.test(lines[i])) {
+        directiveStartIndex = -1;
+      }
+      continue;
+    }
+    result.push(lines[i]);
+  }
+  // If directive was never closed, only strip the opening :::directive line
+  // and keep all subsequent content to avoid dropping text.
+  if (directiveStartIndex !== -1) {
+    result.push(...lines.slice(directiveStartIndex + 1));
+  }
+  return result.join('\n');
+}
+
+/**
  * Extract description from all text content between h1 and h2
  * Collects text from paragraph and list nodes after h1 and before any h2 heading
  * Skips code blocks, HTML, imports, tables following Docusaurus createExcerpt strategy
+ * Also strips container directive blocks (:::tip, :::info, etc.)
  */
 function extractDescription(tree: Root): string {
   const textParts: string[] = [];
@@ -161,7 +209,17 @@ function extractDescription(tree: Root): string {
       }
     }
   }
-  return textParts.join(' ');
+
+  // Strip container directives from the concatenated text.
+  // This is done after collecting all text because remark-parse may split
+  // directives with blank lines into multiple sibling AST nodes (e.g.,
+  // ":::tip", "content", ":::" become three separate paragraph nodes).
+  const joined = textParts.join('\n');
+  return stripContainerDirectives(joined)
+    .split('\n')
+    .map(l => l.trim())
+    .filter(Boolean)
+    .join(' ');
 }
 
 async function getPageIndexInfoByRoute(

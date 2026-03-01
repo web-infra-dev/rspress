@@ -203,7 +203,7 @@ Once installed, Rspress will automatically detect and use the `react-render-to-m
 
 ### UI display
 
-When `llms: true` is enabled, `LlmsCopyButton` and `LlmsViewOptions` components are automatically displayed below all H1 headers, allowing users to copy Markdown content or open it in AI tools like ChatGPT or Claude.
+When `llms: true` is enabled, `LlmsCopyButton` and `LlmsViewOptions` components are automatically displayed below all H1 headers, allowing users to copy Markdown content or open it in AI tools like ChatGPT or Claude. You can also display them in the outline panel instead by setting `placement: 'outline'`.
 
 Customize or disable via `themeConfig.llmsUI`:
 
@@ -218,6 +218,7 @@ export default defineConfig({
     // Or customize options:
     // llmsUI: {
     //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    //   placement: 'outline', // Display in outline panel instead of below H1
     // },
   },
 });

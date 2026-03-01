@@ -1,3 +1,4 @@
+import { normalizeImagePath } from '@rspress/core/runtime';
 import { renderHtmlOrText } from '@theme';
 
 /**
@@ -44,7 +45,9 @@ export function SvgWrapper({ icon: Icon, ...rest }: SvgWrapperProps) {
     }
     // URL or file path
     if (isUrlOrPath(Icon)) {
-      return <img className={className} src={Icon} alt="" />;
+      return (
+        <img className={className} src={normalizeImagePath(Icon)} alt="" />
+      );
     }
     // Fallback: emoji/text/HTML
     return <span className={className} {...renderHtmlOrText(Icon)} />;

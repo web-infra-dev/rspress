@@ -211,7 +211,7 @@ function hello() {
 }
 ```
 
-你也可以通过在配置文件中设置 `showLineNumbers` 选项来全局启用行号：
+你也可以通过在配置文件中设置 [`showLineNumbers`](/api/config/config-build#markdownshowlinenumbers) 选项来全局启用行号：
 
 ```ts title="rspress.config.ts"
 export default {
@@ -222,7 +222,15 @@ export default {
 };
 ```
 
-当全局启用 `showLineNumbers` 时，所有代码块默认都会显示行号。
+当全局启用 `showLineNumbers` 时，所有代码块默认都会显示行号。你可以使用 `lineNumbers=false` 为特定代码块禁用行号：
+
+````mdx
+```ts lineNumbers=false
+function hello() {
+  console.log('此代码块禁用了行号');
+}
+```
+````
 
 ## 代码换行
 
@@ -242,7 +250,7 @@ const longLine = '这是一行很长的代码，当存在 wrapCode meta 属性�
 const longLine = '这是一行很长的代码，当存在 wrapCode meta 属性时会自动换行显示';
 ```
 
-你也可以通过在配置文件中设置 `defaultWrapCode` 选项来全局启用代码换行：
+你也可以通过在配置文件中设置 [`defaultWrapCode`](/api/config/config-build#markdowndefaultwrapcode) 选项来全局启用代码换行：
 
 ```ts title="rspress.config.ts"
 export default {
@@ -253,7 +261,14 @@ export default {
 };
 ```
 
-当全局启用 `defaultWrapCode` 时，所有代码块默认都会换行显示长代码。
+当全局启用 `defaultWrapCode` 时，所有代码块默认都会换行显示长代码。你可以使用 `wrapCode=false` 为特定代码块禁用代码换行：
+
+{/* prettier-ignore */}
+````mdx
+```ts wrapCode=false
+const longLine = '此代码块不会换行，即使全局启用了 defaultWrapCode';
+```
+````
 
 ## 组合使用 meta 属性
 

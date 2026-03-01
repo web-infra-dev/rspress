@@ -263,11 +263,15 @@ export default defineConfig({
 
 是否显示代码块的行号。默认为 `false`。
 
+全局启用后，可以在代码块 meta 中使用 `lineNumbers=false` 来为特定代码块禁用行号。反之，全局未启用时，可以使用 `lineNumbers` 或 `lineNumbers=true` 来为特定代码块启用行号。详见[显示代码行号](/guide/use-mdx/code-blocks#显示代码行号)。
+
 ### markdown.defaultWrapCode
 
 - **类型**: `boolean`
 
 是否默认启用长代码换行展示。默认为 `false`。
+
+全局启用后，可以在代码块 meta 中使用 `wrapCode=false` 来为特定代码块禁用换行。反之，全局未启用时，可以使用 `wrapCode` 或 `wrapCode=true` 来为特定代码块启用换行。详见[代码换行](/guide/use-mdx/code-blocks#代码换行)。
 
 ### markdown.crossCompilerCache
 

@@ -34,6 +34,13 @@ export type LlmsUI =
        * @default ['markdownLink', 'chatgpt', 'claude']
        */
       viewOptions?: LlmsViewOption[];
+      /**
+       * Where to display the LLM UI components.
+       * - 'title': Show as buttons below the H1 title (default)
+       * - 'outline': Show as separate rows in the outline sidebar
+       * @default 'title'
+       */
+      placement?: 'title' | 'outline';
     }
   | boolean;
 

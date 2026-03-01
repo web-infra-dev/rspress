@@ -203,7 +203,7 @@ SSG-MD 默认使用 `react-render-to-markdown@19`，仅支持 React 19。如果�
 
 ### UI 展示
 
-当启用 `llms: true` 时，会自动在所有 H1 标题下方显示 `LlmsCopyButton` 和 `LlmsViewOptions` 组件，方便用户复制 Markdown 内容或在 ChatGPT、Claude 等 AI 工具中打开。
+当启用 `llms: true` 时，会自动在所有 H1 标题下方显示 `LlmsCopyButton` 和 `LlmsViewOptions` 组件，方便用户复制 Markdown 内容或在 ChatGPT、Claude 等 AI 工具中打开。也可以通过设置 `placement: 'outline'` 将其显示在右侧大纲面板中。
 
 可通过 `themeConfig.llmsUI` 自定义或禁用：
 
@@ -218,6 +218,7 @@ export default defineConfig({
     // 或自定义选项：
     // llmsUI: {
     //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    //   placement: 'outline', // 在大纲面板中显示而非 H1 下方
     // },
   },
 });

@@ -110,11 +110,8 @@
     z-index: var(--rp-z-index-aside);
     padding-top: var(--rp-content-padding-y);
 
-    overflow: hidden scroll;
-    scrollbar-width: none;
-    max-height: calc(
-      100vh - var(--rp-nav-height) - var(--rp-banner-height, 0px)
-    );
+    overflow: hidden;
+    height: calc(100vh - var(--rp-nav-height) - var(--rp-banner-height, 0px));
 
     box-shadow: var(--rp-shadow-1);
   }
@@ -175,6 +172,7 @@
     &__outline {
       position: fixed;
       inset-inline-end: 0;
+      height: auto;
       // margin-top: var(--rp-sidebar-menu-height);
       background-color: color-mix(in srgb, var(--rp-c-bg) 60%, transparent);
       backdrop-filter: blur(25px);

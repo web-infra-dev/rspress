@@ -19,7 +19,13 @@ function hasLineNumbersInMeta(meta: string | undefined): boolean | undefined {
     return undefined;
   }
   const kvList = meta.split(' ').filter(Boolean);
-  return kvList.includes('lineNumbers') || undefined;
+  if (kvList.includes('lineNumbers=false')) {
+    return false;
+  }
+  if (kvList.includes('lineNumbers') || kvList.includes('lineNumbers=true')) {
+    return true;
+  }
+  return undefined;
 }
 
 /**
@@ -38,7 +44,7 @@ export function transformerAddLineNumbers(
       const shouldShowLineNumbers =
         metaHasLineNumbers ?? defaultShowLineNumbers;
 
-      if (shouldShowLineNumbers) {
+      if (metaHasLineNumbers !== undefined || shouldShowLineNumbers) {
         pre.properties = {
           ...pre.properties,
           lineNumbers: shouldShowLineNumbers,

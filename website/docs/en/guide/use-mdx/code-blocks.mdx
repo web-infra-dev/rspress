@@ -211,7 +211,7 @@ function hello() {
 }
 ```
 
-You can also enable line numbers globally by setting the `showLineNumbers` option in the config file:
+You can also enable line numbers globally by setting the [`showLineNumbers`](/api/config/config-build#markdownshowlinenumbers) option in the config file:
 
 ```ts title="rspress.config.ts"
 export default {
@@ -222,7 +222,15 @@ export default {
 };
 ```
 
-When `showLineNumbers` is enabled globally, all code blocks will show line numbers by default.
+When `showLineNumbers` is enabled globally, all code blocks will show line numbers by default. You can disable line numbers for a specific code block by using `lineNumbers=false`:
+
+````mdx
+```ts lineNumbers=false
+function hello() {
+  console.log('Line numbers disabled for this block');
+}
+```
+````
 
 ## Wrap code
 
@@ -242,7 +250,7 @@ It will be rendered as:
 const longLine = 'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
 ```
 
-You can also enable code wrapping globally by setting the `defaultWrapCode` option in the config file:
+You can also enable code wrapping globally by setting the [`defaultWrapCode`](/api/config/config-build#markdowndefaultwrapcode) option in the config file:
 
 ```ts title="rspress.config.ts"
 export default {
@@ -253,7 +261,14 @@ export default {
 };
 ```
 
-When `defaultWrapCode` is enabled globally, all code blocks will wrap long lines by default.
+When `defaultWrapCode` is enabled globally, all code blocks will wrap long lines by default. You can disable code wrapping for a specific code block by using `wrapCode=false`:
+
+{/* prettier-ignore */}
+````mdx
+```ts wrapCode=false
+const longLine = 'This code block will not wrap even if defaultWrapCode is enabled globally';
+```
+````
 
 ## Combining meta attributes
 

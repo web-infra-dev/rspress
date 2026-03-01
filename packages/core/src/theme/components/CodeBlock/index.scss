@@ -74,12 +74,17 @@
     counter-reset: step;
     counter-increment: step 0;
     & .line::before {
+      width: 2ch;
       content: counter(step);
       counter-increment: step;
       margin-right: 1rem;
       display: inline-block;
       text-align: right;
       color: rgba(115, 138, 148, 0.4);
+    }
+    // 100+ for 3 digits
+    &:has(.line:nth-child(100)) .line::before {
+      width: 3ch;
     }
   }
 }

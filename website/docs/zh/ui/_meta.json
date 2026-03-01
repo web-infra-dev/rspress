@@ -34,7 +34,7 @@
     "type": "dir",
     "label": "布局组件",
     "name": "layout-components",
-    "tag": "eject-only"
+    "tag": "theme-only"
   },
   {
     "type": "section-header",

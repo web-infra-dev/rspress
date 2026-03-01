@@ -46,7 +46,7 @@ If you want users reading your documentation site to better utilize large langua
 
 #### Using themeConfig (Recommended)
 
-The simplest way is to enable `llmsUI` in `themeConfig`. This will automatically add `LlmsCopyButton` and `LlmsViewOptions` components below all H1 headers without requiring custom theme code:
+The simplest way is to enable `llmsUI` in `themeConfig`. This will automatically add `LlmsCopyButton` and `LlmsViewOptions` components below all H1 headers (or in the outline panel) without requiring custom theme code:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -59,6 +59,7 @@ export default defineConfig({
     // Or with custom options:
     // llmsUI: {
     //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    //   placement: 'outline', // Display in outline panel instead of below H1
     // },
   },
 });
