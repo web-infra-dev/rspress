@@ -58,11 +58,6 @@
       matchPackagePatterns: ['*'],
       matchUpdateTypes: ['patch'],
     },
-    // Auto-merge patch updates (low risk, historically stable)
-    {
-      matchUpdateTypes: ['patch'],
-      automerge: true,
-    },
     // manually update peer dependencies
     {
       matchDepTypes: ['peerDependencies'],
