@@ -18,7 +18,10 @@ export function ScrollToTop() {
   }
 
   return (
-    <button className="rp-outline__action-row" onClick={scrollToTop}>
+    <button
+      className="rp-outline__action-row rp-scroll-to-top"
+      onClick={scrollToTop}
+    >
       <SvgWrapper icon={IconScrollToTop} width="16" height="16" />
       <span>{t('scrollToTopText')}</span>
     </button>
