@@ -166,6 +166,14 @@ describe('walk', () => {
         "sidebar": {
           "/": [
             {
+              "_fileKey": "index",
+              "context": undefined,
+              "link": "/",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "HomePage",
+            },
+            {
               "_fileKey": "api/index",
               "collapsed": undefined,
               "collapsible": undefined,
@@ -222,14 +230,6 @@ describe('walk', () => {
               "overviewHeaders": undefined,
               "tag": undefined,
               "text": "No meta",
-            },
-            {
-              "_fileKey": "index",
-              "context": undefined,
-              "link": "/",
-              "overviewHeaders": undefined,
-              "tag": undefined,
-              "text": "HomePage",
             },
           ],
         },

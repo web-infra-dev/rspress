@@ -44,7 +44,14 @@ async function fsDirToMetaItems(
 ): Promise<SideMetaItem[]> {
   let subItems: string[];
   try {
-    subItems = await readdir(workDir);
+    subItems = (await readdir(workDir)).sort((a, b) => {
+      const aIsIndex = a.replace(/\.[^/.]+$/, '') === 'index';
+      const bIsIndex = b.replace(/\.[^/.]+$/, '') === 'index';
+      if (aIsIndex !== bIsIndex) {
+        return aIsIndex ? -1 : 1;
+      }
+      return a.localeCompare(b);
+    });
   } catch (e) {
     const metaFilePath = join(workDir, '_meta.json');
 
