@@ -45,11 +45,13 @@ async function fsDirToMetaItems(
   let subItems: string[];
   try {
     subItems = (await readdir(workDir)).sort((a, b) => {
+      // 1. index.md or index.mdx should be placed at the top of the sidebar
       const aIsIndex = a.replace(/\.[^/.]+$/, '') === 'index';
       const bIsIndex = b.replace(/\.[^/.]+$/, '') === 'index';
       if (aIsIndex !== bIsIndex) {
         return aIsIndex ? -1 : 1;
       }
+      // 2. Dictionary order
       return a.localeCompare(b);
     });
   } catch (e) {
