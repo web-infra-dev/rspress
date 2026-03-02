@@ -143,10 +143,10 @@ export const DEFAULT_I18N_TEXT = {
     ru: 'Скопировать ссылку в формате Markdown',
   },
   editLinkText: {
-    en: '📝 Edit this page',
-    zh: '📝 编辑此页面',
-    ja: '📝 このページを編集',
-    ko: '📝 이 페이지 편집',
+    en: 'Edit this page',
+    zh: '编辑此页面',
+    ja: 'このページを編集',
+    ko: '이 페이지 편집',
     ru: 'Отредактировать страницу',
   },
   codeButtonGroupCopyButtonText: {

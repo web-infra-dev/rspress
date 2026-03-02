@@ -1,7 +1,6 @@
 import { useI18n, useSite } from '@rspress/core/runtime';
-import { ReadPercent, Toc, useDynamicToc } from '@theme';
+import { EditLink, ReadPercent, Toc, useDynamicToc } from '@theme';
 import './index.scss';
-import { EditLinkRow } from './EditLinkRow';
 import { ScrollToTop } from './ScrollToTop';
 
 export function Outline() {
@@ -29,8 +28,8 @@ export function Outline() {
       </nav>
       <div className="rp-outline__divider" />
       <div className="rp-outline__bottom">
+        <EditLink isOutline />
         {enableScrollToTop && <ScrollToTop />}
-        <EditLinkRow />
       </div>
     </div>
   );
