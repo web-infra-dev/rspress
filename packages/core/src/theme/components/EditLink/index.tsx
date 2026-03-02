@@ -13,7 +13,7 @@ export function EditLink({ isOutline }: { isOutline?: boolean }) {
 
   if (isOutline) {
     return (
-      <Link href={link} className="rp-outline__action-row">
+      <Link href={link} className="rp-outline__action-row rp-edit-link">
         <SvgWrapper icon={IconEdit} width="16" height="16" />
         <span>{text}</span>
       </Link>

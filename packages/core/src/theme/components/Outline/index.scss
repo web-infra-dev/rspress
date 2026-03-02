@@ -91,15 +91,4 @@
       flex-shrink: 0;
     }
   }
-
-  &__open-in-wrapper {
-    position: relative;
-
-    .rp-llms-view-options__menu {
-      bottom: calc(100% + 6px);
-      top: auto;
-      left: 0;
-      transform-origin: bottom left;
-    }
-  }
 }

@@ -1,5 +1,12 @@
 import { useI18n, useSite } from '@rspress/core/runtime';
-import { EditLink, ReadPercent, Toc, useDynamicToc } from '@theme';
+import {
+  EditLink,
+  LlmsCopyRow,
+  LlmsOpenRow,
+  ReadPercent,
+  Toc,
+  useDynamicToc,
+} from '@theme';
 import './index.scss';
 import { ScrollToTop } from './ScrollToTop';
 
@@ -9,13 +16,16 @@ export function Outline() {
   const headers = useDynamicToc();
   const {
     site: {
-      themeConfig: { enableScrollToTop = true },
+      themeConfig: { enableScrollToTop = true, llmsUI },
     },
   } = useSite();
 
   if (headers.length === 0) {
     return <></>;
   }
+
+  const placement =
+    typeof llmsUI === 'object' ? (llmsUI?.placement ?? 'title') : 'title';
 
   return (
     <div className="rp-outline">
@@ -29,6 +39,12 @@ export function Outline() {
       <div className="rp-outline__divider" />
       <div className="rp-outline__bottom">
         <EditLink isOutline />
+        {process.env.ENABLE_LLMS_UI && placement === 'outline' && (
+          <>
+            <LlmsCopyRow />
+            <LlmsOpenRow />
+          </>
+        )}
         {enableScrollToTop && <ScrollToTop />}
       </div>
     </div>

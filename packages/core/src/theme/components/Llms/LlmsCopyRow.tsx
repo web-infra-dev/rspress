@@ -1,8 +1,7 @@
 import { useI18n } from '@rspress/core/runtime';
-import { IconCopy, IconSuccess } from '@theme';
+import { IconCopy, IconSuccess, SvgWrapper } from '@theme';
 import { useCallback, useRef, useState } from 'react';
-import { useMdUrl } from '../Llms/useMdUrl';
-import { SvgWrapper } from '../SvgWrapper';
+import { useMdUrl } from './useMdUrl';
 
 const cache = new Map<string, string>();
 

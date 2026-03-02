@@ -38,6 +38,8 @@ export {
   type LlmsViewOptionsProps,
   useMdUrl,
 } from './components/Llms/index';
+export { LlmsCopyRow } from './components/Llms/LlmsCopyRow';
+export { LlmsOpenRow } from './components/Llms/LlmsOpenRow';
 export { Nav, type NavProps } from './components/Nav/index';
 export { NavHamburger } from './components/NavHamburger/index';
 export { NavTitle } from './components/NavTitle/index';

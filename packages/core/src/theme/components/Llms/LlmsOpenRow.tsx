@@ -1,9 +1,9 @@
 import { useI18n, useSite } from '@rspress/core/runtime';
-import { IconExternalLink } from '@theme';
+import { IconExternalLink, SvgWrapper } from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { SvgWrapper } from '../SvgWrapper';
-import '../Llms/LlmsViewOptions.scss';
-import { useMdUrl } from '../Llms/useMdUrl';
+import './LlmsOpenRow.scss';
+import './LlmsViewOptions.scss';
+import { useMdUrl } from './useMdUrl';
 
 export function LlmsOpenRow() {
   const t = useI18n();
