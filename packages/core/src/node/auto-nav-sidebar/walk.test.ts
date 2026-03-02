@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
-import { describe, expect, it } from '@rstest/core';
+import { afterEach, describe, expect, it } from '@rstest/core';
 import {
   getRoutePathParts,
   normalizeRoutePath,
@@ -25,7 +25,16 @@ function orderStringSet(input: Set<string>) {
   return Array.from(input).sort().join('\n');
 }
 
+const defaultMock = {
+  normalizeRoutePath: mockNormalizeRoutePath,
+  getRoutePathParts: mockGetRoutePathParts,
+} as RouteService;
+
 describe('walk', () => {
+  afterEach(() => {
+    RouteService.__instance__ = defaultMock;
+  });
+
   it('basic', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs');
     const metaFileSet = new Set<string>();
@@ -157,11 +166,37 @@ describe('walk', () => {
         "sidebar": {
           "/": [
             {
+              "_fileKey": "index",
+              "context": undefined,
+              "link": "/",
+              "overviewHeaders": undefined,
+              "tag": undefined,
+              "text": "HomePage",
+            },
+            {
               "_fileKey": "api/index",
               "collapsed": undefined,
               "collapsible": undefined,
               "context": undefined,
               "items": [
+                {
+                  "_fileKey": "api/_components",
+                  "collapsed": undefined,
+                  "collapsible": undefined,
+                  "context": undefined,
+                  "items": [
+                    {
+                      "_fileKey": "api/_components/Button",
+                      "context": undefined,
+                      "link": "/api/_components/Button",
+                      "overviewHeaders": undefined,
+                      "tag": undefined,
+                      "text": "Button",
+                    },
+                  ],
+                  "overviewHeaders": undefined,
+                  "text": "_components",
+                },
                 {
                   "_fileKey": "api/api",
                   "context": undefined,
@@ -196,21 +231,14 @@ describe('walk', () => {
               "tag": undefined,
               "text": "No meta",
             },
-            {
-              "_fileKey": "index",
-              "context": undefined,
-              "link": "/",
-              "overviewHeaders": undefined,
-              "tag": undefined,
-              "text": "HomePage",
-            },
           ],
         },
       }
     `);
     expect(orderStringSet(metaFileSet)).toMatchInlineSnapshot(`""`);
     expect(orderStringSet(mdFileSet)).toMatchInlineSnapshot(`
-      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-no-meta/api/api.mdx
+      "<ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-no-meta/api/_components/Button.mdx
+      <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-no-meta/api/api.mdx
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-no-meta/api/guide/getting-started.mdx
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-no-meta/api/guide/index.mdx
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-no-meta/api/index.mdx
@@ -302,6 +330,69 @@ describe('walk', () => {
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-meta-nav/api/index.mdx
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-meta-nav/index.mdx"
     `);
+  });
+
+  it('route.exclude should filter sidebar items', async () => {
+    const docsDir = path.join(__dirname, './fixtures/docs-no-meta');
+    const metaFileSet = new Set<string>();
+    const mdFileSet = new Set<string>();
+
+    // Mock isExistRoute to exclude _components paths
+    RouteService.__instance__ = {
+      normalizeRoutePath: mockNormalizeRoutePath,
+      getRoutePathParts: mockGetRoutePathParts,
+      isExistRoute: (link: string) => !link.includes('_components'),
+    } as RouteService;
+
+    const result = await walk(
+      docsDir,
+      docsDir,
+      DEFAULT_PAGE_EXTENSIONS,
+      metaFileSet,
+      mdFileSet,
+    );
+
+    // _components/Button should NOT appear in sidebar
+    const allLinks = JSON.stringify(result.sidebar);
+    expect(allLinks).not.toContain('_components');
+    expect(allLinks).not.toContain('Button');
+
+    // Other items should still be present
+    expect(allLinks).toContain('getting-started');
+
+    // Excluded files should not be in mdFileSet
+    expect(Array.from(mdFileSet).some(f => f.includes('Button'))).toBe(false);
+  });
+
+  it('_meta.json referencing excluded file should skip it', async () => {
+    const docsDir = path.join(__dirname, './fixtures/docs-exclude-meta');
+    const metaFileSet = new Set<string>();
+    const mdFileSet = new Set<string>();
+
+    RouteService.__instance__ = {
+      normalizeRoutePath: mockNormalizeRoutePath,
+      getRoutePathParts: mockGetRoutePathParts,
+      isExistRoute: (link: string) => !link.includes('excluded-file'),
+    } as RouteService;
+
+    const result = await walk(
+      docsDir,
+      docsDir,
+      DEFAULT_PAGE_EXTENSIONS,
+      metaFileSet,
+      mdFileSet,
+    );
+
+    const sidebar = result.sidebar['/guide'];
+    const allLinks = JSON.stringify(sidebar);
+    expect(allLinks).not.toContain('excluded-file');
+    expect(allLinks).toContain('Page a');
+    expect(allLinks).toContain('Page b');
+
+    // Excluded files should not be in mdFileSet
+    expect(Array.from(mdFileSet).some(f => f.includes('excluded-file'))).toBe(
+      false,
+    );
   });
 
   it('custom link group', async () => {

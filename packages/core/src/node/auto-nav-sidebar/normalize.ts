@@ -12,6 +12,7 @@ import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
 import { PUBLIC_DIR } from '../constants';
 import { absolutePathToRoutePath, addRoutePrefix } from '../route/RoutePage';
+import { RouteService } from '../route/RouteService';
 import { createError } from '../utils';
 import type {
   CustomLinkMeta,
@@ -43,7 +44,16 @@ async function fsDirToMetaItems(
 ): Promise<SideMetaItem[]> {
   let subItems: string[];
   try {
-    subItems = await readdir(workDir);
+    subItems = (await readdir(workDir)).sort((a, b) => {
+      // 1. index.md or index.mdx should be placed at the top of the sidebar
+      const aIsIndex = a.replace(/\.[^/.]+$/, '') === 'index';
+      const bIsIndex = b.replace(/\.[^/.]+$/, '') === 'index';
+      if (aIsIndex !== bIsIndex) {
+        return aIsIndex ? -1 : 1;
+      }
+      // 2. Dictionary order
+      return a.localeCompare(b);
+    });
   } catch (e) {
     const metaFilePath = join(workDir, '_meta.json');
 
@@ -100,6 +110,7 @@ async function metaItemToSidebarItem(
 ): Promise<
   | (SidebarItem | SidebarGroup | SidebarDivider | SidebarSectionHeader)
   | (SidebarItem | SidebarGroup | SidebarDivider | SidebarSectionHeader)[]
+  | null
 > {
   if (typeof metaItem === 'string') {
     return metaFileItemToSidebarItem(
@@ -123,7 +134,7 @@ async function metaItemToSidebarItem(
   }
 
   if (type === 'dir') {
-    return metaDirItemToSidebarItem(
+    const group = await metaDirItemToSidebarItem(
       metaItem,
       workDir,
       docsDir,
@@ -132,10 +143,14 @@ async function metaItemToSidebarItem(
       mdFileSet,
       false,
     );
+    if (group.items.length === 0 && !group.link) {
+      return null;
+    }
+    return group;
   }
 
   if (type === 'dir-section-header') {
-    return metaDirSectionHeaderItemToSidebarItem(
+    const items = await metaDirSectionHeaderItemToSidebarItem(
       metaItem,
       workDir,
       docsDir,
@@ -143,6 +158,11 @@ async function metaItemToSidebarItem(
       metaFileSet,
       mdFileSet,
     );
+    // If only the section header remains (no child items), prune it
+    if (items.length <= 1) {
+      return null;
+    }
+    return items;
   }
 
   if (type === 'custom-link') {
@@ -184,7 +204,7 @@ async function metaFileItemToSidebarItem(
   docsDir: string,
   extensions: string[],
   mdFileSet: Set<string>,
-): Promise<SidebarItem> {
+): Promise<SidebarItem | null> {
   let metaItem: FileSideMeta | null = null;
   if (typeof metaItemRaw === 'string') {
     metaItem = {
@@ -218,6 +238,10 @@ async function metaFileItemToSidebarItem(
   }
 
   const link = absolutePathToRoutePath(absolutePathWithExt, docsDir);
+  const routeService = RouteService.getInstance();
+  if (routeService?.isExistRoute && !routeService.isExistRoute(link)) {
+    return null;
+  }
   const info = await extractInfoFromFrontmatterWithAbsolutePath(
     absolutePathWithExt,
     docsDir,
@@ -294,7 +318,12 @@ async function metaDirItemToSidebarItem(
         ),
       ),
     );
-    return items.flat();
+    return items.flat().filter(Boolean) as (
+      | SidebarItem
+      | SidebarGroup
+      | SidebarDivider
+      | SidebarSectionHeader
+    )[];
   }
 
   try {
@@ -309,6 +338,10 @@ async function metaDirItemToSidebarItem(
       extensions,
       mdFileSet,
     );
+
+    if (!sameNameFile) {
+      throw new Error(`Excluded route: ${name}`);
+    }
 
     const { link, text, _fileKey, context, overviewHeaders, tag } =
       sameNameFile;
@@ -356,6 +389,18 @@ async function metaDirItemToSidebarItem(
         extensions,
         mdFileSet,
       );
+
+      if (!indexFile) {
+        return {
+          text: label || name,
+          collapsible,
+          collapsed,
+          items: await getItems(),
+          overviewHeaders: metaJsonOverviewHeaders,
+          context: metaJsonContext,
+          _fileKey: getFileKey(dirAbsolutePath, docsDir),
+        } satisfies SidebarGroup;
+      }
 
       const { link, text, _fileKey, context, overviewHeaders, tag } = indexFile;
       return {
