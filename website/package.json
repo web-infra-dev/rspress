@@ -18,7 +18,7 @@
     "@rspress/plugin-preview": "workspace:*",
     "@rspress/plugin-sitemap": "workspace:*",
     "@rspress/plugin-twoslash": "workspace:*",
-    "@rstack-dev/doc-ui": "^1.12.3",
+    "@rstack-dev/doc-ui": "^1.12.4",
     "@shikijs/transformers": "^3.22.0",
     "@types/react": "^19.2.14",
     "react": "^19.2.4",
