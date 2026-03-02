@@ -194,6 +194,27 @@ End of content.`;
       "
     `);
   });
+
+  it('should preserve mdxFlowExpression as-is', async () => {
+    const input = `# hello
+
+{window.foo}`;
+
+    const result = await processMdx(input);
+
+    expect(result).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      function _createMdxContent(props) {
+        return <>{"# hello\\n"}{"\\n"}{window.foo}</>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
 });
 
 describe('remarkWrapMarkdown with filters', () => {

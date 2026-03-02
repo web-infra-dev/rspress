@@ -66,6 +66,15 @@ export function remarkSplitMdx(
         continue;
       }
 
+      // Preserve MDX expressions as-is (e.g., {window.foo})
+      if (
+        node.type === 'mdxFlowExpression' ||
+        node.type === 'mdxTextExpression'
+      ) {
+        newChildren.push(node);
+        continue;
+      }
+
       // Process JSX elements
       if (
         node.type === 'mdxJsxFlowElement' ||
