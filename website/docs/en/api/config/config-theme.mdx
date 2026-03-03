@@ -134,18 +134,14 @@ interface SidebarGroup {
   tag?: string;
 }
 
-// An object can be filled in, or a string can be filled in
-// When filling in a string, it will be converted into an object internally, the string will be used as a link, and the text value will automatically take the title of the corresponding document
-type SidebarItem =
-  | {
-      // sidebar text
-      text: string;
-      // sidebar link
-      link: string;
-      // svg tag string or image URL(optional)
-      tag?: string;
-    }
-  | string;
+type SidebarItem = {
+  // sidebar text
+  text: string;
+  // sidebar link
+  link: string;
+  // svg tag string or image URL(optional)
+  tag?: string;
+};
 ```
 
 For example:
@@ -160,7 +156,6 @@ export default defineConfig({
         {
           text: 'Getting Started',
           items: [
-            // Fill in an object
             {
               text: 'Introduction',
               link: '/guide/getting-started/introduction',
@@ -173,7 +168,16 @@ export default defineConfig({
         },
         {
           text: 'Advanced',
-          items: ['/guide/advanced/customization', '/guide/advanced/markdown'],
+          items: [
+            {
+              text: 'Customization',
+              link: '/guide/advanced/customization',
+            },
+            {
+              text: 'Markdown',
+              link: '/guide/advanced/markdown',
+            },
+          ],
         },
       ],
     },
