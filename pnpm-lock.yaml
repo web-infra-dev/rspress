@@ -69,8 +69,8 @@ importers:
         specifier: 3.7.4
         version: 3.7.4
       prettier-plugin-packagejson:
-        specifier: ^2.5.22
-        version: 2.5.22(prettier@3.7.4)
+        specifier: ^3.0.0
+        version: 3.0.0(prettier@3.7.4)
       tree-kill:
         specifier: ^1.2.2
         version: 1.2.2
@@ -6275,10 +6275,10 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
-  prettier-plugin-packagejson@2.5.22:
-    resolution: {integrity: sha512-G6WalmoUssKF8ZXkni0+n4324K+gG143KPysSQNW+FrR0XyNb3BdRxchGC/Q1FE/F702p7/6KU7r4mv0WSWbzA==}
+  prettier-plugin-packagejson@3.0.0:
+    resolution: {integrity: sha512-z8/QmPSqx/ANvvQMWJSkSq1+ihBXeuwDEYdjX3ZjRJ5Ty1k7vGbFQfhzk2eDe0rwS/TNyRjWK/qnjJEStAOtDw==}
     peerDependencies:
-      prettier: '>= 1.16.0'
+      prettier: ^3
     peerDependenciesMeta:
       prettier:
         optional: true
@@ -10083,18 +10083,18 @@ snapshots:
     optionalDependencies:
       ajv: 8.18.0
 
-  ajv-formats@2.1.1(ajv@8.13.0):
+  ajv-formats@2.1.1(ajv@8.18.0):
     optionalDependencies:
-      ajv: 8.13.0
+      ajv: 8.18.0
     optional: true
 
   ajv-formats@3.0.1(ajv@8.18.0):
     optionalDependencies:
       ajv: 8.18.0
 
-  ajv-keywords@5.1.0(ajv@8.13.0):
+  ajv-keywords@5.1.0(ajv@8.18.0):
     dependencies:
-      ajv: 8.13.0
+      ajv: 8.18.0
       fast-deep-equal: 3.1.3
     optional: true
 
@@ -12669,7 +12669,7 @@ snapshots:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.13.0
-      semver: 7.7.3
+      semver: 7.7.4
       validate-npm-package-license: 3.0.4
 
   normalize-path@3.0.0: {}
@@ -12972,7 +12972,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  prettier-plugin-packagejson@2.5.22(prettier@3.7.4):
+  prettier-plugin-packagejson@3.0.0(prettier@3.7.4):
     dependencies:
       sort-package-json: 3.6.0
     optionalDependencies:
@@ -13626,9 +13626,9 @@ snapshots:
   schema-utils@4.3.3:
     dependencies:
       '@types/json-schema': 7.0.15
-      ajv: 8.13.0
-      ajv-formats: 2.1.1(ajv@8.13.0)
-      ajv-keywords: 5.1.0(ajv@8.13.0)
+      ajv: 8.18.0
+      ajv-formats: 2.1.1(ajv@8.18.0)
+      ajv-keywords: 5.1.0(ajv@8.18.0)
     optional: true
 
   scroll-into-view-if-needed@3.1.0:
@@ -13790,7 +13790,7 @@ snapshots:
       detect-newline: 4.0.1
       git-hooks-list: 4.1.1
       is-plain-obj: 4.1.0
-      semver: 7.7.3
+      semver: 7.7.4
       sort-object-keys: 2.0.1
       tinyglobby: 0.2.15
 
