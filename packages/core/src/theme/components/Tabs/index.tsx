@@ -18,7 +18,7 @@ type TabItem = {
   content?: ReactNode;
 };
 
-interface TabsProps {
+export interface TabsProps {
   values?: ReactNode[] | ReadonlyArray<ReactNode> | TabItem[];
   /**
    * @default 0

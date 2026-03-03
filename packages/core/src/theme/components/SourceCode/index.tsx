@@ -2,7 +2,7 @@ import { useI18n } from '@rspress/core/runtime';
 import { IconGithub, IconGitlab, SvgWrapper } from '@theme';
 import './index.scss';
 
-interface SourceCodeProps {
+export interface SourceCodeProps {
   href: string;
   platform?: 'github' | 'gitlab';
 }

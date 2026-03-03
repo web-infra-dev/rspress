@@ -15,7 +15,7 @@ function isUrlOrPath(str: string): boolean {
   );
 }
 
-type SvgWrapperProps = {
+export type SvgWrapperProps = {
   icon: string | React.FC<React.SVGProps<SVGSVGElement>>;
 } & React.SVGProps<SVGSVGElement>;
 
