@@ -89,7 +89,9 @@ export function remarkSplitMdx(
       const hasJsxChildren = (node as any).children?.some(
         (child: any) =>
           child.type === 'mdxJsxFlowElement' ||
-          child.type === 'mdxJsxTextElement',
+          child.type === 'mdxJsxTextElement' ||
+          child.type === 'mdxFlowExpression' ||
+          child.type === 'mdxTextExpression',
       );
 
       if (hasJsxChildren) {
@@ -180,7 +182,6 @@ function processJsxChildren(
   };
 
   for (const child of node.children) {
-    // Only process nested JSX elements recursively
     if (
       child.type === 'mdxJsxFlowElement' ||
       child.type === 'mdxJsxTextElement'
@@ -188,6 +189,13 @@ function processJsxChildren(
       // Flush any accumulated text before the JSX element
       flushTextBuffer();
       processedChildren.push(processJsxElement(child, importMap, options));
+    } else if (
+      child.type === 'mdxFlowExpression' ||
+      child.type === 'mdxTextExpression'
+    ) {
+      // Preserve MDX expressions as-is
+      flushTextBuffer();
+      processedChildren.push(child as any);
     } else {
       // Accumulate non-JSX content to be serialized as string
       textBuffer.push(child);
@@ -287,6 +295,12 @@ function processMixedContent(
     ) {
       flushTextBuffer();
       result.push(processJsxElement(child, importMap, options));
+    } else if (
+      child.type === 'mdxFlowExpression' ||
+      child.type === 'mdxTextExpression'
+    ) {
+      flushTextBuffer();
+      result.push(child as MdxFlowExpression | MdxTextExpression);
     } else if (child.type === 'text') {
       textBuffer.push(child.value || '');
     } else {
