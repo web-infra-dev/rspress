@@ -194,6 +194,87 @@ End of content.`;
       "
     `);
   });
+
+  it('should preserve mdxFlowExpression as-is', async () => {
+    const input = `# hello
+
+{window.foo}`;
+
+    const result = await processMdx(input);
+
+    expect(result).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      function _createMdxContent(props) {
+        return <>{"# hello\\n"}{"\\n"}{window.foo}</>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
+
+  it('should preserve inline mdxTextExpression in headings', async () => {
+    const input = `# hello {window.foo}`;
+
+    const result = await processMdx(input);
+
+    expect(result).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      function _createMdxContent(props) {
+        return <><>{"# hello "}{window.foo}</></>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
+
+  it('should preserve inline mdxTextExpression in paragraphs', async () => {
+    const input = `Hello {window.foo}`;
+
+    const result = await processMdx(input);
+
+    expect(result).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      function _createMdxContent(props) {
+        return <><>{"Hello "}{window.foo}</></>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
+
+  it('should preserve mdxTextExpression inside JSX children', async () => {
+    const input = `import Foo from '@components'
+
+<Foo>Hello {window.bar}</Foo>`;
+
+    const result = await processMdx(input);
+
+    expect(result).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      import Foo from '@components';
+      function _createMdxContent(props) {
+        return <Foo>{"Hello \\n"}{window.bar}</Foo>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
 });
 
 describe('remarkWrapMarkdown with filters', () => {

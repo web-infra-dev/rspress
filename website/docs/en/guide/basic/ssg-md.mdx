@@ -108,7 +108,35 @@ renderToMarkdownString(<Article />);
 
 In principle, this API works for any site built with React; see [react-render-to-markdown](https://www.npmjs.com/package/react-render-to-markdown) if you're interested.
 
-2. Provides `import.meta.env.SSG_MD` environment variable, making it easy for users to distinguish between SSG-MD rendering and browser rendering in React components, thus achieving more flexible content customization:
+2. Rspress uses a custom remark plugin `remarkSplitMdx` to preprocess MDX files before rendering. This plugin splits the MDX AST, separating pure Markdown content from JSX components: Markdown text is serialized as string literals, while JSX components and MDX expressions (e.g., `{variable}`) are preserved as React elements. This ensures that Markdown content passes through as-is without being processed by React rendering, while dynamic components are rendered by `renderToMarkdownString`.
+
+For example, the following MDX:
+
+```mdx
+# Hello
+
+Some **bold** text.
+
+<PackageManagerTabs command="install rspress" />
+
+{window.title}
+```
+
+Will be transformed to a component like:
+
+```tsx
+function _createMdxContent() {
+  return (
+    <>
+      {'# Hello\n\nSome **bold** text.\n'}
+      <PackageManagerTabs command="install rspress" />
+      {window.title}
+    </>
+  );
+}
+```
+
+3. Provides `import.meta.env.SSG_MD` environment variable, making it easy for users to distinguish between SSG-MD rendering and browser rendering in React components, thus achieving more flexible content customization:
 
 ```tsx
 export function Tab({ label }: { label: string }) {
@@ -119,7 +147,7 @@ export function Tab({ label }: { label: string }) {
 }
 ```
 
-3. Rspress internal component library has been adapted for SSG-MD to ensure reasonable Markdown content is rendered during the SSG-MD phase. For example:
+4. Rspress internal component library has been adapted for SSG-MD to ensure reasonable Markdown content is rendered during the SSG-MD phase. For example:
 
 ```tsx
 <PackageManagerTabs command="create rspress@latest" />
