@@ -108,7 +108,35 @@ renderToMarkdownString(<Article />);
 
 理论上这一 API 适用于任何使用 React 构建的网站，如果你对它感兴趣，请参考 [react-render-to-markdown](https://www.npmjs.com/package/react-render-to-markdown)。
 
-2. 提供 `import.meta.env.SSG_MD` 环境变量，方便用户在 React 组件中区分 SSG-MD 渲染和浏览器渲染，从而实现更灵活的内容定制：
+2. Rspress 使用自定义的 remark 插件 `remarkSplitMdx` 对 MDX 文件进行预处理。该插件会拆分 MDX AST，将纯 Markdown 内容与 JSX 组件分离：Markdown 文本被序列化为字符串字面量，而 JSX 组件和 MDX 表达式（如 `{variable}`）则保留为 React 元素。这确保了 Markdown 内容能原样透传，不经过 React 渲染处理，而动态组件则由 `renderToMarkdownString` 渲染。
+
+例如以下 MDX：
+
+```mdx
+# Hello
+
+Some **bold** text.
+
+<PackageManagerTabs command="install rspress" />
+
+{window.title}
+```
+
+会被转换为如下组件：
+
+```tsx
+function _createMdxContent() {
+  return (
+    <>
+      {'# Hello\n\nSome **bold** text.\n'}
+      <PackageManagerTabs command="install rspress" />
+      {window.title}
+    </>
+  );
+}
+```
+
+3. 提供 `import.meta.env.SSG_MD` 环境变量，方便用户在 React 组件中区分 SSG-MD 渲染和浏览器渲染，从而实现更灵活的内容定制：
 
 ```tsx
 export function Tab({ label }: { label: string }) {
@@ -119,7 +147,7 @@ export function Tab({ label }: { label: string }) {
 }
 ```
 
-3. Rspress 内部组件对于 SSG-MD 做了适配，确保在 SSG-MD 阶段渲染出合理的 Markdown 内容。例如：
+4. Rspress 内部组件对于 SSG-MD 做了适配，确保在 SSG-MD 阶段渲染出合理的 Markdown 内容。例如：
 
 ```tsx
 <PackageManagerTabs command="create rspress@latest" />
