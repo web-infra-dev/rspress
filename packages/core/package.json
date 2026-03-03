@@ -72,7 +72,7 @@
     "@types/unist": "^3.0.3",
     "@unhead/react": "^2.1.9",
     "body-scroll-lock": "4.0.0-beta.0",
-    "cac": "^6.7.14",
+    "cac": "^7.0.0",
     "chokidar": "^3.6.0",
     "clsx": "2.1.1",
     "copy-to-clipboard": "^3.3.3",
