@@ -1,7 +1,7 @@
 // components
-export { Badge } from './components/Badge/index';
+export { Badge, type BadgeProps } from './components/Badge/index';
 export { Banner, type BannerProps } from './components/Banner/index';
-export { Button } from './components/Button/index';
+export { Button, type ButtonProps } from './components/Button/index';
 export { Callout, type CalloutProps } from './components/Callout/index';
 export { CodeBlock, type CodeBlockProps } from './components/CodeBlock/index';
 export {
@@ -90,11 +90,22 @@ export {
 } from './components/Search/SearchPanel';
 export { Sidebar, SidebarList } from './components/Sidebar/index';
 export { SocialLinks } from './components/SocialLinks/index';
-export { SourceCode } from './components/SourceCode/index';
+export {
+  SourceCode,
+  type SourceCodeProps,
+} from './components/SourceCode/index';
 export { Steps } from './components/Steps/index';
-export { SvgWrapper } from './components/SvgWrapper/index';
+export {
+  SvgWrapper,
+  type SvgWrapperProps,
+} from './components/SvgWrapper/index';
 export { SwitchAppearance } from './components/SwitchAppearance/index';
-export { Tab, Tabs } from './components/Tabs/index';
+export {
+  Tab,
+  type TabProps,
+  Tabs,
+  type TabsProps,
+} from './components/Tabs/index';
 export { Tag } from './components/Tag/index';
 export { Toc } from './components/Toc';
 export { useActiveAnchor } from './hooks/useActiveAnchor';
