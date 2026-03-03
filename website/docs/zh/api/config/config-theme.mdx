@@ -121,18 +121,14 @@ interface SidebarGroup {
   tag?: string;
 }
 
-// 可填入一个对象，也可以填入一个字符串
-// 填入字符串时，内部会转换成一个对象，字符串会被当做 link，text 值会自动取对应文档的标题
-type SidebarItem =
-  | {
-      // 侧边栏文本
-      text: string;
-      // 侧边栏链接
-      link: string;
-      // 图标配置(可选)，填入 svg 标签内容或者图片 URL
-      tag?: string;
-    }
-  | string;
+type SidebarItem = {
+  // 侧边栏文本
+  text: string;
+  // 侧边栏链接
+  link: string;
+  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  tag?: string;
+};
 ```
 
 比如:
@@ -147,7 +143,6 @@ export default defineConfig({
         {
           text: 'Getting Started',
           items: [
-            // 填入一个对象
             {
               text: 'Introduction',
               link: '/guide/getting-started/introduction',
@@ -161,9 +156,14 @@ export default defineConfig({
         {
           text: 'Advanced',
           items: [
-            // 直接填入链接字符串
-            '/guide/advanced/customization',
-            '/guide/advanced/markdown',
+            {
+              text: 'Customization',
+              link: '/guide/advanced/customization',
+            },
+            {
+              text: 'Markdown',
+              link: '/guide/advanced/markdown',
+            },
           ],
         },
       ],
