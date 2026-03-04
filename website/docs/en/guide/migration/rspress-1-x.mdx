@@ -17,6 +17,7 @@ This document will help you migrate from Rspress 1.x to Rspress V2. We recommend
 - [ ] **builderPlugins**: Move to `builderConfig.plugins`
 - [ ] **Sass/Less**: Manually install `@rsbuild/plugin-sass` or `@rsbuild/plugin-less`
 - [ ] **External code blocks**: `<code src="..." />` → ` ```tsx file="..." `
+- [ ] **markdown.mdxRs**: Remove the `markdown.mdxRs` option (no longer supported)
 - [ ] **themeConfig.locales**: Remove `outlineTitle` and other text configs, use `i18nSource` instead
 
 ## [Important] Node.js and upstream dependency requirements
@@ -351,6 +352,38 @@ import { defineConfig } from '@rspress/core';
 export default defineConfig({
   builderConfig: {
     plugins: [pluginFoo()],
+  },
+});
+```
+
+## `markdown.mdxRs` option removed
+
+The `markdown.mdxRs` option has been removed in V2. Rspress no longer uses the Rust-based MDX parser (`@rspress/mdx-rs`). Please remove the `markdown.mdxRs` option from your configuration.
+
+Leaving this option in your configuration will cause TypeScript type checking errors, but it does not affect runtime behavior.
+
+- before:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  markdown: {
+    mdxRs: false,
+    remarkPlugins: [plugin1, plugin2],
+  },
+});
+```
+
+- after:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    // mdxRs option removed, no replacement needed
+    remarkPlugins: [plugin1, plugin2],
   },
 });
 ```
