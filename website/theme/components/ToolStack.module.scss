@@ -52,3 +52,33 @@
     color: var(--rp-c-link);
   }
 }
+
+.ctaButton {
+  align-self: center;
+  margin-top: 2rem;
+  padding: 0.875rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--rp-c-text-inverse, #fff);
+  background: linear-gradient(
+    120deg,
+    var(--rp-c-brand),
+    var(--rp-c-brand-light)
+  );
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+  }
+}
