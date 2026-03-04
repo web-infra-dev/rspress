@@ -24,6 +24,7 @@ test.describe('Auto nav and sidebar test', async () => {
 
     const sidebarTexts = await getSidebarTexts(page);
     expect(sidebarTexts).toEqual([
+      'HomePage',
       'API',
       'plugin',
       'Plugin a',
@@ -34,7 +35,6 @@ test.describe('Auto nav and sidebar test', async () => {
       'Build config',
       'Front matter config',
       'Theme config',
-      'HomePage',
     ]);
   });
 

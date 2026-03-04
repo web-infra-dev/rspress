@@ -2,25 +2,35 @@
 
 这篇文档介绍了如何使用 front matter 来配置页面的各种属性，包括标题、描述、页面类型、导航栏等。
 
-查看 [Front matter](/guide/use-mdx/frontmatter) 了解什么是 front matter 以及如何使用它。
+查看 [Front matter](/guide/use-mdx/frontmatter) 了解什么是 front matter 以及如何使用它，查看 [useFrontmatter](/ui/hooks/use-frontmatter) 了解如何在代码中获取 front matter。
 
 ## title
 
-- Type: `string`
+- **类型**： `string`
 
 页面的标题。默认情况下，页面的 h1 标题将用作 HTML 文档的标题。如果你想使用不同的标题，你可以使用 front matter 来指定页面的标题。例如：
 
-```yaml
+```mdx
 ---
 title: 我的主页
 ---
+
+这是我的**主页内容**。
+```
+
+它等价于：
+
+```mdx
+# 我的主页
+
+这是我的**主页内容**。
 ```
 
 ## description
 
-- Type: `string`
+- **类型**： `string`
 
-页面的自定义描述。例如：
+页面的自定义描述，会产生一个 meta 标签用于 SEO 优化。例如：
 
 ```yaml
 ---
@@ -28,10 +38,12 @@ description: 这是我的主页
 ---
 ```
 
+它会在页面中生成一个 `<meta name="description" content="这是我的主页" />` 标签。
+
 ## pageType
 
-- Type: `'home' | 'doc' | 'doc-wide' | 'custom' | 'blank' | '404'`
-- Default: `'doc'`
+- **类型**： `'home' | 'doc' | 'doc-wide' | 'custom' | 'blank' | '404'`
+- **默认值**: `'doc'`
 
 页面的类型。默认情况下，页面类型为`doc`。但是如果你想使用不同的页面类型，你可以使用 `pageType` 这个 front matter 字段来指定页面类型。例如：
 
@@ -49,7 +61,7 @@ import PageType from '@zh/fragments/page-type.mdx';
 
 ## titleSuffix
 
-- Type: `string`
+- **类型**： `string`
 
 设置页面标题的后缀。未设置 `titleSuffix` 时，默认使用站点的 [title](/api/config/config-basic#title) 作为后缀。
 
@@ -67,9 +79,102 @@ titleSuffix: '| 基于 Rsbuild 的静态站点生成器'
 ---
 ```
 
+## sidebar
+
+是否展示左侧的目录栏。默认情况下，`doc` 页面会展示左侧的目录栏。但是如果你想隐藏左侧的目录栏，你可以使用以下 front matter 来配置：
+
+```yaml
+---
+sidebar: false
+---
+```
+
+:::tip 提示
+`sidebar: false` 仅隐藏侧边栏，但原本侧边栏占据的空间仍然保留。如果你想让正文内容占据更宽的屏幕空间，可以使用 [`pageType: doc-wide`](#pagetype) 配合 `sidebar: false`：
+
+```yaml
+---
+pageType: doc-wide
+sidebar: false
+---
+```
+
+这样正文内容区域会自动扩展，占据原本侧边栏的空间。
+:::
+
+## outline
+
+是否展示右侧的大纲栏。默认情况下，`doc` 页面会展示右侧的大纲栏。你可以通过下面的配置来隐藏大纲栏：
+
+```yaml
+---
+outline: false
+---
+```
+
+:::tip 提示
+`outline: false` 仅隐藏大纲栏，但原本大纲栏占据的空间仍然保留。如果你想让正文内容占据更宽的屏幕空间，可以使用 [`pageType: doc-wide`](#pagetype) 配合 `outline: false`：
+
+```yaml
+---
+pageType: doc-wide
+outline: false
+---
+```
+
+这样正文内容区域会自动扩展，占据原本大纲栏的空间。
+:::
+
+## footer
+
+是否展示文档底部的组件（如上一页/下一页）。默认情况下，`doc` 页面会展示底部的 footer。你可以通过下面的配置来隐藏 footer：
+
+```yaml
+---
+footer: false
+---
+```
+
+## navbar
+
+是否展示顶部导航栏。默认情况下，所有页面都会展示顶部导航栏。但是如果你想隐藏顶部导航栏，你可以使用以下 front matter 来配置：
+
+```yaml
+---
+navbar: false
+---
+```
+
+## context
+
+- **类型**： `string`
+
+配置后，在生成侧边栏时会在所在的 DOM 节点添加 `data-context` 属性，值为配置的值。
+
+```yaml title="foo.mdx"
+---
+context: 'context-foo'
+---
+```
+
+```yaml title="bar.mdx"
+---
+context: 'context-bar'
+---
+```
+
+最终生成的侧边栏的 DOM 结构缩略如下：
+
+```html
+<div class="rspress-sidebar-group">
+  <div className="rspress-sidebar-item" data-context="context-foo"></div>
+  <div className="rspress-sidebar-item" data-context="context-bar"></div>
+</div>
+```
+
 ## head
 
-- Type: `[string, Record<string, string>][]`
+- **类型**： `[string, Record<string, string>][]`
 
 设置为当前页面注入的额外 head 标签，它们将附加在 Rspress 全局注入的 head 标签之后。
 
@@ -99,9 +204,52 @@ head:
 </head>
 ```
 
-## hero
+## Overview 页相关
 
-- Type: `Object`
+以下配置与 [Overview 页](/guide/advanced/overview-page) 功能相关。
+
+### overview
+
+- **类型**： `boolean`
+- **默认值**: `false`
+
+在文档页面中启用 Overview 页功能。如果设置为 `true`，意味着当前页面是 [Overview 页](../../guide/advanced/overview-page.mdx)。例如：
+
+```yaml
+---
+overview: true
+---
+```
+
+### overviewHeaders
+
+- **类型**： `number[]`
+- **默认值**: `[2]`
+
+在 Overview 页中展示的标题级别。默认情况下，展示的标题为 h2。但是如果你想展示不同的标题级别，你可以使用 `overviewHeaders` 这个 front matter 字段来指定。例如：
+
+```yaml
+---
+overview: true
+overviewHeaders: []
+---
+```
+
+或者
+
+```yaml
+---
+overviewHeaders: [2, 3]
+---
+```
+
+## 首页相关
+
+以下配置与 [首页](/guide/basic/home-page) 功能相关。
+
+### hero
+
+- **类型**： `Object`
 
 `home` 页面的 hero 配置。它有以下类型：
 
@@ -181,10 +329,10 @@ hero:
 ---
 ```
 
-## features
+### features
 
-- Type: `Array`
-- Default: `[]`
+- **类型**： `Array`
+- **默认值**: `[]`
 
 `home` 页面的功能配置。它有以下类型：
 
@@ -216,95 +364,7 @@ features:
     details: 对全文搜索、国际化等常见功能可以做到开箱即用。
     icon: 🎨
   - title: '扩展性强: 提供多种自定义能力'
-    details: 通过其扩展机制，你可以轻松的扩展主题 UI 和构建能力。
+    details: 通过其扩展机制，你可以轻松地扩展主题 UI 和构建能力。
     icon: 🚀
 ---
-```
-
-## sidebar
-
-是否展示左侧的目录栏。默认情况下，`doc` 页面会展示左侧的目录栏。但是如果你想隐藏左侧的目录栏，你可以使用以下 front matter 来配置：
-
-```yaml
----
-sidebar: false
----
-```
-
-## outline
-
-是否展示右侧的大纲栏。默认情况下，`doc` 页面会展示右侧的大纲栏。你可以通过下面的配置来隐藏大纲栏：
-
-```yaml
----
-outline: false
----
-```
-
-## footer
-
-是否展示文档底部的组件（如上一页/下一页）。默认情况下，`doc` 页面会展示底部的 footer。你可以通过下面的配置来隐藏 footer：
-
-```yaml
----
-footer: false
----
-```
-
-## navbar
-
-是否展示顶部导航栏。默认情况下，所有页面都会展示顶部导航栏。但是如果你想隐藏顶部导航栏，你可以使用以下 front matter 来配置：
-
-```yaml
----
-navbar: false
----
-```
-
-## overviewHeaders
-
-- Type: `number[]`
-- Default: `[2]`
-
-在预览页中展示的标题级别。默认情况下，展示的标题为 h2。但是如果你想展示不同的标题级别，你可以使用 `overviewHeaders` 这个 front matter 字段来指定。例如：
-
-```yaml
----
-overviewHeaders: []
----
-```
-
-或者
-
-```yaml
----
-overviewHeaders: [2, 3]
----
-```
-
-## context
-
-- Type: `string`
-
-配置后，在生成侧边栏时会在所在的 DOM 节点添加 `data-context` 属性，值为配置的值。
-
-```yaml title="foo.mdx"
----
-context: 'context-foo'
----
-```
-
-```yaml title="bar.mdx"
----
-context: 'context-bar'
----
-```
-
-最终生成的侧边栏的 DOM 结构缩略如下：
-
-```html
-<div class="rspress-sidebar-group">
-  <div className="rspress-sidebar-item" data-context="context-foo"></div>
-  <div className="rspress-sidebar-item" data-context="context-bar"></div>
-</div>
 ```

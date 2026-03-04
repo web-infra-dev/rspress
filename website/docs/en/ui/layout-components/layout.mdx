@@ -1,0 +1,104 @@
+---
+description: Layout component, serves as the layout container for the entire page, providing rich slot props for custom extensions.
+overviewHeaders: []
+---
+
+# Layout
+
+`Layout` is the core layout component of Rspress, serving as the layout container for the entire page. It provides rich slot props to extend the default theme layout without ejecting.
+
+## Usage
+
+Use the Layout component through [custom theme](/guide/basic/custom-theme):
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
+
+export { Layout };
+export * from '@rspress/core/theme-original';
+```
+
+## Slot props
+
+The `Layout` component provides a series of slot props for extending the default theme layout:
+
+<details>
+
+```tsx title="theme/index.tsx"
+import {
+  Layout as BasicLayout,
+  getCustomMDXComponent as basicGetCustomMDXComponent,
+} from '@rspress/core/theme-original';
+
+const Layout = () => (
+  <BasicLayout
+    /* Before Home page Hero section */
+    beforeHero={<div>beforeHero</div>}
+    /* After Home page Hero section */
+    afterHero={<div>afterHero</div>}
+    /* Before Home page Features section */
+    beforeFeatures={<div>beforeFeatures</div>}
+    /* After Home page Features section */
+    afterFeatures={<div>afterFeatures</div>}
+    /* Before Doc page Footer section */
+    beforeDocFooter={<div>beforeDocFooter</div>}
+    /* After Doc page Footer section */
+    afterDocFooter={<div>afterDocFooter</div>}
+    /* At the beginning of Doc page */
+    beforeDoc={<div>beforeDoc</div>}
+    /* At the end of Doc page */
+    afterDoc={<div>afterDoc</div>}
+    /* Before document content */
+    beforeDocContent={<div>beforeDocContent</div>}
+    /* After document content */
+    afterDocContent={<div>afterDocContent</div>}
+    /* Before navbar */
+    beforeNav={<div>beforeNav</div>}
+    /* After navbar */
+    afterNav={<div>afterNav</div>}
+    /* Before nav title in top-left corner */
+    beforeNavTitle={<span>😄</span>}
+    /* Nav title */
+    navTitle={<div>Custom Nav Title</div>}
+    /* After nav title in top-left corner */
+    afterNavTitle={<div>afterNavTitle</div>}
+    /* Before nav menu */
+    beforeNavMenu={<div>beforeNavMenu</div>}
+    /* After nav menu */
+    afterNavMenu={<div>afterNavMenu</div>}
+    /* Above left sidebar */
+    beforeSidebar={<div>beforeSidebar</div>}
+    /* Below left sidebar */
+    afterSidebar={<div>afterSidebar</div>}
+    /* Above right outline */
+    beforeOutline={<div>beforeOutline</div>}
+    /* Below right outline */
+    afterOutline={<div>afterOutline</div>}
+    /* At the very top of the page */
+    top={<div>top</div>}
+    /* At the very bottom of the page */
+    bottom={<div>bottom</div>}
+    /* Custom MDX components */
+    components={{
+      h1: (props) => {
+        const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
+        return (
+          <>
+            <OriginalH1 {...props} />
+            <OriginalP>
+              This is a custom paragraph added after every H1 heading.
+            </OriginalP>
+          </>
+        );
+      },
+    }}
+  />
+);
+
+export { Layout };
+export * from '@rspress/core/theme-original';
+```
+
+</details>

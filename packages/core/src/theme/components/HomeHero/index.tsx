@@ -1,6 +1,6 @@
 import type { FrontMatterMeta } from '@rspress/core';
 import { normalizeImagePath, useFrontmatter } from '@rspress/core/runtime';
-import { Button, renderHtmlOrText } from '@theme';
+import { Button, Link, renderHtmlOrText } from '@theme';
 
 import './index.scss';
 import clsx from 'clsx';
@@ -17,12 +17,17 @@ const DEFAULT_HERO = {
 interface HomeHeroProps {
   beforeHeroActions?: React.ReactNode;
   afterHeroActions?: React.ReactNode;
+  image?: React.ReactNode;
 }
 
-function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
+function HomeHero({
+  beforeHeroActions,
+  afterHeroActions,
+  image,
+}: HomeHeroProps) {
   const { frontmatter } = useFrontmatter();
   const hero = frontmatter?.hero || DEFAULT_HERO;
-  const hasImage = hero.image !== undefined;
+  const hasImage = hero.image !== undefined || image !== undefined;
   const multiHeroText = hero.text
     ? hero.text
         .toString()
@@ -39,7 +44,16 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
       className={clsx('rp-home-hero', { 'rp-home-hero--no-image': !hasImage })}
     >
       <div className="rp-home-hero__container">
-        {hero.badge && <div className="rp-home-hero__badge">{hero.badge}</div>}
+        {hero.badge &&
+          (typeof hero.badge === 'string' ? (
+            <div className="rp-home-hero__badge">{hero.badge}</div>
+          ) : hero.badge.link ? (
+            <Link href={hero.badge.link} className="rp-home-hero__badge">
+              {hero.badge.text}
+            </Link>
+          ) : (
+            <div className="rp-home-hero__badge">{hero.badge.text}</div>
+          ))}
         <div className="rp-home-hero__content">
           <div className="rp-home-hero__title">
             <span
@@ -81,7 +95,9 @@ function HomeHero({ beforeHeroActions, afterHeroActions }: HomeHeroProps) {
           {afterHeroActions}
         </>
       </div>
-      {hasImage ? (
+      {image ? (
+        <div className="rp-home-hero__image">{image}</div>
+      ) : hero.image ? (
         <div className="rp-home-hero__image">
           <img
             src={normalizeImagePath(imageSrc.light)}

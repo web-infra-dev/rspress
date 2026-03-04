@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import INITIAL_CONTENT from '../../../packages/core/src/theme/styles/vars/shiki-vars.css?raw';
 import {
-  CssLiveCodeEditorWithTabs,
-  type Tab,
-} from './CssLiveCodeEditorWithTabs';
+  CssLiveCodeEditorWithSelect,
+  type SelectOption,
+} from './CssLiveCodeEditorWithSelect';
 import shikiThemeCssVars from './shikiThemeCssVars.json';
 
 export interface ThemeSwitcherProps {
@@ -13,8 +13,8 @@ export interface ThemeSwitcherProps {
 export function ShikiThemeSwitcher({
   styleId = 'theme-switcher-style',
 }: ThemeSwitcherProps) {
-  // Convert theme data to CSS tabs
-  const themeTabs: Tab[] = useMemo(() => {
+  // Convert theme data to CSS options
+  const themeOptions: SelectOption[] = useMemo(() => {
     return Object.entries(shikiThemeCssVars).map(([themeName, cssVars]) => {
       const cssCode = `:root {\n${Object.entries(cssVars)
         .map(([key, value]) => `  ${key}: ${value};`)
@@ -31,8 +31,8 @@ export function ShikiThemeSwitcher({
   }, []);
 
   return (
-    <CssLiveCodeEditorWithTabs
-      tabs={themeTabs}
+    <CssLiveCodeEditorWithSelect
+      options={themeOptions}
       styleId={styleId}
       initialCode={INITIAL_CONTENT}
     />

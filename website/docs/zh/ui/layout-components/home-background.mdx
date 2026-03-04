@@ -1,0 +1,20 @@
+---
+description: HomeBackground 首页背景组件，用于渲染首页背景效果并自动设置透明导航栏。
+overviewHeaders: []
+---
+
+# HomeBackground
+
+该组件是 [首页](/guide/basic/home-page) 的一部分，`HomeBackground` 用于在首页渲染背景效果，同时会自动将导航栏设置为透明样式。
+
+## 用法
+
+通过 [自定义主题](/guide/basic/custom-theme) 来进行修改或覆盖。
+
+```tsx
+import { HomeBackground as BasicHomeBackground } from '@rspress/core/theme-original';
+
+export function HomeBackground() {
+  return <BasicHomeBackground className="my-custom-bg" />;
+}
+```

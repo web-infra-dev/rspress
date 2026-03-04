@@ -1,7 +1,8 @@
-import { NoSSR, useDark, usePage, withBase } from '@rspress/core/runtime';
+import { useDark, usePage } from '@rspress/core/runtime';
 import { useCallback, useEffect, useRef, useState } from 'react';
 // @ts-expect-error
 import { normalizeId } from '../../dist/utils';
+import { getPageFullUrl, getPageUrl } from './common/getPageUrl';
 import MobileOperation from './common/PreviewOperations';
 import './FixedDevice.css';
 
@@ -9,15 +10,8 @@ export default () => {
   const { page } = usePage();
   const pageName = `${normalizeId(page.pagePath)}`;
   const demoId = `_${pageName}`;
-  const url = `~demo/${demoId}`;
   const { haveIframeFixedDemos } = page;
 
-  const getPageUrl = (url: string) => {
-    if (page?.devPort) {
-      return `http://localhost:${page.devPort}/${demoId}`;
-    }
-    return withBase(url);
-  };
   const [iframeKey, setIframeKey] = useState(0);
   const dark = useDark();
   const refresh = useCallback(() => {
@@ -50,16 +44,14 @@ export default () => {
       }
     }
     `}</style>
-      <NoSSR>
-        <iframe
-          src={getPageUrl(url)}
-          className="rp-fixed-device__iframe"
-          key={iframeKey}
-          ref={iframeRef}
-        />
-      </NoSSR>
+      <iframe
+        src={getPageUrl(demoId)}
+        className="rp-fixed-device__iframe"
+        key={iframeKey}
+        ref={iframeRef}
+      />
       <MobileOperation
-        url={getPageUrl(url)}
+        url={getPageFullUrl(demoId)}
         className="rp-fixed-device__operations"
         refresh={refresh}
       />

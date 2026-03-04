@@ -18,7 +18,7 @@ type TabItem = {
   content?: ReactNode;
 };
 
-interface TabsProps {
+export interface TabsProps {
   values?: ReactNode[] | ReadonlyArray<ReactNode> | TabItem[];
   /**
    * @default 0
@@ -121,6 +121,22 @@ export const Tabs = forwardRef(
     const tabValues: TabItem[] = useMemo(() => {
       return getTabValuesFromChildren(children, values);
     }, [values, children]);
+
+    if (process.env.__SSR_MD__) {
+      return (
+        <>
+          {tabValues.map(({ label, content }) => {
+            return (
+              <>
+                {`\n**${label}**\n\n`}
+                {content}
+                {`\n`}
+              </>
+            );
+          })}
+        </>
+      );
+    }
 
     const [activeIndex, setActiveIndex] = useState(defaultIndex ?? 0);
 

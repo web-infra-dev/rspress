@@ -23,7 +23,9 @@ test.describe('api-docgen test', async () => {
   });
 
   test('zh/index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/zh/`);
+    await page.goto(`http://localhost:${appPort}/zh/`, {
+      waitUntil: 'networkidle',
+    });
     await page.waitForSelector('.rspress-plugin-api-docgen table');
     const tableH3 = page.locator('#button');
     await expect(tableH3).toBeVisible();
@@ -54,7 +56,9 @@ test.describe('api-docgen test', async () => {
   });
 
   test('search index should include api-docgen result', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     const suggestItems = await searchInPage(page, 'disabled');
     expect(suggestItems.length).toBe(1);
   });

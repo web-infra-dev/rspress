@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('github alert syntax in mdx-js', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -19,7 +19,9 @@ test.describe('github alert syntax in mdx-js', async () => {
   test('should transform github alert syntax to contain syntax', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
 
     const topLevelCallouts = page.locator('.rspress-doc > .rp-callout');
     await expect(topLevelCallouts).toHaveCount(7);

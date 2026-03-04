@@ -1,6 +1,26 @@
+---
+description: 通过脚手架或手动方式快速创建 Rspress 项目，了解开发服务启动、生产构建和本地预览的基本流程。
+---
+
 # 快速开始
 
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+## 环境准备
+
+Rspress 支持使用 [Node.js](https://nodejs.org/)、[Deno](https://deno.com/) 或 [Bun](https://bun.sh/) 作为 JavaScript 运行时。
+
+请参考以下指南安装运行时：
+
+- [安装 Node.js](https://nodejs.org/en/download)
+- [安装 Bun](https://bun.com/docs/installation)
+- [安装 Deno](https://docs.deno.com/runtime/getting_started/installation/)
+
+:::tip 版本要求
+
+Rspress 需要 Node.js 版本 20.19+, 22.12+。
+
+:::
 
 ## 1. 初始化项目
 
@@ -22,7 +42,7 @@ mkdir rspress-app && cd rspress-app
 
 执行 `npm init -y` 来初始化一个项目。你可以使用 npm、pnpm、yarn 或 bun 安装 Rspress:
 
-<PackageManagerTabs command="install rspress -D" />
+<PackageManagerTabs command="install @rspress/core -D" />
 
 然后通过如下命令创建文件:
 

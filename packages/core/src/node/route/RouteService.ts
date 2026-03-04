@@ -13,6 +13,7 @@ import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import { PUBLIC_DIR } from '../constants';
+import { createError } from '../utils';
 import {
   getRoutePathParts,
   normalizeRoutePath,
@@ -198,7 +199,7 @@ export class RouteService {
       routeMeta: { routePath },
     } = routePage;
     if (this.routeData.has(routePath)) {
-      throw new Error(`routePath ${routePath} has already been added`);
+      throw createError(`routePath ${routePath} has already been added`);
     }
     this.routeData.set(routePath, routePage);
   }
@@ -330,5 +331,13 @@ ${routeMeta
 
   getDefaultLang() {
     return this.#defaultLang;
+  }
+
+  getVersions() {
+    return this.#versions;
+  }
+
+  getDefaultVersion() {
+    return this.#defaultVersion;
   }
 }

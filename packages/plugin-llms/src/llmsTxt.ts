@@ -41,14 +41,14 @@ function generateLlmsTxt(
     lines.push(`\n## ${title}\n`);
 
     for (const page of pages) {
-      const { routePath, lang, title, frontmatter } = page;
+      const { routePath, lang, title, description } = page;
       if (routePath === '/' || routePath === `/${lang}/`) {
         continue;
       }
 
       const line = onLineGenerate
         ? onLineGenerate(page)
-        : `- [${title}](${routePathToMdPath(routePath, base)})${frontmatter.description ? `: ${frontmatter.description}` : ''}`;
+        : `- [${title}](${routePathToMdPath(routePath, base)})${description ? `: ${description}` : ''}`;
       lines.push(line);
     }
   }
@@ -58,13 +58,13 @@ function generateLlmsTxt(
   const otherLines = [];
   otherLines.push('\n## Other\n');
   for (const page of others) {
-    const { routePath, lang, title, frontmatter } = page;
+    const { routePath, lang, title, description } = page;
     if (routePath === '/' || routePath === `/${lang}/`) {
       continue;
     }
     const line = onLineGenerate
       ? onLineGenerate(page)
-      : `- [${title}](${routePathToMdPath(routePath, base)})${frontmatter.description ? `: ${frontmatter.description}` : ''}`;
+      : `- [${title}](${routePathToMdPath(routePath, base)})${description ? `: ${description}` : ''}`;
     otherLines.push(line);
     hasOthers = true;
   }

@@ -13,12 +13,17 @@
     "text": "UI",
     "link": "/ui/vars",
     "activeMatch": "/ui/",
-    "tag": "new"
+    "tag": "V2"
   },
   {
     "text": "API",
     "link": "/api/",
     "activeMatch": "/api/"
+  },
+  {
+    "text": "博客",
+    "link": "/blog/",
+    "activeMatch": "/blog/"
   },
   {
     "text": "版本",
@@ -29,7 +34,7 @@
       },
       {
         "text": "Rspress 1.x 文档",
-        "link": "http://rspress.rs/zh/"
+        "link": "https://v1.rspress.rs/zh/"
       }
     ]
   }

@@ -1,4 +1,4 @@
-import { NoSSR, useDark, usePageData, withBase } from '@rspress/core/runtime';
+import { useDark } from '@rspress/core/runtime';
 import {
   type MouseEvent,
   useCallback,
@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { getPageFullUrl, getPageUrl } from './common/getPageUrl';
 import MobileOperation from './common/PreviewOperations';
 import IconCode from './icons/Code';
 import './Preview.css';
@@ -18,12 +19,12 @@ type PreviewProps = {
 
 interface BasePreviewProps {
   children: React.ReactNode[];
-  getPageUrl: () => string;
+  demoId: string;
 }
 
 const PreviewIframeFollow: React.FC<BasePreviewProps> = ({
   children,
-  getPageUrl,
+  demoId,
 }) => {
   const [iframeKey, setIframeKey] = useState(0);
   const refresh = useCallback(() => {
@@ -48,11 +49,11 @@ const PreviewIframeFollow: React.FC<BasePreviewProps> = ({
       <div className="rp-preview--iframe-follow__device">
         <iframe
           className="rp-preview--iframe-follow__device__iframe"
-          src={getPageUrl()}
+          src={getPageUrl(demoId)}
           key={iframeKey}
           ref={iframeRef}
         />
-        <MobileOperation url={getPageUrl()} refresh={refresh} />
+        <MobileOperation url={getPageFullUrl(demoId)} refresh={refresh} />
       </div>
     </div>
   );
@@ -104,26 +105,15 @@ const PreviewInternal: React.FC<{ children: React.ReactNode[] }> = ({
 
 const Preview: React.FC<PreviewProps> = props => {
   const { children, previewMode, demoId } = props;
-  const { page } = usePageData();
-
-  const getPageUrl = useCallback(() => {
-    const url = `/~demo/${demoId}`;
-    if (page?.devPort) {
-      return `http://localhost:${page.devPort}/${demoId}`;
-    }
-    return withBase(url);
-  }, [page?.devPort, demoId]);
 
   return (
-    <NoSSR>
+    <>
       {previewMode === 'iframe-follow' ? (
-        <PreviewIframeFollow getPageUrl={getPageUrl}>
-          {children}
-        </PreviewIframeFollow>
+        <PreviewIframeFollow demoId={demoId}>{children}</PreviewIframeFollow>
       ) : (
         <PreviewInternal>{children}</PreviewInternal>
       )}
-    </NoSSR>
+    </>
   );
 };
 

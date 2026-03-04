@@ -1,6 +1,7 @@
 import { extractTextAndId } from '@rspress/shared/node-utils';
 import Slugger from 'github-slugger';
-import type { Root } from 'hast';
+import type { Root as HastRoot } from 'hast';
+import type { Root as MdastRoot } from 'mdast';
 import type { Plugin } from 'unified';
 import { visitChildren } from 'unist-util-visit-children';
 import type { PageMeta } from '../types';
@@ -23,7 +24,29 @@ interface Heading {
   children?: ChildNode[];
 }
 
-export const parseToc = (tree: Root) => {
+const extractChildText = (child: ChildNode): string => {
+  if (child.type === 'link') {
+    return child.children?.map(extractChildText).join('') ?? '';
+  }
+  if (child.type === 'strong') {
+    return `**${child.children?.map(extractChildText).join('') ?? ''}**`;
+  }
+  if (child.type === 'emphasis') {
+    return `*${child.children?.map(extractChildText).join('') ?? ''}*`;
+  }
+  if (child.type === 'delete') {
+    return `~~${child.children?.map(extractChildText).join('') ?? ''}~~`;
+  }
+  if (child.type === 'text') {
+    return child.value;
+  }
+  if (child.type === 'inlineCode') {
+    return `\`${child.value}\``;
+  }
+  return '';
+};
+
+export const parseToc = (tree: MdastRoot | HastRoot) => {
   let title = '';
   const toc: TocItem[] = [];
   const slugger = new Slugger();
@@ -37,34 +60,20 @@ export const parseToc = (tree: Root) => {
       let customId = '';
       const text = node.children
         .map((child: ChildNode) => {
-          if (child.type === 'link') {
-            return child.children?.map(item => item.value).join('');
-          }
-          if (child.type === 'strong') {
-            return `**${child.children?.map(item => item.value).join('')}**`;
-          }
-          if (child.type === 'emphasis') {
-            return `*${child.children?.map(item => item.value).join('')}*`;
-          }
-          if (child.type === 'delete') {
-            return `~~${child.children?.map(item => item.value).join('')}~~`;
-          }
           if (child.type === 'text') {
             const [textPart, idPart] = extractTextAndId(child.value);
             customId = idPart;
             return textPart;
           }
-          if (child.type === 'inlineCode') {
-            return `\`${child.value}\``;
-          }
-          return '';
+          return extractChildText(child);
         })
-        .join('');
+        .join('')
+        .trim();
 
       if (node.depth === 1) {
         if (!title) title = text;
       } else {
-        const id = customId ? customId : slugger.slug(text.trim());
+        const id = customId ? customId : slugger.slug(text);
         const { depth } = node;
         toc.push({ id, text, depth });
       }
@@ -76,11 +85,11 @@ export const parseToc = (tree: Root) => {
   };
 };
 
-export const remarkToc: Plugin<[], Root> = function () {
+export const remarkToc: Plugin<[], HastRoot> = function () {
   const data = this.data() as {
     pageMeta: PageMeta;
   };
-  return (tree: Root) => {
+  return (tree: HastRoot) => {
     const { toc, title } = parseToc(tree);
     data.pageMeta.toc = toc;
     if (title) {

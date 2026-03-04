@@ -1,0 +1,103 @@
+---
+overviewHeaders: []
+---
+
+# NavTitle
+
+This component is part of the navbar. `NavTitle` renders the site Logo and title in the top-left corner of the navbar.
+
+## Usage
+
+Use through [custom theme](/guide/basic/custom-theme). The component internally reads configuration from `rspress.config.ts` through [`useSite`](/ui/hooks/use-site):
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  title: 'My Site',
+  logo: '/logo.png',
+  // Or support dark/light mode:
+  logo: {
+    light: '/logo-light.png',
+    dark: '/logo-dark.png',
+  },
+  logoText: 'My Site',
+});
+```
+
+### Custom NavTitle
+
+You can customize NavTitle through the `navTitle` prop of the Layout component:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout navTitle={<MyCustomNavTitle />} />;
+
+export { Layout };
+export * from '@rspress/core/theme-original';
+```
+
+Or use `beforeNavTitle` and `afterNavTitle` props to insert custom content:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => (
+  <BasicLayout
+    beforeNavTitle={<div>Before</div>}
+    afterNavTitle={<div>After</div>}
+  />
+);
+
+export { Layout };
+export * from '@rspress/core/theme-original';
+```
+
+For more information about custom themes, see the [Custom Theme](/guide/basic/custom-theme) documentation.
+
+## Configuration
+
+### logo
+
+- **Type:** `string | { light: string; dark: string }`
+
+Site Logo. Can be a single image path, or separate images for light/dark mode.
+
+### logoText
+
+- **Type:** `string`
+
+Text displayed next to the Logo.
+
+### title
+
+- **Type:** `string`
+
+Site title. Displayed when `logo` and `logoText` are not configured.
+
+## i18n Support
+
+For multilingual sites, you can configure `title` in each locale:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  title: 'My Site',
+  themeConfig: {
+    locales: [
+      {
+        lang: 'en',
+        title: 'My Site',
+      },
+      {
+        lang: 'zh',
+        title: '我的网站',
+      },
+    ],
+  },
+});
+```
+
+The NavTitle component will automatically display the corresponding title based on the current language.

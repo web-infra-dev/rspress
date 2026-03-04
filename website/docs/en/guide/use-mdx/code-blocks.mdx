@@ -1,4 +1,8 @@
-import { Tabs, Tab } from '@theme';
+---
+description: Use Shiki for syntax highlighting with support for line highlighting, code titles, line numbers, word highlighting, diff display, and code folding.
+---
+
+import { Tabs, Tab } from '@rspress/core/theme';
 
 # Code blocks
 
@@ -46,6 +50,10 @@ const HelloCodeBlockTitle = (props) => {
 
 You can use the `file="./path/to/file"` attribute without writing any code block content to reference the text from an external file.
 
+### Relative paths
+
+Use relative paths starting with `./` or `../` to reference files relative to the current MDX file:
+
 <Tabs>
 <Tab label="foo.mdx">
 
@@ -70,6 +78,18 @@ It will be rendered as:
 ```tsx file="./_tsx-component.tsx"
 
 ```
+
+### Absolute paths with `<root>/` prefix
+
+Use the `<root>/` prefix to reference files using absolute paths relative to the project root directory. This is useful when you need to reference shared code files from different locations in your documentation:
+
+````mdx
+```tsx file="<root>/src/components/Button.tsx"
+
+```
+````
+
+For example, if your project root is `/project`, then `<root>/src/components/Button.tsx` will resolve to `/project/src/components/Button.tsx`.
 
 :::tip
 
@@ -122,10 +142,6 @@ console.log('Not highlighted');
 console.log('Highlighted');
 console.log('Highlighted');
 ```
-
-:::warning
-The backslash (`\`) in `[\!code highlight]` is for escaping in Markdown to show the original syntax. Do not include the backslash when actually using this syntax.
-:::
 
 ## Meta line highlight
 
@@ -195,7 +211,7 @@ function hello() {
 }
 ```
 
-You can also enable line numbers globally by setting the `showLineNumbers` option in the config file:
+You can also enable line numbers globally by setting the [`showLineNumbers`](/api/config/config-build#markdownshowlinenumbers) option in the config file:
 
 ```ts title="rspress.config.ts"
 export default {
@@ -206,27 +222,35 @@ export default {
 };
 ```
 
-When `showLineNumbers` is enabled globally, all code blocks will show line numbers by default.
+When `showLineNumbers` is enabled globally, all code blocks will show line numbers by default. You can disable line numbers for a specific code block by using `lineNumbers=false`:
+
+````mdx
+```ts lineNumbers=false
+function hello() {
+  console.log('Line numbers disabled for this block');
+}
+```
+````
 
 ## Wrap code
 
 You can enable code wrapping for individual code blocks using the `wrapCode` meta attribute:
 
+{/* prettier-ignore */}
 ````mdx
 ```ts wrapCode
-const longLine =
-  'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
+const longLine = 'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
 ```
 ````
 
 It will be rendered as:
 
+{/* prettier-ignore */}
 ```ts wrapCode
-const longLine =
-  'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
+const longLine = 'This is a very long line of code that will wrap when the wrapCode meta attribute is present';
 ```
 
-You can also enable code wrapping globally by setting the `defaultWrapCode` option in the config file:
+You can also enable code wrapping globally by setting the [`defaultWrapCode`](/api/config/config-build#markdowndefaultwrapcode) option in the config file:
 
 ```ts title="rspress.config.ts"
 export default {
@@ -237,7 +261,14 @@ export default {
 };
 ```
 
-When `defaultWrapCode` is enabled globally, all code blocks will wrap long lines by default.
+When `defaultWrapCode` is enabled globally, all code blocks will wrap long lines by default. You can disable code wrapping for a specific code block by using `wrapCode=false`:
+
+{/* prettier-ignore */}
+````mdx
+```ts wrapCode=false
+const longLine = 'This code block will not wrap even if defaultWrapCode is enabled globally';
+```
+````
 
 ## Combining meta attributes
 
@@ -406,7 +437,7 @@ console.log('Not focused');
 
 > [Twoslash](https://twoslash.netlify.app/guide/) is a markup format for TypeScript code, suitable for creating self-contained code samples and letting the TypeScript compiler automatically supplement type information and hints. It is widely used on the official TypeScript website.
 
-Rspress provides the `@rspress/core/plugin-twoslash` plugin, which enables Twoslash features in Rspress. See [@rspress/plugin-twoslash documentation](../../plugin/official-plugins/twoslash.mdx) for details.
+Rspress provides the `@rspress/plugin-twoslash` plugin, which enables Twoslash features in Rspress. See [@rspress/plugin-twoslash documentation](../../plugin/official-plugins/twoslash.mdx) for details.
 
 ```ts twoslash
 // @noErrorValidation
@@ -420,7 +451,7 @@ When you need to render code blocks dynamically at runtime, such as in interacti
 Here is an example:
 
 ```mdx title="foo.mdx"
-import { CodeBlockRuntime } from '@theme';
+import { CodeBlockRuntime } from '@rspress/core/theme';
 import { transformerNotationHighlight } from '@shikijs/transformers';
 
 <CodeBlockRuntime
@@ -436,7 +467,7 @@ console.log('Not highlighted');`}
 />
 ```
 
-import { CodeBlockRuntime } from '@theme';
+import { CodeBlockRuntime } from '@rspress/core/theme';
 import { transformerNotationHighlight } from '@shikijs/transformers';
 
 <CodeBlockRuntime

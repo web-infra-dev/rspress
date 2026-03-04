@@ -1,7 +1,8 @@
+import { IconEdit, Link, SvgWrapper } from '@theme';
 import './index.scss';
 import { useEditLink } from './useEditLink';
 
-export function EditLink() {
+export function EditLink({ isOutline }: { isOutline?: boolean }) {
   const editLinkObj = useEditLink();
 
   if (!editLinkObj) {
@@ -10,10 +11,18 @@ export function EditLink() {
 
   const { text, link } = editLinkObj;
 
-  // EditLink must be an external site, so we use <a> directly instead of Link
+  if (isOutline) {
+    return (
+      <Link href={link} className="rp-outline__action-row rp-edit-link">
+        <SvgWrapper icon={IconEdit} width="16" height="16" />
+        <span>{text}</span>
+      </Link>
+    );
+  }
+
   return (
-    <a href={link} target="_blank" className="rp-edit-link">
+    <Link href={link} className="rp-edit-link">
       {text}
-    </a>
+    </Link>
   );
 }

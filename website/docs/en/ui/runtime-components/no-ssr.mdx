@@ -1,0 +1,20 @@
+---
+description: NoSSR component for disabling server-side rendering and rendering content only on the client.
+overviewHeaders: []
+---
+
+# NoSSR
+
+`NoSSR` skips server-side rendering for its children.
+
+## Usage
+
+```mdx title="index.mdx"
+import { NoSSR } from '@rspress/core/runtime';
+
+<NoSSR>
+  <ThirdPartyWidget />
+</NoSSR>
+```
+
+Use it when a component depends on browser-only APIs or needs to avoid SSR.

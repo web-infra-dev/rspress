@@ -10,9 +10,13 @@ import {
   usePageData,
   useSidebar,
 } from '@rspress/core/runtime';
-import { type Group, type GroupItem, OverviewGroup } from '@theme';
+import {
+  FallbackHeading,
+  type Group,
+  type GroupItem,
+  OverviewGroup,
+} from '@theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FallbackHeading } from '../DocContent/FallbackHeading';
 import {
   isSidebarDivider,
   isSidebarSectionHeader,
@@ -62,18 +66,13 @@ const OverviewSearchInput = ({
 export function Overview(props: {
   content?: React.ReactNode;
   groups?: Group[];
-  defaultGroupTitle?: string;
   overviewHeaders?: number[];
 }) {
   const {
     siteData,
     page: { routePath, title, frontmatter },
   } = usePageData();
-  const {
-    content,
-    groups: customGroups,
-    defaultGroupTitle: _ = 'Others',
-  } = props;
+  const { content, groups: customGroups } = props;
   const t = useI18n();
 
   // Added state for search query
@@ -83,7 +82,9 @@ export function Overview(props: {
 
   // Added effect to focus search input on mount
   useEffect(() => {
-    searchRef.current?.focus();
+    if (frontmatter.overview === true) {
+      searchRef.current?.focus();
+    }
   }, []);
 
   const subFilter = (link: string) =>
@@ -240,6 +241,17 @@ export function Overview(props: {
   }, [groups, query]);
 
   const overviewTitle = title || 'Overview';
+
+  if (process.env.__SSR_MD__) {
+    return (
+      <>
+        <FallbackHeading level={1} title={overviewTitle} />
+        {groups.map(group => (
+          <OverviewGroup key={group?.name} group={group} />
+        ))}
+      </>
+    );
+  }
 
   return (
     <div className="rspress-doc rp-doc rspress-overview rp-overview">

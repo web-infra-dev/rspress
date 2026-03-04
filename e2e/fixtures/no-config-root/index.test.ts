@@ -8,8 +8,8 @@ import {
 } from '../../utils/runCommands';
 
 test.describe('no config.root dev test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();
@@ -23,15 +23,17 @@ test.describe('no config.root dev test', async () => {
   });
 
   test('Index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     const h1 = page.locator('h1');
     await expect(h1).toContainText('Hello world');
   });
 });
 
 test.describe('no config.root build and preview test', async () => {
-  let appPort;
-  let app;
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runPreviewCommand>> | null;
   test.beforeAll(async () => {
     const appDir = __dirname;
     appPort = await getPort();

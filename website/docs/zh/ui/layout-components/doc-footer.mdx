@@ -1,0 +1,32 @@
+---
+description: DocFooter 文档页脚组件，包含编辑链接、最后更新时间和上一页/下一页导航。
+overviewHeaders: []
+---
+
+# DocFooter
+
+`DocFooter` 用于渲染文档页面底部的页脚区域，包含编辑链接、最后更新时间和上一页/下一页导航。
+
+## 用法
+
+该组件会在文档页面底部自动渲染，通常不需要手动使用。如需自定义，可通过 eject 修改：
+
+```tsx preview
+import { DocFooter as BasicDocFooter } from '@rspress/core/theme-original';
+
+export default function DocFooter() {
+  return <BasicDocFooter />;
+}
+```
+
+```tsx title="theme/components/DocFooter/index.tsx" file="<root>/../packages/core/src/theme/components/DocFooter/index.tsx"
+
+```
+
+## 包含的组件
+
+`DocFooter` 由以下组件组成：
+
+- [EditLink](/ui/layout-components/edit-link) - 显示"编辑此页"链接
+- [LastUpdated](/ui/layout-components/last-updated) - 显示页面最后更新时间
+- [PrevNextPage](/ui/layout-components/prev-next-page) - 显示上一页/下一页导航

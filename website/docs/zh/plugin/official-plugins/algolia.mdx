@@ -1,3 +1,7 @@
+---
+tag: new
+---
+
 # @rspress/plugin-algolia <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-algolia" />
 
 import { SourceCode } from '@rspress/core/theme';
@@ -6,7 +10,7 @@ import { SourceCode } from '@rspress/core/theme';
 
 ## 安装
 
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 <PackageManagerTabs command="add @rspress/plugin-algolia -D" />
 
@@ -25,7 +29,7 @@ export default defineConfig({
 });
 ```
 
-然后通过 [自定义主题](/ui/custom-theme) 将 `Search` 组件覆盖为支持 algolia 的搜索框。
+然后通过 [自定义主题](/guide/basic/custom-theme) 将 `Search` 组件覆盖为支持 algolia 的搜索框。
 
 ```tsx
 // theme/index.tsx
@@ -47,7 +51,7 @@ const Search = () => {
   );
 };
 export { Search };
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
 ## 配置
@@ -111,50 +115,8 @@ type Locales = Record<
 
 <details>
 
-```ts
-export const ZH_LOCALES: Locales = {
-  zh: {
-    placeholder: '搜索文档',
-    translations: {
-      button: {
-        buttonText: '搜索',
-        buttonAriaLabel: '搜索',
-      },
-      modal: {
-        searchBox: {
-          clearButtonTitle: '清除查询条件',
-          clearButtonAriaLabel: '清除查询条件',
-          closeButtonText: '取消',
-          closeButtonAriaLabel: '取消',
-        },
-        startScreen: {
-          recentSearchesTitle: '搜索历史',
-          noRecentSearchesText: '没有搜索历史',
-          saveRecentSearchButtonTitle: '保存至搜索历史',
-          removeRecentSearchButtonTitle: '从搜索历史中移除',
-          favoriteSearchesTitle: '收藏',
-          removeFavoriteSearchButtonTitle: '从收藏中移除',
-        },
-        errorScreen: {
-          titleText: '无法获取结果',
-          helpText: '你可能需要检查你的网络连接',
-        },
-        footer: {
-          selectText: '选择',
-          navigateText: '切换',
-          closeText: '关闭',
-          poweredByText: '搜索提供者',
-        },
-        noResultsScreen: {
-          noResultsText: '无法找到相关结果',
-          suggestedQueryText: '你可以尝试查询',
-          reportMissingResultsText: '你认为该查询应该有结果？',
-          reportMissingResultsLinkText: '点击反馈',
-        },
-      },
-    },
-  },
-} as const;
+```ts file="<root>/../packages/plugin-algolia/src/runtime/locales.ts"
+
 ```
 
 </details>
@@ -202,10 +164,11 @@ new Crawler({
       indexName: 'doc_search_rspress_pages',
       pathsToMatch: ['https://rspress.rs/**'],
       recordExtractor: ({ $, helpers }) => {
-        const lvl0 =
-          $('.rspress-nav-menu-item.rspress-nav-menu-item-active')
-            .first()
-            .text() || 'Documentation';
+        const $activeNavItem = $('.rp-nav-menu__item.rp-nav-menu__item--active')
+          .first()
+          .clone();
+        $activeNavItem.find('.rp-badge').remove();
+        const lvl0 = $activeNavItem.text().trim() || 'Documentation';
 
         return helpers.docsearch({
           recordProps: {
@@ -287,7 +250,7 @@ new Crawler({
 
 ## 基于国际化区分搜索结果
 
-通过 [Runtime API](/api/client-api/api-runtime) 组合 `docSearchProps` 可以实现搜索结果的国际化。
+通过 [Runtime API](/ui/hooks/) 组合 `docSearchProps` 可以实现搜索结果的国际化。
 
 以下是通过 `docSearchProps.searchParameters` 实现的一个示例：
 
@@ -312,5 +275,5 @@ const Search = () => {
   );
 };
 export { Search };
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```

@@ -4,7 +4,7 @@ import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
 import type { PluginDriver } from '../PluginDriver';
-import { pathExists } from '../utils';
+import { createError, pathExists } from '../utils';
 import { DEFAULT_I18N_TEXT } from './DEFAULT_I18N_TEXT';
 import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
@@ -101,7 +101,7 @@ export async function getI18nData(
           logger.error(
             `${logPrefix} i18n key ${cyan(key)} has no text for lang ${cyan(lang)}, and no fallback ${cyan('en')} text either.`,
           );
-          throw new Error(`i18n text missing for ${picocolors.cyan(key)}`);
+          throw createError(`i18n text missing for ${picocolors.cyan(key)}`);
         }
       }
     }
@@ -109,8 +109,9 @@ export async function getI18nData(
 
   if (logKeys.size > 0 && !logged) {
     logger.warn(
-      `${logPrefix} The following i18n keys are missing for some languages and have fallen back to 'en': 
-      ${picocolors.gray(JSON.stringify(Object.fromEntries([...logKeys.keys()].map(i => [i, '...'])), null, 2))}`,
+      `${logPrefix} The following i18n keys are missing for some languages and have fallen back to 'en':
+      ${picocolors.gray(JSON.stringify(Object.fromEntries([...logKeys.keys()].map(i => [i, '...'])), null, 2))}
+      You can provide translations via ${picocolors.cyan('i18n.json')} file or ${picocolors.cyan('i18nSource')} config in rspress.config.ts`,
     );
     logged = true;
   }

@@ -13,6 +13,9 @@ export default defineConfig({
       },
       dts: true,
       format: 'esm',
+      experiments: {
+        advancedEsm: true,
+      },
       syntax: 'esnext',
       redirect: {
         dts: {

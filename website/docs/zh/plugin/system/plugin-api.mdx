@@ -220,8 +220,6 @@ export function pluginForDoc(): RspressPlugin {
     name: 'plugin-name',
     // 扩展 Markdown/MDX 编译能力
     markdown: {
-      // 启用 JS 版本的编译器以支持外部插件
-      mdxRs: false,
       remarkPlugins: [
         // 添加自定义的 remark 插件
       ],
@@ -317,7 +315,7 @@ export function docPluginDemo(): RspressPlugin {
 
 - **类型**：`(routeMeta: RouteMeta[]) => void | Promise<void>`
 
-这这个钩子中，你可以拿到所有的路由信息，每一项路由信息的结构如下:
+在这个钩子中，你可以拿到所有的路由信息，每一项路由信息的结构如下:
 
 ```ts
 export interface RouteMeta {

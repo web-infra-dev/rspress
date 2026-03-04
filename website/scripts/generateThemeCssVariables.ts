@@ -40,6 +40,8 @@ const tokenScopes: Record<string, string[]> = {
     'storage.modifier',
   ],
   '--shiki-token-parameter': [
+    // Generic variable scope first - many themes define this with a distinct color
+    'variable',
     'variable.parameter',
     'variable.parameter.function',
     'variable.parameter.function-call',
@@ -56,28 +58,43 @@ const tokenScopes: Record<string, string[]> = {
     'meta.function-call.generic',
   ],
   '--shiki-token-string-expression': [
+    // String-related scopes for template expressions
+    'string',
     'string variable',
-    'meta.embedded',
-    'meta.template.expression',
-    'punctuation.definition.template-expression',
-    'punctuation.section.embedded',
+    // Escape characters within strings
+    'constant.character.escape',
     'string.regexp constant.character.escape',
+    // Template expression content
+    'meta.template.expression',
+    'meta.embedded',
+    // Template expression punctuation (${} markers) - lower priority
+    'punctuation.definition.template-expression.begin',
+    'punctuation.definition.template-expression.end',
+    'punctuation.definition.template-expression',
+    'punctuation.section.embedded.begin',
+    'punctuation.section.embedded.end',
+    'punctuation.section.embedded',
   ],
   '--shiki-token-punctuation': [
-    'punctuation',
+    // Generic punctuation scopes - many themes define these
+    'punctuation.separator.delimiter',
+    'punctuation.terminator.statement',
+    'punctuation.accessor',
     'punctuation.separator',
     'punctuation.terminator',
-    'punctuation.accessor',
-    'punctuation.section',
+    'punctuation.bracket',
+    'punctuation',
     'meta.brace',
     'meta.bracket',
-    'punctuation.definition',
   ],
   '--shiki-token-link': [
-    'markup.underline',
-    'markup.underline.link',
-    'constant.other.reference.link',
+    // Prioritize link-specific scopes
+    'string.other.link.title',
+    'string.other.link.description',
     'string.other.link',
+    'markup.underline.link',
+    'markup.underline',
+    'constant.other.reference.link',
     'markup.inline.raw',
     'textLink.activeForeground',
     'textLink.foreground',
@@ -91,43 +108,64 @@ interface TokenColor {
   };
 }
 
+function parseScopeString(scope: string): string[] {
+  // Handle comma-separated scopes like "comment, punctuation.definition.comment"
+  return scope.split(',').map(s => s.trim());
+}
+
 function getColorForScope(
   tokenColors: TokenColor[],
   scopes: string[],
 ): string | undefined {
   let bestMatch: string | undefined;
-  let bestMatchScore = 0;
+  let bestMatchScore = -1;
 
   for (const { scope, settings } of tokenColors) {
     if (!scope || !settings?.foreground) continue;
-    const scopeArr = Array.isArray(scope) ? scope : [scope];
 
-    // Check for exact matches (highest priority)
-    for (const targetScope of scopes) {
-      if (scopeArr.includes(targetScope)) {
-        return settings.foreground;
-      }
+    // Convert scope to array and handle comma-separated strings
+    let scopeArr: string[];
+    if (Array.isArray(scope)) {
+      scopeArr = scope.flatMap(s => parseScopeString(s));
+    } else {
+      scopeArr = parseScopeString(scope);
     }
 
-    // Check for partial matches and calculate match score
-    for (const targetScope of scopes) {
+    for (let scopeIndex = 0; scopeIndex < scopes.length; scopeIndex++) {
+      const targetScope = scopes[scopeIndex];
+      // Higher priority for scopes listed earlier in the array
+      const priorityBonus = (scopes.length - scopeIndex) * 1000;
+
       for (const s of scopeArr) {
         let score = 0;
 
-        // Exact substring match
-        if (s.includes(targetScope) || targetScope.includes(s)) {
-          score = Math.max(targetScope.length, s.length);
+        // Exact match (highest priority)
+        if (s === targetScope) {
+          score = priorityBonus + 500 + s.length;
         }
-        // Word boundary match (e.g., "constant" matches "constant.numeric")
-        else if (
-          s.startsWith(`${targetScope}.`) ||
-          targetScope.startsWith(`${s}.`)
-        ) {
-          score = Math.min(targetScope.length, s.length) * 1.5;
+        // Theme scope is more specific (e.g., target "keyword" matches theme "keyword.control.ts")
+        // This means the theme has a specific rule that extends our target scope
+        // Give higher priority to theme scopes that are closer to the target (fewer extra levels)
+        else if (s.startsWith(`${targetScope}.`)) {
+          // Count extra scope levels: "keyword.control.ts" - "keyword" = 2 extra levels
+          const extraPart = s.slice(targetScope.length + 1);
+          const extraLevels = extraPart.split('.').length;
+          // Base score 400, minus heavy penalty for extra specificity levels
+          // This prevents language-specific scopes from being prioritized
+          score = priorityBonus + 400 - extraLevels * 50;
         }
-        // Starts with match
-        else if (s.startsWith(targetScope) || targetScope.startsWith(s)) {
-          score = Math.min(targetScope.length, s.length);
+        // Target scope is more specific (e.g., target "keyword.control" matches theme "keyword")
+        // The theme defines a general rule that applies to our specific scope
+        // This is less preferred because we want specific rules when available
+        // Only allow this if the theme scope is a direct parent (not too general)
+        else if (targetScope.startsWith(`${s}.`)) {
+          // Count how many levels more specific the target is
+          const extraPart = targetScope.slice(s.length + 1);
+          const extraLevels = extraPart.split('.').length;
+          // Only match if not too many levels apart (avoid "string" matching "string.other.link.title")
+          if (extraLevels <= 2) {
+            score = priorityBonus + 200 + s.length - extraLevels * 20;
+          }
         }
 
         if (score > bestMatchScore) {

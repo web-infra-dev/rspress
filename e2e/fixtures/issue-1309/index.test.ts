@@ -18,7 +18,9 @@ test.describe('issue-1309', async () => {
   });
 
   test('should not generate the sidebar in homePage', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
     const navItems = getNavbarItems(page);
     await expect(navItems).toHaveCount(1);
 
@@ -29,7 +31,9 @@ test.describe('issue-1309', async () => {
   test('should render the sidebar correctly in guide page', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/guide`);
+    await page.goto(`http://localhost:${appPort}/guide`, {
+      waitUntil: 'networkidle',
+    });
     const navItems = getNavbarItems(page);
     await expect(navItems).toHaveCount(1);
 

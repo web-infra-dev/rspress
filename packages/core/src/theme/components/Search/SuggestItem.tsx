@@ -1,18 +1,15 @@
-import { Link, SvgWrapper } from '@theme';
-import FileSvg from '@theme-assets/file';
-import HeaderSvg from '@theme-assets/header';
-import JumpSvg from '@theme-assets/jump';
-import TitleSvg from '@theme-assets/title';
+import {
+  IconFile,
+  IconHeader,
+  IconJump,
+  IconTitle,
+  Link,
+  SvgWrapper,
+} from '@theme';
 import { useRef } from 'react';
 import './SuggestItem.scss';
 import type { DefaultMatchResultItem, HighlightInfo } from './logic/types';
 import { getSlicedStrByByteLength } from './logic/util';
-
-const ICON_MAP = {
-  title: TitleSvg,
-  header: HeaderSvg,
-  content: FileSvg,
-};
 
 export function SuggestItem({
   suggestion,
@@ -32,6 +29,12 @@ export function SuggestItem({
   inCurrentDocIndex: boolean;
   scrollTo: (top: number, height: number) => void;
 }) {
+  const ICON_MAP = {
+    title: IconTitle,
+    header: IconHeader,
+    content: IconFile,
+  };
+
   const HitIcon = ICON_MAP[suggestion.type];
   const selfRef = useRef<HTMLLIElement>(null);
   if (isCurrent && selfRef.current?.offsetTop) {
@@ -135,7 +138,7 @@ export function SuggestItem({
             <span>{hitContent}</span>
           </div>
           <div className="rp-suggest-item__action-icon">
-            <SvgWrapper icon={JumpSvg} />
+            <SvgWrapper icon={IconJump} />
           </div>
         </div>
       </Link>

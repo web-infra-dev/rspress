@@ -16,6 +16,8 @@ export type { I18nText } from './theme/i18nText';
 export type {
   EditLink,
   Footer,
+  LlmsUI,
+  LlmsViewOption,
   NormalizedLocales,
   NormalizedThemeConfig,
   ThemeConfig,
@@ -134,6 +136,11 @@ export interface UserConfig {
    */
   logoText?: string;
   /**
+   * Custom link for the logo.
+   * @default '/${lang}/'
+   */
+  logoHref?: string;
+  /**
    * Base path of the site.
    * @default '/'
    */
@@ -215,7 +222,7 @@ export interface UserConfig {
    */
   outDir?: string;
   /**
-   * Custom theme directory
+   * User side custom theme directory
    */
   themeDir?: string;
   /**
@@ -340,6 +347,7 @@ export interface SiteData {
   themeConfig: NormalizedDefaultThemeConfig;
   logo: string | { dark: string; light: string };
   logoText: string;
+  logoHref: string;
   search: SearchOptions;
   markdown: {
     showLineNumbers: boolean;
@@ -364,9 +372,8 @@ export interface PageIndexInfo {
   title: string;
   toc: Header[];
   content: string;
+  description?: string;
   _flattenContent?: string;
-  /* html content is too large to be written to index file */
-  _html: string;
   frontmatter: FrontMatterMeta;
   lang: string;
   version: string;
@@ -384,7 +391,7 @@ export type RemotePageInfo = PageIndexInfo & {
 };
 
 export interface Hero {
-  badge?: string;
+  badge?: string | { text: string; link?: string };
   name?: string;
   text?: string;
   tagline?: string;
@@ -406,6 +413,13 @@ export interface Hero {
 }
 
 export interface Feature {
+  /**
+   * Feature icon, supports:
+   * - Emoji: '🚀'
+   * - HTML string: '<span class="icon">...</span>'
+   * - SVG string: '<svg>...</svg>'
+   * - Image URL: '/icons/feature.svg' or 'https://example.com/icon.png'
+   */
   icon: string;
   title: string;
   details: string;
@@ -429,6 +443,7 @@ export interface FrontMatterMeta {
   pageType?: PageType;
   features?: Feature[];
   hero?: Hero;
+  tag?: string;
 
   // ui
   navbar?: boolean;
@@ -483,6 +498,7 @@ export type LocalSearchOptions = SearchHooks & {
   mode?: 'local';
   /**
    * Whether to generate separate search index for each version
+   * @default true
    */
   versioned?: boolean;
   /**
@@ -533,6 +549,12 @@ export interface MarkdownOptions {
    * @default true
    */
   crossCompilerCache?: boolean;
+  /**
+   * Whether to automatically extract a description from the markdown content,
+   * typically from the first paragraph, for use in page metadata or previews.
+   * @default true
+   */
+  extractDescription?: boolean;
 }
 
 export type Config =

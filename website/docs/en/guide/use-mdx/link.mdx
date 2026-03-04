@@ -1,10 +1,14 @@
+---
+description: Support file path and URL link formats, anchor links, custom anchor IDs, and dead link detection.
+---
+
 # Links
 
 ## Link format
 
 Rspress supports two formats of links: **file path format** and **URL format**. They render exactly the same results, differing only in code style.
 
-import { Tabs, Tab } from '@theme';
+import { Tabs, Tab } from '@rspress/core/theme';
 
 <Tabs>
 <Tab label="Syntax">
@@ -66,7 +70,7 @@ Here are examples from this website:
 
 :::tip
 
-When using absolute paths, the root path is the [`docs`](/api/config/config-basic#root) directory. If the project uses [internationalization](/guide/default-theme/i18n) or [multi-version](/guide/default-theme/multi-version), the [`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) configuration will automatically add prefixes, so you can omit the language directory in links.
+When using absolute paths, the root path is the [`docs`](/api/config/config-basic#root) directory. If the project uses [internationalization](/guide/basic/i18n) or [multi-version](/guide/basic/multi-version), the [`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) configuration will automatically add prefixes, so you can omit the language directory in links.
 
 For example:
 
@@ -128,7 +132,7 @@ Here are examples from this website:
 
 :::tip
 
-When using absolute paths, the root path is the [`docs`](/api/config/config-basic#root) directory. If the project uses [internationalization](/guide/default-theme/i18n) or [multi-version](/guide/default-theme/multi-version), the [`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) configuration will automatically add prefixes, so you can omit the language directory in links.
+When using absolute paths, the root path is the [`docs`](/api/config/config-basic#root) directory. If the project uses [internationalization](/guide/basic/i18n) or [multi-version](/guide/basic/multi-version), the [`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) configuration will automatically add prefixes, so you can omit the language directory in links.
 
 For example:
 

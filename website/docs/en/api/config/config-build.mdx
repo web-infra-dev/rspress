@@ -63,7 +63,7 @@ export default defineConfig({
 });
 ```
 
-- Example: Add Google analytics through [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics).
+- Example: Add Google analytics through [rsbuild-plugin-google-analytics](https://github.com/rstackjs/rsbuild-plugin-google-analytics).
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -81,7 +81,7 @@ export default defineConfig({
 });
 ```
 
-- Example: Add Open Graph meta tags through [rsbuild-plugin-open-graph](https://github.com/rspack-contrib/rsbuild-plugin-open-graph).
+- Example: Add Open Graph meta tags through [rsbuild-plugin-open-graph](https://github.com/rstackjs/rsbuild-plugin-open-graph).
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -138,7 +138,7 @@ Configure MDX-related compilation abilities.
 ### markdown.remarkPlugins
 
 - **Type**: `Array`
-- Default: `[]`
+- **Default**: `[]`
 
 Configure the remark plugins. for example:
 
@@ -251,7 +251,7 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `true`
 
-After enabling this config, Rspress will automatically add prefixes to links in documents based on the conventional routing about [i18n](/guide/default-theme/i18n) and [Multi version](/guide/default-theme/multi-version).
+After enabling this config, Rspress will automatically add prefixes to links in documents based on the conventional routing about [i18n](/guide/basic/i18n) and [Multi version](/guide/basic/multi-version).
 
 If a user writes a link `[](/guide/getting-started)` in `docs/zh/guide/index.md`, Rspress will automatically convert it to `[](/zh/guide/getting-started)`.
 
@@ -261,11 +261,34 @@ If a user writes a link `[](/guide/getting-started)` in `docs/zh/guide/index.md`
 
 Whether to display the line number of the code block. Defaults to `false`.
 
+When enabled globally, you can use `lineNumbers=false` in the code block meta to disable line numbers for a specific block. Conversely, when disabled globally, you can use `lineNumbers` or `lineNumbers=true` to enable line numbers for a specific block. See [Show code line numbers](/guide/use-mdx/code-blocks#show-code-line-numbers) for details.
+
 ### markdown.defaultWrapCode
 
 - **Type**: `boolean`
 
 Whether to enable long code line wrapping display by default. Defaults to `false`.
+
+When enabled globally, you can use `wrapCode=false` in the code block meta to disable wrapping for a specific block. Conversely, when disabled globally, you can use `wrapCode` or `wrapCode=true` to enable wrapping for a specific block. See [Wrap code](/guide/use-mdx/code-blocks#wrap-code) for details.
+
+### markdown.crossCompilerCache
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+Whether to enable cross-compiler cache for MDX compilation during `rspress build`. When enabled, Rspress will cache MDX parsing results across multiple compilers (web and node), which can speed up the production build process by approximately 10%.
+
+This option only takes effect in production builds and is inspired by [Docusaurus](https://docusaurus.io/).
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    crossCompilerCache: true,
+  },
+});
+```
 
 ### markdown.globalComponents
 
@@ -289,3 +312,10 @@ Then you can use the `Alert` component in any MDX file:
 ```mdx title="test.mdx"
 <Alert type="info">This is a info alert</Alert>
 ```
+
+### markdown.extractDescription
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+Whether to extract the description from the content. If enabled, Rspress will automatically extract the first paragraph before the `h2` heading as the description of the page.

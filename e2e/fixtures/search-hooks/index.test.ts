@@ -34,7 +34,9 @@ test.describe('search hooks', async () => {
   });
 
   test('search-hooks should work', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/`);
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
     const { infoList } = proxyConsole(page);
     const suggestItems0 = await searchInPage(page, 'Foo');
     expect(suggestItems0.length).toBe(1);

@@ -1,10 +1,14 @@
+---
+description: 支持文件路径和 URL 两种链接形式，以及锚点链接、自定义锚点 id 和死链检查功能。
+---
+
 # 链接
 
 ## 链接形式
 
 Rspress 支持两种形式的链接：**文件路径形式** 和 **URL 形式**。它们的渲染结果完全相同，仅是在代码风格上有所区分。
 
-import { Tabs, Tab } from '@theme';
+import { Tabs, Tab } from '@rspress/core/theme';
 
 <Tabs>
 <Tab label="语法">
@@ -66,7 +70,7 @@ import { Tabs, Tab } from '@theme';
 
 :::tip
 
-当使用绝对路径时，根路径为 [`docs`](/api/config/config-basic#root) 目录。如果项目中使用了 [国际化](/guide/default-theme/i18n) 或 [多版本](/guide/default-theme/multi-version)，[`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) 配置项会自动添加前缀，所以在链接中可以省略语言目录。
+当使用绝对路径时，根路径为 [`docs`](/api/config/config-basic#root) 目录。如果项目中使用了 [国际化](/guide/basic/i18n) 或 [多版本](/guide/basic/multi-version)，[`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) 配置项会自动添加前缀，所以在链接中可以省略语言目录。
 
 比如：
 
@@ -80,7 +84,7 @@ import { Tabs, Tab } from '@theme';
 
 我们更推荐相对文件路径的形式，它具有以下优点：
 
-1. ide 支持，提供代码提示，跳转到对应的文件，在移动文件时会自动更新文件链接等 ide 功能。
+1. IDE 支持，提供代码提示、跳转到对应文件、移动文件时自动更新链接等功能。
 
 2. 被 Github 界面或者其他 Markdown 编辑器所支持。
 
@@ -128,7 +132,7 @@ URL 形式的特点是使用完整的 URL 地址来引用到具体的页面。
 
 :::tip
 
-当使用绝对路径时，根路径为 [`docs`](/api/config/config-basic#root) 目录。如果项目中使用了 [国际化](/guide/default-theme/i18n) 或 [多版本](/guide/default-theme/multi-version)，[`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) 配置项会自动添加前缀，所以在链接中可以省略语言目录。
+当使用绝对路径时，根路径为 [`docs`](/api/config/config-basic#root) 目录。如果项目中使用了 [国际化](/guide/basic/i18n) 或 [多版本](/guide/basic/multi-version)，[`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) 配置项会自动添加前缀，所以在链接中可以省略语言目录。
 
 比如：
 

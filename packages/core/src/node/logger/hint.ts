@@ -8,6 +8,9 @@ import { pathExists } from '../utils';
 
 const THEME_DEFAULT_EXPORT_PATTERN = /export\s+default\s+\{/;
 
+const THEME_OLD_IMPORT_0 = /from\s+['"]rspress\/theme['"]/;
+const THEME_OLD_IMPORT_1 = /from\s+['"]@rspress\/core\/theme['"]/;
+
 /**
  * breaking change hint of theme
  * @see https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737
@@ -21,25 +24,32 @@ export async function hintThemeBreakingChange(customThemeDir: string) {
       const content = await readFile(filePath, { encoding: 'utf-8' });
       if (THEME_DEFAULT_EXPORT_PATTERN.test(content)) {
         useDefaultExportFilePath = filePath;
+        break;
       }
-      break;
+      if (
+        THEME_OLD_IMPORT_0.test(content) ||
+        THEME_OLD_IMPORT_1.test(content)
+      ) {
+        useDefaultExportFilePath = filePath;
+        break;
+      }
     }
   }
   if (useDefaultExportFilePath) {
     logger.warn(
-      `[Rspress v2] Breaking Change: The "theme/index.tsx" is now using named export instead of default export, please update ${picocolors.greenBright(useDefaultExportFilePath)} (https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737).\n`,
+      `[Rspress v2] Breaking Change: The "theme/index.tsx" is now using named export from '@rspress/core/theme-original' instead of default export from 'rspress/theme', please update ${picocolors.greenBright(useDefaultExportFilePath)} (https://github.com/web-infra-dev/rspress/discussions/1891#discussioncomment-12422737).\n`,
       picocolors.redBright(`
-- import Theme from '@rspress/core/theme';
+- import Theme from 'rspress/theme';
 - export default {
 -  ...Theme,
 -  Layout,
 - };
-- export * from '@rspress/core/theme';`) +
+- export * from 'rspress/theme';`) +
         picocolors.greenBright(`
-+ import { Layout } from '@rspress/core/theme';
++ import { Layout } from '@rspress/core/theme-original';
 
 + export { Layout };
-+ export * from '@rspress/core/theme';
++ export * from '@rspress/core/theme-original';
 `),
     );
   }
@@ -75,7 +85,12 @@ ${picocolors.greenBright(`  builderConfig: {
 /**
  * Possible reasons for printing "ssg: false" and some troubleshooting guidelines for users.
  */
+let isSSGFailedLogged = false;
 export function hintSSGFailed() {
+  if (isSSGFailedLogged) {
+    return;
+  }
+  isSSGFailedLogged = true;
   logger.info(`[Rspress v2] \`ssg: true\` requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
     1. Fix code to make it SSR-compatible.
     2. Set \`ssg: false\` if the code in node_modules may be difficult to fix, but the SSG feature will be lost.`);
@@ -101,16 +116,16 @@ export function hintNavJsonChangeThenPanic(
 ): void {
   if (
     metaJson.some(i => {
-      return (
+      // Skip custom-link format (v2 new format)
+      if (
         typeof i === 'object' &&
-        ('activeMatch' in i ||
-          'text' in i ||
-          'link' in i ||
-          'items' in i ||
-          'icon' in i ||
-          'ariaLabel' in i ||
-          'target' in i)
-      );
+        'type' in i &&
+        (i as any).type === 'custom-link'
+      ) {
+        return false;
+      }
+      // Only panic for old v1 nav config
+      return typeof i === 'object' && ('activeMatch' in i || 'text' in i);
     })
   ) {
     const error = new Error(

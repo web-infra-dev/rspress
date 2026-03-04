@@ -3,7 +3,6 @@ import {
   type DefaultThemeConfig,
   isExternalUrl,
   type NavItem,
-  type NavItemWithLink,
   type NormalizedDefaultThemeConfig,
   type NormalizedSidebarGroup,
   normalizeHref,
@@ -154,7 +153,7 @@ export async function normalizeThemeConfig(
           : {}),
         ...('items' in navItem
           ? {
-              items: navItem.items.map((item: NavItemWithLink) => {
+              items: navItem.items.map(item => {
                 return transformNavItem(item);
               }),
             }

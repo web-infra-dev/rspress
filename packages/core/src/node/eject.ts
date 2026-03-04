@@ -1,11 +1,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { EJECTED_THEME } from './constants';
 
 // For testing purposes, allow overriding the theme path
 let _themeComponentsPathOverride: string | undefined;
@@ -23,7 +20,7 @@ function getThemeComponentsPath(): string {
   if (_themeComponentsPathOverride) {
     return _themeComponentsPathOverride;
   }
-  return path.join(__dirname, 'eject-theme/components');
+  return path.join(EJECTED_THEME, 'components');
 }
 
 /**
@@ -36,15 +33,20 @@ export async function getAvailableComponents(): Promise<string[]> {
     'Badge',
     'Callout',
     'DocFooter',
+    'FallbackHeading',
     'HomeFeature',
     'HomeHero',
     'HomeBackground',
     'HomeFooter',
+    'NavTitle',
+    'SourceCode',
     'Toc',
     'Tabs',
+    'Tag',
     'PackageManagerTabs',
     'PrevNextPage',
-    'Overview',
+    'OverviewGroup',
+    'Root',
     'SocialLinks',
     'Steps',
   ];
@@ -102,11 +104,6 @@ async function transformImports(filePath: string): Promise<void> {
 
   // TODO: currently do noting
   const transformed = content;
-
-  // Transform @theme-assets imports
-  // Note: @theme-assets imports cannot be directly imported by users.
-  // These will need to be manually handled or we could provide helper functions.
-  // For now, we keep them as is.
 
   if (transformed !== content) {
     await fs.writeFile(filePath, transformed, 'utf-8');

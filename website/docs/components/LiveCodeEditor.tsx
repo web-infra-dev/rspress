@@ -1,4 +1,7 @@
-import { CodeBlockRuntime, type CodeBlockRuntimeProps } from '@theme';
+import {
+  CodeBlockRuntime,
+  type CodeBlockRuntimeProps,
+} from '@rspress/core/theme';
 import { useRef } from 'react';
 import styles from './LiveCodeEditor.module.scss';
 
@@ -25,7 +28,7 @@ export function LiveCodeEditor({
           <textarea
             name="live-code-editor"
             ref={textareaRef}
-            className={styles.codeInput}
+            className={`${styles.codeInput} rp-scrollbar rp-scrollbar--always`}
             value={value}
             onChange={e => onChange(e.target.value)}
             spellCheck={false}

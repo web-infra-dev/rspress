@@ -1,0 +1,99 @@
+---
+description: OverviewGroup 概览分组组件，用于渲染概览页面中的分组卡片和页面列表。
+overviewHeaders: []
+---
+
+# OverviewGroup
+
+`OverviewGroup` 用于渲染概览页面中的分组卡片，展示页面列表及其标题锚点，是 [Overview 页](/guide/advanced/overview-page) 的一部分。
+
+## 用法
+
+你可以通过 [自定义主题](/guide/basic/custom-theme) 修改组件的样式，或者不依赖 Rspress 自身的 Overview 页面，自由使用 `OverviewGroup` 进行 UI 展示，例如：
+
+```mdx title="index.mdx"
+import { OverviewGroup } from '@rspress/core/theme';
+
+<OverviewGroup
+  group={{
+    name: '用法测试',
+    items: [
+      {
+        text: '介绍',
+        link: '/guide/introduction',
+        headers: [
+          { id: 'what-is-rspress', text: '什么是 Rspress', depth: 2 },
+          { id: 'features', text: '特性', depth: 2 },
+        ],
+      },
+      {
+        text: '安装',
+        link: '/guide/installation',
+      },
+    ],
+  }}
+/>
+```
+
+import { OverviewGroup } from '@rspress/core/theme';
+import { Border } from '../../../components/Border';
+
+<Border className="rp-toc-exclude">
+  <OverviewGroup
+    group={{
+      name: '用法测试',
+      items: [
+        {
+          text: '介绍',
+          link: '/guide/introduction',
+          headers: [
+            { id: 'what-is-rspress', text: '什么是 Rspress', depth: 2 },
+            { id: 'features', text: '特性', depth: 2 },
+          ],
+        },
+        {
+          text: '安装',
+          link: '/guide/installation',
+        },
+      ],
+    }}
+  />
+</Border>
+
+## Props
+
+### group
+
+- **类型：** `Group`
+- **必填：** 是
+
+```ts
+interface GroupItem {
+  /** 项目标题 */
+  text: string;
+  /** 项目链接 */
+  link: string;
+  /** 页面内的标题锚点列表 */
+  headers?: Header[];
+  /** 自定义子项列表 */
+  items?: { text: string; link: string }[];
+}
+
+interface Group {
+  /** 分组名称 */
+  name: string;
+  /** 分组内的项目列表 */
+  items: GroupItem[];
+}
+
+interface Header {
+  id: string;
+  text: string;
+  depth: number;
+}
+```
+
+- `name` - 分组的标题，会渲染为 h2 标题
+- `items` - 分组内的页面列表
+- `headers` - 每个页面内的标题锚点，点击可跳转到对应位置
+- `items` (在 GroupItem 内) - 自定义子项，用于替代自动提取的 headers

@@ -4,15 +4,37 @@
     "label": "Theme"
   },
   "vars",
-  "custom-theme",
+  "custom-page",
+  {
+    "type": "section-header",
+    "label": "Community tooling"
+  },
+  "tailwindcss",
+  "shadcn-ui",
   {
     "type": "section-header",
     "label": "Components"
   },
   {
     "type": "dir",
-    "label": "Built-in components",
+    "label": "Doc Components",
     "name": "components"
+  },
+  {
+    "type": "dir",
+    "label": "Runtime Components",
+    "name": "runtime-components"
+  },
+  {
+    "type": "file",
+    "label": "Built-in Icons",
+    "name": "icons/index"
+  },
+  {
+    "type": "dir",
+    "label": "Layout Components",
+    "name": "layout-components",
+    "tag": "theme-only"
   },
   {
     "type": "section-header",
@@ -20,7 +42,7 @@
   },
   {
     "type": "dir",
-    "label": "Built-in hooks",
+    "label": "Built-in Hooks",
     "name": "hooks"
   }
 ]

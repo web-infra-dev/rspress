@@ -1,5 +1,5 @@
 import { useLocation } from '@rspress/core/runtime';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 /**
  * Parse CSS length value to number (in pixels)
@@ -49,7 +49,10 @@ function scrollToTarget(target: HTMLElement) {
 export function useScrollAfterNav() {
   const location = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
     const decodedHash = decodeURIComponent(window.location.hash);
     if (decodedHash.length > 0) {
       const target = document.getElementById(decodedHash.slice(1));
@@ -57,5 +60,5 @@ export function useScrollAfterNav() {
         scrollToTarget(target);
       }
     }
-  }, [location]);
+  }, [location, location.pathname]);
 }

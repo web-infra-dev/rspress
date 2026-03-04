@@ -1,5 +1,4 @@
-import { Link, mergeRefs, SvgWrapper } from '@theme';
-import CloseSvg from '@theme-assets/close';
+import { IconClose, Link, mergeRefs, SvgWrapper } from '@theme';
 import clsx from 'clsx';
 import { forwardRef, type ReactNode, useEffect, useState } from 'react';
 import './index.scss';
@@ -31,7 +30,7 @@ export type BannerProps = {
 /**
  * @example
  * // theme/index.tsx
- * import { Layout as BasicLayout, Banner } from '@rspress/core/theme';
+ * import { Layout as BasicLayout, Banner } from '@rspress/core/theme-original';
  * import { useLang } from '@rspress/core/runtime';
  * const Layout = () => {
       const lang = useLang();
@@ -75,7 +74,9 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
 
     const [height, setHeight] = useState(36);
     const ref = mergeRefs(forwardedRef, element => {
-      element?.offsetHeight && setHeight(element?.offsetHeight);
+      if (element?.offsetHeight) {
+        setHeight(element?.offsetHeight);
+      }
     });
     const [disable, setDisable] = useState(false);
 
@@ -100,7 +101,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
                 {message}
               </Link>
               <SvgWrapper
-                icon={CloseSvg}
+                icon={IconClose}
                 onClick={() => {
                   setDisable(true);
                   if (storage) {

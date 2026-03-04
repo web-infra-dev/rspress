@@ -1,0 +1,135 @@
+# MDX and React components
+
+Rspress supports [MDX](https://mdxjs.com/), a powerful way to develop content.
+
+## Markdown
+
+MDX is a superset of Markdown, which means you can write Markdown files as usual. For example:
+
+```md
+# Hello world
+```
+
+## Componentization
+
+In MDX, every `.mdx` file is compiled into a React component, which means it can be imported like any component and can freely render React components. For example:
+
+import { Tabs, Tab } from '@theme';
+import { Border } from './_Border';
+
+<Tabs>
+<Tab label="docs/index.mdx">
+
+```mdx
+import MdxFragment from './_mdx-fragment.mdx';
+import TsxComponent from './_tsx-component';
+
+Testing the use of MDX fragments and React components.
+
+<MdxFragment />
+
+<TsxComponent />
+```
+
+</Tab>
+
+<Tab label="docs/_mdx-fragment.mdx">
+
+```mdx file="./_mdx-fragment.mdx"
+
+```
+
+</Tab>
+
+<Tab label="docs/_tsx-component.tsx">
+
+```tsx file="./_tsx-component.tsx"
+
+```
+
+</Tab>
+
+</Tabs>
+
+It will be rendered as:
+
+import MdxFragment from './_mdx-fragment.mdx';
+import TsxComponent from './_tsx-component';
+
+<Border>
+Testing the use of MDX fragments and React components.
+
+<MdxFragment />
+
+<TsxComponent />
+</Border>
+
+You can use [built-in components](/ui/components/index.mdx) provided by Rspress or install some React component libraries to enrich your documentation in `.mdx` files.
+
+## Routing convention
+
+In the [docs directory](/api/config/config-basic#root), MDX fragments or React components need to be excluded from routing through the [route.exclude](/api/config/config-basic#routeexclude) configuration. For convenience, files starting with "\_" are excluded by default via [route.excludeConvention](/api/config/config-basic#routeexcludeconvention).
+
+You can also place components in adjacent directories outside the docs directory, for example:
+
+<Tabs>
+<Tab label="docsite/docs/index.mdx">
+
+```mdx
+import ButtonFragment from './_button.mdx';
+import Button from '../../components/button';
+
+<ButtonFragment />
+<Button />
+```
+
+</Tab>
+<Tab label="docsite/docs/_button.mdx">
+
+```mdx file="./_button.mdx"
+
+```
+
+</Tab>
+<Tab label="docsite/components/button.tsx">
+
+```tsx
+const Button = () => <button>Button</button>;
+export default Button;
+```
+
+</Tab>
+</Tabs>
+
+It will be rendered as:
+
+<Border>
+
+import Button from './_button.mdx';
+
+<Button />
+<button>Button</button>
+
+</Border>
+
+## Escape Hatch: writing document content using tsx or html
+
+```tsx file="./_escape-hatch.tsx" title="_escape-hatch.tsx"
+
+```
+
+import EscapeHatch from './_escape-hatch';
+
+It will be rendered as:
+
+<Border>
+  <EscapeHatch />
+</Border>
+
+:::warning
+
+tsx and html syntax can make it difficult to extract static information, such as local search indexes.
+
+It is more recommended to use `.mdx` files to write document content and use `.tsx` files to write interactive dynamic content.
+
+:::

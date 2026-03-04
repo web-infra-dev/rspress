@@ -7,6 +7,10 @@ export interface CalloutProps {
   children: ReactNode;
 }
 
+function capitalize(type: string) {
+  return type.charAt(0).toUpperCase() + type.slice(1);
+}
+
 /**
  * Construct the DOM structure of the container directive.
  * For example:
@@ -30,7 +34,9 @@ export function Callout({ type, title, children }: CalloutProps): ReactNode {
   if (isDetails) {
     return (
       <details className={`rp-callout rp-callout--${type}`}>
-        <summary className="rp-callout__title">{title}</summary>
+        <summary className="rp-callout__title">
+          {title ?? capitalize(type)}
+        </summary>
         <div className="rp-callout__content">{children}</div>
       </details>
     );
@@ -38,7 +44,7 @@ export function Callout({ type, title, children }: CalloutProps): ReactNode {
 
   return (
     <div className={`rp-callout rp-callout--${type}`}>
-      <div className="rp-callout__title">{title}</div>
+      <div className="rp-callout__title">{title ?? capitalize(type)}</div>
       <div className="rp-callout__content">{children}</div>
     </div>
   );

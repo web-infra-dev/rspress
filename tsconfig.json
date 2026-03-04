@@ -5,7 +5,7 @@
     "baseUrl": "./"
   },
   "include": [
-    "vitest.workspace.ts",
+    "rstest.config.ts",
     "playwright.config.ts",
     "./scripts/update-modern.ts"
   ]

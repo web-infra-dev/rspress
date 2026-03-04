@@ -1,21 +1,31 @@
+---
+description: Use MDX to import and render React components in Markdown, with support for document fragments and custom component slots.
+---
+
 # MDX and React components
 
-Rspress supports [MDX](https://mdxjs.com/), a powerful way to develop content.
+Rspress supports [MDX](https://mdxjs.com/), a content authoring format that seamlessly combines Markdown with JSX. MDX allows you to use React components directly in your documentation, combining Markdown's concise syntax with the power of the React ecosystem, making it ideal for building interactive, component-based technical documentation.
 
-## Markdown
+## What is MDX
 
-MDX is a superset of Markdown, which means you can write Markdown files as usual. For example:
+MDX is a combination of Markdown and JSX syntax, allowing you to write and use React components directly in Markdown documents.
 
-```md
-# Hello world
+We recommend using `.mdx` for all documentation files, which enables you to write content just like regular Markdown and also import and utilize the [built-in components](/ui/components/index.mdx) provided by Rspress.
+
+```mdx title="docs/index.mdx"
+# Hello, world!
+
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+<PackageManagerTabs command="create rspress@latest" />
 ```
 
-## Componentization
+## MDX fragments \{#fragments}
 
-In MDX, all `.mdx` files are compiled into React components, which means they can be used as React components and can freely use React components. For example:
+In MDX, every `.mdx` file is compiled into a React component, which means it can be imported like any component and can freely render React components. For example:
 
-import { Tabs, Tab } from '@theme';
-import { Border } from './_Border';
+import { Tabs, Tab } from '@rspress/core/theme';
+import { Border } from '../../../components/Border';
 
 <Tabs>
 <Tab label="docs/index.mdx">
@@ -56,7 +66,7 @@ It will be rendered as:
 import MdxFragment from './_mdx-fragment.mdx';
 import TsxComponent from './_tsx-component';
 
-<Border>
+<Border className='rp-toc-exclude'>
 Testing the use of MDX fragments and React components.
 
 <MdxFragment />
@@ -64,55 +74,15 @@ Testing the use of MDX fragments and React components.
 <TsxComponent />
 </Border>
 
-You can use [built-in components](/guide/default-theme/components) provided by Rspress or install some React component libraries to enrich your documentation in `.mdx` files.
+You can use [built-in components](/ui/components/index.mdx) provided by Rspress or install some React component libraries to enrich your documentation in `.mdx` files.
 
 ## Routing convention
 
-In the [docs directory](/api/config/config-basic#root), MDX fragments or React components need to be excluded from routing through the [route.exclude](/api/config/config-basic#routeexclude) configuration. For convenience, we agree that files starting with "\_" will be excluded by default via [route.excludeConvention](/api/config/config-basic#routeexcludeconvention).
+import RouteConvention from '@en/fragments/route-convention.mdx';
 
-You can also place components in adjacent directories outside the docs directory, for example:
+<RouteConvention />
 
-<Tabs>
-<Tab label="docsite/docs/index.mdx">
-
-```mdx
-import ButtonFragment from './_button.mdx';
-import Button from '../../components/button';
-
-<ButtonFragment />
-<Button />
-```
-
-</Tab>
-<Tab label="docsite/docs/_button.mdx">
-
-```mdx file="./_button.mdx"
-
-```
-
-</Tab>
-<Tab label="docsite/components/button.tsx">
-
-```tsx
-const Button = () => <button>Button</button>;
-export default Button;
-```
-
-</Tab>
-</Tabs>
-
-It will be rendered as:
-
-<Border>
-
-import Button from './_button.mdx';
-
-<Button />
-<button>Button</button>
-
-</Border>
-
-## Escape Hatch: writing document content using tsx or html
+## Escape Hatch: writing document content in tsx
 
 ```tsx file="./_escape-hatch.tsx" title="_escape-hatch.tsx"
 
@@ -122,7 +92,7 @@ import EscapeHatch from './_escape-hatch';
 
 It will be rendered as:
 
-<Border>
+<Border className="rp-toc-exclude">
   <EscapeHatch />
 </Border>
 
@@ -131,5 +101,19 @@ It will be rendered as:
 tsx and html syntax can make it difficult to extract static information, such as local search indexes.
 
 It is more recommended to use `.mdx` files to write document content and use `.tsx` files to write interactive dynamic content.
+
+:::
+
+## React version requirements
+
+| Dependency         | Allowed Range          | Default Version | Notes                                     |
+| ------------------ | ---------------------- | --------------- | ----------------------------------------- |
+| `react`            | `^18.0.0 \|\| ^19.0.0` | 19              | React 17 is no longer supported           |
+| `react-dom`        | `^18.0.0 \|\| ^19.0.0` | 19              | Keep consistent with react version        |
+| `react-router-dom` | `^6.0.0 \|\| ^7.0.0`   | 7               | Uses project version if already installed |
+
+:::tip
+
+If `react`, `react-dom`, or `react-router-dom` is already installed in your project, Rspress will prioritize using the version installed in your project rather than the built-in default version.
 
 :::

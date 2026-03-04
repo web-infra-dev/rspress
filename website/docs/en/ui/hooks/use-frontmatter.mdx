@@ -1,0 +1,22 @@
+---
+description: useFrontmatter hook for accessing the current page's frontmatter metadata.
+---
+
+# useFrontmatter
+
+`useFrontmatter` returns the [frontmatter](/api/config/config-frontmatter) of the current page in a convenient object.
+
+- **Type:** `() => { frontmatter: FrontMatterMeta }`
+
+Example: render a custom badge when the page is marked as `beta` in frontmatter.
+
+```tsx
+import { useFrontmatter } from '@rspress/core/runtime';
+
+export default function BetaBadge() {
+  const { frontmatter } = useFrontmatter();
+  return frontmatter.beta ? <span>Beta</span> : null;
+}
+```
+
+> Combine with [`usePage`](./use-page) when you also need other page metadata (title, route, toc, etc.).

@@ -1,0 +1,103 @@
+---
+overviewHeaders: []
+---
+
+# NavTitle
+
+该组件是导航栏的一部分，`NavTitle` 用于渲染导航栏左上角的站点 Logo 和标题。
+
+## 用法
+
+通过 [自定义主题](/guide/basic/custom-theme) 使用，组件内部通过 [`useSite`](/ui/hooks/use-site) 从 `rspress.config.ts` 读取配置：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  title: '我的网站',
+  logo: '/logo.png',
+  // 或支持深色/浅色模式：
+  logo: {
+    light: '/logo-light.png',
+    dark: '/logo-dark.png',
+  },
+  logoText: '我的网站',
+});
+```
+
+### 自定义 NavTitle
+
+可以通过 Layout 组件的 `navTitle` 属性自定义 NavTitle：
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout navTitle={<MyCustomNavTitle />} />;
+
+export { Layout };
+export * from '@rspress/core/theme-original';
+```
+
+或使用 `beforeNavTitle` 和 `afterNavTitle` 属性插入自定义内容：
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => (
+  <BasicLayout
+    beforeNavTitle={<div>前面</div>}
+    afterNavTitle={<div>后面</div>}
+  />
+);
+
+export { Layout };
+export * from '@rspress/core/theme-original';
+```
+
+更多关于自定义主题的信息，请参阅[自定义主题](/guide/basic/custom-theme)文档。
+
+## 配置
+
+### logo
+
+- **类型：** `string | { light: string; dark: string }`
+
+站点 Logo。可以是单个图片路径，或为浅色/深色模式分别配置图片。
+
+### logoText
+
+- **类型：** `string`
+
+Logo 旁边显示的文本。
+
+### title
+
+- **类型：** `string`
+
+站点标题。当未配置 `logo` 和 `logoText` 时显示。
+
+## 国际化支持
+
+对于多语言站点，可在每个 locale 中配置 `title`：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from 'rspress/config';
+
+export default defineConfig({
+  title: 'My Site',
+  themeConfig: {
+    locales: [
+      {
+        lang: 'en',
+        title: 'My Site',
+      },
+      {
+        lang: 'zh',
+        title: '我的网站',
+      },
+    ],
+  },
+});
+```
+
+NavTitle 组件会根据当前语言自动显示对应的标题。

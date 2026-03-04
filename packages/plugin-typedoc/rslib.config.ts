@@ -10,6 +10,9 @@ export default defineConfig({
         distPath: './dist/types',
       },
       format: 'esm',
+      experiments: {
+        advancedEsm: true,
+      },
       syntax: 'es2015',
       output: {
         distPath: {

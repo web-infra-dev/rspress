@@ -1,0 +1,58 @@
+.avatarContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  margin-right: 40px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-weight: 700;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
+  color: var(--rp-c-text-1);
+}
+
+.title {
+  color: var(--rp-c-text-2);
+  line-height: 1;
+  font-size: 0.75rem;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.links {
+  display: flex;
+  gap: 8px;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rp-c-text-2);
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--rp-c-brand);
+}
+
+.link svg {
+  width: 16px;
+  height: 16px;
+}

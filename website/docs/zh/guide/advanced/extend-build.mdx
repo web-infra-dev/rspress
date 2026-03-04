@@ -1,3 +1,7 @@
+---
+description: 通过 builderConfig 自定义 Rsbuild 和 Rspack 配置，使用 markdown 配置添加 remark 和 rehype 插件扩展 MDX 编译能力。
+---
+
 # 构建能力扩展
 
 ## Rsbuild
@@ -26,7 +30,7 @@ export default defineConfig({
 
 Rspress 还提供了 [builderConfig.plugins](/api/config/config-build#builderconfigplugins) 配置项来注册 Rsbuild 插件。你可以利用 Rsbuild 丰富的插件生态来增强和扩展构建能力。
 
-比如通过 [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics) 添加 Google analytics：
+比如通过 [rsbuild-plugin-google-analytics](https://github.com/rstackjs/rsbuild-plugin-google-analytics) 添加 Google analytics：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -75,8 +79,6 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   markdown: {
-    // 需要使用 JS 版本的 MDX 编译器
-    mdxRs: false,
     remarkPlugins: [
       [
         require('remark-autolink-headings'),
@@ -89,9 +91,3 @@ export default defineConfig({
   },
 });
 ```
-
-:::warning 注意
-
-仅 JS 版本的 MDX 编译器支持编译插件。
-
-:::

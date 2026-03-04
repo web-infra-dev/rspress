@@ -1,0 +1,83 @@
+# Tailwind CSS
+
+[Tailwind CSS](https://tailwindcss.com/) is a utility-first CSS framework for rapidly building custom user interfaces. It can be used with MDX files in Rspress to help you style your documentation more efficiently, for example:
+
+```mdx title="docs/foo.mdx"
+# Foo
+
+<div className="text-3xl font-bold underline">Hello world!</div>
+```
+
+Rspress is built on [Rsbuild](https://rsbuild.rs/), and the Tailwind CSS configuration is consistent with Rsbuild. For more details, see:
+
+- [Rsbuild - Tailwind CSS v4](https://rsbuild.rs/guide/styling/tailwindcss)
+- [Rsbuild - Tailwind CSS v3](https://rsbuild.rs/guide/styling/tailwindcss-v3)
+
+Below is a guide for integrating Tailwind CSS v4 with Rspress.
+
+:::tip
+
+All Rspress built-in components use BEM naming conventions and do not use Tailwind CSS internally, which avoids conflicts with Tailwind CSS classes. You can freely use Tailwind v4 or v3 without worrying about style collisions.
+
+:::
+
+import { PackageManagerTabs, Steps } from '@rspress/core/theme';
+
+<Steps>
+
+### Install dependencies
+
+<PackageManagerTabs command="add tailwindcss @tailwindcss/postcss -D" />
+
+### Create PostCSS config
+
+Create a `postcss.config.mjs` file in the root of your project:
+
+```js title="postcss.config.mjs"
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+};
+```
+
+### Create Tailwind CSS file
+
+Create a `tailwind.css` file in the root of your project:
+
+```css title="tailwind.css"
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+:::tip Dark Mode
+
+Rspress toggles dark mode by checking the `.dark` class on the `html` element, so you need to configure `@custom-variant`. See [Tailwind Docs - Dark Mode](https://tailwindcss.com/docs/dark-mode) for details.
+
+:::
+
+### Configure Rspress
+
+In your `rspress.config.ts`, use the `globalStyles` option to import the Tailwind CSS file:
+
+```ts title="rspress.config.ts"
+import * as path from 'node:path';
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  root: path.join(__dirname, 'doc'),
+  globalStyles: path.join(__dirname, 'tailwind.css'),
+});
+```
+
+### Usage
+
+Now you can use Tailwind utility classes in your MDX files:
+
+```mdx title="doc/foo.mdx"
+# Foo
+
+<div className="text-3xl font-bold underline">Hello world!</div>
+```
+
+</Steps>

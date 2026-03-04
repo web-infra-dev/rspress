@@ -1,0 +1,181 @@
+:root {
+  --rp-c-overview-group-bg: var(--rp-c-bg-soft);
+  --rp-c-overview-group-bg-hover: color-mix(
+    in srgb,
+    var(--rp-c-brand-lighter) 30%,
+    transparent
+  );
+  --rp-c-overview-group-border: 1px solid var(--rp-c-divider-light);
+}
+
+.rp-overview-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__item {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+
+    border: var(--rp-c-overview-group-border);
+    border-radius: var(--rp-radius);
+    overflow: hidden;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: var(--rp-c-brand-light);
+      box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.04);
+      .rp-overview-group__item__title {
+        background-color: var(--rp-c-overview-group-bg-hover);
+        .rp-overview-group__item__title__icon {
+          color: var(--rp-c-brand-dark);
+        }
+      }
+    }
+
+    @media (max-width: 1280px) {
+      flex-direction: column;
+      &__title {
+        width: 100% !important;
+        flex: none !important;
+      }
+    }
+
+    &__title {
+      width: 25%;
+      flex: 0 0 25%;
+
+      padding: 16px 20px;
+
+      word-break: break-all;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--rp-c-text-1);
+
+      background-color: var(--rp-c-overview-group-bg);
+
+      overflow: hidden;
+      position: relative;
+
+      transition: background-color 0.2s ease;
+
+      &__link,
+      &__text {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+          color: var(--rp-c-brand);
+        }
+      }
+      &__icon {
+        position: absolute;
+        user-select: none;
+        pointer-events: none;
+        right: 0;
+        bottom: 0;
+        color: var(--rp-c-text-1);
+      }
+    }
+
+    &__content {
+      flex: 1;
+      list-style: none;
+      margin: 0;
+      padding: 16px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      row-gap: 20px;
+
+      &__item {
+        width: 200px;
+        flex: 0 0 200px;
+        min-width: 33.33%; // 3 columns
+        max-width: 33.33%; // 3 columns
+        word-break: break-all;
+
+        @media (max-width: 768px) {
+          // 2 columns or 1 columns
+          min-width: 50%;
+          max-width: 100%;
+          flex: 1 1 200px;
+        }
+
+        &__link {
+          display: inline-block;
+          padding: 4px 8px;
+          font-size: 14px;
+          color: var(--rp-c-text-2);
+          text-decoration: none;
+          word-break: normal;
+          transition:
+            color 0.2s ease,
+            background-color 0.2s ease;
+
+          &:hover {
+            color: var(--rp-c-brand);
+            background-color: var(--rp-c-bg);
+          }
+        }
+      }
+    }
+  }
+
+  // Grid layout for items without content (no headers/items)
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // 4 columns by default
+    gap: 20px;
+    width: 100%;
+
+    @media (max-width: 1280px) {
+      grid-template-columns: repeat(3, 1fr); // 3 columns for medium screens
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr); // 2 columns for small screens
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__grid-item {
+    border: 1px solid var(--rp-c-divider-light);
+    border-radius: var(--rp-radius);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
+
+    &.rp-overview-group__item__title {
+      width: 100%;
+      flex: none;
+    }
+
+    &:hover {
+      border-color: var(--rp-c-brand-light);
+      box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.04);
+      background-color: var(--rp-c-overview-group-bg-hover);
+
+      .rp-overview-group__item__title__icon {
+        color: var(--rp-c-brand-dark);
+      }
+    }
+  }
+}
+
+html.rp-dark {
+  .rp-overview-group__item:hover,
+  .rp-overview-group__grid-item:hover {
+    .rp-overview-group__item__title__icon {
+      color: white;
+    }
+  }
+}

@@ -35,23 +35,31 @@ export async function createPageData(context: FactoryContext): Promise<{
 
   const replaceRules = userConfig?.replaceRules || [];
 
-  const searchConfig = userConfig?.search || {};
+  const searchConfig = userConfig?.search;
+  const searchEnabled = searchConfig !== false;
 
   // If the dev server restart when config file, we will reuse the siteData instead of extracting the siteData from source files again.
   const searchCodeBlocks =
-    'codeBlocks' in searchConfig ? Boolean(searchConfig.codeBlocks) : true;
+    searchConfig &&
+    typeof searchConfig === 'object' &&
+    'codeBlocks' in searchConfig
+      ? Boolean(searchConfig.codeBlocks)
+      : true;
 
   const pages = await extractPageData(routeService, {
     replaceRules,
     alias,
     root: userDocRoot,
     searchCodeBlocks,
+    extractDescription: userConfig.markdown?.extractDescription,
+    searchEnabled,
   });
   // modify page index by plugins
   await pluginDriver.modifySearchIndexData(pages);
 
   const versioned =
-    typeof userConfig.search !== 'boolean' && userConfig.search?.versioned;
+    typeof userConfig.search !== 'boolean' &&
+    (userConfig.search?.versioned ?? true);
 
   const groupedPages = groupBy(pages, page => {
     if (page.frontmatter?.pageType === 'home') {
@@ -97,13 +105,7 @@ export async function createPageData(context: FactoryContext): Promise<{
   const pageData: PageData = {
     pages: pages.map(page => {
       // omit some fields for runtime size
-      const {
-        content: _content,
-        _filepath,
-        _html,
-        _flattenContent,
-        ...rest
-      } = page;
+      const { content: _content, _filepath, _flattenContent, ...rest } = page;
       filepaths.push(_filepath);
       return rest;
     }),

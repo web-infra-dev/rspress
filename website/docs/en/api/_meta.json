@@ -1,18 +1,21 @@
 [
   {
+    "type": "section-header",
+    "label": "Overview"
+  },
+  {
     "type": "file",
     "name": "index",
     "label": "apiOverview"
   },
   {
-    "type": "dir",
-    "name": "config",
-    "label": "config"
+    "type": "section-header",
+    "label": "Config"
   },
   {
     "type": "dir",
-    "name": "client-api",
-    "label": "clientApi"
+    "name": "config",
+    "label": "config"
   },
   "commands"
 ]

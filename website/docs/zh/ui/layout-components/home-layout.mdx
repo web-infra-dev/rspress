@@ -1,0 +1,90 @@
+---
+description: HomeLayout 首页布局组件，用于渲染首页的整体布局，包含 Hero、Features 和 Footer 区域。
+overviewHeaders: []
+---
+
+# HomeLayout
+
+`HomeLayout` 是 [首页](/guide/basic/home-page) 的布局组件，负责整合渲染 Hero、Features 和 Footer 等区域。
+
+## 用法
+
+通过 [自定义主题](/guide/basic/custom-theme) 来进行修改或覆盖：
+
+```tsx title="theme/index.tsx"
+import { HomeLayout as BasicHomeLayout } from '@rspress/core/theme-original';
+
+export default function HomeLayout() {
+  return <BasicHomeLayout />;
+}
+```
+
+`HomeLayout` 组件会通过 [`useFrontmatter`](/ui/hooks/use-frontmatter) 读取 frontmatter 中的 `hero` 和 `features` 配置。关于详细配置项，请参考 [Frontmatter 配置](/api/config/config-frontmatter#hero)。
+
+### 自定义插槽
+
+通过插槽属性，可以在各区域前后插入自定义内容：
+
+```tsx title="theme/index.tsx"
+import { HomeLayout as BasicHomeLayout } from '@rspress/core/theme-original';
+
+export default function HomeLayout() {
+  return (
+    <BasicHomeLayout
+      beforeHero={<div>Hero 区域之前的内容</div>}
+      afterHero={<div>Hero 区域之后的内容</div>}
+      beforeFeatures={<div>Features 区域之前的内容</div>}
+      afterFeatures={<div>Features 区域之后的内容</div>}
+      beforeHeroActions={<div>Hero 按钮之前的内容</div>}
+      afterHeroActions={<div>Hero 按钮之后的内容</div>}
+    />
+  );
+}
+```
+
+## Props
+
+### beforeHero
+
+- **类型：** `React.ReactNode`
+
+在 Hero 区域之前插入的自定义内容。
+
+### afterHero
+
+- **类型：** `React.ReactNode`
+
+在 Hero 区域之后插入的自定义内容。
+
+### beforeHeroActions
+
+- **类型：** `React.ReactNode`
+
+在 Hero 按钮之前插入的自定义内容，会传递给 [HomeHero](/ui/layout-components/home-hero) 组件。
+
+### afterHeroActions
+
+- **类型：** `React.ReactNode`
+
+在 Hero 按钮之后插入的自定义内容，会传递给 [HomeHero](/ui/layout-components/home-hero) 组件。
+
+### beforeFeatures
+
+- **类型：** `React.ReactNode`
+
+在 Features 区域之前插入的自定义内容。
+
+### afterFeatures
+
+- **类型：** `React.ReactNode`
+
+在 Features 区域之后插入的自定义内容。
+
+## 子组件
+
+`HomeLayout` 内部使用了以下组件：
+
+- [HomeBackground](/ui/layout-components/home-background) - 首页背景
+- [HomeHero](/ui/layout-components/home-hero) - Hero 区域
+- [HomeFeature](/ui/layout-components/home-feature) - Features 区域
+- [HomeFooter](/ui/layout-components/home-footer) - Footer 区域

@@ -88,7 +88,7 @@ import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
 
 - **Type**：`RsbuildConfig`
 
-Rspress uses [Rsbuild](https://github.com/web-infra-dev/rsbuild) as the build tool. Rsbuild can be configured through `builderConfig`. For specific configuration options, please refer to [Rsbuild(https://rsbuild.rs/config/).
+Rspress uses [Rsbuild](https://github.com/web-infra-dev/rsbuild) as the build tool. Rsbuild can be configured through `builderConfig`. For specific configuration options, please refer to [Rsbuild](https://rsbuild.rs/config/).
 
 > Of course, if you want to configure Rspack directly, you can also configure it through `builderConfig.tools.rspack`.
 
@@ -215,8 +215,6 @@ export function pluginForDoc(): RspressPlugin {
   return {
     name: 'plugin-name',
     markdown: {
-      // Use js version compiler to support plugins
-      mdxRs: false,
       remarkPlugins: [
         // Add custom remark plugin
       ],
@@ -233,7 +231,7 @@ export function pluginForDoc(): RspressPlugin {
 
 ### extendPageData
 
-- Type: `(pageData: PageData) => void | Promise<void>`
+- **Type**: `(pageData: PageData) => void | Promise<void>`
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';
@@ -264,7 +262,7 @@ export function MyComponent() {
 
 ### addPages
 
-- Type: `(config: UserConfig) => AdditionalPage[] | Promise<AdditionalPage[]>`
+- **Type**: `(config: UserConfig) => AdditionalPage[] | Promise<AdditionalPage[]>`
 
 The `config` parameter is the `doc` config of `rspress.config.ts`, and the `AdditionalPage` type is defined as follows:
 
@@ -324,7 +322,7 @@ export interface RouteMeta {
 }
 ```
 
-例子:
+Example:
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';

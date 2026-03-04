@@ -63,7 +63,7 @@ export default defineConfig({
 });
 ```
 
-- 示例：通过 [rsbuild-plugin-google-analytics](https://github.com/rspack-contrib/rsbuild-plugin-google-analytics) 添加 Google analytics。
+- 示例：通过 [rsbuild-plugin-google-analytics](https://github.com/rstackjs/rsbuild-plugin-google-analytics) 添加 Google analytics。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -81,7 +81,7 @@ export default defineConfig({
 });
 ```
 
-- 示例：通过 [rsbuild-plugin-open-graph](https://github.com/rspack-contrib/rsbuild-plugin-open-graph) 添加 Open Graph meta 标签。
+- 示例：通过 [rsbuild-plugin-open-graph](https://github.com/rstackjs/rsbuild-plugin-open-graph) 添加 Open Graph meta 标签。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -253,7 +253,7 @@ export default defineConfig({
 - **类型**: `boolean`
 - **默认值**: `true`
 
-开启这个配置后，会基于约定式路由对文档中的链接自动增加关于 [国际化](/guide/default-theme/i18n) 和 [多版本](/guide/default-theme/multi-version) 前缀。
+开启这个配置后，会基于约定式路由对文档中的链接自动增加关于 [国际化](/guide/basic/i18n) 和 [多版本](/guide/basic/multi-version) 前缀。
 
 比如，用户在 `docs/zh/guide/index.md` 中写了一个链接 `[](/guide/getting-started)`，Rspress 会自动将其转换为 `[](/zh/guide/getting-started)`。
 
@@ -263,11 +263,34 @@ export default defineConfig({
 
 是否显示代码块的行号。默认为 `false`。
 
+全局启用后，可以在代码块 meta 中使用 `lineNumbers=false` 来为特定代码块禁用行号。反之，全局未启用时，可以使用 `lineNumbers` 或 `lineNumbers=true` 来为特定代码块启用行号。详见[显示代码行号](/guide/use-mdx/code-blocks#显示代码行号)。
+
 ### markdown.defaultWrapCode
 
 - **类型**: `boolean`
 
 是否默认启用长代码换行展示。默认为 `false`。
+
+全局启用后，可以在代码块 meta 中使用 `wrapCode=false` 来为特定代码块禁用换行。反之，全局未启用时，可以使用 `wrapCode` 或 `wrapCode=true` 来为特定代码块启用换行。详见[代码换行](/guide/use-mdx/code-blocks#代码换行)。
+
+### markdown.crossCompilerCache
+
+- **类型**: `boolean`
+- **默认值**: `true`
+
+是否在 `rspress build` 时启用跨编译器缓存。启用后，Rspress 会在多个编译器（web 和 node）之间缓存 MDX 解析结果，从而加速生产环境构建，构建时间可减少约 10%。
+
+该选项仅在生产环境构建时生效，灵感来自 [Docusaurus](https://docusaurus.io/)。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    crossCompilerCache: true,
+  },
+});
+```
 
 ### markdown.globalComponents
 
@@ -291,3 +314,10 @@ export default defineConfig({
 ```mdx title="test.mdx"
 <Alert type="info">This is a info alert</Alert>
 ```
+
+### markdown.extractDescription
+
+- **类型**: `boolean`
+- **默认值**: `true`
+
+是否从内容中提取描述。启用后，Rspress 会自动提取 `h2` 标题前的第一段内容作为页面的描述。

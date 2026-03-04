@@ -51,6 +51,20 @@ export function DocLayout(props: DocLayoutProps) {
     pageType,
   } = frontmatter;
 
+  if (process.env.__SSR_MD__) {
+    return (
+      <>
+        {isOverviewPage ? (
+          <Overview
+            content={<DocContent components={components} isOverviewPage />}
+          />
+        ) : (
+          <DocContent components={components} />
+        )}
+      </>
+    );
+  }
+
   const isDocWide = pageType === 'doc-wide';
 
   const {

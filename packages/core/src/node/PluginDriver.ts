@@ -1,3 +1,4 @@
+import path from 'node:path';
 import {
   addLeadingSlash,
   addTrailingSlash,
@@ -8,6 +9,7 @@ import {
 } from '@rspress/shared';
 import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
+import { createError } from './utils';
 
 type RspressPluginHookKeys =
   | 'beforeBuild'
@@ -88,7 +90,7 @@ export class PluginDriver {
     );
     // Avoid the duplicated plugin
     if (existedIndex !== -1) {
-      throw new Error(`The plugin "${plugin.name}" has been registered`);
+      throw createError(`The plugin "${plugin.name}" has been registered`);
     }
 
     this.#plugins.push(plugin);
@@ -110,12 +112,14 @@ export class PluginDriver {
   }
 
   private async normalizeConfig() {
+    this.#config.root ??= 'docs';
     this.#config.ssg ??= true;
     this.#config.llms ??= false;
     this.#config.base = addTrailingSlash(
       addLeadingSlash(this.#config.base ?? '/'),
     );
     this.#config.lang ??= 'en';
+    this.#config.themeDir ??= path.join(process.cwd(), 'theme');
   }
 
   async modifyConfig() {

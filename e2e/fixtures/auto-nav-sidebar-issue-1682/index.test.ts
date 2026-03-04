@@ -27,7 +27,7 @@ test.describe('Auto nav and sidebar dir issue-1682', async () => {
     const sidebarTexts = await getSidebarTexts(page);
     expect(sidebarTexts.length).toBe(3);
     expect(sidebarTexts.join(',')).toEqual(
-      ['Second sub-directory', 'test', 'First sub-directory'].join(','),
+      ['First sub-directory', 'Second sub-directory', 'test'].join(','),
     );
   });
 });

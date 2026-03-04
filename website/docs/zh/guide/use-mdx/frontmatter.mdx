@@ -1,31 +1,38 @@
+---
+description: 在 Markdown 文件顶部使用 YAML 格式的 frontmatter 定义页面元数据，如标题、描述等配置项。
+---
+
 # Frontmatter
 
-你可以在 Markdown 文件的顶部添加 front matter，它是一个特殊部分，使用 [YAML](https://yaml.org/) 格式来定义元数据，被包含在文件顶部的三个连字符 `---` 之间。
+你可以在 Markdown 文件的顶部添加 front matter。它是一个使用 [YAML](https://yaml.org/) 格式定义元数据的块，位于文件顶部的三个连字符 `---` 之间。
 
-例如使用 [title](/api/config/config-frontmatter#title) 来指定页面的标题：
-
-```yaml
----
-title: Hello world
----
-```
-
-你还可以在正文中访问 front matter 中定义的属性，例如：
+例如使用 [title](/api/config/config-frontmatter#title) 来指定页面的标题，默认情况下，页面的 h1 标题将用作 HTML 文档的标题。如果你想使用不同的标题，你可以使用 front matter 来指定页面的标题。
 
 ```mdx
 ---
-title: Hello world
+title: 我的主页
 ---
 
-# {frontmatter.title}
+这是我的**主页内容**。
 ```
 
-前面定义的属性将作为 `frontmatter` 属性传递给组件。所以最终输出将是：
+例如，你可以使用 [head](/api/config/config-frontmatter#head) 设置 为 [Open Graph](https://ogp.me/) 指定自定义元标签。
 
-```html
-<h1>Hello world</h1>
+```yaml
+---
+head:
+  - - meta
+    - property: og:url
+      content: https://example.com/foo/
+  - - meta
+    - property: og:image
+      content: https://example.com/bar.jpg
+# - - [htmlTag]
+#   - [attributeName]: [attributeValue]
+#     [attributeName]: [attributeValue]
+---
 ```
 
 :::tip
-查看 [Front matter 配置](/api/config/config-frontmatter) 了解可用的 front matter 配置。
+查看 [Front matter 配置](/api/config/config-frontmatter) 了解可用的 front matter 配置，查看 [useFrontmatter](/ui/hooks/use-frontmatter) 了解如何在代码中获取 front matter。
 :::

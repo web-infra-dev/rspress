@@ -1,0 +1,187 @@
+---
+description: Customize theme via CSS variables, BEM classnames, component wrapping with slots, or ejecting built-in components for full control.
+---
+
+# Custom theme
+
+1. For CSS, Rspress provides [CSS variables](#css-variables) and [BEM classnames](#bem-classname) for customization.
+
+2. For JS / React, Rspress implements a runtime interface based on ESM re-exports, supporting modification or replacement of built-in components to implement your own home page, sidebar, search components, etc.
+
+   On top of this, there are two modes:
+   - [**wrap**](#wrap): **Wrap** and enhance Rspress built-in components through props / slots.
+   - [**eject**](#eject): Directly **override** the entire component. You can use the [`rspress eject`](../../api/commands.mdx#rspress-eject) command to copy the source code locally and modify it directly.
+
+The following will introduce them in order according to the degree of theme customization.
+
+## CSS variables \{#css-variables}
+
+Rspress exposes some commonly used CSS variables. Compared to rewriting Rspress built-in React components, overriding CSS variables for customization is simpler and easier to maintain. You can view these CSS variables on the [UI - CSS Variables](../../ui/vars.mdx) page, and override them through:
+
+```tree
+├── docs
+│   └── index.mdx
+├── theme
+│   ├── index.tsx
+│   └── index.css  <-- Copy CSS variable code here for style overriding
+└── rspress.config.ts
+```
+
+```tsx title="theme/index.tsx"
+import './index.css';
+export * from '@rspress/core/theme-original';
+```
+
+Another approach is to use the [globalStyles](/api/config/config-basic#globalstyles) config in `rspress.config.ts`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalStyles: path.join(__dirname, 'styles/index.css'), // Points to your CSS file
+});
+```
+
+## BEM classname \{#bem-classname}
+
+Rspress built-in components all use BEM naming convention. You can use these classnames to override styles, in the same way as [CSS Variables](#css-variables).
+
+```css
+.rp-[component-name]__[element-name]--[modifier-name] {
+  /* styles */
+}
+```
+
+For example:
+
+```css
+.rp-nav {
+}
+.rp-link {
+}
+.rp-tabs {
+}
+.rp-codeblock {
+}
+.rp-codeblock__title {
+}
+.rp-codeblock__description {
+}
+.rp-nav-menu__item,
+.rp-nav-menu__item--active {
+}
+```
+
+## Override built-in components using ESM re-exports \{#reexport}
+
+By default, you need to create a `theme` directory under the project root directory, and then create an `index.ts` or `index.tsx` file under the `theme` directory, which is used to export the theme components.
+
+```tree
+├── docs
+├── theme
+│   └── index.tsx
+└── rspress.config.ts
+```
+
+You can write the `theme/index.tsx` file using built-in components from `@rspress/core/theme-original`:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+
+const Layout = () => <BasicLayout beforeNavTitle={<div>some content</div>} />;
+
+export { Layout }; //[!code highlight]
+export * from '@rspress/core/theme-original'; //[!code highlight]
+```
+
+By **ESM re-export** to override built-in components, all Rspress internal references to built-in components will preferentially use your re-exported version.
+
+:::note About @rspress/core/theme-original
+
+`@rspress/core/theme-original` is used to avoid circular references, only use it when customizing themes.
+
+```tree
+├── docs
+│   └── index.mdx <-- use "@rspress/core/theme"
+├── theme
+│   └── index.tsx <-- use "@rspress/core/theme-original"
+└── rspress.config.ts
+```
+
+1. In the `docs` directory, use `@rspress/core/theme`, which points to your `theme/index.tsx`.
+
+2. In the `theme` directory, use `@rspress/core/theme-original`, which always points to Rspress built-in theme components.
+
+:::
+
+### Wrap: Pass props/slots \{#wrap}
+
+Wrap means adding props to re-exported components. Here's an example of inserting some content before the navbar title:
+
+import { Tabs, Tab } from '@rspress/core/theme';
+
+<Tabs>
+<Tab label="theme/index.tsx">
+
+```tsx
+import { Layout as BasicLayout } from '@rspress/core/theme-original';
+import { useI18n } from '@rspress/core';
+
+const Layout = () => {
+  const t = useI18n();
+  return <BasicLayout beforeNavTitle={<div>{t('some content')}</div>} />;
+};
+
+export { Layout };
+export * from '@rspress/core/theme-original';
+```
+
+</Tab>
+
+<Tab label="i18n.json">
+
+```json
+{
+  "some content": {
+    "zh": "一些内容",
+    "en": "some content"
+  }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+:::tip
+
+The [`Layout`](/ui/layout-components/layout) component is designed with a series of slot props specifically for wrapping. You can use these props to extend the default theme layout:
+
+:::
+
+### Eject: Directly override the entire component \{#eject}
+
+Eject means directly overriding a single Rspress built-in component, using your own version entirely. For this, Rspress provides the [`rspress eject [component]`](../../api/commands.mdx#rspress-eject) command to copy the source code of built-in components locally and modify them directly. The steps are as follows:
+
+1. Execute CLI, Rspress will eject the source code of the specified component to the local `theme/components` directory, without ejecting dependencies.
+
+2. Update `theme/index.tsx` re-export:
+
+```tsx title="theme/index.tsx"
+// Assuming you ejected the DocFooter component
+export { DocFooter } from './components/DocFooter';
+export * from '@rspress/core/theme-original';
+```
+
+3. Modify `theme/components/DocFooter.tsx` as needed to meet your requirements.
+
+To make it easier for users to eject, Rspress components are split with fine granularity. You can see which components are suitable for eject in [Layout Components](/ui/layout-components/).
+
+:::warning Do you really need eject?
+
+Eject will increase maintenance costs, because when Rspress is updated in the future, these ejected components will not automatically receive updates, and you need to manually compare and merge changes.
+
+Please check if wrap can meet your needs first. Only consider eject when wrap cannot meet your needs.
+
+:::

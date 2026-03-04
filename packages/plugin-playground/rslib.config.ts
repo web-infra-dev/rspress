@@ -7,6 +7,9 @@ export default defineConfig({
   lib: [
     {
       format: 'esm',
+      experiments: {
+        advancedEsm: true,
+      },
       source: {
         entry: { index: 'src/cli/index.ts' },
       },
@@ -26,6 +29,9 @@ export default defineConfig({
     },
     {
       format: 'esm',
+      experiments: {
+        advancedEsm: true,
+      },
       source: {
         entry: { index: 'src/web/index.ts' },
       },

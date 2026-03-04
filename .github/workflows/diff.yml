@@ -17,7 +17,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -28,7 +28,7 @@ jobs:
           corepack enable
 
       - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
           node-version: 22
           cache: 'pnpm'
@@ -47,5 +47,5 @@ jobs:
         uses: web-infra-dev/rsdoctor-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          file_path: 'website/doc_build/web/rsdoctor-data.json'
+          file_path: 'website/doc_build/diff-rsdoctor/**/rsdoctor-data.json'
           target_branch: 'main'

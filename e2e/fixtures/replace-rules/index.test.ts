@@ -17,7 +17,9 @@ test.describe('replace-rules test', async () => {
   });
 
   test('Index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`);
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
 
     // replace text in _meta.json
     const navItem = page.locator('.rp-nav-menu__item__container').nth(0);
@@ -29,7 +31,9 @@ test.describe('replace-rules test', async () => {
   });
 
   test('Foo page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/foo`);
+    await page.goto(`http://localhost:${appPort}/foo`, {
+      waitUntil: 'networkidle',
+    });
     const doc = page.locator('.rspress-doc');
     await expect(doc).toBeVisible();
 

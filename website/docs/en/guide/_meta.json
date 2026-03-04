@@ -13,16 +13,16 @@
     "type": "dir-section-header",
     "label": "Markdown & MDX",
     "name": "use-mdx",
-    "tag": "new"
-  },
-  {
-    "type": "dir-section-header",
-    "name": "default-theme",
-    "label": "defaultTheme"
+    "tag": "updated"
   },
   {
     "type": "dir-section-header",
     "name": "advanced",
     "label": "advanced"
+  },
+  {
+    "type": "dir-section-header",
+    "name": "migration",
+    "label": "migration"
   }
 ]

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps, TransitionStartFunction } from 'react';
+import { forwardRef } from 'react';
 import './index.scss';
 import { getHref, useLinkNavigate } from './useLinkNavigate';
 
@@ -43,7 +44,7 @@ nprogress.configure({ showSpinner: false });
  * 3. If inCurrentSite, it will navigate and scroll to anchor, preload the asyncChunk onHover the link
  * 4. Link is styled.
  */
-export function Link(props: LinkProps) {
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
   const {
     href = '/',
     children,
@@ -60,6 +61,7 @@ export function Link(props: LinkProps) {
   if (linkType === 'external') {
     return (
       <a
+        ref={ref}
         href={href}
         target="_blank"
         rel="noopener noreferrer"
@@ -76,6 +78,7 @@ export function Link(props: LinkProps) {
   if (linkType === 'hashOnly') {
     return (
       <a
+        ref={ref}
         href={href}
         className={clsx(className, 'rp-link')}
         onClick={onClick}
@@ -90,6 +93,7 @@ export function Link(props: LinkProps) {
   if (linkType === 'relative') {
     return (
       <a
+        ref={ref}
         href={href}
         className={clsx(className, 'rp-link')}
         onMouseEnter={event => {
@@ -123,6 +127,7 @@ export function Link(props: LinkProps) {
 
   return (
     <a
+      ref={ref}
       href={withBaseHref}
       className={clsx(className, 'rp-link')}
       onMouseEnter={event => {
@@ -152,4 +157,6 @@ export function Link(props: LinkProps) {
       {children}
     </a>
   );
-}
+});
+
+Link.displayName = 'Link';

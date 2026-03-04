@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import './index.scss';
 
-interface BadgeProps {
+export interface BadgeProps {
   /**
    * The content to display inside the badge. Can be a string or React nodes.
    */

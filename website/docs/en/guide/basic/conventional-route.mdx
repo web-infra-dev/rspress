@@ -1,3 +1,7 @@
+---
+description: Rspress uses file system routing to map file paths to URL routes, supporting custom routing with frontmatter pageType and route configuration.
+---
+
 # Conventional route
 
 ## What is it?
@@ -10,25 +14,40 @@ For example, if there is a file named `foo.md` in the `docs` directory, the rout
 
 Rspress automatically scans the root directory and all subdirectories, and maps file paths to route paths. For example, if you have the following file structure:
 
-```txt
+```tree
 docs
 ├── foo
-│   └── bar.md
-└── foo.md
+│   ├── bar.md
+│   └── index.md
+├── zoo.md
+└── index.md
 ```
 
-Then `bar.md` will be routed to `/foo/bar`, and `foo.md` will be routed to `/foo`.
+Then `bar.md` will be routed to `/foo/bar` and `/foo/index.md` will be routed to `/foo/`.
 
 The specific mapping rules are as follows:
 
-| file path       | route path |
-| --------------- | ---------- |
-| `index.md`      | `/`        |
-| `/foo.md`       | `/foo`     |
-| `/foo/bar.md`   | `/foo/bar` |
-| `/zoo/index.md` | `/zoo/`    |
+| filepath        | route path | `cleanUrl: false` path |
+| --------------- | ---------- | ---------------------- |
+| `index.md`      | `/`        | `/index.html`          |
+| `/zoo.md`       | `/zoo`     | `/zoo.html`            |
+| `/foo/index.md` | `/foo/`    | `/foo/index.html`      |
+| `/foo/bar.md`   | `/foo/bar` | `/foo/bar.html`        |
 
-## Component routing
+:::warning
+
+Do not have files and folders with the same name, which will cause routing conflicts. For example, the following file structure is not allowed:
+
+```tree
+docs
+├── foo
+│   └── index.md
+└── foo.md
+```
+
+:::
+
+## TSX routing
 
 In conventional routing, in addition to `.md(x)` files, you can also use `.tsx` files as route components. By default, a component is exported in `.tsx`, and this component will be automatically registered in the route. For example:
 
@@ -59,24 +78,30 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    // These files will be excluded from the routing (support glob pattern)
-    exclude: ['component/**/*']
-    // These files will be included in the routing (support glob pattern)
+    // These files will be registered as routes (supports glob pattern)
     include: ['other-dir/**/*'],
-  }
+    // These files will not be registered as routes (supports glob pattern)
+    exclude: ['components/**/*', 'fragments/**/*'],
+  },
 });
 ```
 
+## Exclude files starting with `_` by default
+
+import RouteConvention from '@en/fragments/route-convention.mdx';
+
+<RouteConvention />
+
 ## Best practices
 
-We recommend that you place documentation files in the `docs` directory to make your project more clear. For non-documentation content, such as custom components, util functions, etc., they can be maintained outside the `docs` directory. For example:
+We recommend that you place documentation files in the `docs` directory to make your project more clear. For non-documentation content, such as custom components, util functions, etc., they can be maintained outside the `docs` directory. If placed in the `docs` directory, you need to use `route.exclude` together.
 
-```txt
-docs
-└── foo.mdx
-src
-├── components
-│   └── CustomComponent.tsx
-└── utils
-    └── utils.ts
-```
+:::tip
+
+If you want to place custom components or document fragments in the `docs` directory, you need to use `route.exclude` together, otherwise these files will be automatically registered as routes, which may cause some unexpected issues.
+
+:::
+
+import FileStructure from '../../fragments/file-structure.mdx';
+
+<FileStructure />

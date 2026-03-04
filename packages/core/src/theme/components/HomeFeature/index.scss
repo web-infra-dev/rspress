@@ -1,5 +1,5 @@
 .rp-home-feature {
-  --rp-home-feature-gap: 0.5rem;
+  --rp-home-feature-gap: 15px;
   overflow: hidden;
   margin: auto;
   display: flex;
@@ -7,6 +7,7 @@
   max-width: 72rem;
   gap: var(--rp-home-feature-gap);
   padding: 10px;
+  margin-bottom: 2rem;
 
   &__item {
     width: 100%;
@@ -97,6 +98,12 @@
     background-color: var(--rp-c-bg);
     border-radius: 1rem;
     border: 3px solid var(--rp-c-divider-light);
+
+    img,
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 
   &__title {

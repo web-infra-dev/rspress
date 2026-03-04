@@ -69,6 +69,10 @@ export function CodeBlock({
   codeButtonGroupProps,
   children,
 }: CodeBlockProps) {
+  if (process.env.__SSR_MD__) {
+    return <>{children}</>;
+  }
+
   const { codeWrap, toggleCodeWrap, copyElementRef } =
     useCodeButtonGroup(wrapCodeProp);
   return (
@@ -88,7 +92,7 @@ export function CodeBlock({
         )}
       >
         <div
-          className="rp-codeblock__content__scroll-container rp-scrollbar"
+          className="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"
           ref={copyElementRef}
         >
           {children}

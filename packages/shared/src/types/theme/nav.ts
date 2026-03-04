@@ -13,20 +13,24 @@ export type NavItemWithLink = {
   tag?: string;
   activeMatch?: string;
   position?: 'left' | 'right';
+  lang?: string;
+  rel?: string;
 };
 
 export interface NavItemWithChildren {
   text?: string;
   tag?: string;
-  items: NavItemWithLink[];
+  items: NavItem[];
   position?: 'left' | 'right';
 }
 
 export interface NavItemWithLinkAndChildren {
   text: string;
   link: string;
-  items: NavItemWithLink[];
+  items: NavItem[];
   tag?: string;
   activeMatch?: string;
   position?: 'left' | 'right';
+  lang?: string;
+  rel?: string;
 }

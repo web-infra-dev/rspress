@@ -1,22 +1,32 @@
-import { useLang } from '@rspress/core/runtime';
 import {
-  Banner,
+  useFrontmatter,
+  useI18n,
+  useLang,
+  useLocation,
+} from '@rspress/core/runtime';
+import {
+  HomeHero as BasicHomeHero,
   HomeLayout as BasicHomeLayout,
   Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
+  Callout,
+  type HomeHeroProps,
+  Link,
   PackageManagerTabs,
-} from '@rspress/core/theme';
+} from '@rspress/core/theme-original';
 import {
   Search as PluginAlgoliaSearch,
   ZH_LOCALES,
 } from '@rspress/plugin-algolia/runtime';
-import {
-  LlmsContainer,
-  LlmsCopyButton,
-  LlmsViewOptions,
-} from '@rspress/plugin-llms/runtime';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
+import type { PropsWithChildren } from 'react';
+import { CssModificationProvider } from '../docs/components/CssModificationContext';
+import { CssModificationIndicator } from '../docs/components/CssModificationIndicator';
+import { CssStyleSync } from '../docs/components/CssStyleSync';
+import { HeroInteractive } from './components/HeroInteractive';
+import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
+import './index.css';
 
 function HomeLayout() {
   return (
@@ -27,29 +37,24 @@ function HomeLayout() {
           className="rp-doc"
           style={{ width: '100%', maxWidth: 450, margin: '-1rem 0' }}
         >
-          <PackageManagerTabs command="create rspress@rc" />
+          <PackageManagerTabs command="create rspress@latest" />
         </div>
       }
     />
   );
 }
 
+const HomeHero = ({ image: _, ...otherProps }: HomeHeroProps) => {
+  return <BasicHomeHero image={<HeroInteractive />} {...otherProps} />;
+};
+
 const Layout = () => {
-  const lang = useLang();
   return (
-    <BasicLayout
-      beforeNavTitle={<NavIcon />}
-      beforeNav={
-        <Banner
-          href="/"
-          message={
-            lang === 'en'
-              ? '🚧 Rspress 2.0 document is under development'
-              : '🚧 Rspress 2.0 文档还在开发中'
-          }
-        />
-      }
-    />
+    <CssModificationProvider>
+      <CssStyleSync />
+      <CssModificationIndicator />
+      <BasicLayout beforeNavTitle={<NavIcon />} />
+    </CssModificationProvider>
   );
 };
 
@@ -73,14 +78,48 @@ const Search = () => {
 function getCustomMDXComponent() {
   const { h1: H1, ...components } = basicGetCustomMDXComponent();
 
-  const MyH1 = ({ ...props }) => {
+  const MyH1 = ({ children, ...props }: PropsWithChildren) => {
+    const {
+      frontmatter: { tag },
+    } = useFrontmatter();
+    const { pathname } = useLocation();
+    const isEjectOnly = pathname.includes('/ui/layout-components');
+    const isNonEjectable = tag?.includes('non-ejectable');
+    const t = useI18n<typeof import('i18n')>();
+    const lang = useLang();
+
     return (
       <>
-        <H1 {...props} />
-        <LlmsContainer>
-          <LlmsCopyButton />
-          <LlmsViewOptions />
-        </LlmsContainer>
+        <H1 {...props}>{children}</H1>
+        {isEjectOnly ? (
+          <Callout type="warning">
+            {isEjectOnly ? (
+              <p>
+                {t('ejectOnlyDescription').split('<link>')[0]}{' '}
+                <Link
+                  href={`${lang === 'en' ? '' : '/zh'}/guide/basic/custom-theme`}
+                >
+                  {t('customThemeLink')}
+                </Link>{' '}
+                {t('ejectOnlyDescription').split('<link>')[1]}
+              </p>
+            ) : null}
+          </Callout>
+        ) : null}
+        {isNonEjectable ? (
+          <Callout type="warning">
+            <p>
+              {t('nonEjectableDescription').split('<link>')[0]}
+              <Link
+                href={`${lang === 'en' ? '' : '/zh'}/guide/basic/custom-theme`}
+              >
+                {' '}
+                {t('customThemeLink')}
+              </Link>
+              {t('nonEjectableDescription').split('<link>')[1]}
+            </p>
+          </Callout>
+        ) : null}
       </>
     );
   };
@@ -90,5 +129,5 @@ function getCustomMDXComponent() {
   };
 }
 
-export { Layout, HomeLayout, Search, getCustomMDXComponent };
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
+export { getCustomMDXComponent, HomeLayout, Layout, Search, Tag, HomeHero };

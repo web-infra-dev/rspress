@@ -1,4 +1,7 @@
 .rp-nav {
+  transition:
+    background-color 0.2s ease-in-out,
+    border-bottom 0.2s ease-in-out;
   display: flex;
   height: var(--rp-nav-height);
   flex-shrink: 0;

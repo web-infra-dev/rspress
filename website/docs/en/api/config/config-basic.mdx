@@ -91,7 +91,7 @@ For normal path, Rspress will find your icon in the `public` directory, of cours
 - **Type**: `string`
 - **Default**: `""`
 
-Default language of the site. See [Internationalization](/guide/default-theme/i18n) for more details.
+Default language of the site. See [Internationalization](/guide/basic/i18n) for more details.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -205,6 +205,22 @@ export default defineConfig({
 });
 ```
 
+## logoHref
+
+- **Type**: `string`
+- **Default**: `/${lang}/`
+
+Custom link for the logo. By default, clicking the logo will navigate to the home page of the current language. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: '/logo.png',
+  logoHref: 'https://example.com',
+});
+```
+
 ## logoText
 
 - **Type**: `string`
@@ -290,13 +306,37 @@ export default defineConfig({
     // [htmlTag, { attrName: attrValue, attrName2: attrValue2 }]
     // or
     (route) => {
-      if (route.routePath.startsWith('/jane/')) return "<meta name='author' content='Jane Doe'>";
-      if (route.routePath.startsWith('/john/')) return ['meta', { name: 'author', content: 'John Doe' }];
-      \\ or even skip returning anything
+      if (route.routePath.startsWith('/jane/'))
+        return "<meta name='author' content='Jane Doe'>";
+      if (route.routePath.startsWith('/john/'))
+        return ['meta', { name: 'author', content: 'John Doe' }];
+      // or even skip returning anything
       return undefined;
-    }
-  ]
+    },
+  ],
 });
+```
+
+## globalStyles
+
+- **Type:** `string`
+- **Default:** `undefined`
+
+Used to add global styles, configured as the path to a style file. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  globalStyles: path.join(__dirname, 'styles/global.css'),
+});
+```
+
+```css title="styles/global.css"
+:root {
+  --rp-c-brand: #f00;
+}
 ```
 
 ## mediumZoom
@@ -358,17 +398,16 @@ For specific hook logic, you can read [Customize Search Functions](/guide/advanc
 ### versioned
 
 - **Type**: `boolean`
-- **Default**: `false`
+- **Default**: `true`
 
-If you are using `multiVersion`, the `versioned` parameter allows you to create a separate search index for each version of your documentation.
-When enabled, the search will only query the index corresponding to the currently selected version.
+When using [`multiVersion`](/guide/basic/multi-version), a separate search index is created for each version by default, so that search results only include pages from the version the user is currently viewing. Set `versioned` to `false` to disable this behavior and include all versions in search results.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   search: {
-    versioned: true,
+    versioned: false,
   },
 });
 ```

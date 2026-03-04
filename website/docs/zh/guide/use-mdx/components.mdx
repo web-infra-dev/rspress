@@ -1,21 +1,31 @@
+---
+description: MDX 将 Markdown 文件编译为 React 组件，支持在文档中引入 MDX 片段和自定义 React 组件，实现组件化内容开发。
+---
+
 # MDX 和 React 组件
 
-Rspress 支持 [MDX](https://mdxjs.com/)，这是一种功能强大的内容开发方式。
+Rspress 支持 [MDX](https://mdxjs.com/)，这是一种将 Markdown 与 JSX 无缝融合的内容创作格式。MDX 允许你在文档中直接使用 React 组件，结合了 Markdown 的简洁语法和 React 生态的强大能力，非常适合构建交互式、组件化的技术文档。
 
-## Markdown
+## 什么是 MDX
 
-MDX 是 Markdown 的超集，这意味着你可以像往常一样编写 Markdown 文件。例如：
+MDX 是 Markdown 与 JSX 语法的结合，让你可以在 Markdown 文档中使用 React 组件。
 
-```md
-# Hello world
+我们推荐所有文档文件均使用 `.mdx`，这样既可以像普通 Markdown 一样编写内容，又能导入和使用 Rspress 提供的 [文档组件](/ui/components/index.mdx)：
+
+```mdx title="docs/index.mdx"
+# Hello, world!
+
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+<PackageManagerTabs command="create rspress@latest" />
 ```
 
-## 组件化
+## MDX 片段 \{#fragments}
 
-在 MDX 中，所有 `.mdx` 文件都会编译为 React 组件，这意味着它们可以被当做 React 组件使用，也可以自由使用 React 组件。例如：
+在 MDX 中，每个 `.mdx` 文件都会编译为 React 组件，这意味着它既可以被当做组件引用，也可以自由使用 React 组件。例如：
 
-import { Tabs, Tab } from '@theme';
-import { Border } from './_Border';
+import { Tabs, Tab } from '@rspress/core/theme';
+import { Border } from '../../../components/Border';
 
 <Tabs>
 <Tab label="docs/index.mdx">
@@ -56,7 +66,7 @@ import TsxComponent from './_tsx-component';
 import MdxFragment from './_mdx-fragment.mdx';
 import TsxComponent from './_tsx-component';
 
-<Border>
+<Border className='rp-toc-exclude'>
 测试 MDX 片段和 React 组件的使用。
 
 <MdxFragment />
@@ -64,55 +74,15 @@ import TsxComponent from './_tsx-component';
 <TsxComponent />
 </Border>
 
-你可以在 `.mdx` 文件中使用 Rspress 提供的 [内置组件](/guide/default-theme/components) 或安装一些 React 组件库来丰富你的文档。
+你可以在 `.mdx` 文件中使用 Rspress 提供的 [文档组件](/ui/components/index.mdx) 或安装一些 React 组件库来丰富你的文档。
 
 ## 路由约定
 
-在 [docs 目录](/api/config/config-basic#root) 中，使用 MDX 片段或 React 组件要通过 [route.exclude](/api/config/config-basic#routeexclude) 配置从路由中排除。为了使用方便，我们约定以 "\_" 开头的文件会被默认排除，通过 [route.excludeConvention](/api/config/config-basic#routeexcludeconvention)。
+import RouteConvention from '@zh/fragments/route-convention.mdx';
 
-你也可以将组件放到 docs 目录以外的相邻目录，例如：
+<RouteConvention />
 
-<Tabs>
-<Tab label="docsite/docs/index.mdx">
-
-```mdx
-import ButtonFragment from './_button.mdx';
-import Button from '../../components/button';
-
-<ButtonFragment />
-<Button />
-```
-
-</Tab>
-<Tab label="docsite/docs/_button.mdx">
-
-```mdx file="./_button.mdx"
-
-```
-
-</Tab>
-<Tab label="docsite/components/button.tsx">
-
-```tsx
-const Button = () => <button>按钮</button>;
-export default Button;
-```
-
-</Tab>
-</Tabs>
-
-它将被渲染为：
-
-<Border>
-
-import Button from './_button.mdx';
-
-<Button />
-<button>按钮</button>
-
-</Border>
-
-## 逃生舱：使用 tsx 或 html 编写文档内容
+## 逃生舱：在 tsx 中编写文档内容
 
 ```tsx file="./_escape-hatch.tsx" title="_escape-hatch.tsx"
 
@@ -122,7 +92,7 @@ import EscapeHatch from './_escape-hatch';
 
 它将被渲染为：
 
-<Border>
+<Border className="rp-toc-exclude">
   <EscapeHatch />
 </Border>
 
@@ -131,5 +101,19 @@ import EscapeHatch from './_escape-hatch';
 tsx 和 html 语法会导致静态信息难以提取，比如本地搜索索引。
 
 更推荐使用 `.mdx` 文件来编写文档内容，使用 `.tsx` 文件来编写需交互的动态内容。
+
+:::
+
+## React 相关版本
+
+| 依赖               | 允许范围               | 默认版本 | 说明                       |
+| ------------------ | ---------------------- | -------- | -------------------------- |
+| `react`            | `^18.0.0 \|\| ^19.0.0` | 19       | 不再支持 React 17          |
+| `react-dom`        | `^18.0.0 \|\| ^19.0.0` | 19       | 与 react 版本保持一致      |
+| `react-router-dom` | `^6.0.0 \|\| ^7.0.0`   | 7        | 如项目已安装则使用项目版本 |
+
+:::tip
+
+如果你的项目中已安装 `react`、`react-dom` 或 `react-router-dom`，Rspress 会优先使用项目中安装的版本，而非内置的默认版本。
 
 :::

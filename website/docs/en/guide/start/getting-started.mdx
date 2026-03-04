@@ -1,6 +1,26 @@
+---
+description: Quickly create an Rspress project via CLI or manually, and learn the basic workflow of dev server startup, production build, and local preview.
+---
+
 # Quick start
 
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+## Environment preparation
+
+Rspress supports using [Node.js](https://nodejs.org/), [Deno](https://deno.com/), or [Bun](https://bun.sh/) as the JavaScript runtime.
+
+Use one of the following installation guides to set up a runtime:
+
+- [Install Node.js](https://nodejs.org/en/download)
+- [Install Bun](https://bun.com/docs/installation)
+- [Install Deno](https://docs.deno.com/runtime/getting_started/installation/)
+
+:::tip Version requirements
+
+Rspress requires Node.js version 20.19+, 22.12+.
+
+:::
 
 ## 1. Initialize the project
 
@@ -22,7 +42,7 @@ mkdir rspress-app && cd rspress-app
 
 Execute `npm init -y` to initialize a project. You can install Rspress using npm, pnpm, yarn or bun:
 
-<PackageManagerTabs command="install rspress -D" />
+<PackageManagerTabs command="install @rspress/core -D" />
 
 Then create the file with the following command
 

@@ -37,6 +37,7 @@ deepmerge
 directorytest
 docgen
 docsite
+domcontentloaded
 envinfo
 estree
 facti
@@ -72,6 +73,7 @@ Lamperouge
 Lelouch
 lightningcss
 llms
+llmstxt
 longpaths
 manypkg
 mattcompiles
@@ -81,6 +83,7 @@ Mdxjs
 mdxrs
 menlo
 metastring
+microhei
 modularly
 napi
 networkidle
@@ -119,6 +122,7 @@ Qrcode
 rebranded
 rehype
 renderable
+resvg
 rsbuild
 rsdoctor
 rsfamily
@@ -128,6 +132,7 @@ rslog
 rspack
 rspress
 rstack
+rstackjs
 rstest
 Rustify
 selfsign
@@ -136,6 +141,7 @@ shikijs
 sirv
 Sizefor
 sokra
+sooniter
 speedscope
 srcset
 SSGMD
@@ -164,7 +170,6 @@ unpatch
 unplugin
 unshift
 upath
-vitest
 watchpack
 webm
 webp
@@ -173,3 +178,5 @@ weibo
 weixin
 zeabur
 zhihu
+zhong
+Zovn

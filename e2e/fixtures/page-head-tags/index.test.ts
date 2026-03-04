@@ -49,6 +49,9 @@ test.describe('page head tags', async () => {
     expect(htmlContent).toContain(
       '<meta property="og:title" content="Hello world">',
     );
+    expect(htmlContent).toContain(
+      '<meta property="og:description" content="World Hello">',
+    );
 
     await page.goto(`http://localhost:${appPort}/jane`, {
       waitUntil: 'networkidle',

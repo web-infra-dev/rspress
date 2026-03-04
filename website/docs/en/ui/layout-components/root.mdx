@@ -1,0 +1,37 @@
+---
+description: Root component, serves as the wrapper component for the entire application, used to wrap custom Providers.
+overviewHeaders: []
+---
+
+# Root
+
+`Root` is the wrapper component for the entire application, wrapping all content (including Layout and global UI components).
+
+Its source code is as follows:
+
+```tsx
+export function Root({ children }: RootProps) {
+  return <>{children}</>;
+}
+```
+
+## Usage
+
+Use it through eject to wrap custom Providers:
+
+```tsx title="theme/components/Root/index.tsx"
+import type { RootProps } from '@rspress/core/theme';
+
+export function Root({ children }: RootProps) {
+  return <YourProvider>{children}</YourProvider>;
+}
+```
+
+## Props
+
+### children
+
+- **Type:** `ReactNode`
+- **Required:** Yes
+
+Child elements to render, containing the entire application content.

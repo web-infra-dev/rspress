@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const SYNC_STORAGE_EVENT_NAME = 'RSPRESS_SYNC_STORAGE_EVENT_NAME';
 
@@ -8,13 +8,17 @@ const SYNC_STORAGE_EVENT_NAME = 'RSPRESS_SYNC_STORAGE_EVENT_NAME';
  */
 export const useStorageValue = <T>(key: string, defaultValue: T) => {
   const [value, setValueInternal] = useState<T>(defaultValue);
-  // TODO: support SSR
-  useLayoutEffect(() => {
+
+  // Use useEffect instead of useLayoutEffect for SSR compatibility
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
     const storedValue = localStorage.getItem(key);
     if (storedValue != null) {
       setValueInternal(storedValue as T);
     }
-  }, []);
+  }, [key]);
 
   const setValue = useCallback(
     (value: T) => {

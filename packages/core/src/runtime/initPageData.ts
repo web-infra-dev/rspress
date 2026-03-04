@@ -27,9 +27,7 @@ export async function initPageData(routePath: string): Promise<Page> {
     const pagePath = cleanUrl(matchedRoute.filePath);
     const normalize = (p: string) =>
       // compat the path that has no / suffix and ignore case
-      p
-        .replace(/\/$/, '')
-        .toLowerCase();
+      p.replace(/\/$/, '').toLowerCase();
     const extractPageInfo: BaseRuntimePageInfo = pageData.pages.find(page =>
       isEqualPath(normalize(page.routePath), normalize(matchedRoute.path)),
     )!;

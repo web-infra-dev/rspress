@@ -1,0 +1,99 @@
+---
+description: OverviewGroup component for rendering group cards and page lists in overview pages.
+overviewHeaders: []
+---
+
+# OverviewGroup
+
+`OverviewGroup` renders group cards in overview pages, displaying page lists and their heading anchors. It's part of the [Overview page](/guide/advanced/overview-page).
+
+## Usage
+
+You can modify the component's styles through [custom theme](/guide/basic/custom-theme), or use `OverviewGroup` freely for UI display without relying on Rspress's built-in Overview page, for example:
+
+```mdx title="index.mdx"
+import { OverviewGroup } from '@rspress/core/theme';
+
+<OverviewGroup
+  group={{
+    name: 'Usage Test',
+    items: [
+      {
+        text: 'Introduction',
+        link: '/guide/introduction',
+        headers: [
+          { id: 'what-is-rspress', text: 'What is Rspress', depth: 2 },
+          { id: 'features', text: 'Features', depth: 2 },
+        ],
+      },
+      {
+        text: 'Installation',
+        link: '/guide/installation',
+      },
+    ],
+  }}
+/>
+```
+
+import { OverviewGroup } from '@rspress/core/theme';
+import { Border } from '../../../components/Border';
+
+<Border className="rp-toc-exclude">
+  <OverviewGroup
+    group={{
+      name: 'Usage Test',
+      items: [
+        {
+          text: 'Introduction',
+          link: '/guide/introduction',
+          headers: [
+            { id: 'what-is-rspress', text: 'What is Rspress', depth: 2 },
+            { id: 'features', text: 'Features', depth: 2 },
+          ],
+        },
+        {
+          text: 'Installation',
+          link: '/guide/installation',
+        },
+      ],
+    }}
+  />
+</Border>
+
+## Props
+
+### group
+
+- **Type:** `Group`
+- **Required:** Yes
+
+```ts
+interface GroupItem {
+  /** Item title */
+  text: string;
+  /** Item link */
+  link: string;
+  /** List of heading anchors within the page */
+  headers?: Header[];
+  /** Custom sub-items list */
+  items?: { text: string; link: string }[];
+}
+
+interface Group {
+  /** Group name */
+  name: string;
+  /** List of items in the group */
+  items: GroupItem[];
+}
+
+interface Header {
+  id: string;
+  text: string;
+  depth: number;
+}
+```
+
+- `name` - Group title, rendered as h2 heading
+- `items` - List of pages in the group
+- `headers` - Heading anchors within each page, clickable to jump to corresponding position
+- `items` (within GroupItem) - Custom sub-items, used to replace auto-extracted headers

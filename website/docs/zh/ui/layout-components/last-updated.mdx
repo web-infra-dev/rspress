@@ -1,0 +1,38 @@
+---
+description: LastUpdated 最后更新时间组件，用于展示页面的最后更新时间。
+overviewHeaders: []
+---
+
+# LastUpdated
+
+`LastUpdated` 展示页面的最后更新时间。通常配合主题的 `lastUpdated` 配置使用。
+
+## 用法
+
+```tsx preview
+import { LastUpdated as BasicLastUpdated } from '@rspress/core/theme-original';
+
+export default function LastUpdated() {
+  return <BasicLastUpdated />;
+}
+```
+
+该组件不接受任何 props，会自动从页面元数据中读取最后更新时间。
+
+## 相关配置
+
+在 `rspress.config.ts` 中开启 `lastUpdated`：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: true,
+  },
+});
+```
+
+当启用 `lastUpdated` 时，组件会自动读取页面元数据并格式化显示。
+
+如需自定义展示文案或时间格式，可通过 `rspress eject LastUpdated` 导出并修改 `theme/components/LastUpdated/index.tsx`。

@@ -44,6 +44,10 @@ export type PackageManagerTabProps = (
 // contains `--npm` or `--jsr` (in which case explicit npm behavior is desired).
 const transformDenoPositional = (cmd: string) => {
   const parts = cmd.split(' ');
+  const subcommand = parts[1];
+  const isRun = subcommand === 'run';
+  let transformedFirst = false;
+
   const transformed = parts.map((tok, idx) => {
     // only transform positional args (after "deno" and the subcommand)
     if (
@@ -52,6 +56,10 @@ const transformDenoPositional = (cmd: string) => {
       !tok.includes(':') &&
       !/^https?:/.test(tok)
     ) {
+      if (isRun && transformedFirst) {
+        return tok;
+      }
+      transformedFirst = true;
       return `npm:${tok}`;
     }
     return tok;
@@ -164,7 +172,7 @@ export function PackageManagerTabs({
           case 'bun':
             return 'bunx';
           case 'deno':
-            return 'deno run';
+            return 'deno run -A';
           default:
             return packageManager;
         }
@@ -180,7 +188,7 @@ export function PackageManagerTabs({
           case 'bun':
             return 'bun';
           case 'deno':
-            return 'deno run';
+            return 'deno run -A';
           default:
             return packageManager;
         }
@@ -208,6 +216,18 @@ export function PackageManagerTabs({
   } else {
     // When using { "yarn": "", "pnpm": "", "bun": "", "deno": "" } as command we don't normalize anything
     commandInfo = command;
+  }
+
+  if (process.env.__SSR_MD__) {
+    return Object.values(commandInfo).reduce((previous, current) => {
+      const [packageManager, command] = splitTo2Parts(current);
+      return (
+        previous +
+        `\n\`\`\`sh [${packageManager}]\n` +
+        `${packageManager}${command}\n` +
+        `\`\`\`\n`
+      );
+    }, '');
   }
 
   return (

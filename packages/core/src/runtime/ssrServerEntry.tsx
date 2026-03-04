@@ -25,6 +25,8 @@ function renderToHtml(app: ReactNode): Promise<string> {
   return new Promise((resolve, reject) => {
     const passThrough = new PassThrough();
     const { pipe } = renderToPipeableStream(app, {
+      // Why Infinity? https://github.com/facebook/react/pull/33027#issuecomment-3403958008
+      progressiveChunkSize: Infinity,
       onError(error) {
         reject(error);
       },

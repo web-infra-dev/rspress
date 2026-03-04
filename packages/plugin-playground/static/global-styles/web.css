@@ -1,4 +1,4 @@
-.rspress-playground {
+.rp-playground {
   display: flex;
   border: 1px solid var(--rp-c-divider-light);
   border-radius: 3px;
@@ -6,52 +6,50 @@
   margin-bottom: 20px;
 }
 
-.rspress-playground-horizontal {
+.rp-playground-horizontal {
   flex-direction: row;
   height: 400px;
 }
 
-.rspress-playground-horizontal.rspress-playground-reverse-y {
+.rp-playground-horizontal.rp-playground-reverse-y {
   flex-direction: row-reverse;
 }
 
-.rspress-playground-vertical {
+.rp-playground-vertical {
   flex-direction: column;
 }
 
-.rspress-playground-runner {
+.rp-playground-runner {
   position: relative;
   padding: 20px;
   overflow: auto;
 }
 
-.rspress-playground-horizontal > .rspress-playground-runner {
+.rp-playground-horizontal > .rp-playground-runner {
   width: 40%;
 }
 
-.rspress-playground-horizontal > .rspress-playground-editor {
+.rp-playground-horizontal > .rp-playground-editor {
   width: 60%;
 }
 
-.rspress-playground-horizontal.rspress-playground-reverse-y
-  > .rspress-playground-editor {
+.rp-playground-horizontal.rp-playground-reverse-y > .rp-playground-editor {
   border-right: 1px solid var(--rp-c-divider-light);
 }
 
-.rspress-playground-horizontal.rspress-playground-reverse-n
-  > .rspress-playground-editor {
+.rp-playground-horizontal.rp-playground-reverse-n > .rp-playground-editor {
   border-left: 1px solid var(--rp-c-divider-light);
 }
 
-.rspress-playground-vertical > .rspress-playground-editor {
+.rp-playground-vertical > .rp-playground-editor {
   height: 300px;
 }
 
-.rspress-playground-vertical > .rspress-playground-editor {
+.rp-playground-vertical > .rp-playground-editor {
   border-top: 1px solid var(--rp-c-divider-light);
 }
 
-.rspress-playground-error {
+.rp-playground-error {
   width: 100%;
   height: 100%;
   position: absolute;

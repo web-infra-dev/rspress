@@ -27,7 +27,7 @@ interface PlaygroundOptions {
   monacoOptions: MonacoEditorProps['options'];
   /**
    * determine how to handle a internal code block without meta
-   * @default 'playground'
+   * @default 'pure'
    */
   defaultRenderMode?: 'pure' | 'playground';
 }
@@ -49,7 +49,7 @@ export function pluginPlayground(
     babelUrl = DEFAULT_BABEL_URL,
     monacoLoader = {},
     monacoOptions = {},
-    defaultRenderMode = 'playground',
+    defaultRenderMode = 'pure',
   } = options || {};
 
   const playgroundVirtualModule = new RspackVirtualModulePlugin({});
@@ -71,10 +71,8 @@ export function pluginPlayground(
 
   return {
     name: '@rspress/plugin-playground',
-    config(config, { removePlugin }) {
+    config(config) {
       config.markdown = config.markdown || {};
-      // The preview and playground plugin are mutually conflicting.
-      removePlugin('@rspress/plugin-preview');
       return config;
     },
     async routeGenerated(routes: RouteMeta[]) {

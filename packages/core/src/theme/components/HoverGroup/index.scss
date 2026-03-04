@@ -14,7 +14,7 @@
   border-radius: 8px;
   border: var(--rp-code-block-border);
   background: var(--rp-c-bg);
-  box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--rp-shadow-2);
   transition: opacity 0.3s ease-in-out;
 
   position: absolute;
@@ -40,6 +40,10 @@
   &--hidden {
     visibility: hidden;
     opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease-in-out,
+      visibility 0s linear 0.3s;
   }
 
   &__item {
@@ -49,7 +53,6 @@
     display: block;
     white-space: nowrap;
 
-    padding-left: 8px;
     padding-right: 8px;
 
     // style
@@ -64,8 +67,10 @@
     line-height: 32px;
 
     &__link {
+      display: flex;
+      align-items: center;
+      gap: 2px;
       // For click area
-      display: block;
       height: 100%;
     }
 

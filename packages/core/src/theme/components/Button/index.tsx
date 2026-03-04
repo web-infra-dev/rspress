@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import React, { type JSX } from 'react';
 import './index.scss';
 
-interface ButtonProps {
+export interface ButtonProps {
   type?: string;
   size?: 'medium' | 'big';
   theme?: 'brand' | 'alt';

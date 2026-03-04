@@ -1,12 +1,24 @@
+---
+tag: new
+---
+
 # @rspress/plugin-llms <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-llms" />
 
 import { SourceCode } from '@rspress/core/theme';
 
 Generate [llms.txt](https://llmstxt.org/) related files for your Rspress site, allowing large language models to better understand your documentation site.
 
+:::warning
+
+`@rspress/plugin-llms` uses remark to process MDX source files, so it does not support rendering dynamic content such as React Hooks or custom components.
+
+This plugin is only intended as a fallback solution when SSG and SSG-MD features cannot be enabled due to code incompatibility with SSR. It is recommended to prioritize using the [SSG-MD](/guide/basic/ssg-md) feature.
+
+:::
+
 ## Installation
 
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 <PackageManagerTabs command="add @rspress/plugin-llms -D" />
 
@@ -30,12 +42,37 @@ Then execute the `rspress build` command. While generating the output, the plugi
 
 ### 2. UI display
 
-If you want users reading your documentation site to better utilize large language models to read the documentation, you can add a copy Markdown button at the top of the page through [custom theme](/ui/custom-theme), with the same effect as this website.
+If you want users reading your documentation site to better utilize large language models to read the documentation, you can add a copy Markdown button at the top of the page with the same effect as this website.
+
+#### Using themeConfig (Recommended)
+
+The simplest way is to enable `llmsUI` in `themeConfig`. This will automatically add `LlmsCopyButton` and `LlmsViewOptions` components below all H1 headers (or in the outline panel) without requiring custom theme code:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginLlms } from '@rspress/plugin-llms';
+
+export default defineConfig({
+  plugins: [pluginLlms()],
+  themeConfig: {
+    llmsUI: true,
+    // Or with custom options:
+    // llmsUI: {
+    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    //   placement: 'outline', // Display in outline panel instead of below H1
+    // },
+  },
+});
+```
+
+#### Using custom theme
+
+If you need more control, you can use [custom theme](/guide/basic/custom-theme) to add a copy Markdown button.
 
 Add a copy button to all pages, example:
 
 ```tsx title="theme/index.tsx"
-import { getCustomMDXComponent as basicGetCustomMDXComponent } from '@rspress/core/theme';
+import { getCustomMDXComponent as basicGetCustomMDXComponent } from '@rspress/core/theme-original';
 import {
   LlmsContainer,
   LlmsCopyButton,
@@ -65,7 +102,7 @@ function getCustomMDXComponent() {
 }
 
 export { getCustomMDXComponent };
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 ```
 
 Add a copy button to specific pages, example:
@@ -122,7 +159,7 @@ export interface Options {
 
 - **Default**:
 
-When [internationalization](/guide/default-theme/i18n) is not enabled, the default value is:
+When [internationalization](/guide/basic/i18n) is not enabled, the default value is:
 
 ```ts
 {
@@ -132,7 +169,7 @@ When [internationalization](/guide/default-theme/i18n) is not enabled, the defau
 }
 ```
 
-When [internationalization](/guide/default-theme/i18n) is enabled, it will use [multiple configurations](#group), with the default value being:
+When [internationalization](/guide/basic/i18n) is enabled, it will use [multiple configurations](#group), with the default value being:
 
 ```ts
 [
@@ -326,31 +363,8 @@ pluginLlms({
 - **Type**: `LlmsCopyButtonProps`
 
 ```ts
-interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  textByLang?: Record<string, string>;
-  text?: string;
-}
+interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 ```
-
-#### textByLang
-
-- **Type**: `Record<string, string>`
-- **Default**: `{ en: 'Copy Markdown', zh: '复制 Markdown' }`
-
-Replace the text on the button according to the corresponding language.
-
-- **Example**:
-
-```mdx
-<LlmsCopyButton textByLang={{ en: 'Copy MD' }} />
-```
-
-#### text
-
-- **Type**: `string`
-- **Default**: `''`
-
-Text on the copy button, has higher priority than `textByLang`.
 
 ### LlmsViewOptionsProps
 
@@ -374,8 +388,6 @@ type Option =
 
 interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   options?: Option[];
-  textByLang?: Record<string, string>;
-  text?: string;
 }
 ```
 
@@ -403,20 +415,6 @@ type Option =
 - **Default**: `['markdownLink', 'chatgpt', 'claude']`
 
 Customize the options in the dropdown menu. By default, supports "Copy Markdown Link", [ChatGPT](https://chatgpt.com/) and [Claude](https://claude.ai).
-
-#### textByLang
-
-- **Type**: `Record<string, string>`
-- **Default**: `{ en: 'Open', zh: '打开' }`
-
-Replace the text on the button according to the corresponding language.
-
-#### text
-
-- **Type**: `string`
-- **Default**: `''`
-
-Text on the button, has higher priority than `textByLang`.
 
 ## Generate multiple groups of `llms.txt` at the same time \{#group}
 

@@ -3,7 +3,7 @@ import {
   Content,
   useFrontmatter,
   useLocaleSiteData,
-  usePageData,
+  usePage,
   useSite,
 } from '@rspress/core/runtime';
 import type { HomeLayoutProps } from '@theme';
@@ -15,11 +15,11 @@ import {
   Nav,
   type NavProps,
   useRedirect4FirstVisit,
+  useScrollReset,
   useSetup,
 } from '@theme';
 import { Head, useHead } from '@unhead/react';
 import React, { memo, useMemo } from 'react';
-import { useScrollReset } from '../../logic/useScrollReset';
 
 export type LayoutProps = {
   top?: React.ReactNode;
@@ -79,12 +79,18 @@ const HeadTags = memo(
               content: title,
             }
           : undefined,
-        description
-          ? {
-              name: 'description',
-              content: description,
-            }
-          : undefined,
+        ...(description
+          ? [
+              {
+                name: 'description',
+                content: description,
+              },
+              {
+                property: 'og:description',
+                content: description,
+              },
+            ]
+          : []),
       ],
     });
 
@@ -115,6 +121,7 @@ export function Layout(props: LayoutProps) {
     afterHero,
     beforeFeatures,
     afterFeatures,
+    beforeNavMenu,
     afterNavMenu,
     components,
     HomeLayout = DefaultHomeLayout,
@@ -139,7 +146,7 @@ export function Layout(props: LayoutProps) {
     beforeFeatures,
     afterFeatures,
   };
-  const { page } = usePageData();
+  const { page } = usePage();
   const { site } = useSite();
   const { frontmatter } = useFrontmatter();
   const {
@@ -149,10 +156,6 @@ export function Layout(props: LayoutProps) {
     title: articleTitle,
   } = page;
   const localesData = useLocaleSiteData();
-
-  useSetup();
-  useScrollReset();
-  useRedirect4FirstVisit();
 
   // Always show sidebar by default
   // Priority: front matter title > h1 title
@@ -174,9 +177,7 @@ export function Layout(props: LayoutProps) {
   }
 
   const description =
-    (frontmatter?.description as string) ||
-    site.description ||
-    localesData.description;
+    page.description || site.description || localesData.description;
 
   // Use doc layout by default
   const getContentLayout = () => {
@@ -196,6 +197,14 @@ export function Layout(props: LayoutProps) {
         return <DocLayout {...docProps} />;
     }
   };
+
+  if (process.env.__SSR_MD__) {
+    return <>{getContentLayout()}</>;
+  }
+
+  useSetup();
+  useScrollReset();
+  useRedirect4FirstVisit();
 
   const {
     frontmatter: { navbar: showNavbar = true },
@@ -218,6 +227,7 @@ export function Layout(props: LayoutProps) {
             beforeNavTitle={beforeNavTitle}
             afterNavTitle={afterNavTitle}
             navTitle={navTitle}
+            beforeNavMenu={beforeNavMenu}
             afterNavMenu={afterNavMenu}
           />
           {afterNav}
