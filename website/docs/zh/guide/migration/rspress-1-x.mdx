@@ -527,6 +527,24 @@ export default defineConfig({
 });
 ```
 
+## plugin-preview
+
+`@rspress/plugin-preview` V2 不再内置 `@rsbuild/plugin-less` 和 `@rsbuild/plugin-sass`。如需在预览中使用 Less 或 Sass，请通过 `iframeOptions.builderConfig` 手动配置对应插件：
+
+```ts
+import { pluginLess } from '@rsbuild/plugin-less';
+
+pluginPreview({
+  iframeOptions: {
+    builderConfig: {
+      plugins: [pluginLess()],
+    },
+  },
+});
+```
+
+更多迁移细节请参考 [plugin-preview 迁移指南](/plugin/official-plugins/preview#从-v1-迁移)。
+
 ## 参考资源
 
 - [GitHub 讨论：Rspress v2 Breaking Changes](https://github.com/web-infra-dev/rspress/discussions/1891)

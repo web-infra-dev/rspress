@@ -541,6 +541,24 @@ export default defineConfig({
 });
 ```
 
+## plugin-preview
+
+`@rspress/plugin-preview` V2 no longer includes `@rsbuild/plugin-less` and `@rsbuild/plugin-sass` as built-in dependencies. If you need Less or Sass support in previews, manually configure the corresponding plugin via `iframeOptions.builderConfig`:
+
+```ts
+import { pluginLess } from '@rsbuild/plugin-less';
+
+pluginPreview({
+  iframeOptions: {
+    builderConfig: {
+      plugins: [pluginLess()],
+    },
+  },
+});
+```
+
+For more migration details, see [plugin-preview migration guide](/plugin/official-plugins/preview#migrating-from-v1).
+
 ## Resources
 
 - [GitHub Discussion: Rspress v2 Breaking Changes](https://github.com/web-infra-dev/rspress/discussions/1891)
