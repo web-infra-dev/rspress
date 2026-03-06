@@ -359,17 +359,25 @@ When migrating from Rspress V1, the plugin functionality remains unchanged. Only
 - `<code src="./foo.tsx"/>` should be migrated to [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) ` ```tsx file="./foo.tsx"`
 - The `defaultPreviewMode` option replaces `iframeOptions.position` and `previewMode`
 - The default value of `defaultRenderMode` changed from `'preview'` to `'pure'`
-- `@rsbuild/plugin-less` and `@rsbuild/plugin-sass` are no longer built-in. If you need Less or Sass support in previews, manually configure the corresponding plugin via `iframeOptions.builderConfig`:
+- `@rsbuild/plugin-less` and `@rsbuild/plugin-sass` are no longer built-in. If you need Less or Sass support in previews, install the corresponding plugin and configure it via `iframeOptions.builderConfig`:
 
-```ts
+<PackageManagerTabs command="add @rsbuild/plugin-less -D" />
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginPreview } from '@rspress/plugin-preview';
 import { pluginLess } from '@rsbuild/plugin-less';
 
-pluginPreview({
-  iframeOptions: {
-    builderConfig: {
-      plugins: [pluginLess()],
-    },
-  },
+export default defineConfig({
+  plugins: [
+    pluginPreview({
+      iframeOptions: {
+        builderConfig: {
+          plugins: [pluginLess()],
+        },
+      },
+    }),
+  ],
 });
 ```
 

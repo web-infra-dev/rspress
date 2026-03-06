@@ -359,17 +359,25 @@ return React.createElement(json.type, null, json.children);
 - `<code src="./foo.tsx"/>` 迁移为[文件代码块](../../guide/use-mdx/code-blocks.mdx#file-code-block) ` ```tsx file="./foo.tsx"`
 - `defaultPreviewMode` 配置项替代了 `iframeOptions.position` 和 `previewMode`
 - `defaultRenderMode` 默认值从 `'preview'` 改为 `'pure'`
-- 不再内置 `@rsbuild/plugin-less` 和 `@rsbuild/plugin-sass`，如需在预览中使用 Less 或 Sass，请通过 `iframeOptions.builderConfig` 手动配置对应插件：
+- 不再内置 `@rsbuild/plugin-less` 和 `@rsbuild/plugin-sass`，如需在预览中使用 Less 或 Sass，请先安装对应的 Rsbuild 插件，然后通过 `iframeOptions.builderConfig` 进行配置：
 
-```ts
+<PackageManagerTabs command="add @rsbuild/plugin-less -D" />
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginPreview } from '@rspress/plugin-preview';
 import { pluginLess } from '@rsbuild/plugin-less';
 
-pluginPreview({
-  iframeOptions: {
-    builderConfig: {
-      plugins: [pluginLess()],
-    },
-  },
+export default defineConfig({
+  plugins: [
+    pluginPreview({
+      iframeOptions: {
+        builderConfig: {
+          plugins: [pluginLess()],
+        },
+      },
+    }),
+  ],
 });
 ```
 

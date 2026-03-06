@@ -2,6 +2,8 @@
 description: Complete migration guide from Rspress 1.x to V2, covering package name changes, import paths, custom themes, Shiki code highlighting, and more.
 ---
 
+import { PackageManagerTabs } from '@theme';
+
 # Migrating from Rspress 1.x
 
 This document will help you migrate from Rspress 1.x to Rspress V2. We recommend using the "Copy as Markdown" feature to pass this document to an LLM for automated migration assistance.
@@ -543,17 +545,25 @@ export default defineConfig({
 
 ## plugin-preview
 
-`@rspress/plugin-preview` V2 no longer includes `@rsbuild/plugin-less` and `@rsbuild/plugin-sass` as built-in dependencies. If you need Less or Sass support in previews, manually configure the corresponding plugin via `iframeOptions.builderConfig`:
+`@rspress/plugin-preview` V2 no longer includes `@rsbuild/plugin-less` and `@rsbuild/plugin-sass` as built-in dependencies. If you need Less or Sass support in previews, install the corresponding plugin and configure it via `iframeOptions.builderConfig`:
 
-```ts
+<PackageManagerTabs command="add @rsbuild/plugin-less -D" />
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginPreview } from '@rspress/plugin-preview';
 import { pluginLess } from '@rsbuild/plugin-less';
 
-pluginPreview({
-  iframeOptions: {
-    builderConfig: {
-      plugins: [pluginLess()],
-    },
-  },
+export default defineConfig({
+  plugins: [
+    pluginPreview({
+      iframeOptions: {
+        builderConfig: {
+          plugins: [pluginLess()],
+        },
+      },
+    }),
+  ],
 });
 ```
 
