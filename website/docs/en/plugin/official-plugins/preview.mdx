@@ -267,6 +267,28 @@ Configures the dev server port for iframe preview. Use this when the default por
 
 Configures Rsbuild build options for the iframe, such as adding global styles or scripts.
 
+For example, to add Less or Sass support in previews, install and configure the corresponding Rsbuild plugin:
+
+<PackageManagerTabs command="add @rsbuild/plugin-less -D" />
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginPreview } from '@rspress/plugin-preview';
+import { pluginLess } from '@rsbuild/plugin-less';
+
+export default defineConfig({
+  plugins: [
+    pluginPreview({
+      iframeOptions: {
+        builderConfig: {
+          plugins: [pluginLess()],
+        },
+      },
+    }),
+  ],
+});
+```
+
 #### iframeOptions.customEntry
 
 Configures a custom entry to support other frameworks like Vue.

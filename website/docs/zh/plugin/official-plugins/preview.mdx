@@ -267,6 +267,28 @@ interface IframeOptions {
 
 配置 iframe 的 Rsbuild 构建选项，例如添加全局样式或脚本。
 
+例如，如需在预览中使用 Less 或 Sass，请安装并配置对应的 Rsbuild 插件：
+
+<PackageManagerTabs command="add @rsbuild/plugin-less -D" />
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginPreview } from '@rspress/plugin-preview';
+import { pluginLess } from '@rsbuild/plugin-less';
+
+export default defineConfig({
+  plugins: [
+    pluginPreview({
+      iframeOptions: {
+        builderConfig: {
+          plugins: [pluginLess()],
+        },
+      },
+    }),
+  ],
+});
+```
+
 #### iframeOptions.customEntry
 
 配置自定义入口以支持其他框架（如 Vue）。
