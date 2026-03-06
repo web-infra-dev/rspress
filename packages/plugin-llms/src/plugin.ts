@@ -97,6 +97,39 @@ const rsbuildPluginLlms = ({
         exclude,
       );
 
+      // Normalize md content first so it can be used by both mdFiles and llmsFullTxt
+      const mdContents: Record<string, string> = {};
+      await Promise.all(
+        [...newPageDataList.values()].map(async pageData => {
+          const content = pageData._flattenContent ?? pageData.content;
+          const filepath = pageData._filepath;
+          const isMD = path.extname(filepath).slice(1) !== 'mdx';
+          let mdContent: string | Buffer;
+          try {
+            mdContent = await normalizeMdFile(
+              content,
+              filepath,
+              routeServiceRef.current!,
+              baseRef.current,
+              typeof mdFiles !== 'boolean'
+                ? (mdFiles?.mdxToMd ?? false)
+                : false,
+              isMD,
+              typeof mdFiles !== 'boolean'
+                ? (mdFiles?.remarkPlugins ?? [])
+                : [],
+            );
+          } catch (e) {
+            logger.debug('normalizeMdFile failed', pageData.routePath, e);
+            mdContent = content;
+          }
+          const outFilePath = routePathToMdPath(pageData.routePath, '');
+          const mdContentStr = mdContent.toString();
+          mdContents[outFilePath] = mdContentStr;
+          (pageData as any).mdContent = mdContentStr;
+        }),
+      );
+
       const versionList = isMultiVersion ? versions : [''];
 
       for (const version of versionList) {
@@ -182,37 +215,6 @@ const rsbuildPluginLlms = ({
           );
         }
       }
-
-      // md files are not version-scoped (they map 1:1 with routes which already have version in path)
-      const mdContents: Record<string, string> = {};
-      await Promise.all(
-        [...newPageDataList.values()].map(async pageData => {
-          const content = pageData._flattenContent ?? pageData.content;
-          const filepath = pageData._filepath;
-          const isMD = path.extname(filepath).slice(1) !== 'mdx';
-          let mdContent: string | Buffer;
-          try {
-            mdContent = await normalizeMdFile(
-              content,
-              filepath,
-              routeServiceRef.current!,
-              baseRef.current,
-              typeof mdFiles !== 'boolean'
-                ? (mdFiles?.mdxToMd ?? false)
-                : false,
-              isMD,
-              typeof mdFiles !== 'boolean'
-                ? (mdFiles?.remarkPlugins ?? [])
-                : [],
-            );
-          } catch (e) {
-            logger.debug('normalizeMdFile failed', pageData.routePath, e);
-            mdContent = content;
-          }
-          const outFilePath = routePathToMdPath(pageData.routePath, '');
-          mdContents[outFilePath] = mdContent.toString();
-        }) ?? [],
-      );
 
       if (mdFiles) {
         api.processAssets(
