@@ -103,12 +103,7 @@ function absolutePathToRoutePrefix(
   absolutePath: string,
   docsDir: string,
 ): string {
-  const relativePath = slash(
-    path.relative(
-      docsDir,
-      absolutePath.replace(path.extname(absolutePath), ''),
-    ),
-  );
+  const relativePath = slash(path.relative(docsDir, absolutePath));
   const routeService = RouteService.getInstance();
   const [versionPrefix, langPrefix] =
     routeService.getRoutePathParts(relativePath);
