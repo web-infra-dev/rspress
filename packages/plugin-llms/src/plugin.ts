@@ -127,7 +127,7 @@ const rsbuildPluginLlms = ({
           const mdContentStr = mdContent.toString();
           mdContents[outFilePath] = mdContentStr;
           (pageData as any).mdContent = mdContentStr;
-        }) ?? [],
+        }),
       );
 
       const versionList = isMultiVersion ? versions : [''];
