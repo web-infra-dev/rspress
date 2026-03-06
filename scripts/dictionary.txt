@@ -51,6 +51,7 @@ frontmatter
 fullhash
 fumadocs
 Geass
+giscus
 htmr
 iconify
 icss
