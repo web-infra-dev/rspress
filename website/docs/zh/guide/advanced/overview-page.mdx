@@ -154,12 +154,28 @@ docs
 
 ## 自定义
 
-如果需要完全自定义 Overview 页的内容，可以使用 [OverviewGroup](/ui/layout-components/overview-group) 组件手动进行展示：
+如果需要完全自定义 Overview 页的内容，有以下两种方案：
+
+### 方案一：通过自定义主题修改样式
+
+通过[自定义主题](/guide/basic/custom-theme)来修改 [OverviewGroup](/ui/layout-components/overview-group) 组件的样式，同时继续使用 Overview 页的内置功能：
 
 ```mdx title="index.mdx"
 ---
 overview: true
 ---
+```
+
+### 方案二：完全自定义页面内容
+
+使用 [OverviewGroup](/ui/layout-components/overview-group) 组件并通过 `pageType: doc-wide` 调整页面布局，自行定义页面内容：
+
+```mdx title="index.mdx"
+---
+pageType: doc-wide
+---
+
+# My Custom Overview Page
 
 import { OverviewGroup } from '@rspress/core/theme';
 
