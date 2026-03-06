@@ -154,12 +154,28 @@ docs
 
 ## Customization
 
-If you need to fully customize the Overview page content, you can use the [OverviewGroup](/ui/layout-components/overview-group) component to build it manually:
+If you need to fully customize the Overview page content, there are two approaches:
+
+### Approach 1: customize styles via custom theme
+
+Use a [custom theme](/guide/basic/custom-theme) to modify the styles of the [OverviewGroup](/ui/layout-components/overview-group) component, while continuing to use the built-in Overview page functionality:
 
 ```mdx title="index.mdx"
 ---
 overview: true
 ---
+```
+
+### Approach 2: fully custom page content
+
+Use the [OverviewGroup](/ui/layout-components/overview-group) component with `pageType: doc-wide` to adjust the page layout and define content yourself:
+
+```mdx title="index.mdx"
+---
+pageType: doc-wide
+---
+
+# My custom overview page
 
 import { OverviewGroup } from '@rspress/core/theme';
 
