@@ -555,6 +555,14 @@ export interface MarkdownOptions {
    * @default true
    */
   extractDescription?: boolean;
+  /**
+   * Whether to enable CJK-friendly emphasis and strikethrough handling.
+   * This fixes a CommonMark specification issue where emphasis/strong and strikethrough markers (`*`, `**`, `~~`)
+   * are not recognized correctly when CJK characters are adjacent.
+   * @default true
+   * @see {@link https://github.com/tats-u/markdown-cjk-friendly}
+   */
+  cjkFriendlyEmphasis?: boolean;
 }
 
 export type Config =
