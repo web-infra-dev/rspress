@@ -94,6 +94,8 @@
     "react-router-dom": "^7.13.1",
     "rehype-external-links": "^3.0.0",
     "rehype-raw": "^7.0.0",
+    "remark-cjk-friendly": "^2.0.1",
+    "remark-cjk-friendly-gfm-strikethrough": "^2.0.1",
     "remark-gfm": "^4.0.1",
     "remark-mdx": "^3.1.1",
     "remark-parse": "^11.0.0",
