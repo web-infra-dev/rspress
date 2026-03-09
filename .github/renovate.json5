@@ -9,18 +9,6 @@
       // always bump package.json
       rangeStrategy: 'bump',
     },
-    // Group Rsbuild ecosystem packages
-    {
-      groupName: 'rsbuild',
-      matchPackagePatterns: ['rsbuild'],
-      groupSlug: 'rsbuild',
-    },
-    // Group Rslib with rsbuild ecosystem
-    {
-      groupName: 'rsbuild',
-      matchPackageNames: ['@rslib/core'],
-      groupSlug: 'rsbuild',
-    },
     {
       groupName: 'modern-js',
       matchPackagePatterns: ['modern-js'],
@@ -57,6 +45,26 @@
       groupSlug: 'all-patch',
       matchPackagePatterns: ['*'],
       matchUpdateTypes: ['patch'],
+    },
+    // Group Rstack ecosystem packages (placed after all-patch to take precedence)
+    {
+      groupName: 'rstack',
+      matchPackagePatterns: [
+        'rsbuild',
+        'rsdoctor',
+        'rslib',
+        'rspack',
+        'rstest',
+        'rspress',
+        'create-rstack',
+      ],
+      groupSlug: 'rstack',
+    },
+    // Group Shiki packages (placed after all-patch to take precedence)
+    {
+      groupName: 'shiki',
+      matchPackagePatterns: ['shiki', '@shikijs/'],
+      groupSlug: 'shiki',
     },
     // manually update peer dependencies
     {
