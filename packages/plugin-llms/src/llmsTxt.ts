@@ -27,7 +27,7 @@ function generateLlmsTxt(
   const { onAfterLlmsTxtGenerate, onLineGenerate, onTitleGenerate } =
     llmsTxtOptions;
 
-  if (!title) {
+  if (!onTitleGenerate && !title) {
     logger.warn(
       'No `title` found in your rspress config. It is recommended to set `title` in rspress.config.ts to generate a proper llms.txt heading.',
     );
@@ -81,9 +81,12 @@ function generateLlmsTxt(
     lines.push(...otherLines);
   }
 
-  const llmsTxt = summary
-    ? `${summary}\n${lines.join('\n')}`
-    : lines.join('\n').trimStart();
+  let llmsTxt: string;
+  if (summary) {
+    llmsTxt = lines.length > 0 ? `${summary}\n${lines.join('\n')}` : summary;
+  } else {
+    llmsTxt = lines.join('\n').trimStart();
+  }
 
   return onAfterLlmsTxtGenerate ? onAfterLlmsTxtGenerate(llmsTxt) : llmsTxt;
 }

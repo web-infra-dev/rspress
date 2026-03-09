@@ -98,9 +98,12 @@ async function generateLlmsTxt(
     others,
   );
   lines.push(...otherLines);
-  const llmsTxt = summary
-    ? `${summary}\n${lines.join('\n')}`
-    : lines.join('\n').trimStart();
+  let llmsTxt: string;
+  if (summary) {
+    llmsTxt = lines.length > 0 ? `${summary}\n${lines.join('\n')}` : summary;
+  } else {
+    llmsTxt = lines.join('\n').trimStart();
+  }
 
   return llmsTxt;
 }
