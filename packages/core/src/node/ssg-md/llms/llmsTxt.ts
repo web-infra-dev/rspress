@@ -1,4 +1,5 @@
 import { type NavItemWithLink, normalizeHref, withBase } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import { extractInfoFromFrontmatterWithAbsolutePath } from '../../auto-nav-sidebar/utils';
 import type { RouteService } from '../../route/RouteService';
 
@@ -19,6 +20,12 @@ async function generateLlmsTxt(
   routeService: RouteService,
 ): Promise<string> {
   const lines: string[] = [];
+
+  if (!title) {
+    logger.warn(
+      'No `title` found in your rspress config. It is recommended to set `title` in rspress.config.ts to generate a proper llms.txt heading.',
+    );
+  }
 
   const summary = title
     ? `# ${title}${description ? `\n\n> ${description}` : ''}`

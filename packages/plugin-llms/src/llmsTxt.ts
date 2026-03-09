@@ -1,4 +1,5 @@
 import {
+  logger,
   type NavItemWithLink,
   normalizeHref,
   type PageIndexInfo,
@@ -25,6 +26,12 @@ function generateLlmsTxt(
   const lines: string[] = [];
   const { onAfterLlmsTxtGenerate, onLineGenerate, onTitleGenerate } =
     llmsTxtOptions;
+
+  if (!title) {
+    logger.warn(
+      'No `title` found in your rspress config. It is recommended to set `title` in rspress.config.ts to generate a proper llms.txt heading.',
+    );
+  }
 
   const summary = onTitleGenerate
     ? onTitleGenerate({ title, description })
