@@ -20,7 +20,9 @@ async function generateLlmsTxt(
 ): Promise<string> {
   const lines: string[] = [];
 
-  const summary = `# ${title}${description ? `\n\n> ${description}` : ''}`;
+  const summary = title
+    ? `# ${title}${description ? `\n\n> ${description}` : ''}`
+    : '';
 
   async function genH2Part(
     nav: { text: string },
@@ -89,7 +91,9 @@ async function generateLlmsTxt(
     others,
   );
   lines.push(...otherLines);
-  const llmsTxt = `${summary}\n${lines.join('\n')}`;
+  const llmsTxt = summary
+    ? `${summary}\n${lines.join('\n')}`
+    : lines.join('\n').trimStart();
 
   return llmsTxt;
 }

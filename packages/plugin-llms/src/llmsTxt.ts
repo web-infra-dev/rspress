@@ -28,7 +28,9 @@ function generateLlmsTxt(
 
   const summary = onTitleGenerate
     ? onTitleGenerate({ title, description })
-    : `# ${title}${description ? `\n\n> ${description}` : ''}`;
+    : title
+      ? `# ${title}${description ? `\n\n> ${description}` : ''}`
+      : '';
 
   for (let i = 0; i < navList.length; i++) {
     const nav = navList[i];
@@ -72,7 +74,9 @@ function generateLlmsTxt(
     lines.push(...otherLines);
   }
 
-  const llmsTxt = `${summary}\n${lines.join('\n')}`;
+  const llmsTxt = summary
+    ? `${summary}\n${lines.join('\n')}`
+    : lines.join('\n').trimStart();
 
   return onAfterLlmsTxtGenerate ? onAfterLlmsTxtGenerate(llmsTxt) : llmsTxt;
 }
