@@ -321,3 +321,24 @@ export default defineConfig({
 - **默认值**: `true`
 
 是否从内容中提取描述。启用后，Rspress 会自动提取 `h2` 标题前的第一段内容作为页面的描述。
+
+### markdown.cjkFriendlyEmphasis
+
+- **类型**: `boolean`
+- **默认值**: `true`
+
+是否启用对 CJK（中日韩）友好的强调和删除线解析。启用后，即使标记内部含有标点符号（CJK 或 ASCII），只要标记外侧紧邻 CJK 字符，`**`、`*` 和 `~~` 也能正确解析为强调或删除线。
+
+此选项解决了 [CommonMark 规范的一个限制](https://github.com/commonmark/commonmark-spec/issues/650)，该限制导致强调标记在 CJK 字符相邻时无法正常工作。例如，未启用此选项时 `**该星号不会被识别，而是直接显示。**这是因为它没有被识别为强调符号。` 中的第一句不会被渲染为粗体，因为闭合 `**` 后紧跟着 CJK 字符。有关此扩展的更多详情，请参见 [markdown-cjk-friendly](https://github.com/tats-u/markdown-cjk-friendly)。
+
+默认启用。如需禁用：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    cjkFriendlyEmphasis: false,
+  },
+});
+```

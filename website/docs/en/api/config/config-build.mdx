@@ -319,3 +319,24 @@ Then you can use the `Alert` component in any MDX file:
 - **Default**: `true`
 
 Whether to extract the description from the content. If enabled, Rspress will automatically extract the first paragraph before the `h2` heading as the description of the page.
+
+### markdown.cjkFriendlyEmphasis
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+Whether to enable CJK-friendly emphasis and strikethrough parsing. When enabled, `**`, `*`, and `~~` will correctly parse as emphasis/strikethrough when CJK characters are adjacent to the outside of the markers, even if punctuation (CJK or ASCII) appears inside the markers.
+
+This addresses a [CommonMark spec limitation](https://github.com/commonmark/commonmark-spec/issues/650) where emphasis markers are not recognized correctly when CJK characters are adjacent. For example, `**该星号不会被识别，而是直接显示。**这是因为它没有被识别为强调符号。` would not render the first sentence as bold without this option, because CJK characters follow the closing `**`. For more details on this extension, see [markdown-cjk-friendly](https://github.com/tats-u/markdown-cjk-friendly).
+
+Enabled by default. To disable:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    cjkFriendlyEmphasis: false,
+  },
+});
+```
