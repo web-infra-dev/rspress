@@ -1,4 +1,5 @@
 import {
+  logger,
   type NavItemWithLink,
   normalizeHref,
   type PageIndexInfo,
@@ -26,9 +27,17 @@ function generateLlmsTxt(
   const { onAfterLlmsTxtGenerate, onLineGenerate, onTitleGenerate } =
     llmsTxtOptions;
 
+  if (!onTitleGenerate && !title) {
+    logger.warn(
+      'No `title` is configured in your Rspress setup. Please set `title` in rspress.config.ts so llms.txt can include an appropriate heading.',
+    );
+  }
+
   const summary = onTitleGenerate
     ? onTitleGenerate({ title, description })
-    : `# ${title}${description ? `\n\n> ${description}` : ''}`;
+    : title
+      ? `# ${title}${description ? `\n\n> ${description}` : ''}`
+      : '';
 
   for (let i = 0; i < navList.length; i++) {
     const nav = navList[i];
@@ -72,7 +81,12 @@ function generateLlmsTxt(
     lines.push(...otherLines);
   }
 
-  const llmsTxt = `${summary}\n${lines.join('\n')}`;
+  let llmsTxt: string;
+  if (summary) {
+    llmsTxt = lines.length > 0 ? `${summary}\n${lines.join('\n')}` : summary;
+  } else {
+    llmsTxt = lines.join('\n').trimStart();
+  }
 
   return onAfterLlmsTxtGenerate ? onAfterLlmsTxtGenerate(llmsTxt) : llmsTxt;
 }

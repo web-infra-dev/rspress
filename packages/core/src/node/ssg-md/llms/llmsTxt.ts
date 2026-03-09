@@ -1,4 +1,5 @@
 import { type NavItemWithLink, normalizeHref, withBase } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
 import { extractInfoFromFrontmatterWithAbsolutePath } from '../../auto-nav-sidebar/utils';
 import type { RouteService } from '../../route/RouteService';
 
@@ -20,7 +21,15 @@ async function generateLlmsTxt(
 ): Promise<string> {
   const lines: string[] = [];
 
-  const summary = `# ${title}${description ? `\n\n> ${description}` : ''}`;
+  if (!title) {
+    logger.warn(
+      'No `title` is configured in your Rspress setup. Please set `title` in rspress.config.ts so llms.txt can include an appropriate heading.',
+    );
+  }
+
+  const summary = title
+    ? `# ${title}${description ? `\n\n> ${description}` : ''}`
+    : '';
 
   async function genH2Part(
     nav: { text: string },
@@ -89,7 +98,12 @@ async function generateLlmsTxt(
     others,
   );
   lines.push(...otherLines);
-  const llmsTxt = `${summary}\n${lines.join('\n')}`;
+  let llmsTxt: string;
+  if (summary) {
+    llmsTxt = lines.length > 0 ? `${summary}\n${lines.join('\n')}` : summary;
+  } else {
+    llmsTxt = lines.join('\n').trimStart();
+  }
 
   return llmsTxt;
 }
