@@ -9,17 +9,25 @@
       // always bump package.json
       rangeStrategy: 'bump',
     },
-    // Group Rsbuild ecosystem packages
+    // Group Rstack ecosystem packages
     {
-      groupName: 'rsbuild',
-      matchPackagePatterns: ['rsbuild'],
-      groupSlug: 'rsbuild',
+      groupName: 'rstack',
+      matchPackagePatterns: [
+        'rsbuild',
+        'rsdoctor',
+        'rslib',
+        'rspack',
+        'rstest',
+        'rspress',
+        'create-rstack',
+      ],
+      groupSlug: 'rstack',
     },
-    // Group Rslib with rsbuild ecosystem
+    // Group Shiki packages
     {
-      groupName: 'rsbuild',
-      matchPackageNames: ['@rslib/core'],
-      groupSlug: 'rsbuild',
+      groupName: 'shiki',
+      matchPackagePatterns: ['shiki'],
+      groupSlug: 'shiki',
     },
     {
       groupName: 'modern-js',
