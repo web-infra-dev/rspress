@@ -29,7 +29,7 @@ function generateLlmsTxt(
 
   if (!onTitleGenerate && !title) {
     logger.warn(
-      'No `title` found in your rspress config. It is recommended to set `title` in rspress.config.ts to generate a proper llms.txt heading.',
+      'No `title` is configured in your Rspress setup. Please set `title` in rspress.config.ts so llms.txt can include an appropriate heading.',
     );
   }
 
