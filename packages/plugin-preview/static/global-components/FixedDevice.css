@@ -14,7 +14,7 @@
   display: none;
   position: fixed;
   top: calc(
-    var(--rp-nav-height) + var(--rp-sidebar-menu-height)+
+    var(--rp-nav-height) + var(--rp-sidebar-menu-height) +
       var(--rp-preview-padding) + var(--rp-banner-height, 0px)
   );
   right: max(
