@@ -29,7 +29,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.7.5",
+    "@floating-ui/dom": "^1.7.6",
     "@shikijs/twoslash": "^4.0.1",
     "mdast-util-from-markdown": "^2.0.3",
     "mdast-util-gfm": "^3.1.0",
@@ -38,7 +38,7 @@
     "twoslash": "^0.3.6"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.57.6",
+    "@microsoft/api-extractor": "^7.57.7",
     "@rslib/core": "0.20.0-canary-202603101",
     "@rspress/config": "workspace:*",
     "@shikijs/types": "^4.0.1",

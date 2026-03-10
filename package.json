@@ -31,7 +31,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.4",
+    "@biomejs/biome": "^2.4.6",
     "@changesets/cli": "^2.30.0",
     "@playwright/test": "1.58.2",
     "@rspress/config": "workspace:*",
@@ -51,7 +51,7 @@
     "path-serializer": "0.5.1",
     "playwright": "1.58.2",
     "prettier": "3.7.4",
-    "prettier-plugin-packagejson": "^3.0.0",
+    "prettier-plugin-packagejson": "^3.0.2",
     "tree-kill": "^1.2.2",
     "zx": "^8.8.5"
   },
