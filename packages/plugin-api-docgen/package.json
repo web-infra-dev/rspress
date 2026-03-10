@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.57.7",
-    "@rslib/core": "0.20.0-canary-202603101",
+    "@rslib/core": "0.20.0",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
