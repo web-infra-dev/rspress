@@ -56,20 +56,33 @@ export default defineConfig({
         filenameHash: true,
       },
       tools: {
-        rspack(config) {
-          config.plugins.forEach(plugin => {
-            if (plugin?.constructor.name === 'EsmLibraryPlugin') {
-              // @ts-expect-error
-              plugin.options = {
-                preserveModules: path.resolve(
-                  path.dirname(fileURLToPath(import.meta.url)),
-                  './src',
-                ),
-              };
-            }
-          });
+        rspack: {
+          output: {
+            library: {
+              type: 'modern-module',
+              preserveModules: path.resolve(
+                path.dirname(fileURLToPath(import.meta.url)),
+                './src',
+              ),
+            },
+          },
         },
       },
+      // tools: {
+      //   rspack(config) {
+      //     config.plugins.forEach(plugin => {
+      //       if (plugin?.constructor.name === 'EsmLibraryPlugin') {
+      //         // @ts-expect-error
+      //         plugin.options = {
+      //           preserveModules: path.resolve(
+      //             path.dirname(fileURLToPath(import.meta.url)),
+      //             './src',
+      //           ),
+      //         };
+      //       }
+      //     });
+      //   },
+      // },
     },
     {
       bundle: false,
