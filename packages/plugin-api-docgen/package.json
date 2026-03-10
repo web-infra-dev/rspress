@@ -36,7 +36,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.57.6",
+    "@microsoft/api-extractor": "^7.57.7",
     "@rslib/core": "0.20.0-canary-202603101",
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
