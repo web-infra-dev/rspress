@@ -68,21 +68,6 @@ export default defineConfig({
           },
         },
       },
-      // tools: {
-      //   rspack(config) {
-      //     config.plugins.forEach(plugin => {
-      //       if (plugin?.constructor.name === 'EsmLibraryPlugin') {
-      //         // @ts-expect-error
-      //         plugin.options = {
-      //           preserveModules: path.resolve(
-      //             path.dirname(fileURLToPath(import.meta.url)),
-      //             './src',
-      //           ),
-      //         };
-      //       }
-      //     });
-      //   },
-      // },
     },
     {
       bundle: false,
