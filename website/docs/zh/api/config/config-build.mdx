@@ -320,16 +320,9 @@ export default defineConfig({
 - **类型**: `boolean`
 - **默认值**: `true`
 
-是否自动从 Markdown 内容中提取描述。启用后，Rspress 使用以下策略来确定页面描述：
+是否自动从 Markdown 内容中提取描述。启用后，Rspress 会提取 `h1` 标题下方第一段有内容的段落作为页面描述。如果在 [frontmatter](/api/config/config-frontmatter#description) 中指定了 `description`，则优先使用，跳过自动提取。
 
-1. 如果在 [frontmatter](/api/config/config-frontmatter#description) 中指定了 `description`，则优先使用，跳过自动提取。
-2. 否则，Rspress 会提取 `h1` 标题和第一个 `h2` 标题之间的所有文本内容。
-3. 提取时会跳过以下内容类型：代码块、HTML、import/export 语句、JSX 表达式、分隔线（`---`）、图片和表格。
-4. [容器指令](/guide/use-mdx/container)块（如 `:::tip ... :::`）也会被过滤。
-5. 链接 URL 会被移除，仅保留链接文本（如 `[Rspress](https://rspress.dev)` 变为 `Rspress`）。
-6. 多个段落会用空格合并为一个描述字符串。
-
-提取的描述用于 `<meta name="description">` 和 Open Graph 的 `<meta property="og:description">` 标签。详情请参阅[自定义 Head 标签](/guide/advanced/custom-head)。
+提取的描述用于 `<meta name="description">` 和 Open Graph 的 `<meta property="og:description">` 标签。详情请参阅[自定义 Head 标签 - description 的获取方式](/guide/advanced/custom-head#description-的获取方式)。
 
 ### markdown.cjkFriendlyEmphasis
 

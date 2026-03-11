@@ -318,16 +318,9 @@ Then you can use the `Alert` component in any MDX file:
 - **Type**: `boolean`
 - **Default**: `true`
 
-Whether to automatically extract the description from the markdown content. When enabled, Rspress uses the following strategy to determine the page description:
+Whether to automatically extract the description from the markdown content. When enabled, Rspress extracts the first contentful paragraph below the `h1` heading as the page description. If `description` is specified in [frontmatter](/api/config/config-frontmatter#description), it takes priority and automatic extraction is skipped.
 
-1. If `description` is specified in [frontmatter](/api/config/config-frontmatter#description), it takes priority and automatic extraction is skipped.
-2. Otherwise, Rspress extracts all text content between the `h1` heading and the first `h2` heading.
-3. During extraction, the following content types are skipped: code blocks, HTML, import/export statements, JSX expressions, thematic breaks (`---`), images, and tables.
-4. [Container directive](/guide/use-mdx/container) blocks (e.g., `:::tip ... :::`) are also stripped.
-5. Link URLs are removed, keeping only the link text (e.g., `[Rspress](https://rspress.dev)` becomes `Rspress`).
-6. Multiple paragraphs are joined with spaces into a single description string.
-
-The extracted description is used for `<meta name="description">` and Open Graph `<meta property="og:description">` tags. See [Custom Head](/guide/advanced/custom-head) for details.
+The extracted description is used for `<meta name="description">` and Open Graph `<meta property="og:description">` tags. See [Custom Head - How description is determined](/guide/advanced/custom-head#how-description-is-determined) for details.
 
 ### markdown.cjkFriendlyEmphasis
 
