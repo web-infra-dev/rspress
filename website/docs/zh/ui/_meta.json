@@ -18,7 +18,8 @@
   {
     "type": "dir",
     "label": "文档组件",
-    "name": "components"
+    "name": "components",
+    "tag": "111"
   },
   {
     "type": "dir",
