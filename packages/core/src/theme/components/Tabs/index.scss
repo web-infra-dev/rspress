@@ -76,6 +76,26 @@
 
   &__content {
     &__item {
+      padding: 0 1rem;
+
+      > :first-child {
+        margin-top: 1rem;
+      }
+
+      > :last-child {
+        margin-bottom: 1rem;
+      }
+
+      // When the tab content only contains a single codeblock, remove padding
+      // to avoid double padding since CodeBlock has its own padding.
+      &:has(> .rp-codeblock:only-child) {
+        padding: 0;
+
+        > .rp-codeblock {
+          margin: 0;
+        }
+      }
+
       &--active {
         display: block;
       }
