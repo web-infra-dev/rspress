@@ -4,13 +4,41 @@ Adding head tags (such as meta tags) to web pages is crucial for SEO optimizatio
 
 Currently, Rspress automatically injects the following head tags:
 
-| Tag                                                         | Description                                                                               |
-| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `<meta name="generator" content="Rspress v${version}">`     | Identifies the site generator and version                                                 |
-| `<meta name="description" content="${description}">`        | Page description, uses description from frontmatter or global config (if available)       |
-| `<meta property="og:type" content="website">`               | Open Graph type, fixed as `website`                                                       |
-| `<meta property="og:title" content="${title}">`             | Open Graph title, uses current page title (if available)                                  |
-| `<meta property="og:description" content="${description}">` | Open Graph description, uses description from frontmatter or global config (if available) |
+| Tag                                                         | Description                                                                                 |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `<meta name="generator" content="Rspress v${version}">`     | Identifies the site generator and version                                                   |
+| `<meta name="description" content="${description}">`        | Page description, see [How description is determined](#how-description-is-determined) below |
+| `<meta property="og:type" content="website">`               | Open Graph type, fixed as `website`                                                         |
+| `<meta property="og:title" content="${title}">`             | Open Graph title, uses current page title (if available)                                    |
+| `<meta property="og:description" content="${description}">` | Open Graph description, same as above                                                       |
+
+## How description is determined
+
+Rspress determines the page description using the following priority:
+
+1. **Frontmatter `description`** — If a `description` field is specified in [frontmatter](/api/config/config-frontmatter#description), it is used directly.
+2. **Automatic extraction** — Otherwise, Rspress automatically extracts the description from the markdown content (enabled by default via [`markdown.extractDescription`](/api/config/config-build#markdownextractdescription)). It collects all text between the `h1` heading and the first `h2` heading, while skipping code blocks, images, HTML, tables, import/export statements, and [container directives](/guide/basic/markdown#container) (e.g., `:::tip ... :::`). Link URLs are stripped, keeping only the link text.
+
+For example, given the following markdown:
+
+```md title="example.mdx"
+# Getting Started
+
+Rspress is a static site generator based on [Rsbuild](https://rsbuild.dev).
+It is designed for building documentation sites.
+
+## Installation
+```
+
+The automatically extracted description would be: `Rspress is a static site generator based on Rsbuild. It is designed for building documentation sites.`
+
+To override this, specify the description in frontmatter:
+
+```md title="example.mdx"
+---
+description: Custom description for this page.
+---
+```
 
 If you want to add head tags, you can use the following methods:
 

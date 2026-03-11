@@ -4,13 +4,41 @@
 
 目前 Rspress 会自动注入以下 Head 标签：
 
-| 标签                                                        | 描述                                                                     |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `<meta name="generator" content="Rspress v${version}">`     | 标识站点生成器及版本号                                                   |
-| `<meta name="description" content="${description}">`        | 页面描述，使用 frontmatter 或全局配置中的 description（如果存在）        |
-| `<meta property="og:type" content="website">`               | Open Graph 类型，固定为 `website`                                        |
-| `<meta property="og:title" content="${title}">`             | Open Graph 标题，使用当前页面标题（如果存在）                            |
-| `<meta property="og:description" content="${description}">` | Open Graph 描述，使用 frontmatter 或全局配置中的 description（如果存在） |
+| 标签                                                        | 描述                                                                 |
+| ----------------------------------------------------------- | -------------------------------------------------------------------- |
+| `<meta name="generator" content="Rspress v${version}">`     | 标识站点生成器及版本号                                               |
+| `<meta name="description" content="${description}">`        | 页面描述，参见下方 [description 的获取方式](#description-的获取方式) |
+| `<meta property="og:type" content="website">`               | Open Graph 类型，固定为 `website`                                    |
+| `<meta property="og:title" content="${title}">`             | Open Graph 标题，使用当前页面标题（如果存在）                        |
+| `<meta property="og:description" content="${description}">` | Open Graph 描述，同上                                                |
+
+## description 的获取方式
+
+Rspress 按照以下优先级确定页面描述：
+
+1. **frontmatter `description`** — 如果在 [frontmatter](/api/config/config-frontmatter#description) 中指定了 `description` 字段，则直接使用。
+2. **自动提取** — 否则，Rspress 会自动从 Markdown 内容中提取描述（默认启用，可通过 [`markdown.extractDescription`](/api/config/config-build#markdownextractdescription) 配置）。它会收集 `h1` 标题和第一个 `h2` 标题之间的所有文本内容，同时跳过代码块、图片、HTML、表格、import/export 语句和[容器指令](/guide/basic/markdown#container)（如 `:::tip ... :::`）。链接 URL 会被移除，仅保留链接文本。
+
+例如，给定以下 Markdown：
+
+```md title="example.mdx"
+# 快速开始
+
+Rspress 是一个基于 [Rsbuild](https://rsbuild.dev) 的静态站点生成器。
+它专为构建文档站点而设计。
+
+## 安装
+```
+
+自动提取的描述为：`Rspress 是一个基于 Rsbuild 的静态站点生成器。 它专为构建文档站点而设计。`
+
+如需覆盖自动提取的描述，可以在 frontmatter 中指定：
+
+```md title="example.mdx"
+---
+description: 自定义页面描述。
+---
+```
 
 如果想增加 Head 标签可以通过以下几种方式：
 
