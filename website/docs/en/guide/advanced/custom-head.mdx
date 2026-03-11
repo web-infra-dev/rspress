@@ -17,7 +17,7 @@ Currently, Rspress automatically injects the following head tags:
 Rspress determines the page description using the following priority:
 
 1. **Frontmatter `description`** — If a `description` field is specified in [frontmatter](/api/config/config-frontmatter#description), it is used directly.
-2. **Automatic extraction** — Otherwise, Rspress automatically extracts the description from the markdown content (enabled by default via [`markdown.extractDescription`](/api/config/config-build#markdownextractdescription)). It collects all text between the `h1` heading and the first `h2` heading, while skipping code blocks, images, HTML, tables, import/export statements, and [container directives](/guide/basic/markdown#container) (e.g., `:::tip ... :::`). Link URLs are stripped, keeping only the link text.
+2. **Automatic extraction** — Otherwise, Rspress automatically extracts the description from the markdown content (enabled by default via [`markdown.extractDescription`](/api/config/config-build#markdownextractdescription)). It collects all text between the `h1` heading and the first `h2` heading, while skipping code blocks, images, HTML, tables, import/export statements, and [container directives](/guide/use-mdx/container) (e.g., `:::tip ... :::`). Link URLs are stripped, keeping only the link text.
 
 For example, given the following markdown:
 

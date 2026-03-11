@@ -17,7 +17,7 @@
 Rspress 按照以下优先级确定页面描述：
 
 1. **frontmatter `description`** — 如果在 [frontmatter](/api/config/config-frontmatter#description) 中指定了 `description` 字段，则直接使用。
-2. **自动提取** — 否则，Rspress 会自动从 Markdown 内容中提取描述（默认启用，可通过 [`markdown.extractDescription`](/api/config/config-build#markdownextractdescription) 配置）。它会收集 `h1` 标题和第一个 `h2` 标题之间的所有文本内容，同时跳过代码块、图片、HTML、表格、import/export 语句和[容器指令](/guide/basic/markdown#container)（如 `:::tip ... :::`）。链接 URL 会被移除，仅保留链接文本。
+2. **自动提取** — 否则，Rspress 会自动从 Markdown 内容中提取描述（默认启用，可通过 [`markdown.extractDescription`](/api/config/config-build#markdownextractdescription) 配置）。它会收集 `h1` 标题和第一个 `h2` 标题之间的所有文本内容，同时跳过代码块、图片、HTML、表格、import/export 语句和[容器指令](/guide/use-mdx/container)（如 `:::tip ... :::`）。链接 URL 会被移除，仅保留链接文本。
 
 例如，给定以下 Markdown：
 
