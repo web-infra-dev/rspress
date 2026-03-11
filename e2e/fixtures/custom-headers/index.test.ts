@@ -91,29 +91,24 @@ test.describe('custom headers', async () => {
     expect(htmlContent).toContain('<meta http-equiv="refresh" content="300">');
   });
 
-  test('frontmatter property headers should be injected (Open Graph)', async ({
+  test('frontmatter property headers should override auto-injected OG tags', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
 
-    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
-      'content',
-      'https://example.com/image.png',
-    );
+    // frontmatter og:title should override auto-injected og:title
+    const ogTitles = page.locator('meta[property="og:title"]');
+    await expect(ogTitles).toHaveCount(1);
+    await expect(ogTitles).toHaveAttribute('content', 'Custom OG Title');
 
-    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
+    // frontmatter og:description should override auto-injected og:description
+    const ogDescriptions = page.locator('meta[property="og:description"]');
+    await expect(ogDescriptions).toHaveCount(1);
+    await expect(ogDescriptions).toHaveAttribute(
       'content',
-      'https://example.com',
-    );
-
-    const htmlContent = await page.content();
-    expect(htmlContent).toContain(
-      '<meta property="og:image" content="https://example.com/image.png">',
-    );
-    expect(htmlContent).toContain(
-      '<meta property="og:url" content="https://example.com">',
+      'Custom OG Description',
     );
   });
 });
