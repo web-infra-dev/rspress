@@ -50,6 +50,13 @@ description: 自定义页面描述。
 
 你可以调整 frontmatter 中的 [title](/api/config/config-frontmatter#title) 和 [description](/api/config/config-frontmatter#description) 字段来修改单个页面的标题和描述。
 
+```md title="example.mdx"
+---
+title: 自定义页面标题
+description: 自定义页面描述，用于 meta description 和 Open Graph。
+---
+```
+
 也可以使用 [frontmatter - head](/api/config/config-frontmatter#head) 自定义页面的 metadata 标签以进行 SEO 优化。
 
 例如，如果你想在 `<head>` 标签中添加 `<meta name="og:description" content="This is description">`，你可以这样使用 frontmatter：

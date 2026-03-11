@@ -50,6 +50,13 @@ In `rspress.config.ts`, you can set HTML metadata (head tags) for all pages. See
 
 You can modify the [title](/api/config/config-frontmatter#title) and [description](/api/config/config-frontmatter#description) fields in frontmatter to change the title and description of individual pages.
 
+```md title="example.mdx"
+---
+title: Custom Page Title
+description: Custom page description for meta description and Open Graph.
+---
+```
+
 You can also use [frontmatter - head](/api/config/config-frontmatter#head) to customize page metadata tags for SEO optimization.
 
 For example, if you want to add `<meta name="og:description" content="This is description">` to the `<head>` tag, you can use frontmatter like this:
