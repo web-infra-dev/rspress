@@ -16,6 +16,14 @@ title: My Home Page
 This is my **home page content**.
 ```
 
+You can also use [description](/api/config/config-frontmatter#description) to specify a custom page description. By default, Rspress extracts the first contentful paragraph below the `h1` heading as the description (see [How description is determined](/guide/advanced/custom-head#how-description-is-determined)). If the extracted result does not meet your needs, you can override it:
+
+```mdx
+---
+description: A brief introduction to my home page for SEO and social sharing.
+---
+```
+
 For example, you can use [head](/api/config/config-frontmatter#head) to specify custom meta tags for [Open Graph](https://ogp.me/).
 
 ```yaml

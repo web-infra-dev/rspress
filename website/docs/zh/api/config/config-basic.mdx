@@ -339,6 +339,29 @@ export default defineConfig({
 }
 ```
 
+## llms
+
+- **类型**：`boolean | { remarkSplitMdxOptions?: RemarkSplitMdxOptions }`
+- **默认值**：`false`
+
+是否开启 [SSG-MD](/guide/basic/ssg-md) 来生成 `llms.txt`、`llms-full.txt` 以及每个页面对应的 Markdown 文件，使你的文档更容易被大语言模型理解。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+});
+```
+
+:::warning
+
+`llms` 为实验性功能。如果由于代码不兼容 SSR 而无法开启 SSG-MD，请使用 [@rspress/plugin-llms](/plugin/official-plugins/llms) 作为备选方案。
+
+:::
+
+详细用法、配置选项和实现原理请参阅 [llms.txt（SSG-MD）](/guide/basic/ssg-md)。
+
 ## mediumZoom
 
 - **类型**： `boolean` | `{ selector?: string }`

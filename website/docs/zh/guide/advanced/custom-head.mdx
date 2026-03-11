@@ -4,13 +4,23 @@
 
 目前 Rspress 会自动注入以下 Head 标签：
 
-| 标签                                                        | 描述                                                                     |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `<meta name="generator" content="Rspress v${version}">`     | 标识站点生成器及版本号                                                   |
-| `<meta name="description" content="${description}">`        | 页面描述，使用 frontmatter 或全局配置中的 description（如果存在）        |
-| `<meta property="og:type" content="website">`               | Open Graph 类型，固定为 `website`                                        |
-| `<meta property="og:title" content="${title}">`             | Open Graph 标题，使用当前页面标题（如果存在）                            |
-| `<meta property="og:description" content="${description}">` | Open Graph 描述，使用 frontmatter 或全局配置中的 description（如果存在） |
+| 标签                                                        | 描述                                                                 |
+| ----------------------------------------------------------- | -------------------------------------------------------------------- |
+| `<meta name="generator" content="Rspress v${version}">`     | 标识站点生成器及版本号                                               |
+| `<meta name="description" content="${description}">`        | 页面描述，参见下方 [description 的获取方式](#description-的获取方式) |
+| `<meta property="og:type" content="website">`               | Open Graph 类型，固定为 `website`                                    |
+| `<meta property="og:title" content="${title}">`             | Open Graph 标题，使用当前页面标题（如果存在）                        |
+| `<meta property="og:description" content="${description}">` | Open Graph 描述，同上                                                |
+
+## description 的获取方式
+
+默认情况下，Rspress 会提取 `h1` 标题下方第一段有内容的段落作为页面描述（参见 [`markdown.extractDescription`](/api/config/config-build#markdownextractdescription)）。如果提取结果不满足需求，可以在 [frontmatter](/api/config/config-frontmatter#description) 中指定 `description` 字段来覆盖：
+
+```md title="example.mdx"
+---
+description: 自定义页面描述。
+---
+```
 
 如果想增加 Head 标签可以通过以下几种方式：
 
@@ -21,6 +31,13 @@
 ## frontmatter 配置
 
 你可以调整 frontmatter 中的 [title](/api/config/config-frontmatter#title) 和 [description](/api/config/config-frontmatter#description) 字段来修改单个页面的标题和描述。
+
+```md title="example.mdx"
+---
+title: 自定义页面标题
+description: 自定义页面描述，用于 meta description 和 Open Graph。
+---
+```
 
 也可以使用 [frontmatter - head](/api/config/config-frontmatter#head) 自定义页面的 metadata 标签以进行 SEO 优化。
 

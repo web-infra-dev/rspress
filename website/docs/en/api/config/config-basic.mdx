@@ -339,6 +339,29 @@ export default defineConfig({
 }
 ```
 
+## llms
+
+- **Type**: `boolean | { remarkSplitMdxOptions?: RemarkSplitMdxOptions }`
+- **Default**: `false`
+
+Whether to enable [SSG-MD](/guide/basic/ssg-md) to generate `llms.txt`, `llms-full.txt`, and Markdown files for each page, making your documentation easier for large language models to understand.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+});
+```
+
+:::warning
+
+`llms` is an experimental feature. If SSG-MD cannot be enabled due to SSR incompatibility, use [@rspress/plugin-llms](/plugin/official-plugins/llms) as a fallback.
+
+:::
+
+For detailed usage, configuration options, and implementation principles, see [llms.txt (SSG-MD)](/guide/basic/ssg-md).
+
 ## mediumZoom
 
 - **Type**: `boolean` | `{ selector?: string }`

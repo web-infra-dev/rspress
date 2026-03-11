@@ -318,7 +318,9 @@ Then you can use the `Alert` component in any MDX file:
 - **Type**: `boolean`
 - **Default**: `true`
 
-Whether to extract the description from the content. If enabled, Rspress will automatically extract the first paragraph before the `h2` heading as the description of the page.
+Whether to automatically extract the description from the markdown content. When enabled, Rspress extracts the first contentful paragraph below the `h1` heading as the page description. If `description` is specified in [frontmatter](/api/config/config-frontmatter#description), it takes priority and automatic extraction is skipped.
+
+The extracted description is used for `<meta name="description">` and Open Graph `<meta property="og:description">` tags. See [Custom Head - How description is determined](/guide/advanced/custom-head#how-description-is-determined) for details.
 
 ### markdown.cjkFriendlyEmphasis
 

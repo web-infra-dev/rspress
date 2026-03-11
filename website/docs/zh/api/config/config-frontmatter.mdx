@@ -30,15 +30,15 @@ title: 我的主页
 
 - **类型**： `string`
 
-页面的自定义描述，会产生一个 meta 标签用于 SEO 优化。例如：
+页面的自定义描述，会在页面中生成 `<meta name="description" content="..." />` 标签用于 SEO 优化。
+
+默认情况下，Rspress 会提取 `h1` 标题下方第一段有内容的段落作为描述（参见 [`markdown.extractDescription`](/api/config/config-build#markdownextractdescription)）。如果提取结果不满足需求，可以使用此字段覆盖。详情请参阅[自定义 Head 标签 - description 的获取方式](/guide/advanced/custom-head#description-的获取方式)。
 
 ```yaml
 ---
 description: 这是我的主页
 ---
 ```
-
-它会在页面中生成一个 `<meta name="description" content="这是我的主页" />` 标签。
 
 ## pageType
 
