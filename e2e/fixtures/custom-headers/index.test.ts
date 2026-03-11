@@ -90,4 +90,30 @@ test.describe('custom headers', async () => {
     );
     expect(htmlContent).toContain('<meta http-equiv="refresh" content="300">');
   });
+
+  test('frontmatter property headers should be injected (Open Graph)', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      'content',
+      'https://example.com/image.png',
+    );
+
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
+      'content',
+      'https://example.com',
+    );
+
+    const htmlContent = await page.content();
+    expect(htmlContent).toContain(
+      '<meta property="og:image" content="https://example.com/image.png">',
+    );
+    expect(htmlContent).toContain(
+      '<meta property="og:url" content="https://example.com">',
+    );
+  });
 });
