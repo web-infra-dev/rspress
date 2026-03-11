@@ -16,6 +16,14 @@ title: 我的主页
 这是我的**主页内容**。
 ```
 
+你也可以使用 [description](/api/config/config-frontmatter#description) 来指定自定义的页面描述。默认情况下，Rspress 会提取 `h1` 标题下方第一段有内容的段落作为描述。如果提取结果不满足需求，可以手动覆盖：
+
+```mdx
+---
+description: 我的主页简介，用于 SEO 和社交媒体分享。
+---
+```
+
 例如，你可以使用 [head](/api/config/config-frontmatter#head) 设置 为 [Open Graph](https://ogp.me/) 指定自定义元标签。
 
 ```yaml
