@@ -41,16 +41,16 @@ description: Custom page description for meta description and Open Graph.
 
 You can also use [frontmatter - head](/api/config/config-frontmatter#head) to customize page metadata tags for SEO optimization.
 
-For example, if you want to add `<meta name="og:description" content="This is description">` to the `<head>` tag, you can use frontmatter like this:
+For example, if you want to add `<meta property="og:description" content="This is description">` to the `<head>` tag, you can use frontmatter like this:
 
 ```md title="example.mdx"
 ---
 head:
   - - meta
-    - name: og:title
+    - property: og:title
       content: This is title
   - - meta
-    - name: og:description
+    - property: og:description
       content: This is description
 ---
 ```
