@@ -180,16 +180,22 @@ function organizeBySidebar(sidebar: Sidebar, routes: string[]) {
   }
   const orderList = flatSidebar(currSidebar);
 
+  // Normalize a path for comparison:
+  // - Remove .html suffix (added by normalizeThemeConfig with cleanUrls=false)
+  // - Normalize /index suffix → / (RouteService represents index pages as /parent/)
+  const normalizeLink = (p: string) =>
+    p.replace(/\.html$/, '').replace(/\/index$/, '/');
+
   routes.sort((a, b) => {
-    let aIndex = orderList.findIndex(order => matchPath(order, a));
-    // if not in sidebar, put it to last
-    if (aIndex === -1) {
-      aIndex = Number.MAX_SAFE_INTEGER;
-    }
-    let bIndex = orderList.findIndex(order => matchPath(order, b));
-    if (bIndex === -1) {
-      bIndex = Number.MAX_SAFE_INTEGER;
-    }
-    return aIndex - bIndex;
+    const aIndex = orderList.findIndex(order =>
+      matchPath(normalizeLink(order), a),
+    );
+    const bIndex = orderList.findIndex(order =>
+      matchPath(normalizeLink(order), b),
+    );
+    return (
+      (aIndex === -1 ? Number.MAX_SAFE_INTEGER : aIndex) -
+      (bIndex === -1 ? Number.MAX_SAFE_INTEGER : bIndex)
+    );
   });
 }
