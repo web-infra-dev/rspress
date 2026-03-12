@@ -106,7 +106,7 @@ test.describe('plugin-llms', async () => {
     // doc/api/_meta.json top-level order: config group → client-api group → commands → single-page
     // Alphabetically, commands < config (c-o-m < c-o-n), so this proves top-level order is respected
     assertOrder(apiSection, 'config/config-basic.md', '/api/commands.md');
-    assertOrder(apiSection, 'api/commands.md', '/api/single-page.md');
+    assertOrder(apiSection, '/api/commands.md', '/api/single-page.md');
   });
 
   test('multiple configuration - should generate llms.txt llms-full.txt mdFiles', async () => {
