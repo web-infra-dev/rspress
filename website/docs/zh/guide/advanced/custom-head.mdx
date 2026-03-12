@@ -41,16 +41,16 @@ description: 自定义页面描述，用于 meta description 和 Open Graph。
 
 也可以使用 [frontmatter - head](/api/config/config-frontmatter#head) 自定义页面的 metadata 标签以进行 SEO 优化。
 
-例如，如果你想在 `<head>` 标签中添加 `<meta name="og:description" content="This is description">`，你可以这样使用 frontmatter：
+例如，如果你想在 `<head>` 标签中添加 `<meta property="og:description" content="This is description">`，你可以这样使用 frontmatter：
 
 ```md title="example.mdx"
 ---
 head:
   - - meta
-    - name: og:title
+    - property: og:title
       content: This is title
   - - meta
-    - name: og:description
+    - property: og:description
       content: This is description
 ---
 ```

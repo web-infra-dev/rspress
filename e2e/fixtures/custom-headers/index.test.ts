@@ -90,4 +90,25 @@ test.describe('custom headers', async () => {
     );
     expect(htmlContent).toContain('<meta http-equiv="refresh" content="300">');
   });
+
+  test('frontmatter property headers should override auto-injected OG tags', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    // frontmatter og:title should override auto-injected og:title
+    const ogTitles = page.locator('meta[property="og:title"]');
+    await expect(ogTitles).toHaveCount(1);
+    await expect(ogTitles).toHaveAttribute('content', 'Custom OG Title');
+
+    // frontmatter og:description should override auto-injected og:description
+    const ogDescriptions = page.locator('meta[property="og:description"]');
+    await expect(ogDescriptions).toHaveCount(1);
+    await expect(ogDescriptions).toHaveAttribute(
+      'content',
+      'Custom OG Description',
+    );
+  });
 });

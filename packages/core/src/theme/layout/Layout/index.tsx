@@ -63,17 +63,34 @@ const HeadTags = memo(
       });
     }, [head]);
 
+    const frontmatterMetaProperties = useMemo(() => {
+      const properties = new Set<string>();
+      if (head) {
+        for (const [tagName, attrs] of head) {
+          if (tagName === 'meta' && attrs?.property) {
+            properties.add(attrs.property as string);
+          }
+          if (tagName === 'meta' && attrs?.name) {
+            properties.add(attrs.name as string);
+          }
+        }
+      }
+      return properties;
+    }, [head]);
+
     useHead({
       htmlAttrs: {
         lang: lang || 'en',
       },
       title: title || undefined,
       meta: [
-        {
-          property: 'og:type',
-          content: 'website',
-        },
-        title
+        frontmatterMetaProperties.has('og:type')
+          ? undefined
+          : {
+              property: 'og:type',
+              content: 'website',
+            },
+        title && !frontmatterMetaProperties.has('og:title')
           ? {
               property: 'og:title',
               content: title,
@@ -81,14 +98,18 @@ const HeadTags = memo(
           : undefined,
         ...(description
           ? [
-              {
-                name: 'description',
-                content: description,
-              },
-              {
-                property: 'og:description',
-                content: description,
-              },
+              frontmatterMetaProperties.has('description')
+                ? undefined
+                : {
+                    name: 'description',
+                    content: description,
+                  },
+              frontmatterMetaProperties.has('og:description')
+                ? undefined
+                : {
+                    property: 'og:description',
+                    content: description,
+                  },
             ]
           : []),
       ],
