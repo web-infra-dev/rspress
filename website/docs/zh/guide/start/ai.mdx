@@ -1,0 +1,101 @@
+import { PackageManagerTabs } from '@theme';
+
+# AI
+
+为了帮助 AI 更全面地了解 Rspress 的功能、配置与最佳实践，从而在日常开发和问题排查过程中提供更准确的帮助，Rspress 提供了以下能力：
+
+- [Agent Skills](#agent-skills)
+- [llms.txt](#llmstxt)
+- [Markdown 文档](#markdown-文档)
+- [AGENTS.md](#agentsmd)
+
+## Agent Skills
+
+Agent Skills 是可安装到 Agent 中的领域知识包，能够让 Agent 在特定场景下更准确、更专业地给出建议或执行操作。
+
+我们在 [rstackjs/agent-skills](https://github.com/rstackjs/agent-skills) 仓库中为 Rstack 生态提供了许多 Skills，其中关于 Rspress 的 Skills 包括：
+
+- [rspress-v2-upgrade](https://github.com/rstackjs/agent-skills#rspress-v2-upgrade)：将 Rspress v1 项目升级到 v2。
+- [rspress-description-generator](https://github.com/rstackjs/agent-skills#rspress-description-generator)：为 Rspress 文档文件生成和维护 `description` frontmatter。
+
+在支持 Skills 的 Coding Agent 中，可以通过以下命令使用 [skills](https://www.npmjs.com/package/skills) 包安装指定的 Skill：
+
+<PackageManagerTabs
+  command="skills add rstackjs/agent-skills --skill rspress-v2-upgrade"
+  dlx
+/>
+
+安装完成后，用自然语言输入相关提示词即可触发对应 Skill，例如：
+
+```
+帮我把这个 Rspress v1 项目升级到 v2
+```
+
+## llms.txt
+
+[llms.txt](https://llmstxt.org/) 是一种帮助 LLM 发现和使用项目文档的标准规范。Rspress 遵循该规范，发布了以下两个文件：
+
+- [llms.txt](https://rspress.rs/llms.txt)：结构化索引文件，包含所有文档页面的标题、链接与简要描述。
+
+```
+https://rspress.rs/llms.txt
+```
+
+- [llms-full.txt](https://rspress.rs/llms-full.txt)：完整内容文件，将所有文档页面的内容合并为单个文件。
+
+```
+https://rspress.rs/llms-full.txt
+```
+
+你可以根据使用场景选择合适的文件：
+
+- `llms.txt` 体积较小、消耗 token 少，适合让 AI 按需获取具体页面。
+- `llms-full.txt` 包含全量文档内容，无需 AI 逐一跟随链接，适合需要 AI 全面了解 Rspress 的场景，但会消耗更多 token，建议在支持大上下文窗口的 AI 工具中使用。
+
+此外，Rspress 内置了 [SSG-MD](/guide/basic/ssg-md) 能力，可以为你自己的文档站点生成符合 `llms.txt` 规范的文件。只需在配置中启用 `llms: true` 即可使用。
+
+## Markdown 文档
+
+Rspress 文档的每个页面都提供对应的 `.md` 纯文本版本，可直接作为上下文提供给 AI。你可以在文档任意页面的标题下方点击「复制 Markdown」或「复制 Markdown 链接」按钮，获取该页面对应的 Markdown 文件内容或链接。
+
+```
+https://rspress.rs/guide/start/introduction.md
+```
+
+将 Markdown 链接或内容提供给 AI，即可让其精确了解某一具体章节的内容，适合在针对性问题排查或查阅特定内容时使用。
+
+## AGENTS.md
+
+你可以在 Rspress 项目中创建一个 `AGENTS.md` 文件。该文件遵循 [AGENTS.md](https://agents.md/) 规范，向 Agents 提供项目的关键信息。
+
+`AGENTS.md` 示例内容如下：
+
+```markdown wrapCode
+# AGENTS.md
+
+You are an expert in JavaScript, Rspress, and documentation site development. You write maintainable, performant, and accessible code.
+
+## Commands
+
+- `npm run dev` - Start the dev server
+- `npm run build` - Build the site for production
+- `npm run preview` - Preview the production build locally
+
+## Docs
+
+- Rspress: https://rspress.rs/llms.txt
+- Rsbuild: https://rsbuild.rs/llms.txt
+- Rspack: https://rspack.rs/llms.txt
+```
+
+你也可以根据项目的实际情况进行修改，添加更多关于项目结构、整体架构等多方面的信息，以便 Agents 更好地理解你的项目。
+
+::: tip
+
+如果你使用的是 Claude Code，可以创建一个 `CLAUDE.md` 文件，并在其中引用 `AGENTS.md` 文件。
+
+```markdown title="CLAUDE.md"
+@AGENTS.md
+```
+
+:::

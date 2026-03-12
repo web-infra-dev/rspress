@@ -1,0 +1,101 @@
+import { PackageManagerTabs } from '@theme';
+
+# AI
+
+To help AI better understand Rspress's features, configuration, and best practices so it can provide more accurate assistance during day-to-day development and troubleshooting, Rspress provides the following capabilities:
+
+- [Agent Skills](#agent-skills)
+- [llms.txt](#llmstxt)
+- [Markdown docs](#markdown-docs)
+- [AGENTS.md](#agentsmd)
+
+## Agent Skills
+
+Agent Skills are domain-specific knowledge packs that can be installed into Agents, enabling them to give more accurate and professional suggestions or perform actions in specific scenarios.
+
+In the [rstackjs/agent-skills](https://github.com/rstackjs/agent-skills) repository, there are many skills for the Rstack ecosystem. The skills related to Rspress include:
+
+- [rspress-v2-upgrade](https://github.com/rstackjs/agent-skills#rspress-v2-upgrade): Migrate Rspress projects from v1 to v2.
+- [rspress-description-generator](https://github.com/rstackjs/agent-skills#rspress-description-generator): Generate and maintain `description` frontmatter for Rspress documentation files.
+
+In Coding Agents that support skills, you can use the [skills](https://www.npmjs.com/package/skills) package to install a specific skill with the following command:
+
+<PackageManagerTabs
+  command="skills add rstackjs/agent-skills --skill rspress-v2-upgrade"
+  dlx
+/>
+
+After installation, simply use natural language prompts to trigger the skill, for example:
+
+```
+Help me upgrade this Rspress v1 project to v2
+```
+
+## llms.txt
+
+[llms.txt](https://llmstxt.org/) is a standard that helps LLMs discover and use project documentation. Rspress follows this standard and publishes the following two files:
+
+- [llms.txt](https://rspress.rs/llms.txt): A structured index file containing the titles, links, and brief descriptions of all documentation pages.
+
+```
+https://rspress.rs/llms.txt
+```
+
+- [llms-full.txt](https://rspress.rs/llms-full.txt): A full-content file that concatenates the complete content of every documentation page into a single file.
+
+```
+https://rspress.rs/llms-full.txt
+```
+
+You can choose the file that best fits your use case:
+
+- `llms.txt` is smaller and consumes fewer tokens, making it suitable for AI to fetch specific pages on demand.
+- `llms-full.txt` contains the complete documentation content, so AI doesn't need to follow individual links — ideal when you need AI to have a comprehensive understanding of Rspress, though it consumes more tokens and is best used with AI tools that support large context windows.
+
+Furthermore, Rspress has built-in [SSG-MD](/guide/basic/ssg-md) capability, which can generate `llms.txt` compliant files for your own documentation sites. Simply enable `llms: true` in the config to use it.
+
+## Markdown docs
+
+Every Rspress documentation page has a corresponding `.md` plain-text version that can be provided directly to AI. On any doc page, you can click "Copy Markdown" or "Copy Markdown Link" under the title to get the Markdown content or link.
+
+```
+https://rspress.rs/guide/start/introduction.md
+```
+
+Providing the Markdown link or content allows AI to focus on a specific chapter, which is useful for targeted troubleshooting or looking up a particular topic.
+
+## AGENTS.md
+
+You can create an `AGENTS.md` file in your Rspress project. This file follows the [AGENTS.md](https://agents.md/) specification and provides key project information to Agents.
+
+Example `AGENTS.md` content:
+
+```markdown wrapCode
+# AGENTS.md
+
+You are an expert in JavaScript, Rspress, and documentation site development. You write maintainable, performant, and accessible code.
+
+## Commands
+
+- `npm run dev` - Start the dev server
+- `npm run build` - Build the site for production
+- `npm run preview` - Preview the production build locally
+
+## Docs
+
+- Rspress: https://rspress.rs/llms.txt
+- Rsbuild: https://rsbuild.rs/llms.txt
+- Rspack: https://rspack.rs/llms.txt
+```
+
+You can customize it for your project, adding more details about the project structure, overall architecture, and other relevant information so Agents can better understand your project.
+
+::: tip
+
+If you are using Claude Code, you can create a `CLAUDE.md` file and reference the `AGENTS.md` file in it.
+
+```markdown title="CLAUDE.md"
+@AGENTS.md
+```
+
+:::

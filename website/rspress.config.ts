@@ -23,7 +23,7 @@ import pluginOg from 'rspress-plugin-og';
 
 // import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 
-const siteUrl = 'https://v2.rspress.rs';
+const siteUrl = 'https://rspress.rs';
 
 const commonRsdoctorConfig = {
   disableClientServer: true,
@@ -101,7 +101,7 @@ export default defineConfig({
     }),
     pluginFileTree(),
     pluginOg({
-      domain: 'https://v2.rspress.rs',
+      domain: 'https://rspress.rs',
       maxTitleSizePerLine: 28,
       async resvgOptions() {
         // fetch font files to og-fonts
