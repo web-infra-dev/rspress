@@ -1,212 +1,68 @@
 # Getting Started
 
-## Markdown
+## Project structure
 
-Rspress supports not only Markdown but also [MDX](https://mdxjs.com/), a powerful way to develop content.
+After creating a project with `create-rspress`, you will get the following project structure:
 
-MDX is a superset of Markdown, which means you can write Markdown files as usual. For example:
-
-```md
-# Hello world
+```tree
+.
+├── docs
+│   ├── _nav.json
+│   ├── index.md
+│   ├── public
+│   │   ├── rspress-dark-logo.png
+│   │   ├── rspress-icon.png
+│   │   └── rspress-light-logo.png
+│   └── guide
+│       ├── _meta.json
+│       └── start
+│           ├── _meta.json
+│           ├── introduction.md
+│           └── getting-started.md
+├── rspress.config.ts
+├── package.json
+└── tsconfig.json
 ```
 
-## Use component
+- `docs/` — The documentation source directory, configured via `root` in `rspress.config.ts`.
+- `docs/_nav.json` — The navigation bar configuration.
+- `docs/guide/_meta.json` — The sidebar configuration for the guide section.
+- `docs/public/` — Static assets directory.
+- `rspress.config.ts` — The Rspress configuration file.
 
-When you want to use React components in Markdown files, you should name your files with `.mdx` extension. For example:
+## Development
 
-```mdx
-// docs/index.mdx
-import { CustomComponent } from './custom';
+Start the local development server:
 
-# Hello world
-
-<CustomComponent />
+```bash
+npm run dev
 ```
-
-## Front matter
-
-You can add Front Matter at the beginning of your Markdown file, which is a YAML-formatted object that defines some metadata. For example:
-
-```yaml
----
-title: Hello world
----
-```
-
-> Note: By default, Rspress uses h1 headings as html headings.
-
-You can also access properties defined in Front Matter in the body, for example:
-
-```markdown
----
-title: Hello world
----
-
-# {frontmatter.title}
-```
-
-The previously defined properties will be passed to the component as `frontmatter` properties. So the final output will be:
-
-```html
-<h1>Hello world</h1>
-```
-
-## Custom container
-
-You can use the `:::` syntax to create custom containers and support custom titles. For example:
-
-**Input:**
-
-```markdown
-:::tip
-This is a `block` of type `tip`
-:::
-
-:::info
-This is a `block` of type `info`
-:::
-
-:::warning
-This is a `block` of type `warning`
-:::
-
-:::danger
-This is a `block` of type `danger`
-:::
-
-::: details
-This is a `block` of type `details`
-:::
-
-:::tip Custom Title
-This is a `block` of `Custom Title`
-:::
-
-:::tip{title="Custom Title"}
-This is a `block` of `Custom Title`
-:::
-```
-
-**Output:**
 
 :::tip
-This is a `block` of type `tip`
+You can specify the port number or host with `--port` or `--host`, such as `rspress dev --port 8080 --host 0.0.0.0`.
 :::
 
-:::info
-This is a `block` of type `info`
-:::
+## Production build
 
-:::warning
-This is a `block` of type `warning`
-:::
+Build the site for production:
 
-:::danger
-This is a `block` of type `danger`
-:::
-
-::: details
-This is a `block` of type `details`
-:::
-
-:::tip Custom Title
-This is a `block` of `Custom Title`
-:::
-
-:::tip{title="Custom Title"}
-This is a `block` of `Custom Title`
-:::
-
-## Code block
-
-### Basic usage
-
-You can use the ``` syntax to create code blocks and support custom titles. For example:
-
-**Input:**
-
-````md
-```js
-console.log('Hello World');
+```bash
+npm run build
 ```
 
-```js title="hello.js"
-console.log('Hello World');
-```
-````
+By default, Rspress will output to `doc_build` directory.
 
-**Output:**
+## Preview
 
-```js
-console.log('Hello World');
-```
+Preview the production build locally:
 
-```js title="hello.js"
-console.log('Hello World');
+```bash
+npm run preview
 ```
 
-### Show line numbers
+## Next steps
 
-If you want to display line numbers, you can enable the `showLineNumbers` option in the config file:
-
-```ts title="rspress.config.ts"
-export default {
-  // ...
-  markdown: {
-    showLineNumbers: true,
-  },
-};
-```
-
-### Wrap code
-
-If you want to wrap long code line by default, you can enable the `defaultWrapCode` option in the config file:
-
-```ts title="rspress.config.ts"
-export default {
-  // ...
-  markdown: {
-    defaultWrapCode: true,
-  },
-};
-```
-
-### Line highlighting
-
-You can also apply line highlighting and code block title at the same time, for example:
-
-**Input:**
-
-````md
-```js title="hello.js"
-console.log('Hello World'); // [\!code highlight]
-
-// [\!code highlight:3]
-const a = 1;
-
-console.log(a);
-
-const b = 2;
-
-console.log(b);
-```
-````
-
-:::warning
-The backslash (`\`) in `[\!code highlight]` is for Markdown escaping to display the raw syntax. Do not include it when using this notation in your actual code.
-:::
-
-**Output:**
-
-```js title="hello.js"
-console.log('Hello World'); // [!code highlight]
-
-// [!code highlight:3]
-const a = 1;
-
-console.log(a);
-
-const b = 2;
-
-console.log(b);
-```
+- Learn how to use [MDX & React Components](/guide/use-mdx/components) in your docs.
+- Learn about [Code Blocks](/guide/use-mdx/code-blocks) syntax highlighting and line highlighting.
+- Learn about [Custom Containers](/guide/use-mdx/container) for tips, warnings, and more.
+- Explore the full [Rspress documentation](https://rspress.rs/) for advanced features.
