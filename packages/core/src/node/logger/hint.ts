@@ -103,7 +103,12 @@ export function hintSSGFalse() {
   logger.info('`ssg: false` detected, SSG will be disabled.');
 }
 
+let reactVersionLogged = false;
 export function hintReactVersion() {
+  if (reactVersionLogged) {
+    return;
+  }
+  reactVersionLogged = true;
   logger.info(
     '[Rspress v2] Rspress support React 18 and 19, please confirm that both react and react-dom are installed in package.json with the same version. ',
   );
