@@ -147,4 +147,57 @@ test.describe('search keyboard', async () => {
     searchPanel = await page.$('.rp-search-panel__mask');
     expect(searchPanel).toBeNull();
   });
+
+  test('should reset to first suggestion when search query changes', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+
+    // Open search panel
+    const searchButton = await page.$('.rp-search-button');
+    await searchButton?.click();
+    await page.waitForSelector('.rp-search-panel__input');
+
+    // Type first search query
+    const searchInput = await page.$('.rp-search-panel__input');
+    await searchInput?.focus();
+    await page.keyboard.type('Foo');
+    await page.waitForTimeout(400);
+
+    // Wait for search results
+    await page.waitForSelector('.rp-suggest-item');
+    const suggestItems = await page.$$('.rp-suggest-item');
+    expect(suggestItems.length).toBeGreaterThan(0);
+
+    // Navigate to second item
+    await page.keyboard.press('ArrowDown');
+    await page.waitForTimeout(100);
+    let currentIndex = await page.evaluate(() => {
+      const items = Array.from(document.querySelectorAll('.rp-suggest-item'));
+      const current = document.querySelector(
+        '.rp-suggest-item.rp-suggest-item--current',
+      );
+      return items.indexOf(current as Element);
+    });
+    expect(currentIndex).toBe(1);
+
+    // Change search query
+    await searchInput?.fill('Bar');
+    await page.waitForTimeout(400);
+
+    // Wait for new search results
+    await page.waitForSelector('.rp-suggest-item');
+
+    // Verify that first item is now selected
+    currentIndex = await page.evaluate(() => {
+      const items = Array.from(document.querySelectorAll('.rp-suggest-item'));
+      const current = document.querySelector(
+        '.rp-suggest-item.rp-suggest-item--current',
+      );
+      return items.indexOf(current as Element);
+    });
+    expect(currentIndex).toBe(0);
+  });
 });

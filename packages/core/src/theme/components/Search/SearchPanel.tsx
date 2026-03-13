@@ -350,6 +350,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       if (currQuery === newQuery) {
         setSearchResult(searchResult || DEFAULT_RESULT);
         setIsSearching(false);
+        // Reset current suggestion index to 0 when search query changes
+        setCurrentSuggestionIndex(0);
       }
     }
   };
