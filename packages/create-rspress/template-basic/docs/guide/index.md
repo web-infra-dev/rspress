@@ -210,7 +210,3 @@ const b = 2;
 
 console.log(b);
 ```
-
-## Rustify MDX compiler
-
-You can enable Rustify MDX compiler by following config:
