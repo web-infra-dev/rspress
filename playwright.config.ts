@@ -1,5 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
+const isCI = Boolean(process.env.CI);
+
 export default defineConfig({
   // exclude webpack / rspack self-feature test cases when run rspack / webpack test
   testDir: './e2e',
@@ -13,6 +15,8 @@ export default defineConfig({
     trace: 'on',
     video: 'on',
     viewport: { width: 1440, height: 900 }, // screen size
+    // Use the built-in Chrome browser to speed up CI tests
+    channel: isCI ? 'chrome' : undefined,
   },
-  retries: process.env.CI ? 3 : 0,
+  retries: isCI ? 3 : 0,
 });
