@@ -1,8 +1,8 @@
-# Markdown & MDX
-
-Rspress supports not only Markdown but also [MDX](https://mdxjs.com/), a powerful way to develop content.
+# Getting Started
 
 ## Markdown
+
+Rspress supports not only Markdown but also [MDX](https://mdxjs.com/), a powerful way to develop content.
 
 MDX is a superset of Markdown, which means you can write Markdown files as usual. For example:
 
@@ -121,7 +121,7 @@ This is a `block` of `Custom Title`
 
 ### Basic usage
 
-You can use the \`\`\` syntax to create code blocks and support custom titles. For example:
+You can use the ``` syntax to create code blocks and support custom titles. For example:
 
 **Input:**
 
