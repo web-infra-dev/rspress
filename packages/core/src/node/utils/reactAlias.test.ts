@@ -28,34 +28,34 @@ describe('resolveReactAlias', () => {
   it('should resolve all react aliases for client (non-SSR)', async () => {
     const alias = await resolveReactAlias(false);
 
-    expect(Object.keys(alias).sort()).toMatchInlineSnapshot(`
-      [
-        "react",
-        "react-dom",
-        "react-dom/client",
-        "react-dom/package.json",
-        "react-dom/server",
-        "react/jsx-dev-runtime",
-        "react/jsx-runtime",
-        "react/package.json",
-      ]
+    expect(alias).toMatchInlineSnapshot(`
+      {
+        "react": "<ROOT>/node_modules/<PNPM_INNER>/react/index.js",
+        "react-dom": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/index.js",
+        "react-dom/client": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/client.js",
+        "react-dom/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/package.json",
+        "react-dom/server": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/server.browser.js",
+        "react/jsx-dev-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-dev-runtime.js",
+        "react/jsx-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-runtime.js",
+        "react/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react/package.json",
+      }
     `);
   });
 
   it('should resolve all react aliases for SSR', async () => {
     const alias = await resolveReactAlias(true);
 
-    expect(Object.keys(alias).sort()).toMatchInlineSnapshot(`
-      [
-        "react",
-        "react-dom",
-        "react-dom/client",
-        "react-dom/package.json",
-        "react-dom/server",
-        "react/jsx-dev-runtime",
-        "react/jsx-runtime",
-        "react/package.json",
-      ]
+    expect(alias).toMatchInlineSnapshot(`
+      {
+        "react": "<ROOT>/node_modules/<PNPM_INNER>/react/index.js",
+        "react-dom": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/index.js",
+        "react-dom/client": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/client.js",
+        "react-dom/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/package.json",
+        "react-dom/server": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/server.node.js",
+        "react/jsx-dev-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-dev-runtime.js",
+        "react/jsx-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-runtime.js",
+        "react/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react/package.json",
+      }
     `);
   });
 
@@ -63,17 +63,17 @@ describe('resolveReactAlias', () => {
     process.env.NODE_ENV = 'production';
     const alias = await resolveReactAlias(false);
 
-    expect(Object.keys(alias).sort()).toMatchInlineSnapshot(`
-      [
-        "react",
-        "react-dom",
-        "react-dom/client",
-        "react-dom/package.json",
-        "react-dom/server",
-        "react/jsx-dev-runtime",
-        "react/jsx-runtime",
-        "react/package.json",
-      ]
+    expect(alias).toMatchInlineSnapshot(`
+      {
+        "react": "<ROOT>/node_modules/<PNPM_INNER>/react/index.js",
+        "react-dom": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/index.js",
+        "react-dom/client": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/client.js",
+        "react-dom/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/package.json",
+        "react-dom/server": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/server.browser.js",
+        "react/jsx-dev-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-dev-runtime.js",
+        "react/jsx-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-runtime.js",
+        "react/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react/package.json",
+      }
     `);
   });
 
@@ -81,17 +81,17 @@ describe('resolveReactAlias', () => {
     delete process.env.NODE_ENV;
     const alias = await resolveReactAlias(false);
 
-    expect(Object.keys(alias).sort()).toMatchInlineSnapshot(`
-      [
-        "react",
-        "react-dom",
-        "react-dom/client",
-        "react-dom/package.json",
-        "react-dom/server",
-        "react/jsx-dev-runtime",
-        "react/jsx-runtime",
-        "react/package.json",
-      ]
+    expect(alias).toMatchInlineSnapshot(`
+      {
+        "react": "<ROOT>/node_modules/<PNPM_INNER>/react/index.js",
+        "react-dom": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/index.js",
+        "react-dom/client": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/client.js",
+        "react-dom/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/package.json",
+        "react-dom/server": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/server.browser.js",
+        "react/jsx-dev-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-dev-runtime.js",
+        "react/jsx-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-runtime.js",
+        "react/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react/package.json",
+      }
     `);
   });
 });
@@ -100,10 +100,10 @@ describe('resolveReactRouterDomAlias', () => {
   it('should resolve react-router-dom', async () => {
     const alias = await resolveReactRouterDomAlias();
 
-    expect(Object.keys(alias)).toMatchInlineSnapshot(`
-      [
-        "react-router-dom",
-      ]
+    expect(alias).toMatchInlineSnapshot(`
+      {
+        "react-router-dom": "<ROOT>/node_modules/<PNPM_INNER>/react-router-dom",
+      }
     `);
   });
 });

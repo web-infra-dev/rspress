@@ -77,14 +77,7 @@ export async function resolveReactAlias(isSSR: boolean) {
   const resolver = new Resolver({
     extensions: ['.js'],
     alias,
-    conditionNames: [
-      'import',
-      'module',
-      ...(isSSR ? ['node'] : ['browser']),
-      ...(process.env.NODE_ENV === 'production'
-        ? ['production']
-        : ['development']),
-    ],
+    conditionNames: [...(isSSR ? ['node'] : ['browser']), 'import', 'module'],
     enablePnp: !!process.versions.pnp,
   });
 
