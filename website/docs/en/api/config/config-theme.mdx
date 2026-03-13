@@ -558,6 +558,10 @@ Configuration for LLMS UI components. When enabled, `LlmsCopyButton` and `LlmsVi
 
 This is useful when using the [llms](/guide/basic/ssg-md) feature to generate llms.txt files, allowing users to easily copy or open the markdown content in AI tools.
 
+:::warning
+ssg-md only takes effect during the build process, so copying Markdown content in `dev` mode will not work. Please use `rspress build` first, then debug with `rspress preview`. See [Differences between dev and build](/guide/basic/ssg#differences-between-dev-and-build) for details.
+:::
+
 For example:
 
 ```ts title="rspress.config.ts"
