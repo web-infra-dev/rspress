@@ -29,12 +29,12 @@ export async function resolveReactRouterDomAlias(): Promise<
 > {
   const hasInstalled = await detectPackageMajorVersion('react-router-dom');
   const basedir = hasInstalled ? process.cwd() : PACKAGE_ROOT;
-
   const alias: Record<string, string> = {};
   const resolver = new Resolver({
     mainFields: ['browser', 'module', 'main'],
     extensions: ['.js'],
     alias,
+    enablePnp: !!process.versions.pnp,
   });
 
   try {
@@ -78,6 +78,7 @@ export async function resolveReactAlias(isSSR: boolean) {
     extensions: ['.js'],
     alias,
     conditionNames: isSSR ? ['...'] : ['browser', '...'],
+    enablePnp: !!process.versions.pnp,
   });
 
   await Promise.all(
