@@ -53,7 +53,6 @@ export default defineConfig({
       output: {
         target: 'node',
         externals: COMMON_EXTERNALS,
-        filenameHash: true,
       },
       tools: {
         rspack: {
