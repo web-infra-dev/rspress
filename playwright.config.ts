@@ -12,8 +12,8 @@ export default defineConfig({
   quiet: true,
   reporter: 'list',
   use: {
-    trace: 'on',
-    video: 'on',
+    trace: isCI ? 'on-first-retry' : 'on',
+    video: isCI ? 'off' : 'on',
     viewport: { width: 1440, height: 900 }, // screen size
     // Use the built-in Chrome browser to speed up CI tests
     channel: isCI ? 'chrome' : undefined,
