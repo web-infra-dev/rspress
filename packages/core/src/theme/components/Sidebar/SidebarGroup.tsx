@@ -45,11 +45,12 @@ export interface SidebarGroupProps {
       )[]
     >
   >;
+  isAccordionMode?: boolean;
 }
 
 export function SidebarGroup(props: SidebarGroupProps) {
   const activeMatcher = useActiveMatcher();
-  const { item, depth, id, setSidebarData, className } = props;
+  const { item, depth, id, setSidebarData, className, isAccordionMode } = props;
   const navigate = useLinkNavigate();
   const active = item.link && activeMatcher(item.link);
   const { collapsed = false, collapsible = true } =
@@ -67,7 +68,24 @@ export function SidebarGroup(props: SidebarGroupProps) {
         current = (current as NormalizedSidebarGroup).items[index];
       }
       if ('items' in current) {
+        const wasCollapsed = current.collapsed;
         current.collapsed = !current.collapsed;
+
+        // If accordion mode is enabled and we're expanding a top-level item (depth 0),
+        // collapse all other top-level items
+        if (isAccordionMode && depth === 0 && wasCollapsed) {
+          // Collapse all other top-level items that are collapsible
+          newSidebarData.forEach((item, idx) => {
+            if (
+              idx !== initialIndex &&
+              'collapsed' in item &&
+              'collapsible' in item &&
+              item.collapsible !== false
+            ) {
+              item.collapsed = true;
+            }
+          });
+        }
       }
       return newSidebarData;
     });
@@ -119,6 +137,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
                 item={item}
                 setSidebarData={setSidebarData}
                 className="rp-sidebar-item--group-item"
+                isAccordionMode={isAccordionMode}
               />
             ) : isSidebarDivider(item) ? (
               <SidebarDivider
