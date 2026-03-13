@@ -77,7 +77,9 @@ export async function resolveReactAlias(isSSR: boolean) {
   const resolver = new Resolver({
     extensions: ['.js'],
     alias,
-    conditionNames: isSSR ? ['...'] : ['browser', '...'],
+    conditionNames: isSSR
+      ? ['import', 'module', 'webpack']
+      : ['browser', 'import', 'module', 'webpack'],
     enablePnp: !!process.versions.pnp,
   });
 
@@ -133,6 +135,7 @@ export async function resolveReactRenderToMarkdownAlias(): Promise<
     extensions: ['.js'],
     alias,
     conditionNames: ['import', 'require', 'node', 'default'],
+    enablePnp: !!process.versions.pnp,
   });
 
   try {
