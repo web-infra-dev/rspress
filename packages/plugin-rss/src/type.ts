@@ -97,4 +97,9 @@ export interface PluginRssOptions {
    * output config for all feed files
    */
   output?: Omit<FeedOutputOptions, 'filename'>;
+  /**
+   * Whether to exclude some RSS generation. If an array of strings is provided,
+   * they will be treated as picomatch glob patterns to exclude some RSS for matching route paths.
+   */
+  exclude?: string[];
 }
