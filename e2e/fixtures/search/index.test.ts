@@ -166,7 +166,7 @@ test.describe('search keyboard', async () => {
     await searchInput.focus();
 
     // Type first search query
-    await page.keyboard.type('1.');
+    await page.keyboard.type('Foo');
     await page.waitForTimeout(500);
 
     // Wait for search results to be visible
@@ -187,7 +187,7 @@ test.describe('search keyboard', async () => {
     expect(currentIndex).toBe(1);
 
     // Change search query
-    await searchInput.fill('1');
+    await searchInput.fill('Fo');
     await page.waitForTimeout(500);
 
     // Wait for new search results to be visible
