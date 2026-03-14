@@ -5,6 +5,7 @@ import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo, RspressPlugin, UserConfig } from '@rspress/core';
 import { getIconUrlPath } from '@rspress/core';
 import { Feed } from 'feed';
+import picomatch from 'picomatch';
 
 import { createFeed, generateFeedItem } from './createFeed';
 import { PluginComponents, PluginName } from './exports';
@@ -80,6 +81,10 @@ async function getRssItems(
 }
 
 export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
+  const { disable } = pluginRssOptions;
+
+  const isDisableMatch = Array.isArray(disable) ? picomatch(disable) : null;
+
   const feedsSet = new FeedsSet();
 
   /**
@@ -111,6 +116,14 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
     },
     async extendPageData(pageData) {
       if (!_pagesForRss) return;
+
+      const testPath = pageData.routePath.startsWith('/')
+        ? pageData.routePath
+        : `/${pageData.routePath}`;
+
+      if (isDisableMatch?.(testPath)) {
+        return;
+      }
 
       // Find which feeds this page belongs to
       const matchedChannels = feedsSet

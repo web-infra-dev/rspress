@@ -1,0 +1,5989 @@
+{
+  "graph": {
+    "nodes": {
+      "@rspress-fixture/auto-nav-sidebar-dir-convention": {
+        "name": "@rspress-fixture/auto-nav-sidebar-dir-convention",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/auto-nav-sidebar-dir-convention",
+          "name": "@rspress-fixture/auto-nav-sidebar-dir-convention",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/auto-nav-sidebar-dir-convention",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/auto-nav-sidebar-issue-1682": {
+        "name": "@rspress-fixture/auto-nav-sidebar-issue-1682",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/auto-nav-sidebar-issue-1682",
+          "name": "@rspress-fixture/auto-nav-sidebar-issue-1682",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/auto-nav-sidebar-issue-1682",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/plugin-preview-custom-entry": {
+        "name": "@rspress-fixture/plugin-preview-custom-entry",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-preview-custom-entry",
+          "name": "@rspress-fixture/plugin-preview-custom-entry",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/plugin-preview-custom-entry",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/plugin-api-docgen-locales": {
+        "name": "@rspress-fixture/plugin-api-docgen-locales",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-api-docgen/locales",
+          "name": "@rspress-fixture/plugin-api-docgen-locales",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/plugin-api-docgen-locales",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/plugin-playground-preview": {
+        "name": "@rspress-fixture/plugin-playground-preview",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-playground-preview",
+          "name": "@rspress-fixture/plugin-playground-preview",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/plugin-playground-preview",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/auto-nav-sidebar-no-meta": {
+        "name": "@rspress-fixture/auto-nav-sidebar-no-meta",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/auto-nav-sidebar-no-meta",
+          "name": "@rspress-fixture/auto-nav-sidebar-no-meta",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/auto-nav-sidebar-no-meta",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/plugin-api-docgen-single": {
+        "name": "@rspress-fixture/plugin-api-docgen-single",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-api-docgen/single",
+          "name": "@rspress-fixture/plugin-api-docgen-single",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/plugin-api-docgen-single",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/nav-link-item-with-hash": {
+        "name": "@rspress-fixture/nav-link-item-with-hash",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/nav-link-item-with-hash",
+          "name": "@rspress-fixture/nav-link-item-with-hash",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/nav-link-item-with-hash",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/rspress-plugin-typedoc-single": {
+        "name": "@rspress-fixture/rspress-plugin-typedoc-single",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-typedoc/single",
+          "name": "@rspress-fixture/rspress-plugin-typedoc-single",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/rspress-plugin-typedoc-single",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/package-manager-tabs": {
+        "name": "@rspress-fixture/package-manager-tabs",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/package-manager-tabs",
+          "name": "@rspress-fixture/package-manager-tabs",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/package-manager-tabs",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/rspress-plugin-typedoc-multi": {
+        "name": "@rspress-fixture/rspress-plugin-typedoc-multi",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-typedoc/multi",
+          "name": "@rspress-fixture/rspress-plugin-typedoc-multi",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/rspress-plugin-typedoc-multi",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/markdown-link-asset": {
+        "name": "@rspress-fixture/markdown-link-asset",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/markdown-link-asset",
+          "name": "@rspress-fixture/markdown-link-asset",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/markdown-link-asset",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/plugin-client-redirects": {
+        "name": "@rspress/plugin-client-redirects",
+        "type": "lib",
+        "data": {
+          "root": "packages/plugin-client-redirects",
+          "name": "@rspress/plugin-client-redirects",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "A plugin for rspress to client redirect in docs.",
+            "js": {
+              "packageName": "@rspress/plugin-client-redirects",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./dist/index.d.ts",
+                  "default": "./dist/index.js"
+                }
+              },
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/code-block-runtime": {
+        "name": "@rspress-fixture/code-block-runtime",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/code-block-runtime",
+          "name": "@rspress-fixture/code-block-runtime",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/code-block-runtime",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/custom-home-footer": {
+        "name": "@rspress-fixture/custom-home-footer",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/custom-home-footer",
+          "name": "@rspress-fixture/custom-home-footer",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/custom-home-footer",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/github-alert-mdxjs": {
+        "name": "@rspress-fixture/github-alert-mdxjs",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/github-alert-mdxjs",
+          "name": "@rspress-fixture/github-alert-mdxjs",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/github-alert-mdxjs",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/multi-version-llms": {
+        "name": "@rspress-fixture/multi-version-llms",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/multi-version-llms",
+          "name": "@rspress-fixture/multi-version-llms",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/multi-version-llms",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/plugin-rss": {
+        "name": "@rspress-fixture/plugin-rss",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-rss-disable",
+          "name": "@rspress-fixture/plugin-rss",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/plugin-rss",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/react-router-dom-6": {
+        "name": "@rspress-fixture/react-router-dom-6",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/react-router-dom-6",
+          "name": "@rspress-fixture/react-router-dom-6",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/react-router-dom-6",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/search-code-blocks": {
+        "name": "@rspress-fixture/search-code-blocks",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/search-code-blocks",
+          "name": "@rspress-fixture/search-code-blocks",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/search-code-blocks",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/plugin-playground": {
+        "name": "@rspress-fixture/plugin-playground",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-playground",
+          "name": "@rspress-fixture/plugin-playground",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/plugin-playground",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/auto-nav-sidebar": {
+        "name": "@rspress-fixture/auto-nav-sidebar",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/auto-nav-sidebar",
+          "name": "@rspress-fixture/auto-nav-sidebar",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/auto-nav-sidebar",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/client-redirects": {
+        "name": "@rspress-fixture/client-redirects",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/client-redirects",
+          "name": "@rspress-fixture/client-redirects",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/client-redirects",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/i18n-source-text": {
+        "name": "@rspress-fixture/i18n-source-text",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/i18n-source-text",
+          "name": "@rspress-fixture/i18n-source-text",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/i18n-source-text",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/check-dead-link": {
+        "name": "@rspress-fixture/check-dead-link",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/check-dead-link",
+          "name": "@rspress-fixture/check-dead-link",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/check-dead-link",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/inline-markdown": {
+        "name": "@rspress-fixture/inline-markdown",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/inline-markdown",
+          "name": "@rspress-fixture/inline-markdown",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/inline-markdown",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/nested-overview": {
+        "name": "@rspress-fixture/nested-overview",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/nested-overview",
+          "name": "@rspress-fixture/nested-overview",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/nested-overview",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/plugin-twoslash": {
+        "name": "@rspress-fixture/plugin-twoslash",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-twoslash",
+          "name": "@rspress-fixture/plugin-twoslash",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/plugin-twoslash",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/ssg-fail-strict": {
+        "name": "@rspress-fixture/ssg-fail-strict",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/ssg-fail-strict",
+          "name": "@rspress-fixture/ssg-fail-strict",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/ssg-fail-strict",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/custom-headers": {
+        "name": "@rspress-fixture/custom-headers",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/custom-headers",
+          "name": "@rspress-fixture/custom-headers",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/custom-headers",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/nav-link-items": {
+        "name": "@rspress-fixture/nav-link-items",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/nav-link-items",
+          "name": "@rspress-fixture/nav-link-items",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/nav-link-items",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/no-config-root": {
+        "name": "@rspress-fixture/no-config-root",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/no-config-root",
+          "name": "@rspress-fixture/no-config-root",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/no-config-root",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/page-head-tags": {
+        "name": "@rspress-fixture/page-head-tags",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/page-head-tags",
+          "name": "@rspress-fixture/page-head-tags",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/page-head-tags",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/page-type-home": {
+        "name": "@rspress-fixture/page-type-home",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/page-type-home",
+          "name": "@rspress-fixture/page-type-home",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/page-type-home",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/plugin-preview": {
+        "name": "@rspress-fixture/plugin-preview",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-preview",
+          "name": "@rspress-fixture/plugin-preview",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/plugin-preview",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/search-algolia": {
+        "name": "@rspress-fixture/search-algolia",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/search-algolia",
+          "name": "@rspress-fixture/search-algolia",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/search-algolia",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/tabs-component": {
+        "name": "@rspress-fixture/tabs-component",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/tabs-component",
+          "name": "@rspress-fixture/tabs-component",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/tabs-component",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/custom-layout": {
+        "name": "@rspress-fixture/custom-layout",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/custom-layout",
+          "name": "@rspress-fixture/custom-layout",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/custom-layout",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/custom-plugin": {
+        "name": "@rspress-fixture/custom-plugin",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/custom-plugin",
+          "name": "@rspress-fixture/custom-plugin",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/custom-plugin",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/heading-title": {
+        "name": "@rspress-fixture/heading-title",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/heading-title",
+          "name": "@rspress-fixture/heading-title",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/heading-title",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/icon-file-url": {
+        "name": "@rspress-fixture/icon-file-url",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/icon-file-url",
+          "name": "@rspress-fixture/icon-file-url",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/icon-file-url",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/markdown-link": {
+        "name": "@rspress-fixture/markdown-link",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/markdown-link",
+          "name": "@rspress-fixture/markdown-link",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/markdown-link",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/multi-version": {
+        "name": "@rspress-fixture/multi-version",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/multi-version",
+          "name": "@rspress-fixture/multi-version",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/multi-version",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/replace-rules": {
+        "name": "@rspress-fixture/replace-rules",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/replace-rules",
+          "name": "@rspress-fixture/replace-rules",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/replace-rules",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/plugin-api-docgen": {
+        "name": "@rspress/plugin-api-docgen",
+        "type": "lib",
+        "data": {
+          "root": "packages/plugin-api-docgen",
+          "name": "@rspress/plugin-api-docgen",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "A plugin for rspress to generate api doc.",
+            "js": {
+              "packageName": "@rspress/plugin-api-docgen",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./dist/index.d.ts",
+                  "default": "./dist/index.js"
+                }
+              },
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/plugin-playground": {
+        "name": "@rspress/plugin-playground",
+        "type": "lib",
+        "data": {
+          "root": "packages/plugin-playground",
+          "name": "@rspress/plugin-playground",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "A plugin for rspress to preview the code block in markdown/mdx file.",
+            "js": {
+              "packageName": "@rspress/plugin-playground",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./dist/cli/index.d.ts",
+                  "default": "./dist/cli/index.js"
+                },
+                "./web": {
+                  "types": "./dist/web/index.d.ts",
+                  "default": "./dist/web/index.js"
+                }
+              },
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/search-hooks": {
+        "name": "@rspress-fixture/search-hooks",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/search-hooks",
+          "name": "@rspress-fixture/search-hooks",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/search-hooks",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/title-number": {
+        "name": "@rspress-fixture/title-number",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/title-number",
+          "name": "@rspress-fixture/title-number",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/title-number",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/title-suffix": {
+        "name": "@rspress-fixture/title-suffix",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/title-suffix",
+          "name": "@rspress-fixture/title-suffix",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/title-suffix",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/custom-icon": {
+        "name": "@rspress-fixture/custom-icon",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/custom-icon",
+          "name": "@rspress-fixture/custom-icon",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/custom-icon",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/dynamic-toc": {
+        "name": "@rspress-fixture/dynamic-toc",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/dynamic-toc",
+          "name": "@rspress-fixture/dynamic-toc",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/dynamic-toc",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/plugin-llms": {
+        "name": "@rspress-fixture/plugin-llms",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/plugin-llms",
+          "name": "@rspress-fixture/plugin-llms",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/plugin-llms",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/remark-link": {
+        "name": "@rspress-fixture/remark-link",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/remark-link",
+          "name": "@rspress-fixture/remark-link",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/remark-link",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/search-i18n": {
+        "name": "@rspress-fixture/search-i18n",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/search-i18n",
+          "name": "@rspress-fixture/search-i18n",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/search-i18n",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/tailwind-v4": {
+        "name": "@rspress-fixture/tailwind-v4",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/tailwind-v4",
+          "name": "@rspress-fixture/tailwind-v4",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/tailwind-v4",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/plugin-twoslash": {
+        "name": "@rspress/plugin-twoslash",
+        "type": "lib",
+        "data": {
+          "root": "packages/plugin-twoslash",
+          "name": "@rspress/plugin-twoslash",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "A plugin for rspress to applies twoslash to code blocks.",
+            "js": {
+              "packageName": "@rspress/plugin-twoslash",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./dist/index.d.ts",
+                  "default": "./dist/index.js"
+                }
+              },
+              "packageMain": "./dist/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/code-block": {
+        "name": "@rspress-fixture/code-block",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/code-block",
+          "name": "@rspress-fixture/code-block",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/code-block",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/issue-1309": {
+        "name": "@rspress-fixture/issue-1309",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/issue-1309",
+          "name": "@rspress-fixture/issue-1309",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/issue-1309",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/production": {
+        "name": "@rspress-fixture/production",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/production",
+          "name": "@rspress-fixture/production",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/production",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/public-dir": {
+        "name": "@rspress-fixture/public-dir",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/public-dir",
+          "name": "@rspress-fixture/public-dir",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/public-dir",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/plugin-algolia": {
+        "name": "@rspress/plugin-algolia",
+        "type": "lib",
+        "data": {
+          "root": "packages/plugin-algolia",
+          "name": "@rspress/plugin-algolia",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "A plugin for rspress to search with algolia in docs.",
+            "js": {
+              "packageName": "@rspress/plugin-algolia",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./dist/index.d.ts",
+                  "default": "./dist/index.js"
+                },
+                "./runtime": {
+                  "types": "./dist/runtime/index.d.ts",
+                  "default": "./dist/runtime/index.js"
+                }
+              },
+              "packageMain": "./dist/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/plugin-preview": {
+        "name": "@rspress/plugin-preview",
+        "type": "lib",
+        "data": {
+          "root": "packages/plugin-preview",
+          "name": "@rspress/plugin-preview",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "A plugin for rspress to preview the code block in markdown/mdx file.",
+            "js": {
+              "packageName": "@rspress/plugin-preview",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./index.d.ts",
+                  "default": "./dist/index.js"
+                }
+              },
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/plugin-sitemap": {
+        "name": "@rspress/plugin-sitemap",
+        "type": "lib",
+        "data": {
+          "root": "packages/plugin-sitemap",
+          "name": "@rspress/plugin-sitemap",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "A plugin for rspress to generate sitemap.xml",
+            "js": {
+              "packageName": "@rspress/plugin-sitemap",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./dist/index.d.ts",
+                  "default": "./dist/index.js"
+                }
+              },
+              "packageMain": "./dist/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/plugin-typedoc": {
+        "name": "@rspress/plugin-typedoc",
+        "type": "lib",
+        "data": {
+          "root": "packages/plugin-typedoc",
+          "name": "@rspress/plugin-typedoc",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "A plugin for rspress to integrate typedoc",
+            "js": {
+              "packageName": "@rspress/plugin-typedoc",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./dist/types/index.d.ts",
+                  "import": "./dist/es/index.js"
+                }
+              },
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "create-rspress": {
+        "name": "create-rspress",
+        "type": "lib",
+        "data": {
+          "root": "packages/create-rspress",
+          "name": "create-rspress",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "start"]
+            },
+            "description": "Create a new Rspress project",
+            "js": {
+              "packageName": "create-rspress",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": "./dist/index.js"
+              },
+              "packageMain": "./dist/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "start": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "start"
+              },
+              "metadata": {
+                "scriptContent": "node ./dist/index.js",
+                "runCommand": "pnpm run start"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/theme-css": {
+        "name": "@rspress-fixture/theme-css",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/theme-css",
+          "name": "@rspress-fixture/theme-css",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/theme-css",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/with-base": {
+        "name": "@rspress-fixture/with-base",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/with-base",
+          "name": "@rspress-fixture/with-base",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/with-base",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/nav-link": {
+        "name": "@rspress-fixture/nav-link",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/nav-link",
+          "name": "@rspress-fixture/nav-link",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/nav-link",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/react-18": {
+        "name": "@rspress-fixture/react-18",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/react-18",
+          "name": "@rspress-fixture/react-18",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/react-18",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/react-19": {
+        "name": "@rspress-fixture/react-19",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/react-19",
+          "name": "@rspress-fixture/react-19",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/react-19",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/plugin-llms": {
+        "name": "@rspress/plugin-llms",
+        "type": "lib",
+        "data": {
+          "root": "packages/plugin-llms",
+          "name": "@rspress/plugin-llms",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "A plugin for rspress to generate llms.txt, llms-full.txt, md files to let llm understand your website.",
+            "js": {
+              "packageName": "@rspress/plugin-llms",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./dist/index.d.ts",
+                  "default": "./dist/index.js"
+                },
+                "./runtime": {
+                  "types": "./dist/runtime/index.d.ts",
+                  "default": "./dist/runtime/index.js"
+                }
+              },
+              "packageMain": "./dist/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/banner": {
+        "name": "@rspress-fixture/banner",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/banner",
+          "name": "@rspress-fixture/banner",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/banner",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/search": {
+        "name": "@rspress-fixture/search",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/search",
+          "name": "@rspress-fixture/search",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/search",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/ssg-md": {
+        "name": "@rspress-fixture/ssg-md",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/ssg-md",
+          "name": "@rspress-fixture/ssg-md",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/ssg-md",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/plugin-rss": {
+        "name": "@rspress/plugin-rss",
+        "type": "lib",
+        "data": {
+          "root": "packages/plugin-rss",
+          "name": "@rspress/plugin-rss",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "A plugin for rss generation for rspress",
+            "js": {
+              "packageName": "@rspress/plugin-rss",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./index.d.ts",
+                  "default": "./dist/index.js"
+                },
+                "./FeedsAnnotations": "./static/global-components/FeedsAnnotations.tsx"
+              },
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/basic": {
+        "name": "@rspress-fixture/basic",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/basic",
+          "name": "@rspress-fixture/basic",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/basic",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/i18n": {
+        "name": "@rspress-fixture/i18n",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/i18n",
+          "name": "@rspress-fixture/i18n",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/i18n",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress-fixture/hmr": {
+        "name": "@rspress-fixture/hmr",
+        "type": "app",
+        "data": {
+          "root": "e2e/fixtures/hmr",
+          "name": "@rspress-fixture/hmr",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress-fixture/hmr",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/shared": {
+        "name": "@rspress/shared",
+        "type": "lib",
+        "data": {
+          "root": "packages/shared",
+          "name": "@rspress/shared",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "build:watch", "dev", "reset"]
+            },
+            "js": {
+              "packageName": "@rspress/shared",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./dist/index.d.ts",
+                  "default": "./dist/index.js"
+                },
+                "./constants": {
+                  "types": "./dist/constants.d.ts",
+                  "default": "./dist/constants.js"
+                },
+                "./logger": {
+                  "types": "./dist/logger.d.ts",
+                  "default": "./dist/logger.js"
+                },
+                "./node-utils": {
+                  "types": "./dist/node-utils.d.ts",
+                  "default": "./dist/node-utils.js"
+                }
+              },
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "build:watch": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build:watch"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run build:watch"
+              },
+              "configurations": {},
+              "parallelism": true
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/config": {
+        "name": "@rspress/config",
+        "type": "app",
+        "data": {
+          "root": "scripts/config",
+          "name": "@rspress/config",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {},
+            "js": {
+              "packageName": "@rspress/config",
+              "packageVersion": "1.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {},
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/core": {
+        "name": "@rspress/core",
+        "type": "lib",
+        "data": {
+          "root": "packages/core",
+          "name": "@rspress/core",
+          "tags": ["npm:public"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "reset"]
+            },
+            "description": "The Rspress Documentation Framework",
+            "js": {
+              "packageName": "@rspress/core",
+              "packageVersion": "2.0.5",
+              "packageExports": {
+                ".": {
+                  "types": "./dist/index.d.ts",
+                  "import": "./dist/index.js"
+                },
+                "./dist/*": "./dist/*",
+                "./package.json": "./package.json",
+                "./theme": {
+                  "types": "./dist/theme/index.d.ts",
+                  "default": "./dist/theme/index.js"
+                },
+                "./theme-original": {
+                  "types": "./dist/theme/index.d.ts",
+                  "default": "./dist/theme/index.js"
+                },
+                "./runtime": {
+                  "types": "./dist/runtime/index.d.ts",
+                  "default": "./dist/runtime/index.js"
+                },
+                "./shiki-transformers": {
+                  "types": "./dist/shiki-transformers.d.ts",
+                  "default": "./dist/shiki-transformers.js"
+                }
+              },
+              "packageMain": "./dist/index.js",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "node ./scripts/generateJsonSchema.mjs && rslib build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rslib build -w",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "reset": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "reset"
+              },
+              "metadata": {
+                "scriptContent": "rimraf ./**/node_modules",
+                "runCommand": "pnpm run reset"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      },
+      "@rspress/docs": {
+        "name": "@rspress/docs",
+        "type": "app",
+        "data": {
+          "root": "website",
+          "name": "@rspress/docs",
+          "tags": ["npm:private"],
+          "metadata": {
+            "targetGroups": {
+              "NPM Scripts": ["build", "dev", "preview"]
+            },
+            "js": {
+              "packageName": "@rspress/docs",
+              "packageVersion": "0.0.0",
+              "isInPackageManagerWorkspaces": true
+            }
+          },
+          "targets": {
+            "build": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "build"
+              },
+              "metadata": {
+                "scriptContent": "rspress build",
+                "runCommand": "pnpm run build"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "outputs": ["{projectRoot}/dist"],
+              "inputs": ["build", "^build"]
+            },
+            "dev": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "dev"
+              },
+              "metadata": {
+                "scriptContent": "rspress dev",
+                "runCommand": "pnpm run dev"
+              },
+              "configurations": {},
+              "parallelism": true,
+              "dependsOn": ["^build"],
+              "inputs": ["dev", "^dev"]
+            },
+            "preview": {
+              "executor": "nx:run-script",
+              "options": {
+                "script": "preview"
+              },
+              "metadata": {
+                "scriptContent": "rspress preview",
+                "runCommand": "pnpm run preview"
+              },
+              "configurations": {},
+              "parallelism": true
+            }
+          },
+          "implicitDependencies": []
+        }
+      }
+    },
+    "dependencies": {
+      "@rspress-fixture/auto-nav-sidebar-dir-convention": [
+        {
+          "source": "@rspress-fixture/auto-nav-sidebar-dir-convention",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/auto-nav-sidebar-issue-1682": [
+        {
+          "source": "@rspress-fixture/auto-nav-sidebar-issue-1682",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/plugin-preview-custom-entry": [
+        {
+          "source": "@rspress-fixture/plugin-preview-custom-entry",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-preview-custom-entry",
+          "target": "@rspress/plugin-preview",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/plugin-api-docgen-locales": [
+        {
+          "source": "@rspress-fixture/plugin-api-docgen-locales",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-api-docgen-locales",
+          "target": "@rspress/plugin-api-docgen",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/plugin-playground-preview": [
+        {
+          "source": "@rspress-fixture/plugin-playground-preview",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-playground-preview",
+          "target": "@rspress/plugin-playground",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-playground-preview",
+          "target": "@rspress/plugin-preview",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/auto-nav-sidebar-no-meta": [
+        {
+          "source": "@rspress-fixture/auto-nav-sidebar-no-meta",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/plugin-api-docgen-single": [
+        {
+          "source": "@rspress-fixture/plugin-api-docgen-single",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-api-docgen-single",
+          "target": "@rspress/plugin-api-docgen",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/nav-link-item-with-hash": [
+        {
+          "source": "@rspress-fixture/nav-link-item-with-hash",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/rspress-plugin-typedoc-single": [
+        {
+          "source": "@rspress-fixture/rspress-plugin-typedoc-single",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/rspress-plugin-typedoc-single",
+          "target": "@rspress/plugin-typedoc",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/package-manager-tabs": [
+        {
+          "source": "@rspress-fixture/package-manager-tabs",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/rspress-plugin-typedoc-multi": [
+        {
+          "source": "@rspress-fixture/rspress-plugin-typedoc-multi",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/rspress-plugin-typedoc-multi",
+          "target": "@rspress/plugin-typedoc",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/markdown-link-asset": [
+        {
+          "source": "@rspress-fixture/markdown-link-asset",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress/plugin-client-redirects": [
+        {
+          "source": "@rspress/plugin-client-redirects",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/plugin-client-redirects",
+          "target": "@rspress/config",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/code-block-runtime": [
+        {
+          "source": "@rspress-fixture/code-block-runtime",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/custom-home-footer": [
+        {
+          "source": "@rspress-fixture/custom-home-footer",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/github-alert-mdxjs": [
+        {
+          "source": "@rspress-fixture/github-alert-mdxjs",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/multi-version-llms": [
+        {
+          "source": "@rspress-fixture/multi-version-llms",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/multi-version-llms",
+          "target": "@rspress/plugin-llms",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/plugin-rss": [
+        {
+          "source": "@rspress-fixture/plugin-rss",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-rss",
+          "target": "@rspress/plugin-rss",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/react-router-dom-6": [
+        {
+          "source": "@rspress-fixture/react-router-dom-6",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/search-code-blocks": [
+        {
+          "source": "@rspress-fixture/search-code-blocks",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/plugin-playground": [
+        {
+          "source": "@rspress-fixture/plugin-playground",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-playground",
+          "target": "@rspress/plugin-playground",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/auto-nav-sidebar": [
+        {
+          "source": "@rspress-fixture/auto-nav-sidebar",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/client-redirects": [
+        {
+          "source": "@rspress-fixture/client-redirects",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/client-redirects",
+          "target": "@rspress/plugin-client-redirects",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/i18n-source-text": [
+        {
+          "source": "@rspress-fixture/i18n-source-text",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/check-dead-link": [
+        {
+          "source": "@rspress-fixture/check-dead-link",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/inline-markdown": [
+        {
+          "source": "@rspress-fixture/inline-markdown",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/nested-overview": [
+        {
+          "source": "@rspress-fixture/nested-overview",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/plugin-twoslash": [
+        {
+          "source": "@rspress-fixture/plugin-twoslash",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-twoslash",
+          "target": "@rspress/plugin-twoslash",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/ssg-fail-strict": [
+        {
+          "source": "@rspress-fixture/ssg-fail-strict",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/custom-headers": [
+        {
+          "source": "@rspress-fixture/custom-headers",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/nav-link-items": [
+        {
+          "source": "@rspress-fixture/nav-link-items",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/no-config-root": [
+        {
+          "source": "@rspress-fixture/no-config-root",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/page-head-tags": [
+        {
+          "source": "@rspress-fixture/page-head-tags",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/page-type-home": [
+        {
+          "source": "@rspress-fixture/page-type-home",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/plugin-preview": [
+        {
+          "source": "@rspress-fixture/plugin-preview",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-preview",
+          "target": "@rspress/plugin-playground",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-preview",
+          "target": "@rspress/plugin-preview",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/search-algolia": [
+        {
+          "source": "@rspress-fixture/search-algolia",
+          "target": "@rspress/plugin-algolia",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/search-algolia",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/tabs-component": [
+        {
+          "source": "@rspress-fixture/tabs-component",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/custom-layout": [
+        {
+          "source": "@rspress-fixture/custom-layout",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/custom-plugin": [
+        {
+          "source": "@rspress-fixture/custom-plugin",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/heading-title": [
+        {
+          "source": "@rspress-fixture/heading-title",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/icon-file-url": [
+        {
+          "source": "@rspress-fixture/icon-file-url",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/markdown-link": [
+        {
+          "source": "@rspress-fixture/markdown-link",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/multi-version": [
+        {
+          "source": "@rspress-fixture/multi-version",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/replace-rules": [
+        {
+          "source": "@rspress-fixture/replace-rules",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress/plugin-api-docgen": [
+        {
+          "source": "@rspress/plugin-api-docgen",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress/plugin-playground": [
+        {
+          "source": "@rspress/plugin-playground",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/search-hooks": [
+        {
+          "source": "@rspress-fixture/search-hooks",
+          "target": "@rspress/plugin-algolia",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/search-hooks",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/title-number": [
+        {
+          "source": "@rspress-fixture/title-number",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/title-suffix": [
+        {
+          "source": "@rspress-fixture/title-suffix",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/custom-icon": [
+        {
+          "source": "@rspress-fixture/custom-icon",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/dynamic-toc": [
+        {
+          "source": "@rspress-fixture/dynamic-toc",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/plugin-llms": [
+        {
+          "source": "@rspress-fixture/plugin-llms",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/plugin-llms",
+          "target": "@rspress/plugin-llms",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/remark-link": [
+        {
+          "source": "@rspress-fixture/remark-link",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/search-i18n": [
+        {
+          "source": "@rspress-fixture/search-i18n",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/tailwind-v4": [
+        {
+          "source": "@rspress-fixture/tailwind-v4",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress/plugin-twoslash": [
+        {
+          "source": "@rspress/plugin-twoslash",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/plugin-twoslash",
+          "target": "@rspress/config",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/code-block": [
+        {
+          "source": "@rspress-fixture/code-block",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/issue-1309": [
+        {
+          "source": "@rspress-fixture/issue-1309",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/production": [
+        {
+          "source": "@rspress-fixture/production",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/public-dir": [
+        {
+          "source": "@rspress-fixture/public-dir",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress/plugin-algolia": [
+        {
+          "source": "@rspress/plugin-algolia",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/plugin-algolia",
+          "target": "@rspress/config",
+          "type": "static"
+        }
+      ],
+      "@rspress/plugin-preview": [
+        {
+          "source": "@rspress/plugin-preview",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress/plugin-sitemap": [
+        {
+          "source": "@rspress/plugin-sitemap",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/plugin-sitemap",
+          "target": "@rspress/config",
+          "type": "static"
+        }
+      ],
+      "@rspress/plugin-typedoc": [
+        {
+          "source": "@rspress/plugin-typedoc",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/plugin-typedoc",
+          "target": "@rspress/config",
+          "type": "static"
+        }
+      ],
+      "create-rspress": [],
+      "@rspress-fixture/theme-css": [
+        {
+          "source": "@rspress-fixture/theme-css",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/with-base": [
+        {
+          "source": "@rspress-fixture/with-base",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/nav-link": [
+        {
+          "source": "@rspress-fixture/nav-link",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/react-18": [
+        {
+          "source": "@rspress-fixture/react-18",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/react-19": [
+        {
+          "source": "@rspress-fixture/react-19",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress/plugin-llms": [
+        {
+          "source": "@rspress/plugin-llms",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/plugin-llms",
+          "target": "@rspress/config",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/banner": [
+        {
+          "source": "@rspress-fixture/banner",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/search": [
+        {
+          "source": "@rspress-fixture/search",
+          "target": "@rspress/plugin-algolia",
+          "type": "static"
+        },
+        {
+          "source": "@rspress-fixture/search",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/ssg-md": [
+        {
+          "source": "@rspress-fixture/ssg-md",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress/plugin-rss": [
+        {
+          "source": "@rspress/plugin-rss",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/basic": [
+        {
+          "source": "@rspress-fixture/basic",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/i18n": [
+        {
+          "source": "@rspress-fixture/i18n",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress-fixture/hmr": [
+        {
+          "source": "@rspress-fixture/hmr",
+          "target": "@rspress/core",
+          "type": "static"
+        }
+      ],
+      "@rspress/shared": [],
+      "@rspress/config": [],
+      "@rspress/core": [
+        {
+          "source": "@rspress/core",
+          "target": "@rspress/config",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/core",
+          "target": "@rspress/shared",
+          "type": "static"
+        }
+      ],
+      "@rspress/docs": [
+        {
+          "source": "@rspress/docs",
+          "target": "@rspress/core",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/docs",
+          "target": "@rspress/plugin-algolia",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/docs",
+          "target": "@rspress/plugin-llms",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/docs",
+          "target": "@rspress/plugin-playground",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/docs",
+          "target": "@rspress/plugin-preview",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/docs",
+          "target": "@rspress/plugin-sitemap",
+          "type": "static"
+        },
+        {
+          "source": "@rspress/docs",
+          "target": "@rspress/plugin-twoslash",
+          "type": "static"
+        }
+      ]
+    }
+  }
+}

@@ -144,6 +144,7 @@ export interface PluginRssOptions {
   siteUrl: string;
   feed?: Partial<FeedChannel> | FeedChannel[];
   output?: Omit<FeedOutputOptions, 'filename'>;
+  disable?: boolean;
 }
 ```
 
@@ -169,6 +170,20 @@ export default defineConfig({
       siteUrl: 'https://example.com/base/',
     }),
   ],
+});
+```
+
+#### `disable`
+
+- **类型**： `string[]`
+
+是否禁用 RSS 生成。这在需要在某些环境或配置中跳过生成 RSS 文件时非常有用。
+
+如果提供的是字符串数组，它们将被作为 `picomatch` 的 glob 模式处理。如果有页面的路由能够匹配其中任意一个模式，那么该页面将不会被纳入 RSS 生成范围。
+
+```ts
+pluginRss({
+  disable: ['/blog/foo', '/releases/*'],
 });
 ```
 

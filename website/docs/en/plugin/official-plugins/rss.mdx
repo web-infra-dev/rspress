@@ -144,6 +144,7 @@ export interface PluginRssOptions {
   siteUrl: string;
   feed?: Partial<FeedChannel> | FeedChannel[];
   output?: Omit<FeedOutputOptions, 'filename'>;
+  disable?: boolean;
 }
 ```
 
@@ -169,6 +170,20 @@ export default defineConfig({
       siteUrl: 'https://example.com/base/',
     }),
   ],
+});
+```
+
+#### `disable`
+
+- **Type**: `string[]`
+
+Whether to disable RSS generation. This is useful if you want to conditionally skip building feeds in certain environments or configurations.
+
+If an array of strings is provided, they will be treated as `picomatch` glob patterns. RSS generation will be disabled for pages whose route path matches any of the patterns.
+
+```ts
+pluginRss({
+  disable: ['/blog/foo', '/releases/*'],
 });
 ```
 
