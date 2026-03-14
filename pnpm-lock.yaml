@@ -623,7 +623,7 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
-  e2e/fixtures/plugin-rss-disable:
+  e2e/fixtures/plugin-rss-exclude:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
@@ -1295,7 +1295,7 @@ importers:
         version: 7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       rsbuild-plugin-publint:
         specifier: ^0.3.4
-        version: 0.3.4(@rsbuild/core@2.0.0-beta.6)
+        version: 0.3.4(@rsbuild/core@2.0.0-beta.8)
       rsbuild-plugin-virtual-module:
         specifier: 0.4.1
         version: 0.4.1(@rsbuild/core@2.0.0-beta.6)
