@@ -163,7 +163,7 @@ test.describe('search keyboard', async () => {
     // Type first search query
     const searchInput = await page.$('.rp-search-panel__input');
     await searchInput?.focus();
-    await page.keyboard.type('Foo');
+    await page.keyboard.type('1.');
     await page.waitForTimeout(400);
 
     // Wait for search results
@@ -184,7 +184,7 @@ test.describe('search keyboard', async () => {
     expect(currentIndex).toBe(1);
 
     // Change search query
-    await searchInput?.fill('Bar');
+    await searchInput?.fill('1');
     await page.waitForTimeout(400);
 
     // Wait for new search results
