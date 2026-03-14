@@ -158,22 +158,25 @@ test.describe('search keyboard', async () => {
     // Open search panel
     const searchButton = await page.$('.rp-search-button');
     await searchButton?.click();
-    await page.waitForSelector('.rp-search-panel__input');
+
+    // Wait for search input to be visible and focus it
+    const searchInput = await page.waitForSelector('.rp-search-panel__input', {
+      state: 'visible',
+    });
+    await searchInput.focus();
 
     // Type first search query
-    const searchInput = await page.$('.rp-search-panel__input');
-    await searchInput?.focus();
     await page.keyboard.type('1.');
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(500);
 
-    // Wait for search results
-    await page.waitForSelector('.rp-suggest-item');
+    // Wait for search results to be visible
+    await page.waitForSelector('.rp-suggest-item', { state: 'visible' });
     const suggestItems = await page.$$('.rp-suggest-item');
     expect(suggestItems.length).toBeGreaterThan(0);
 
     // Navigate to second item
     await page.keyboard.press('ArrowDown');
-    await page.waitForTimeout(100);
+    await page.waitForTimeout(200);
     let currentIndex = await page.evaluate(() => {
       const items = Array.from(document.querySelectorAll('.rp-suggest-item'));
       const current = document.querySelector(
@@ -184,11 +187,11 @@ test.describe('search keyboard', async () => {
     expect(currentIndex).toBe(1);
 
     // Change search query
-    await searchInput?.fill('1');
-    await page.waitForTimeout(400);
+    await searchInput.fill('1');
+    await page.waitForTimeout(500);
 
-    // Wait for new search results
-    await page.waitForSelector('.rp-suggest-item');
+    // Wait for new search results to be visible
+    await page.waitForSelector('.rp-suggest-item', { state: 'visible' });
 
     // Verify that first item is now selected
     currentIndex = await page.evaluate(() => {
