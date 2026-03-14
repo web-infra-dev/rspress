@@ -61,10 +61,8 @@ test.describe('plugin rss test with disable: true', async () => {
     expect(blogText).toContain('/blog/bar');
     expect(blogText).not.toContain('/blog/foo');
 
-    // releases is completely empty because all releases paths are wildcard disabled
+    // releases feed is not generated at all because all its items are disabled
     const releasesRes = await request.get(`${prefix}releases/feed.xml`);
-    expect(releasesRes.status()).toBe(200);
-    const releasesText = await releasesRes.text();
-    expect(releasesText).not.toContain('1.0.0');
+    expect(releasesRes.status()).toBe(404);
   });
 });
