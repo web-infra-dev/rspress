@@ -1,5 +1,5 @@
 {
-  "name": "@rspress-fixture/plugin-rss-disable",
+  "name": "@rspress-fixture/plugin-rss-exclude",
   "version": "1.0.0",
   "private": true,
   "scripts": {

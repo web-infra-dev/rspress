@@ -81,9 +81,9 @@ async function getRssItems(
 }
 
 export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
-  const { disable } = pluginRssOptions;
+  const { exclude } = pluginRssOptions;
 
-  const isDisableMatch = Array.isArray(disable) ? picomatch(disable) : null;
+  const isExcludeMatch = Array.isArray(exclude) ? picomatch(exclude) : null;
 
   const feedsSet = new FeedsSet();
 
@@ -121,7 +121,7 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
         ? pageData.routePath
         : `/${pageData.routePath}`;
 
-      if (isDisableMatch?.(testPath)) {
+      if (isExcludeMatch?.(testPath)) {
         return;
       }
 

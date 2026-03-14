@@ -9,7 +9,7 @@ export default defineConfig({
   base: fixture.base,
   plugins: [
     pluginRss({
-      disable: ['/blog/foo', '/releases/*'],
+      exclude: ['/blog/foo', '/releases/*'],
       siteUrl: fixture.siteUrl,
       feed: [
         {

@@ -10,7 +10,7 @@ import fixture from './fixture.json';
 const appDir = __dirname;
 const { siteUrl } = fixture;
 
-test.describe('plugin rss test with disable: true', async () => {
+test.describe('plugin rss test with exclude: true', async () => {
   let appPort: number;
   let app: unknown;
   let prefix: string;
@@ -27,7 +27,7 @@ test.describe('plugin rss test with disable: true', async () => {
     }
   });
 
-  test('`blog/bar` should HAVE rss <link> since it is not disabled', async ({
+  test('`blog/bar` should HAVE rss <link> since it is not excluded', async ({
     page,
   }) => {
     await page.goto(`${prefix}blog/bar`, { waitUntil: 'networkidle' });
@@ -35,7 +35,7 @@ test.describe('plugin rss test with disable: true', async () => {
     await expect(link).toHaveCount(1);
   });
 
-  test('`blog/foo` should NOT have rss <link> since it is disabled by exact match', async ({
+  test('`blog/foo` should NOT have rss <link> since it is excluded by exact match', async ({
     page,
   }) => {
     await page.goto(`${prefix}blog/foo`, { waitUntil: 'networkidle' });
@@ -43,7 +43,7 @@ test.describe('plugin rss test with disable: true', async () => {
     await expect(link).toHaveCount(0);
   });
 
-  test('`releases/1.0.0` should NOT have rss <link> since it is disabled by wildcard', async ({
+  test('`releases/1.0.0` should NOT have rss <link> since it is excluded by wildcard', async ({
     page,
   }) => {
     await page.goto(`${prefix}releases/1.0.0`, { waitUntil: 'networkidle' });
@@ -51,7 +51,7 @@ test.describe('plugin rss test with disable: true', async () => {
     await expect(link).toHaveCount(0);
   });
 
-  test('should generate feed files but respect disabled paths', async ({
+  test('should generate feed files but respect excluded paths', async ({
     request,
   }) => {
     // We expect a 200 since the feed channels are enabled globally, but individual items are filtered
@@ -61,7 +61,7 @@ test.describe('plugin rss test with disable: true', async () => {
     expect(blogText).toContain('/blog/bar');
     expect(blogText).not.toContain('/blog/foo');
 
-    // releases feed is not generated at all because all its items are disabled
+    // releases feed is not generated at all because all its items are excluded
     const releasesRes = await request.get(`${prefix}releases/feed.xml`);
     expect(releasesRes.status()).toBe(404);
   });
