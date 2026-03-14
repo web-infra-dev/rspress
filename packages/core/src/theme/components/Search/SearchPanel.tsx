@@ -345,13 +345,13 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         await userSearchHooks[key](newQuery, searchResult);
       }
 
+      // Reset current suggestion index to 0 when search query changes
+      setCurrentSuggestionIndex(0);
       // only setSearchResult when query is current query value
       const currQuery = searchInputRef.current?.value;
       if (currQuery === newQuery) {
         setSearchResult(searchResult || DEFAULT_RESULT);
         setIsSearching(false);
-        // Reset current suggestion index to 0 when search query changes
-        setCurrentSuggestionIndex(0);
       }
     }
   };
