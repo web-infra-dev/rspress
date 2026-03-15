@@ -1,3 +1,5 @@
+'use client';
+
 import type { Feature } from '@rspress/core';
 import { useFrontmatter } from '@rspress/core/runtime';
 import { renderHtmlOrText, SvgWrapper, useLinkNavigate } from '@theme';

@@ -92,6 +92,7 @@
     "react-reconciler": "0.33.0",
     "react-render-to-markdown": "19.0.1",
     "react-router-dom": "^7.13.1",
+    "react-server-dom-rspack": "0.0.2",
     "rehype-external-links": "^3.0.0",
     "rehype-raw": "^7.0.0",
     "remark-cjk-friendly": "^2.0.1",
@@ -107,7 +108,9 @@
     "unified": "^11.0.5",
     "unist-util-remove": "^4.0.0",
     "unist-util-visit": "^5.0.0",
-    "unist-util-visit-children": "^3.0.0"
+    "unist-util-visit-children": "^3.0.0",
+    "rsbuild-plugin-rsc": "0.0.2",
+    "rsc-html-stream": "^0.0.7"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.57.7",

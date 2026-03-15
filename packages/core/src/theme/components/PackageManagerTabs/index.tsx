@@ -1,3 +1,5 @@
+'use client';
+
 import { getCustomMDXComponent, Tab, Tabs } from '@theme';
 import { type ReactNode, useMemo } from 'react';
 import { Bun } from './icons/Bun';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useSearchParams } from '@rspress/core/runtime';
 import clsx from 'clsx';
 import {

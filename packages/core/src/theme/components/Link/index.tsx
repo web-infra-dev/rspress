@@ -1,3 +1,5 @@
+'use client';
+
 import { preloadLink } from '@rspress/core/runtime';
 import clsx from 'clsx';
 import nprogress from 'nprogress';
@@ -98,7 +100,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
         className={clsx(className, 'rp-link')}
         onMouseEnter={event => {
           onMouseEnter?.(event);
-          preloadLink(removeBaseHref);
+          if (!process.env.__RSC__) {
+            preloadLink(removeBaseHref);
+          }
         }}
         onClick={e => {
           onClick?.(e);
@@ -132,7 +136,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
       className={clsx(className, 'rp-link')}
       onMouseEnter={event => {
         onMouseEnter?.(event);
-        preloadLink(removeBaseHref);
+        if (!process.env.__RSC__) {
+          preloadLink(removeBaseHref);
+        }
       }}
       onClick={e => {
         onClick?.(e);

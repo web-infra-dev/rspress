@@ -245,6 +245,13 @@ export interface UserConfig {
     | boolean
     | {
         /**
+         * Select the static rendering implementation.
+         * - `ssr`: existing SSR-to-HTML SSG pipeline
+         * - `rsc`: React Server Components based SSG pipeline
+         * @default 'ssr'
+         */
+        renderMode?: 'ssr' | 'rsc';
+        /**
          * After enabled, you can use worker to accelerate the SSG process and reduce memory usage. It is suitable for large document sites and is based on [tinypool](https://github.com/tinylibs/tinypool).
          * @default false
          */

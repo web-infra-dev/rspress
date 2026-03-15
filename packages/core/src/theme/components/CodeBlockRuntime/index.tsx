@@ -1,3 +1,5 @@
+'use client';
+
 import type { CodeBlockProps } from '@theme';
 import { getCustomMDXComponent } from '@theme';
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';

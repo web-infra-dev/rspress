@@ -80,6 +80,11 @@ export function useLinkNavigate(
         return;
       }
 
+      if (process.env.__RSC__) {
+        window.location.assign(withBaseHref);
+        return;
+      }
+
       const preloadChunkThenNavigate = async () => {
         const inCurrPage = isActive(removeBaseHref, currPagePathname);
         if (!process.env.__SSR__ && !inCurrPage) {

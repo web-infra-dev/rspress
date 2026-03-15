@@ -38,7 +38,10 @@ export default async function mdxLoader(
         routeService,
         addDependency: this.addDependency,
       });
-      callback(null, compileResult);
+
+      // TODO: hardcoded "use server-entry";
+      const serverEntryCode = `"use server-entry";\n${compileResult}`;
+      callback(null, serverEntryCode);
     } else {
       const compileResult = await compile({
         source,
@@ -50,7 +53,9 @@ export default async function mdxLoader(
         addDependency: this.addDependency,
         isSsgMd,
       });
-      callback(null, compileResult);
+      // TODO: hardcoded "use server-entry";
+      const serverEntryCode = `"use server-entry";\n${compileResult}`;
+      callback(null, serverEntryCode);
     }
   } catch (e) {
     if (e instanceof Error) {

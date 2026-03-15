@@ -1,3 +1,5 @@
+'use client';
+
 import { IconClose, Link, mergeRefs, SvgWrapper } from '@theme';
 import clsx from 'clsx';
 import { forwardRef, type ReactNode, useEffect, useState } from 'react';

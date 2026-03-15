@@ -768,6 +768,22 @@ importers:
         specifier: ^22.8.1
         version: 22.10.2
 
+  e2e/fixtures/rsc:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.0
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.4(react@19.2.4)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.10.2
+
   e2e/fixtures/search:
     dependencies:
       '@rspress/core':
@@ -1024,6 +1040,9 @@ importers:
       react-router-dom:
         specifier: ^7.13.1
         version: 7.13.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react-server-dom-rspack:
+        specifier: 0.0.2
+        version: 0.0.2(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       rehype-external-links:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1048,6 +1067,12 @@ importers:
       remark-stringify:
         specifier: ^11.0.0
         version: 11.0.0
+      rsbuild-plugin-rsc:
+        specifier: 0.0.2
+        version: 0.0.2(@rsbuild/core@2.0.0-beta.6)(react-server-dom-rspack@0.0.2(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+      rsc-html-stream:
+        specifier: ^0.0.7
+        version: 0.0.7
       scroll-into-view-if-needed:
         specifier: ^3.1.0
         version: 3.1.0
@@ -6304,6 +6329,14 @@ packages:
       react-dom:
         optional: true
 
+  react-server-dom-rspack@0.0.2:
+    resolution: {integrity: sha512-PowIm+Z65LkvC3yk4t3YrH2nMejwL361jiBT0BMW2bQCDUaNQknDHMPH0aTgMtJ9ZZ1Gc7KFgBvwB0itSzzELQ==}
+    engines: {node: '>=0.10.0'}
+    peerDependencies:
+      '@rspack/core': ^2.0.0-0
+      react: ^19.1.0
+      react-dom: ^19.1.0
+
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
@@ -6529,6 +6562,12 @@ packages:
       '@rsbuild/core':
         optional: true
 
+  rsbuild-plugin-rsc@0.0.2:
+    resolution: {integrity: sha512-JkaXP6P9aXJDs0cGCY7+PBpQ5jc7g3kV3vhZA7Sco35FD3tPWhWX61FsrTnglqJ6PtPah3tJbJ42NMjwP2XfVw==}
+    peerDependencies:
+      '@rsbuild/core': ^2.0.0-0
+      react-server-dom-rspack: '*'
+
   rsbuild-plugin-virtual-module@0.4.1:
     resolution: {integrity: sha512-4ifO+yPlcjkjroNNVWaixDhFxX+mveaAiX1lVtIlm/f8q+9yELKWoeSNedlJ6vKtwGNjwBglje/ISKfUMT4Q9A==}
     peerDependencies:
@@ -6536,6 +6575,9 @@ packages:
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
+
+  rsc-html-stream@0.0.7:
+    resolution: {integrity: sha512-v9+fuY7usTgvXdNl8JmfXCvSsQbq2YMd60kOeeMIqCJFZ69fViuIxztHei7v5mlMMa2h3SqS+v44Gu9i9xANZA==}
 
   rslog@1.3.0:
     resolution: {integrity: sha512-93DpwwaiRrLz7fJ5z6Uwb171hHBws1VVsWjU6IruLFX63BicLA44QNu0sfn3guKHnBHZMFSKO8akfx5QhjuegQ==}
@@ -12783,6 +12825,12 @@ snapshots:
     optionalDependencies:
       react-dom: 19.2.4(react@19.2.4)
 
+  react-server-dom-rspack@0.0.2(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+    dependencies:
+      '@rspack/core': 2.0.0-beta.6(@swc/helpers@0.5.19)
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
@@ -13124,9 +13172,16 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 2.0.0-beta.8
 
+  rsbuild-plugin-rsc@0.0.2(@rsbuild/core@2.0.0-beta.6)(react-server-dom-rspack@0.0.2(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
+    dependencies:
+      '@rsbuild/core': 2.0.0-beta.6
+      react-server-dom-rspack: 0.0.2(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+
   rsbuild-plugin-virtual-module@0.4.1(@rsbuild/core@2.0.0-beta.6):
     optionalDependencies:
       '@rsbuild/core': 2.0.0-beta.6
+
+  rsc-html-stream@0.0.7: {}
 
   rslog@1.3.0: {}
 

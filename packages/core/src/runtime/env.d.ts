@@ -43,3 +43,47 @@ declare module '*.svg' {
 declare module '@theme' {
   export * from '#theme';
 }
+
+declare module 'react-server-dom-rspack/client.browser' {
+  export function createFromReadableStream<T>(
+    stream: ReadableStream<Uint8Array>,
+  ): Promise<T>;
+}
+
+declare module 'react-server-dom-rspack/client.node' {
+  export function createFromReadableStream<T>(
+    stream: ReadableStream<Uint8Array>,
+  ): Promise<T>;
+}
+
+declare module 'react-server-dom-rspack/client.edge' {
+  export function createFromReadableStream<T>(
+    stream: ReadableStream<Uint8Array>,
+  ): Promise<T>;
+}
+
+declare module 'react-server-dom-rspack/server.node' {
+  import type { ComponentType } from 'react';
+
+  export type ServerEntry<T extends ComponentType<any>> = T & {
+    entryCssFiles?: string[];
+    entryJsFiles?: string[];
+  };
+
+  export function renderToReadableStream(
+    value: unknown,
+  ): ReadableStream<Uint8Array>;
+}
+
+declare module 'react-server-dom-rspack/server.edge' {
+  import type { ComponentType } from 'react';
+
+  export type ServerEntry<T extends ComponentType<any>> = T & {
+    entryCssFiles?: string[];
+    entryJsFiles?: string[];
+  };
+
+  export function renderToReadableStream(
+    value: unknown,
+  ): ReadableStream<Uint8Array>;
+}

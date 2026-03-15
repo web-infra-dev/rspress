@@ -1,3 +1,5 @@
+'use client';
+
 import { ThemeContext, useSite } from '@rspress/core/runtime';
 import { IconMoon, IconSun, SvgWrapper } from '@theme';
 import { type MouseEvent, useContext } from 'react';
