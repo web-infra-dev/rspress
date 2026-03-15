@@ -1,3 +1,5 @@
+'use client';
+
 export { RscClientProviders } from './rsc/ClientProviders';
 export {
   RscDocChrome,

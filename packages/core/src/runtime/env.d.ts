@@ -30,6 +30,18 @@ declare module 'virtual-global-styles';
 
 declare module 'virtual-i18n-text';
 
+declare module 'rspress-rsc-entry' {
+  import type { UserConfig } from '@rspress/shared';
+
+  export function renderStaticRsc(
+    routePath: string,
+    configHead?: UserConfig['head'],
+  ): Promise<{
+    stream: ReadableStream<Uint8Array>;
+    bootstrapScripts?: string[];
+  }>;
+}
+
 declare module '*.module.scss' {
   const classes: { [key: string]: string };
   export default classes;

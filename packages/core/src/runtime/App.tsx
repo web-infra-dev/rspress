@@ -1,3 +1,5 @@
+"use client";
+
 import { PageContext, useLocation } from '@rspress/core/runtime';
 import { Layout, Root } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';

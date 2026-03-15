@@ -75,7 +75,7 @@ export const RSC_SSR_ENTRY = path.join(
   PACKAGE_ROOT,
   'dist',
   'runtime',
-  'rscSsrEntry.js',
+  'rscSsrServerEntry.js',
 );
 
 export const SSG_MD_SERVER_ENTRY = path.join(

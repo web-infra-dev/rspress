@@ -15,7 +15,7 @@ import {
   removeTrailingSlash,
   type UserConfig,
 } from '@rspress/shared';
-import { Layers, pluginRSC } from 'rsbuild-plugin-rsc';
+import { pluginRSC } from 'rsbuild-plugin-rsc';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import {
   CSR_CLIENT_ENTRY,
@@ -23,8 +23,6 @@ import {
   DEFAULT_TITLE,
   inlineThemeScript,
   isProduction,
-  NODE_RSC_SSG_SERVER_ENTRY_NAME,
-  NODE_RSC_SSG_SSR_ENTRY_NAME,
   NODE_SSG_BUNDLE_FOLDER,
   NODE_SSG_BUNDLE_NAME,
   NODE_SSG_MD_BUNDLE_FOLDER,
@@ -64,7 +62,6 @@ import {
   resolveReactAlias,
   resolveReactRenderToMarkdownAlias,
   resolveReactRouterDomAlias,
-  resolveReactServerAlias,
 } from './utils';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
@@ -136,13 +133,11 @@ async function createInternalBuildConfig(
   const [
     reactCSRAlias,
     reactSSRAlias,
-    reactRscAlias,
     reactRouterDomAlias,
     reactRenderToMarkdownAlias,
   ] = await Promise.all([
     resolveReactAlias(false),
     enableSSG ? resolveReactAlias(true) : Promise.resolve({}),
-    isRsc ? resolveReactServerAlias() : Promise.resolve({}),
     resolveReactRouterDomAlias(),
     enableSSG && config.llms
       ? resolveReactRenderToMarkdownAlias()
@@ -156,7 +151,6 @@ async function createInternalBuildConfig(
     pluginDriver,
   };
   return {
-    mode: 'development',
     plugins: [
       ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
       isRsc
@@ -164,6 +158,10 @@ async function createInternalBuildConfig(
             environments: {
               server: 'node',
               client: 'web',
+            },
+            layers: {
+              rsc: RSC_SERVER_ENTRY,
+              ssr: RSC_SSR_ENTRY,
             },
           })
         : null,
@@ -420,12 +418,7 @@ async function createInternalBuildConfig(
         }
 
         chain.resolve.extensions.prepend('.md').prepend('.mdx').prepend('.mjs');
-        if (isSsg && isRsc) {
-          chain.module
-            .rule('rspress-rsc-react-alias')
-            .issuerLayer([Layers.rsc])
-            .resolve.alias.merge(reactRscAlias);
-        }
+
 
         chain.module
           .rule('rspress-css-virtual-module')
@@ -436,20 +429,11 @@ async function createInternalBuildConfig(
           chain.optimization.splitChunks({});
         }
 
-        if (isRsc) {
-          chain.optimization.concatenateModules(false);
-        }
-
         if (isSsg) {
-          if (isRsc) {
-            chain.output.filename(`${NODE_SSG_BUNDLE_FOLDER}/[name].mjs`);
-            chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].mjs`);
-          } else {
-            chain.output.filename(
-              `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
-            );
-            chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`);
-          }
+          chain.output.filename(
+            `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
+          );
+          chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`);
         } else if (isSsgMd) {
           chain.output.filename(
             `${NODE_SSG_MD_BUNDLE_FOLDER}/${NODE_SSG_MD_BUNDLE_NAME}`,
@@ -496,13 +480,6 @@ async function createInternalBuildConfig(
               __dirname: 'mock',
               __filename: 'mock',
             },
-            ...(isRsc
-              ? {
-                  optimization: {
-                    concatenateModules: false,
-                  },
-                }
-              : {}),
           },
         },
       },
@@ -519,14 +496,7 @@ async function createInternalBuildConfig(
                 entry: {
                   ...(isRsc
                     ? {
-                        [NODE_RSC_SSG_SERVER_ENTRY_NAME]: {
-                          import: RSC_SERVER_ENTRY,
-                          layer: Layers.rsc,
-                        },
-                        [NODE_RSC_SSG_SSR_ENTRY_NAME]: {
-                          import: RSC_SSR_ENTRY,
-                          layer: Layers.ssr,
-                        },
+                        index: RSC_SSR_ENTRY,
                       }
                     : {
                         index: SSR_SERVER_ENTRY,
