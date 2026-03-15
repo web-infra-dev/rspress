@@ -1,14 +1,22 @@
-import { type ReactNode, Suspense, useMemo } from 'react';
+import type { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
-import { pathnameToRouteService } from './route';
+import { RouteContent, type RouteRenderProps } from './RouteContent';
 
 // TODO: fallback should be a loading spinner
-export const Content = ({ fallback = <></> }: { fallback?: ReactNode }) => {
+export const Content = ({
+  fallback = <></>,
+  routeProps,
+}: {
+  fallback?: ReactNode;
+  routeProps?: RouteRenderProps;
+}) => {
   const { pathname } = useLocation();
-  const matchedElement = useMemo(() => {
-    const route = pathnameToRouteService(pathname);
-    return route?.element;
-  }, [pathname]);
 
-  return <Suspense fallback={fallback}>{matchedElement}</Suspense>;
+  return (
+    <RouteContent
+      pathname={pathname}
+      fallback={fallback}
+      routeProps={routeProps}
+    />
+  );
 };

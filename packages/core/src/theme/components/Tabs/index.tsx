@@ -1,3 +1,5 @@
+'use client';
+
 import { useStorageValue } from '@theme';
 import clsx from 'clsx';
 import {

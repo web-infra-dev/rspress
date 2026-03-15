@@ -1,3 +1,5 @@
+'use client';
+
 import { Link } from '@theme';
 import clsx from 'clsx';
 import React, { type JSX } from 'react';

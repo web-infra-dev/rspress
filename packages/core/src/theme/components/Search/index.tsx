@@ -1,3 +1,5 @@
+'use client';
+
 import { NoSSR } from '@rspress/core/runtime';
 import { SearchButton, SearchPanel } from '@theme';
 import { useState } from 'react';

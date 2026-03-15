@@ -14,15 +14,14 @@ interface MdSSRBundleExports {
 export async function renderPage(route: RouteMeta, ssrBundlePath: string) {
   let render: MdSSRBundleExports['render'];
   try {
-    let { default: ssrExports } = await import(
-      pathToFileURL(ssrBundlePath).toString()
-    );
+    const imported = await import(pathToFileURL(ssrBundlePath).toString());
+    let ssrExports = imported.default;
 
     if (ssrExports instanceof Promise) {
       ssrExports = await ssrExports;
     }
 
-    render = ssrExports.render;
+    render = imported.render ?? ssrExports?.render;
   } catch (e) {
     if (e instanceof Error) {
       logger.error(

@@ -1,3 +1,5 @@
+'use client';
+
 import { useNavTransparent } from './useNavTransparent';
 import './index.scss';
 import clsx from 'clsx';

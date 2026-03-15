@@ -104,6 +104,47 @@ export async function resolveReactAlias(isSSR: boolean) {
   return alias;
 }
 
+export async function resolveReactServerAlias(): Promise<Record<string, string>> {
+  const hasInstalled = await detectPackageMajorVersion('react');
+  const basedir = hasInstalled ? process.cwd() : PACKAGE_ROOT;
+  const libPaths = [
+    'react',
+    'react/jsx-runtime',
+    'react/jsx-dev-runtime',
+    'react/package.json',
+  ];
+
+  const alias: Record<string, string> = {};
+  const resolver = new Resolver({
+    extensions: ['.js'],
+    alias,
+    conditionNames: ['react-server', 'node', 'import', 'require', 'default'],
+  });
+
+  await Promise.all(
+    libPaths.map(async lib => {
+      try {
+        const resolved = await resolver.async(basedir, lib);
+
+        if (resolved.error || !resolved.path) {
+          throw Error(resolved.error);
+        }
+
+        alias[lib] = resolved.path;
+      } catch (e) {
+        if (e instanceof Error) {
+          logger.warn(
+            `${lib} not found: \n    ${picocolors.gray(e.toString())}`,
+          );
+          hintReactVersion();
+        }
+      }
+    }),
+  );
+
+  return alias;
+}
+
 export async function resolveReactRenderToMarkdownAlias(): Promise<
   Record<string, string>
 > {

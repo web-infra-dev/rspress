@@ -50,11 +50,32 @@ export const SSR_CLIENT_ENTRY = path.join(
   'ssrClientEntry.js',
 );
 
+export const RSC_CLIENT_ENTRY = path.join(
+  PACKAGE_ROOT,
+  'dist',
+  'runtime',
+  'rscClientEntry.js',
+);
+
 export const SSR_SERVER_ENTRY = path.join(
   PACKAGE_ROOT,
   'dist',
   'runtime',
   'ssrServerEntry.js',
+);
+
+export const RSC_SERVER_ENTRY = path.join(
+  PACKAGE_ROOT,
+  'dist',
+  'runtime',
+  'rscServerEntry.js',
+);
+
+export const RSC_SSR_ENTRY = path.join(
+  PACKAGE_ROOT,
+  'dist',
+  'runtime',
+  'rscSsrServerEntry.js',
 );
 
 export const SSG_MD_SERVER_ENTRY = path.join(
@@ -76,6 +97,9 @@ export const PUBLIC_DIR = 'public';
 // Prevent the risk of naming conflicts with the user's folders
 export const NODE_SSG_BUNDLE_FOLDER = '__ssg__';
 export const NODE_SSG_BUNDLE_NAME = 'rspress-ssg-entry.cjs';
+export const NODE_RSC_SSG_BUNDLE_NAME = 'rspress-ssg-entry.mjs';
+export const NODE_RSC_SSG_SERVER_ENTRY_NAME = 'rspress-rsc-entry';
+export const NODE_RSC_SSG_SSR_ENTRY_NAME = 'rspress-rsc-ssr-entry';
 
 export const NODE_SSG_MD_BUNDLE_FOLDER = '__ssg_md__';
 export const NODE_SSG_MD_BUNDLE_NAME = 'rspress-ssg-md-entry.cjs';

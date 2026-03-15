@@ -15,6 +15,7 @@ import {
   removeTrailingSlash,
   type UserConfig,
 } from '@rspress/shared';
+import { Layers, pluginRSC } from 'rsbuild-plugin-rsc';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import {
   CSR_CLIENT_ENTRY,
@@ -22,6 +23,7 @@ import {
   DEFAULT_TITLE,
   inlineThemeScript,
   isProduction,
+  NODE_RSC_SSG_BUNDLE_NAME,
   NODE_SSG_BUNDLE_FOLDER,
   NODE_SSG_BUNDLE_NAME,
   NODE_SSG_MD_BUNDLE_FOLDER,
@@ -29,6 +31,9 @@ import {
   OUTPUT_DIR,
   PACKAGE_ROOT,
   PUBLIC_DIR,
+  RSC_CLIENT_ENTRY,
+  RSC_SERVER_ENTRY,
+  RSC_SSR_ENTRY,
   SSG_MD_SERVER_ENTRY,
   SSR_CLIENT_ENTRY,
   SSR_SERVER_ENTRY,
@@ -49,6 +54,7 @@ import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import { siteDataVMPlugin } from './runtimeModule/siteData/rsbuildPlugin';
 import { socialLinksVMPlugin } from './runtimeModule/socialLinks';
 import type { FactoryContext } from './runtimeModule/types';
+import { isRscRenderMode } from './ssg/renderMode';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import { rsbuildPluginSSGMD } from './ssg-md/rsbuildPluginSSGMD';
@@ -57,6 +63,7 @@ import {
   resolveReactAlias,
   resolveReactRenderToMarkdownAlias,
   resolveReactRouterDomAlias,
+  resolveReactServerAlias,
 } from './utils';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
@@ -96,6 +103,9 @@ async function createInternalBuildConfig(
     ? config.themeDir!
     : path.join(cwd(), config.themeDir!);
   const outDir = config?.outDir ?? OUTPUT_DIR;
+  const isRsc = enableSSG && config.ssg && isRscRenderMode(config);
+  const RSC_THEME_ENTRY = path.join(PACKAGE_ROOT, 'dist/runtime/rsc/theme.js');
+  const RSC_MDX_ENTRY = path.join(PACKAGE_ROOT, 'dist/runtime/rsc/mdx.js');
 
   const base = config?.base ?? '/';
 
@@ -125,11 +135,13 @@ async function createInternalBuildConfig(
   const [
     reactCSRAlias,
     reactSSRAlias,
+    reactRscAlias,
     reactRouterDomAlias,
     reactRenderToMarkdownAlias,
   ] = await Promise.all([
     resolveReactAlias(false),
     enableSSG ? resolveReactAlias(true) : Promise.resolve({}),
+    isRsc ? resolveReactServerAlias() : Promise.resolve({}),
     resolveReactRouterDomAlias(),
     enableSSG && config.llms
       ? resolveReactRenderToMarkdownAlias()
@@ -145,6 +157,18 @@ async function createInternalBuildConfig(
   return {
     plugins: [
       ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
+      isRsc
+        ? pluginRSC({
+            environments: {
+              server: 'node',
+              client: 'web',
+            },
+            layers: {
+              rsc: RSC_SERVER_ENTRY,
+              ssr: RSC_SSR_ENTRY,
+            },
+          })
+        : null,
       rsbuildPluginDocVM({
         config,
         pluginDriver,
@@ -244,11 +268,13 @@ async function createInternalBuildConfig(
     },
     resolve: {
       alias: {
-        '@mdx-js/react': require.resolve('@mdx-js/react'),
+        '@mdx-js/react': isRsc ? RSC_MDX_ENTRY : require.resolve('@mdx-js/react'),
         'react-lazy-with-preload': require.resolve('react-lazy-with-preload'),
         // single runtime
-        '@theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
-        '@rspress/core/theme': [CUSTOM_THEME_DIR, DEFAULT_THEME],
+        '@theme': isRsc ? RSC_THEME_ENTRY : [CUSTOM_THEME_DIR, DEFAULT_THEME],
+        '@rspress/core/theme': isRsc
+          ? RSC_THEME_ENTRY
+          : [CUSTOM_THEME_DIR, DEFAULT_THEME],
 
         '@theme-original': DEFAULT_THEME,
         '@rspress/core/theme-original': DEFAULT_THEME,
@@ -261,6 +287,16 @@ async function createInternalBuildConfig(
           PACKAGE_ROOT,
           'dist/shiki-transformers.js',
         ),
+
+        'react-server-dom-rspack/server': require.resolve(
+          'react-server-dom-rspack/server.node',
+        ),
+        'react-server-dom-rspack/client': require.resolve(
+          'react-server-dom-rspack/client.browser',
+        ),
+        'react-server-dom-rspack/client.browser': require.resolve(
+          'react-server-dom-rspack/client.browser',
+        ),
       },
     },
     source: {
@@ -268,7 +304,7 @@ async function createInternalBuildConfig(
         // ensure CSS orders and access @theme before @rspress/theme-default to avoid circular dependency
         path.join(DEFAULT_THEME, './styles/index.js'), // 1. @rspress/theme-default global styles
         'virtual-global-styles', // 2. virtual-global-styles
-        '@theme', // 3. import './index.css'; from 'theme/index.tsx'
+        isRsc ? RSC_THEME_ENTRY : '@theme', // 3. import './index.css'; from 'theme/index.tsx'
       ],
       include: [PACKAGE_ROOT],
       define: {
@@ -387,6 +423,13 @@ async function createInternalBuildConfig(
 
         chain.resolve.extensions.prepend('.md').prepend('.mdx').prepend('.mjs');
 
+        if (isRsc) {
+          chain.module
+            .rule('rspress-rsc-react-alias')
+            .issuerLayer([Layers.rsc])
+            .resolve.alias.merge(reactRscAlias);
+        }
+
         chain.module
           .rule('rspress-css-virtual-module')
           .test(/\.rspress[\\/]runtime[\\/]virtual-global-styles/)
@@ -397,10 +440,16 @@ async function createInternalBuildConfig(
         }
 
         if (isSsg) {
+          const nodeBundleName = isRsc
+            ? NODE_RSC_SSG_BUNDLE_NAME
+            : NODE_SSG_BUNDLE_NAME;
+          const nodeChunkPattern = isRsc
+            ? `${NODE_SSG_BUNDLE_FOLDER}/[name].mjs`
+            : `${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`;
           chain.output.filename(
-            `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
+            `${NODE_SSG_BUNDLE_FOLDER}/${nodeBundleName}`,
           );
-          chain.output.chunkFilename(`${NODE_SSG_BUNDLE_FOLDER}/[name].cjs`);
+          chain.output.chunkFilename(nodeChunkPattern);
         } else if (isSsgMd) {
           chain.output.filename(
             `${NODE_SSG_MD_BUNDLE_FOLDER}/${NODE_SSG_MD_BUNDLE_NAME}`,
@@ -420,13 +469,19 @@ async function createInternalBuildConfig(
         source: {
           entry: {
             index:
-              enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
+              enableSSG && isProduction()
+                ? isRsc
+                  ? RSC_CLIENT_ENTRY
+                  : SSR_CLIENT_ENTRY
+                : CSR_CLIENT_ENTRY,
           },
           define: {
             'process.env.__SSR__': JSON.stringify(false),
             'process.env.__SSR_MD__': JSON.stringify(false),
+            'process.env.__RSC__': JSON.stringify(isRsc),
             'import.meta.env.SSR': JSON.stringify(false),
             'import.meta.env.SSG_MD': JSON.stringify(false),
+            'import.meta.env.RSC': JSON.stringify(isRsc),
           },
         },
         output: {
@@ -455,13 +510,21 @@ async function createInternalBuildConfig(
               },
               source: {
                 entry: {
-                  index: SSR_SERVER_ENTRY,
+                  ...(isRsc
+                    ? {
+                        index: RSC_SSR_ENTRY,
+                      }
+                    : {
+                        index: SSR_SERVER_ENTRY,
+                      }),
                 },
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),
                   'process.env.__SSR_MD__': JSON.stringify(false),
+                  'process.env.__RSC__': JSON.stringify(isRsc),
                   'import.meta.env.SSR': JSON.stringify(true),
                   'import.meta.env.SSG_MD': JSON.stringify(false),
+                  'import.meta.env.RSC': JSON.stringify(isRsc),
                 },
               },
               performance: {
@@ -472,7 +535,7 @@ async function createInternalBuildConfig(
               output: {
                 emitAssets: false,
                 target: 'node',
-                module: false,
+                module: isRsc,
                 minify: false,
               },
             },
@@ -503,8 +566,10 @@ async function createInternalBuildConfig(
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),
                   'process.env.__SSR_MD__': JSON.stringify(true),
+                  'process.env.__RSC__': JSON.stringify(false),
                   'import.meta.env.SSR': JSON.stringify(true),
                   'import.meta.env.SSG_MD': JSON.stringify(true),
+                  'import.meta.env.RSC': JSON.stringify(false),
                 },
               },
               performance: {
