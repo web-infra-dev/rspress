@@ -12,7 +12,11 @@ import { hintSSGFailed } from '../logger/hint';
 import { renderHtmlTemplate } from './renderHtmlTemplate';
 
 interface SSRBundleExports {
-  render: (pagePath: string, head: Unhead) => Promise<{ appHtml: string }>;
+  render: (
+    pagePath: string,
+    head: Unhead,
+    configHead?: UserConfig['head'],
+  ) => Promise<{ appHtml: string }>;
   routes: Route[];
 }
 
@@ -24,15 +28,14 @@ export async function renderPage(
 ) {
   let render: SSRBundleExports['render'];
   try {
-    let { default: ssrExports } = await import(
-      pathToFileURL(ssrBundlePath).toString()
-    );
+    const imported = await import(pathToFileURL(ssrBundlePath).toString());
+    let ssrExports = imported.default;
 
     if (ssrExports instanceof Promise) {
       ssrExports = await ssrExports;
     }
 
-    render = ssrExports.render;
+    render = imported.render ?? ssrExports?.render;
   } catch (e) {
     if (e instanceof Error) {
       logger.error(
@@ -48,7 +51,7 @@ export async function renderPage(
   let appHtml = '';
   if (render) {
     try {
-      ({ appHtml } = await render(routePath, head));
+      ({ appHtml } = await render(routePath, head, configHead));
     } catch (e) {
       if (e instanceof Error) {
         logger.error(
@@ -58,6 +61,10 @@ ${absolutePath ? picocolors.gray(`    File: ${absolutePath}\n`) : ''}    ${picoc
         throw e;
       }
     }
+  }
+
+  if (/^\s*(<!doctype html>\s*)?<html[\s>]/i.test(appHtml)) {
+    return appHtml;
   }
 
   const replacedHtmlTemplate = await renderHtmlTemplate(

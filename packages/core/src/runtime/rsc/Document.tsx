@@ -3,27 +3,24 @@
 import React from 'react';
 import type { PageDataLegacy, RouteMeta, UserConfig } from '@rspress/shared';
 import siteData from 'virtual-site-data';
-import { normalizeImagePath } from '../utils';
 import {
-  RscClientProviders,
   RscDocChrome,
   RscNavChrome,
   RscNotFoundChrome,
   RscOverviewChrome,
-} from '../rscClientReferences';
+} from './ServerChrome';
+import { normalizeImagePath } from '../utils';
 
-const inlineThemeScript = `{
-  const saved = localStorage.getItem('rspress-theme-appearance')
-  const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  const isDark = !saved || saved === 'auto' ? preferDark : saved === 'dark'
-  document.documentElement.classList.toggle('dark', isDark)
-  document.documentElement.classList.toggle('rp-dark', isDark)
-  document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
-}`
-  .replace(/\n/g, ';')
-  .replace(/\s{2,}/g, '');
-
-type PageComponent = React.ComponentType<unknown>;
+const inlineThemeScript = [
+  '{',
+  "const storageKey = 'rspress-theme-appearance'",
+  "const applyTheme = theme => { const isDark = theme === 'dark'; document.documentElement.classList.toggle('dark', isDark); document.documentElement.classList.toggle('rp-dark', isDark); document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'; document.querySelectorAll('[data-rspress-theme-toggle]').forEach(button => { button.textContent = isDark ? 'light' : 'dark' }) }",
+  "const getTheme = () => { const saved = localStorage.getItem(storageKey); const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches; return !saved || saved === 'auto' ? (preferDark ? 'dark' : 'light') : saved }",
+  'applyTheme(getTheme())',
+  "document.addEventListener('DOMContentLoaded', () => { applyTheme(getTheme()) })",
+  "document.addEventListener('click', event => { const targetElement = event.target instanceof Element ? event.target : event.target?.parentElement; const target = targetElement?.closest('[data-rspress-theme-toggle]'); if (!target) { return } const nextTheme = document.documentElement.classList.contains('rp-dark') ? 'light' : 'dark'; localStorage.setItem(storageKey, nextTheme); applyTheme(nextTheme) })",
+  '}',
+].join(';');
 
 export default function RspressRscDocument({
   page,
@@ -32,7 +29,9 @@ export default function RspressRscDocument({
   routeMeta,
 }: {
   page: PageDataLegacy['page'];
-  PageComponent: PageComponent;
+  PageComponent: React.ComponentType<{
+    components?: Record<string, unknown>;
+  }>;
   configHead?: UserConfig['head'];
   routeMeta: RouteMeta;
 }) {
@@ -41,9 +40,7 @@ export default function RspressRscDocument({
   const showNavbar = frontmatter.navbar !== false && pageType !== 'blank';
   const pageTitle = getDocumentTitle(page);
   const description = getDocumentDescription(page);
-  const RenderedPage = PageComponent as React.ComponentType<{
-    components?: Record<string, unknown>;
-  }>;
+  const RenderedPage = PageComponent;
   const mdxComponents = {
     ...getRscMdxComponents(),
     $$$callout$$$: RscCallout,
@@ -63,9 +60,16 @@ export default function RspressRscDocument({
     content = <RscHomeLayout frontmatter={frontmatter} />;
   } else if (pageType === 'doc' || pageType === 'doc-wide') {
     const overviewContent = <RscOverviewChrome content={pageContent} />;
-    content = <RscDocChrome content={pageContent} overviewContent={overviewContent} />;
+    content = (
+      <RscDocChrome
+        content={pageContent}
+        overviewContent={overviewContent}
+        isOverviewPage={Boolean(frontmatter.overview)}
+        isDocWide={frontmatter.pageType === 'doc-wide'}
+      />
+    );
   } else if (pageType === '404') {
-    content = <RscNotFoundChrome />;
+    content = <RscNotFoundChrome page={page} />;
   } else {
     content = pageContent;
   }
@@ -87,13 +91,11 @@ export default function RspressRscDocument({
         <script dangerouslySetInnerHTML={{ __html: inlineThemeScript }} />
       </head>
       <body>
-        <RscClientProviders page={page}>
-          <div id="__rspress_root">
-            {showNavbar ? <RscNavChrome /> : null}
-            {content}
-          </div>
-          <div id="__rspress_modal_container" />
-        </RscClientProviders>
+        <div id="__rspress_root">
+          {showNavbar ? <RscNavChrome /> : null}
+          {content}
+        </div>
+        <div id="__rspress_modal_container" />
       </body>
     </html>
   );

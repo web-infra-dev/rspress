@@ -97,6 +97,7 @@ export const PUBLIC_DIR = 'public';
 // Prevent the risk of naming conflicts with the user's folders
 export const NODE_SSG_BUNDLE_FOLDER = '__ssg__';
 export const NODE_SSG_BUNDLE_NAME = 'rspress-ssg-entry.cjs';
+export const NODE_RSC_SSG_BUNDLE_NAME = 'rspress-ssg-entry.mjs';
 export const NODE_RSC_SSG_SERVER_ENTRY_NAME = 'rspress-rsc-entry';
 export const NODE_RSC_SSG_SSR_ENTRY_NAME = 'rspress-rsc-ssr-entry';
 

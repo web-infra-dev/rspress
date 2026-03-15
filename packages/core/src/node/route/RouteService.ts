@@ -34,6 +34,7 @@ interface InitOptions {
 export interface Route {
   path: string;
   element: React.ReactElement;
+  render: (props?: Record<string, unknown>) => React.ReactElement;
   filePath: string;
   preload: () => Promise<PageModule<ComponentType<unknown>>>;
   lang: string;
@@ -252,15 +253,17 @@ ${routeMeta
         return import("${route.absolutePath}");
       }`;
     const component = `Route${index}`;
+    const render = `(props) => React.createElement(${component}, props)`;
     /**
      * {
      *   route: '/',
      *   element: jsx(Route0),
+     *   render: props => jsx(Route0, props),
      *   preload: Route0.preload,
      *   filePath: '/Users/foo/bar/index.md'
      * }
      */
-    return `{ path: '${route.routePath}', element: React.createElement(${component}), filePath: '${route.relativePath}', preload: ${preload}, lang: '${route.lang}', version: '${route.version}' }`;
+    return `{ path: '${route.routePath}', element: React.createElement(${component}), render: ${render}, filePath: '${route.relativePath}', preload: ${preload}, lang: '${route.lang}', version: '${route.version}' }`;
   })
   .join(',\n')}
 ];

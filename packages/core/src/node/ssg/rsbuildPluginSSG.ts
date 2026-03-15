@@ -3,8 +3,13 @@ import { join } from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { isDebugMode, type UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import { NODE_SSG_BUNDLE_FOLDER, NODE_SSG_BUNDLE_NAME } from '../constants';
+import {
+  NODE_RSC_SSG_BUNDLE_NAME,
+  NODE_SSG_BUNDLE_FOLDER,
+  NODE_SSG_BUNDLE_NAME,
+} from '../constants';
 import type { RouteService } from '../route/RouteService';
+import { isRscRenderMode } from './renderMode';
 import { renderPages } from './renderPages';
 
 export const rsbuildPluginSSG = ({
@@ -73,7 +78,10 @@ export const rsbuildPluginSSG = ({
 
           const distPath = environment.distPath;
           const ssgFolderPath = join(distPath, NODE_SSG_BUNDLE_FOLDER);
-          const mainCjsAbsolutePath = join(ssgFolderPath, NODE_SSG_BUNDLE_NAME);
+          const bundleName = isRscRenderMode(config)
+            ? NODE_RSC_SSG_BUNDLE_NAME
+            : NODE_SSG_BUNDLE_NAME;
+          const mainSsgEntryPath = join(ssgFolderPath, bundleName);
 
           await mkdir(ssgFolderPath, { recursive: true });
           await Promise.all(
@@ -93,7 +101,7 @@ export const rsbuildPluginSSG = ({
           await renderPages(
             routeService,
             config,
-            mainCjsAbsolutePath,
+            mainSsgEntryPath,
             htmlTemplate,
             emitAsset,
           );

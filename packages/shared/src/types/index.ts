@@ -48,6 +48,7 @@ export type { RspressPlugin, AdditionalPage, RspressPlugin as Plugin };
 export interface Route {
   path: string;
   element: React.ReactElement;
+  render: (props?: Record<string, unknown>) => React.ReactElement;
   filePath: string;
   preload: () => Promise<PageModule<React.ComponentType<unknown>>>;
   lang: string;

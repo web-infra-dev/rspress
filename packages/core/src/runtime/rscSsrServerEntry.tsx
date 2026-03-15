@@ -1,3 +1,4 @@
+import type { UserConfig } from '@rspress/shared';
 import type { Unhead } from '@unhead/react/server';
 import React from 'react';
 import { renderToReadableStream } from 'react-dom/server.edge';
@@ -9,8 +10,13 @@ import { renderToRscStream } from './rscServerEntry';
 export async function render(
   routePath: string,
   head: Unhead,
+  configHead?: UserConfig['head'],
 ): Promise<{ appHtml: string }> {
-  const {rscStream, bootstrapScripts} = await renderToRscStream(routePath, head);
+  const { rscStream, bootstrapScripts } = await renderToRscStream(
+    routePath,
+    head,
+    configHead,
+  );
 
   const [rscStream1, rscStream2] = rscStream.tee();
 
@@ -24,7 +30,7 @@ export async function render(
     bootstrapScripts,
   });
   const injectedHtmlStream = htmlStream.pipeThrough(injectRSCPayload(rscStream2));
-  
+
   const reader = injectedHtmlStream.getReader();
   const decoder = new TextDecoder();
   let appHtml = '';
