@@ -5,7 +5,71 @@ import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo, RspressPlugin, UserConfig } from '@rspress/core';
 import { getIconUrlPath } from '@rspress/core';
 import { Feed } from 'feed';
-import picomatch from 'picomatch';
+
+/**
+ * Convert a glob pattern to a RegExp.
+ * Supports: `*` (single segment), `**` (any depth), `?`, `[abc]`, `{a,b}`
+ */
+function globToRegex(pattern: string): RegExp {
+  let i = 0;
+  let regexStr = '';
+  const len = pattern.length;
+
+  while (i < len) {
+    const ch = pattern[i];
+
+    if (ch === '*') {
+      if (pattern[i + 1] === '*') {
+        // ** matches any characters including /
+        regexStr += '.*';
+        i += 2;
+        // skip optional trailing /
+        if (pattern[i] === '/') i++;
+      } else {
+        // * matches anything except /
+        regexStr += '[^/]*';
+        i++;
+      }
+    } else if (ch === '?') {
+      regexStr += '[^/]';
+      i++;
+    } else if (ch === '[') {
+      const closingIdx = pattern.indexOf(']', i + 1);
+      if (closingIdx !== -1) {
+        regexStr += pattern.slice(i, closingIdx + 1);
+        i = closingIdx + 1;
+      } else {
+        regexStr += '\\[';
+        i++;
+      }
+    } else if (ch === '{') {
+      const closingIdx = pattern.indexOf('}', i + 1);
+      if (closingIdx !== -1) {
+        const alternatives = pattern.slice(i + 1, closingIdx).split(',');
+        regexStr += `(?:${alternatives.map(a => a.replace(/[.*+?^$|()\\]/g, '\\$&')).join('|')})`;
+        i = closingIdx + 1;
+      } else {
+        regexStr += '\\{';
+        i++;
+      }
+    } else {
+      // escape regex special characters
+      regexStr += ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      i++;
+    }
+  }
+
+  return new RegExp(`^${regexStr}$`);
+}
+
+/**
+ * Create a matcher function from an array of glob patterns.
+ * Returns a function that tests a string against all patterns.
+ */
+function createGlobMatcher(patterns: string[]): (str: string) => boolean {
+  const regexes = patterns.map(globToRegex);
+  return (str: string) => regexes.some(re => re.test(str));
+}
 
 import { createFeed, generateFeedItem } from './createFeed';
 import { PluginComponents, PluginName } from './exports';
@@ -83,7 +147,9 @@ async function getRssItems(
 export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
   const { exclude } = pluginRssOptions;
 
-  const isExcludeMatch = Array.isArray(exclude) ? picomatch(exclude) : null;
+  const isExcludeMatch = Array.isArray(exclude)
+    ? createGlobMatcher(exclude)
+    : null;
 
   const feedsSet = new FeedsSet();
 

@@ -30,13 +30,11 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "feed": "^5.2.0",
-    "picomatch": "^4.0.3"
+    "feed": "^5.2.0"
   },
   "devDependencies": {
     "@rslib/core": "0.20.0",
     "@types/node": "^22.8.1",
-    "@types/picomatch": "^4.0.2",
     "@types/react": "^19.2.14",
     "react": "^19.2.4",
     "rsbuild-plugin-publint": "^0.3.4",

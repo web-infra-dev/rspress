@@ -1543,9 +1543,6 @@ importers:
       feed:
         specifier: ^5.2.0
         version: 5.2.0
-      picomatch:
-        specifier: ^4.0.3
-        version: 4.0.3
     devDependencies:
       '@rslib/core':
         specifier: 0.20.0
@@ -1553,9 +1550,6 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.10.2
-      '@types/picomatch':
-        specifier: ^4.0.2
-        version: 4.0.2
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.14
@@ -3782,9 +3776,6 @@ packages:
 
   '@types/parse5@6.0.3':
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
-
-  '@types/picomatch@4.0.2':
-    resolution: {integrity: sha512-qHHxQ+P9PysNEGbALT8f8YOSHW0KJu6l2xU8DYY0fu/EmGxXdVnuTLvFUvBgPJMSqXq29SYHveejeAha+4AYgA==}
 
   '@types/react-dom@19.2.3':
     resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
@@ -9633,8 +9624,6 @@ snapshots:
   '@types/nprogress@0.2.3': {}
 
   '@types/parse5@6.0.3': {}
-
-  '@types/picomatch@4.0.2': {}
 
   '@types/react-dom@19.2.3(@types/react@19.2.14)':
     dependencies:

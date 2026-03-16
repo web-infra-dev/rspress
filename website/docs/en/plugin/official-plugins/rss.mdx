@@ -179,7 +179,7 @@ export default defineConfig({
 
 Whether to exclude some RSS generation. This is useful if you want to conditionally skip building feeds in certain environments or configurations.
 
-If an array of strings is provided, they will be treated as `picomatch` glob patterns. RSS generation will be excluded for pages whose route path matches any of the patterns.
+If an array of strings is provided, they will be treated as glob patterns. RSS generation will be excluded for pages whose route path matches any of the patterns.
 
 ```ts
 pluginRss({
