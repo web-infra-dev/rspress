@@ -135,7 +135,6 @@ rspress
 rstack
 rstackjs
 rstest
-Rustify
 selfsign
 shiki
 shikijs
