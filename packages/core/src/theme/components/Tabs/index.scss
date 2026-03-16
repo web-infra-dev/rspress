@@ -63,12 +63,6 @@
 
   &__content {
     &__item {
-      &--active {
-        display: block;
-      }
-      &--hidden {
-        display: none;
-      }
       padding: 0 1rem;
 
       // nested rp-tabs and codeblock
@@ -78,6 +72,13 @@
         border-radius: 0;
         border: none;
         box-shadow: none;
+      }
+
+      &--active {
+        display: block;
+      }
+      &--hidden {
+        display: none;
       }
     }
   }
