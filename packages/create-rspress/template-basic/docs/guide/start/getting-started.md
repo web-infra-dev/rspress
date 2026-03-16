@@ -45,6 +45,6 @@ npm run preview
 ## Next steps
 
 - Learn how to use [MDX & React Components](/guide/use-mdx/components) in your docs.
-- Learn about [Code Blocks](/guide/use-mdx/code-blocks) syntax highlighting and line highlighting.
+- Learn about [Code Blocks](/guide/use-mdx/code-blocks/) syntax highlighting and line highlighting.
 - Learn about [Custom Containers](/guide/use-mdx/container) for tips, warnings, and more.
 - Explore the full [Rspress documentation](https://rspress.rs/) for advanced features.
