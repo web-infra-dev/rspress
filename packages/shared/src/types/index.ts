@@ -10,8 +10,6 @@ import type {
 import type { I18nText } from './theme/i18nText';
 
 // #region theme
-export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
-
 export type { I18nText } from './theme/i18nText';
 export type {
   EditLink,
@@ -41,9 +39,10 @@ export type {
   SidebarSectionHeader,
 } from './theme/sidebar';
 export type { SocialLink } from './theme/socialLink';
+export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
 // #endregion
 
-export type { RspressPlugin, AdditionalPage, RspressPlugin as Plugin };
+export type { AdditionalPage, RspressPlugin, RspressPlugin as Plugin };
 
 export interface Route {
   path: string;

@@ -11,5 +11,6 @@ const Search = () => {
     />
   );
 };
-export { Search };
+
 export * from '@rspress/core/theme-original';
+export { Search };

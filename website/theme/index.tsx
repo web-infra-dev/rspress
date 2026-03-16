@@ -130,4 +130,4 @@ function getCustomMDXComponent() {
 }
 
 export * from '@rspress/core/theme-original';
-export { getCustomMDXComponent, HomeLayout, Layout, Search, Tag, HomeHero };
+export { getCustomMDXComponent, HomeHero, HomeLayout, Layout, Search, Tag };

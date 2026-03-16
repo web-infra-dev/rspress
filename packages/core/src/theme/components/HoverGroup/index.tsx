@@ -147,5 +147,5 @@ function HoverGroup({
   );
 }
 
-export { HoverGroup };
 export type { HoverGroupProps, Items };
+export { HoverGroup };

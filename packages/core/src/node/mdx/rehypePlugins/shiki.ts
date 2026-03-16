@@ -40,4 +40,4 @@ function createRehypeShikiOptions(
   };
 }
 
-export { rehypeShiki, createRehypeShikiOptions };
+export { createRehypeShikiOptions, rehypeShiki };
