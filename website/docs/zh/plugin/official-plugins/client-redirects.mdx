@@ -4,24 +4,8 @@ import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 用于客户端重定向。
 
-## 注意
-
-为了使该插件正常工作，你需要在服务器的部署配置中，将 fallback 路径设置为 Rspress 生成的 `404.html` 页面。
-
-例如：
-
-```js title="nginx"
-location / {
-  error_page 404 /404.html;
-}
-```
-
-```toml title="netlify.toml"
-[[redirects]]
-from = "/*"
-to = "/404.html"
-status = 404
-```
+:::warning 请检查 https://rspress.rs/zh/guide/basic/ssg#refresh-404
+:::
 
 ## 安装
 
