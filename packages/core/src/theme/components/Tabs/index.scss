@@ -5,21 +5,8 @@
   border: var(--rp-code-block-border);
   box-shadow: var(--rp-code-block-shadow);
 
-  // nested
-  & & {
-    border-radius: 0;
-    margin: 0;
-    border: none;
-  }
-
-  .rp-codeblock {
-    margin: 0;
-    border-radius: 0;
-    border: none;
-
-    .rp-codeblock__title {
-      padding: 8px 12px;
-    }
+  .rp-codeblock__title {
+    padding: 8px 12px;
   }
 
   &__label {
@@ -76,6 +63,17 @@
 
   &__content {
     &__item {
+      padding: 0 1rem;
+
+      // nested rp-tabs and codeblock
+      & > .rp-codeblock:only-child,
+      & > .rp-tabs:only-child {
+        margin: 0 -1rem;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+      }
+
       &--active {
         display: block;
       }
