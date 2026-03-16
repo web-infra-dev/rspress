@@ -4,26 +4,6 @@
 
 After creating a project with `create-rspress`, you will get the following project structure:
 
-```tree
-.
-├── docs
-│   ├── _nav.json
-│   ├── index.md
-│   ├── public
-│   │   ├── rspress-dark-logo.png
-│   │   ├── rspress-icon.png
-│   │   └── rspress-light-logo.png
-│   └── guide
-│       ├── _meta.json
-│       └── start
-│           ├── _meta.json
-│           ├── introduction.md
-│           └── getting-started.md
-├── rspress.config.ts
-├── package.json
-└── tsconfig.json
-```
-
 - `docs/` — The documentation source directory, configured via `root` in `rspress.config.ts`.
 - `docs/_nav.json` — The navigation bar configuration.
 - `docs/guide/_meta.json` — The sidebar configuration for the guide section.
@@ -39,7 +19,9 @@ npm run dev
 ```
 
 :::tip
+
 You can specify the port number or host with `--port` or `--host`, such as `rspress dev --port 8080 --host 0.0.0.0`.
+
 :::
 
 ## Production build

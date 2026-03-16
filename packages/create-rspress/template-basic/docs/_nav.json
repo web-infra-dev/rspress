@@ -6,6 +6,11 @@
   },
   {
     "text": "API",
-    "link": "https://rspress.rs/api/index.html"
+    "link": "/api/",
+    "activeMatch": "/api/"
+  },
+  {
+    "text": "Document",
+    "link": "https://rspress.rs/"
   }
 ]
