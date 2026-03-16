@@ -68,13 +68,13 @@ function isAbsoluteUrl(path: string) {
 export {
   addLeadingSlash,
   addTrailingSlash,
-  removeTrailingSlash,
-  isProduction,
-  normalizeImagePath,
   cleanUrlByConfig,
-  removeBase,
-  withBase,
   isEqualPath,
+  isProduction,
   normalizeHrefInRuntime,
+  normalizeImagePath,
+  removeBase,
+  removeTrailingSlash,
   routePathToMdPath,
+  withBase,
 };

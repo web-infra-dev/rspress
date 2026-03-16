@@ -67,5 +67,5 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
   );
 }
 
-export { Search };
 export type { SearchProps };
+export { Search };

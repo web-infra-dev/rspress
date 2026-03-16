@@ -73,8 +73,8 @@ function SSGConcurrency() {
 }
 
 export {
+  getNumberOfThreads,
+  SSGConcurrency,
   SSGWorkerThreadRecyclerMaxMemory,
   SSGWorkerThreadTaskSize,
-  SSGConcurrency,
-  getNumberOfThreads,
 };

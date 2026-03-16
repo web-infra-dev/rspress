@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { describe, expect, it } from '@rstest/core';
 import { getRoutePathParts, normalizeRoutePath } from './normalizeRoutePath';
 import { addRoutePrefix } from './RoutePage';
