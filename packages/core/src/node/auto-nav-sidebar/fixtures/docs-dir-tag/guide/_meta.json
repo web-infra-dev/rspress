@@ -1,0 +1,8 @@
+[
+  {
+    "type": "dir",
+    "name": "tagged-dir",
+    "label": "Tagged Dir",
+    "tag": "experimental"
+  }
+]
