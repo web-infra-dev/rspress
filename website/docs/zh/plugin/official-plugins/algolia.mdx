@@ -161,13 +161,16 @@ new Crawler({
   discoveryPatterns: ['https://rspress.rs/**'],
   actions: [
     {
-      indexName: 'doc_search_rspress_pages',
+      indexName: 'doc_search_rspress_v2_pages',
       pathsToMatch: ['https://rspress.rs/**'],
       recordExtractor: ({ $, helpers }) => {
+        $('.rp-badge').remove();
+        $('.rspress-doc h1 .rp-not-doc').remove();
+
         const $activeNavItem = $('.rp-nav-menu__item.rp-nav-menu__item--active')
           .first()
           .clone();
-        $activeNavItem.find('.rp-badge').remove();
+
         const lvl0 = $activeNavItem.text().trim() || 'Documentation';
 
         return helpers.docsearch({
@@ -194,14 +197,7 @@ new Crawler({
   initialIndexSettings: {
     doc_search_rspress_pages: {
       attributesForFaceting: ['type', 'lang'],
-      attributesToRetrieve: [
-        'hierarchy',
-        'content',
-        'anchor',
-        'url',
-        'url_without_anchor',
-        'type',
-      ],
+      attributesToRetrieve: ['hierarchy', 'content', 'anchor', 'url'],
       attributesToHighlight: ['hierarchy', 'content'],
       attributesToSnippet: ['content:10'],
       camelCaseAttributes: ['hierarchy', 'content'],
@@ -231,8 +227,6 @@ new Crawler({
         'exact',
         'custom',
       ],
-      highlightPreTag: '<span class="algolia-docsearch-suggestion--highlight">',
-      highlightPostTag: '</span>',
       minWordSizefor1Typo: 3,
       minWordSizefor2Typos: 7,
       allowTyposOnNumericTokens: false,
@@ -243,6 +237,8 @@ new Crawler({
       removeWordsIfNoResults: 'allOptional',
     },
   },
+  schedule: 'on tuesday',
+  indexPrefix: 'rspress-v2-crawler-',
 });
 ```
 
