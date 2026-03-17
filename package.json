@@ -21,7 +21,10 @@
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },
   "lint-staged": {
-    "*.{md,mdx,css,less,scss,json,jsonc,json5}": "prettier --write",
+    "*.{md,mdx,css,less,scss,json,jsonc,json5}": [
+      "prettier --write",
+      "heading-case --write"
+    ],
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
       "biome check --write"
     ],
