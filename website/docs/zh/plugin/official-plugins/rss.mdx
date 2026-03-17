@@ -225,6 +225,19 @@ RSS 的 ID，在多个 RSS 配置中唯一。同时也是该 RSS 文件的默认
 - `string`: 前缀匹配文档的路由。当文档设有 `base` 时，会同时匹配含 `base` 和不含 `base` 的路由。
 - `(item: PageIndexInfo, base: string) => boolean`: 根据文档基础信息和 frontmatter 来匹配页面。
 
+例如，只收录 `/blog/` 下的文章页面，而不收录博客列表页本身：
+
+```ts
+feed: {
+  id: 'blog',
+  test: (item) => {
+    return (
+      item.routePath.startsWith('/blog/') && item.routePath !== '/blog/'
+    );
+  },
+}
+```
+
 #### `item`
 
 - **类型**：`(item: FeedItem, page: PageIndexInfo, siteUrl: string) => FeedItem | PromiseLike<FeedItem>`
