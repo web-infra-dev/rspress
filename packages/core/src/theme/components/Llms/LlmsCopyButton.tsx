@@ -9,6 +9,7 @@ import { useCallback, useRef, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 import './LlmsCopyButton.scss';
+import { copyToClipboard } from './copy';
 import { useMdUrl } from './useMdUrl';
 
 export interface LlmsCopyButtonProps
@@ -51,7 +52,7 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
         cache.get(url) ?? (await fetch(url).then(res => res.text()));
 
       cache.set(url, content);
-      await navigator.clipboard.writeText(content);
+      await copyToClipboard(content);
     } finally {
       setLoading(false);
       setFinished(true);

@@ -1,6 +1,7 @@
 import { useI18n } from '@rspress/core/runtime';
 import { IconCopy, IconSuccess, SvgWrapper } from '@theme';
 import { useCallback, useRef, useState } from 'react';
+import { copyToClipboard } from './copy';
 import { useMdUrl } from './useMdUrl';
 
 const cache = new Map<string, string>();
@@ -19,7 +20,7 @@ export function LlmsCopyRow() {
       const content: string =
         cache.get(pathname) ?? (await fetch(pathname).then(res => res.text()));
       cache.set(pathname, content);
-      await navigator.clipboard.writeText(content);
+      await copyToClipboard(content);
     } finally {
       setLoading(false);
       setFinished(true);

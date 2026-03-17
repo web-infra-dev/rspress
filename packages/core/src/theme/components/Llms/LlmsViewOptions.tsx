@@ -10,6 +10,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 import './LlmsViewOptions.scss';
+import { copyToClipboard } from './copy';
 import { useMdUrl } from './useMdUrl';
 
 type Option =
@@ -98,7 +99,7 @@ export function LlmsViewOptions({
         title: t('copyMarkdownLinkText'),
         icon: <SvgWrapper icon={IconLink} />,
         onClick: () => {
-          navigator.clipboard.writeText(fullMarkdownUrl);
+          void copyToClipboard(fullMarkdownUrl);
         },
       },
       chatgpt: {
