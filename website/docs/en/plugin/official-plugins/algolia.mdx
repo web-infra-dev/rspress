@@ -162,7 +162,9 @@ new Crawler({
       indexName: 'doc_search_rspress_v2_pages',
       pathsToMatch: ['https://rspress.rs/**'],
       recordExtractor: ({ $, helpers }) => {
+        // Remove badge elements to prevent their text from being indexed
         $('.rp-badge').remove();
+        // Remove non-doc elements (e.g. version switcher) from h1 to keep title text clean
         $('.rspress-doc h1 .rp-not-doc').remove();
 
         const $activeNavItem = $('.rp-nav-menu__item.rp-nav-menu__item--active')

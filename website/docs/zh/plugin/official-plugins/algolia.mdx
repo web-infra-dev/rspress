@@ -164,7 +164,9 @@ new Crawler({
       indexName: 'doc_search_rspress_v2_pages',
       pathsToMatch: ['https://rspress.rs/**'],
       recordExtractor: ({ $, helpers }) => {
+        // 移除徽章元素，避免其文本被索引
         $('.rp-badge').remove();
+        // 移除 h1 中的非文档元素（如版本切换器），确保标题文本干净
         $('.rspress-doc h1 .rp-not-doc').remove();
 
         const $activeNavItem = $('.rp-nav-menu__item.rp-nav-menu__item--active')
