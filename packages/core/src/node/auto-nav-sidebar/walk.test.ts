@@ -195,6 +195,7 @@ describe('walk', () => {
                     },
                   ],
                   "overviewHeaders": undefined,
+                  "tag": undefined,
                   "text": "_components",
                 },
                 {
@@ -393,6 +394,23 @@ describe('walk', () => {
     expect(Array.from(mdFileSet).some(f => f.includes('excluded-file'))).toBe(
       false,
     );
+  });
+
+  it('dir tag should be preserved when no index file exists', async () => {
+    const docsDir = path.join(__dirname, './fixtures/docs-dir-tag');
+    const metaFileSet = new Set<string>();
+    const mdFileSet = new Set<string>();
+    const sidebar = await walk(
+      docsDir,
+      docsDir,
+      DEFAULT_PAGE_EXTENSIONS,
+      metaFileSet,
+      mdFileSet,
+    );
+    const guideSidebar = sidebar.sidebar['/guide'];
+    const taggedDir = guideSidebar[0] as { tag?: string; text: string };
+    expect(taggedDir.text).toBe('Tagged Dir');
+    expect(taggedDir.tag).toBe('experimental');
   });
 
   it('custom link group', async () => {
