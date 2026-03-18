@@ -176,31 +176,39 @@ test.describe('search keyboard', async () => {
 
     // Navigate to second item
     await page.keyboard.press('ArrowDown');
-    await page.waitForTimeout(200);
-    let currentIndex = await page.evaluate(() => {
-      const items = Array.from(document.querySelectorAll('.rp-suggest-item'));
-      const current = document.querySelector(
-        '.rp-suggest-item.rp-suggest-item--current',
-      );
-      return items.indexOf(current as Element);
-    });
-    expect(currentIndex).toBe(1);
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const items = Array.from(
+            document.querySelectorAll('.rp-suggest-item'),
+          );
+          const current = document.querySelector(
+            '.rp-suggest-item.rp-suggest-item--current',
+          );
+          return items.indexOf(current as Element);
+        }),
+      )
+      .toBe(1);
 
     // Change search query
     await searchInput.fill('Ba');
-    await page.waitForTimeout(500);
 
     // Wait for new search results to be visible
     await page.waitForSelector('.rp-suggest-item', { state: 'visible' });
 
     // Verify that first item is now selected
-    currentIndex = await page.evaluate(() => {
-      const items = Array.from(document.querySelectorAll('.rp-suggest-item'));
-      const current = document.querySelector(
-        '.rp-suggest-item.rp-suggest-item--current',
-      );
-      return items.indexOf(current as Element);
-    });
-    expect(currentIndex).toBe(0);
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const items = Array.from(
+            document.querySelectorAll('.rp-suggest-item'),
+          );
+          const current = document.querySelector(
+            '.rp-suggest-item.rp-suggest-item--current',
+          );
+          return items.indexOf(current as Element);
+        }),
+      )
+      .toBe(0);
   });
 });
