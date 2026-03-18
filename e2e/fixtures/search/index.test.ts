@@ -167,7 +167,6 @@ test.describe('search keyboard', async () => {
 
     // Type first search query
     await page.keyboard.type('Bar');
-    await page.waitForTimeout(500);
 
     // Wait for search results to be visible
     await page.waitForSelector('.rp-suggest-item', { state: 'visible' });
