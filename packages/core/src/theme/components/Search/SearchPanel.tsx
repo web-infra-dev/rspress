@@ -348,6 +348,8 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       // only setSearchResult when query is current query value
       const currQuery = searchInputRef.current?.value;
       if (currQuery === newQuery) {
+        // Reset current suggestion index to 0 when search query changes
+        setCurrentSuggestionIndex(0);
         setSearchResult(searchResult || DEFAULT_RESULT);
         setIsSearching(false);
       }

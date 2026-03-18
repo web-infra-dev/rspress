@@ -147,4 +147,67 @@ test.describe('search keyboard', async () => {
     searchPanel = await page.$('.rp-search-panel__mask');
     expect(searchPanel).toBeNull();
   });
+
+  test('should reset to first suggestion when search query changes', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+
+    // Open search panel
+    const searchButton = await page.$('.rp-search-button');
+    await searchButton?.click();
+
+    // Wait for search input to be visible and focus it
+    const searchInput = await page.waitForSelector('.rp-search-panel__input', {
+      state: 'visible',
+    });
+    await searchInput.focus();
+
+    // Type first search query
+    await page.keyboard.type('Bar');
+
+    // Wait for search results to be visible
+    await page.waitForSelector('.rp-suggest-item', { state: 'visible' });
+    const suggestItems = await page.$$('.rp-suggest-item');
+    expect(suggestItems.length).toBeGreaterThan(0);
+
+    // Navigate to second item
+    await page.keyboard.press('ArrowDown');
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const items = Array.from(
+            document.querySelectorAll('.rp-suggest-item'),
+          );
+          const current = document.querySelector(
+            '.rp-suggest-item.rp-suggest-item--current',
+          );
+          return items.indexOf(current as Element);
+        }),
+      )
+      .toBe(1);
+
+    // Change search query
+    await searchInput.fill('Ba');
+
+    // Wait for new search results to be visible
+    await page.waitForSelector('.rp-suggest-item', { state: 'visible' });
+
+    // Verify that first item is now selected
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const items = Array.from(
+            document.querySelectorAll('.rp-suggest-item'),
+          );
+          const current = document.querySelector(
+            '.rp-suggest-item.rp-suggest-item--current',
+          );
+          return items.indexOf(current as Element);
+        }),
+      )
+      .toBe(0);
+  });
 });
