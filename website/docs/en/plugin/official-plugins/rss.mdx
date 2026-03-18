@@ -227,6 +227,19 @@ Used to select documents to be included in the RSS. The types are as follows:
 - `string`: Prefix-based matching to the document's route. When the rspress site has `base` configured, it will match both routes with and without the `base` path.
 - `(item: PageIndexInfo, base: string) => boolean`: Match pages based on page data and frontmatter.
 
+For example, if you only want to include article pages under `/blog/` but exclude the blog index page itself:
+
+```ts
+feed: {
+  id: 'blog',
+  test: (item) => {
+    return (
+      item.routePath.startsWith('/blog/') && item.routePath !== '/blog/'
+    );
+  },
+}
+```
+
 #### `item`
 
 - **Type**: `(item: FeedItem, page: PageIndexInfo, siteUrl: string) => FeedItem | PromiseLike<FeedItem>`
