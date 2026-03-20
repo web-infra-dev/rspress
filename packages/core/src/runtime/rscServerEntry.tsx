@@ -6,18 +6,13 @@ import { createStaticRenderContext } from './rscStaticContext';
 export async function renderToRscStream(
   routePath: string,
   _head: Unhead,
-  configHead?: UserConfig['head'],
+  _configHead?: UserConfig['head'],
 ): Promise<{
   rscStream: ReadableStream<Uint8Array>;
-  bootstrapScripts: string[];
 }> {
-  const { payload, bootstrapScripts = [] } = await createStaticRenderContext(
-    routePath,
-    configHead,
-  );
+  const { payload } = await createStaticRenderContext(routePath);
 
   return {
     rscStream: renderToReadableStream(payload),
-    bootstrapScripts,
   };
 }

@@ -4,6 +4,8 @@ import { initRsbuild } from './initRsbuild';
 import { hintSSGFalse } from './logger/hint';
 import { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
+import { isRscEnabled, isSsgEnabled } from './rsc/config';
+import { createError } from './utils';
 import { checkLanguageParity } from './utils/checkLanguageParity';
 
 interface BuildOptions {
@@ -17,9 +19,11 @@ export async function build(options: BuildOptions) {
   // 1. create PluginDriver
   const pluginDriver = await PluginDriver.create(config, configFilePath, true);
   const modifiedConfig = await pluginDriver.modifyConfig();
-  const enableSSG = Boolean(
-    (modifiedConfig.ssg || modifiedConfig.llms) ?? true,
-  );
+  const enableSSG = isSsgEnabled(modifiedConfig);
+
+  if (isRscEnabled(modifiedConfig) && modifiedConfig.ssg === false) {
+    throw createError('`rsc` requires `ssg` to be enabled during build.');
+  }
 
   // 2. create RouteService
   const additionalPages = await pluginDriver.addPages();

@@ -3,6 +3,7 @@ import {
   getPort,
   killProcess,
   runBuildCommand,
+  runDevCommand,
   runPreviewCommand,
 } from '../../utils/runCommands';
 
@@ -47,6 +48,40 @@ test.describe('rsc render mode', () => {
   });
 
   test('keeps internal links working in rsc mode', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/`, {
+      waitUntil: 'networkidle',
+    });
+
+    await page.getByRole('link', { name: 'Go to guide' }).click();
+    await page.waitForLoadState('networkidle');
+    await expect(page.locator('h1')).toContainText('RSC Guide');
+  });
+});
+
+test.describe('rsc dev', () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | null;
+
+  test.beforeAll(async () => {
+    const appDir = __dirname;
+    appPort = await getPort();
+    app = await runDevCommand(appDir, appPort);
+  });
+
+  test.afterAll(async () => {
+    if (app) {
+      await killProcess(app);
+    }
+  });
+
+  test('renders through the rsc pipeline in dev', async ({ page }) => {
+    const response = await page.request.get(`http://localhost:${appPort}/`);
+    const html = await response.text();
+
+    expect(html).toContain('RSC Index');
+    expect(html).toContain('server rendered through the RSC pipeline');
+    expect(html).toContain('__rspress_root');
+
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });

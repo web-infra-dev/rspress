@@ -9,7 +9,7 @@ import {
   NODE_SSG_BUNDLE_NAME,
 } from '../constants';
 import type { RouteService } from '../route/RouteService';
-import { isRscRenderMode } from './renderMode';
+import { shouldUseRscSsg } from '../rsc/config';
 import { renderPages } from './renderPages';
 
 export const rsbuildPluginSSG = ({
@@ -78,7 +78,7 @@ export const rsbuildPluginSSG = ({
 
           const distPath = environment.distPath;
           const ssgFolderPath = join(distPath, NODE_SSG_BUNDLE_FOLDER);
-          const bundleName = isRscRenderMode(config)
+          const bundleName = shouldUseRscSsg(config, true)
             ? NODE_RSC_SSG_BUNDLE_NAME
             : NODE_SSG_BUNDLE_NAME;
           const mainSsgEntryPath = join(ssgFolderPath, bundleName);

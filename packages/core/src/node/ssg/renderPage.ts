@@ -1,22 +1,15 @@
 import { pathToFileURL } from 'node:url';
 import type { Route, RouteMeta, UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
-import {
-  createHead,
-  transformHtmlTemplate,
-  type Unhead,
-} from '@unhead/react/server';
+import { createHead, transformHtmlTemplate } from '@unhead/react/server';
 import picocolors from 'picocolors';
+import type { SSRRender } from '../../runtime/ssrRender';
 
 import { hintSSGFailed } from '../logger/hint';
 import { renderHtmlTemplate } from './renderHtmlTemplate';
 
 interface SSRBundleExports {
-  render: (
-    pagePath: string,
-    head: Unhead,
-    configHead?: UserConfig['head'],
-  ) => Promise<{ appHtml: string }>;
+  render: SSRRender;
   routes: Route[];
 }
 
@@ -51,7 +44,10 @@ export async function renderPage(
   let appHtml = '';
   if (render) {
     try {
-      ({ appHtml } = await render(routePath, head, configHead));
+      ({ appHtml } = await render(routePath, head, configHead, {
+        htmlTemplate,
+        route,
+      }));
     } catch (e) {
       if (e instanceof Error) {
         logger.error(
