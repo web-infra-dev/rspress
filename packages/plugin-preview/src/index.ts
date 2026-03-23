@@ -44,6 +44,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
   let devServer: StartServerResult | undefined;
   let clientConfig: RsbuildConfig;
   let port = devPort;
+  let resolvedPortPromise: Promise<number> | undefined;
 
   async function createDemoRsbuild() {
     const distPath = clientConfig?.output?.distPath;
@@ -128,7 +129,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
 
   async function buildDemo() {
     const rsbuildInstance = await createDemoRsbuild();
-    rsbuildInstance.build();
+    await rsbuildInstance.build();
   }
 
   async function startDemoServer() {
@@ -191,8 +192,9 @@ export function pluginPreview(options?: Options): RspressPlugin {
                 // client build config
                 clientConfig = config;
               }
-              // Resolve available port before config is finalized
-              port = await resolveAvailablePort(devPort);
+              // Resolve available port before config is finalized (memoized to avoid repeated probing)
+              resolvedPortPromise ??= resolveAvailablePort(devPort);
+              port = await resolvedPortPromise;
               // Inject the resolved port so iframe pages can connect to the demo server
               config.source ??= {};
               config.source.define ??= {};
