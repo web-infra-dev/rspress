@@ -111,6 +111,28 @@ export default defineConfig({
 });
 ```
 
+## i18nSourcePath
+
+- **类型**： `string`
+- **默认值**： `path.join(cwd, 'i18n.json')`
+
+指定国际化文案数据源文件的路径。默认情况下，Rspress 从当前工作目录下的 `i18n.json` 读取。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  i18nSourcePath: path.join(__dirname, 'config/i18n.json'),
+});
+```
+
+:::tip
+
+效果与在项目根目录放置 `i18n.json` 文件一致。如果同时配置了 `i18nSource`，`i18nSource` 的数据将会合并并覆盖 `i18nSourcePath` 加载的数据。
+
+:::
+
 ## i18nSource
 
 - **类型**： `Record<string, Record<string, string>> | ((value: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>)`
@@ -250,6 +272,26 @@ export default defineConfig({
   outDir: 'doc_build',
 });
 ```
+
+## themeDir
+
+- **类型**： `string`
+- **默认值**： `theme`
+
+指定自定义主题目录。默认情况下，Rspress 使用当前工作目录下的 `theme` 目录作为自定义主题目录。你可以通过 `themeDir` 来自定义它。例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  themeDir: path.join(__dirname, 'my-theme'),
+});
+```
+
+该配置同时支持相对路径和绝对路径，相对路径相对于当前工作目录。
+
+更多关于自定义主题的内容，请参阅 [自定义主题](/guide/basic/custom-theme)。
 
 ## locales
 
