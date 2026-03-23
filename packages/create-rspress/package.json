@@ -28,7 +28,7 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "create-rstack": "1.8.0"
+    "create-rstack": "1.8.1"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.57.7",
