@@ -15,7 +15,6 @@ import entryContent from '../static/iframe/entry?raw';
 import { STATIC_DIR } from './constants';
 import { generateEntry } from './generateEntry';
 import { pluginLogger } from './logger';
-import { resolveAvailablePort } from './port';
 import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
 import type { Options, StartServerResult } from './types';
 
@@ -44,7 +43,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
   let devServer: StartServerResult | undefined;
   let clientConfig: RsbuildConfig;
   let port = devPort;
-  let resolvedPortPromise: Promise<number> | undefined;
 
   async function createDemoRsbuild() {
     const distPath = clientConfig?.output?.distPath;
@@ -63,7 +61,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
           host: true,
           port,
           printUrls: () => undefined,
-          strictPort: true,
         },
         dev: {
           lazyCompilation: false,
@@ -145,6 +142,12 @@ export function pluginPreview(options?: Options): RspressPlugin {
 
     const rsbuildInstance = await createDemoRsbuild();
     devServer = await rsbuildInstance.startDevServer();
+    if (devServer.port !== port) {
+      pluginLogger.info(
+        `Port ${port} is in use, using port ${devServer.port} instead.`,
+      );
+      port = devServer.port;
+    }
     isDirtyRef.current = false;
   }
 
@@ -187,15 +190,12 @@ export function pluginPreview(options?: Options): RspressPlugin {
         {
           name: 'iframe-sync-rsbuild-instance',
           setup: (api: RsbuildPluginAPI) => {
-            api.modifyRsbuildConfig(async config => {
+            api.modifyRsbuildConfig(config => {
               if (config.output?.target === 'web') {
                 // client build config
                 clientConfig = config;
               }
-              // Resolve available port before config is finalized (memoized to avoid repeated probing)
-              resolvedPortPromise ??= resolveAvailablePort(devPort);
-              port = await resolvedPortPromise;
-              // Inject the resolved port so iframe pages can connect to the demo server
+              // Inject the dev port so iframe pages can connect to the demo server
               config.source ??= {};
               config.source.define ??= {};
               config.source.define['process.env.RSPRESS_IFRAME_DEV_PORT'] =
