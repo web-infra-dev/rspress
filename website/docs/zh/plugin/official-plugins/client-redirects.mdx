@@ -4,7 +4,10 @@ import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
 用于客户端重定向。
 
-:::warning 请检查 https://rspress.rs/zh/guide/basic/ssg#refresh-404
+:::warning
+使用此插件前，请先确保部署环境已正确配置 fallback 页面，详见 [常见问题](/zh/guide/basic/ssg#refresh-404)。
+
+注意：客户端重定向与服务端重定向不同，页面会先加载再跳转（会有一次闪屏），且不支持 SSR。
 :::
 
 ## 安装
