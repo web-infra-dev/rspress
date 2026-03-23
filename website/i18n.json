@@ -58,5 +58,9 @@
   "nonEjectableDescription": {
     "zh": "该组件目前暂不支持 <link> 通过 eject 命令复制源码。",
     "en": "This component currently does not support copying source code via the eject command."
+  },
+  "backToBlog": {
+    "zh": "← 返回博客",
+    "en": "← Back to Blog"
   }
 }

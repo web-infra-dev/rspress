@@ -5,11 +5,13 @@ import {
   useLocation,
 } from '@rspress/core/runtime';
 import {
+  DocLayout as BasicDocLayout,
   HomeHero as BasicHomeHero,
   HomeLayout as BasicHomeLayout,
   Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
   Callout,
+  type DocLayoutProps,
   type HomeHeroProps,
   Link,
   PackageManagerTabs,
@@ -23,6 +25,7 @@ import type { PropsWithChildren } from 'react';
 import { CssModificationProvider } from '../docs/components/CssModificationContext';
 import { CssModificationIndicator } from '../docs/components/CssModificationIndicator';
 import { CssStyleSync } from '../docs/components/CssStyleSync';
+import { BlogBackButton } from './components/BlogBackButton';
 import { HeroInteractive } from './components/HeroInteractive';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
@@ -55,6 +58,20 @@ const Layout = () => {
       <CssModificationIndicator />
       <BasicLayout beforeNavTitle={<NavIcon />} />
     </CssModificationProvider>
+  );
+};
+
+const DocLayout = (props: DocLayoutProps) => {
+  return (
+    <BasicDocLayout
+      {...props}
+      beforeDocContent={
+        <>
+          <BlogBackButton />
+          {props.beforeDocContent}
+        </>
+      }
+    />
   );
 };
 
@@ -130,4 +147,12 @@ function getCustomMDXComponent() {
 }
 
 export * from '@rspress/core/theme-original';
-export { getCustomMDXComponent, HomeHero, HomeLayout, Layout, Search, Tag };
+export {
+  DocLayout,
+  getCustomMDXComponent,
+  HomeHero,
+  HomeLayout,
+  Layout,
+  Search,
+  Tag,
+};

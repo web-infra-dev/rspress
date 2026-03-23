@@ -5,3 +5,19 @@
     width: 12vw !important;
   }
 }
+
+.blog-back-button {
+  margin-bottom: 1rem;
+}
+
+.blog-back-button a {
+  color: var(--rp-c-text-2);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.blog-back-button a:hover,
+.blog-back-button a:focus-visible {
+  color: var(--rp-c-brand);
+}
