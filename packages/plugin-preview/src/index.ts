@@ -1,8 +1,6 @@
-import net from 'node:net';
 import { join } from 'node:path';
 import {
   createRsbuild,
-  logger,
   mergeRsbuildConfig,
   type RsbuildConfig,
   type RsbuildPluginAPI,
@@ -12,11 +10,12 @@ import {
   type RouteMeta,
   type RspressPlugin,
   removeTrailingSlash,
-  type UserConfig,
 } from '@rspress/core';
 import entryContent from '../static/iframe/entry?raw';
 import { STATIC_DIR } from './constants';
 import { generateEntry } from './generateEntry';
+import { pluginLogger } from './logger';
+import { resolveAvailablePort } from './port';
 import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
 import type { Options, StartServerResult } from './types';
 
@@ -44,32 +43,24 @@ export function pluginPreview(options?: Options): RspressPlugin {
   const getRouteMeta = () => routeMeta;
   let devServer: StartServerResult | undefined;
   let clientConfig: RsbuildConfig;
-  const port = devPort;
+  let port = devPort;
 
-  async function rsbuildStartOrBuild(config: UserConfig, isProd: boolean) {
-    if (devServer && !isProd && !isDirtyRef.current) {
-      return;
-    }
-
-    if (devServer && !isProd) {
-      await devServer.server.close();
-      devServer = undefined;
-      logger.info(
-        '[@rspress/plugin-preview] Restarting preview server due to demo changes...',
-      );
-    }
-
-    const outDir = join(config.outDir ?? 'doc_build', '~demo');
+  async function createDemoRsbuild() {
+    const distPath = clientConfig?.output?.distPath;
+    const distRoot =
+      typeof distPath === 'string' ? distPath : (distPath?.root ?? 'doc_build');
+    const outDir = join(distRoot, '~demo');
     const { source, output, performance, resolve } = clientConfig ?? {};
     // omit preEntry to avoid '@theme' import
     const { preEntry: _, ...otherSourceOptions } = source ?? {};
 
-    const rsbuildConfig = mergeRsbuildConfig(
+    const rsbuildInstanceConfig = mergeRsbuildConfig(
       {
+        logLevel: 'error',
         server: {
           // allow QR code scan on mobile devices and access through local network
           host: true,
-          port: devPort,
+          port,
           printUrls: () => undefined,
           strictPort: true,
         },
@@ -78,8 +69,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
           writeToDisk: true,
         },
         performance: {
+          printFileSize: true,
           ...performance,
-          printFileSize: false,
           buildCache: false,
         },
         source: {
@@ -126,17 +117,33 @@ export function pluginPreview(options?: Options): RspressPlugin {
     );
     const rsbuildInstance = await createRsbuild({
       callerName: 'rspress',
-      rsbuildConfig,
+      rsbuildConfig: rsbuildInstanceConfig,
     });
 
     if (framework === 'react') {
       rsbuildInstance.addPlugins([pluginReact()]);
     }
-    if (isProd) {
-      rsbuildInstance.build();
-    } else {
-      devServer = await rsbuildInstance.startDevServer();
+    return rsbuildInstance;
+  }
+
+  async function buildDemo() {
+    const rsbuildInstance = await createDemoRsbuild();
+    rsbuildInstance.build();
+  }
+
+  async function startDemoServer() {
+    if (devServer && !isDirtyRef.current) {
+      return;
     }
+
+    if (devServer) {
+      await devServer.server.close();
+      devServer = undefined;
+      pluginLogger.info('Restarting dev server due to demo changes...');
+    }
+
+    const rsbuildInstance = await createDemoRsbuild();
+    devServer = await rsbuildInstance.startDevServer();
     isDirtyRef.current = false;
   }
 
@@ -150,42 +157,9 @@ export function pluginPreview(options?: Options): RspressPlugin {
       // init routeMeta
       routeMeta = routes;
     },
-    async beforeBuild(_, isProd) {
-      if (!isProd) {
-        try {
-          await new Promise((resolve, reject) => {
-            const server = net.createServer();
-            server.unref();
-            server.on('error', reject);
-            server.listen({ port, host: '0.0.0.0' }, () => {
-              server.close(resolve);
-            });
-          });
-        } catch (e) {
-          if (
-            !!e &&
-            typeof e === 'object' &&
-            'code' in e &&
-            e.code !== 'EADDRINUSE'
-          ) {
-            throw e;
-          }
-
-          throw new Error(
-            `Port "${port}" is occupied, please choose another one.`,
-          );
-        }
-      }
-    },
-    async afterBuild(config, isProd) {
-      await rsbuildStartOrBuild(config, isProd);
-    },
     builderConfig: {
       source: {
         include: [join(__dirname, '..')],
-        define: {
-          'process.env.RSPRESS_IFRAME_DEV_PORT': JSON.stringify(devPort),
-        },
       },
       tools: {
         bundlerChain(chain) {
@@ -210,13 +184,26 @@ export function pluginPreview(options?: Options): RspressPlugin {
       },
       plugins: [
         {
-          name: 'close-demo-server',
+          name: 'iframe-sync-rsbuild-instance',
           setup: (api: RsbuildPluginAPI) => {
-            api.modifyRsbuildConfig(config => {
+            api.modifyRsbuildConfig(async config => {
               if (config.output?.target === 'web') {
                 // client build config
                 clientConfig = config;
               }
+              // Resolve available port before config is finalized
+              port = await resolveAvailablePort(devPort);
+              // Inject the resolved port so iframe pages can connect to the demo server
+              config.source ??= {};
+              config.source.define ??= {};
+              config.source.define['process.env.RSPRESS_IFRAME_DEV_PORT'] =
+                JSON.stringify(port);
+            });
+            api.onAfterBuild(async () => {
+              await buildDemo();
+            });
+            api.onAfterDevCompile(async () => {
+              await startDemoServer();
             });
             api.onCloseDevServer(async () => {
               await devServer?.server?.close();
