@@ -5,7 +5,7 @@ import {
   useLang,
   useSite,
 } from '@rspress/core/runtime';
-import { Link } from '@theme';
+import { Link } from '@rspress/core/theme';
 import { useMemo } from 'react';
 import './index.scss';
 

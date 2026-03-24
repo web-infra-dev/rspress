@@ -5,7 +5,7 @@ import {
   IconExperimental,
   SvgWrapper,
   Tag as WrappedTag,
-} from '@theme';
+} from '@rspress/core/theme';
 import { useMemo } from 'react';
 
 const BADGE_TAGS = {

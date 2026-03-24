@@ -1,5 +1,9 @@
 import { useI18n } from '@rspress/core/runtime';
-import { IconScrollToTop, SvgWrapper, useReadPercent } from '@theme';
+import {
+  IconScrollToTop,
+  SvgWrapper,
+  useReadPercent,
+} from '@rspress/core/theme';
 
 export function ScrollToTop() {
   const scrollToTop = () => {

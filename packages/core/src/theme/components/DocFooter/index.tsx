@@ -1,4 +1,4 @@
-import { EditLink, LastUpdated, PrevNextPage } from '@theme';
+import { EditLink, LastUpdated, PrevNextPage } from '@rspress/core/theme';
 import './index.scss';
 
 export function DocFooter() {

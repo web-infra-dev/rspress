@@ -1,5 +1,5 @@
-import type { CodeBlockProps } from '@theme';
-import { getCustomMDXComponent } from '@theme';
+import type { CodeBlockProps } from '@rspress/core/theme';
+import { getCustomMDXComponent } from '@rspress/core/theme';
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
 import {
   Fragment,

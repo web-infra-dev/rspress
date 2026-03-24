@@ -5,7 +5,7 @@ import {
   FallbackHeading,
   getCustomMDXComponent,
   useScrollAfterNav,
-} from '@theme';
+} from '@rspress/core/theme';
 import './doc.scss';
 
 function FallbackTitle() {

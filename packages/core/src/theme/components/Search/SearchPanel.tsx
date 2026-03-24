@@ -7,7 +7,7 @@ import {
   Tab,
   Tabs,
   useLinkNavigate,
-} from '@theme';
+} from '@rspress/core/theme';
 import { debounce } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';

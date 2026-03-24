@@ -1,6 +1,11 @@
 import type { Feature, Hero } from '@rspress/core';
 import { useFrontmatter } from '@rspress/core/runtime';
-import { HomeBackground, HomeFeature, HomeFooter, HomeHero } from '@theme';
+import {
+  HomeBackground,
+  HomeFeature,
+  HomeFooter,
+  HomeHero,
+} from '@rspress/core/theme';
 
 export interface HomeLayoutProps {
   beforeHero?: React.ReactNode;

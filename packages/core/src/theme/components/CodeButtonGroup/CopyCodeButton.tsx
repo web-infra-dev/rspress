@@ -1,4 +1,4 @@
-import { IconCopy, IconSuccess, SvgWrapper } from '@theme';
+import { IconCopy, IconSuccess, SvgWrapper } from '@rspress/core/theme';
 import copy from 'copy-to-clipboard';
 import { useRef } from 'react';
 import './CopyCodeButton.scss';

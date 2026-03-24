@@ -5,7 +5,11 @@ import type {
   SidebarSectionHeader as SidebarSectionHeaderType,
 } from '@rspress/core';
 import { useActiveMatcher } from '@rspress/core/runtime';
-import { IconArrowRight, SvgWrapper, useLinkNavigate } from '@theme';
+import {
+  IconArrowRight,
+  SvgWrapper,
+  useLinkNavigate,
+} from '@rspress/core/theme';
 import clsx from 'clsx';
 import type React from 'react';
 import { SidebarDivider } from './SidebarDivider';

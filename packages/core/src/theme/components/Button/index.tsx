@@ -1,4 +1,4 @@
-import { Link } from '@theme';
+import { Link } from '@rspress/core/theme';
 import clsx from 'clsx';
 import React, { type JSX } from 'react';
 import './index.scss';

@@ -1,4 +1,4 @@
-import { getCustomMDXComponent, Tab, Tabs } from '@theme';
+import { getCustomMDXComponent, Tab, Tabs } from '@rspress/core/theme';
 import { type ReactNode, useMemo } from 'react';
 import { Bun } from './icons/Bun';
 import { Deno } from './icons/Deno';

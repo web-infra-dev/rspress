@@ -5,7 +5,7 @@ import {
   Search,
   SocialLinks,
   SwitchAppearance,
-} from '@theme';
+} from '@rspress/core/theme';
 import './index.scss';
 import { NavLangs, NavMenu, NavMenuDivider, NavVersions } from './NavMenu';
 

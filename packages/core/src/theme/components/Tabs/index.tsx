@@ -1,4 +1,4 @@
-import { useStorageValue } from '@theme';
+import { useStorageValue } from '@rspress/core/theme';
 import clsx from 'clsx';
 import {
   Children,

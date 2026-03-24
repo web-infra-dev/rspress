@@ -5,8 +5,14 @@ import type {
   NavItemWithLinkAndChildren,
 } from '@rspress/core';
 import { matchNavbar, useLocation } from '@rspress/core/runtime';
-import type { HoverGroupProps } from '@theme';
-import { IconArrowDown, Link, SvgWrapper, Tag, useHoverGroup } from '@theme';
+import type { HoverGroupProps } from '@rspress/core/theme';
+import {
+  IconArrowDown,
+  Link,
+  SvgWrapper,
+  Tag,
+  useHoverGroup,
+} from '@rspress/core/theme';
 import cls from 'clsx';
 import { type ReactNode, useMemo } from 'react';
 import { useLangsMenu, useVersionsMenu } from './hooks';

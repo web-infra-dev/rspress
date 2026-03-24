@@ -1,5 +1,5 @@
 import { useNav } from '@rspress/core/runtime';
-import { SocialLinks } from '@theme';
+import { SocialLinks } from '@rspress/core/theme';
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import clsx from 'clsx';
 import { useEffect, useRef } from 'react';

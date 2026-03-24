@@ -15,7 +15,7 @@ import {
   type Group,
   type GroupItem,
   OverviewGroup,
-} from '@theme';
+} from '@rspress/core/theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   isSidebarDivider,

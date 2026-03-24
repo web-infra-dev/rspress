@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLangsMenu } from '../Nav/hooks';
 import './NavScreenLangs.scss';
 import { useI18n } from '@rspress/core/runtime';
-import { Link } from '@theme';
+import { Link } from '@rspress/core/theme';
 import clsx from 'clsx';
 import { SvgDown } from './NavScreenMenuItem';
 

@@ -61,7 +61,7 @@ export function getHref(href: string): {
 }
 
 /**
- * For import { Link } from '@theme';
+ * For import { Link } from '@rspress/core/theme';
  * useNavigate with preload logic
  */
 export function useLinkNavigate(

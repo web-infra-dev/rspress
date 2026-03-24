@@ -5,7 +5,7 @@ import type {
   NavItemWithLinkAndChildren,
 } from '@rspress/core';
 import { matchNavbar, useLocation } from '@rspress/core/runtime';
-import { IconArrowDown, Link, SvgWrapper, Tag } from '@theme';
+import { IconArrowDown, Link, SvgWrapper, Tag } from '@rspress/core/theme';
 import clsx from 'clsx';
 import type React from 'react';
 import { useMemo, useState } from 'react';

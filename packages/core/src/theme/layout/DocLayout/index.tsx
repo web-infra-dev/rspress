@@ -6,7 +6,7 @@ import {
   Overview,
   Sidebar,
   useWatchToc,
-} from '@theme';
+} from '@rspress/core/theme';
 import clsx from 'clsx';
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
 import './index.scss';

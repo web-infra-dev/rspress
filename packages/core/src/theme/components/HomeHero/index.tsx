@@ -1,6 +1,6 @@
 import type { FrontMatterMeta } from '@rspress/core';
 import { normalizeImagePath, useFrontmatter } from '@rspress/core/runtime';
-import { Button, Link, renderHtmlOrText } from '@theme';
+import { Button, Link, renderHtmlOrText } from '@rspress/core/theme';
 
 import './index.scss';
 import clsx from 'clsx';

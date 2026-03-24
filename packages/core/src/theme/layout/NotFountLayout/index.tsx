@@ -1,5 +1,5 @@
 import { useI18n, usePageData } from '@rspress/core/runtime';
-import { Link } from '@theme';
+import { Link } from '@rspress/core/theme';
 import './index.scss';
 
 export function NotFoundLayout() {

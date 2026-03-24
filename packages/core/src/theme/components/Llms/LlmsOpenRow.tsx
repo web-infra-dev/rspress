@@ -1,5 +1,5 @@
 import { useI18n, useSite } from '@rspress/core/runtime';
-import { IconExternalLink, SvgWrapper } from '@theme';
+import { IconExternalLink, SvgWrapper } from '@rspress/core/theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './LlmsOpenRow.scss';
 import './LlmsViewOptions.scss';

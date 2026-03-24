@@ -1,5 +1,5 @@
 import { useSite } from '@rspress/core/runtime';
-import { renderHtmlOrText } from '@theme';
+import { renderHtmlOrText } from '@rspress/core/theme';
 import './index.scss';
 
 export function HomeFooter() {

@@ -1,5 +1,5 @@
 import { useI18n } from '@rspress/core/runtime';
-import { IconGithub, IconGitlab, SvgWrapper } from '@theme';
+import { IconGithub, IconGitlab, SvgWrapper } from '@rspress/core/theme';
 import './index.scss';
 
 export interface SourceCodeProps {

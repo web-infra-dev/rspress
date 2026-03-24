@@ -1,4 +1,4 @@
-import { IconClose, Link, mergeRefs, SvgWrapper } from '@theme';
+import { IconClose, Link, mergeRefs, SvgWrapper } from '@rspress/core/theme';
 import clsx from 'clsx';
 import { forwardRef, type ReactNode, useEffect, useState } from 'react';
 import './index.scss';

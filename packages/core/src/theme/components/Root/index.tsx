@@ -23,7 +23,7 @@ export interface RootProps {
  * @example
  * Default usage (no customization needed):
  * ```tsx
- * import { Root } from '@theme';
+ * import { Root } from '@rspress/core/theme';
  *
  * function App() {
  *   return (

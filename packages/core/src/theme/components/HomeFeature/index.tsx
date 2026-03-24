@@ -1,6 +1,10 @@
 import type { Feature } from '@rspress/core';
 import { useFrontmatter } from '@rspress/core/runtime';
-import { renderHtmlOrText, SvgWrapper, useLinkNavigate } from '@theme';
+import {
+  renderHtmlOrText,
+  SvgWrapper,
+  useLinkNavigate,
+} from '@rspress/core/theme';
 import type { JSX } from 'react';
 import './index.scss';
 import { useCardAnimation } from './useCardAnimation';

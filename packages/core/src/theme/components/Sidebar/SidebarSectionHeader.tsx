@@ -1,4 +1,4 @@
-import { renderInlineMarkdown, Tag } from '@theme';
+import { renderInlineMarkdown, Tag } from '@rspress/core/theme';
 import './SidebarSectionHeader.scss';
 
 export function SidebarSectionHeader({
