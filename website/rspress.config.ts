@@ -18,6 +18,7 @@ import {
 } from '@shikijs/transformers';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+import { pluginPWA } from 'rsbuild-plugin-pwa';
 import pluginFileTree from 'rspress-plugin-file-tree';
 import pluginOg from 'rspress-plugin-og';
 
@@ -136,6 +137,9 @@ export default defineConfig({
     }),
   ],
   builderConfig: {
+    server: {
+      base: '/',
+    },
     plugins: [
       pluginSass(),
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
@@ -147,6 +151,7 @@ export default defineConfig({
           card: 'summary_large_image',
         },
       }),
+      pluginPWA(),
     ],
     tools: {
       rspack: config => {
