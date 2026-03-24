@@ -1,4 +1,4 @@
-import { logger } from '@rsbuild/core';
+import { pluginLogger } from './logger';
 import type { Options } from './types';
 
 interface PreviewInfo {
@@ -74,7 +74,7 @@ export function parsePreviewInfoFromMeta(options: {
 
   // Check for iframe
   if (meta.includes('iframe')) {
-    logger.warn(
+    pluginLogger.warn(
       'The "iframe" meta is deprecated, please use \`\`\`tsx preview="iframe-fixed" or \`\`\`tsx preview="iframe-follow" instead.',
     );
   }

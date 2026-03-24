@@ -261,7 +261,7 @@ This plugin starts a separate Rsbuild instance for the iframe mode's dev server 
 - **Type:** `number`
 - **Default:** `7890`
 
-Configures the dev server port for iframe preview. Use this when the default port is occupied.
+Configures the dev server port for iframe preview. If the specified port is already occupied, the plugin will automatically try the next port, up to 20 attempts.
 
 #### iframeOptions.builderConfig
 

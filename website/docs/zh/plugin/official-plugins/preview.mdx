@@ -261,7 +261,7 @@ interface IframeOptions {
 - **类型**：`number`
 - **默认值**：`7890`
 
-配置 iframe 预览的开发服务器端口。当默认端口被占用时可手动指定。
+配置 iframe 预览的开发服务器端口。如果指定端口已被占用，插件会自动尝试下一个端口，最多尝试 20 次。
 
 #### iframeOptions.builderConfig
 
