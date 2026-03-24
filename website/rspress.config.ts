@@ -137,6 +137,9 @@ export default defineConfig({
     }),
   ],
   builderConfig: {
+    server: {
+      base: '/',
+    },
     plugins: [
       pluginSass(),
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
