@@ -1,11 +1,6 @@
 import { MDXProvider } from '@mdx-js/react';
 import { Content, usePage, useSite } from '@rspress/core/runtime';
-import {
-  Callout,
-  FallbackHeading,
-  getCustomMDXComponent,
-  useScrollAfterNav,
-} from '@theme';
+import { Callout, FallbackHeading, getCustomMDXComponent } from '@theme';
 import './doc.scss';
 
 function FallbackTitle() {
@@ -38,8 +33,6 @@ export function DocContent({
    */
   afterDocContent?: React.ReactNode;
 }) {
-  useScrollAfterNav();
-
   const mdxComponents = {
     ...getCustomMDXComponent(),
     ...components,
