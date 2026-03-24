@@ -66,7 +66,10 @@ body {
   text-autospace: normal;
 }
 
-pre {
+pre,
+code,
+kbd,
+samp {
   text-autospace: no-autospace;
 }
 
