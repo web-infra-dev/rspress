@@ -162,6 +162,8 @@ export function CodeBlock({
             expanded && 'rp-codeblock__fold-btn--expanded',
           )}
           onClick={handleFoldToggle}
+          aria-label={expanded ? 'Collapse code' : 'Expand code'}
+          aria-expanded={expanded}
         >
           <SvgWrapper
             icon={IconArrowDown}
