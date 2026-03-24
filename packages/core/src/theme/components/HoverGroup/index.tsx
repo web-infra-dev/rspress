@@ -69,7 +69,8 @@ function HoverGroupItem({
   }
 
   if ('link' in item) {
-    const { text, link, lang, rel, download } = item;
+    const { text, link, lang, rel } = item;
+    const download = 'download' in item ? item.download : undefined;
     const isActiveItem = activeMatcher
       ? activeMatcher(item)
       : matchNavbar(item, pathname);
