@@ -1,4 +1,4 @@
-import { CodeBlock, type CodeBlockProps } from '@theme';
+import { CodeBlock, type CodeBlockProps } from '@rspress/core/theme';
 
 export type ShikiPreProps = CodeBlockProps &
   React.HTMLAttributes<HTMLPreElement>;

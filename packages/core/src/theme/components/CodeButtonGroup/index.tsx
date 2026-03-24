@@ -1,5 +1,5 @@
 import { useSite } from '@rspress/core/runtime';
-import { IconWrap, IconWrapped, SvgWrapper } from '@theme';
+import { IconWrap, IconWrapped, SvgWrapper } from '@rspress/core/theme';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
 import './index.scss';

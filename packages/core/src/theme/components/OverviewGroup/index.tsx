@@ -1,8 +1,8 @@
-import { Link, renderInlineMarkdown } from '@theme';
+import { Link, renderInlineMarkdown } from '@rspress/core/theme';
 import './index.scss';
 import type { Header } from '@rspress/core';
 import { routePathToMdPath } from '@rspress/core/runtime';
-import { FallbackHeading, SvgWrapper } from '@theme';
+import { FallbackHeading, SvgWrapper } from '@rspress/core/theme';
 import { useMemo } from 'react';
 import IconPlugin from './icons/plugin.svg';
 

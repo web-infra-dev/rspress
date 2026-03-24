@@ -1,5 +1,5 @@
 import { useI18n } from '@rspress/core/runtime';
-import { IconSearch, SvgWrapper } from '@theme';
+import { IconSearch, SvgWrapper } from '@rspress/core/theme';
 import { useEffect, useState } from 'react';
 import './SearchButton.scss';
 

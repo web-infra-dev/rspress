@@ -4,7 +4,7 @@ import {
   IconArrowDown,
   SvgWrapper,
   useCodeButtonGroup,
-} from '@theme';
+} from '@rspress/core/theme';
 import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import './index.scss';

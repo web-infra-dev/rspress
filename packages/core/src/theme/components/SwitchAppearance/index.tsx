@@ -1,5 +1,5 @@
 import { ThemeContext, useSite } from '@rspress/core/runtime';
-import { IconMoon, IconSun, SvgWrapper } from '@theme';
+import { IconMoon, IconSun, SvgWrapper } from '@rspress/core/theme';
 import { type MouseEvent, useContext } from 'react';
 import './global.scss';
 import './index.scss';

@@ -1,4 +1,7 @@
-import { getCustomMDXComponent, renderInlineMarkdown } from '@theme';
+import {
+  getCustomMDXComponent,
+  renderInlineMarkdown,
+} from '@rspress/core/theme';
 import { slug } from 'github-slugger';
 import { useMemo } from 'react';
 

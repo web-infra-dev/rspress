@@ -7,7 +7,7 @@ import {
   SvgWrapper,
   useActiveAnchor,
   useDynamicToc,
-} from '@theme';
+} from '@rspress/core/theme';
 import { forwardRef, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import './index.scss';

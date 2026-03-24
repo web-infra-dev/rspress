@@ -1,4 +1,9 @@
-import { IconSmallMenu, SocialLinks, SvgWrapper, useHoverGroup } from '@theme';
+import {
+  IconSmallMenu,
+  SocialLinks,
+  SvgWrapper,
+  useHoverGroup,
+} from '@rspress/core/theme';
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
 import { NavVersions } from '../Nav/NavMenu';

@@ -5,7 +5,7 @@ import {
   IconTitle,
   Link,
   SvgWrapper,
-} from '@theme';
+} from '@rspress/core/theme';
 import { useRef } from 'react';
 import './SuggestItem.scss';
 import type { DefaultMatchResultItem, HighlightInfo } from './logic/types';

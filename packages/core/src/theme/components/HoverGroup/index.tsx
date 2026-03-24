@@ -1,6 +1,6 @@
 import type { NavItemWithChildren } from '@rspress/core';
 import { matchNavbar, useLocation } from '@rspress/core/runtime';
-import { Link, Tag } from '@theme';
+import { Link, Tag } from '@rspress/core/theme';
 import cls from 'clsx';
 
 import './index.scss';

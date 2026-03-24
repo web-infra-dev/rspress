@@ -20,7 +20,7 @@ declare module 'virtual-search-hooks' {
     OnSearch,
     AfterSearch,
     RenderSearchFunction,
-  } from '@theme';
+  } from '@rspress/core/theme';
 
   export const beforeSearch: BeforeSearch;
   export const onSearch: OnSearch;

@@ -4,7 +4,7 @@
  * @license MIT
  */
 import { useI18n, useSite } from '@rspress/core/runtime';
-import { IconDown, IconExternalLink, IconLink } from '@theme';
+import { IconDown, IconExternalLink, IconLink } from '@rspress/core/theme';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';

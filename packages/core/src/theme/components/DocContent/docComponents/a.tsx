@@ -1,4 +1,4 @@
-import { Link } from '@theme';
+import { Link } from '@rspress/core/theme';
 import type { ComponentProps } from 'react';
 
 export const A = (props: ComponentProps<'a'>) => {

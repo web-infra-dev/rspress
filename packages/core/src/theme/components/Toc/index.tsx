@@ -1,4 +1,4 @@
-import { useActiveAnchor, useDynamicToc } from '@theme';
+import { useActiveAnchor, useDynamicToc } from '@rspress/core/theme';
 import { TocItem } from './TocItem';
 
 const baseHeaderLevel = 2;

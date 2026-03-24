@@ -1,5 +1,5 @@
 import { useI18n } from '@rspress/core/runtime';
-import { IconCopy, IconSuccess, SvgWrapper } from '@theme';
+import { IconCopy, IconSuccess, SvgWrapper } from '@rspress/core/theme';
 import { useCallback, useRef, useState } from 'react';
 import { copyToClipboard } from './copy';
 import { useMdUrl } from './useMdUrl';

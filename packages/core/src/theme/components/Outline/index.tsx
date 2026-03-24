@@ -6,7 +6,7 @@ import {
   ReadPercent,
   Toc,
   useDynamicToc,
-} from '@theme';
+} from '@rspress/core/theme';
 import './index.scss';
 import { ScrollToTop } from './ScrollToTop';
 

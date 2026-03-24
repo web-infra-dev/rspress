@@ -6,7 +6,7 @@ import {
   usePage,
   useSite,
 } from '@rspress/core/runtime';
-import type { HomeLayoutProps } from '@theme';
+import type { HomeLayoutProps } from '@rspress/core/theme';
 import {
   HomeLayout as DefaultHomeLayout,
   NotFoundLayout as DefaultNotFoundLayout,
@@ -17,7 +17,7 @@ import {
   useRedirect4FirstVisit,
   useScrollReset,
   useSetup,
-} from '@theme';
+} from '@rspress/core/theme';
 import { Head, useHead } from '@unhead/react';
 import React, { memo, useMemo } from 'react';
 

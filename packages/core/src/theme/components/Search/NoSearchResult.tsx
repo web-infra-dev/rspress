@@ -1,5 +1,5 @@
 import { useI18n } from '@rspress/core/runtime';
-import { IconEmpty, SvgWrapper } from '@theme';
+import { IconEmpty, SvgWrapper } from '@rspress/core/theme';
 import './NoSearchResult.scss';
 
 export function NoSearchResult({ query }: { query: string }) {

@@ -1,5 +1,9 @@
 import type { Header } from '@rspress/core';
-import { Link, parseInlineMarkdownText, renderInlineMarkdown } from '@theme';
+import {
+  Link,
+  parseInlineMarkdownText,
+  renderInlineMarkdown,
+} from '@rspress/core/theme';
 import clsx from 'clsx';
 import './TocItem.scss';
 import { useEffect, useRef } from 'react';

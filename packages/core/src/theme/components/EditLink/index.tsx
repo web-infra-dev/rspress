@@ -1,4 +1,4 @@
-import { IconEdit, Link, SvgWrapper } from '@theme';
+import { IconEdit, Link, SvgWrapper } from '@rspress/core/theme';
 import './index.scss';
 import { useEditLink } from './useEditLink';
 

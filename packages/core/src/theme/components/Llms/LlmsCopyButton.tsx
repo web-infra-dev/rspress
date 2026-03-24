@@ -4,7 +4,7 @@
  * @license MIT
  */
 import { useI18n } from '@rspress/core/runtime';
-import { IconCopy, IconSuccess } from '@theme';
+import { IconCopy, IconSuccess } from '@rspress/core/theme';
 import { useCallback, useRef, useState } from 'react';
 import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';

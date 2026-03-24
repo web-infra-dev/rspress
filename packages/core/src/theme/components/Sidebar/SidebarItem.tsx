@@ -3,7 +3,7 @@ import type {
   SidebarItem as SidebarItemType,
 } from '@rspress/core';
 import { useActiveMatcher } from '@rspress/core/runtime';
-import { Link, renderInlineMarkdown, Tag } from '@theme';
+import { Link, renderInlineMarkdown, Tag } from '@rspress/core/theme';
 import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useRef, useTransition } from 'react';

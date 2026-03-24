@@ -1,5 +1,5 @@
 import { NoSSR, useI18n, useSite } from '@rspress/core/runtime';
-import { SwitchAppearance } from '@theme';
+import { SwitchAppearance } from '@rspress/core/theme';
 import './NavScreenAppearance.scss';
 
 export function NavScreenAppearance() {

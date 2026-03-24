@@ -5,7 +5,7 @@ import {
   renderInlineMarkdown,
   SvgWrapper,
   usePrevNextPage,
-} from '@theme';
+} from '@rspress/core/theme';
 import clsx from 'clsx';
 import './index.scss';
 
