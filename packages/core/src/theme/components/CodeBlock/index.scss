@@ -65,7 +65,7 @@
     line-height: 1.7;
   }
 
-  &--code-wrap code {
+  &--wrap-code code {
     white-space: pre-wrap !important;
     word-break: break-all !important;
   }
@@ -88,7 +88,7 @@
     }
   }
 
-  &--folded {
+  &--fold {
     overflow: hidden;
     position: relative;
 

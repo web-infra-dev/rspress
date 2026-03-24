@@ -134,9 +134,9 @@ export function CodeBlock({
       <div
         className={clsx(
           'rp-codeblock__content',
-          codeWrap && 'rp-codeblock__content--code-wrap',
+          codeWrap && 'rp-codeblock__content--wrap-code',
           lineNumbersProp && 'rp-codeblock__content--line-numbers',
-          needFold && !expanded && 'rp-codeblock__content--folded',
+          needFold && !expanded && 'rp-codeblock__content--fold',
         )}
         style={needFold && !expanded ? { maxHeight: `${height}px` } : undefined}
         ref={contentRef}
