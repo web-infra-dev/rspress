@@ -46,74 +46,6 @@ const HelloCodeBlockTitle = (props) => {
 };
 ```
 
-## 代码折叠
-
-当代码块内容较长时，你可以使用 `fold` 属性启用展开/收起功能。代码块会以指定高度收起，底部显示展开按钮，点击可展开查看完整代码。
-
-````mdx
-```tsx fold
-const App = () => {
-  return (
-    <div>
-      <h1>Hello</h1>
-      <p>Line 1</p>
-      <p>Line 2</p>
-      <p>Line 3</p>
-      ...
-    </div>
-  );
-};
-```
-````
-
-你也可以通过 `height` 属性自定义收起高度（单位为像素，默认 300）：
-
-````mdx
-```tsx fold height="200"
-// 此代码块收起高度为 200px
-```
-````
-
-以下是一个实际示例：
-
-```jsx title="fold-demo.tsx" fold height="350"
-import { useState } from 'react';
-
-export default () => {
-  const [count, setCount] = useState(0);
-  return (
-    <div>
-      <div>Line 1</div>
-      <div>Line 2</div>
-      <div>Line 3</div>
-      <div>Line 4</div>
-      <div>Line 5</div>
-      <div>Line 6</div>
-      <div>Line 7</div>
-      <div>Line 8</div>
-      <div>Line 9</div>
-      <div>Line 10</div>
-      <div>Line 11</div>
-      <div>Line 12</div>
-      <div>Line 13</div>
-      <div>Line 14</div>
-      <div>Line 15</div>
-      <div>Line 16</div>
-      <div>Line 17</div>
-      <div>Line 18</div>
-      <div>Line 19</div>
-      <div>Line 20</div>
-      <div>{count}</div>
-      <button onClick={() => setCount((c) => c + 1)}>{count}</button>
-    </div>
-  );
-};
-```
-
-:::tip
-当代码块实际内容高度小于 `height` 时，展开/收起按钮不会显示。
-:::
-
 ## 文件代码块 \{#file-code-block}
 
 你可以使用 `file="./path/to/file"` 属性并不书写任何代码块内容，来引用外部文件中的文本。
@@ -337,6 +269,74 @@ export default {
 const longLine = '此代码块不会换行，即使全局启用了 defaultWrapCode';
 ```
 ````
+
+## 代码折叠
+
+当代码块内容较长时，你可以使用 `fold` 属性启用展开/收起功能。代码块会以指定高度收起，底部显示展开按钮，点击可展开查看完整代码。
+
+````mdx
+```tsx fold
+const App = () => {
+  return (
+    <div>
+      <h1>Hello</h1>
+      <p>Line 1</p>
+      <p>Line 2</p>
+      <p>Line 3</p>
+      ...
+    </div>
+  );
+};
+```
+````
+
+你也可以通过 `height` 属性自定义收起高度（单位为像素，默认 300）：
+
+````mdx
+```tsx fold height="200"
+// 此代码块收起高度为 200px
+```
+````
+
+以下是一个实际示例：
+
+```jsx title="fold-demo.tsx" fold height="350"
+import { useState } from 'react';
+
+export default () => {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <div>Line 1</div>
+      <div>Line 2</div>
+      <div>Line 3</div>
+      <div>Line 4</div>
+      <div>Line 5</div>
+      <div>Line 6</div>
+      <div>Line 7</div>
+      <div>Line 8</div>
+      <div>Line 9</div>
+      <div>Line 10</div>
+      <div>Line 11</div>
+      <div>Line 12</div>
+      <div>Line 13</div>
+      <div>Line 14</div>
+      <div>Line 15</div>
+      <div>Line 16</div>
+      <div>Line 17</div>
+      <div>Line 18</div>
+      <div>Line 19</div>
+      <div>Line 20</div>
+      <div>{count}</div>
+      <button onClick={() => setCount((c) => c + 1)}>{count}</button>
+    </div>
+  );
+};
+```
+
+:::tip
+当代码块实际内容高度小于 `height` 时，展开/收起按钮不会显示。
+:::
 
 ## 组合使用 meta 属性
 
