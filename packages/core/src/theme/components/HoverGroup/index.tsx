@@ -44,6 +44,7 @@ function HoverGroupItem({
           >
             <Link
               href={item.link}
+              download={'download' in item ? item.download : undefined}
               aria-label={item.text}
               className="rp-hover-group__item__link"
               lang={item.lang}
@@ -69,6 +70,7 @@ function HoverGroupItem({
 
   if ('link' in item) {
     const { text, link, lang, rel } = item;
+    const download = 'download' in item ? item.download : undefined;
     const isActiveItem = activeMatcher
       ? activeMatcher(item)
       : matchNavbar(item, pathname);
@@ -85,6 +87,7 @@ function HoverGroupItem({
         {link ? (
           <Link
             href={link}
+            download={download}
             aria-label={text}
             className="rp-hover-group__item__link"
             lang={lang}

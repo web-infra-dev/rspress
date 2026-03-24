@@ -25,6 +25,8 @@ interface NavItem {
   text: string;
   // Navbar link
   link: '/';
+  // Whether it is a download link
+  download?: boolean;
   // Activation rules for navbar links
   activeMatch: '^/$|^/';
   // svg tag string or image URL(optional)

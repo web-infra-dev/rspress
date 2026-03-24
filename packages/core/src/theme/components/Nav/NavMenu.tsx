@@ -35,6 +35,7 @@ export function NavMenuItemInner({
       {'link' in menuItem && typeof menuItem.link === 'string' ? (
         <Link
           href={menuItem.link}
+          download={menuItem.download}
           className="rp-nav-menu__item__container"
           hrefLang={menuItem.lang}
           lang={menuItem.lang}
