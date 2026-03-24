@@ -31,7 +31,7 @@ export type CodeBlockProps = {
   containerElementClassName?: string;
   codeButtonGroupProps?: Omit<
     CodeButtonGroupProps,
-    'preElementRef' | 'codeWrap' | 'toggleCodeWrap'
+    'preElementRef' | 'wrapCode' | 'toggleWrapCode'
   >;
   children?: React.ReactNode;
 };
@@ -86,8 +86,11 @@ export function CodeBlock({
     return <>{children}</>;
   }
 
-  const { codeWrap, toggleCodeWrap, copyElementRef } =
-    useCodeButtonGroup(wrapCodeProp);
+  const {
+    wrapCode: wrapCodeState,
+    toggleWrapCode,
+    copyElementRef,
+  } = useCodeButtonGroup(wrapCodeProp);
   const [expanded, setExpanded] = useState(false);
   const [needFold, setNeedFold] = useState(false);
   const codeBlockRef = useRef<HTMLDivElement>(null);
@@ -134,7 +137,7 @@ export function CodeBlock({
       <div
         className={clsx(
           'rp-codeblock__content',
-          codeWrap && 'rp-codeblock__content--wrap-code',
+          wrapCodeState && 'rp-codeblock__content--wrap-code',
           lineNumbersProp && 'rp-codeblock__content--line-numbers',
           needFold && !expanded && 'rp-codeblock__content--fold',
         )}
@@ -150,8 +153,8 @@ export function CodeBlock({
         <CodeButtonGroup
           {...codeButtonGroupProps}
           copyElementRef={copyElementRef}
-          codeWrap={codeWrap}
-          toggleCodeWrap={toggleCodeWrap}
+          wrapCode={wrapCodeState}
+          toggleWrapCode={toggleWrapCode}
         />
       </div>
       {needFold && (
