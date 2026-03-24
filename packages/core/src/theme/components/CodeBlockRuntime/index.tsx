@@ -56,6 +56,8 @@ export function CodeBlockRuntime({
   onRendered,
   wrapCode,
   lineNumbers,
+  toggle,
+  height,
 }: CodeBlockRuntimeProps) {
   // getCustomMDXComponent is stable for theme rendering
   const mdxComponents = useMemo(() => getCustomMDXComponent(), []);
@@ -67,6 +69,8 @@ export function CodeBlockRuntime({
         lang={lang}
         wrapCode={wrapCode}
         lineNumbers={lineNumbers}
+        toggle={toggle}
+        height={height}
         containerElementClassName={containerElementClassName}
         codeButtonGroupProps={codeButtonGroupProps}
         className="shiki css-variables"
@@ -79,6 +83,8 @@ export function CodeBlockRuntime({
       lang,
       wrapCode,
       lineNumbers,
+      toggle,
+      height,
       containerElementClassName,
       codeButtonGroupProps,
       code,
@@ -115,6 +121,8 @@ export function CodeBlockRuntime({
               codeButtonGroupProps={codeButtonGroupProps}
               wrapCode={wrapCode}
               lineNumbers={lineNumbers}
+              toggle={toggle}
+              height={height}
               {...props}
             />
           ),
@@ -132,6 +140,8 @@ export function CodeBlockRuntime({
     containerElementClassName,
     lang,
     lineNumbers,
+    toggle,
+    height,
     shikiOptions,
     title,
     wrapCode,

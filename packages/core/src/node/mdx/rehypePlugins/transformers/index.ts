@@ -5,6 +5,10 @@ export {
 } from './add-line-numbers';
 export { SHIKI_TRANSFORMER_ADD_TITLE, transformerAddTitle } from './add-title';
 export {
+  SHIKI_TRANSFORMER_ADD_TOGGLE,
+  transformerAddToggle,
+} from './add-toggle';
+export {
   SHIKI_TRANSFORMER_ADD_WRAP_CODE,
   transformerAddWrapCode,
 } from './add-wrap-code';

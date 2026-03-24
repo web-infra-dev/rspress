@@ -8,6 +8,8 @@ export function ShikiPre({
   lang,
   wrapCode,
   lineNumbers,
+  toggle,
+  height,
   containerElementClassName,
   codeButtonGroupProps,
   ...otherProps
@@ -18,6 +20,8 @@ export function ShikiPre({
       lang={lang}
       wrapCode={wrapCode}
       lineNumbers={lineNumbers}
+      toggle={toggle}
+      height={height}
       containerElementClassName={containerElementClassName}
       codeButtonGroupProps={codeButtonGroupProps}
     >
