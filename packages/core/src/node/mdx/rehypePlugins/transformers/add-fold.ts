@@ -1,18 +1,18 @@
 import type { ShikiTransformer } from 'shiki';
 
-export const SHIKI_TRANSFORMER_ADD_TOGGLE = 'shiki-transformer:add-toggle';
+export const SHIKI_TRANSFORMER_ADD_FOLD = 'shiki-transformer:add-fold';
 
-const DEFAULT_TOGGLE_HEIGHT = 300;
+const DEFAULT_FOLD_HEIGHT = 300;
 
-function hasToggleInMeta(meta: string | undefined): boolean | undefined {
+function hasFoldInMeta(meta: string | undefined): boolean | undefined {
   if (!meta) {
     return undefined;
   }
   const kvList = meta.split(' ').filter(Boolean);
-  if (kvList.includes('toggle=false')) {
+  if (kvList.includes('fold=false')) {
     return false;
   }
-  if (kvList.includes('toggle') || kvList.includes('toggle=true')) {
+  if (kvList.includes('fold') || kvList.includes('fold=true')) {
     return true;
   }
   return undefined;
@@ -38,18 +38,18 @@ function parseHeightFromMeta(meta: string | undefined): number | undefined {
 /**
  * @private compile-time only
  */
-export function transformerAddToggle(): ShikiTransformer {
+export function transformerAddFold(): ShikiTransformer {
   return {
-    name: SHIKI_TRANSFORMER_ADD_TOGGLE,
+    name: SHIKI_TRANSFORMER_ADD_FOLD,
     pre(pre) {
       const meta = this.options.meta?.__raw;
-      const shouldToggle = hasToggleInMeta(meta);
+      const shouldFold = hasFoldInMeta(meta);
 
-      if (shouldToggle) {
-        const height = parseHeightFromMeta(meta) ?? DEFAULT_TOGGLE_HEIGHT;
+      if (shouldFold) {
+        const height = parseHeightFromMeta(meta) ?? DEFAULT_FOLD_HEIGHT;
         pre.properties = {
           ...pre.properties,
-          toggle: true,
+          fold: true,
           height,
         };
       }

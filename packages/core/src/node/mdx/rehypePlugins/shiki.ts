@@ -1,8 +1,8 @@
 import {
+  transformerAddFold,
   transformerAddLang,
   transformerAddLineNumbers,
   transformerAddTitle,
-  transformerAddToggle,
   transformerAddWrapCode,
 } from '@rspress/core/shiki-transformers';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
@@ -28,7 +28,7 @@ function createRehypeShikiOptions(
     transformerAddLang(),
     transformerAddLineNumbers({ defaultShowLineNumbers: showLineNumbers }),
     transformerAddWrapCode({ defaultWrapCode }),
-    transformerAddToggle(),
+    transformerAddFold(),
     ...transformers,
   ];
 

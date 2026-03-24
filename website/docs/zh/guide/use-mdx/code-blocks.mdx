@@ -48,10 +48,10 @@ const HelloCodeBlockTitle = (props) => {
 
 ## 代码折叠
 
-当代码块内容较长时，你可以使用 `toggle` 属性启用展开/收起功能。代码块会以指定高度收起，底部显示展开按钮，点击可展开查看完整代码。
+当代码块内容较长时，你可以使用 `fold` 属性启用展开/收起功能。代码块会以指定高度收起，底部显示展开按钮，点击可展开查看完整代码。
 
 ````mdx
-```tsx toggle
+```tsx fold
 const App = () => {
   return (
     <div>
@@ -69,14 +69,14 @@ const App = () => {
 你也可以通过 `height` 属性自定义收起高度（单位为像素，默认 300）：
 
 ````mdx
-```tsx toggle height="200"
+```tsx fold height="200"
 // 此代码块收起高度为 200px
 ```
 ````
 
 以下是一个实际示例：
 
-```jsx title="toggle-demo.tsx" toggle height="350"
+```jsx title="fold-demo.tsx" fold height="350"
 import { useState } from 'react';
 
 export default () => {

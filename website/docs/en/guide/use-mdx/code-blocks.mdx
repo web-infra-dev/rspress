@@ -48,10 +48,10 @@ const HelloCodeBlockTitle = (props) => {
 
 ## Code folding
 
-When a code block is long, you can use the `toggle` attribute to enable expand/collapse functionality. The code block will be collapsed to a specified height with an expand button at the bottom. Click to expand and view the full code.
+When a code block is long, you can use the `fold` attribute to enable expand/collapse functionality. The code block will be collapsed to a specified height with an expand button at the bottom. Click to expand and view the full code.
 
 ````mdx
-```tsx toggle
+```tsx fold
 const App = () => {
   return (
     <div>
@@ -69,14 +69,14 @@ const App = () => {
 You can also customize the collapsed height via the `height` attribute (in pixels, default 300):
 
 ````mdx
-```tsx toggle height="200"
+```tsx fold height="200"
 // This code block collapses to 200px
 ```
 ````
 
 Here is a live example:
 
-```jsx title="toggle-demo.tsx" toggle height="350"
+```jsx title="fold-demo.tsx" fold height="350"
 import { useState } from 'react';
 
 export default () => {

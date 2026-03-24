@@ -23,7 +23,7 @@ export type CodeBlockProps = {
   /**
    * @default false
    */
-  toggle?: boolean;
+  fold?: boolean;
   /**
    * @default 300
    */
@@ -77,7 +77,7 @@ export function CodeBlock({
   lang = 'txt',
   wrapCode: wrapCodeProp = false,
   lineNumbers: lineNumbersProp = false,
-  toggle = false,
+  fold = false,
   height = 300,
   codeButtonGroupProps,
   children,
@@ -89,20 +89,20 @@ export function CodeBlock({
   const { codeWrap, toggleCodeWrap, copyElementRef } =
     useCodeButtonGroup(wrapCodeProp);
   const [expanded, setExpanded] = useState(false);
-  const [needToggle, setNeedToggle] = useState(false);
+  const [needFold, setNeedFold] = useState(false);
   const codeBlockRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!toggle || !contentRef.current) {
-      setNeedToggle(false);
+    if (!fold || !contentRef.current) {
+      setNeedFold(false);
       return;
     }
     const realHeight = contentRef.current.scrollHeight;
-    setNeedToggle(realHeight > height);
-  }, [toggle, height]);
+    setNeedFold(realHeight > height);
+  }, [fold, height]);
 
-  const handleToggle = useCallback(() => {
+  const handleFoldToggle = useCallback(() => {
     if (expanded) {
       setExpanded(false);
       requestAnimationFrame(() => {
@@ -136,11 +136,9 @@ export function CodeBlock({
           'rp-codeblock__content',
           codeWrap && 'rp-codeblock__content--code-wrap',
           lineNumbersProp && 'rp-codeblock__content--line-numbers',
-          needToggle && !expanded && 'rp-codeblock__content--collapsed',
+          needFold && !expanded && 'rp-codeblock__content--collapsed',
         )}
-        style={
-          needToggle && !expanded ? { maxHeight: `${height}px` } : undefined
-        }
+        style={needFold && !expanded ? { maxHeight: `${height}px` } : undefined}
         ref={contentRef}
       >
         <div
@@ -156,18 +154,18 @@ export function CodeBlock({
           toggleCodeWrap={toggleCodeWrap}
         />
       </div>
-      {needToggle && (
+      {needFold && (
         <button
           type="button"
           className={clsx(
-            'rp-codeblock__toggle-btn',
-            expanded && 'rp-codeblock__toggle-btn--expanded',
+            'rp-codeblock__fold-btn',
+            expanded && 'rp-codeblock__fold-btn--expanded',
           )}
-          onClick={handleToggle}
+          onClick={handleFoldToggle}
         >
           <SvgWrapper
             icon={IconArrowDown}
-            className="rp-codeblock__toggle-btn__icon"
+            className="rp-codeblock__fold-btn__icon"
           />
         </button>
       )}

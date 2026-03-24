@@ -1,13 +1,13 @@
+export {
+  SHIKI_TRANSFORMER_ADD_FOLD,
+  transformerAddFold,
+} from './add-fold';
 export { SHIKI_TRANSFORMER_ADD_LANG, transformerAddLang } from './add-lang';
 export {
   SHIKI_TRANSFORMER_ADD_LINE_NUMBERS,
   transformerAddLineNumbers,
 } from './add-line-numbers';
 export { SHIKI_TRANSFORMER_ADD_TITLE, transformerAddTitle } from './add-title';
-export {
-  SHIKI_TRANSFORMER_ADD_TOGGLE,
-  transformerAddToggle,
-} from './add-toggle';
 export {
   SHIKI_TRANSFORMER_ADD_WRAP_CODE,
   transformerAddWrapCode,
