@@ -56,7 +56,7 @@ export function CodeBlockRuntime({
   onRendered,
   wrapCode,
   lineNumbers,
-  toggle,
+  fold,
   height,
 }: CodeBlockRuntimeProps) {
   // getCustomMDXComponent is stable for theme rendering
@@ -69,7 +69,7 @@ export function CodeBlockRuntime({
         lang={lang}
         wrapCode={wrapCode}
         lineNumbers={lineNumbers}
-        toggle={toggle}
+        fold={fold}
         height={height}
         containerElementClassName={containerElementClassName}
         codeButtonGroupProps={codeButtonGroupProps}
@@ -83,7 +83,7 @@ export function CodeBlockRuntime({
       lang,
       wrapCode,
       lineNumbers,
-      toggle,
+      fold,
       height,
       containerElementClassName,
       codeButtonGroupProps,
@@ -121,7 +121,7 @@ export function CodeBlockRuntime({
               codeButtonGroupProps={codeButtonGroupProps}
               wrapCode={wrapCode}
               lineNumbers={lineNumbers}
-              toggle={toggle}
+              fold={fold}
               height={height}
               {...props}
             />
@@ -140,7 +140,7 @@ export function CodeBlockRuntime({
     containerElementClassName,
     lang,
     lineNumbers,
-    toggle,
+    fold,
     height,
     shikiOptions,
     title,

@@ -46,74 +46,6 @@ const HelloCodeBlockTitle = (props) => {
 };
 ```
 
-## Code folding
-
-When a code block is long, you can use the `toggle` attribute to enable expand/collapse functionality. The code block will be collapsed to a specified height with an expand button at the bottom. Click to expand and view the full code.
-
-````mdx
-```tsx toggle
-const App = () => {
-  return (
-    <div>
-      <h1>Hello</h1>
-      <p>Line 1</p>
-      <p>Line 2</p>
-      <p>Line 3</p>
-      ...
-    </div>
-  );
-};
-```
-````
-
-You can also customize the collapsed height via the `height` attribute (in pixels, default 300):
-
-````mdx
-```tsx toggle height="200"
-// This code block collapses to 200px
-```
-````
-
-Here is a live example:
-
-```jsx title="toggle-demo.tsx" toggle height="350"
-import { useState } from 'react';
-
-export default () => {
-  const [count, setCount] = useState(0);
-  return (
-    <div>
-      <div>Line 1</div>
-      <div>Line 2</div>
-      <div>Line 3</div>
-      <div>Line 4</div>
-      <div>Line 5</div>
-      <div>Line 6</div>
-      <div>Line 7</div>
-      <div>Line 8</div>
-      <div>Line 9</div>
-      <div>Line 10</div>
-      <div>Line 11</div>
-      <div>Line 12</div>
-      <div>Line 13</div>
-      <div>Line 14</div>
-      <div>Line 15</div>
-      <div>Line 16</div>
-      <div>Line 17</div>
-      <div>Line 18</div>
-      <div>Line 19</div>
-      <div>Line 20</div>
-      <div>{count}</div>
-      <button onClick={() => setCount((c) => c + 1)}>{count}</button>
-    </div>
-  );
-};
-```
-
-:::tip
-The expand/collapse button will not be shown when the actual content height is less than `height`.
-:::
-
 ## File code block \{#file-code-block}
 
 You can use the `file="./path/to/file"` attribute without writing any code block content to reference the text from an external file.
@@ -337,6 +269,74 @@ When `defaultWrapCode` is enabled globally, all code blocks will wrap long lines
 const longLine = 'This code block will not wrap even if defaultWrapCode is enabled globally';
 ```
 ````
+
+## Code folding
+
+When a code block is long, you can use the `fold` attribute to enable expand/collapse functionality. The code block will be collapsed to a specified height with an expand button at the bottom. Click to expand and view the full code.
+
+````mdx
+```tsx fold
+const App = () => {
+  return (
+    <div>
+      <h1>Hello</h1>
+      <p>Line 1</p>
+      <p>Line 2</p>
+      <p>Line 3</p>
+      ...
+    </div>
+  );
+};
+```
+````
+
+You can also customize the collapsed height via the `height` attribute (in pixels, default 300):
+
+````mdx
+```tsx fold height="200"
+// This code block collapses to 200px
+```
+````
+
+Here is a live example:
+
+```jsx title="fold-demo.tsx" fold height="350"
+import { useState } from 'react';
+
+export default () => {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <div>Line 1</div>
+      <div>Line 2</div>
+      <div>Line 3</div>
+      <div>Line 4</div>
+      <div>Line 5</div>
+      <div>Line 6</div>
+      <div>Line 7</div>
+      <div>Line 8</div>
+      <div>Line 9</div>
+      <div>Line 10</div>
+      <div>Line 11</div>
+      <div>Line 12</div>
+      <div>Line 13</div>
+      <div>Line 14</div>
+      <div>Line 15</div>
+      <div>Line 16</div>
+      <div>Line 17</div>
+      <div>Line 18</div>
+      <div>Line 19</div>
+      <div>Line 20</div>
+      <div>{count}</div>
+      <button onClick={() => setCount((c) => c + 1)}>{count}</button>
+    </div>
+  );
+};
+```
+
+:::tip
+The expand/collapse button will not be shown when the actual content height is less than `height`.
+:::
 
 ## Combining meta attributes
 

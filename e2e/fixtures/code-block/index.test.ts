@@ -72,7 +72,7 @@ test.describe('plugin shiki test', async () => {
       /rp-codeblock__content--line-numbers/,
     );
     await expect(codeBlockWithLineNumbers).not.toHaveClass(
-      /rp-codeblock__content--code-wrap/,
+      /rp-codeblock__content--wrap-code/,
     );
 
     // Second code block has no meta - check if no extra class is applied
@@ -81,7 +81,7 @@ test.describe('plugin shiki test', async () => {
       /rp-codeblock__content--line-numbers/,
     );
     await expect(codeBlockWithoutBoth).not.toHaveClass(
-      /rp-codeblock__content--code-wrap/,
+      /rp-codeblock__content--wrap-code/,
     );
 
     // Third code block has wrapCode meta - check if wrapCode property is set and wrapping is applied
@@ -90,7 +90,7 @@ test.describe('plugin shiki test', async () => {
       /rp-codeblock__content--line-numbers/,
     );
     await expect(codeBlockWithWrap).toHaveClass(
-      /rp-codeblock__content--code-wrap/,
+      /rp-codeblock__content--wrap-code/,
     );
 
     // Fifth code block has both attributes
@@ -99,7 +99,7 @@ test.describe('plugin shiki test', async () => {
       /rp-codeblock__content--line-numbers/,
     );
     await expect(codeBlockWithBoth).toHaveClass(
-      /rp-codeblock__content--code-wrap/,
+      /rp-codeblock__content--wrap-code/,
     );
   });
 });

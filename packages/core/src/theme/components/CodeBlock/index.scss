@@ -65,7 +65,7 @@
     line-height: 1.7;
   }
 
-  &--code-wrap code {
+  &--wrap-code code {
     white-space: pre-wrap !important;
     word-break: break-all !important;
   }
@@ -88,7 +88,7 @@
     }
   }
 
-  &--collapsed {
+  &--fold {
     overflow: hidden;
     position: relative;
 
@@ -110,14 +110,13 @@
   }
 }
 
-.rp-codeblock__toggle-btn {
+.rp-codeblock__fold-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   padding: 4px 0;
   border: none;
-  border-top: var(--rp-code-block-border);
   background-color: var(--rp-code-block-bg);
   color: var(--rp-c-text-3);
   cursor: pointer;

@@ -7,12 +7,12 @@ import { CopyCodeButton } from './CopyCodeButton';
 
 export interface CodeButtonGroupProps {
   copyElementRef: React.RefObject<HTMLDivElement | null>;
-  codeWrap: boolean;
-  toggleCodeWrap: () => void;
+  wrapCode: boolean;
+  toggleWrapCode: () => void;
   /**
    * @default true
    */
-  showCodeWrapButton?: boolean;
+  showWrapCodeButton?: boolean;
   /**
    * @default true
    */
@@ -22,38 +22,38 @@ export interface CodeButtonGroupProps {
 export const useCodeButtonGroup = (initialWrapCode?: boolean) => {
   const { site } = useSite();
   const { defaultWrapCode } = site.markdown;
-  const [codeWrap, setCodeWrap] = useState(initialWrapCode ?? defaultWrapCode);
+  const [wrapCode, setWrapCode] = useState(initialWrapCode ?? defaultWrapCode);
   const copyElementRef = useRef<HTMLDivElement>(null);
 
-  const toggleCodeWrap = () => {
-    setCodeWrap(!codeWrap);
+  const toggleWrapCode = () => {
+    setWrapCode(!wrapCode);
   };
 
   return {
     copyElementRef,
-    codeWrap,
-    toggleCodeWrap,
+    wrapCode,
+    toggleWrapCode,
   };
 };
 
 export function CodeButtonGroup({
-  codeWrap,
-  toggleCodeWrap,
+  wrapCode,
+  toggleWrapCode,
   copyElementRef,
-  showCodeWrapButton = true,
+  showWrapCodeButton = true,
   showCopyButton = true,
 }: CodeButtonGroupProps) {
   return (
     <>
       <div className="rp-code-button-group">
-        {showCodeWrapButton && (
+        {showWrapCodeButton && (
           <button
             className={clsx(
               'rp-code-button-group__button',
               'rp-code-wrap-button',
-              codeWrap && 'rp-code-wrap-button--wrapped',
+              wrapCode && 'rp-code-wrap-button--wrapped',
             )}
-            onClick={() => toggleCodeWrap()}
+            onClick={() => toggleWrapCode()}
             title="Toggle code wrap"
           >
             <SvgWrapper

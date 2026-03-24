@@ -23,7 +23,7 @@ export type CodeBlockProps = {
   /**
    * @default false
    */
-  toggle?: boolean;
+  fold?: boolean;
   /**
    * @default 300
    */
@@ -31,7 +31,7 @@ export type CodeBlockProps = {
   containerElementClassName?: string;
   codeButtonGroupProps?: Omit<
     CodeButtonGroupProps,
-    'preElementRef' | 'codeWrap' | 'toggleCodeWrap'
+    'preElementRef' | 'wrapCode' | 'toggleWrapCode'
   >;
   children?: React.ReactNode;
 };
@@ -77,7 +77,7 @@ export function CodeBlock({
   lang = 'txt',
   wrapCode: wrapCodeProp = false,
   lineNumbers: lineNumbersProp = false,
-  toggle = false,
+  fold = false,
   height = 300,
   codeButtonGroupProps,
   children,
@@ -86,23 +86,26 @@ export function CodeBlock({
     return <>{children}</>;
   }
 
-  const { codeWrap, toggleCodeWrap, copyElementRef } =
-    useCodeButtonGroup(wrapCodeProp);
+  const {
+    wrapCode: wrapCodeState,
+    toggleWrapCode,
+    copyElementRef,
+  } = useCodeButtonGroup(wrapCodeProp);
   const [expanded, setExpanded] = useState(false);
-  const [needToggle, setNeedToggle] = useState(false);
+  const [needFold, setNeedFold] = useState(false);
   const codeBlockRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!toggle || !contentRef.current) {
-      setNeedToggle(false);
+    if (!fold || !contentRef.current) {
+      setNeedFold(false);
       return;
     }
     const realHeight = contentRef.current.scrollHeight;
-    setNeedToggle(realHeight > height);
-  }, [toggle, height]);
+    setNeedFold(realHeight > height);
+  }, [fold, height]);
 
-  const handleToggle = useCallback(() => {
+  const handleFoldToggle = useCallback(() => {
     if (expanded) {
       setExpanded(false);
       requestAnimationFrame(() => {
@@ -134,13 +137,11 @@ export function CodeBlock({
       <div
         className={clsx(
           'rp-codeblock__content',
-          codeWrap && 'rp-codeblock__content--code-wrap',
+          wrapCodeState && 'rp-codeblock__content--wrap-code',
           lineNumbersProp && 'rp-codeblock__content--line-numbers',
-          needToggle && !expanded && 'rp-codeblock__content--collapsed',
+          needFold && !expanded && 'rp-codeblock__content--fold',
         )}
-        style={
-          needToggle && !expanded ? { maxHeight: `${height}px` } : undefined
-        }
+        style={needFold && !expanded ? { maxHeight: `${height}px` } : undefined}
         ref={contentRef}
       >
         <div
@@ -152,22 +153,24 @@ export function CodeBlock({
         <CodeButtonGroup
           {...codeButtonGroupProps}
           copyElementRef={copyElementRef}
-          codeWrap={codeWrap}
-          toggleCodeWrap={toggleCodeWrap}
+          wrapCode={wrapCodeState}
+          toggleWrapCode={toggleWrapCode}
         />
       </div>
-      {needToggle && (
+      {needFold && (
         <button
           type="button"
           className={clsx(
-            'rp-codeblock__toggle-btn',
-            expanded && 'rp-codeblock__toggle-btn--expanded',
+            'rp-codeblock__fold-btn',
+            expanded && 'rp-codeblock__fold-btn--expanded',
           )}
-          onClick={handleToggle}
+          onClick={handleFoldToggle}
+          aria-label={expanded ? 'Collapse code' : 'Expand code'}
+          aria-expanded={expanded}
         >
           <SvgWrapper
             icon={IconArrowDown}
-            className="rp-codeblock__toggle-btn__icon"
+            className="rp-codeblock__fold-btn__icon"
           />
         </button>
       )}
