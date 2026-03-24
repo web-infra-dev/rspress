@@ -111,6 +111,28 @@ export default defineConfig({
 });
 ```
 
+## i18nSourcePath
+
+- **Type**: `string`
+- **Default**: `path.join(cwd, 'i18n.json')`
+
+Specifies the path of the i18n text data source file. By default, Rspress reads from `i18n.json` in the current working directory. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  i18nSourcePath: path.join(__dirname, 'config/i18n.json'),
+});
+```
+
+:::tip
+
+This has the same effect as placing an `i18n.json` at the project root. If you also configure `i18nSource`, the `i18nSource` will be merged with and take priority over the data loaded from `i18nSourcePath`.
+
+:::
+
 ## i18nSource
 
 - **Type**: `Record<string, Record<string, string>> | ((value: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>)`
@@ -250,6 +272,26 @@ export default defineConfig({
   outDir: 'doc_build',
 });
 ```
+
+## themeDir
+
+- **Type**: `string`
+- **Default**: `theme`
+
+Specifies the custom theme directory. By default, Rspress uses the `theme` directory under the current working directory as the custom theme directory. You can use `themeDir` to customize it. For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import path from 'path';
+
+export default defineConfig({
+  themeDir: path.join(__dirname, 'my-theme'),
+});
+```
+
+This config supports both relative and absolute paths, with relative paths being relative to the current working directory.
+
+For more details on custom themes, see [Custom Theme](/guide/basic/custom-theme).
 
 ## locales
 
