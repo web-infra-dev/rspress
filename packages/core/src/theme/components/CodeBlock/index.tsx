@@ -136,7 +136,7 @@ export function CodeBlock({
           'rp-codeblock__content',
           codeWrap && 'rp-codeblock__content--code-wrap',
           lineNumbersProp && 'rp-codeblock__content--line-numbers',
-          needFold && !expanded && 'rp-codeblock__content--collapsed',
+          needFold && !expanded && 'rp-codeblock__content--folded',
         )}
         style={needFold && !expanded ? { maxHeight: `${height}px` } : undefined}
         ref={contentRef}
