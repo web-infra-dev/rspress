@@ -47,6 +47,7 @@ flexbox
 flexbugs
 flexsearch
 fnames
+folo
 Français
 frontmatter
 fullhash
