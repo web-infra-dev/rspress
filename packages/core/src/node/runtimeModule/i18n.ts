@@ -62,7 +62,10 @@ export async function getI18nData(
     delete require.cache[i18nSourcePath];
     i18nSourceFromJson = require(i18nSourcePath);
   } catch (e) {
-    logger.debug('getI18nData from i18n.json Failed: \n', e);
+    logger.debug(
+      'getI18nData from i18n.json Failed: \n',
+      e instanceof Error ? e.message : '',
+    );
   }
 
   i18nSourceFull = mergeI18nData(i18nSourceFull, i18nSourceFromJson);

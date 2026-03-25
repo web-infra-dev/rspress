@@ -11,10 +11,11 @@ import {
   type RspressPlugin,
   removeTrailingSlash,
 } from '@rspress/core';
+import picocolors from 'picocolors';
 import entryContent from '../static/iframe/entry?raw';
 import { STATIC_DIR } from './constants';
 import { generateEntry } from './generateEntry';
-import { pluginLogger } from './logger';
+import { pluginLogger, previewLogger } from './logger';
 import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
 import type { Options, StartServerResult } from './types';
 
@@ -55,11 +56,12 @@ export function pluginPreview(options?: Options): RspressPlugin {
 
     const rsbuildInstanceConfig = mergeRsbuildConfig(
       {
-        logLevel: 'error',
+        customLogger: pluginLogger,
         server: {
           // allow QR code scan on mobile devices and access through local network
           host: true,
           port,
+          // don't print the iframe URL
           printUrls: () => undefined,
         },
         dev: {
@@ -137,13 +139,15 @@ export function pluginPreview(options?: Options): RspressPlugin {
     if (devServer) {
       await devServer.server.close();
       devServer = undefined;
-      pluginLogger.info('Restarting dev server due to demo changes...');
+      previewLogger.info(
+        picocolors.dim('Restarting dev server due to demo changes...'),
+      );
     }
 
     const rsbuildInstance = await createDemoRsbuild();
     devServer = await rsbuildInstance.startDevServer();
     if (devServer.port !== port) {
-      pluginLogger.info(
+      previewLogger.info(
         `Port ${port} is in use, using port ${devServer.port} instead.`,
       );
       port = devServer.port;
