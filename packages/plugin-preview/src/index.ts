@@ -12,12 +12,42 @@ import {
   type RspressPlugin,
   removeTrailingSlash,
 } from '@rspress/core';
+import { gray } from 'picocolors';
 import entryContent from '../static/iframe/entry?raw';
 import { STATIC_DIR } from './constants';
 import { generateEntry } from './generateEntry';
 import { pluginLogger } from './logger';
 import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
 import type { Options, StartServerResult } from './types';
+
+const SUFFIX = gray('(preview)');
+const LOG_METHODS = [
+  'log',
+  'info',
+  'warn',
+  'error',
+  'debug',
+  'start',
+  'ready',
+  'success',
+  'greet',
+] as const;
+
+function createPreviewLogger() {
+  const logger = createLogger();
+  const original = Object.fromEntries(
+    LOG_METHODS.map(m => [m, logger[m].bind(logger)]),
+  );
+  logger.override(
+    Object.fromEntries(
+      LOG_METHODS.map(m => [
+        m,
+        (msg: string) => original[m](`${msg} ${SUFFIX}`),
+      ]),
+    ),
+  );
+  return logger;
+}
 
 // global variables which need to be initialized in plugin
 let routeMeta: RouteMeta[];
@@ -56,7 +86,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
 
     const rsbuildInstanceConfig = mergeRsbuildConfig(
       {
-        logLevel: 'error',
+        customLogger: createPreviewLogger(),
         server: {
           // allow QR code scan on mobile devices and access through local network
           host: true,
@@ -117,7 +147,6 @@ export function pluginPreview(options?: Options): RspressPlugin {
     const rsbuildInstance = await createRsbuild({
       callerName: 'rspress',
       rsbuildConfig: rsbuildInstanceConfig,
-      customLogger: createLogger({ prefix: '(preview)' }),
     });
 
     if (framework === 'react') {
