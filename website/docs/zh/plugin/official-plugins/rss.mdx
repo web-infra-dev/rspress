@@ -197,7 +197,7 @@ export interface FeedChannel extends Partial<FeedOptions> {
     | RegExp
     | string
     | (RegExp | string)[]
-    | ((item: PageIndexInfo, base: string) => boolean);
+    | ((item: PageIndexInfo) => boolean);
   item?: (
     item: FeedItem,
     page: PageIndexInfo,
@@ -216,14 +216,18 @@ RSS 的 ID，在多个 RSS 配置中唯一。同时也是该 RSS 文件的默认
 
 #### `test`
 
-- **类型**：`RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo, base: string) => boolean)`
+- **类型**：`RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo) => boolean)`
 - **必填**
 
 用于匹配文档。匹配上的文档会纳入该 RSS 中。类型说明：
 
-- `RegExp`: 正则匹配文档的路由。当文档设有 `base` 时，会同时匹配含 `base` 和不含 `base` 的路由。
-- `string`: 前缀匹配文档的路由。当文档设有 `base` 时，会同时匹配含 `base` 和不含 `base` 的路由。
-- `(item: PageIndexInfo, base: string) => boolean`: 根据文档基础信息和 frontmatter 来匹配页面。
+- `RegExp`: 正则匹配文档的路由。
+- `string`: 前缀匹配文档的路由。
+- `(item: PageIndexInfo) => boolean`: 根据文档基础信息和 frontmatter 来匹配页面。这也是”包含某个路由前缀，但排除特定页面（例如 `/blog/`）”时最推荐的写法。
+
+:::tip
+`item.routePath` 不包含 `base` 路径。
+:::
 
 例如，只收录 `/blog/` 下的文章页面，而不收录博客列表页本身：
 
@@ -241,7 +245,7 @@ feed: {
 #### `item`
 
 - **类型**：`(item: FeedItem, page: PageIndexInfo, siteUrl: string) => FeedItem | PromiseLike<FeedItem>`
-- **默认值**：内部逻辑
+- **默认值**：<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss/src/createFeed.ts" />
 
 生成 RSS 文件中每一篇文章的结构化数据。
 
@@ -257,8 +261,6 @@ const item: FeedChannel['item'] = (item) => ({
   content: item.content.slice(0, 1000),
 });
 ```
-
-默认逻辑详情请参考：<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss/src/feed.ts" />
 
 #### `output`
 
@@ -284,6 +286,14 @@ interface FeedOutputOptions {
   filename?: string;
   publicPath?: string;
   sorting?: (left: FeedItem, right: FeedItem) => number;
+  transform?: (
+    content: string,
+    context: {
+      type: 'atom' | 'rss' | 'json';
+      feed: Feed;
+      channel: FeedChannel;
+    },
+  ) => string | PromiseLike<string>;
 }
 ```
 
@@ -356,3 +366,33 @@ RSS 文件 URL 的前缀。一个 RSS URL 由 `publicPath` 、`dir`、`filename`
 - **类型**：`sorting?: (left: FeedItem, right: FeedItem) => number;`
 
 可以对 RSS 文件中的文章进行排序。默认情况下是新的文章在前，旧的文章在后。
+
+#### `transform`
+
+- **类型**：`(content: string, context: { type: 'atom' | 'rss' | 'json'; feed: Feed; channel: FeedChannel }) => string | PromiseLike<string>`
+
+在最终的 Feed 内容写入磁盘前对其进行转换。这个钩子同时支持插件级别的 `output` 配置和单个 feed 的 `output` 配置，因此可以用同一套自定义方式处理 Atom、RSS 和 JSON Feed 输出。
+
+例如，下面的配置会在 XML Feed 中注入自定义的 `folo:id`，并在 JSON Feed 中写入同样的标识：
+
+```ts
+pluginRss({
+  siteUrl: 'https://example.com/',
+  output: {
+    transform(content, { type, channel }) {
+      if (type === 'json') {
+        return JSON.stringify({
+          ...JSON.parse(content),
+          foloId: channel.id,
+        });
+      }
+
+      const closingTag = type === 'rss' ? '</channel>' : '</feed>';
+      return content.replace(
+        closingTag,
+        `<folo:id>${channel.id}</folo:id>${closingTag}`,
+      );
+    },
+  },
+});
+```

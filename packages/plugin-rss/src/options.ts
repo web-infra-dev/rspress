@@ -55,6 +55,23 @@ export function getFeedFileType(type: FeedOutputType) {
       };
   }
 }
+
+export async function renderFeedContent(
+  feed: Feed,
+  channel: FeedChannel,
+  output: ResolvedOutput,
+) {
+  const content = output.getContent(feed);
+  if (!output.transform) {
+    return content;
+  }
+  return output.transform(content, {
+    type: output.type,
+    feed,
+    channel,
+  });
+}
+
 export function getOutputInfo(
   { id, output }: Pick<FeedChannel, 'id' | 'output'>,
   {
@@ -74,5 +91,16 @@ export function getOutputInfo(
     output?.sorting ||
     globalOutput?.sorting ||
     ((l, r) => sortByDate(l.date, r.date));
-  return { type, mime, filename, getContent, dir, publicPath, url, sorting };
+  const transform = output?.transform || globalOutput?.transform;
+  return {
+    type,
+    mime,
+    filename,
+    getContent,
+    dir,
+    publicPath,
+    url,
+    sorting,
+    transform,
+  };
 }
