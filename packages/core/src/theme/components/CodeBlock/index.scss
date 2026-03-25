@@ -89,9 +89,9 @@
   }
 
   &--fold {
-    overflow: hidden;
     position: relative;
 
+    // Gradient overlay on the non-scrolling parent, stays fixed at bottom
     &::after {
       content: '';
       position: absolute;
@@ -106,6 +106,11 @@
       );
       pointer-events: none;
       z-index: 2;
+    }
+
+    // Scroll container becomes scrollable with constrained height
+    .rp-codeblock__content__scroll-container {
+      overflow-y: auto;
     }
   }
 }

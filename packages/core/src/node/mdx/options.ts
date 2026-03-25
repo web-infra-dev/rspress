@@ -48,6 +48,7 @@ export async function createMDXOptions(options: {
     globalComponents: globalComponentsFromConfig = [],
     showLineNumbers = false,
     defaultWrapCode = false,
+    defaultMaxHeight,
     shiki,
     cjkFriendlyEmphasis = true,
   } = config?.markdown || {};
@@ -131,7 +132,12 @@ export async function createMDXOptions(options: {
               : []),
             [
               rehypeShiki,
-              createRehypeShikiOptions(showLineNumbers, defaultWrapCode, shiki),
+              createRehypeShikiOptions(
+                showLineNumbers,
+                defaultWrapCode,
+                defaultMaxHeight,
+                shiki,
+              ),
             ],
             [
               rehypeExternalLinks,

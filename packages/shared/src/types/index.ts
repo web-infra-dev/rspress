@@ -535,6 +535,12 @@ export interface MarkdownOptions {
    */
   defaultWrapCode?: boolean;
   /**
+   * Default max height (in px) for code blocks.
+   * When set, code blocks taller than this value will be collapsible with a scrollable area and expand/collapse toggle.
+   * Can be overridden per block with `maxHeight="..."` or disabled with `fold=false` in the meta string.
+   */
+  defaultMaxHeight?: number;
+  /**
    * Register global components in mdx files
    */
   globalComponents?: string[];

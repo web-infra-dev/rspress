@@ -94,14 +94,13 @@ export function CodeBlock({
   const [expanded, setExpanded] = useState(false);
   const [needFold, setNeedFold] = useState(false);
   const codeBlockRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!fold || !contentRef.current) {
+    if (!fold || !copyElementRef.current) {
       setNeedFold(false);
       return;
     }
-    const realHeight = contentRef.current.scrollHeight;
+    const realHeight = copyElementRef.current.scrollHeight;
     setNeedFold(realHeight > height);
   }, [fold, height]);
 
@@ -124,6 +123,8 @@ export function CodeBlock({
     }
   }, [expanded]);
 
+  const isFolded = needFold && !expanded;
+
   return (
     <div
       className={clsx(
@@ -139,14 +140,13 @@ export function CodeBlock({
           'rp-codeblock__content',
           wrapCodeState && 'rp-codeblock__content--wrap-code',
           lineNumbersProp && 'rp-codeblock__content--line-numbers',
-          needFold && !expanded && 'rp-codeblock__content--fold',
+          isFolded && 'rp-codeblock__content--fold',
         )}
-        style={needFold && !expanded ? { maxHeight: `${height}px` } : undefined}
-        ref={contentRef}
       >
         <div
           className="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"
           ref={copyElementRef}
+          style={isFolded ? { maxHeight: `${height}px` } : undefined}
         >
           {children}
         </div>
