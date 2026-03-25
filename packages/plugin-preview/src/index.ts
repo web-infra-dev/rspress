@@ -21,30 +21,27 @@ import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
 import type { Options, StartServerResult } from './types';
 
 const SUFFIX = gray('(preview)');
-const LOG_METHODS = [
-  'log',
-  'info',
-  'warn',
-  'error',
-  'debug',
-  'start',
-  'ready',
-  'success',
-  'greet',
-] as const;
 
 function createPreviewLogger() {
-  const logger = createLogger();
-  const original = Object.fromEntries(
-    LOG_METHODS.map(m => [m, logger[m].bind(logger)]),
+  const logger = createLogger({ level: 'error' });
+  const methodNames = Object.keys(logger).filter(
+    key => typeof (logger as any)[key] === 'function' && key !== 'override',
   );
+  const original: Record<string, (...args: any[]) => unknown> = {};
+  for (const name of methodNames) {
+    original[name] = (logger as any)[name].bind(logger);
+  }
   logger.override(
     Object.fromEntries(
-      LOG_METHODS.map(m => [
-        m,
-        (msg: string) => original[m](`${msg} ${SUFFIX}`),
+      methodNames.map(name => [
+        name,
+        (msg: string, ...rest: any[]) =>
+          original[name](
+            typeof msg === 'string' ? `${msg} ${SUFFIX}` : msg,
+            ...rest,
+          ),
       ]),
-    ),
+    ) as any,
   );
   return logger;
 }
