@@ -8,7 +8,7 @@ export function docPluginDemo(): RspressPlugin {
       return [
         {
           routePath: '/filepath-route',
-          filepath: path.join(__dirname, 'blog', 'index.md'),
+          filepath: path.join(import.meta.dirname, 'blog', 'index.md'),
         },
         {
           routePath: '/content-route',

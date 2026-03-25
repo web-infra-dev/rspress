@@ -3,10 +3,10 @@ import { defineConfig } from '@rspress/core';
 import { pluginTypeDoc } from '@rspress/plugin-typedoc';
 
 export default defineConfig({
-  root: path.join(__dirname, 'doc'),
+  root: path.join(import.meta.dirname, 'doc'),
   plugins: [
     pluginTypeDoc({
-      entryPoints: [path.join(__dirname, './src/index.ts')],
+      entryPoints: [path.join(import.meta.dirname, './src/index.ts')],
     }),
   ],
 });

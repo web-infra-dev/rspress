@@ -10,7 +10,7 @@ test.describe('page head tags', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);

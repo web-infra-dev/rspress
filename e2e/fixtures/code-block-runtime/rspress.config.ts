@@ -3,7 +3,7 @@ import { defineConfig } from '@rspress/core';
 import { transformerNotationHighlight } from '@shikijs/transformers';
 
 export default defineConfig({
-  root: path.join(__dirname, 'docs'),
+  root: path.join(import.meta.dirname, 'docs'),
   markdown: {
     shiki: {
       transformers: [transformerNotationHighlight()],

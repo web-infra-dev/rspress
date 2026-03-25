@@ -4,7 +4,7 @@ import { test } from '@playwright/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
 test('llms should be successful', async () => {
-  const appDir = __dirname;
+  const appDir = import.meta.dirname;
   await runBuildCommand(appDir);
 
   const docBuildDir = path.join(appDir, 'doc_build');
@@ -20,6 +20,6 @@ test('llms should be successful', async () => {
 });
 
 test('csr should be successful', async () => {
-  const appDir = __dirname;
+  const appDir = import.meta.dirname;
   await runBuildCommand(appDir, 'rspress-csr.config.ts');
 });

@@ -70,7 +70,7 @@ test.describe('basic test', async () => {
   }
 
   test('should support asset link', async ({ page }) => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);
@@ -78,7 +78,7 @@ test.describe('basic test', async () => {
   });
 
   test('should support asset link - i18n', async ({ page }) => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);
@@ -86,7 +86,7 @@ test.describe('basic test', async () => {
   });
 
   test('should support asset link - cleanUrls: false', async ({ page }) => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir, 'rspress-clean.config.ts');
     app = await runPreviewCommand(appDir, appPort);
@@ -96,7 +96,7 @@ test.describe('basic test', async () => {
   test('should support asset link - cleanUrls: false - i18n', async ({
     page,
   }) => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir, 'rspress-clean.config.ts');
     app = await runPreviewCommand(appDir, appPort);

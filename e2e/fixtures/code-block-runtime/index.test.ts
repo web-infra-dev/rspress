@@ -11,7 +11,7 @@ test.describe('<CodeBlockRuntime />', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
@@ -73,7 +73,7 @@ test.describe('<CodeBlockRuntime /> SSG', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runPreviewCommand>>;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);

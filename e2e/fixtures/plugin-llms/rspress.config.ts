@@ -3,7 +3,7 @@ import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
-  root: path.join(__dirname, 'doc'),
+  root: path.join(import.meta.dirname, 'doc'),
   ssg: false,
   plugins: [pluginLlms()],
   title: 'Plugin LLMS',

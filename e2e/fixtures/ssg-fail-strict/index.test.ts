@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
 test('ssg-fail-strict test', async () => {
-  const appDir = __dirname;
+  const appDir = import.meta.dirname;
   try {
     await runBuildCommand(appDir);
   } catch (err) {
@@ -11,6 +11,6 @@ test('ssg-fail-strict test', async () => {
 });
 
 test('csr should be successful', async () => {
-  const appDir = __dirname;
+  const appDir = import.meta.dirname;
   await runBuildCommand(appDir, 'rspress-csr.config.ts');
 });

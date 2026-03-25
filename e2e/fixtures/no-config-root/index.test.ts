@@ -11,7 +11,7 @@ test.describe('no config.root dev test', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
@@ -35,7 +35,7 @@ test.describe('no config.root build and preview test', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runPreviewCommand>> | null;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);

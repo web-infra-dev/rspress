@@ -22,7 +22,7 @@ test.describe('search hooks', async () => {
   let app: Awaited<ReturnType<typeof runDevCommand>>;
 
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

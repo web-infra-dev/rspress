@@ -10,7 +10,7 @@ test.describe('plugin shiki test', async () => {
   let appPort: number;
   let app: unknown;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);

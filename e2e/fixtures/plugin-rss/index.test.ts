@@ -5,9 +5,9 @@ import {
   runBuildCommand,
   runPreviewCommand,
 } from '../../utils/runCommands';
-import fixture from './fixture.json';
+import fixture from './fixture.json' with { type: 'json' };
 
-const appDir = __dirname;
+const appDir = import.meta.dirname;
 const { siteUrl } = fixture;
 
 test.describe('plugin rss test', async () => {

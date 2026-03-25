@@ -3,7 +3,7 @@ import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
-const appDir = __dirname;
+const appDir = import.meta.dirname;
 const docBuildDir = path.join(appDir, 'doc_build');
 
 async function expectFileExists(filePath: string) {

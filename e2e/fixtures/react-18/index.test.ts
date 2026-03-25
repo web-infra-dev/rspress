@@ -10,7 +10,7 @@ import {
 
 function getPackageVersion(name: string) {
   const pkgJsonPath = path.join(
-    __dirname,
+    import.meta.dirname,
     'node_modules',
     name,
     'package.json',
@@ -22,7 +22,7 @@ test.describe('React 18 dev test', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
@@ -56,7 +56,7 @@ test.describe('React 18 dev test', async () => {
 });
 
 test('React 18 build should be successful', async () => {
-  const appDir = __dirname;
+  const appDir = import.meta.dirname;
   await runBuildCommand(appDir);
 
   const docBuildDir = path.join(appDir, 'doc_build');
