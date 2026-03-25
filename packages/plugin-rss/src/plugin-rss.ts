@@ -16,7 +16,12 @@ import {
   routePathToHtmlPath,
   writeFile,
 } from './internals';
-import { getDefaultFeedOption, getOutputInfo, testPage } from './options';
+import {
+  getDefaultFeedOption,
+  getOutputInfo,
+  renderFeedContent,
+  testPage,
+} from './options';
 import type { FeedChannel, FeedItem, PluginRssOptions } from './type';
 
 type FeedItemWithChannel = FeedItem & { channel: string };
@@ -73,6 +78,7 @@ async function getRssItems(
         const item = await after(
           generateFeedItem(page, siteUrl, htmlContent),
           page,
+          siteUrl,
         );
         return { ...item, channel: options.id };
       }),
@@ -178,10 +184,14 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
 
       // Write feed files
       for (const [channel, feed] of Object.entries(feeds)) {
-        const { output } = feedsSet.get(channel)!;
+        const feedChannel = feedsSet.get(channel)!;
+        const { output } = feedChannel;
         feed.items.sort(output.sorting);
         const path = NodePath.resolve(outDir, output.dir, output.filename);
-        await writeFile(path, output.getContent(feed));
+        await writeFile(
+          path,
+          await renderFeedContent(feed, feedChannel, output),
+        );
       }
 
       _pagesForRss = null;

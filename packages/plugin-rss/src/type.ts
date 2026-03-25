@@ -1,5 +1,5 @@
 import type { PageIndexInfo } from '@rspress/core';
-import type { FeedOptions, Item } from 'feed';
+import type { Feed, FeedOptions, Item } from 'feed';
 import type { PartialPartial } from './internals';
 
 /**
@@ -12,6 +12,17 @@ export interface PageFeedData {
 }
 
 export type FeedItem = Item;
+
+export interface FeedOutputTransformContext {
+  type: FeedOutputType;
+  feed: Feed;
+  channel: FeedChannel;
+}
+
+export type FeedOutputTransformer = (
+  content: string,
+  context: FeedOutputTransformContext,
+) => string | PromiseLike<string>;
 
 /**
  * output feed file type
@@ -46,6 +57,10 @@ export interface FeedOutputOptions {
    * sort feed items
    */
   sorting?: (left: FeedItem, right: FeedItem) => number;
+  /**
+   * transform the final generated feed content before it is written to disk.
+   */
+  transform?: FeedOutputTransformer;
 }
 
 export interface FeedChannel
@@ -72,6 +87,7 @@ export interface FeedChannel
   item?: (
     item: FeedItem,
     page: PageIndexInfo,
+    siteUrl: string,
   ) => FeedItem | PromiseLike<FeedItem>;
   /**
    * feed level output config

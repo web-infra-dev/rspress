@@ -1,5 +1,5 @@
 import type { Feed } from 'feed';
-import type { FeedItem, FeedOutputType } from '../type';
+import type { FeedItem, FeedOutputTransformer, FeedOutputType } from '../type';
 
 export interface ResolvedOutput {
   type: FeedOutputType;
@@ -10,4 +10,5 @@ export interface ResolvedOutput {
   publicPath: string;
   url: string;
   sorting: (left: FeedItem, right: FeedItem) => number;
+  transform?: FeedOutputTransformer;
 }

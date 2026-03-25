@@ -199,7 +199,7 @@ export interface FeedChannel extends Partial<FeedOptions> {
     | RegExp
     | string
     | (RegExp | string)[]
-    | ((item: PageIndexInfo, base: string) => boolean);
+    | ((item: PageIndexInfo) => boolean);
   item?: (
     item: FeedItem,
     page: PageIndexInfo,
@@ -218,14 +218,18 @@ The ID of an RSS, unique among multiple RSS options. It is also the default file
 
 #### `test`
 
-- **Type**: `RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo, base: string) => boolean)`
+- **Type**: `RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo) => boolean)`
 - **Required**
 
 Used to select documents to be included in the RSS. The types are as follows:
 
-- `RegExp`: Regular expression to match the document's route. When the rspress site has `base` configured, it will match both routes with and without the `base` path.
-- `string`: Prefix-based matching to the document's route. When the rspress site has `base` configured, it will match both routes with and without the `base` path.
-- `(item: PageIndexInfo, base: string) => boolean`: Match pages based on page data and frontmatter.
+- `RegExp`: Regular expression to match the document's route.
+- `string`: Prefix-based matching to the document's route.
+- `(item: PageIndexInfo) => boolean`: Match pages based on page data and frontmatter. This is also the recommended way to include a route prefix while excluding specific pages such as `/blog/`.
+
+:::tip
+`item.routePath` does not include the `base` path.
+:::
 
 For example, if you only want to include article pages under `/blog/` but exclude the blog index page itself:
 
@@ -243,7 +247,7 @@ feed: {
 #### `item`
 
 - **Type**: `(item: FeedItem, page: PageIndexInfo, siteUrl: string) => FeedItem | PromiseLike<FeedItem>`
-- **Default**: Elaborated below
+- **Default**: <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss/src/createFeed.ts" />
 
 Generates structured data for each article in the RSS file.
 
@@ -263,8 +267,6 @@ const item: FeedChannel['item'] = (item) => ({
   content: item.content.slice(0, 1000),
 });
 ```
-
-For details on the logic of the built-in generator, please refer to: <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss/src/feed.ts" />
 
 #### `output`
 
@@ -290,6 +292,14 @@ interface FeedOutputOptions {
   filename?: string;
   publicPath?: string;
   sorting?: (left: FeedItem, right: FeedItem) => number;
+  transform?: (
+    content: string,
+    context: {
+      type: 'atom' | 'rss' | 'json';
+      feed: Feed;
+      channel: FeedChannel;
+    },
+  ) => string | PromiseLike<string>;
 }
 ```
 
@@ -364,3 +374,33 @@ URL Prefix for the RSS file. An RSS URL is composed of `publicPath`, `dir`, and 
 - **Type**：`sorting?: (left: FeedItem, right: FeedItem) => number;`
 
 Used for sorting the articles. By default, the newest articles go first, followed by the older ones.
+
+#### `transform`
+
+- **Type**: `(content: string, context: { type: 'atom' | 'rss' | 'json'; feed: Feed; channel: FeedChannel }) => string | PromiseLike<string>`
+
+Transform the final generated feed content before it is written to disk. This hook is available in both the plugin-level `output` option and the per-feed `output` option, so the same customization pattern can be used for Atom, RSS, and JSON Feed outputs.
+
+For example, the following configuration injects a custom `folo:id` into XML feeds and adds the same identifier to JSON Feed:
+
+```ts
+pluginRss({
+  siteUrl: 'https://example.com/',
+  output: {
+    transform(content, { type, channel }) {
+      if (type === 'json') {
+        return JSON.stringify({
+          ...JSON.parse(content),
+          foloId: channel.id,
+        });
+      }
+
+      const closingTag = type === 'rss' ? '</channel>' : '</feed>';
+      return content.replace(
+        closingTag,
+        `<folo:id>${channel.id}</folo:id>${closingTag}`,
+      );
+    },
+  },
+});
+```
