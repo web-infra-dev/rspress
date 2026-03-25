@@ -1,5 +1,6 @@
 import { join } from 'node:path';
 import {
+  createLogger,
   createRsbuild,
   mergeRsbuildConfig,
   type RsbuildConfig,
@@ -116,6 +117,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     const rsbuildInstance = await createRsbuild({
       callerName: 'rspress',
       rsbuildConfig: rsbuildInstanceConfig,
+      customLogger: createLogger({ prefix: '(preview)' }),
     });
 
     if (framework === 'react') {
