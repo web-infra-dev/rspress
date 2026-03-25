@@ -1,6 +1,5 @@
 import { join } from 'node:path';
 import {
-  createLogger,
   createRsbuild,
   mergeRsbuildConfig,
   type RsbuildConfig,
@@ -12,39 +11,13 @@ import {
   type RspressPlugin,
   removeTrailingSlash,
 } from '@rspress/core';
-import { gray } from 'picocolors';
+import picocolors from 'picocolors';
 import entryContent from '../static/iframe/entry?raw';
 import { STATIC_DIR } from './constants';
 import { generateEntry } from './generateEntry';
-import { pluginLogger } from './logger';
+import { pluginLogger, previewLogger } from './logger';
 import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
 import type { Options, StartServerResult } from './types';
-
-const SUFFIX = gray('(preview)');
-
-function createPreviewLogger() {
-  const logger = createLogger({ level: 'error' });
-  const methodNames = Object.keys(logger).filter(
-    key => typeof (logger as any)[key] === 'function' && key !== 'override',
-  );
-  const original: Record<string, (...args: any[]) => unknown> = {};
-  for (const name of methodNames) {
-    original[name] = (logger as any)[name].bind(logger);
-  }
-  logger.override(
-    Object.fromEntries(
-      methodNames.map(name => [
-        name,
-        (msg: string, ...rest: any[]) =>
-          original[name](
-            typeof msg === 'string' ? `${msg} ${SUFFIX}` : msg,
-            ...rest,
-          ),
-      ]),
-    ) as any,
-  );
-  return logger;
-}
 
 // global variables which need to be initialized in plugin
 let routeMeta: RouteMeta[];
@@ -83,11 +56,12 @@ export function pluginPreview(options?: Options): RspressPlugin {
 
     const rsbuildInstanceConfig = mergeRsbuildConfig(
       {
-        customLogger: createPreviewLogger(),
+        customLogger: pluginLogger,
         server: {
           // allow QR code scan on mobile devices and access through local network
           host: true,
           port,
+          // don't print the iframe URL
           printUrls: () => undefined,
         },
         dev: {
@@ -165,13 +139,15 @@ export function pluginPreview(options?: Options): RspressPlugin {
     if (devServer) {
       await devServer.server.close();
       devServer = undefined;
-      pluginLogger.info('Restarting dev server due to demo changes...');
+      previewLogger.info(
+        picocolors.dim('Restarting dev server due to demo changes...'),
+      );
     }
 
     const rsbuildInstance = await createDemoRsbuild();
     devServer = await rsbuildInstance.startDevServer();
     if (devServer.port !== port) {
-      pluginLogger.info(
+      previewLogger.info(
         `Port ${port} is in use, using port ${devServer.port} instead.`,
       );
       port = devServer.port;
