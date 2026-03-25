@@ -2,6 +2,7 @@
   "name": "@rspress-fixture/replace-rules",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "rspress build",
     "dev": "rspress dev",
