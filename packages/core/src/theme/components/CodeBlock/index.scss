@@ -89,12 +89,7 @@
   }
 
   &--scroll {
-    overflow: hidden;
-
-    .rp-codeblock__content__scroll-container {
-      overflow-y: auto;
-      height: 100%;
-    }
+    overflow-y: auto;
   }
 
   &--fold {

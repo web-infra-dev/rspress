@@ -9,6 +9,8 @@ import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import './index.scss';
 
+const DEFAULT_FOLD_HEIGHT = 300;
+
 export type CodeBlockProps = {
   title?: string;
   lang?: string;
