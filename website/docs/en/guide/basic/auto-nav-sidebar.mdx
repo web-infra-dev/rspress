@@ -52,16 +52,16 @@ docs
 
 ## Global sidebar
 
-By default (only `_nav.json` exists at the root), Rspress generates a **separate sidebar for each subdirectory**. The sidebar switches automatically based on the currently active nav item. For example, clicking the "Guides" nav item shows the Guides sidebar, and clicking "Reference" shows the Reference sidebar:
+By default (only `_nav.json` exists at the root), Rspress generates a **separate sidebar for each subdirectory**. The sidebar switches automatically based on the currently active nav item. For example, clicking the "Guide" nav item shows the Guide sidebar, and clicking "API" shows the API sidebar:
 
 ```tree
 docs
 ├── _nav.json
-├── guides
-│   ├── _meta.json  // sidebar for /guides
+├── guide
+│   ├── _meta.json  // sidebar for /guide
 │   └── ...
-└── reference
-    ├── _meta.json  // sidebar for /reference
+└── api
+    ├── _meta.json  // sidebar for /api
     └── ...
 ```
 
@@ -71,10 +71,10 @@ If you want all pages to **share a single global sidebar** instead of switching 
 docs
 ├── _nav.json
 ├── _meta.json  // root-level _meta.json → global sidebar
-├── guides
+├── guide
 │   ├── _meta.json
 │   └── ...
-└── reference
+└── api
     ├── _meta.json
     └── ...
 ```
@@ -85,13 +85,13 @@ When a root-level `_meta.json` exists, Rspress will generate a single sidebar (k
 [
   {
     "type": "dir",
-    "name": "guides",
-    "label": "Guides"
+    "name": "guide",
+    "label": "Guide"
   },
   {
     "type": "dir",
-    "name": "reference",
-    "label": "Reference"
+    "name": "api",
+    "label": "API"
   }
 ]
 ```
