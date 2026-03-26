@@ -24,9 +24,6 @@ export type CodeBlockProps = {
    * @default false
    */
   fold?: boolean;
-  /**
-   * @default 300
-   */
   height?: number;
   containerElementClassName?: string;
   codeButtonGroupProps?: Omit<
@@ -78,7 +75,7 @@ export function CodeBlock({
   wrapCode: wrapCodeProp = false,
   lineNumbers: lineNumbersProp = false,
   fold = false,
-  height = 300,
+  height,
   codeButtonGroupProps,
   children,
 }: CodeBlockProps) {
@@ -93,6 +90,7 @@ export function CodeBlock({
   } = useCodeButtonGroup(wrapCodeProp);
   const [expanded, setExpanded] = useState(false);
   const [needFold, setNeedFold] = useState(false);
+  const hasFixedHeight = !fold && height !== undefined;
   const codeBlockRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -140,8 +138,15 @@ export function CodeBlock({
           wrapCodeState && 'rp-codeblock__content--wrap-code',
           lineNumbersProp && 'rp-codeblock__content--line-numbers',
           needFold && !expanded && 'rp-codeblock__content--fold',
+          hasFixedHeight && 'rp-codeblock__content--fixed-height',
         )}
-        style={needFold && !expanded ? { maxHeight: `${height}px` } : undefined}
+        style={
+          needFold && !expanded
+            ? { maxHeight: `${height}px` }
+            : hasFixedHeight
+              ? { height: `${height}px` }
+              : undefined
+        }
         ref={contentRef}
       >
         <div

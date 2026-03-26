@@ -44,12 +44,17 @@ export function transformerAddFold(): ShikiTransformer {
     pre(pre) {
       const meta = this.options.meta?.__raw;
       const shouldFold = hasFoldInMeta(meta);
+      const height = parseHeightFromMeta(meta);
 
       if (shouldFold) {
-        const height = parseHeightFromMeta(meta) ?? DEFAULT_FOLD_HEIGHT;
         pre.properties = {
           ...pre.properties,
           fold: true,
+          height: height ?? DEFAULT_FOLD_HEIGHT,
+        };
+      } else if (height !== undefined) {
+        pre.properties = {
+          ...pre.properties,
           height,
         };
       }
