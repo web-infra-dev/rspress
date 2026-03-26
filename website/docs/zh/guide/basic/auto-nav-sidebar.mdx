@@ -50,6 +50,52 @@ docs
             └── plugin-development.md
 ```
 
+## 全局侧边栏
+
+默认情况下（根目录仅存在 `_nav.json`），Rspress 会为每个子目录生成**独立的侧边栏**，侧边栏会根据当前激活的导航项自动切换。例如，点击「Guide」导航项会显示 Guide 的侧边栏，点击「API」则显示 API 的侧边栏：
+
+```tree
+docs
+├── _nav.json
+├── guide
+│   ├── _meta.json  // /guide 的侧边栏
+│   └── ...
+└── api
+    ├── _meta.json  // /api 的侧边栏
+    └── ...
+```
+
+如果你希望所有页面**共用一个全局侧边栏**，而不是按导航项切换，可以在文档根目录下添加一个 `_meta.json`（与 `_nav.json` 同级）：
+
+```tree
+docs
+├── _nav.json
+├── _meta.json  // 根目录 _meta.json → 全局侧边栏
+├── guide
+│   ├── _meta.json
+│   └── ...
+└── api
+    ├── _meta.json
+    └── ...
+```
+
+当根目录存在 `_meta.json` 时，Rspress 会生成一个以 `'/'` 为键的全局侧边栏，无论当前激活的是哪个导航项，侧边栏内容都保持一致。根目录的 `_meta.json` 作为整个侧边栏树的入口，通常引用各个子目录：
+
+```json title="docs/_meta.json"
+[
+  {
+    "type": "dir",
+    "name": "guide",
+    "label": "Guide"
+  },
+  {
+    "type": "dir",
+    "name": "api",
+    "label": "API"
+  }
+]
+```
+
 ## JSON schema 类型提示
 
 为了更好地编辑 `_nav.json` 和 `_meta.json` 文件，Rspress 提供了 `@rspress/core/meta-json-schema.json` 和 `@rspress/core/nav-json-schema.json` 两个 schema 文件用于 IDE 的类型提示。

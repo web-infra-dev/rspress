@@ -50,6 +50,52 @@ docs
             └── plugin-development.md
 ```
 
+## Global sidebar
+
+By default (only `_nav.json` exists at the root), Rspress generates a **separate sidebar for each subdirectory**. The sidebar switches automatically based on the currently active nav item. For example, clicking the "Guide" nav item shows the Guide sidebar, and clicking "API" shows the API sidebar:
+
+```tree
+docs
+├── _nav.json
+├── guide
+│   ├── _meta.json  // sidebar for /guide
+│   └── ...
+└── api
+    ├── _meta.json  // sidebar for /api
+    └── ...
+```
+
+If you want all pages to **share a single global sidebar** instead of switching by nav, you can add a `_meta.json` at the root level of the docs directory (alongside `_nav.json`):
+
+```tree
+docs
+├── _nav.json
+├── _meta.json  // root-level _meta.json → global sidebar
+├── guide
+│   ├── _meta.json
+│   └── ...
+└── api
+    ├── _meta.json
+    └── ...
+```
+
+When a root-level `_meta.json` exists, Rspress will generate a single sidebar (keyed by `'/'`) for all pages, regardless of which nav item is active. The root `_meta.json` serves as the entry point for the entire sidebar tree, typically referencing subdirectories:
+
+```json title="docs/_meta.json"
+[
+  {
+    "type": "dir",
+    "name": "guide",
+    "label": "Guide"
+  },
+  {
+    "type": "dir",
+    "name": "api",
+    "label": "API"
+  }
+]
+```
+
 ## JSON schema type hint
 
 To better edit `_nav.json` and `_meta.json` files, Rspress provides two schema files `@rspress/core/meta-json-schema.json` and `@rspress/core/nav-json-schema.json` for IDE type hinting.
