@@ -52,16 +52,16 @@ docs
 
 ## 全局侧边栏用法
 
-默认情况下（根目录仅存在 `_nav.json`），Rspress 会为每个子目录生成**独立的侧边栏**，侧边栏会根据当前激活的导航项自动切换。例如，点击「Guide」导航项会显示 Guide 的侧边栏，点击「API」则显示 API 的侧边栏：
+默认情况下（根目录仅存在 `_nav.json`），Rspress 会为每个子目录生成**独立的侧边栏**，侧边栏会根据当前激活的导航项自动切换。例如，点击「Guides」导航项会显示 Guides 的侧边栏，点击「Reference」则显示 Reference 的侧边栏：
 
 ```tree
 docs
 ├── _nav.json
-├── guide
-│   ├── _meta.json  // /guide 的侧边栏
+├── guides
+│   ├── _meta.json  // /guides 的侧边栏
 │   └── ...
-└── api
-    ├── _meta.json  // /api 的侧边栏
+└── reference
+    ├── _meta.json  // /reference 的侧边栏
     └── ...
 ```
 
@@ -71,10 +71,10 @@ docs
 docs
 ├── _nav.json
 ├── _meta.json  // 根目录 _meta.json → 全局侧边栏
-├── guide
+├── guides
 │   ├── _meta.json
 │   └── ...
-└── api
+└── reference
     ├── _meta.json
     └── ...
 ```
@@ -85,13 +85,13 @@ docs
 [
   {
     "type": "dir",
-    "name": "guide",
-    "label": "Guide"
+    "name": "guides",
+    "label": "Guides"
   },
   {
     "type": "dir",
-    "name": "api",
-    "label": "API"
+    "name": "reference",
+    "label": "Reference"
   }
 ]
 ```
