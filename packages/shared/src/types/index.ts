@@ -351,7 +351,6 @@ export interface SiteData {
   markdown: {
     showLineNumbers: boolean;
     defaultWrapCode: boolean;
-    defaultCodeOverview: MarkdownOptions['defaultCodeOverview'];
     shiki: Partial<RehypeShikiOptions>;
   };
   multiVersion: {

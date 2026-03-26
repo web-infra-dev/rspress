@@ -35,29 +35,61 @@ function parseHeightFromMeta(meta: string | undefined): number | undefined {
   return undefined;
 }
 
+export interface ITransformerAddFoldOptions {
+  defaultCodeOverview?: {
+    height?: number;
+    overview?: 'fold' | 'scroll';
+  };
+}
+
 /**
  * @private compile-time only
  */
-export function transformerAddFold(): ShikiTransformer {
+export function transformerAddFold(
+  options: ITransformerAddFoldOptions = {},
+): ShikiTransformer {
+  const { defaultCodeOverview } = options;
+
   return {
     name: SHIKI_TRANSFORMER_ADD_FOLD,
     pre(pre) {
       const meta = this.options.meta?.__raw;
-      const shouldFold = hasFoldInMeta(meta);
-      const height = parseHeightFromMeta(meta);
+      const metaFold = hasFoldInMeta(meta);
+      const metaHeight = parseHeightFromMeta(meta);
+      const hasExplicitMeta =
+        metaFold !== undefined || metaHeight !== undefined;
 
-      if (shouldFold) {
-        pre.properties = {
-          ...pre.properties,
-          fold: true,
-          height: height ?? DEFAULT_FOLD_HEIGHT,
-        };
-      } else if (height !== undefined) {
-        pre.properties = {
-          ...pre.properties,
-          height,
-        };
+      if (hasExplicitMeta) {
+        // Explicit meta takes priority
+        if (metaFold) {
+          pre.properties = {
+            ...pre.properties,
+            fold: true,
+            height: metaHeight ?? DEFAULT_FOLD_HEIGHT,
+          };
+        } else if (metaHeight !== undefined) {
+          pre.properties = {
+            ...pre.properties,
+            height: metaHeight,
+          };
+        }
+      } else if (defaultCodeOverview?.height !== undefined) {
+        // Fall back to site-wide config
+        const overview = defaultCodeOverview.overview ?? 'scroll';
+        if (overview === 'fold') {
+          pre.properties = {
+            ...pre.properties,
+            fold: true,
+            height: defaultCodeOverview.height,
+          };
+        } else {
+          pre.properties = {
+            ...pre.properties,
+            height: defaultCodeOverview.height,
+          };
+        }
       }
+
       return pre;
     },
   };
