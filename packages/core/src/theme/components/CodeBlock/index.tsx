@@ -90,7 +90,7 @@ export function CodeBlock({
   } = useCodeButtonGroup(wrapCodeProp);
   const [expanded, setExpanded] = useState(false);
   const [needFold, setNeedFold] = useState(false);
-  const hasFixedHeight = !fold && height !== undefined;
+  const hasScroll = !fold && height !== undefined;
   const codeBlockRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -138,12 +138,12 @@ export function CodeBlock({
           wrapCodeState && 'rp-codeblock__content--wrap-code',
           lineNumbersProp && 'rp-codeblock__content--line-numbers',
           needFold && !expanded && 'rp-codeblock__content--fold',
-          hasFixedHeight && 'rp-codeblock__content--fixed-height',
+          hasScroll && 'rp-codeblock__content--scroll',
         )}
         style={
           needFold && !expanded
             ? { maxHeight: `${height}px` }
-            : hasFixedHeight
+            : hasScroll
               ? { height: `${height}px` }
               : undefined
         }
