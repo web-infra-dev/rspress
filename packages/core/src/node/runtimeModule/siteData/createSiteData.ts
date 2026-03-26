@@ -33,6 +33,7 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
     markdown: {
       showLineNumbers: userConfig?.markdown?.showLineNumbers ?? false,
       defaultWrapCode: userConfig?.markdown?.defaultWrapCode ?? false,
+      defaultCodeOverview: userConfig?.markdown?.defaultCodeOverview,
       shiki: {},
     },
   };

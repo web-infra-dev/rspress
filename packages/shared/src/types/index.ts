@@ -351,6 +351,7 @@ export interface SiteData {
   markdown: {
     showLineNumbers: boolean;
     defaultWrapCode: boolean;
+    defaultCodeOverview: MarkdownOptions['defaultCodeOverview'];
     shiki: Partial<RehypeShikiOptions>;
   };
   multiVersion: {
@@ -534,6 +535,22 @@ export interface MarkdownOptions {
    * @default false
    */
   defaultWrapCode?: boolean;
+  /**
+   * Default code block overview behavior when content exceeds the specified height.
+   */
+  defaultCodeOverview?: {
+    /**
+     * Height threshold in pixels. When not set, no overview behavior is applied.
+     */
+    height?: number;
+    /**
+     * How to handle code blocks exceeding the height.
+     * - `scroll`: fixed height with scrollbar
+     * - `fold`: collapsible with expand button
+     * @default 'scroll'
+     */
+    overview?: 'fold' | 'scroll';
+  };
   /**
    * Register global components in mdx files
    */

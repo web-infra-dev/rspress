@@ -1,3 +1,4 @@
+import { useSite } from '@rspress/core/runtime';
 import {
   CodeButtonGroup,
   type CodeButtonGroupProps,
@@ -8,6 +9,8 @@ import {
 import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import './index.scss';
+
+const DEFAULT_FOLD_HEIGHT = 300;
 
 export type CodeBlockProps = {
   title?: string;
@@ -83,6 +86,33 @@ export function CodeBlock({
     return <>{children}</>;
   }
 
+  const { site } = useSite();
+  const { defaultCodeOverview } = site.markdown;
+
+  // Resolve effective behavior:
+  // 1. Explicit meta props (fold / height) take priority
+  // 2. Fall back to defaultCodeOverview config
+  const hasExplicitMeta = fold || height !== undefined;
+
+  let effectiveFold: boolean;
+  let effectiveHeight: number | undefined;
+  let hasFixedHeight: boolean;
+
+  if (hasExplicitMeta) {
+    effectiveFold = fold;
+    effectiveHeight = fold ? (height ?? DEFAULT_FOLD_HEIGHT) : height;
+    hasFixedHeight = !fold && height !== undefined;
+  } else if (defaultCodeOverview?.height !== undefined) {
+    const overview = defaultCodeOverview.overview ?? 'scroll';
+    effectiveFold = overview === 'fold';
+    effectiveHeight = defaultCodeOverview.height;
+    hasFixedHeight = overview === 'scroll';
+  } else {
+    effectiveFold = false;
+    effectiveHeight = undefined;
+    hasFixedHeight = false;
+  }
+
   const {
     wrapCode: wrapCodeState,
     toggleWrapCode,
@@ -90,18 +120,17 @@ export function CodeBlock({
   } = useCodeButtonGroup(wrapCodeProp);
   const [expanded, setExpanded] = useState(false);
   const [needFold, setNeedFold] = useState(false);
-  const hasFixedHeight = !fold && height !== undefined;
   const codeBlockRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!fold || !contentRef.current) {
+    if (!effectiveFold || !contentRef.current) {
       setNeedFold(false);
       return;
     }
     const realHeight = contentRef.current.scrollHeight;
-    setNeedFold(realHeight > height);
-  }, [fold, height]);
+    setNeedFold(realHeight > (effectiveHeight ?? DEFAULT_FOLD_HEIGHT));
+  }, [effectiveFold, effectiveHeight]);
 
   const handleFoldToggle = useCallback(() => {
     if (expanded) {
@@ -142,9 +171,9 @@ export function CodeBlock({
         )}
         style={
           needFold && !expanded
-            ? { maxHeight: `${height}px` }
+            ? { maxHeight: `${effectiveHeight}px` }
             : hasFixedHeight
-              ? { height: `${height}px` }
+              ? { height: `${effectiveHeight}px` }
               : undefined
         }
         ref={contentRef}
