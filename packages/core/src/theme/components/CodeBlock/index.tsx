@@ -99,8 +99,9 @@ export function CodeBlock({
       setNeedFold(false);
       return;
     }
+    const foldHeight = height ?? DEFAULT_FOLD_HEIGHT;
     const realHeight = contentRef.current.scrollHeight;
-    setNeedFold(realHeight > (height ?? 0));
+    setNeedFold(realHeight > foldHeight);
   }, [fold, height]);
 
   const handleFoldToggle = useCallback(() => {
@@ -142,9 +143,9 @@ export function CodeBlock({
         )}
         style={
           needFold && !expanded
-            ? { maxHeight: `${height}px` }
+            ? { maxHeight: `${height ?? DEFAULT_FOLD_HEIGHT}px` }
             : hasScroll
-              ? { height: `${height}px` }
+              ? { maxHeight: `${height}px` }
               : undefined
         }
         ref={contentRef}
