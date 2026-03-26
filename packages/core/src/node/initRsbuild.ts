@@ -104,9 +104,9 @@ async function createInternalBuildConfig(
     ? config.themeDir!
     : path.join(cwd(), config.themeDir!);
   const outDir = config?.outDir ?? OUTPUT_DIR;
-  const rscEnabled = isRscEnabled(config);
+  const enableRSC = isRscEnabled(config);
   const useRscSsg = shouldUseRscSsg(config, enableSSG);
-  const enableNodeRuntime = enableSSG || rscEnabled;
+  const enableNodeRuntime = enableSSG || enableRSC;
 
   const base = config?.base ?? '/';
 
@@ -404,6 +404,7 @@ async function createInternalBuildConfig(
             docDirectory: userDocRoot,
             routeService,
             pluginDriver,
+            rscEnabled,
             isSsgMd,
           })
           .end();

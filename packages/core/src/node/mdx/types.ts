@@ -13,6 +13,10 @@ export interface MdxLoaderOptions {
   /**
    * @default false
    */
+  enableRSC?: boolean;
+  /**
+   * @default false
+   */
   isSsgMd?: boolean;
 }
 

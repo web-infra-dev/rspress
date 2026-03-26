@@ -17,6 +17,7 @@ export default async function mdxLoader(
     docDirectory,
     routeService,
     pluginDriver,
+    enableRSC,
     isSsgMd = false,
   } = options;
 
@@ -36,12 +37,10 @@ export default async function mdxLoader(
         config,
         pluginDriver,
         routeService,
+        enableRSC,
         addDependency: this.addDependency,
       });
-
-      // TODO: hardcoded "use server-entry";
-      const serverEntryCode = `"use server-entry";\n${compileResult}`;
-      callback(null, serverEntryCode);
+      callback(null, compileResult);
     } else {
       const compileResult = await compile({
         source,
@@ -50,12 +49,11 @@ export default async function mdxLoader(
         config,
         pluginDriver,
         routeService,
+        enableRSC,
         addDependency: this.addDependency,
         isSsgMd,
       });
-      // TODO: hardcoded "use server-entry";
-      const serverEntryCode = `"use server-entry";\n${compileResult}`;
-      callback(null, serverEntryCode);
+      callback(null, compileResult);
     }
   } catch (e) {
     if (e instanceof Error) {

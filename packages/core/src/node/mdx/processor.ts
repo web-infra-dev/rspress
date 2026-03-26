@@ -25,6 +25,7 @@ interface CompileOptions {
   config: UserConfig | null;
   routeService: RouteService | null;
   pluginDriver: PluginDriver | null;
+  enableRSC?: boolean;
 
   addDependency?: Rspack.LoaderContext['addDependency']; // remarkFileCodeBlock hmr
 
@@ -42,6 +43,7 @@ async function compile(options: CompileOptions): Promise<string> {
     config,
     routeService,
     pluginDriver,
+    enableRSC = false,
     addDependency,
     isSsgMd = false,
   } = options;
@@ -102,7 +104,7 @@ async function compile(options: CompileOptions): Promise<string> {
       frontmatter,
     } as PageMeta;
 
-    const result = `${compileResult}
+    const result = `${enableRSC ? '"use server-entry";\n' : ''}${compileResult}
 
 MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
