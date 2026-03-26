@@ -535,11 +535,11 @@ export interface MarkdownOptions {
    */
   defaultWrapCode?: boolean;
   /**
-   * Default code block overview behavior when content exceeds the specified height.
+   * Default code block overflow behavior when content exceeds the specified height.
    */
-  defaultCodeOverview?: {
+  defaultCodeOverflow?: {
     /**
-     * Height threshold in pixels. When not set, no overview behavior is applied.
+     * Height threshold in pixels. When not set, no overflow behavior is applied.
      */
     height?: number;
     /**
@@ -548,7 +548,7 @@ export interface MarkdownOptions {
      * - `fold`: collapsible with expand button
      * @default 'scroll'
      */
-    overview?: 'fold' | 'scroll';
+    behavior?: 'fold' | 'scroll';
   };
   /**
    * Register global components in mdx files

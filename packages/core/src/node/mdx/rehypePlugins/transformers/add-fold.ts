@@ -36,9 +36,9 @@ function parseHeightFromMeta(meta: string | undefined): number | undefined {
 }
 
 export interface ITransformerAddFoldOptions {
-  defaultCodeOverview?: {
+  defaultCodeOverflow?: {
     height?: number;
-    overview?: 'fold' | 'scroll';
+    behavior?: 'fold' | 'scroll';
   };
 }
 
@@ -48,7 +48,7 @@ export interface ITransformerAddFoldOptions {
 export function transformerAddFold(
   options: ITransformerAddFoldOptions = {},
 ): ShikiTransformer {
-  const { defaultCodeOverview } = options;
+  const { defaultCodeOverflow } = options;
 
   return {
     name: SHIKI_TRANSFORMER_ADD_FOLD,
@@ -73,19 +73,19 @@ export function transformerAddFold(
             height: metaHeight,
           };
         }
-      } else if (defaultCodeOverview?.height !== undefined) {
+      } else if (defaultCodeOverflow?.height !== undefined) {
         // Fall back to site-wide config
-        const overview = defaultCodeOverview.overview ?? 'scroll';
-        if (overview === 'fold') {
+        const behavior = defaultCodeOverflow.behavior ?? 'scroll';
+        if (behavior === 'fold') {
           pre.properties = {
             ...pre.properties,
             fold: true,
-            height: defaultCodeOverview.height,
+            height: defaultCodeOverflow.height,
           };
         } else {
           pre.properties = {
             ...pre.properties,
-            height: defaultCodeOverview.height,
+            height: defaultCodeOverflow.height,
           };
         }
       }
