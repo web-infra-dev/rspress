@@ -270,9 +270,17 @@ const longLine = '此代码块不会换行，即使全局启用了 defaultWrapCo
 ```
 ````
 
-## 代码折叠
+## 代码块高度
 
-当代码块内容较长时，你可以使用 `fold` 属性启用展开/收起功能。代码块会以指定高度收起，底部显示展开按钮，点击可展开查看完整代码。
+你可以通过 `height` 和 `fold` meta 属性控制代码块的高度行为。共有三种情况：
+
+- **`fold`**：可折叠代码块，底部显示展开按钮。高度默认 300px。
+- **`height=X`**：固定高度，显示垂直滚动条。如果同时使用 `fold`，则以指定高度折叠而非滚动。
+- **无 meta**：默认完全展开。可通过 [`markdown.defaultCodeOverflow`](/api/config/config-build#markdowndefaultcodeoverflow) 全局配置默认行为。
+
+### 折叠
+
+使用 `fold` 属性启用展开/收起功能：
 
 ````mdx
 ```tsx fold
@@ -290,7 +298,7 @@ const App = () => {
 ```
 ````
 
-你也可以通过 `height` 属性自定义收起高度（单位为像素，默认 300）：
+你可以通过 `height` 属性自定义收起高度（单位为像素，默认 300）：
 
 ````mdx
 ```tsx fold height="200"
@@ -298,7 +306,17 @@ const App = () => {
 ```
 ````
 
-以下是一个实际示例：
+### 滚动
+
+单独使用 `height` 属性（不加 `fold`）来设置固定高度并显示垂直滚动条：
+
+````mdx
+```tsx height="200"
+// 此代码块固定高度为 200px，带滚动条
+```
+````
+
+### 实际示例
 
 ```jsx title="fold-demo.tsx" fold height="350"
 import { useState } from 'react';
@@ -337,8 +355,6 @@ export default () => {
 :::tip
 当代码块实际内容高度小于 `height` 时，展开/收起按钮不会显示。
 :::
-
-你也可以单独使用 `height` 属性（不加 `fold`）来设置固定高度并显示垂直滚动条。如需为所有代码块全局设置默认的高度行为，请参阅 [`markdown.defaultCodeOverflow`](/api/config/config-build#markdowndefaultcodeoverview)。
 
 ## 组合使用 meta 属性
 

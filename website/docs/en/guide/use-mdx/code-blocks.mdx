@@ -270,9 +270,17 @@ const longLine = 'This code block will not wrap even if defaultWrapCode is enabl
 ```
 ````
 
-## Code folding
+## Code block height
 
-When a code block is long, you can use the `fold` attribute to enable expand/collapse functionality. The code block will be collapsed to a specified height with an expand button at the bottom. Click to expand and view the full code.
+You can control the height behavior of code blocks using the `height` and `fold` meta attributes. There are three cases:
+
+- **`fold`**: Collapsible code block with an expand button. Height defaults to 300px.
+- **`height=X`**: Fixed height with vertical scrollbar. If combined with `fold`, the code block will be collapsible at the specified height instead.
+- **No meta**: Fully expanded by default. You can change this globally via [`markdown.defaultCodeOverflow`](/api/config/config-build#markdowndefaultcodeoverflow).
+
+### Fold
+
+Use the `fold` attribute to enable expand/collapse functionality:
 
 ````mdx
 ```tsx fold
@@ -290,7 +298,7 @@ const App = () => {
 ```
 ````
 
-You can also customize the collapsed height via the `height` attribute (in pixels, default 300):
+You can customize the collapsed height via the `height` attribute (in pixels, default 300):
 
 ````mdx
 ```tsx fold height="200"
@@ -298,7 +306,17 @@ You can also customize the collapsed height via the `height` attribute (in pixel
 ```
 ````
 
-Here is a live example:
+### Scroll
+
+Use the `height` attribute alone (without `fold`) to set a fixed height with a vertical scrollbar:
+
+````mdx
+```tsx height="200"
+// This code block has a fixed height of 200px with scrollbar
+```
+````
+
+### Live example
 
 ```jsx title="fold-demo.tsx" fold height="350"
 import { useState } from 'react';
@@ -337,8 +355,6 @@ export default () => {
 :::tip
 The expand/collapse button will not be shown when the actual content height is less than `height`.
 :::
-
-You can also use the `height` attribute alone (without `fold`) to set a fixed height with a vertical scrollbar. To apply a default height behavior to all code blocks globally, see [`markdown.defaultCodeOverflow`](/api/config/config-build#markdowndefaultcodeoverview).
 
 ## Combining meta attributes
 
