@@ -11,7 +11,7 @@ In Rspress, in addition to declaring [nav](/api/config/config-theme.html#nav) an
 Automated navbar/sidebar will only work if there are no `nav` and `sidebar` configurations in the config file `rspress.config.ts`.
 :::
 
-## Basic concepts
+## Basic usage
 
 Rspress generates the nav through `_nav.json` and the sidebar through `_meta.json`. The `_nav.json` at the navigation bar level is located in the root directory of the document, while the `_meta.json` at the sidebar level is located in the subdirectories of the document root. For example:
 
@@ -50,7 +50,7 @@ docs
             └── plugin-development.md
 ```
 
-## Global sidebar
+## Global sidebar usage
 
 By default (only `_nav.json` exists at the root), Rspress generates a **separate sidebar for each subdirectory**. The sidebar switches automatically based on the currently active nav item. For example, clicking the "Guide" nav item shows the Guide sidebar, and clicking "API" shows the API sidebar:
 
