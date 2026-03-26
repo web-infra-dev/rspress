@@ -18,7 +18,7 @@ Rspress generates the nav through `_nav.json` and the sidebar through `_meta.jso
 ```tree
 docs
 ├── _nav.json // navigation bar level
-└── guides
+└── guide
     ├── _meta.json // sidebar level
     ├── introduction.mdx
     └── advanced
@@ -32,7 +32,7 @@ If your document supports i18n, then `_nav.json` at the navigation bar level wil
 docs
 ├── en
 │   ├── _nav.json // navigation bar level
-│   └── guides
+│   └── guide
 │       ├── _meta.json // sidebar level
 │       ├── introduction.mdx
 │       ├── install.mdx
@@ -41,7 +41,7 @@ docs
 │           └── plugin-development.md
 └── zh
     ├── _nav.json // navigation bar level
-    └── guides
+    └── guide
         ├── _meta.json // sidebar level
         ├── introduction.mdx
         ├── install.mdx
@@ -129,8 +129,8 @@ At the navigation bar level, you can fill in an array in `_nav.json`, and its ty
 [
   {
     "text": "Guide",
-    "link": "/guides/introduction",
-    "activeMatch": "^/guides/"
+    "link": "/guide/introduction",
+    "activeMatch": "^/guide/"
   }
 ]
 ```
@@ -478,7 +478,7 @@ In some directories, you don't need to configure `_meta.json` and let Rspress au
 ```tree
 docs
 ├── _meta.json
-└── guides
+└── guide
   ├── _meta.json
   └── basic
     ├── introduction.mdx
@@ -486,7 +486,7 @@ docs
     └── plugin-development.md
 ```
 
-In the guides directory you can configure `_meta.json` as follows:
+In the guide directory you can configure `_meta.json` as follows:
 
 ```json
 [

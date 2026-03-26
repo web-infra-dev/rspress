@@ -18,7 +18,7 @@ Rspress 通过 `_nav.json` 生成导航栏，通过 `_meta.json` 生成侧边栏
 ```tree
 docs
 ├── _nav.json // 导航栏级别
-└── guides
+└── guide
     ├── _meta.json // 侧边栏级别
     ├── introduction.mdx
     └── advanced
@@ -32,7 +32,7 @@ docs
 docs
 ├── en
 │   ├── _nav.json // 导航栏级别
-│   └── guides
+│   └── guide
 │       ├── _meta.json // 侧边栏级别
 │       ├── introduction.mdx
 │       ├── install.mdx
@@ -41,7 +41,7 @@ docs
 │           └── plugin-development.md
 └── zh
     ├── _nav.json // 导航栏级别
-    └── guides
+    └── guide
         ├── _meta.json // 侧边栏级别
         ├── introduction.mdx
         ├── install.mdx
@@ -129,8 +129,8 @@ docs
 [
   {
     "text": "Guide",
-    "link": "/guides/introduction",
-    "activeMatch": "^/guides/"
+    "link": "/guide/introduction",
+    "activeMatch": "^/guide/"
   }
 ]
 ```
@@ -478,7 +478,7 @@ export type CustomLinkMeta =
 ```tree
 docs
 ├── _meta.json
-└── guides
+└── guide
   ├── _meta.json
   └── basic
     ├── introduction.mdx
@@ -486,7 +486,7 @@ docs
     └── plugin-development.md
 ```
 
-在 `guides` 目录中你可以配置 `_meta.json` 内容如下:
+在 `guide` 目录中你可以配置 `_meta.json` 内容如下:
 
 ```json
 [
