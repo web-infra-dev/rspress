@@ -282,6 +282,14 @@ const longLine = '此代码块不会换行，即使全局启用了 defaultWrapCo
 
 使用 `fold` 属性启用展开/收起功能，也可以通过 `height` 属性自定义收起高度（单位为像素，默认 300）：
 
+````mdx
+```tsx fold height="350"
+// 这里放较长的代码内容即可触发展开/收起
+```
+````
+
+它将被渲染为：
+
 ```jsx title="fold-demo.tsx" fold height="350"
 import { useState } from 'react';
 
@@ -319,6 +327,14 @@ export default () => {
 ### 滚动
 
 单独使用 `height` 属性（不加 `fold`）来设置固定高度并显示垂直滚动条：
+
+````mdx
+```tsx height="200"
+// 这里放较长的代码内容即可触发滚动
+```
+````
+
+它将被渲染为：
 
 ```tsx title="scroll-demo.tsx" height="200"
 const lines = Array.from({ length: 20 }, (_, index) => `Line ${index + 1}`);

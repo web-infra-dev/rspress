@@ -282,6 +282,14 @@ You can control the height behavior of code blocks using the `height` and `fold`
 
 Use the `fold` attribute to enable expand/collapse functionality. You can also customize the collapsed height via the `height` attribute (in pixels, default 300):
 
+````mdx
+```tsx fold height="350"
+// Put longer code content here to trigger expand/collapse
+```
+````
+
+It will be rendered as:
+
 ```jsx title="fold-demo.tsx" fold height="350"
 import { useState } from 'react';
 
@@ -319,6 +327,14 @@ export default () => {
 ### Scroll
 
 Use the `height` attribute alone (without `fold`) to set a fixed height with a vertical scrollbar:
+
+````mdx
+```tsx height="200"
+// Put longer code content here to trigger scrolling
+```
+````
+
+It will be rendered as:
 
 ```tsx title="scroll-demo.tsx" height="200"
 const lines = Array.from({ length: 20 }, (_, index) => `Line ${index + 1}`);
