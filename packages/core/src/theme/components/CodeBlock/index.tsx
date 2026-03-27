@@ -9,6 +9,8 @@ import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import './index.scss';
 
+const DEFAULT_FOLD_HEIGHT = 300;
+
 export type CodeBlockProps = {
   title?: string;
   lang?: string;
@@ -24,9 +26,6 @@ export type CodeBlockProps = {
    * @default false
    */
   fold?: boolean;
-  /**
-   * @default 300
-   */
   height?: number;
   containerElementClassName?: string;
   codeButtonGroupProps?: Omit<
@@ -78,7 +77,7 @@ export function CodeBlock({
   wrapCode: wrapCodeProp = false,
   lineNumbers: lineNumbersProp = false,
   fold = false,
-  height = 300,
+  height,
   codeButtonGroupProps,
   children,
 }: CodeBlockProps) {
@@ -93,6 +92,7 @@ export function CodeBlock({
   } = useCodeButtonGroup(wrapCodeProp);
   const [expanded, setExpanded] = useState(false);
   const [needFold, setNeedFold] = useState(false);
+  const hasScroll = !fold && height !== undefined;
   const codeBlockRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -101,8 +101,9 @@ export function CodeBlock({
       setNeedFold(false);
       return;
     }
+    const foldHeight = height ?? DEFAULT_FOLD_HEIGHT;
     const realHeight = contentRef.current.scrollHeight;
-    setNeedFold(realHeight > height);
+    setNeedFold(realHeight > foldHeight);
   }, [fold, height]);
 
   const handleFoldToggle = useCallback(() => {
@@ -140,8 +141,15 @@ export function CodeBlock({
           wrapCodeState && 'rp-codeblock__content--wrap-code',
           lineNumbersProp && 'rp-codeblock__content--line-numbers',
           needFold && !expanded && 'rp-codeblock__content--fold',
+          hasScroll && 'rp-codeblock__content--scroll',
         )}
-        style={needFold && !expanded ? { maxHeight: `${height}px` } : undefined}
+        style={
+          needFold && !expanded
+            ? { maxHeight: `${height ?? DEFAULT_FOLD_HEIGHT}px` }
+            : hasScroll
+              ? { maxHeight: `${height}px` }
+              : undefined
+        }
         ref={contentRef}
       >
         <div

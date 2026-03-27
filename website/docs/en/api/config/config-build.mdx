@@ -271,6 +271,32 @@ Whether to enable long code line wrapping display by default. Defaults to `false
 
 When enabled globally, you can use `wrapCode=false` in the code block meta to disable wrapping for a specific block. Conversely, when disabled globally, you can use `wrapCode` or `wrapCode=true` to enable wrapping for a specific block. See [Wrap code](/guide/use-mdx/code-blocks#wrap-code) for details.
 
+### markdown.defaultCodeOverflow
+
+- **Type**: `{ height?: number; behavior?: 'fold' | 'scroll' }`
+
+By default, Rspress code blocks are fully expanded with no overflow behavior. You can use meta attributes like ` ```tsx fold ` to control overflow for individual code blocks. This config sets the global default overflow behavior, which is automatically applied when code blocks exceed the specified height.
+
+- `height`: Height threshold in pixels. When not set, no overflow behavior is applied.
+- `behavior`: How to handle code blocks exceeding the height. Defaults to `'scroll'`.
+  - `'scroll'`: Fixed height with vertical scrollbar.
+  - `'fold'`: Collapsible with an expand/collapse button.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    defaultCodeOverflow: {
+      height: 400,
+      behavior: 'fold',
+    },
+  },
+});
+```
+
+Individual code blocks can override the default using `height` or `fold` meta attributes. See [Code block height](/guide/use-mdx/code-blocks#code-block-height) for details.
+
 ### markdown.crossCompilerCache
 
 - **Type**: `boolean`

@@ -273,6 +273,32 @@ export default defineConfig({
 
 全局启用后，可以在代码块 meta 中使用 `wrapCode=false` 来为特定代码块禁用换行。反之，全局未启用时，可以使用 `wrapCode` 或 `wrapCode=true` 来为特定代码块启用换行。详见[代码换行](/guide/use-mdx/code-blocks#代码换行)。
 
+### markdown.defaultCodeOverflow
+
+- **类型**: `{ height?: number; behavior?: 'fold' | 'scroll' }`
+
+默认情况下，Rspress 的代码块会完全展开显示，没有 overflow 行为。你可以通过 ` ```tsx fold ` 等 meta 属性控制单个代码块的 overflow 行为。此配置项可以为所有代码块设置全局默认的 overflow 行为，超过指定高度时自动应用。
+
+- `height`：高度阈值，单位为像素。未设置时不应用任何 overflow 行为。
+- `behavior`：超出高度时的处理方式，默认为 `'scroll'`。
+  - `'scroll'`：固定高度，显示垂直滚动条。
+  - `'fold'`：可折叠，显示展开/收起按钮。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    defaultCodeOverflow: {
+      height: 400,
+      behavior: 'fold',
+    },
+  },
+});
+```
+
+单个代码块可通过 `height` 或 `fold` meta 属性覆盖默认行为。详见[代码块高度](/guide/use-mdx/code-blocks#代码块高度)。
+
 ### markdown.crossCompilerCache
 
 - **类型**: `boolean`

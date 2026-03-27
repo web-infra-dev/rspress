@@ -19,6 +19,7 @@ const cssVariablesTheme = createCssVariablesTheme({
 function createRehypeShikiOptions(
   showLineNumbers: boolean,
   defaultWrapCode: boolean,
+  defaultCodeOverflow?: { height?: number; behavior?: 'fold' | 'scroll' },
   options?: Partial<RehypeShikiOptions>,
 ): RehypeShikiOptions {
   const { transformers = [], ...restOptions } = options || {};
@@ -28,7 +29,7 @@ function createRehypeShikiOptions(
     transformerAddLang(),
     transformerAddLineNumbers({ defaultShowLineNumbers: showLineNumbers }),
     transformerAddWrapCode({ defaultWrapCode }),
-    transformerAddFold(),
+    transformerAddFold({ defaultCodeOverflow }),
     ...transformers,
   ];
 

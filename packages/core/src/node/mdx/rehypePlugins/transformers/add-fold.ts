@@ -35,24 +35,61 @@ function parseHeightFromMeta(meta: string | undefined): number | undefined {
   return undefined;
 }
 
+export interface ITransformerAddFoldOptions {
+  defaultCodeOverflow?: {
+    height?: number;
+    behavior?: 'fold' | 'scroll';
+  };
+}
+
 /**
  * @private compile-time only
  */
-export function transformerAddFold(): ShikiTransformer {
+export function transformerAddFold(
+  options: ITransformerAddFoldOptions = {},
+): ShikiTransformer {
+  const { defaultCodeOverflow } = options;
+
   return {
     name: SHIKI_TRANSFORMER_ADD_FOLD,
     pre(pre) {
       const meta = this.options.meta?.__raw;
-      const shouldFold = hasFoldInMeta(meta);
+      const metaFold = hasFoldInMeta(meta);
+      const metaHeight = parseHeightFromMeta(meta);
+      const hasExplicitMeta =
+        metaFold !== undefined || metaHeight !== undefined;
 
-      if (shouldFold) {
-        const height = parseHeightFromMeta(meta) ?? DEFAULT_FOLD_HEIGHT;
-        pre.properties = {
-          ...pre.properties,
-          fold: true,
-          height,
-        };
+      if (hasExplicitMeta) {
+        // Explicit meta takes priority
+        if (metaFold) {
+          pre.properties = {
+            ...pre.properties,
+            fold: true,
+            height: metaHeight ?? DEFAULT_FOLD_HEIGHT,
+          };
+        } else if (metaHeight !== undefined) {
+          pre.properties = {
+            ...pre.properties,
+            height: metaHeight,
+          };
+        }
+      } else if (defaultCodeOverflow?.height !== undefined) {
+        // Fall back to site-wide config
+        const behavior = defaultCodeOverflow.behavior ?? 'scroll';
+        if (behavior === 'fold') {
+          pre.properties = {
+            ...pre.properties,
+            fold: true,
+            height: defaultCodeOverflow.height,
+          };
+        } else {
+          pre.properties = {
+            ...pre.properties,
+            height: defaultCodeOverflow.height,
+          };
+        }
       }
+
       return pre;
     },
   };

@@ -88,6 +88,10 @@
     }
   }
 
+  &--scroll {
+    overflow-y: auto;
+  }
+
   &--fold {
     overflow: hidden;
     position: relative;
