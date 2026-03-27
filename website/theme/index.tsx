@@ -53,15 +53,7 @@ const HomeHero = ({ image: _, ...otherProps }: HomeHeroProps) => {
 };
 
 const Layout = () => {
-  const lang = useLang();
-  const bannerHref =
-    lang === 'en'
-      ? '/guide/start/ai#agent-skills'
-      : '/zh/guide/start/ai#agent-skills';
-  const bannerMessage =
-    lang === 'en'
-      ? 'Customize Rspress themes faster with the `rspress-custom-theme` skill'
-      : '用 `rspress-custom-theme` skill 更快定制 Rspress 主题';
+  const t = useI18n<typeof import('i18n')>();
 
   return (
     <CssModificationProvider>
@@ -70,9 +62,9 @@ const Layout = () => {
       <BasicLayout
         beforeNav={
           <Banner
-            href={bannerHref}
-            message={bannerMessage}
-            storageKey="rp-banner-rspress-custom-theme-closed"
+            href={t('bannerHref')}
+            message={t('bannerMessage')}
+            storageKey="rp-banner-rspress-custom-theme-v2-closed"
           />
         }
         beforeNavTitle={<NavIcon />}

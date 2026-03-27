@@ -62,5 +62,13 @@
   "backToBlog": {
     "zh": "← 返回博客",
     "en": "← Back to Blog"
+  },
+  "bannerMessage": {
+    "zh": "✨ 用 rspress-custom-theme skill 更快定制 Rspress 主题",
+    "en": "✨ Customize Rspress themes faster with the rspress-custom-theme skill"
+  },
+  "bannerHref": {
+    "zh": "/zh/guide/start/ai#agent-skills",
+    "en": "/guide/start/ai#agent-skills"
   }
 }
