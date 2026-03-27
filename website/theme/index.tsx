@@ -54,6 +54,8 @@ const HomeHero = ({ image: _, ...otherProps }: HomeHeroProps) => {
 
 const Layout = () => {
   const t = useI18n<typeof import('i18n')>();
+  const { pathname } = useLocation();
+  const isHomePage = pathname === '/' || pathname === '/zh/';
 
   return (
     <CssModificationProvider>
@@ -61,11 +63,13 @@ const Layout = () => {
       <CssModificationIndicator />
       <BasicLayout
         beforeNav={
-          <Banner
-            href={t('bannerHref')}
-            message={t('bannerMessage')}
-            storageKey="rp-banner-rspress-custom-theme-v2-closed"
-          />
+          isHomePage ? (
+            <Banner
+              href={t('bannerHref')}
+              message={t('bannerMessage')}
+              storageKey="rp-banner-rspress-custom-theme-v2-closed"
+            />
+          ) : null
         }
         beforeNavTitle={<NavIcon />}
       />
