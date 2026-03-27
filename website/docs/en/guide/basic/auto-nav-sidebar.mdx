@@ -11,14 +11,14 @@ In Rspress, in addition to declaring [nav](/api/config/config-theme.html#nav) an
 Automated navbar/sidebar will only work if there are no `nav` and `sidebar` configurations in the config file `rspress.config.ts`.
 :::
 
-## Basic concepts
+## Basic usage
 
 Rspress generates the nav through `_nav.json` and the sidebar through `_meta.json`. The `_nav.json` at the navigation bar level is located in the root directory of the document, while the `_meta.json` at the sidebar level is located in the subdirectories of the document root. For example:
 
 ```tree
 docs
 ├── _nav.json // navigation bar level
-└── guides
+└── guide
     ├── _meta.json // sidebar level
     ├── introduction.mdx
     └── advanced
@@ -32,7 +32,7 @@ If your document supports i18n, then `_nav.json` at the navigation bar level wil
 docs
 ├── en
 │   ├── _nav.json // navigation bar level
-│   └── guides
+│   └── guide
 │       ├── _meta.json // sidebar level
 │       ├── introduction.mdx
 │       ├── install.mdx
@@ -41,13 +41,59 @@ docs
 │           └── plugin-development.md
 └── zh
     ├── _nav.json // navigation bar level
-    └── guides
+    └── guide
         ├── _meta.json // sidebar level
         ├── introduction.mdx
         ├── install.mdx
         └── advanced
             ├── _meta.json // sidebar level
             └── plugin-development.md
+```
+
+## Global sidebar usage
+
+By default (only `_nav.json` exists at the root), Rspress generates a **separate sidebar for each subdirectory**. The sidebar switches automatically based on the currently active nav item. For example, clicking the "Guide" nav item shows the Guide sidebar, and clicking "API" shows the API sidebar:
+
+```tree
+docs
+├── _nav.json
+├── guide
+│   ├── _meta.json  // sidebar for /guide
+│   └── ...
+└── api
+    ├── _meta.json  // sidebar for /api
+    └── ...
+```
+
+If you want all pages to **share a single global sidebar** instead of switching by nav, you can add a `_meta.json` at the root level of the docs directory (alongside `_nav.json`):
+
+```tree
+docs
+├── _nav.json
+├── _meta.json  // root-level _meta.json → global sidebar
+├── guide
+│   ├── _meta.json
+│   └── ...
+└── api
+    ├── _meta.json
+    └── ...
+```
+
+When a root-level `_meta.json` exists, Rspress will generate a single sidebar (keyed by `'/'`) for all pages, regardless of which nav item is active. The root `_meta.json` serves as the entry point for the entire sidebar tree, typically referencing subdirectories:
+
+```json title="docs/_meta.json"
+[
+  {
+    "type": "dir",
+    "name": "guide",
+    "label": "Guide"
+  },
+  {
+    "type": "dir",
+    "name": "api",
+    "label": "API"
+  }
+]
 ```
 
 ## JSON schema type hint
@@ -83,8 +129,8 @@ At the navigation bar level, you can fill in an array in `_nav.json`, and its ty
 [
   {
     "text": "Guide",
-    "link": "/guides/introduction",
-    "activeMatch": "^/guides/"
+    "link": "/guide/introduction",
+    "activeMatch": "^/guide/"
   }
 ]
 ```
@@ -432,7 +478,7 @@ In some directories, you don't need to configure `_meta.json` and let Rspress au
 ```tree
 docs
 ├── _meta.json
-└── guides
+└── guide
   ├── _meta.json
   └── basic
     ├── introduction.mdx
@@ -440,7 +486,7 @@ docs
     └── plugin-development.md
 ```
 
-In the guides directory you can configure `_meta.json` as follows:
+In the guide directory you can configure `_meta.json` as follows:
 
 ```json
 [
