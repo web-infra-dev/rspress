@@ -280,43 +280,7 @@ You can control the height behavior of code blocks using the `height` and `fold`
 
 ### Fold
 
-Use the `fold` attribute to enable expand/collapse functionality:
-
-````mdx
-```tsx fold
-const App = () => {
-  return (
-    <div>
-      <h1>Hello</h1>
-      <p>Line 1</p>
-      <p>Line 2</p>
-      <p>Line 3</p>
-      ...
-    </div>
-  );
-};
-```
-````
-
-You can customize the collapsed height via the `height` attribute (in pixels, default 300):
-
-````mdx
-```tsx fold height="200"
-// This code block collapses to 200px
-```
-````
-
-### Scroll
-
-Use the `height` attribute alone (without `fold`) to set a fixed height with a vertical scrollbar:
-
-````mdx
-```tsx height="200"
-// This code block has a fixed height of 200px with scrollbar
-```
-````
-
-### Live example
+Use the `fold` attribute to enable expand/collapse functionality. You can also customize the collapsed height via the `height` attribute (in pixels, default 300):
 
 ```jsx title="fold-demo.tsx" fold height="350"
 import { useState } from 'react';
@@ -350,6 +314,24 @@ export default () => {
     </div>
   );
 };
+```
+
+### Scroll
+
+Use the `height` attribute alone (without `fold`) to set a fixed height with a vertical scrollbar:
+
+```tsx title="scroll-demo.tsx" height="200"
+const lines = Array.from({ length: 20 }, (_, index) => `Line ${index + 1}`);
+
+export default function ScrollDemo() {
+  return (
+    <div>
+      {lines.map((line) => (
+        <div key={line}>{line}</div>
+      ))}
+    </div>
+  );
+}
 ```
 
 :::tip
