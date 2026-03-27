@@ -324,6 +324,10 @@ export default () => {
 };
 ```
 
+:::tip
+当代码块实际内容高度小于 `height` 时，展开/收起按钮不会显示。
+:::
+
 ### 滚动
 
 单独使用 `height` 属性（不加 `fold`）来设置固定高度并显示垂直滚动条：
@@ -349,10 +353,6 @@ export default function ScrollDemo() {
   );
 }
 ```
-
-:::tip
-当代码块实际内容高度小于 `height` 时，展开/收起按钮不会显示。
-:::
 
 ## 组合使用 meta 属性
 
