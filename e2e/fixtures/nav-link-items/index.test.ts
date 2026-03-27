@@ -61,7 +61,7 @@ const createNavSuite = ({ title, configFile, paths }: NavSuiteConfig) => {
     const gotoPage = (suffix: string) => `http://localhost:${appPort}${suffix}`;
 
     test.beforeAll(async () => {
-      const appDir = __dirname;
+      const appDir = import.meta.dirname;
       appPort = await getPort();
       app = await runDevCommand(appDir, appPort, configFile);
     });

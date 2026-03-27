@@ -6,7 +6,7 @@ test.describe('tabs-component test', async () => {
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
 
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

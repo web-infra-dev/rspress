@@ -11,7 +11,7 @@ test.describe('api-docgen test', async () => {
   let app: unknown;
 
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

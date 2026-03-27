@@ -28,7 +28,7 @@ async function pathExists(path: string): Promise<boolean> {
 
 test.describe('plugin-llms', async () => {
   test('should generate llms.txt llms-full.txt mdFiles', async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     await runBuildCommand(appDir);
 
     expect(
@@ -66,7 +66,7 @@ test.describe('plugin-llms', async () => {
   });
 
   test('should order llms.txt entries according to _meta.json', async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     await runBuildCommand(appDir);
 
     const llmsTxt = await readFile(
@@ -110,7 +110,7 @@ test.describe('plugin-llms', async () => {
   });
 
   test('multiple configuration - should generate llms.txt llms-full.txt mdFiles', async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     await runBuildCommand(appDir, 'rspress-i18n.config.ts');
 
     expect(

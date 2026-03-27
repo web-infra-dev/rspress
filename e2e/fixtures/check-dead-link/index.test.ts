@@ -16,7 +16,7 @@ test.describe('check dead links', async () => {
   });
 
   test('should link the correct page', async ({ page }) => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);
@@ -88,7 +88,7 @@ test.describe('check dead links', async () => {
   });
 
   test('should link the correct page - autoPrefix: false', async ({ page }) => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir, 'rspress-no-prefix.config.ts');
     app = await runPreviewCommand(appDir, appPort);
@@ -160,7 +160,7 @@ test.describe('check dead links', async () => {
   });
 
   test('should link the correct page - cleanUrl', async ({ page }) => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir, 'rspress-clean.config.ts');
     app = await runPreviewCommand(appDir, appPort);

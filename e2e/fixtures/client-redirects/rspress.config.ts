@@ -3,7 +3,7 @@ import { defineConfig } from '@rspress/core';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 
 export default defineConfig({
-  root: path.join(__dirname, 'doc'),
+  root: path.join(import.meta.dirname, 'doc'),
   plugins: [
     pluginClientRedirects({
       redirects: [

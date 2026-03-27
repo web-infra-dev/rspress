@@ -3,6 +3,6 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   title: 'rspress',
-  root: path.join(__dirname, 'doc'),
+  root: path.join(import.meta.dirname, 'doc'),
   base: '/base/',
 });

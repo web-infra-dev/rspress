@@ -1,10 +1,10 @@
 import * as NodePath from 'node:path';
 import { defineConfig } from '@rspress/core';
 import { pluginRss } from '@rspress/plugin-rss';
-import fixture from './fixture.json';
+import fixture from './fixture.json' with { type: 'json' };
 
 export default defineConfig({
-  root: NodePath.resolve(__dirname, 'doc'),
+  root: NodePath.resolve(import.meta.dirname, 'doc'),
   title: fixture.title,
   base: fixture.base,
   plugins: [

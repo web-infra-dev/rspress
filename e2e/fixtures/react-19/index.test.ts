@@ -5,7 +5,7 @@ import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 function getPackageVersion(name: string) {
   const pkgJsonPath = path.join(
-    __dirname,
+    import.meta.dirname,
     'node_modules',
     name,
     'package.json',
@@ -17,7 +17,7 @@ test.describe('React 19 test', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

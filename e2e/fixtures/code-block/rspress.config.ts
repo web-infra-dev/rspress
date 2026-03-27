@@ -8,7 +8,7 @@ import {
 } from '@shikijs/transformers';
 
 export default defineConfig({
-  root: path.join(__dirname, 'doc'),
+  root: path.join(import.meta.dirname, 'doc'),
   markdown: {
     shiki: {
       langAlias: {

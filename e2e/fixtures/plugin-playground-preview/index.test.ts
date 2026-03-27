@@ -5,7 +5,7 @@ test.describe('plugin-playground-preview combined test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });

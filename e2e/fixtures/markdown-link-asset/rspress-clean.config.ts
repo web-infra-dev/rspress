@@ -3,7 +3,7 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   base: '/base/',
-  root: path.join(__dirname, 'doc'),
+  root: path.join(import.meta.dirname, 'doc'),
   lang: 'en',
   route: {
     cleanUrls: true,

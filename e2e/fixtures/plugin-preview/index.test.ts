@@ -9,13 +9,13 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-const HMR_TEST_FILE = path.resolve(__dirname, 'doc/hmr.mdx');
+const HMR_TEST_FILE = path.resolve(import.meta.dirname, 'doc/hmr.mdx');
 
 test.describe('plugin test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
@@ -148,7 +148,7 @@ test.describe('plugin preview build', async () => {
   let appPort: number;
   let app;
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir);
     app = await runPreviewCommand(appDir, appPort);
@@ -193,7 +193,7 @@ test.describe('plugin preview HMR', async () => {
   let originalContent: string;
 
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
     originalContent = await fs.readFile(HMR_TEST_FILE, 'utf-8');

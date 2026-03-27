@@ -3,7 +3,7 @@ import { defineConfig } from '@rspress/core';
 import { pluginApiDocgen } from '@rspress/plugin-api-docgen';
 
 export default defineConfig({
-  root: path.join(__dirname, 'doc'),
+  root: path.join(import.meta.dirname, 'doc'),
   lang: 'en',
   plugins: [
     pluginApiDocgen({

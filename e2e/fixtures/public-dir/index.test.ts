@@ -19,7 +19,7 @@ async function pathExists(path: string): Promise<boolean> {
 
 test.describe('basic test', async () => {
   test('should not generate the routes for html/js/mdx files in publicDir', async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     await runBuildCommand(appDir);
 
     const existsImg = pathExists(
@@ -47,7 +47,7 @@ test.describe('basic test', async () => {
   test('should load public dir img successfully under "rspress build && rspress preview"', async ({
     page,
   }) => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     const appPort = await getPort();
     await runBuildCommand(appDir);
     await runPreviewCommand(appDir, appPort);
@@ -62,7 +62,7 @@ test.describe('basic test', async () => {
   test('should load public dir img successfully under "rspress dev"', async ({
     page,
   }) => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     const appPort = await getPort();
     await runDevCommand(appDir, appPort);
     await page.goto(`http://localhost:${appPort}/base/`, {

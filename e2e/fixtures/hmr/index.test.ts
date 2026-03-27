@@ -3,14 +3,17 @@ import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-const TEST_FILE = path.resolve(__dirname, 'doc/guide/test.mdx');
+const TEST_FILE = path.resolve(import.meta.dirname, 'doc/guide/test.mdx');
 const TEST_FRAGMENT_FILE = path.resolve(
-  __dirname,
+  import.meta.dirname,
   'doc/guide/_mdx-fragment.mdx',
 );
 
-const TEST_NAV_FILE = path.resolve(__dirname, 'doc/_nav.json');
-const TEST_META_FILE = path.resolve(__dirname, 'doc/guide/_meta.json');
+const TEST_NAV_FILE = path.resolve(import.meta.dirname, 'doc/_nav.json');
+const TEST_META_FILE = path.resolve(
+  import.meta.dirname,
+  'doc/guide/_meta.json',
+);
 
 test.describe('hmr test', async () => {
   let appPort: number;
@@ -21,7 +24,7 @@ test.describe('hmr test', async () => {
   let originalMetaContent: string;
 
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
     originalContent = await fs.readFile(TEST_FILE, 'utf-8');

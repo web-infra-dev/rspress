@@ -3,6 +3,6 @@ import { defineConfig } from '@rspress/core';
 import { docPluginDemo } from './plugin';
 
 export default defineConfig({
-  root: path.join(__dirname, 'doc'),
+  root: path.join(import.meta.dirname, 'doc'),
   plugins: [docPluginDemo()],
 });

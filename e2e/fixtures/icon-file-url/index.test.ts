@@ -14,7 +14,7 @@ async function pathExists(path: string): Promise<boolean> {
 
 test.describe('icon file url', async () => {
   test('should use specified file URL icon path', async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     await runBuildCommand(appDir);
 
     const existsImg = pathExists(

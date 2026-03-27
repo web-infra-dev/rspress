@@ -6,7 +6,7 @@ test.describe('tailwind-v4', async () => {
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
 
   test.beforeAll(async () => {
-    const appDir = __dirname;
+    const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
   });
