@@ -21,8 +21,8 @@ importers:
         specifier: workspace:*
         version: link:scripts/config
       '@rstest/core':
-        specifier: ^0.9.4
-        version: 0.9.4
+        specifier: ^0.9.5
+        version: 0.9.5
       '@types/cross-spawn':
         specifier: ^6.0.6
         version: 6.0.6
@@ -588,7 +588,7 @@ importers:
     dependencies:
       '@rsbuild/plugin-vue':
         specifier: ^1.2.7
-        version: 1.2.7(@rsbuild/core@2.0.0-canary-20260309140114)(@rspack/core@2.0.0-beta.8(@swc/helpers@0.5.19))(vue@3.5.31(typescript@5.8.2))
+        version: 1.2.7(@rsbuild/core@2.0.0-canary-20260309140114)(@rspack/core@2.0.0-beta.9(@swc/helpers@0.5.20))(vue@3.5.31(typescript@5.8.2))
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
@@ -946,11 +946,11 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(@types/react@19.2.14)(react@19.2.4)
       '@rsbuild/core':
-        specifier: 2.0.0-beta.10
-        version: 2.0.0-beta.10
+        specifier: 2.0.0-canary-20260309140114
+        version: 2.0.0-canary-20260309140114
       '@rsbuild/plugin-react':
         specifier: ~1.4.6
-        version: 1.4.6(@rsbuild/core@2.0.0-beta.10)
+        version: 1.4.6(@rsbuild/core@2.0.0-canary-20260309140114)
       '@rspress/shared':
         specifier: workspace:*
         version: link:../shared
@@ -1080,13 +1080,13 @@ importers:
         version: 7.57.7(@types/node@22.10.2)
       '@rsbuild/plugin-sass':
         specifier: ~1.5.1
-        version: 1.5.1(@rsbuild/core@2.0.0-beta.10)
+        version: 1.5.1(@rsbuild/core@2.0.0-canary-20260309140114)
       '@rsbuild/plugin-svgr':
         specifier: ^1.3.1
-        version: 1.3.1(@rsbuild/core@2.0.0-beta.10)(typescript@5.8.2)
+        version: 1.3.1(@rsbuild/core@2.0.0-canary-20260309140114)(typescript@5.8.2)
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1143,10 +1143,10 @@ importers:
         version: 4.0.0
       rsbuild-plugin-publint:
         specifier: ^0.3.4
-        version: 0.3.4(@rsbuild/core@2.0.0-beta.10)
+        version: 0.3.4(@rsbuild/core@2.0.0-canary-20260309140114)
       rsbuild-plugin-virtual-module:
         specifier: 0.4.1
-        version: 0.4.1(@rsbuild/core@2.0.0-beta.10)
+        version: 0.4.1(@rsbuild/core@2.0.0-canary-20260309140114)
       tailwindcss:
         specifier: ^3.4.19
         version: 3.4.19
@@ -1163,15 +1163,15 @@ importers:
   packages/create-rspress:
     dependencies:
       create-rstack:
-        specifier: 1.8.1
-        version: 1.8.1
+        specifier: 1.8.2
+        version: 1.8.2
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.57.7
         version: 7.57.7(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@types/node':
         specifier: ^22.8.1
         version: 22.10.2
@@ -1201,8 +1201,8 @@ importers:
         specifier: ~1.4.6
         version: 1.4.6(@rsbuild/core@2.0.0-canary-20260309140114)
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1256,8 +1256,8 @@ importers:
         specifier: ^7.57.7
         version: 7.57.7(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
@@ -1287,7 +1287,7 @@ importers:
         version: 0.3.4(@rsbuild/core@2.0.0-canary-20260309140114)
       rsbuild-plugin-virtual-module:
         specifier: 0.4.1
-        version: 0.4.1(@rsbuild/core@2.0.0-beta.10)
+        version: 0.4.1(@rsbuild/core@2.0.0-canary-20260309140114)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1302,8 +1302,8 @@ importers:
         specifier: ^7.57.7
         version: 7.57.7(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1351,14 +1351,14 @@ importers:
         specifier: ^7.57.7
         version: 7.57.7(@types/node@22.10.2)
       '@rsbuild/core':
-        specifier: 2.0.0-beta.10
-        version: 2.0.0-beta.10
+        specifier: 2.0.0-canary-20260309140114
+        version: 2.0.0-canary-20260309140114
       '@rsbuild/plugin-react':
         specifier: ~1.4.6
-        version: 1.4.6(@rsbuild/core@2.0.0-beta.10)
+        version: 1.4.6(@rsbuild/core@2.0.0-canary-20260309140114)
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1376,7 +1376,7 @@ importers:
         version: 19.2.4
       rsbuild-plugin-publint:
         specifier: ^0.3.4
-        version: 0.3.4(@rsbuild/core@2.0.0-beta.10)
+        version: 0.3.4(@rsbuild/core@2.0.0-canary-20260309140114)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1415,8 +1415,8 @@ importers:
         specifier: ~1.4.6
         version: 1.4.6(@rsbuild/core@2.0.0-canary-20260309140114)
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: 'link:'
@@ -1466,14 +1466,14 @@ importers:
   packages/plugin-preview:
     dependencies:
       '@rsbuild/core':
-        specifier: 2.0.0-beta.10
-        version: 2.0.0-beta.10
+        specifier: 2.0.0-canary-20260309140114
+        version: 2.0.0-canary-20260309140114
       '@rsbuild/plugin-babel':
         specifier: ~1.1.2
-        version: 1.1.2(@rsbuild/core@2.0.0-beta.10)
+        version: 1.1.2(@rsbuild/core@2.0.0-canary-20260309140114)
       '@rsbuild/plugin-react':
         specifier: ~1.4.6
-        version: 1.4.6(@rsbuild/core@2.0.0-beta.10)
+        version: 1.4.6(@rsbuild/core@2.0.0-canary-20260309140114)
       '@rspress/core':
         specifier: workspace:^2.0.7
         version: link:../core
@@ -1485,8 +1485,8 @@ importers:
         version: 4.2.0(react@19.2.4)
     devDependencies:
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -1516,7 +1516,7 @@ importers:
         version: 7.13.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       rsbuild-plugin-publint:
         specifier: ^0.3.4
-        version: 0.3.4(@rsbuild/core@2.0.0-beta.10)
+        version: 0.3.4(@rsbuild/core@2.0.0-canary-20260309140114)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1537,8 +1537,8 @@ importers:
         version: 5.2.0
     devDependencies:
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@types/node':
         specifier: ^22.8.1
         version: 22.10.2
@@ -1565,8 +1565,8 @@ importers:
         specifier: ^7.57.7
         version: 7.57.7(@types/node@25.0.3)
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@25.0.3))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@25.0.3))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1605,8 +1605,8 @@ importers:
         specifier: ^7.57.7
         version: 7.57.7(@types/node@25.0.3)
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@25.0.3))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@25.0.3))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1648,8 +1648,8 @@ importers:
         specifier: ^7.57.7
         version: 7.57.7(@types/node@22.10.2)
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1675,8 +1675,8 @@ importers:
   packages/shared:
     dependencies:
       '@rsbuild/core':
-        specifier: 2.0.0-beta.10
-        version: 2.0.0-beta.10
+        specifier: 2.0.0-canary-20260309140114
+        version: 2.0.0-canary-20260309140114
       '@shikijs/rehype':
         specifier: ^4.0.2
         version: 4.0.2
@@ -1691,8 +1691,8 @@ importers:
         version: 11.0.5
     devDependencies:
       '@rslib/core':
-        specifier: 0.20.0
-        version: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
+        specifier: 0.20.2
+        version: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -1713,7 +1713,7 @@ importers:
         version: 6.1.3
       rsbuild-plugin-publint:
         specifier: ^0.3.4
-        version: 0.3.4(@rsbuild/core@2.0.0-beta.10)
+        version: 0.3.4(@rsbuild/core@2.0.0-canary-20260309140114)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -1733,8 +1733,8 @@ importers:
         specifier: ~1.5.1
         version: 1.5.1(@rsbuild/core@2.0.0-canary-20260309140114)
       '@rsdoctor/rspack-plugin':
-        specifier: 1.5.5
-        version: 1.5.5(@rsbuild/core@2.0.0-canary-20260309140114)
+        specifier: 1.5.6
+        version: 1.5.6(@rsbuild/core@2.0.0-canary-20260309140114)
       '@rspress/core':
         specifier: workspace:*
         version: link:../packages/core
@@ -1944,10 +1944,6 @@ packages:
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/code-frame@7.28.6':
-    resolution: {integrity: sha512-JYgintcMjRiCvS8mMECzaEn+m3PfoQiyqukOMCCVQtoJGYJw8j/8LBJEiqkHLkfwCcs74E3pbAUFNg7d9VNJ+Q==}
     engines: {node: '>=6.9.0'}
 
   '@babel/code-frame@7.29.0':
@@ -3237,18 +3233,8 @@ packages:
       core-js:
         optional: true
 
-  '@rsbuild/core@2.0.0-beta.8':
-    resolution: {integrity: sha512-MUxbKJPE1agOK3eCHjKvBIiA+CcZ0TJU/ANKDBLMjK2Er+wq4r5c2ne53+Pi7DtIExoMbSSWBx+RP3CMewKGVA==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-    peerDependencies:
-      core-js: '>= 3.0.0'
-    peerDependenciesMeta:
-      core-js:
-        optional: true
-
-  '@rsbuild/core@2.0.0-beta.9':
-    resolution: {integrity: sha512-WRDnxRWqIO+/RawCKwL2nB6EDAOuGqDznuIkVih4r5H5OEW+WgfcV/U8PUgn+n6+ZfFaXNBJnZBCsgKSNcHfXA==}
+  '@rsbuild/core@2.0.0-beta.11':
+    resolution: {integrity: sha512-IBbQx7SrnSpD7j2p2qyq3qDxoqmG4E6lcflTpbBitX6iUrzpVRQbP4rktXZ2iuY7ph9+FtUK/SVAVA+Ocm3Nig==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -3315,28 +3301,28 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rsdoctor/client@1.5.5':
-    resolution: {integrity: sha512-27mYT2iJ9dbWfMzdNoY5jETYPY6MwMJJnS4KU4Oito7NuQzs78349DkY+jsivEJTjO9p/XONGFLOSQLEG63zxA==}
+  '@rsdoctor/client@1.5.6':
+    resolution: {integrity: sha512-1eY72Mm83V6gYwxrGVuX8ibuyn7eniBcb8MIcY989XlRqXEnkLAztE3S4zAv8kltuW6SVHu8e5qHT1QS/oq1AA==}
 
-  '@rsdoctor/core@1.5.5':
-    resolution: {integrity: sha512-5fK/KCK4p7d1tPRV7B5lzQn334BLeEVFcLWix7a4XpWPGIoX9wxw1r73/FK8j5zaErxHlj1NghuMb15fcDowxw==}
+  '@rsdoctor/core@1.5.6':
+    resolution: {integrity: sha512-9KqiDcqMZF3yq/s0PSuhEsPfWY5MRMd1XNBRLV380fGJ3IORhR9P+rSzfCQH/v8k9ioFbcXpXkIHI+pwG/yldA==}
 
-  '@rsdoctor/graph@1.5.5':
-    resolution: {integrity: sha512-YILNLmd2DnCFIfh46Rpeor16hPTxP7HuffQkkyBtjaXz9zkdX3fR6zCBnE56rAw/SmGVqRLRt85mbTcEw7dQPQ==}
+  '@rsdoctor/graph@1.5.6':
+    resolution: {integrity: sha512-PD45iyO0iVTY/uJzZwRXH/oE03fIbFKuv/JJXK3DtX1B7vVlNVnxGwYeEgk6IzCzmj7CPJ9QM22oLYKCKCQxQg==}
 
-  '@rsdoctor/rspack-plugin@1.5.5':
-    resolution: {integrity: sha512-uLUk2TzNF5Y3oqcuK6xw1ExVtidrkPkTMqWm6zLsLkZpVnEJhBD7EXtVwMMltvcAcewpUwsmbUV94O0JdGGmeg==}
+  '@rsdoctor/rspack-plugin@1.5.6':
+    resolution: {integrity: sha512-IPi4byXW8WhEuB6Tu+yByc1yGQYZlvOpygkRFZzkxtDJZ1GrKjzUzeooX3NzlnXfBXg9Mu3t4Yiym8QWbLa8XA==}
     peerDependencies:
       '@rspack/core': '*'
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
 
-  '@rsdoctor/sdk@1.5.5':
-    resolution: {integrity: sha512-2Ee1JcgED/yWvNVb/BFSMm0ywNoNZ2m+UBILXWx2ExNnYgNr4ab+ujK+w2CsDRLA+A6RdOinhPGgeHcatcyIFQ==}
+  '@rsdoctor/sdk@1.5.6':
+    resolution: {integrity: sha512-+v3XyJv7DM9HxV3LnqtOxTF2PqCpUQtHP6RTW5omJsgQ1ThhDjcZLQRr63BbCtCzHizpu8myz92gfkJ9Reu4Ug==}
 
-  '@rsdoctor/types@1.5.5':
-    resolution: {integrity: sha512-lrd5LYerL49As79eZ1ljbxUFp2NrY7UhLy8Zl9Kx3Xke04QMurLMS3V8mNWxt+c4eoKK43vjF3RHghkdxmq+sg==}
+  '@rsdoctor/types@1.5.6':
+    resolution: {integrity: sha512-ozLXrRSlUgIICjCs0xL2Nyp7S3JA6zXjrepKqQkcgFdeK70r76a4qYdQQp+bf09P/87uO8O1GOHYk6/R+qbmWw==}
     peerDependencies:
       '@rspack/core': '*'
       webpack: 5.x
@@ -3346,16 +3332,16 @@ packages:
       webpack:
         optional: true
 
-  '@rsdoctor/utils@1.5.5':
-    resolution: {integrity: sha512-YyB5jJ2vPalb9JpSkMa2TuAXaBRn401m+hKRSz2LqdxOIoK4LMEu32k10TyzprkoS4yKexW+XXiMtio5PhvstA==}
+  '@rsdoctor/utils@1.5.6':
+    resolution: {integrity: sha512-t3r7acBzJ0dLoM22TS3yZ3x4Sw6kHgy+6zelF81ybw2Ai9DXDb2dWUSlM1wxehk4rzYhpl1CukT4XJd+vgrOpw==}
 
-  '@rslib/core@0.20.0':
-    resolution: {integrity: sha512-hsRwjMbBla8lyKIVR0gFsK5M3j+LSbFOTafvbT0QR90ehZXwlu+EhpHJv8v/uIRT50RVlgCrcT+LCVr1oU3pbA==}
+  '@rslib/core@0.20.2':
+    resolution: {integrity: sha512-NJk2GasIvgfZdQ9CUTh/JxFvlhKiBv9BOa8GsnRrkRZ62CzSVrfiCT+FaBnqMk5adt+m2T9n+4Clrm6Rl0eoGw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
       '@microsoft/api-extractor': ^7
-      typescript: ^5
+      typescript: ^5 || ^6
     peerDependenciesMeta:
       '@microsoft/api-extractor':
         optional: true
@@ -3430,29 +3416,14 @@ packages:
       '@swc/helpers':
         optional: true
 
-  '@rspack/binding-darwin-arm64@2.0.0-beta.6':
-    resolution: {integrity: sha512-FQ8zflthQJJf0cM0vDFnfnXrTOnRvwz886tiafbwu1RO5qmh+pJH+xg1eQaLPnRPqLTlcmnpngyacYFUxw+1AA==}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@rspack/binding-darwin-arm64@2.0.0-beta.7':
-    resolution: {integrity: sha512-I8qhHJ4yQuaEw2s/LnpD7kuNuFoOjvu2v6h/erDZY8m4pArC0PhujYANApyDmqE69eMCN97dcnooR/3txDSUEA==}
-    cpu: [arm64]
-    os: [darwin]
-
   '@rspack/binding-darwin-arm64@2.0.0-beta.8':
     resolution: {integrity: sha512-h3x2GreEh8J36A3cWFeHZGTuz4vjUArk9dBDq8fZSyaUQQQox/lp8bUOGa/2YuYUOXk0gei2GN+/BVi2R5p39A==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rspack/binding-darwin-x64@2.0.0-beta.6':
-    resolution: {integrity: sha512-Cr4P19anOIaHtK8Z20Hl12PPUcs3LM24ZSQPfs0gPS0etzSOE4JRsqW/79GnnjZd/A+Wola/dZcnMVS44e3c3A==}
-    cpu: [x64]
-    os: [darwin]
-
-  '@rspack/binding-darwin-x64@2.0.0-beta.7':
-    resolution: {integrity: sha512-v3UjBYIWCup87WG13mErO2yZARNUL9flgq9gl4O0Y1H83BsbIclck8GroJAU2Vg16xAt4vTNjkx5FcllsPxAjg==}
-    cpu: [x64]
+  '@rspack/binding-darwin-arm64@2.0.0-beta.9':
+    resolution: {integrity: sha512-9Aao24b+lrVGG25itl2c7e6HK6eNH5J5ao1Uq5UoSwSJZOxRPuY+QlHIvE2tyt833Ly9qcT1J7os2AIUNlF6Vw==}
+    cpu: [arm64]
     os: [darwin]
 
   '@rspack/binding-darwin-x64@2.0.0-beta.8':
@@ -3460,17 +3431,10 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@rspack/binding-linux-arm64-gnu@2.0.0-beta.6':
-    resolution: {integrity: sha512-MgTzspaj3v9/4T3KQ/fRuj+cit3BnEcgFe4OP+BvUWlTQvxlckDWpDymVhPuIqpx7pJvLcXwdz8mQhvZ87AD5g==}
-    cpu: [arm64]
-    os: [linux]
-    libc: [glibc]
-
-  '@rspack/binding-linux-arm64-gnu@2.0.0-beta.7':
-    resolution: {integrity: sha512-MR5OmEscDXhRF9NoUG4tBArKAlmyxkWq3DM++UxNP8+fAKjoTJQ6Tp/2eTTUItoSE1Ymu4X1neJv+nzTSWSu2Q==}
-    cpu: [arm64]
-    os: [linux]
-    libc: [glibc]
+  '@rspack/binding-darwin-x64@2.0.0-beta.9':
+    resolution: {integrity: sha512-sP6gusMsxm3W4aHpRsmVaBQU09n1p/1+XpLHT/gZy6nJ7Wy3nqfNKNoybNBORwCuFcGUon6cVRcieN9AEm6iJA==}
+    cpu: [x64]
+    os: [darwin]
 
   '@rspack/binding-linux-arm64-gnu@2.0.0-beta.8':
     resolution: {integrity: sha512-vD2+ztbMmeBR65jBlwUZCNIjUzO0exp/LaPSMIhLlqPlk670gMCQ7fmKo3tSgQ9tobfizEA/Atdy3/lW1Rl64A==}
@@ -3478,17 +3442,11 @@ packages:
     os: [linux]
     libc: [glibc]
 
-  '@rspack/binding-linux-arm64-musl@2.0.0-beta.6':
-    resolution: {integrity: sha512-5vyjbrj3u8x4Crb77QvFJSZkq7QwOuVJff8oStbS/v7cC+NEAQQYB/6Bl0JwyDFAcMMX8ZRyaDjc1o1qQ0Q31g==}
+  '@rspack/binding-linux-arm64-gnu@2.0.0-beta.9':
+    resolution: {integrity: sha512-k2DPN3B2qaz4L/h/R+l7rbDk/lLwbR/sayfsHZ8sLdZ3f6pvaSI9ejrsFv0nU4OmKCQsz4zYuoKTVFPtDfbGjA==}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
-
-  '@rspack/binding-linux-arm64-musl@2.0.0-beta.7':
-    resolution: {integrity: sha512-cDodToY/gVWviKOPVHDsnmsW95gdXuRyXocGPWCgps/EhCpwCLIMnddoubXFcqzx7cwV93hmHj4w3fmG7eaZXw==}
-    cpu: [arm64]
-    os: [linux]
-    libc: [musl]
+    libc: [glibc]
 
   '@rspack/binding-linux-arm64-musl@2.0.0-beta.8':
     resolution: {integrity: sha512-jJ1XB7Yz9YdPRA6MJ35S9/mb+3jeI4p9v78E3dexzCPA3G4X7WXbyOcRbUlYcyOlE5MtX5O19rDexqWlkD9tVw==}
@@ -3496,17 +3454,11 @@ packages:
     os: [linux]
     libc: [musl]
 
-  '@rspack/binding-linux-x64-gnu@2.0.0-beta.6':
-    resolution: {integrity: sha512-GmNJgFHoK5LFQ2m96HrXIgf1zZNe+4yaaOD/5qqcI163QXRqRflfZprmdr2L4R6VsU2i+YQ2Ap2s20Y/zSt6RQ==}
-    cpu: [x64]
+  '@rspack/binding-linux-arm64-musl@2.0.0-beta.9':
+    resolution: {integrity: sha512-7+XwAsqhfc2rIHMc9mY6RMBTP76RRqmUm1UjidqYdJl5hYBa5apffjeZfJYgAhVbSwKB/tUffzPpEffGUuc5kw==}
+    cpu: [arm64]
     os: [linux]
-    libc: [glibc]
-
-  '@rspack/binding-linux-x64-gnu@2.0.0-beta.7':
-    resolution: {integrity: sha512-NgUBIyQ8m0gadf/DOO5ToVNKuzUDHlERVC3Aqvsrytp/TJOqZDiSs8xQGYbbIOtVc7AfVIQl/Fsotr25Eircmg==}
-    cpu: [x64]
-    os: [linux]
-    libc: [glibc]
+    libc: [musl]
 
   '@rspack/binding-linux-x64-gnu@2.0.0-beta.8':
     resolution: {integrity: sha512-qy+fK/tiYw3KvGjTGGMu/mWOdvBYrMO8xva/ouiaRTrx64PPZ6vyqFXOUfHj9rhY5L6aU2NTObpV6HZHcBtmhQ==}
@@ -3514,17 +3466,11 @@ packages:
     os: [linux]
     libc: [glibc]
 
-  '@rspack/binding-linux-x64-musl@2.0.0-beta.6':
-    resolution: {integrity: sha512-tI2S3v8yXel5GL3yPnBNnFZ/dye4TyRM2j7mfJ49M6uTWjfRFyAcuxqw7z9Pyvyhsc1AoOnnXejtqqJpZkBQoA==}
+  '@rspack/binding-linux-x64-gnu@2.0.0-beta.9':
+    resolution: {integrity: sha512-z/EOUKEq5rq4sYsVSFL9uzdPtTPVA82x3gsRJlDTfEcruZZI7Y6JKUkpDYkC0LivXqyOnoOz8slAFd2/dByRtA==}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
-
-  '@rspack/binding-linux-x64-musl@2.0.0-beta.7':
-    resolution: {integrity: sha512-GB7db46b2bIq5pda0aR4iI/vCtD3x3amsJQYUJpGDY4uVKMnODWXuOwVMp5H83lRdHxKsc0iFe+yZJvQ2yhesQ==}
-    cpu: [x64]
-    os: [linux]
-    libc: [musl]
+    libc: [glibc]
 
   '@rspack/binding-linux-x64-musl@2.0.0-beta.8':
     resolution: {integrity: sha512-eJF1IsayHhsURu5Dp6fzdr5jYGeJmoREOZAc9UV3aEqY6zNAcWgZT1RwKCCujJylmHgCTCOuxqdK/VdFJqWDyw==}
@@ -3532,41 +3478,28 @@ packages:
     os: [linux]
     libc: [musl]
 
-  '@rspack/binding-wasm32-wasi@2.0.0-beta.6':
-    resolution: {integrity: sha512-Bv9o1zZIDTOzjbliyAwMOGjsL6wiGIPRttJ9CLsdRoKI5XcMTEFHjwlnm1Zs4/EP+zC+bTgseq1EFngIy+nZRg==}
-    cpu: [wasm32]
-
-  '@rspack/binding-wasm32-wasi@2.0.0-beta.7':
-    resolution: {integrity: sha512-wnH4qGb8pH+LFmgIdef8EOQVc5QMMaay5+D7Dp6IfiBGmY/242Imy+e16Qcwxnr1QCwvfrgxcCkus40vM1ujMw==}
-    cpu: [wasm32]
+  '@rspack/binding-linux-x64-musl@2.0.0-beta.9':
+    resolution: {integrity: sha512-LVIXrqtAOy/DowIB04jyUyYy+5kHtZNJ0W5EJd39OwY/9gGvhgAEVvSWu7JrRAvKW1kQsV7GnRT5ninbDrRw1A==}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
 
   '@rspack/binding-wasm32-wasi@2.0.0-beta.8':
     resolution: {integrity: sha512-HssdOQE8i+nUWoK+NDeD5OSyNxf80k3elKCl/due3WunoNn0h6tUTSZ8QB+bhcT4tjH9vTbibWZIT91avtvUNw==}
     cpu: [wasm32]
 
-  '@rspack/binding-win32-arm64-msvc@2.0.0-beta.6':
-    resolution: {integrity: sha512-R/j0VTVKn3gU4a0xKAXJUX6jzmanHsuBHtLSpgnRqKW/20csFzsnsqY9PxaiAObTHVPMCrNvTG5KXHYIqYgACg==}
-    cpu: [arm64]
-    os: [win32]
-
-  '@rspack/binding-win32-arm64-msvc@2.0.0-beta.7':
-    resolution: {integrity: sha512-gImxvBR5Ki2B+xRdzzXhv6AjUiLI7JzBJxDrNLagap4rs018KaYtEiwkhqaYnDNTcynibflZYGYjS8vjwoqwpA==}
-    cpu: [arm64]
-    os: [win32]
+  '@rspack/binding-wasm32-wasi@2.0.0-beta.9':
+    resolution: {integrity: sha512-Vl7aDAt7DCqtZ/RJd8hLFjQqufX+efL/XZG3qADsagl/SspH1ItJ7N6X1S8o50eKoshy27Jr7mQYZEdufX9qhQ==}
+    cpu: [wasm32]
 
   '@rspack/binding-win32-arm64-msvc@2.0.0-beta.8':
     resolution: {integrity: sha512-RuHbXuIMJr0ANMFoGXIb3sUZE5VwIsJw70u3TKPwfoaOFiJjgW7Pi2JTLPoTYfOlE+CNcu2ldX8VJRBbktR4NA==}
     cpu: [arm64]
     os: [win32]
 
-  '@rspack/binding-win32-ia32-msvc@2.0.0-beta.6':
-    resolution: {integrity: sha512-v3Gc+gRFTBNLSmyHAgI6mE30W94T0g8jD7S1qamUfX6i50YjDylyiMG1prG/8i/YVNWQynQeQi4Cjfg+Hi7alQ==}
-    cpu: [ia32]
-    os: [win32]
-
-  '@rspack/binding-win32-ia32-msvc@2.0.0-beta.7':
-    resolution: {integrity: sha512-/fzINtJkc5daz99ikOb7m7MbkTlfEwJ+n8QUlNUQ3F2Q6MRHzBQ5JjyDleuzu1sb5yEwAheCsqsq0kjL98YqNA==}
-    cpu: [ia32]
+  '@rspack/binding-win32-arm64-msvc@2.0.0-beta.9':
+    resolution: {integrity: sha512-g4Fc3JjfibuHt5ltoV64eK0bs6NKlh8kgHA8Go3ETwEGO6OBck877e+5CqPtjTH8c1/KQPbnCoccGR1OScoZGg==}
+    cpu: [arm64]
     os: [win32]
 
   '@rspack/binding-win32-ia32-msvc@2.0.0-beta.8':
@@ -3574,14 +3507,9 @@ packages:
     cpu: [ia32]
     os: [win32]
 
-  '@rspack/binding-win32-x64-msvc@2.0.0-beta.6':
-    resolution: {integrity: sha512-PjaKOG2rQqzOwsmu03EAyTb7oA52CrO1I8JXiBT07adrDysHvKV/Gi+P0XPuDLDMnxNpndoGJMmvfxsymRpwyA==}
-    cpu: [x64]
-    os: [win32]
-
-  '@rspack/binding-win32-x64-msvc@2.0.0-beta.7':
-    resolution: {integrity: sha512-QrGSz8G1L7ePcW4mb5zslm8zBBRNDc0orqG4mCBWcgFMZE5Ujt1EUiBDK1Tti7/cVK+H8FdtulzKIJDYSMWKwQ==}
-    cpu: [x64]
+  '@rspack/binding-win32-ia32-msvc@2.0.0-beta.9':
+    resolution: {integrity: sha512-Oii4HpCEH3CBDKSXcS6EVlV9nGYVKAV/uBLSsuZ0RNdEG0i+OHvEiicqHAwuIYZNlH4Ea/Vwc+Dl5PM2twCZ4Q==}
+    cpu: [ia32]
     os: [win32]
 
   '@rspack/binding-win32-x64-msvc@2.0.0-beta.8':
@@ -3589,41 +3517,31 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rspack/binding@2.0.0-beta.6':
-    resolution: {integrity: sha512-oJytPDJT57cz2is0e/e1myWVNxn+ZcII1/fF2Y3TiXVUIihLC/KDm6ISTgaZKr8ZyjTlVIV3V4wSO7IHlYV6aw==}
-
-  '@rspack/binding@2.0.0-beta.7':
-    resolution: {integrity: sha512-D5ycNB5gpYpsM7SwFohcbg0LooB1bmYEeTYRLPRuwXeN0Tp/Alq4iq4/32iaF1I9NcxgQddx2NERXzlxguvYeQ==}
+  '@rspack/binding-win32-x64-msvc@2.0.0-beta.9':
+    resolution: {integrity: sha512-7UFjyy7QMtWvf1CBEVQkHL6bJBKaVY9yq9+Qxb7ggtxvpBbkoYykdsrhMTvr/f5TBjBqHmyeb0/oYXqo5pWFBQ==}
+    cpu: [x64]
+    os: [win32]
 
   '@rspack/binding@2.0.0-beta.8':
     resolution: {integrity: sha512-6tG/yYhUIF1zcEF7qw9GPA1Bwj5gq+Hqy4OzVzIBUWOn/2bKsFTWuorEJh8Yx1LwOnjNO7O+NbsATvk5zEOGKQ==}
 
-  '@rspack/core@2.0.0-beta.6':
-    resolution: {integrity: sha512-dvi10ijR9Rr0W75GRFqWvswAEdLBsbXCGhxzm6zXxFNSanNL9s9xPelZ8XfnIU13QZkN2VNHGl9O/8KQEmYdEw==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    peerDependencies:
-      '@module-federation/runtime-tools': ^0.24.1 || ^2.0.0
-      '@swc/helpers': '>=0.5.1'
-    peerDependenciesMeta:
-      '@module-federation/runtime-tools':
-        optional: true
-      '@swc/helpers':
-        optional: true
-
-  '@rspack/core@2.0.0-beta.7':
-    resolution: {integrity: sha512-JbLVx0RptvNvPx3Tj+b96v4lxLvcV9YId2VWJ1DmYlQ+oFJJrjjdQtr3KJitU5tEIySW1CqD1R6qxU3BzpwEjw==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    peerDependencies:
-      '@module-federation/runtime-tools': ^0.24.1 || ^2.0.0
-      '@swc/helpers': '>=0.5.1'
-    peerDependenciesMeta:
-      '@module-federation/runtime-tools':
-        optional: true
-      '@swc/helpers':
-        optional: true
+  '@rspack/binding@2.0.0-beta.9':
+    resolution: {integrity: sha512-QgkOvzl6BJc4Vg5eaY9r7MkHNfXvVZPgTIeYkdBEOYPowdyCLhlG9vH7QltqLKP9KDNel70YIeMyUrpTqez01w==}
 
   '@rspack/core@2.0.0-beta.8':
     resolution: {integrity: sha512-GHiMNhcxfzJV3DqxIYYjiBGzhFkwwt+jSJl8+aVFRbQM0AYRdZJSfQDH4G5rHD1gO2yc3ktOOMHYnZWNtXCwdA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      '@module-federation/runtime-tools': ^0.24.1 || ^2.0.0
+      '@swc/helpers': '>=0.5.1'
+    peerDependenciesMeta:
+      '@module-federation/runtime-tools':
+        optional: true
+      '@swc/helpers':
+        optional: true
+
+  '@rspack/core@2.0.0-beta.9':
+    resolution: {integrity: sha512-4sN3f72l4cj8n/dSCdWn6FkSjfHiDxHWrO1Kmqd0Bk0MmgyW+ldHitsSWPETCAxjTJGXY34r5sou5sYzb0DRww==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@module-federation/runtime-tools': ^0.24.1 || ^2.0.0
@@ -3706,8 +3624,8 @@ packages:
   '@rstack-dev/doc-ui@1.12.5':
     resolution: {integrity: sha512-fwPRz8R52VHVW1u8SFH7uqon4IL2BAfYwrNDEPlB4rPAz+DrOkhag16oQtcQ2ApUXTInrQjEOXK9TaqfP02MXg==}
 
-  '@rstest/core@0.9.4':
-    resolution: {integrity: sha512-rbwoQ9hQ7SN5yzdWfCuaQSUvdU21JnKj4Bx1AQatC72XEb0r2cyyPenbNs6fAes1NP9tw5U71WnOrZRtT/ia5g==}
+  '@rstest/core@0.9.5':
+    resolution: {integrity: sha512-whFxW3eJLsL81Thk2BypB9blL4EoOEOrzVv391pdblap/Z87X57UtVtswm8pd1TpaZN/Nzp4z8JaG0oYIYl8Tg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -3898,6 +3816,9 @@ packages:
 
   '@swc/helpers@0.5.19':
     resolution: {integrity: sha512-QamiFeIK3txNjgUTNppE6MiG3p7TdninpZu0E0PbqVh1a9FNLT2FRhisaa4NcaX52XVhA5l7Pk58Ft7Sqi/2sA==}
+
+  '@swc/helpers@0.5.20':
+    resolution: {integrity: sha512-2egEBHUMasdypIzrprsu8g+OEVd7Vp2MM3a2eVlM/cyFYto0nGz5BX5BTgh/ShZZI9ed+ozEq+Ngt+rgmUs8tw==}
 
   '@tailwindcss/node@4.1.18':
     resolution: {integrity: sha512-DoR7U1P7iYhw16qJ49fgXUlry1t4CpXeErJHnQ44JgTSKMaZUdf17cfn5mHchfJ4KRBZRFA/Coo+MUF5+gOaCQ==}
@@ -4579,8 +4500,9 @@ packages:
       typescript:
         optional: true
 
-  create-rstack@1.8.1:
-    resolution: {integrity: sha512-PzhDParUoZdWgDJ7YIbgIFulbDKvk7mRWMMhulF7X8RWsgizcgsa87XYkPij7jNc/EnrVn7hfQBx5wrQZlPcxA==}
+  create-rstack@1.8.2:
+    resolution: {integrity: sha512-epsAuH2AtI1rGTHrcjBAZmP9iu3D1aF4MgpVcxQxdxuDFgIwLLuB+DjI6qV+86nri9kjfwwS/NAl0ZlvkqJ0Zw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
 
   cross-env@10.1.0:
     resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
@@ -6812,14 +6734,14 @@ packages:
     engines: {node: 20 || >=22}
     hasBin: true
 
-  rsbuild-plugin-dts@0.20.0:
-    resolution: {integrity: sha512-CnTJTB59zzQFjPVEjpOaaEw5BeK/eTY6kwt4l5Lr9d3HQk3VRDSKfLWY/hpeZMbZzpCk2TqLrqIhS6a+jg7k7g==}
+  rsbuild-plugin-dts@0.20.2:
+    resolution: {integrity: sha512-GM2sNAXjMgm8X3HrASn6znHLoxkGRqQZrdbGqaV0nqzqIz1h9JF3PlsUAcI6iAxzWQYuTwNfIly2SnKzsB/PjA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@microsoft/api-extractor': ^7
       '@rsbuild/core': ^1.0.0 || ^2.0.0-0
       '@typescript/native-preview': 7.x
-      typescript: ^5
+      typescript: ^5 || ^6
     peerDependenciesMeta:
       '@microsoft/api-extractor':
         optional: true
@@ -7878,12 +7800,6 @@ snapshots:
       js-tokens: 4.0.0
       picocolors: 1.1.1
 
-  '@babel/code-frame@7.28.6':
-    dependencies:
-      '@babel/helper-validator-identifier': 7.28.5
-      js-tokens: 4.0.0
-      picocolors: 1.1.1
-
   '@babel/code-frame@7.29.0':
     dependencies:
       '@babel/helper-validator-identifier': 7.28.5
@@ -7916,7 +7832,7 @@ snapshots:
 
   '@babel/core@7.28.6':
     dependencies:
-      '@babel/code-frame': 7.28.6
+      '@babel/code-frame': 7.29.0
       '@babel/generator': 7.28.6
       '@babel/helper-compilation-targets': 7.28.6
       '@babel/helper-module-transforms': 7.28.6(@babel/core@7.28.6)
@@ -8179,7 +8095,7 @@ snapshots:
 
   '@babel/template@7.27.2':
     dependencies:
-      '@babel/code-frame': 7.28.6
+      '@babel/code-frame': 7.29.0
       '@babel/parser': 7.29.0
       '@babel/types': 7.29.0
 
@@ -8203,7 +8119,7 @@ snapshots:
 
   '@babel/traverse@7.28.6':
     dependencies:
-      '@babel/code-frame': 7.28.6
+      '@babel/code-frame': 7.29.0
       '@babel/generator': 7.28.6
       '@babel/helper-globals': 7.28.0
       '@babel/parser': 7.29.0
@@ -9316,17 +9232,10 @@ snapshots:
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
-  '@rsbuild/core@2.0.0-beta.8':
+  '@rsbuild/core@2.0.0-beta.11':
     dependencies:
-      '@rspack/core': 2.0.0-beta.6(@swc/helpers@0.5.19)
-      '@swc/helpers': 0.5.19
-    transitivePeerDependencies:
-      - '@module-federation/runtime-tools'
-
-  '@rsbuild/core@2.0.0-beta.9':
-    dependencies:
-      '@rspack/core': 2.0.0-beta.7(@swc/helpers@0.5.19)
-      '@swc/helpers': 0.5.19
+      '@rspack/core': 2.0.0-beta.9(@swc/helpers@0.5.20)
+      '@swc/helpers': 0.5.20
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
@@ -9336,9 +9245,8 @@ snapshots:
       '@swc/helpers': 0.5.19
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
-    optional: true
 
-  '@rsbuild/plugin-babel@1.1.2(@rsbuild/core@2.0.0-beta.10)':
+  '@rsbuild/plugin-babel@1.1.2(@rsbuild/core@2.0.0-canary-20260309140114)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-proposal-decorators': 7.29.0(@babel/core@7.29.0)
@@ -9347,7 +9255,7 @@ snapshots:
       '@types/babel__core': 7.20.5
       reduce-configs: 1.1.1
     optionalDependencies:
-      '@rsbuild/core': 2.0.0-beta.10
+      '@rsbuild/core': 2.0.0-canary-20260309140114
     transitivePeerDependencies:
       - supports-color
 
@@ -9361,15 +9269,6 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 2.0.0-canary-20260309140114
 
-  '@rsbuild/plugin-react@1.4.6(@rsbuild/core@2.0.0-beta.10)':
-    dependencies:
-      '@rspack/plugin-react-refresh': 1.6.1(react-refresh@0.18.0)
-      react-refresh: 0.18.0
-    optionalDependencies:
-      '@rsbuild/core': 2.0.0-beta.10
-    transitivePeerDependencies:
-      - webpack-hot-middleware
-
   '@rsbuild/plugin-react@1.4.6(@rsbuild/core@2.0.0-canary-20260309140114)':
     dependencies:
       '@rspack/plugin-react-refresh': 1.6.1(react-refresh@0.18.0)
@@ -9378,16 +9277,6 @@ snapshots:
       '@rsbuild/core': 2.0.0-canary-20260309140114
     transitivePeerDependencies:
       - webpack-hot-middleware
-
-  '@rsbuild/plugin-sass@1.5.1(@rsbuild/core@2.0.0-beta.10)':
-    dependencies:
-      deepmerge: 4.3.1
-      loader-utils: 2.0.4
-      postcss: 8.5.8
-      reduce-configs: 1.1.1
-      sass-embedded: 1.97.3
-    optionalDependencies:
-      '@rsbuild/core': 2.0.0-beta.10
 
   '@rsbuild/plugin-sass@1.5.1(@rsbuild/core@2.0.0-canary-20260309140114)':
     dependencies:
@@ -9399,24 +9288,24 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 2.0.0-canary-20260309140114
 
-  '@rsbuild/plugin-svgr@1.3.1(@rsbuild/core@2.0.0-beta.10)(typescript@5.8.2)':
+  '@rsbuild/plugin-svgr@1.3.1(@rsbuild/core@2.0.0-canary-20260309140114)(typescript@5.8.2)':
     dependencies:
-      '@rsbuild/plugin-react': 1.4.6(@rsbuild/core@2.0.0-beta.10)
+      '@rsbuild/plugin-react': 1.4.6(@rsbuild/core@2.0.0-canary-20260309140114)
       '@svgr/core': 8.1.0(typescript@5.8.2)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.8.2))
       '@svgr/plugin-svgo': 8.1.0(@svgr/core@8.1.0(typescript@5.8.2))(typescript@5.8.2)
       deepmerge: 4.3.1
       loader-utils: 3.3.1
     optionalDependencies:
-      '@rsbuild/core': 2.0.0-beta.10
+      '@rsbuild/core': 2.0.0-canary-20260309140114
     transitivePeerDependencies:
       - supports-color
       - typescript
       - webpack-hot-middleware
 
-  '@rsbuild/plugin-vue@1.2.7(@rsbuild/core@2.0.0-canary-20260309140114)(@rspack/core@2.0.0-beta.8(@swc/helpers@0.5.19))(vue@3.5.31(typescript@5.8.2))':
+  '@rsbuild/plugin-vue@1.2.7(@rsbuild/core@2.0.0-canary-20260309140114)(@rspack/core@2.0.0-beta.9(@swc/helpers@0.5.20))(vue@3.5.31(typescript@5.8.2))':
     dependencies:
-      rspack-vue-loader: 17.5.0(@rspack/core@2.0.0-beta.8(@swc/helpers@0.5.19))(vue@3.5.31(typescript@5.8.2))
+      rspack-vue-loader: 17.5.0(@rspack/core@2.0.0-beta.9(@swc/helpers@0.5.20))(vue@3.5.31(typescript@5.8.2))
     optionalDependencies:
       '@rsbuild/core': 2.0.0-canary-20260309140114
     transitivePeerDependencies:
@@ -9424,15 +9313,15 @@ snapshots:
       - '@vue/compiler-sfc'
       - vue
 
-  '@rsdoctor/client@1.5.5': {}
+  '@rsdoctor/client@1.5.6': {}
 
-  '@rsdoctor/core@1.5.5(@rsbuild/core@2.0.0-canary-20260309140114)':
+  '@rsdoctor/core@1.5.6(@rsbuild/core@2.0.0-canary-20260309140114)':
     dependencies:
       '@rsbuild/plugin-check-syntax': 1.6.1(@rsbuild/core@2.0.0-canary-20260309140114)
-      '@rsdoctor/graph': 1.5.5
-      '@rsdoctor/sdk': 1.5.5
-      '@rsdoctor/types': 1.5.5
-      '@rsdoctor/utils': 1.5.5
+      '@rsdoctor/graph': 1.5.6
+      '@rsdoctor/sdk': 1.5.6
+      '@rsdoctor/types': 1.5.6
+      '@rsdoctor/utils': 1.5.6
       '@rspack/resolver': 0.2.8
       browserslist-load-config: 1.0.1
       es-toolkit: 1.45.1
@@ -9448,10 +9337,10 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/graph@1.5.5':
+  '@rsdoctor/graph@1.5.6':
     dependencies:
-      '@rsdoctor/types': 1.5.5
-      '@rsdoctor/utils': 1.5.5
+      '@rsdoctor/types': 1.5.6
+      '@rsdoctor/utils': 1.5.6
       es-toolkit: 1.45.1
       path-browserify: 1.0.1
       source-map: 0.7.6
@@ -9459,13 +9348,13 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rsdoctor/rspack-plugin@1.5.5(@rsbuild/core@2.0.0-canary-20260309140114)':
+  '@rsdoctor/rspack-plugin@1.5.6(@rsbuild/core@2.0.0-canary-20260309140114)':
     dependencies:
-      '@rsdoctor/core': 1.5.5(@rsbuild/core@2.0.0-canary-20260309140114)
-      '@rsdoctor/graph': 1.5.5
-      '@rsdoctor/sdk': 1.5.5
-      '@rsdoctor/types': 1.5.5
-      '@rsdoctor/utils': 1.5.5
+      '@rsdoctor/core': 1.5.6(@rsbuild/core@2.0.0-canary-20260309140114)
+      '@rsdoctor/graph': 1.5.6
+      '@rsdoctor/sdk': 1.5.6
+      '@rsdoctor/types': 1.5.6
+      '@rsdoctor/utils': 1.5.6
     transitivePeerDependencies:
       - '@rsbuild/core'
       - bufferutil
@@ -9473,12 +9362,12 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/sdk@1.5.5':
+  '@rsdoctor/sdk@1.5.6':
     dependencies:
-      '@rsdoctor/client': 1.5.5
-      '@rsdoctor/graph': 1.5.5
-      '@rsdoctor/types': 1.5.5
-      '@rsdoctor/utils': 1.5.5
+      '@rsdoctor/client': 1.5.6
+      '@rsdoctor/graph': 1.5.6
+      '@rsdoctor/types': 1.5.6
+      '@rsdoctor/utils': 1.5.6
       launch-editor: 2.13.2
       safer-buffer: 2.1.2
       socket.io: 4.8.1
@@ -9490,17 +9379,17 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/types@1.5.5':
+  '@rsdoctor/types@1.5.6':
     dependencies:
       '@types/connect': 3.4.38
       '@types/estree': 1.0.5
       '@types/tapable': 2.3.0
       source-map: 0.7.6
 
-  '@rsdoctor/utils@1.5.5':
+  '@rsdoctor/utils@1.5.6':
     dependencies:
       '@babel/code-frame': 7.26.2
-      '@rsdoctor/types': 1.5.5
+      '@rsdoctor/types': 1.5.6
       '@types/estree': 1.0.5
       acorn: 8.15.0
       acorn-import-attributes: 1.9.5(acorn@8.15.0)
@@ -9518,10 +9407,10 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rslib/core@0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)':
+  '@rslib/core@0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(typescript@5.8.2)':
     dependencies:
-      '@rsbuild/core': 2.0.0-beta.8
-      rsbuild-plugin-dts: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(@rsbuild/core@2.0.0-beta.8)(typescript@5.8.2)
+      '@rsbuild/core': 2.0.0-beta.11
+      rsbuild-plugin-dts: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(@rsbuild/core@2.0.0-beta.11)(typescript@5.8.2)
     optionalDependencies:
       '@microsoft/api-extractor': 7.57.7(@types/node@22.10.2)
       typescript: 5.8.2
@@ -9530,10 +9419,10 @@ snapshots:
       - '@typescript/native-preview'
       - core-js
 
-  '@rslib/core@0.20.0(@microsoft/api-extractor@7.57.7(@types/node@25.0.3))(typescript@5.8.2)':
+  '@rslib/core@0.20.2(@microsoft/api-extractor@7.57.7(@types/node@25.0.3))(typescript@5.8.2)':
     dependencies:
-      '@rsbuild/core': 2.0.0-beta.8
-      rsbuild-plugin-dts: 0.20.0(@microsoft/api-extractor@7.57.7(@types/node@25.0.3))(@rsbuild/core@2.0.0-beta.8)(typescript@5.8.2)
+      '@rsbuild/core': 2.0.0-beta.11
+      rsbuild-plugin-dts: 0.20.2(@microsoft/api-extractor@7.57.7(@types/node@25.0.3))(@rsbuild/core@2.0.0-beta.11)(typescript@5.8.2)
     optionalDependencies:
       '@microsoft/api-extractor': 7.57.7(@types/node@25.0.3)
       typescript: 5.8.2
@@ -9586,77 +9475,47 @@ snapshots:
       '@rspack/binding-win32-arm64-msvc': '@rspack-canary/binding-win32-arm64-msvc@2.0.0-canary-511d0b77-20260309140114'
       '@rspack/binding-win32-ia32-msvc': '@rspack-canary/binding-win32-ia32-msvc@2.0.0-canary-511d0b77-20260309140114'
       '@rspack/binding-win32-x64-msvc': '@rspack-canary/binding-win32-x64-msvc@2.0.0-canary-511d0b77-20260309140114'
-    optional: true
 
   '@rspack-canary/core@2.0.0-canary-511d0b77-20260309140114(@swc/helpers@0.5.19)':
     dependencies:
       '@rspack/binding': '@rspack-canary/binding@2.0.0-canary-511d0b77-20260309140114'
     optionalDependencies:
       '@swc/helpers': 0.5.19
-    optional: true
-
-  '@rspack/binding-darwin-arm64@2.0.0-beta.6':
-    optional: true
-
-  '@rspack/binding-darwin-arm64@2.0.0-beta.7':
-    optional: true
 
   '@rspack/binding-darwin-arm64@2.0.0-beta.8':
     optional: true
 
-  '@rspack/binding-darwin-x64@2.0.0-beta.6':
-    optional: true
-
-  '@rspack/binding-darwin-x64@2.0.0-beta.7':
+  '@rspack/binding-darwin-arm64@2.0.0-beta.9':
     optional: true
 
   '@rspack/binding-darwin-x64@2.0.0-beta.8':
     optional: true
 
-  '@rspack/binding-linux-arm64-gnu@2.0.0-beta.6':
-    optional: true
-
-  '@rspack/binding-linux-arm64-gnu@2.0.0-beta.7':
+  '@rspack/binding-darwin-x64@2.0.0-beta.9':
     optional: true
 
   '@rspack/binding-linux-arm64-gnu@2.0.0-beta.8':
     optional: true
 
-  '@rspack/binding-linux-arm64-musl@2.0.0-beta.6':
-    optional: true
-
-  '@rspack/binding-linux-arm64-musl@2.0.0-beta.7':
+  '@rspack/binding-linux-arm64-gnu@2.0.0-beta.9':
     optional: true
 
   '@rspack/binding-linux-arm64-musl@2.0.0-beta.8':
     optional: true
 
-  '@rspack/binding-linux-x64-gnu@2.0.0-beta.6':
-    optional: true
-
-  '@rspack/binding-linux-x64-gnu@2.0.0-beta.7':
+  '@rspack/binding-linux-arm64-musl@2.0.0-beta.9':
     optional: true
 
   '@rspack/binding-linux-x64-gnu@2.0.0-beta.8':
     optional: true
 
-  '@rspack/binding-linux-x64-musl@2.0.0-beta.6':
-    optional: true
-
-  '@rspack/binding-linux-x64-musl@2.0.0-beta.7':
+  '@rspack/binding-linux-x64-gnu@2.0.0-beta.9':
     optional: true
 
   '@rspack/binding-linux-x64-musl@2.0.0-beta.8':
     optional: true
 
-  '@rspack/binding-wasm32-wasi@2.0.0-beta.6':
-    dependencies:
-      '@napi-rs/wasm-runtime': 1.0.7
-    optional: true
-
-  '@rspack/binding-wasm32-wasi@2.0.0-beta.7':
-    dependencies:
-      '@napi-rs/wasm-runtime': 1.0.7
+  '@rspack/binding-linux-x64-musl@2.0.0-beta.9':
     optional: true
 
   '@rspack/binding-wasm32-wasi@2.0.0-beta.8':
@@ -9664,58 +9523,28 @@ snapshots:
       '@napi-rs/wasm-runtime': 1.1.1
     optional: true
 
-  '@rspack/binding-win32-arm64-msvc@2.0.0-beta.6':
-    optional: true
-
-  '@rspack/binding-win32-arm64-msvc@2.0.0-beta.7':
+  '@rspack/binding-wasm32-wasi@2.0.0-beta.9':
+    dependencies:
+      '@napi-rs/wasm-runtime': 1.1.1
     optional: true
 
   '@rspack/binding-win32-arm64-msvc@2.0.0-beta.8':
     optional: true
 
-  '@rspack/binding-win32-ia32-msvc@2.0.0-beta.6':
-    optional: true
-
-  '@rspack/binding-win32-ia32-msvc@2.0.0-beta.7':
+  '@rspack/binding-win32-arm64-msvc@2.0.0-beta.9':
     optional: true
 
   '@rspack/binding-win32-ia32-msvc@2.0.0-beta.8':
     optional: true
 
-  '@rspack/binding-win32-x64-msvc@2.0.0-beta.6':
-    optional: true
-
-  '@rspack/binding-win32-x64-msvc@2.0.0-beta.7':
+  '@rspack/binding-win32-ia32-msvc@2.0.0-beta.9':
     optional: true
 
   '@rspack/binding-win32-x64-msvc@2.0.0-beta.8':
     optional: true
 
-  '@rspack/binding@2.0.0-beta.6':
-    optionalDependencies:
-      '@rspack/binding-darwin-arm64': 2.0.0-beta.6
-      '@rspack/binding-darwin-x64': 2.0.0-beta.6
-      '@rspack/binding-linux-arm64-gnu': 2.0.0-beta.6
-      '@rspack/binding-linux-arm64-musl': 2.0.0-beta.6
-      '@rspack/binding-linux-x64-gnu': 2.0.0-beta.6
-      '@rspack/binding-linux-x64-musl': 2.0.0-beta.6
-      '@rspack/binding-wasm32-wasi': 2.0.0-beta.6
-      '@rspack/binding-win32-arm64-msvc': 2.0.0-beta.6
-      '@rspack/binding-win32-ia32-msvc': 2.0.0-beta.6
-      '@rspack/binding-win32-x64-msvc': 2.0.0-beta.6
-
-  '@rspack/binding@2.0.0-beta.7':
-    optionalDependencies:
-      '@rspack/binding-darwin-arm64': 2.0.0-beta.7
-      '@rspack/binding-darwin-x64': 2.0.0-beta.7
-      '@rspack/binding-linux-arm64-gnu': 2.0.0-beta.7
-      '@rspack/binding-linux-arm64-musl': 2.0.0-beta.7
-      '@rspack/binding-linux-x64-gnu': 2.0.0-beta.7
-      '@rspack/binding-linux-x64-musl': 2.0.0-beta.7
-      '@rspack/binding-wasm32-wasi': 2.0.0-beta.7
-      '@rspack/binding-win32-arm64-msvc': 2.0.0-beta.7
-      '@rspack/binding-win32-ia32-msvc': 2.0.0-beta.7
-      '@rspack/binding-win32-x64-msvc': 2.0.0-beta.7
+  '@rspack/binding-win32-x64-msvc@2.0.0-beta.9':
+    optional: true
 
   '@rspack/binding@2.0.0-beta.8':
     optionalDependencies:
@@ -9730,23 +9559,30 @@ snapshots:
       '@rspack/binding-win32-ia32-msvc': 2.0.0-beta.8
       '@rspack/binding-win32-x64-msvc': 2.0.0-beta.8
 
-  '@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19)':
-    dependencies:
-      '@rspack/binding': 2.0.0-beta.6
+  '@rspack/binding@2.0.0-beta.9':
     optionalDependencies:
-      '@swc/helpers': 0.5.19
-
-  '@rspack/core@2.0.0-beta.7(@swc/helpers@0.5.19)':
-    dependencies:
-      '@rspack/binding': 2.0.0-beta.7
-    optionalDependencies:
-      '@swc/helpers': 0.5.19
+      '@rspack/binding-darwin-arm64': 2.0.0-beta.9
+      '@rspack/binding-darwin-x64': 2.0.0-beta.9
+      '@rspack/binding-linux-arm64-gnu': 2.0.0-beta.9
+      '@rspack/binding-linux-arm64-musl': 2.0.0-beta.9
+      '@rspack/binding-linux-x64-gnu': 2.0.0-beta.9
+      '@rspack/binding-linux-x64-musl': 2.0.0-beta.9
+      '@rspack/binding-wasm32-wasi': 2.0.0-beta.9
+      '@rspack/binding-win32-arm64-msvc': 2.0.0-beta.9
+      '@rspack/binding-win32-ia32-msvc': 2.0.0-beta.9
+      '@rspack/binding-win32-x64-msvc': 2.0.0-beta.9
 
   '@rspack/core@2.0.0-beta.8(@swc/helpers@0.5.19)':
     dependencies:
       '@rspack/binding': 2.0.0-beta.8
     optionalDependencies:
       '@swc/helpers': 0.5.19
+
+  '@rspack/core@2.0.0-beta.9(@swc/helpers@0.5.20)':
+    dependencies:
+      '@rspack/binding': 2.0.0-beta.9
+    optionalDependencies:
+      '@swc/helpers': 0.5.20
 
   '@rspack/lite-tapable@1.1.0': {}
 
@@ -9803,9 +9639,9 @@ snapshots:
 
   '@rstack-dev/doc-ui@1.12.5': {}
 
-  '@rstest/core@0.9.4':
+  '@rstest/core@0.9.5':
     dependencies:
-      '@rsbuild/core': 2.0.0-beta.9
+      '@rsbuild/core': 2.0.0-beta.10
       '@types/chai': 5.2.3
       tinypool: 2.1.0
     transitivePeerDependencies:
@@ -10059,6 +9895,10 @@ snapshots:
       - typescript
 
   '@swc/helpers@0.5.19':
+    dependencies:
+      tslib: 2.8.1
+
+  '@swc/helpers@0.5.20':
     dependencies:
       tslib: 2.8.1
 
@@ -10754,7 +10594,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.8.2
 
-  create-rstack@1.8.1: {}
+  create-rstack@1.8.2: {}
 
   cross-env@10.1.0:
     dependencies:
@@ -13162,7 +13002,7 @@ snapshots:
 
   parse-json@5.2.0:
     dependencies:
-      '@babel/code-frame': 7.28.6
+      '@babel/code-frame': 7.29.0
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
@@ -13732,18 +13572,18 @@ snapshots:
       glob: 13.0.3
       package-json-from-dist: 1.0.1
 
-  rsbuild-plugin-dts@0.20.0(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(@rsbuild/core@2.0.0-beta.8)(typescript@5.8.2):
+  rsbuild-plugin-dts@0.20.2(@microsoft/api-extractor@7.57.7(@types/node@22.10.2))(@rsbuild/core@2.0.0-beta.11)(typescript@5.8.2):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.0.0-beta.8
+      '@rsbuild/core': 2.0.0-beta.11
     optionalDependencies:
       '@microsoft/api-extractor': 7.57.7(@types/node@22.10.2)
       typescript: 5.8.2
 
-  rsbuild-plugin-dts@0.20.0(@microsoft/api-extractor@7.57.7(@types/node@25.0.3))(@rsbuild/core@2.0.0-beta.8)(typescript@5.8.2):
+  rsbuild-plugin-dts@0.20.2(@microsoft/api-extractor@7.57.7(@types/node@25.0.3))(@rsbuild/core@2.0.0-beta.11)(typescript@5.8.2):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.0.0-beta.8
+      '@rsbuild/core': 2.0.0-beta.11
     optionalDependencies:
       '@microsoft/api-extractor': 7.57.7(@types/node@25.0.3)
       typescript: 5.8.2
@@ -13756,13 +13596,6 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 2.0.0-canary-20260309140114
 
-  rsbuild-plugin-publint@0.3.4(@rsbuild/core@2.0.0-beta.10):
-    dependencies:
-      picocolors: 1.1.1
-      publint: 0.3.17
-    optionalDependencies:
-      '@rsbuild/core': 2.0.0-beta.10
-
   rsbuild-plugin-publint@0.3.4(@rsbuild/core@2.0.0-canary-20260309140114):
     dependencies:
       picocolors: 1.1.1
@@ -13770,9 +13603,9 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 2.0.0-canary-20260309140114
 
-  rsbuild-plugin-virtual-module@0.4.1(@rsbuild/core@2.0.0-beta.10):
+  rsbuild-plugin-virtual-module@0.4.1(@rsbuild/core@2.0.0-canary-20260309140114):
     optionalDependencies:
-      '@rsbuild/core': 2.0.0-beta.10
+      '@rsbuild/core': 2.0.0-canary-20260309140114
 
   rslog@1.3.2: {}
 
@@ -13780,12 +13613,12 @@ snapshots:
     dependencies:
       fs-extra: 11.3.0
 
-  rspack-vue-loader@17.5.0(@rspack/core@2.0.0-beta.8(@swc/helpers@0.5.19))(vue@3.5.31(typescript@5.8.2)):
+  rspack-vue-loader@17.5.0(@rspack/core@2.0.0-beta.9(@swc/helpers@0.5.20))(vue@3.5.31(typescript@5.8.2)):
     dependencies:
       '@rspack/lite-tapable': 1.1.0
       chalk: 4.1.2
     optionalDependencies:
-      '@rspack/core': 2.0.0-beta.8(@swc/helpers@0.5.19)
+      '@rspack/core': 2.0.0-beta.9(@swc/helpers@0.5.20)
       vue: 3.5.31(typescript@5.8.2)
 
   rspress-plugin-devkit@1.0.0(@rspress/core@packages+core):
