@@ -1,0 +1,13 @@
+lockfileVersion: "0.1"
+installDir: .agents/skills
+linkTargets:
+  - .cursor/skills
+skills:
+  rspress-custom-theme:
+    specifier: https://github.com/rstackjs/agent-skills.git#path:/skills/rspress-custom-theme
+    resolution:
+      type: git
+      url: https://github.com/rstackjs/agent-skills.git
+      commit: 6cb0992a176f2ca142e19f64dca8ac12025b035e
+      path: /skills/rspress-custom-theme
+    digest: sha256-480d684299c0c44c5d6614d241ebd335756408f0db2445370d5768770b445498

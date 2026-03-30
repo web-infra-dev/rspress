@@ -12,3 +12,4 @@ doc_build
 
 # ignore pnpm-lock
 pnpm-lock.yaml
+skills-lock.yaml
