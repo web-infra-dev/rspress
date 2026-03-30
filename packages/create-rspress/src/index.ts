@@ -50,6 +50,7 @@ function mapESLintTemplate(): ESLintTemplateName {
 create({
   root: path.resolve(__dirname, '..'),
   name: 'rspress',
+  skipFiles: ['template-placeholder'],
   templates: [...templates],
   getTemplateName,
   mapESLintTemplate,
