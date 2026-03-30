@@ -5,7 +5,7 @@ packages:
   - website
   - '!**/compiled/**'
   - '!**/tests/**'
-  - '!packages/create-rspress/template-basic'
+  - '!packages/create-rspress/template-*'
 
 hoistPattern: []
 
