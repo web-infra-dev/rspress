@@ -8,6 +8,7 @@ After creating a project with `create-rspress`, you will get the following proje
 - `docs/_nav.json` — The navigation bar configuration.
 - `docs/guide/_meta.json` — The sidebar configuration for the guide section.
 - `docs/public/` — Static assets directory.
+- `theme/` — Optional custom theme directory, generated when you choose the custom theme scaffold.
 - `rspress.config.ts` — The Rspress configuration file.
 
 ## Development
