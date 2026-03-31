@@ -15,6 +15,9 @@ npx create-rspress --dir my-project
 
 # Using abbreviations
 npx create-rspress -d my-project
+
+# Scaffold with the custom theme template
+npx create-rspress --dir my-project --template custom-theme
 ```
 
 ## Documentation

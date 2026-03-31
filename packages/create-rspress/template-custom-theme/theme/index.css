@@ -1,0 +1,6 @@
+:root {
+  /* Example brand color overrides for the custom theme scaffold. */
+  --rp-c-brand: #0f766e;
+  --rp-c-brand-dark: #115e59;
+  --rp-c-brand-tint: rgba(15, 118, 110, 0.16);
+}
