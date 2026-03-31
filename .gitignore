@@ -41,6 +41,8 @@ log/
 .changeset/pre.json
 
 .pnpm-store/
+.agents/skills/
+.cursor/skills/
 
 modern.config.local.ts
 modern.config.local.js
