@@ -19,13 +19,32 @@ export const rsbuildPluginSSG = ({
     api.onBeforeBuild(() => {
       let htmlTemplate: string = '';
       let hasError: boolean = false;
+      const missingIndexHtmlMessage =
+        'SSG requires an `index.html` as entry, but this file is not emitted successfully in the web target.';
       const indexHtmlEmittedInWeb: Promise<void> = new Promise<void>(
         (resolve, reject) => {
+          let settled = false;
+          const resolveOnce = () => {
+            if (settled) {
+              return;
+            }
+            settled = true;
+            resolve();
+          };
+          const rejectOnce = () => {
+            if (settled) {
+              return;
+            }
+            settled = true;
+            reject(new Error(missingIndexHtmlMessage));
+          };
+
           api.processAssets(
             { stage: 'report', environments: ['web'] },
             ({ assets, compilation }) => {
               if (compilation.errors.length > 0) {
                 hasError = true;
+                resolveOnce();
                 return;
               }
 
@@ -33,19 +52,17 @@ export const rsbuildPluginSSG = ({
                 if (assetName === 'index.html') {
                   htmlTemplate = assetSource.source().toString();
                   compilation.deleteAsset(assetName);
-                  resolve();
-                  break;
+                  resolveOnce();
+                  return;
                 }
               }
-              reject();
+              rejectOnce();
             },
           );
         },
       ).catch(() => {
-        const message =
-          'SSG requires an `index.html` as entry, but this file is not emitted successfully in the web target.';
-        logger.error(message);
-        const error = new Error(message);
+        logger.error(missingIndexHtmlMessage);
+        const error = new Error(missingIndexHtmlMessage);
         throw error;
       });
 
@@ -92,6 +109,9 @@ export const rsbuildPluginSSG = ({
           );
 
           await indexHtmlEmittedInWeb;
+          if (hasError) {
+            return;
+          }
           await renderPages(
             routeService,
             config,
