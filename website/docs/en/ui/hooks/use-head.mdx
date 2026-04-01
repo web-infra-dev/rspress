@@ -1,0 +1,43 @@
+---
+description: useHead hook for declaring document head tags in React components and layouts.
+---
+
+# useHead
+
+`useHead` lets you declare document head tags from React components or custom layouts.
+
+- **Type:** `(input: UseHeadInput) => ActiveHeadEntry | void`
+
+Rspress re-exports this hook from `@rspress/core/runtime`, so you can use the same head API in custom pages, theme components, and layout code.
+
+```tsx
+import { useHead } from '@rspress/core/runtime';
+
+export function ProductMeta() {
+  useHead({
+    title: 'Rspress',
+    meta: [
+      {
+        name: 'description',
+        content: 'Static site generator based on Rsbuild and MDX.',
+      },
+      {
+        property: 'og:title',
+        content: 'Rspress',
+      },
+    ],
+    link: [
+      {
+        rel: 'canonical',
+        href: 'https://rspress.dev/',
+      },
+    ],
+  });
+
+  return null;
+}
+```
+
+Use `useHead` when your head data is easier to build from JavaScript objects or depends on component state and props.
+
+> If you prefer authoring tags directly in MDX, use the [`Head`](/ui/runtime-components/head) component instead.

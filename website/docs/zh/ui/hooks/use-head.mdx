@@ -1,0 +1,43 @@
+---
+description: useHead hook，用于在 React 组件和布局中声明文档 head 标签。
+---
+
+# useHead
+
+`useHead` 用于在 React 组件或自定义布局中声明文档的 head 标签。
+
+- **类型：** `(input: UseHeadInput) => ActiveHeadEntry | void`
+
+Rspress 通过 `@rspress/core/runtime` 重新导出了这个 hook，因此你可以在自定义页面、主题组件和布局代码中使用同一套 head API。
+
+```tsx
+import { useHead } from '@rspress/core/runtime';
+
+export function ProductMeta() {
+  useHead({
+    title: 'Rspress',
+    meta: [
+      {
+        name: 'description',
+        content: '基于 Rsbuild 和 MDX 的静态站点生成器。',
+      },
+      {
+        property: 'og:title',
+        content: 'Rspress',
+      },
+    ],
+    link: [
+      {
+        rel: 'canonical',
+        href: 'https://rspress.dev/',
+      },
+    ],
+  });
+
+  return null;
+}
+```
+
+当 head 内容更适合用 JavaScript 对象组织，或者需要依赖组件状态、props 动态计算时，推荐使用 `useHead`。
+
+> 如果你更想直接在 MDX 里编写标签，可以使用 [`Head`](/ui/runtime-components/head) 组件。
