@@ -63,6 +63,30 @@ head:
 
 If you need more complex head customization, you can use the [Head component](/ui/runtime-components/head) provided by Rspress to dynamically set head tags in pages or layout components.
 
+## useHead hook
+
+If you are already inside a React component and prefer object-based declarations, use [`useHead`](/ui/hooks/use-head):
+
+```tsx
+import { useHead } from '@rspress/core/runtime';
+
+export function PageMeta() {
+  useHead({
+    title: 'Custom Page Title',
+    meta: [
+      {
+        name: 'description',
+        content: 'Custom page description for SEO and social sharing.',
+      },
+    ],
+  });
+
+  return null;
+}
+```
+
+Compared with `Head`, `useHead` is usually more convenient when the final tags depend on props, state, or reusable helper functions.
+
 ## Rsbuild html.tags configuration
 
 Through `builderConfig.html.tags`, you can inject custom content into HTML, such as adding analytics code, scripts, or styles:
@@ -93,6 +117,6 @@ For more configuration details, please refer to the [Rsbuild html.tags documenta
 - **Rspress head configuration**: Can access route-related information, supports dynamically setting head tags based on different pages
 - **Rsbuild html.tags**: A static build-time configuration, suitable for global uniform tag injection (such as analytics code)
 
-If you need to dynamically adjust head content based on page routes, use [Global head configuration](#global-head-configuration) or [Head component](#head-component).
+If you need to dynamically adjust head content based on page routes, use [Global head configuration](#global-head-configuration), the [Head component](#head-component), or the [useHead hook](#usehead-hook).
 
 :::

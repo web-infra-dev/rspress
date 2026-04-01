@@ -5,7 +5,7 @@ export {
   matchSidebar,
   normalizeHref,
 } from '@rspress/shared';
-export { Head } from '@unhead/react';
+export { Head, useHead } from '@unhead/react';
 export * from 'react-router-dom';
 export { Content } from './Content';
 export { useActiveMatcher } from './hooks/useActiveMatcher';

@@ -63,6 +63,30 @@ head:
 
 如果你需要更复杂的 Head 定制，可以使用 Rspress 提供的 [Head 组件](/ui/runtime-components/head) 在页面或布局组件中动态设置 Head 标签。
 
+## useHead hook
+
+如果你已经在 React 组件内部，并且更偏向使用对象形式声明 head 内容，可以使用 [`useHead`](/ui/hooks/use-head)：
+
+```tsx
+import { useHead } from '@rspress/core/runtime';
+
+export function PageMeta() {
+  useHead({
+    title: '自定义页面标题',
+    meta: [
+      {
+        name: 'description',
+        content: '用于 SEO 和社交分享的自定义页面描述。',
+      },
+    ],
+  });
+
+  return null;
+}
+```
+
+和 `Head` 组件相比，`useHead` 在需要依赖 props、状态或复用工具函数来生成最终标签时通常更方便。
+
 ## Rsbuild html.tags 配置
 
 通过 `builderConfig.html.tags`，你可以向 HTML 中注入自定义内容，比如添加统计代码、脚本或样式：
@@ -93,6 +117,6 @@ export default defineConfig({
 - **Rspress head 配置**：可以获取路由相关信息，支持根据不同页面动态设置 head 标签
 - **Rsbuild html.tags**：是构建时的静态配置，适用于全局统一的标签注入（如统计代码）
 
-如果需要根据页面路由动态调整 head 内容，请使用 [全局 head 配置](#全局-head-配置) 或 [Head 组件](#head-组件)。
+如果需要根据页面路由动态调整 head 内容，请使用 [全局 head 配置](#全局-head-配置)、[Head 组件](#head-组件) 或 [useHead hook](#usehead-hook)。
 
 :::
