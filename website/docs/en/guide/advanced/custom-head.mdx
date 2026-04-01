@@ -59,13 +59,29 @@ head:
 ---
 ```
 
-## Head component
+## Head component and useHead hook
 
-If you need more complex head customization, you can use the [Head component](/ui/runtime-components/head) provided by Rspress to dynamically set head tags in pages or layout components.
+If you need more complex head customization, Rspress provides both the [Head component](/ui/runtime-components/head) and the [`useHead`](/ui/hooks/use-head) hook. Both are based on unhead.
 
-## useHead hook
+Use `Head` when you want to write tags directly in MDX or JSX:
 
-If you are already inside a React component and prefer object-based declarations, use [`useHead`](/ui/hooks/use-head):
+```tsx
+import { Head } from '@rspress/core/runtime';
+
+export function PageMeta() {
+  return (
+    <Head>
+      <meta
+        name="description"
+        content="Custom page description for SEO and social sharing."
+      />
+      <link rel="canonical" href="https://rspress.dev/" />
+    </Head>
+  );
+}
+```
+
+Use `useHead` when object-based declarations fit better, or when the final tags depend on props, state, or reusable helper functions:
 
 ```tsx
 import { useHead } from '@rspress/core/runtime';
@@ -84,8 +100,6 @@ export function PageMeta() {
   return null;
 }
 ```
-
-Compared with `Head`, `useHead` is usually more convenient when the final tags depend on props, state, or reusable helper functions.
 
 ## Rsbuild html.tags configuration
 
@@ -117,6 +131,6 @@ For more configuration details, please refer to the [Rsbuild html.tags documenta
 - **Rspress head configuration**: Can access route-related information, supports dynamically setting head tags based on different pages
 - **Rsbuild html.tags**: A static build-time configuration, suitable for global uniform tag injection (such as analytics code)
 
-If you need to dynamically adjust head content based on page routes, use [Global head configuration](#global-head-configuration), the [Head component](#head-component), or the [useHead hook](#usehead-hook).
+If you need to dynamically adjust head content based on page routes, use [Global head configuration](#global-head-configuration) or the [Head component and useHead hook](#head-component-and-usehead-hook).
 
 :::
