@@ -3,7 +3,7 @@ import path from 'node:path';
 import { isExternalUrl, type NavItem, type Sidebar } from '@rspress/shared';
 import { hintNavJsonChangeThenPanic } from '../logger/hint';
 import { addRoutePrefix } from '../route/RoutePage';
-import { createError, pathExists } from '../utils';
+import { pathExists } from '../utils';
 import { scanSideMeta } from './normalize';
 import { readJson } from './utils';
 
@@ -18,16 +18,7 @@ async function scanNav(
   if (isRootNavJsonExist) {
     metaFileSet.add(rootNavJson);
     // Get the nav config from the `_meta.json` file
-    try {
-      navConfig = await readJson<NavItem[]>(rootNavJson);
-    } catch (e) {
-      if (e instanceof Error) {
-        throw createError(
-          `[auto-nav-sidebar] Generate nav meta error: ${rootNavJson} failed, original error is (${e.message})`,
-        );
-      }
-      throw e;
-    }
+    navConfig = await readJson<NavItem[]>(rootNavJson);
   } else {
     navConfig = [];
   }

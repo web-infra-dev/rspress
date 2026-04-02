@@ -1,3 +1,5 @@
+import fs from 'node:fs/promises';
+import os from 'node:os';
 import path from 'node:path';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import { afterEach, describe, expect, it } from '@rstest/core';
@@ -478,5 +480,31 @@ describe('walk', () => {
       <ROOT>/packages/core/src/node/auto-nav-sidebar/fixtures/docs-custom-link-group/guide/_meta.json"
     `);
     expect(orderStringSet(mdFileSet)).toMatchInlineSnapshot(`""`);
+  });
+
+  it('should include invalid json file path in error message', async () => {
+    const docsDir = await fs.mkdtemp(
+      path.join(os.tmpdir(), 'rspress-auto-nav-invalid-json-'),
+    );
+    const guideDir = path.join(docsDir, 'guide');
+    const invalidMetaPath = path.join(guideDir, '_meta.json');
+
+    await fs.mkdir(guideDir, { recursive: true });
+    await fs.writeFile(
+      invalidMetaPath,
+      '[\n  {\n    name: "a.md"\n  }\n]\n',
+      'utf8',
+    );
+
+    const metaFileSet = new Set<string>();
+    const mdFileSet = new Set<string>();
+
+    try {
+      await expect(
+        walk(docsDir, docsDir, DEFAULT_PAGE_EXTENSIONS, metaFileSet, mdFileSet),
+      ).rejects.toThrow(`Failed to parse JSON file "${invalidMetaPath}"`);
+    } finally {
+      await fs.rm(docsDir, { recursive: true, force: true });
+    }
   });
 });
