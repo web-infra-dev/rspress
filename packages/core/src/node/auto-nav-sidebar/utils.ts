@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
+import { createError } from '../utils';
 
 export async function pathExists(path: string): Promise<boolean> {
   try {
@@ -13,7 +14,16 @@ export async function pathExists(path: string): Promise<boolean> {
 
 export async function readJson<T = unknown>(path: string): Promise<T> {
   const raw = await fs.readFile(path, 'utf8');
-  return JSON.parse(raw);
+
+  try {
+    return JSON.parse(raw) as T;
+  } catch (error) {
+    const detail =
+      error instanceof Error ? error.message : 'Unknown JSON parse error';
+    throw createError(
+      `[auto-nav-sidebar] Failed to parse JSON file "${path}": ${detail}`,
+    );
+  }
 }
 
 export async function extractInfoFromFrontmatterWithAbsolutePath(
