@@ -32,4 +32,20 @@
   p {
     color: var(--rp-c-text-1);
   }
+
+  /* don't render anchor under the stepper component, render at the end */
+  .rp-toc-include:has(> .rp-header-anchor) {
+    display: flex;
+    gap: 1.5rem;
+
+    .rp-header-anchor {
+      /* moves the anchor to the end of the line */
+      order: 2;
+
+      &:not(:hover) {
+        /* prevents odd pixel shift on hover */
+        border-bottom: 1px solid transparent;
+      }
+    }
+  }
 }
