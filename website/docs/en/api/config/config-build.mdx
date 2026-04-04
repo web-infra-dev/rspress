@@ -255,6 +255,47 @@ After enabling this config, Rspress will automatically add prefixes to links in 
 
 If a user writes a link `[](/guide/getting-started)` in `docs/zh/guide/index.md`, Rspress will automatically convert it to `[](/zh/guide/getting-started)`.
 
+### markdown.image
+
+- **Type**:
+
+```ts
+export type RemarkImageOptions = {
+  checkDeadImages?:
+    | boolean
+    | { excludes: string[] | ((url: string) => boolean) };
+};
+```
+
+- **Default**: `{ checkDeadImages: true }`
+
+Configure image-related options.
+
+#### markdown.image.checkDeadImages
+
+- **Type**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
+- **Default**: `true`
+
+After enabling this configuration, Rspress will check the local images in the document. If an image references a non-existent file, the build will throw an error and exit.
+
+For relative image paths (e.g., `./image.png`), the file is resolved relative to the current document. For absolute image paths (e.g., `/image.png`), the file is resolved from the `public` directory.
+
+If there is a misjudgment of images, you can ignore the error through the `excludes` configuration:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    image: {
+      checkDeadImages: {
+        excludes: ['/generated-diagram.png'],
+      },
+    },
+  },
+});
+```
+
 ### markdown.showLineNumbers
 
 - **Type**: `boolean`

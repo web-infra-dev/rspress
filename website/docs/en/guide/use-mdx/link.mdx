@@ -256,3 +256,21 @@ export default defineConfig({
   },
 });
 ```
+
+## Dead images checking
+
+Similar to dead link checking, Rspress can also check for broken image references in your documentation. This catches images that reference non-existent local files, including both relative paths and absolute paths that reference the `public` directory.
+
+Configure through [markdown.image.checkDeadImages](/api/config/config-build#markdownimagecheckdeadimages) to automatically check for invalid images.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    image: {
+      checkDeadImages: true,
+    },
+  },
+});
+```
