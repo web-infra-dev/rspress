@@ -524,10 +524,21 @@ export type RemarkLinkOptions = {
   autoPrefix?: boolean;
 };
 
+export type RemarkImageOptions = {
+  /**
+   * Whether to enable check dead images
+   * @default true
+   */
+  checkDeadImages?:
+    | boolean
+    | { excludes: string[] | ((url: string) => boolean) };
+};
+
 export interface MarkdownOptions {
   remarkPlugins?: PluggableList;
   rehypePlugins?: PluggableList;
   link?: RemarkLinkOptions;
+  image?: RemarkImageOptions;
   showLineNumbers?: boolean;
   /**
    * Whether to wrap code by default
