@@ -121,7 +121,7 @@ export async function initPageData(routePath: string): Promise<Page> {
     } = MDX_OR_MD_REGEXP.test(matchedRoute.filePath)
       ? meta
       : (mod as unknown as PageMeta);
-    const result: Page = {
+    return {
       ...rest,
       pagePath,
       ...extractPageInfo,
@@ -130,7 +130,6 @@ export async function initPageData(routePath: string): Promise<Page> {
       frontmatter,
       toc,
     };
-    return result;
   }
 
   let lang = siteData.lang || '';
@@ -162,7 +161,7 @@ export async function initPageData(routePath: string): Promise<Page> {
   }
 
   // 404 Page
-  const result: Page = {
+  return {
     pagePath: '',
     pageType: '404',
     routePath: '/404',
@@ -174,5 +173,4 @@ export async function initPageData(routePath: string): Promise<Page> {
     _filepath: '',
     _relativePath: '',
   };
-  return result;
 }
