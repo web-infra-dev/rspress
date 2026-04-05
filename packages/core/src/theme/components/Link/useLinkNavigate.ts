@@ -90,7 +90,6 @@ export function useLinkNavigate(
             const timer = setTimeout(() => {
               nprogress.start();
             }, 200);
-            await matchedRoute.preload();
             const data = await initPageData(removeBaseHref);
             warmPageData(removeBaseHref, data);
             clearTimeout(timer);
