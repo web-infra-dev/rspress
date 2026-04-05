@@ -1,5 +1,6 @@
 import {
   cleanUrlByConfig,
+  initPageData,
   isActive,
   isExternalUrl,
   pathnameToRouteService,
@@ -89,6 +90,7 @@ export function useLinkNavigate(
               nprogress.start();
             }, 200);
             await matchedRoute.preload();
+            await initPageData(removeBaseHref);
             clearTimeout(timer);
             nprogress.done();
           } else {

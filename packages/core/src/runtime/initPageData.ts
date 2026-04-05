@@ -19,6 +19,12 @@ type PageMeta = {
 
 export type Page = PageDataLegacy['page'];
 
+const pageDataCache = new Map<string, Page>();
+
+export function getCachedPageData(routePath: string): Page | undefined {
+  return pageDataCache.get(routePath);
+}
+
 export async function initPageData(routePath: string): Promise<Page> {
   const matchedRoute = pathnameToRouteService(routePath);
   if (matchedRoute) {
@@ -51,7 +57,7 @@ export async function initPageData(routePath: string): Promise<Page> {
     } = MDX_OR_MD_REGEXP.test(matchedRoute.filePath)
       ? meta
       : (mod as unknown as PageMeta);
-    return {
+    const result: Page = {
       ...rest,
       pagePath,
       ...extractPageInfo,
@@ -60,6 +66,8 @@ export async function initPageData(routePath: string): Promise<Page> {
       frontmatter,
       toc,
     };
+    pageDataCache.set(routePath, result);
+    return result;
   }
 
   let lang = siteData.lang || '';
@@ -91,7 +99,7 @@ export async function initPageData(routePath: string): Promise<Page> {
   }
 
   // 404 Page
-  return {
+  const result: Page = {
     pagePath: '',
     pageType: '404',
     routePath: '/404',
@@ -103,4 +111,6 @@ export async function initPageData(routePath: string): Promise<Page> {
     _filepath: '',
     _relativePath: '',
   };
+  pageDataCache.set(routePath, result);
+  return result;
 }
