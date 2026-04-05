@@ -2,7 +2,11 @@ import { PageContext, useLocation } from '@rspress/core/runtime';
 import { Layout, Root } from '@theme';
 import React, { useContext, useLayoutEffect } from 'react';
 import globalComponents from 'virtual-global-components';
-import { getCachedPageData, initPageData } from './initPageData';
+import {
+  consumeCachedPageData,
+  initPageData,
+  setCurrentPageData,
+} from './initPageData';
 
 enum QueryStatus {
   Show = '1',
@@ -13,7 +17,7 @@ export function App() {
   const { setData: setPageData, data } = useContext(PageContext);
   const { pathname, search } = useLocation();
   useLayoutEffect(() => {
-    const cached = getCachedPageData(pathname);
+    const cached = consumeCachedPageData(pathname);
     if (cached) {
       setPageData?.(cached);
       return;
@@ -21,6 +25,7 @@ export function App() {
     async function refetchData() {
       try {
         const pageData = await initPageData(pathname);
+        setCurrentPageData(pathname, pageData);
         setPageData?.(pageData);
       } catch (e) {
         console.log(e);

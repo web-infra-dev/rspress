@@ -26,7 +26,7 @@ export {
 export { useSite } from './hooks/useSite';
 export { useVersion } from './hooks/useVersion';
 export { useWindowSize } from './hooks/useWindowSize';
-export { initPageData } from './initPageData';
+export { initPageData, warmPageData } from './initPageData';
 export { NoSSR } from './NoSSR';
 export { isActive, pathnameToRouteService, preloadLink } from './route';
 export {

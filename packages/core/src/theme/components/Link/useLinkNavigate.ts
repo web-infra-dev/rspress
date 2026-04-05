@@ -7,6 +7,7 @@ import {
   removeBase,
   useLocation,
   useNavigate as useNavigateInner,
+  warmPageData,
   withBase,
 } from '@rspress/core/runtime';
 import nprogress from 'nprogress';
@@ -90,7 +91,8 @@ export function useLinkNavigate(
               nprogress.start();
             }, 200);
             await matchedRoute.preload();
-            await initPageData(removeBaseHref);
+            const data = await initPageData(removeBaseHref);
+            warmPageData(removeBaseHref, data);
             clearTimeout(timer);
             nprogress.done();
           } else {
