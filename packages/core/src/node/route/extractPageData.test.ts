@@ -180,14 +180,13 @@ describe('getPageIndexInfoByRoute', async () => {
 
       ",
         "_relativePath": "index.mdx",
-        "content": "## h2 Comp
+        "content": "h2 Comp
 
       Comp content
 
-      ## H2 comp in comp
+      H2 comp in comp
 
-      Comp in Comp content \`code\`
-      ",
+      Comp in Comp content code",
         "description": undefined,
         "frontmatter": {
           "__content": undefined,
@@ -203,7 +202,7 @@ describe('getPageIndexInfoByRoute', async () => {
             "text": "h2 Comp",
           },
           {
-            "charIndex": 26,
+            "charIndex": 23,
             "depth": 2,
             "id": "h2-comp-in-comp",
             "text": "H2 comp in comp",
@@ -248,10 +247,9 @@ describe('getPageIndexInfoByRoute', async () => {
 
       Some text after code.
 
-      ## Section two
+      Section two
 
-      More content here.
-      ",
+      More content here.",
         "description": "Some text before code. Some text after code.",
         "frontmatter": {
           "__content": undefined,
@@ -304,17 +302,14 @@ describe('getPageIndexInfoByRoute', async () => {
         "_relativePath": "with-code.mdx",
         "content": "Some text before code.
 
-      \`\`\`javascript
       const foo = 'bar';
       console.log(foo);
-      \`\`\`
 
       Some text after code.
 
-      ## Section two
+      Section two
 
-      More content here.
-      ",
+      More content here.",
         "description": "Some text before code. Some text after code.",
         "frontmatter": {
           "__content": undefined,
@@ -324,7 +319,7 @@ describe('getPageIndexInfoByRoute', async () => {
         "title": "Page with code",
         "toc": [
           {
-            "charIndex": 103,
+            "charIndex": 85,
             "depth": 2,
             "id": "section-two",
             "text": "Section two",
@@ -368,10 +363,9 @@ describe('getPageIndexInfoByRoute', async () => {
 
       And some text after.
 
-      ## Another section
+      Another section
 
-      Final text.
-      ",
+      Final text.",
         "description": "Here is an image: And some text after.",
         "frontmatter": {
           "__content": undefined,
@@ -419,16 +413,17 @@ describe('getPageIndexInfoByRoute', async () => {
       Visit [our docs](./docs/intro.md) for more info.
       ",
         "_relativePath": "with-links.mdx",
-        "content": "This is a [link to Google]() in text.
+        "content": "This is a link to Google in text.
 
-      ## Links section
+      Links section
 
-      - [First link]()
-      - [Second link]()
-      - Plain text item
+      First link
 
-      Visit [our docs]() for more info.
-      ",
+      Second link
+
+      Plain text item
+
+      Visit our docs for more info.",
         "description": "This is a link to Google in text.",
         "frontmatter": {
           "__content": undefined,
@@ -438,7 +433,7 @@ describe('getPageIndexInfoByRoute', async () => {
         "title": "Page with links",
         "toc": [
           {
-            "charIndex": 39,
+            "charIndex": 35,
             "depth": 2,
             "id": "links-section",
             "text": "Links section",
@@ -479,15 +474,13 @@ describe('getPageIndexInfoByRoute', async () => {
         "_relativePath": "with-table.mdx",
         "content": "Some intro text.
 
-      | Header 1 | Header 2 | Header 3 |
-      | -------- | -------- | -------- |
-      | Cell 1   | Cell 2   | Cell 3   |
-      | Cell 4   | Cell 5   | Cell 6   |
+      Header 1	Header 2	Header 3
+      Cell 1	Cell 2	Cell 3
+      Cell 4	Cell 5	Cell 6
 
-      ## After table
+      After table
 
-      More content.
-      ",
+      More content.",
         "description": "Some intro text.",
         "frontmatter": {
           "__content": undefined,
@@ -497,7 +490,7 @@ describe('getPageIndexInfoByRoute', async () => {
         "title": "Page with table",
         "toc": [
           {
-            "charIndex": 159,
+            "charIndex": 88,
             "depth": 2,
             "id": "after-table",
             "text": "After table",
@@ -534,10 +527,9 @@ describe('getPageIndexInfoByRoute', async () => {
         "_relativePath": "with-frontmatter.mdx",
         "content": "This page has frontmatter with a custom title.
 
-      ## Section
+      Section
 
-      More content here.
-      ",
+      More content here.",
         "description": "A page with frontmatter",
         "frontmatter": {
           "__content": undefined,

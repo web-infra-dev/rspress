@@ -8,14 +8,12 @@ import {
   type RouteMeta,
 } from '@rspress/shared';
 import { loadFrontMatter } from '@rspress/shared/node-utils';
-import type { Link, Node, Root } from 'mdast';
+import type { Node, Nodes, Root } from 'mdast';
 import remarkGFM from 'remark-gfm';
 import remarkParse from 'remark-parse';
-import remarkStringify from 'remark-stringify';
 import type { Plugin } from 'unified';
 import { unified } from 'unified';
 import { remove } from 'unist-util-remove';
-import { visit } from 'unist-util-visit';
 import { importStatementRegex } from '../constants';
 import { parseToc } from '../mdx/remarkPlugins/toc';
 import { flattenMdxContent } from '../utils';
@@ -73,18 +71,6 @@ const remarkRemoveImages: Plugin<[], Root> = () => {
 };
 
 /**
- * Remark plugin to strip link URLs, keeping only the link text
- * This mimics html-to-text's ignoreHref behavior
- */
-const remarkStripLinkUrls: Plugin<[], Root> = () => {
-  return tree => {
-    visit(tree, 'link', (node: Link) => {
-      node.url = '';
-    });
-  };
-};
-
-/**
  * Cached processor instances for performance optimization
  * Reusing processors avoids the overhead of creating new instances for each file
  */
@@ -93,12 +79,7 @@ const createProcessor = (searchCodeBlocks: boolean) =>
     .use(remarkParse)
     .use(remarkGFM)
     .use(remarkRemoveImages)
-    .use(remarkStripLinkUrls)
-    .use(searchCodeBlocks ? [] : [remarkRemoveCodeBlocks])
-    .use(remarkStringify, {
-      bullet: '-',
-      listItemIndent: 'one',
-    });
+    .use(searchCodeBlocks ? [] : [remarkRemoveCodeBlocks]);
 
 const processorWithCode = createProcessor(true);
 const processorWithoutCode = createProcessor(false);
@@ -114,6 +95,134 @@ function extractTextFromNode(node: Node): string {
     return node.children.map(extractTextFromNode).join('');
   }
   return '';
+}
+
+/**
+ * Nodes that we should just ignore for search indexing
+ */
+const SEARCH_SKIP_TYPES = new Set([
+  'image',
+  'imageReference',
+  'definition',
+  'footnoteDefinition',
+  'footnoteReference',
+  'html',
+  'thematicBreak',
+  'mdxJsxFlowElement',
+  'mdxJsxTextElement',
+  'mdxFlowExpression',
+  'mdxTextExpression',
+  'mdxjsEsm',
+]);
+
+/**
+ * Block level nodes that should have a trailing newline or are separated naturally in the markdown already.
+ */
+const SEARCH_BLOCK_TYPES = new Set([
+  'paragraph',
+  'heading',
+  'listItem',
+  'tableRow',
+]);
+
+/**
+ * Recursively extract raw text from the mdast
+ */
+function extractSearchText(node: Nodes, codeblocks: boolean): string {
+  const { type } = node;
+
+  // Return an empty string for any kind of "non-content" node
+  if (SEARCH_SKIP_TYPES.has(type)) {
+    return '';
+  }
+
+  // If we are excluding code blocks then return an empty string for them
+  if (type === 'code' && !codeblocks) {
+    return '';
+  }
+
+  if (type === 'break') {
+    return '\n';
+  }
+
+  // If we are text or inline code then just return that nodes value, for example `**test**` becomes `test`
+  if (type === 'text' || type === 'inlineCode') {
+    return node.value;
+  }
+  // multiline code blocks are prefixed and suffixed with newlines
+  if (type === 'code') {
+    return `\n${node.value}\n`;
+  }
+
+  let result = '';
+  if ('children' in node) {
+    for (const child of node.children) {
+      result += extractSearchText(child as Nodes, codeblocks);
+    }
+  }
+
+  // Add a new line for any element thats like a block of something, such as a heading or paragraph
+  if (SEARCH_BLOCK_TYPES.has(type)) {
+    result += '\n';
+  }
+
+  // table cells are separated by tabs instead of `|`
+  if (type === 'tableCell') {
+    result += '\t';
+  }
+
+  // \t\n replace so we don't have trailing whitespace on table rows that aren't at the end of the text
+  return result.replaceAll('\t\n', '\n');
+}
+
+/**
+ * Walk the AST to build plain text search content. Tracks charIndex positions
+ * for each TOC heading so the search UI can link results to the right section.
+ */
+function buildSearchContent(
+  tree: Root,
+  rawToc: Array<{ id: string; text: string; depth: number }>,
+  codeblocks: boolean,
+): { content: string; toc: Header[] } {
+  const parts: string[] = [];
+  const headingCharIndexes: number[] = [];
+  let tocIndex = 0;
+  let contentLength = 0;
+
+  for (const node of tree.children) {
+    if (node.type === 'heading' && node.depth === 1) {
+      continue;
+    }
+
+    const text = extractSearchText(node, codeblocks).trim();
+    if (!text) {
+      continue;
+    }
+
+    if (parts.length > 0) {
+      contentLength += 2; // \n\n separator, account for it before we do heading nodes!
+    }
+
+    // parseToc collects h2-h4 in document order, so we can match them by index
+    if (node.type === 'heading' && node.depth >= 2 && node.depth < 5) {
+      if (tocIndex < rawToc.length) {
+        headingCharIndexes.push(contentLength);
+        tocIndex++;
+      }
+    }
+
+    contentLength += text.length;
+    parts.push(text);
+  }
+
+  return {
+    content: parts.join('\n\n'),
+    toc: rawToc.map((item, index) => ({
+      ...item,
+      charIndex:
+        index < headingCharIndexes.length ? headingCharIndexes[index] : -1,
+    })),
+  };
 }
 
 /**
@@ -306,41 +415,13 @@ async function getPageIndexInfoByRoute(
 
   // Run plugins and stringify to markdown for search content
   const processedTree = await processor.run(tree);
-  let processedContent = String(processor.stringify(processedTree as Root));
 
-  // Remove the title from the content if it appears at the start
-  if (processedContent.startsWith(`# ${title}`)) {
-    processedContent = processedContent.slice(`# ${title}`.length).trimStart();
-  }
-
-  // Calculate character index positions for each toc item
-  const toc: Header[] = rawToc.map(item => {
-    const match = item.id.match(/-(\d+)$/);
-    // Find the heading in content (## for h2, ### for h3, etc.)
-    const headingPrefix = '#'.repeat(item.depth);
-    let position = -1;
-    if (match) {
-      for (let i = 0; i < Number(match[1]); i++) {
-        // When text is repeated, the position needs to be determined based on -number
-        position = processedContent.indexOf(
-          `${headingPrefix} ${item.text}`,
-          position + 1,
-        );
-
-        // If the positions don't match, it means the text itself may exist -number
-        if (position === -1) {
-          break;
-        }
-      }
-    }
-    return {
-      ...item,
-      charIndex: processedContent.indexOf(
-        `${headingPrefix} ${item.text}`,
-        position + 1,
-      ),
-    };
-  });
+  // Walk the AST to extract plain text content and compute heading positions
+  const { content: processedContent, toc } = buildSearchContent(
+    processedTree as Root,
+    rawToc,
+    searchCodeBlocks,
+  );
 
   return {
     ...defaultIndexInfo,
