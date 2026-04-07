@@ -51,7 +51,7 @@
     "husky": "^9.1.7",
     "lint-staged": "~16.2.7",
     "nx": "21.6.10",
-    "path-serializer": "0.5.1",
+    "path-serializer": "0.6.0",
     "playwright": "1.58.2",
     "prettier": "3.7.4",
     "prettier-plugin-packagejson": "^3.0.2",
