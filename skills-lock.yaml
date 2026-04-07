@@ -3,6 +3,14 @@ installDir: .agents/skills
 linkTargets:
   - .cursor/skills
 skills:
+  pr-creator:
+    specifier: https://github.com/rstackjs/agent-skills.git#89bd10a842356073382b281509b4c8af7f9eb5a8&path:/skills/pr-creator
+    resolution:
+      type: git
+      url: https://github.com/rstackjs/agent-skills.git
+      commit: 89bd10a842356073382b281509b4c8af7f9eb5a8
+      path: /skills/pr-creator
+    digest: sha256-afab2f00a2b7cc393c7a0e924441aa374e4a6198228acc88ea683900dbf0b23a
   rspress-custom-theme:
     specifier: https://github.com/rstackjs/agent-skills.git#89bd10a842356073382b281509b4c8af7f9eb5a8&path:/skills/rspress-custom-theme
     resolution:
