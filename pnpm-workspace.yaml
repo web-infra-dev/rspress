@@ -1,3 +1,6 @@
+configDependencies:
+  pnpm-plugin-skills: 0.3.0+sha512-grriFBSg98JI0lmNkuDg1a72JK+HVFlA5QRPjwN8dqH2me1Y+uapYq+uIJ3g8I3BlkdZ+SVJHyt4uknoKrUKwQ==
+
 packages:
   - scripts/config
   - packages/**
@@ -10,9 +13,6 @@ packages:
 hoistPattern: []
 
 linkWorkspacePackages: true
-
-configDependencies:
-  pnpm-plugin-skills: 0.1.0+sha512-2SVyrp5xhiejj02/5yjnxC3eSlDQOEzDT1g1EhPTJlgU+wc9Rk+uei8qrXlWwGaQ6vwscdo7plZt5g7ql8Kafw==
 
 onlyBuiltDependencies:
   - '@biomejs/biome'
