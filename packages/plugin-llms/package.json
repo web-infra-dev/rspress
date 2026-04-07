@@ -43,7 +43,7 @@
     "@microsoft/api-extractor": "^7.57.7",
     "@rsbuild/core": "2.0.0-beta.11",
     "@rsbuild/plugin-react": "~1.4.6",
-    "@rslib/core": "0.20.2",
+    "@rslib/core": "0.20.3",
     "@rspress/config": "workspace:*",
     "@types/hast": "^3.0.4",
     "@types/node": "^22.8.1",
