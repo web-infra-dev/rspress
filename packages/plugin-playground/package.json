@@ -37,7 +37,7 @@
     "@oxidation-compiler/napi": "^0.2.0",
     "remark-gfm": "^4.0.1",
     "rspack-plugin-virtual-module": "1.0.1",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
     "@babel/types": "^7.29.0",

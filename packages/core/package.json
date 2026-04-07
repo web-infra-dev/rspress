@@ -70,7 +70,7 @@
     "@rspress/shared": "workspace:*",
     "@shikijs/rehype": "^4.0.2",
     "@types/unist": "^3.0.3",
-    "@unhead/react": "^2.1.12",
+    "@unhead/react": "^2.1.13",
     "body-scroll-lock": "4.0.0-beta.0",
     "cac": "^7.0.0",
     "chokidar": "^3.6.0",
@@ -80,7 +80,7 @@
     "github-slugger": "^2.0.0",
     "hast-util-heading-rank": "^3.0.0",
     "hast-util-to-jsx-runtime": "^2.3.6",
-    "lodash-es": "^4.17.23",
+    "lodash-es": "^4.18.1",
     "mdast-util-mdx": "^3.0.0",
     "mdast-util-mdxjs-esm": "^2.0.1",
     "medium-zoom": "1.1.0",
@@ -106,7 +106,7 @@
     "tinypool": "^1.1.1",
     "unified": "^11.0.5",
     "unist-util-remove": "^4.0.0",
-    "unist-util-visit": "^5.0.0",
+    "unist-util-visit": "^5.1.0",
     "unist-util-visit-children": "^3.0.0"
   },
   "devDependencies": {
@@ -135,7 +135,7 @@
     "rsbuild-plugin-publint": "^0.3.4",
     "rsbuild-plugin-virtual-module": "0.4.1",
     "tailwindcss": "^3.4.19",
-    "ts-json-schema-generator": "^2.4.0",
+    "ts-json-schema-generator": "^2.9.0",
     "typescript": "^5.8.2",
     "vfile": "^6.0.3"
   },

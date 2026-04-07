@@ -33,7 +33,7 @@
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "unified": "^11.0.5",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.57.7",
