@@ -257,6 +257,47 @@ export default defineConfig({
 
 比如，用户在 `docs/zh/guide/index.md` 中写了一个链接 `[](/guide/getting-started)`，Rspress 会自动将其转换为 `[](/zh/guide/getting-started)`。
 
+### markdown.image
+
+- **类型**:
+
+```ts
+export type RemarkImageOptions = {
+  checkDeadImages?:
+    | boolean
+    | { excludes: string[] | ((url: string) => boolean) };
+};
+```
+
+- **默认值**: `{ checkDeadImages: true }`
+
+配置图片相关选项。
+
+#### markdown.image.checkDeadImages
+
+- **类型**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
+- **默认值**: `true`
+
+开启该配置后，Rspress 会检查文档中的本地图片。如果图片引用了不存在的文件，构建会抛出错误并退出。
+
+对于相对图片路径（例如 `./image.png`），Rspress 会相对于当前文档解析文件；对于绝对图片路径（例如 `/image.png`），Rspress 会从 `public` 目录下解析文件。
+
+如果某些图片被误判，可以通过 `excludes` 配置忽略这些错误：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    image: {
+      checkDeadImages: {
+        excludes: ['/generated-diagram.png'],
+      },
+    },
+  },
+});
+```
+
 ### markdown.showLineNumbers
 
 - **类型**: `boolean`
