@@ -4,8 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-pnpmfileChecksum: sha256-f+K/a3jVaA+xjqgal1g79mgPckOPtgDVpJhYb422HUE=
-
 importers:
 
   .:
@@ -50,8 +48,8 @@ importers:
         specifier: 5.1.1
         version: 5.1.1
       heading-case:
-        specifier: ^1.0.7
-        version: 1.0.7
+        specifier: ^1.1.0
+        version: 1.1.0
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -4976,8 +4974,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  heading-case@1.0.7:
-    resolution: {integrity: sha512-iwQFmbRpvSm57XVI1LiWyXqKd6KyW3jGDIskxPO+8zCZ/JblxU5rdCNmqVWuc3NNHFr32cOmxSTC38GsR7U8GA==}
+  heading-case@1.1.0:
+    resolution: {integrity: sha512-VNNu8W4V3Sc64VyLgeQU3uB5PIq0CM4yyD+OKq0zKgMMOOQGftNfCiwDahpFasKYN+RNY9+29jBZUBW8x9O/8A==}
     hasBin: true
 
   highlight.js@11.11.1:
@@ -10905,7 +10903,7 @@ snapshots:
   he@1.2.0:
     optional: true
 
-  heading-case@1.0.7: {}
+  heading-case@1.1.0: {}
 
   highlight.js@11.11.1: {}
 
