@@ -2,6 +2,7 @@
   "installDir": ".agents/skills",
   "linkTargets": [".cursor/skills"],
   "skills": {
+    "pr-creator": "https://github.com/rstackjs/agent-skills.git#89bd10a842356073382b281509b4c8af7f9eb5a8&path:/skills/pr-creator",
     "rspress-custom-theme": "https://github.com/rstackjs/agent-skills.git#89bd10a842356073382b281509b4c8af7f9eb5a8&path:/skills/rspress-custom-theme"
   }
 }
