@@ -257,3 +257,21 @@ export default defineConfig({
   },
 });
 ```
+
+## 失效图片检查
+
+类似于死链检查，Rspress 也可以检查文档中的失效图片引用。这能够发现指向不存在本地文件的图片，包括相对路径图片和引用 `public` 目录的绝对路径图片。
+
+通过 [markdown.image.checkDeadImages](/api/config/config-build#markdownimagecheckdeadimages) 配置即可自动检查无效图片。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    image: {
+      checkDeadImages: true,
+    },
+  },
+});
+```
