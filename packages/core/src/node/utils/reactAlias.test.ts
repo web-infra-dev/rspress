@@ -24,14 +24,14 @@ describe('resolveReactAlias', () => {
 
     expect(alias).toMatchInlineSnapshot(`
       {
-        "react": "<ROOT>/node_modules/<PNPM_INNER>/react/index.js",
-        "react-dom": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/index.js",
-        "react-dom/client": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/client.js",
-        "react-dom/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/package.json",
-        "react-dom/server": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/server.browser.js",
-        "react/jsx-dev-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-dev-runtime.js",
-        "react/jsx-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-runtime.js",
-        "react/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react/package.json",
+        "react": "<PNPM_INNER>/react/index.js",
+        "react-dom": "<PNPM_INNER>/react-dom/index.js",
+        "react-dom/client": "<PNPM_INNER>/react-dom/client.js",
+        "react-dom/package.json": "<PNPM_INNER>/react-dom/package.json",
+        "react-dom/server": "<PNPM_INNER>/react-dom/server.browser.js",
+        "react/jsx-dev-runtime": "<PNPM_INNER>/react/jsx-dev-runtime.js",
+        "react/jsx-runtime": "<PNPM_INNER>/react/jsx-runtime.js",
+        "react/package.json": "<PNPM_INNER>/react/package.json",
       }
     `);
   });
@@ -41,14 +41,14 @@ describe('resolveReactAlias', () => {
 
     expect(alias).toMatchInlineSnapshot(`
       {
-        "react": "<ROOT>/node_modules/<PNPM_INNER>/react/index.js",
-        "react-dom": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/index.js",
-        "react-dom/client": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/client.js",
-        "react-dom/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/package.json",
-        "react-dom/server": "<ROOT>/node_modules/<PNPM_INNER>/react-dom/server.node.js",
-        "react/jsx-dev-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-dev-runtime.js",
-        "react/jsx-runtime": "<ROOT>/node_modules/<PNPM_INNER>/react/jsx-runtime.js",
-        "react/package.json": "<ROOT>/node_modules/<PNPM_INNER>/react/package.json",
+        "react": "<PNPM_INNER>/react/index.js",
+        "react-dom": "<PNPM_INNER>/react-dom/index.js",
+        "react-dom/client": "<PNPM_INNER>/react-dom/client.js",
+        "react-dom/package.json": "<PNPM_INNER>/react-dom/package.json",
+        "react-dom/server": "<PNPM_INNER>/react-dom/server.node.js",
+        "react/jsx-dev-runtime": "<PNPM_INNER>/react/jsx-dev-runtime.js",
+        "react/jsx-runtime": "<PNPM_INNER>/react/jsx-runtime.js",
+        "react/package.json": "<PNPM_INNER>/react/package.json",
       }
     `);
   });
@@ -60,7 +60,7 @@ describe('resolveReactRouterDomAlias', () => {
 
     expect(alias).toMatchInlineSnapshot(`
       {
-        "react-router-dom": "<ROOT>/node_modules/<PNPM_INNER>/react-router-dom",
+        "react-router-dom": "<PNPM_INNER>/react-router-dom",
       }
     `);
   });
