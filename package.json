@@ -58,10 +58,10 @@
     "tree-kill": "^1.2.2",
     "zx": "^8.8.5"
   },
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "pnpm@10.33.0",
   "engines": {
     "node": "^20.19.0 || >=22.12.0",
-    "pnpm": ">=10.28.2"
+    "pnpm": ">=10.33.0"
   },
   "publishConfig": {
     "access": "public",
