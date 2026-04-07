@@ -97,7 +97,20 @@ export async function createMDXOptions(options: {
               remarkLinkOptions,
             },
       ],
-      remarkImage,
+      [
+        remarkImage,
+        isSsgMd
+          ? {
+              docDirectory,
+              remarkImageOptions: {
+                checkDeadImages: false,
+              },
+            }
+          : {
+              docDirectory,
+              remarkImageOptions: config?.markdown?.image,
+            },
+      ],
       isSsgMd && [
         remarkSplitMdx,
         typeof config?.llms === 'object'
