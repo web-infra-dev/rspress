@@ -129,6 +129,7 @@
     "mdast-util-mdx-expression": "^2.0.1",
     "memfs": "^4.57.1",
     "p-map": "^7.0.4",
+    "picocolors": "^1.1.1",
     "postcss": "8.5.8",
     "remark-directive": "^4.0.0",
     "rsbuild-plugin-publint": "^0.3.4",
