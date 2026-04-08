@@ -19,6 +19,7 @@ export default defineConfig({
       index: 'src/index.ts',
       logger: 'src/logger.ts',
       'node-utils': 'src/node-utils.ts',
+      'gray-matter': 'src/grayMatter.ts',
       constants: 'src/constants.ts',
       'lodash-es': 'src/lodash-es.ts',
     },

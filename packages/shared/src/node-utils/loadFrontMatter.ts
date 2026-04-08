@@ -1,5 +1,5 @@
 import path from 'node:path';
-import grayMatter from 'gray-matter';
+import grayMatter from '../grayMatter';
 import { logger } from '../logger';
 import type { FrontMatterMeta } from '../types';
 

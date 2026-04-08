@@ -28,6 +28,10 @@
     "./lodash-es": {
       "types": "./dist/lodash-es.d.ts",
       "default": "./dist/lodash-es.js"
+    },
+    "./gray-matter": {
+      "types": "./dist/gray-matter.d.ts",
+      "default": "./dist/gray-matter.js"
     }
   },
   "module": "./dist/index.js",
@@ -44,7 +48,6 @@
   "dependencies": {
     "@rsbuild/core": "2.0.0-rc.1",
     "@shikijs/rehype": "^4.0.2",
-    "gray-matter": "4.0.3",
     "unified": "^11.0.5"
   },
   "devDependencies": {
@@ -52,6 +55,7 @@
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.14",
+    "gray-matter": "4.0.3",
     "lodash-es": "^4.18.1",
     "mdast-util-mdx-jsx": "^3.2.0",
     "medium-zoom": "1.1.0",
