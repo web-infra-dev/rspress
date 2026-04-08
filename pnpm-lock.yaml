@@ -978,12 +978,6 @@ importers:
       body-scroll-lock:
         specifier: 4.0.0-beta.0
         version: 4.0.0-beta.0
-      cac:
-        specifier: ^7.0.0
-        version: 7.0.0
-      chokidar:
-        specifier: ^3.6.0
-        version: 3.6.0
       clsx:
         specifier: 2.1.1
         version: 2.1.1
@@ -1017,9 +1011,6 @@ importers:
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
-      picocolors:
-        specifier: ^1.1.1
-        version: 1.1.1
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -1132,6 +1123,12 @@ importers:
       '@types/web':
         specifier: ^0.0.345
         version: 0.0.345
+      cac:
+        specifier: ^7.0.0
+        version: 7.0.0
+      chokidar:
+        specifier: ^3.6.0
+        version: 3.6.0
       execa:
         specifier: 8.0.1
         version: 8.0.1

@@ -44,6 +44,12 @@ export default defineConfig({
         },
       },
       dts: false,
+      autoExternal: {
+        dependencies: true,
+        optionalDependencies: true,
+        peerDependencies: true,
+        devDependencies: false,
+      },
       experiments: {
         advancedEsm: true,
       },
