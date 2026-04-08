@@ -20,6 +20,7 @@ export default defineConfig({
       logger: 'src/logger.ts',
       'node-utils': 'src/node-utils.ts',
       constants: 'src/constants.ts',
+      'lodash-es': 'src/lodash-es.ts',
     },
   },
   plugins: [pluginPublint()],
