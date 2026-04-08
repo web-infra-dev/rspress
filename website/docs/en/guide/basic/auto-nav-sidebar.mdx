@@ -65,7 +65,9 @@ docs
     └── ...
 ```
 
-If you want all pages to **share a single global sidebar** instead of switching by nav, you can add a `_meta.json` at the root level of the docs directory (alongside `_nav.json`):
+If you want all pages to **share a single global sidebar** instead of switching by nav, you can add a `_meta.json` at the root level of the docs directory (alongside `_nav.json`).
+
+This approach works better for documentation sites with **fewer nav items and a simpler structure**. Since the sidebar stays the same regardless of which nav item is active, it is a good fit when you want to organize the whole site under one unified sidebar:
 
 ```tree
 docs
@@ -79,17 +81,17 @@ docs
     └── ...
 ```
 
-When a root-level `_meta.json` exists, Rspress will generate a single sidebar (keyed by `'/'`) for all pages, regardless of which nav item is active. The root `_meta.json` serves as the entry point for the entire sidebar tree, typically referencing subdirectories:
+When a root-level `_meta.json` exists, Rspress will generate a single sidebar (keyed by `'/'`) for all pages, regardless of which nav item is active. The root `_meta.json` serves as the entry point for the entire sidebar tree, and you can typically organize subdirectories with section headers:
 
 ```json title="docs/_meta.json"
 [
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "guide",
     "label": "Guide"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "api",
     "label": "API"
   }
