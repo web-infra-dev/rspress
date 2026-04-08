@@ -73,6 +73,8 @@
         transition:
           color 0.25s,
           opacity 0.25s;
+        border-bottom: 1px solid transparent;
+
         &:hover {
           border-bottom: 1px solid var(--rp-c-brand);
           opacity: 0.85;
