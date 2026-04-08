@@ -237,35 +237,9 @@ export * from '@rspress/core/theme-original';
 
 Rspress 通过 [@rspress/plugin-preview](/plugin/official-plugins/preview) 和 [@rspress/plugin-playground](/plugin/official-plugins/playground) 提供组件预览与实时编辑能力，适合组件库文档和交互式示例。
 
-#### Demo 预览
+#### 组件库 Demo 预览
 
-在 `.mdx` 文件中声明 `preview` meta 后，Rspress 会自动渲染代码块默认导出的组件：
-
-````mdx
-```tsx preview
-import { useState } from 'react';
-
-function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div style={{ textAlign: 'center' }}>
-      <p>当前计数: {count}</p>
-      <button onClick={() => setCount(count + 1)}>+</button>
-      <button onClick={() => setCount(count - 1)}>-</button>
-    </div>
-  );
-}
-
-export default App;
-```
-````
-
-如果你希望把示例代码拆分到外部文件，也可以配合文件代码块一起使用，详见 [@rspress/plugin-preview](/plugin/official-plugins/preview)。
-
-#### Demo 实时 playground
-
-当你希望读者直接在文档里修改和运行示例代码时，可以使用 `playground` meta：
+在 mdx 文件中使用 ` ```tsx preview ` 的语法：
 
 ````mdx
 ```tsx playground
@@ -286,6 +260,72 @@ function App() {
 export default App;
 ```
 ````
+
+它的渲染结果如下：
+
+```tsx preview
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>当前计数: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+如果你希望把示例代码拆分到外部文件，也可以配合文件代码块一起使用，详见 [@rspress/plugin-preview](/plugin/official-plugins/preview)。
+
+#### 组件库 Demo 实时 playground
+
+在 mdx 文件中使用 ` ```tsx playground ` 的语法：
+
+````mdx
+```tsx playground
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>当前计数: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
+
+export default App;
+```
+````
+
+它的渲染结果如下：
+
+```tsx preview
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>当前计数: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
+
+export default App;
+```
 
 关于 iframe 预览模式、布局方向以及与 `preview` 联用的方式，请参考 [@rspress/plugin-playground](/plugin/official-plugins/playground)。
 

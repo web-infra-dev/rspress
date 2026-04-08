@@ -30,8 +30,8 @@ Then, we continued to explore in this direction and finally achieved this effect
 
 Rspress achieves strong performance through multiple optimization strategies:
 
-- **LazyCompilation**. LazyCompilation compiles on-demand in dev mode. Pages are only compiled when you visit them, significantly improving development startup speed and even achieving millisecond-level cold starts.
-- **Route Preload**. When hovering over links, Rspress preloads target route resources ahead of time, pairing with lazyCompilation for a near-lossless dev experience.
+- **`lazyCompilation`**. `lazyCompilation` compiles on-demand in dev mode. Pages are only compiled when you visit them, significantly improving development startup speed and even achieving millisecond-level cold starts.
+- **Route Preload**. When hovering over links, Rspress preloads target route resources ahead of time, pairing with `lazyCompilation` for a near-lossless dev experience.
 - **Persistent Cache**. For production builds, persistent cache is enabled by default, reusing previous compilation results during warm starts to improve build speed by 30%-60%.
 - **Rspack Bundler**. Rspress uses Rspack developed by the team. Rspack is a Bundler based on Rust, with built-in multiple performance optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc., which are 5 to 10 times more efficient than traditional packaging tools in the community.
 
@@ -147,7 +147,7 @@ You can customize code block color schemes through CSS variables, and interactiv
 Rspress also brings a more complete authoring experience:
 
 - Dead link checking is enabled by default and catches invalid links during builds.
-- File code blocks support `file=\"./path/to/file\"` so examples can live in standalone source files.
+- File code blocks support `file="./path/to/file"` so examples can live in standalone source files.
 - The `preview` plugin now uses meta-based configuration and works better with file code blocks.
 - `preview` and `playground` can now be enabled together for component docs and interactive examples.
 
@@ -236,9 +236,9 @@ The plugin system is a crucial part of Rspress, which can help you conveniently 
 
 Rspress provides component preview and live editing through [@rspress/plugin-preview](/plugin/official-plugins/preview) and [@rspress/plugin-playground](/plugin/official-plugins/playground), which works well for component library docs and interactive examples.
 
-#### Demo preview
+#### Component library demo preview
 
-After enabling `@rspress/plugin-preview`, you can declare a `preview` code block directly in `.mdx`:
+Use the ` ```tsx preview ` syntax in mdx files:
 
 ````mdx
 ```tsx preview
@@ -260,11 +260,31 @@ export default App;
 ```
 ````
 
+The rendering result is as follows:
+
+```tsx preview
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>Current count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
 If you prefer to keep demo code in external files, you can combine it with file code blocks. See [@rspress/plugin-preview](/plugin/official-plugins/preview) for details.
 
-#### Demo real-time playground
+#### Component library real-time playground
 
-When readers need to edit and run the example directly in the document, you can use `playground`:
+Use the ` ```tsx playground ` syntax in mdx files:
 
 ````mdx
 ```tsx playground
@@ -285,6 +305,26 @@ function App() {
 export default App;
 ```
 ````
+
+The rendering result is as follows:
+
+```tsx playground
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>Current count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
+
+export default App;
+```
 
 For iframe preview mode, layout direction, and combining it with `preview`, see [@rspress/plugin-playground](/plugin/official-plugins/playground).
 
