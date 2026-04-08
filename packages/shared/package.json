@@ -41,7 +41,7 @@
     "@rsbuild/core": "2.0.0-beta.11",
     "@shikijs/rehype": "^4.0.2",
     "gray-matter": "4.0.3",
-    "lodash-es": "^4.17.23",
+    "lodash-es": "^4.18.1",
     "unified": "^11.0.5"
   },
   "devDependencies": {
