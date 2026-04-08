@@ -20,6 +20,9 @@
     "test:unit": "rstest run",
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec nano-staged"
+  },
   "nano-staged": {
     "*.{md,mdx,css,less,scss,json,jsonc,json5}": [
       "prettier --write",
@@ -32,9 +35,6 @@
       "pnpm run check-dependency-version",
       "prettier --write"
     ]
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm exec nano-staged"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.10",
