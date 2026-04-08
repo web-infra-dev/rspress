@@ -9,8 +9,8 @@
   }
 
   &--success.rp-llms-copy-button {
-    color: var(--rp-c-green-1, #10b981);
-    border-color: var(--rp-c-green-1, #10b981);
+    color: #10b981;
+    border-color: #10b981;
     background: var(--rp-c-bg-soft);
   }
 }
@@ -48,7 +48,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  color: var(--rp-c-green-1, #10b981);
+  color: #10b981;
 
   visibility: hidden;
   opacity: 0;
