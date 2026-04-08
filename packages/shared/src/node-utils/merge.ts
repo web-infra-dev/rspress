@@ -1,3 +1,4 @@
+import { mergeWith } from '../lodash-es';
 import type { UserConfig } from '../types/index';
 
 const castArray = <T>(value: T | T[]): T[] =>
@@ -6,7 +7,6 @@ const castArray = <T>(value: T | T[]): T[] =>
 export const mergeDocConfig = async (
   ...configs: UserConfig[]
 ): Promise<UserConfig> => {
-  const { mergeWith } = await import('lodash-es');
   return mergeWith({}, ...configs, (target: UserConfig, source: UserConfig) => {
     const pair = [target, source];
     if (pair.some(item => item === undefined)) {

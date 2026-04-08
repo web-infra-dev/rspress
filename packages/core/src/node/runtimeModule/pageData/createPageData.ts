@@ -1,5 +1,5 @@
 import { type PageData, SEARCH_INDEX_NAME } from '@rspress/shared';
-import { groupBy } from 'lodash-es';
+import { groupBy } from '@rspress/shared/lodash-es';
 import { extractPageData } from '../../route/extractPageData';
 import { createHash } from '../../utils';
 import type { FactoryContext } from '../types';
@@ -61,7 +61,7 @@ export async function createPageData(context: FactoryContext): Promise<{
     typeof userConfig.search !== 'boolean' &&
     (userConfig.search?.versioned ?? true);
 
-  const groupedPages = groupBy(pages, page => {
+  const groupedPages = groupBy(pages, (page: (typeof pages)[number]) => {
     if (page.frontmatter?.pageType === 'home') {
       return 'noindex';
     }

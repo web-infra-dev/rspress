@@ -8,7 +8,7 @@ import {
   Tabs,
   useLinkNavigate,
 } from '@rspress/core/theme';
-import { debounce } from 'lodash-es';
+import { debounce } from '@rspress/shared/lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';

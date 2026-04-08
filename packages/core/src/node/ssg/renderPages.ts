@@ -1,6 +1,6 @@
 import type { RouteMeta, UserConfig } from '@rspress/shared';
+import { chunk } from '@rspress/shared/lodash-es';
 import { logger } from '@rspress/shared/logger';
-import { chunk } from 'lodash-es';
 import pMap from 'p-map';
 import picocolors from 'picocolors';
 
@@ -120,15 +120,17 @@ export async function renderPages(
       });
 
       await Promise.all(
-        chunk(routes, SSGWorkerThreadTaskSize()).map(async routes => {
-          const htmlList = await pool.run({ routes });
-          for (let i = 0; i < routes.length; i++) {
-            const route = routes[i];
-            const html = htmlList[i];
-            const fileName = routePath2HtmlFileName(route.routePath);
-            emitAsset(fileName, html);
-          }
-        }),
+        chunk(routes, SSGWorkerThreadTaskSize()).map(
+          async (routes: RouteMeta[]) => {
+            const htmlList = await pool.run({ routes });
+            for (let i = 0; i < routes.length; i++) {
+              const route = routes[i];
+              const html = htmlList[i];
+              const fileName = routePath2HtmlFileName(route.routePath);
+              emitAsset(fileName, html);
+            }
+          },
+        ),
       );
 
       await pool.destroy();
