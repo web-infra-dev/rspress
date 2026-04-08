@@ -31,7 +31,7 @@ type ThemeConfigValue = ThemeValue | 'auto';
 // ============================================================================
 
 const applyThemeToDOM = (theme: ThemeValue) => {
-  if (!document || !document.documentElement) return;
+  if (!document?.documentElement) return;
   const root = document.documentElement;
   root.classList.toggle('dark', theme === 'dark');
   root.classList.toggle('rp-dark', theme === 'dark');

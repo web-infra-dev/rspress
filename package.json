@@ -13,14 +13,17 @@
     "format": "prettier . --write && biome check --write && heading-case --write",
     "generate-release-pr": "zx scripts/generateReleasePr.mjs",
     "lint": "biome check . --diagnostic-level=warn && prettier . --check && pnpm run check-spell",
-    "prepare": "pnpm run build && husky",
+    "prepare": "pnpm run build && simple-git-hooks",
     "preview:website": "cd website && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:e2e": "playwright test",
     "test:unit": "rstest run",
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },
-  "lint-staged": {
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec nano-staged"
+  },
+  "nano-staged": {
     "*.{md,mdx,css,less,scss,json,jsonc,json5}": [
       "prettier --write",
       "heading-case --write"
@@ -48,13 +51,13 @@
     "cspell-ban-words": "^0.0.4",
     "get-port": "5.1.1",
     "heading-case": "^1.1.0",
-    "husky": "^9.1.7",
-    "lint-staged": "~16.2.7",
+    "nano-staged": "^0.9.0",
     "nx": "21.6.10",
     "path-serializer": "0.6.0",
     "playwright": "1.58.2",
     "prettier": "3.7.4",
     "prettier-plugin-packagejson": "^3.0.2",
+    "simple-git-hooks": "^2.13.1",
     "tree-kill": "^1.2.2",
     "zx": "^8.8.5"
   },
