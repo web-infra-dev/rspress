@@ -12,7 +12,9 @@ Rspress is designed around the following core features:
 
 - **Build Performance**. Ensuring a fast enough startup speed brings a good development experience.
 - **AI-native**. Technical documentation not only serves human readers but can also be better understood and utilized by AI through SSG-MD.
+- **Theme and Customization**. A brand new default theme with multiple customization layers, including CSS variables, BEM class names, re-export overrides, and eject.
 - **MDX Support**. Through MDX, we can conveniently reuse document fragments and render custom React components in documents.
+- **Documentation DX**. Continuous improvements for authoring with navigation metadata, code blocks, and dead link checks.
 - **Basic Capabilities of Documentation Site**. Including internationalization, multi-version support, full-text search, component library documentation, etc.
 - **Extensibility**. Provides a built-in plugin system, supports extending Rspress through plugin API.
 
@@ -26,9 +28,10 @@ We couldn't help but start thinking, can we break the limitations of the current
 
 Then, we continued to explore in this direction and finally achieved this effect on Rspress.
 
-In Rspress V2, we have made significant performance improvements through multiple optimization methods:
+Rspress achieves strong performance through multiple optimization strategies:
 
-- **LazyCompilation**. LazyCompilation compiles on-demand in dev mode. Pages are only compiled when you visit them, significantly improving development startup speed and even achieving millisecond-level cold starts.
+- **`lazyCompilation`**. `lazyCompilation` compiles on-demand in dev mode. Pages are only compiled when you visit them, significantly improving development startup speed and even achieving millisecond-level cold starts.
+- **Route Preload**. When hovering over links, Rspress preloads target route resources ahead of time, pairing with `lazyCompilation` for a near-lossless dev experience.
 - **Persistent Cache**. For production builds, persistent cache is enabled by default, reusing previous compilation results during warm starts to improve build speed by 30%-60%.
 - **Rspack Bundler**. Rspress uses Rspack developed by the team. Rspack is a Bundler based on Rust, with built-in multiple performance optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc., which are 5 to 10 times more efficient than traditional packaging tools in the community.
 
@@ -38,7 +41,7 @@ At the same time, Rspress internally also applies many other build optimization 
 
 With the rise of large language models, technical documentation needs to serve not only human readers but also be better understood and utilized by AI.
 
-Rspress V2 introduces **SSG-MD** capability, which renders pages as Markdown files instead of HTML files and generates index files compliant with the [llms.txt](https://llmstxt.org/) specification.
+Rspress provides **SSG-MD** capability, which renders pages as Markdown files instead of HTML files and generates index files compliant with the [llms.txt](https://llmstxt.org/) specification.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -50,50 +53,19 @@ export default defineConfig({
 
 Once enabled, the build output will include `llms.txt` (an index file showing page titles and descriptions in navigation and sidebar order), `llms-full.txt` (a complete file containing Markdown content from all pages), and `.md` files corresponding to each route.
 
+For custom components, you can also use `import.meta.env.SSG_MD` to output AI-friendly plain text in SSG-MD mode, balancing interactive UX with higher-quality static information.
+
 Just as SSG can generate static HTML files to improve SEO, SSG-MD can relatively improve GEO (Generative Engine Optimization) and the quality of static information for large models.
 
 For detailed usage, please refer to the [SSG-MD documentation](/guide/basic/ssg-md).
 
-### MDX support
+Beyond build performance and AI-native capabilities, Rspress also provides a default theme, automatic layout generation, MDX, Shiki code highlighting, internationalization, multi-version docs, full-text search, and a plugin system. The following sections cover these capabilities in more detail.
 
-In order to ensure the flexibility of content development, Rspress chooses to support the MDX content format.
+### Default theme and customization
 
-MDX represents a method of componentized content organization. In other words, documents serve as components, allowing for the reuse of document fragments across different documents. Additionally, custom React components can be incorporated into documents, significantly enhancing the flexibility of document development.
+Rspress provides a well-designed default theme with a strong reading experience and a high degree of customizability.
 
-### Basic capabilities of documentation site
-
-Of course, Rspress has also done a lot of work on the polishing of the basic capabilities of the documentation site, supporting the following functional features:
-
-- Automatically generate layouts, including navigation bars, left sidebars, etc.
-- Static site generation, HTML is directly output after production build.
-- Internationalization, support for multi-language documents.
-- Full-text search, provide out-of-the-box search function.
-- Multi-version document management.
-- Custom document theme.
-- Automatically generate component Demo preview and playground.
-
-In the following text, we will introduce these functional features in detail.
-
-### Extension mechanism
-
-Rspress internally designed various extension mechanisms to ensure sufficient customization capabilities, including:
-
-- Support for custom global components, global styles, page layout structure, please refer to [Custom Page](../../ui/custom-page.mdx).
-- Support **build extension**, including custom Rspack config, adding MDX compilation plugins, etc., please refer to [Build Extension](/guide/advanced/extend-build).
-- Support **custom theme**, please refer to [Custom Theme](/guide/basic/custom-theme).
-- Built-in **plugin system**, support for custom plugins, please refer to [Plugin System](/plugin/system/introduction).
-
-## Features
-
-Next, let's introduce the main functional features of Rspress.
-
-### Brand new theme
-
-Rspress V2 introduces a completely redesigned theme, featuring significant improvements in visual effects and reading experience while providing exceptional customizability.
-
-#### BEM naming convention
-
-All built-in components now adopt the [BEM naming convention](https://getbem.com/). This enables developers to flexibly adjust styles through standard CSS selectors, avoiding conflicts with tools like Tailwind CSS and significantly lowering the barrier for style customization.
+#### Theme customization
 
 ```css
 /* Easily override component styles */
@@ -105,18 +77,20 @@ All built-in components now adopt the [BEM naming convention](https://getbem.com
 }
 ```
 
-#### Rich CSS variables
-
-The new theme exposes more CSS variables, covering styles for theme colors, code blocks, homepage components, and more. You can interactively preview and adjust these variables on the [CSS Variables](/ui/vars) page.
+The default theme exposes more CSS variables for theme colors, code blocks, homepage components, and more. All built-in components also follow the [BEM naming convention](https://getbem.com/), making it easier to override styles with standard CSS selectors. If CSS is not enough, you can go deeper by overriding built-in components through ESM re-exports in `theme/index.tsx`.
 
 #### `rspress eject` Command
 
-When CSS variables cannot meet your customization needs, you can use the new `rspress eject` command to copy the source code of built-in components to your project's theme directory for complete customization.
+When CSS variables cannot meet your customization needs, you can use the `rspress eject` command to copy the source code of built-in components to your project's theme directory for complete customization.
 
 ```bash
 # Export nav component to theme directory
 npx rspress eject Nav
 ```
+
+#### Navbar and sidebar tags
+
+Rspress provides a [Tag component](/ui/layout-components/tag). You can define `tag` in frontmatter and display those annotations in headings, the navbar, the sidebar, and the outline.
 
 ### Automatic layout generation
 
@@ -138,7 +112,7 @@ For the navigation bar and sidebar, we provide two config methods, you can choos
 
 You can read the [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar) for config details.
 
-- **Programming config**. Implement it by specifying the [nav](/api/config/config-theme.html#nav) and [sidebar](/api/config/config-theme.html#sidebar) config items in the Rspress config.
+- **Programming config**. Implement it by specifying the [nav](/api/config/config-theme#nav) and [sidebar](/api/config/config-theme#sidebar) config items in the Rspress config.
 
 We recommend using `declarative config` under normal scenes, which has many benefits:
 
@@ -168,13 +142,24 @@ Rspress uses [Shiki](https://shiki.style/) by default for code highlighting. Com
 
 You can customize code block color schemes through CSS variables, and interactively switch and preview different Shiki themes on the [CSS Variables](/ui/vars) page. Shiki also allows extensions through custom [transformers](https://shiki.style/guide/transformers) to enrich writing, such as [twoslash](https://twoslash.netlify.app/).
 
+### Documentation DX
+
+Rspress also brings a more complete authoring experience:
+
+- Dead link checking is enabled by default and catches invalid links during builds.
+- File code blocks support `file="./path/to/file"` so examples can live in standalone source files.
+- The `preview` plugin now uses meta-based configuration and works better with file code blocks.
+- `preview` and `playground` can now be enabled together for component docs and interactive examples.
+
+For concrete `preview` and `playground` examples, see the [Component documentation](#component-documentation) section below.
+
 ### SSG
 
 Rspress is a SSG framework. In the build process in the production environment, it will automatically help you generate static sites, that is, generate HTML content for each page. After the build process is completed, HTML will appear in the default output directory.
 
 Then, you can deploy the contents of this product directory to any static site hosting service, such as GitHub Pages, Netlify, Vercel, etc.
 
-At the same time, we also provide config to easily customize the HTML content generated by SSG. For details, please refer to the [Static Site Generation Document](/guide/basic/ssg.html 'Static Site Generation Document').
+At the same time, we also provide config to easily customize the HTML content generated by SSG. For details, please refer to the [Static Site Generation Document](/guide/basic/ssg).
 
 ### Internationalization (I18n)
 
@@ -185,9 +170,9 @@ Internationalization is a common requirement in a document-type site, and Rspres
 - How to organize the document directory of different language versions?
 - How to use I18n data source in custom components?
 
-Rspress V2 includes translations for Chinese, English, Japanese, Korean, and more languages built-in, with more to come. The system automatically performs "Tree Shaking" based on language configuration and usage, bundling only the text you need. You can also easily extend or override translations through the [`i18nSource`](/api/config/config-basic.html#i18nsource) configuration option.
+Rspress includes translations for Chinese, English, Japanese, Korean, and more languages built-in, with more to come. The system automatically performs "Tree Shaking" based on language configuration and usage, bundling only the text you need. You can also easily extend or override translations through the [`i18nSource`](/api/config/config-basic#i18nsource) configuration option.
 
-You can follow the [I18n Tutorial](../basic/i18n.mdx 'I18n Tutorial') to step by step to implement internationalization for your site.
+You can follow the [I18n Tutorial](/guide/basic/i18n) to implement internationalization for your site step by step.
 
 ### Multi-version Documents
 
@@ -241,82 +226,107 @@ export * from '@rspress/core/theme-original';
 
 2.  Fully customized theme. If you want to develop a custom theme from scratch, you can customize the content of Layout and use various Runtime APIs provided by Rspress (such as `usePageData`) to obtain compile-time data, routing information, etc.
 
-For details about custom themes, you can refer to the [Custom Theme Documentation](/guide/basic/custom-theme.html 'Custom Theme Documentation').
+For details about custom themes, you can refer to the [Custom Theme Documentation](/guide/basic/custom-theme).
 
 ### Plugin system
 
-The plugin system is a crucial part of Rspress, which can help you conveniently extend Rspress's functionality during site construction. Details can be found in the [Plugin Introduction Documentation](/plugin/system/introduction.html 'Introduction Documentation').
+The plugin system is a crucial part of Rspress, which can help you conveniently extend Rspress's functionality during site construction. Details can be found in the [Plugin Introduction Documentation](/plugin/system/introduction).
 
 ### Component documentation
 
-#### Demo preview
+Rspress provides component preview and live editing through [@rspress/plugin-preview](/plugin/official-plugins/preview) and [@rspress/plugin-playground](/plugin/official-plugins/playground), which works well for component library docs and interactive examples.
 
-Rspress provides a [preview plugin](/plugin/official-plugins/preview 'preview plugin'), which can automatically generate component previews for you. After you register the preview plugin, declare the following code block in the mdx file:
+#### Component library demo preview
 
-```tsx
-import React from 'react';
-import { Tag, Space } from '@arco-design/web-react';
-import '@arco-design/web-react/dist/css/arco.css';
-const COLORS = [
-  'red',
-  'orangered',
-  'orange',
-  'gold',
-  'lime',
-  'green',
-  'cyan',
-  'blue',
-  'arcoblue',
-  'purple',
-  'pinkpurple',
-  'magenta',
-  'gray',
-];
+Use the ` ```tsx preview ` syntax in mdx files:
 
-export default () => {
+````mdx
+```tsx preview
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
   return (
-    <Space>
-      {COLORS.map((color, i) => (
-        <Tag key={i} color={color}>
-          {color}
-        </Tag>
-      ))}
-    </Space>
+    <div style={{ textAlign: 'center' }}>
+      <p>Current count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
   );
-};
+}
+
+export default App;
+```
+````
+
+The rendering result is as follows:
+
+```tsx preview
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>Current count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
+
+export default App;
 ```
 
-Then you can see the following preview effect:
+If you prefer to keep demo code in external files, you can combine it with file code blocks. See [@rspress/plugin-preview](/plugin/official-plugins/preview) for details.
 
-![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview.png)
+#### Component library real-time playground
 
-Of course, the plugin also supports mobile preview mode, which you can enable through plugin config:
+Use the ` ```tsx playground ` syntax in mdx files:
 
-![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile.png)
+````mdx
+```tsx playground
+import { useState } from 'react';
 
-#### Demo real-time playground
+function App() {
+  const [count, setCount] = useState(0);
 
-For component documentation, if real-time editing capabilities can be provided for components, it will greatly enhance the interactive experience of the documentation.
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>Current count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
 
-To achieve this feature, you only need to register the official [playground plugin](/plugin/official-plugins/playground.html 'playground plugin'), and then declare your code block in the .mdx file. (Take the above code block as an example)
-
-Next, you will see the following playground effect in the documentation:
-
-![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-playground.gif)
-
-### Built-in smooth transition animation
-
-[View Transition API](https://developer.mozilla.org/zh-CN/docs/Web/API/View_Transitions_API 'View Transition API') is a set of APIs natively provided by modern browsers for implementing transition effects during page jumps. In Rspress, we also followed up on this feature, implemented document transition animations based on View Transition, and did not use any third-party SPA animation schemes. In the future, we will explore more animation effects to further enhance the experience.
-
-```ts
-export default defineConfig({
-  themeConfig: {
-    // Enable View Transition transition
-    enableContentAnimation: true,
-    enableAppearanceAnimation: true,
-  },
-});
+export default App;
 ```
+````
+
+The rendering result is as follows:
+
+```tsx playground
+import { useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p>Current count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+For iframe preview mode, layout direction, and combining it with `preview`, see [@rspress/plugin-playground](/plugin/official-plugins/playground).
 
 ## Differences from other SSG frameworks
 
