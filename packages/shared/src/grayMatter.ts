@@ -14,10 +14,7 @@ export interface GrayMatterResult<
 
 export function grayMatter<
   TFrontmatter extends Record<string, unknown> = Record<string, unknown>,
->(
-  source: string | Buffer,
-  options?: any,
-): GrayMatterResult<TFrontmatter> {
+>(source: string | Buffer, options?: any): GrayMatterResult<TFrontmatter> {
   const result = matter(source, options);
   return result as unknown as GrayMatterResult<TFrontmatter>;
 }
