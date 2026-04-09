@@ -1,5 +1,5 @@
 import path from 'node:path';
-import grayMatter from '../grayMatter';
+import { grayMatter } from '../grayMatter';
 import { logger } from '../logger';
 import type { FrontMatterMeta } from '../types';
 
@@ -16,12 +16,12 @@ export function loadFrontMatter<
   emptyLinesSource: string; // replace frontmatter with empty lines
 } {
   try {
-    const { content, data } = grayMatter(source);
+    const { content, data } = grayMatter<TFrontmatter>(source);
     const rawFrontMatter = source.slice(0, source.length - content.length);
     const emptyLinesSource = rawFrontMatter.length
       ? `${rawFrontMatter.replace(/[^\n]/g, '')}${content}`
       : content;
-    return { content, frontmatter: data as TFrontmatter, emptyLinesSource };
+    return { content, frontmatter: data, emptyLinesSource };
   } catch (e) {
     if (outputWarning) {
       logger.warn(
