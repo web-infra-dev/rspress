@@ -1,5 +1,5 @@
+import Slugger from '@rspress/shared/github-slugger';
 import { extractTextAndId } from '@rspress/shared/node-utils';
-import Slugger from 'github-slugger';
 import type { Root as HastRoot } from 'hast';
 import type { Root as MdastRoot } from 'mdast';
 import type { Plugin } from 'unified';

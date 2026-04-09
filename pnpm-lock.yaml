@@ -987,9 +987,6 @@ importers:
       flexsearch:
         specifier: 0.8.212
         version: 0.8.212
-      github-slugger:
-        specifier: ^2.0.0
-        version: 2.0.0
       hast-util-heading-rank:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1705,6 +1702,9 @@ importers:
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.14
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
       lodash-es:
         specifier: ^4.18.1
         version: 4.18.1
