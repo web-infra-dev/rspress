@@ -176,8 +176,8 @@ function extractSearchText(node: Nodes, codeblocks: boolean): string {
 }
 
 /**
- * Walk the AST to build plain text search content. Tracks charIndex positions
- * for each TOC heading so the search UI can link results to the right section.
+ * Walk the AST to build plain text search content. Tracks charIndex positions for each TOC heading so the search UI can
+ * link results to the right section.
  */
 function buildSearchContent(
   tree: Root,
@@ -189,8 +189,13 @@ function buildSearchContent(
   let tocIndex = 0;
   let contentLength = 0;
 
+  // Keep track of whether we have seen the first heading, the first one does not get included in the table of contents.
+  let skippedFirstH1 = false;
+
   for (const node of tree.children) {
-    if (node.type === 'heading' && node.depth === 1) {
+    // Only skip the first one, subsequent H1 headings we can keep.
+    if (node.type === 'heading' && node.depth === 1 && !skippedFirstH1) {
+      skippedFirstH1 = true;
       continue;
     }
 
