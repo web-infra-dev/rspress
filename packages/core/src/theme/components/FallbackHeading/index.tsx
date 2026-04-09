@@ -2,7 +2,7 @@ import {
   getCustomMDXComponent,
   renderInlineMarkdown,
 } from '@rspress/core/theme';
-import { slug } from 'github-slugger';
+import { slug } from '@rspress/shared/github-slugger';
 import { useMemo } from 'react';
 
 const getHeadingMap = () => {
