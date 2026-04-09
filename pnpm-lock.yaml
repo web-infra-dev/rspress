@@ -987,9 +987,6 @@ importers:
       flexsearch:
         specifier: 0.8.212
         version: 0.8.212
-      github-slugger:
-        specifier: ^2.0.0
-        version: 2.0.0
       hast-util-heading-rank:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1056,12 +1053,6 @@ importers:
       shiki:
         specifier: ^4.0.2
         version: 4.0.2
-      tinyglobby:
-        specifier: ^0.2.15
-        version: 0.2.15
-      tinypool:
-        specifier: ^1.1.1
-        version: 1.1.1
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1156,6 +1147,12 @@ importers:
       tailwindcss:
         specifier: ^3.4.19
         version: 3.4.19(yaml@2.8.3)
+      tinyglobby:
+        specifier: ^0.2.15
+        version: 0.2.15
+      tinypool:
+        specifier: ^1.1.1
+        version: 1.1.1
       ts-json-schema-generator:
         specifier: ^2.9.0
         version: 2.9.0
@@ -1702,6 +1699,9 @@ importers:
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.14
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
       gray-matter:
         specifier: 4.0.3
         version: 4.0.3

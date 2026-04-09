@@ -22,6 +22,7 @@ export default defineConfig({
       'gray-matter': 'src/grayMatter.ts',
       constants: 'src/constants.ts',
       'lodash-es': 'src/lodash-es.ts',
+      'github-slugger': 'src/github-slugger.ts',
     },
   },
   plugins: [pluginPublint()],
