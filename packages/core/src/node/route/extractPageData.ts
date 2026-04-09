@@ -128,51 +128,50 @@ const SEARCH_BLOCK_TYPES = new Set([
 /**
  * Recursively extract raw text from the mdast
  */
-function extractSearchText(node: Nodes, codeblocks: boolean): string {
+function extractSearchText(node: Nodes, codeblocks: boolean): Array<string> {
   const { type } = node;
 
   // Return an empty string for any kind of "non-content" node
   if (SEARCH_SKIP_TYPES.has(type)) {
-    return '';
+    return [];
   }
 
   // If we are excluding code blocks then return an empty string for them
   if (type === 'code' && !codeblocks) {
-    return '';
+    return [];
   }
 
   if (type === 'break') {
-    return '\n';
+    return ['\n'];
   }
 
   // If we are text or inline code then just return that nodes value, for example `**test**` becomes `test`
   if (type === 'text' || type === 'inlineCode') {
-    return node.value;
+    return [node.value];
   }
   // multiline code blocks are prefixed and suffixed with newlines
   if (type === 'code') {
-    return `\n${node.value}\n`;
+    return [`\n${node.value}\n`];
   }
 
-  let result = '';
+  const result: Array<string> = [];
   if ('children' in node) {
     for (const child of node.children) {
-      result += extractSearchText(child as Nodes, codeblocks);
+      result.push(...extractSearchText(child as Nodes, codeblocks));
     }
   }
 
   // Add a new line for any element thats like a block of something, such as a heading or paragraph
   if (SEARCH_BLOCK_TYPES.has(type)) {
-    result += '\n';
+    result.push('\n');
   }
 
   // table cells are separated by tabs instead of `|`
   if (type === 'tableCell') {
-    result += '\t';
+    result.push('\t');
   }
 
-  // \t\n replace so we don't have trailing whitespace on table rows that aren't at the end of the text
-  return result.replaceAll('\t\n', '\n');
+  return result;
 }
 
 /**
@@ -199,7 +198,11 @@ function buildSearchContent(
       continue;
     }
 
-    const text = extractSearchText(node, codeblocks).trim();
+    const text = extractSearchText(node, codeblocks)
+      .join('')
+      // \t\n replace so we don't have trailing whitespace on table rows that aren't at the end of the text
+      .replaceAll('\t\n', '\n')
+      .trim();
     if (!text) {
       continue;
     }
