@@ -47,12 +47,6 @@ jobs:
           node-version: 22.x
           cache: 'pnpm'
 
-      # Update npm to the latest version to enable OIDC
-      - name: Update npm
-        run: |
-          npm install -g npm@latest
-          npm --version
-
       - name: Install Dependencies && Build
         run: pnpm install
 
