@@ -15,7 +15,6 @@ import {
 
 import { App } from './App';
 import { PageContext } from './hooks/usePage';
-import { initPageData } from './initPageData';
 import type { Page } from './initPageData';
 
 function AppShell() {
@@ -39,28 +38,13 @@ function toRouteObject(route: Route, index: number) {
   };
 }
 
-function getChildRoutes(routes: Route[]) {
-  const children = routes.map((route, index) => toRouteObject(route, index));
-
-  if (!routes.some(route => route.path === '/404')) {
-    children.push({
-      id: 'rspress-route-404',
-      path: '/404',
-      loader: () => initPageData('/404'),
-      element: <></>,
-    });
-  }
-
-  return children;
-}
-
 export function createRspressBrowserRouter(routes: Route[], basename: string) {
   return createBrowserRouter([
     {
       id: 'rspress-app-shell',
       path: '/',
       element: <AppShell />,
-      children: getChildRoutes(routes),
+      children: routes.map((route, index) => toRouteObject(route, index)),
     },
   ], { basename });
 }
@@ -75,7 +59,7 @@ export function createRspressStaticRouter(
         id: 'rspress-app-shell',
         path: '/',
         element: <AppShell />,
-        children: getChildRoutes(routes),
+        children: routes.map((route, index) => toRouteObject(route, index)),
       },
     ],
     context,

@@ -39,10 +39,6 @@ export async function renderPages(
 
   try {
     const routes = routeService.getRoutes();
-    if (!routeService.isExistRoute('/404')) {
-      // @ts-expect-error 404 page has no absolutePath attribute, so it is special
-      routes.push({ routePath: '/404' });
-    }
 
     if (
       typeof ssg === 'object' &&
@@ -184,10 +180,6 @@ export async function renderCSRPages(
   emitAsset: (assetName: string, content: string | Buffer) => void,
 ) {
   const routes = routeService.getRoutes();
-  if (!routeService.isExistRoute('/404')) {
-    // @ts-expect-error 404 page is special
-    routes.push({ routePath: '/404' });
-  }
 
   await Promise.all(
     routes.map(route => {
