@@ -2,7 +2,7 @@ import { removeBase } from '@rspress/core/runtime';
 import { startTransition } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { ClientApp } from './ClientApp';
-import { initPageData, setCurrentPageData } from './initPageData';
+import { initPageData } from './initPageData';
 
 // difference from csrClientEntry.tsx
 // 1. use hydrate instead of createRoot().render()
@@ -13,7 +13,6 @@ async function renderInBrowser() {
   const container = document.getElementById('__rspress_root')!;
   const pathname = removeBase(window.location.pathname);
   const initialPageData = await initPageData(pathname);
-  setCurrentPageData(pathname, initialPageData);
   // why startTransition?
   // https://github.com/facebook/docusaurus/pull/9051
   startTransition(() => {

@@ -63,7 +63,7 @@ describe('extractPageData', async () => {
             },
           }),
         getRoutePageByRoutePath: () => undefined,
-      } as RouteService,
+      } as unknown as RouteService,
       {
         alias: {},
         replaceRules: [],
