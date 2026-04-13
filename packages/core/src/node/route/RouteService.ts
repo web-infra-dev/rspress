@@ -192,6 +192,8 @@ export class RouteService {
         }
       }),
     );
+
+    this.#ensureFramework404Routes();
   }
 
   async addRoute(routePage: RoutePage): Promise<void> {
@@ -202,6 +204,37 @@ export class RouteService {
       throw createError(`routePath ${routePath} has already been added`);
     }
     this.routeData.set(routePath, routePage);
+  }
+
+  #ensureFramework404Routes() {
+    const existingRoutePaths = new Set(this.routeData.keys());
+
+    const versions = this.#defaultVersion
+      ? [this.#defaultVersion, ...this.#versions.filter(v => v !== this.#defaultVersion)]
+      : [''];
+    const langs = this.#defaultLang
+      ? [this.#defaultLang, ...this.#langs.filter(l => l !== this.#defaultLang)]
+      : [''];
+
+    for (const version of versions) {
+      for (const lang of langs) {
+        const versionPrefix = version && version !== this.#defaultVersion ? `/${version}` : '';
+        const langPrefix = lang && lang !== this.#defaultLang ? `/${lang}` : '';
+        const routePath = `${versionPrefix}${langPrefix}/404`;
+
+        if (!existingRoutePaths.has(routePath)) {
+          this.routeData.set(
+            routePath,
+            RoutePage.createFrameworkFallback404(
+              routePath,
+              lang,
+              version,
+              this.#scanDir,
+            ),
+          );
+        }
+      }
+    }
   }
 
   getRoutes(): RouteMeta[] {
@@ -220,11 +253,12 @@ export class RouteService {
     }
 
     const cleanLinkPath = linkToRoutePath(link);
+    const routePaths = new Set(this.getRoutes().map(route => route.routePath));
     // allow fuzzy matching, e.g: /guide/ and /guide is equal
     // This is a simple judgment, the performance will be better than "matchPath" in react-router-dom
     if (
-      !this.routeData.has(removeTrailingSlash(cleanLinkPath)) &&
-      !this.routeData.has(addTrailingSlash(cleanLinkPath))
+      !routePaths.has(removeTrailingSlash(cleanLinkPath)) &&
+      !routePaths.has(addTrailingSlash(cleanLinkPath))
     ) {
       return false;
     }
@@ -236,34 +270,31 @@ export class RouteService {
   }
 
   private generateRoutesCodeByRouteMeta(routeMeta: RouteMeta[]) {
+    const routeRecords = routeMeta.map((route, index) => {
+      if (route.pageName === '__rspress_fallback_404__') {
+        return `{ path: '${route.routePath}', element: React.createElement(React.Fragment), filePath: '', preload: async () => ({ default: React.Fragment }), loader: () => initPageData('${route.routePath}'), lang: '${route.lang}', version: '${route.version}' }`;
+      }
+
+      const preload = `async () => {
+        await Route${index}.preload();
+        return import("${route.absolutePath}");
+      }`;
+      const component = `Route${index}`;
+      return `{ path: '${route.routePath}', element: React.createElement(${component}), filePath: '${route.relativePath}', preload: ${preload}, loader: () => initPageData('${route.routePath}'), lang: '${route.lang}', version: '${route.version}' }`;
+    });
+
     return `
 import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";
 import { initPageData } from '@rspress/core/runtime';
 ${routeMeta
+  .filter(route => route.pageName !== '__rspress_fallback_404__')
   .map((route, index) => {
     return `const Route${index} = lazyWithPreload(() => import('${route.absolutePath}'))`;
   })
   .join('\n')}
 export const routes = [
-${routeMeta
-  .map((route, index) => {
-    const preload = `async () => {
-        await Route${index}.preload();
-        return import("${route.absolutePath}");
-      }`;
-    const component = `Route${index}`;
-    /**
-     * {
-     *   route: '/',
-     *   element: jsx(Route0),
-     *   preload: Route0.preload,
-     *   filePath: '/Users/foo/bar/index.md'
-     * }
-     */
-    return `{ path: '${route.routePath}', element: React.createElement(${component}), filePath: '${route.relativePath}', preload: ${preload}, loader: () => initPageData('${route.routePath}'), lang: '${route.lang}', version: '${route.version}' }`;
-  })
-  .join(',\n')}
+${routeRecords.join(',\n')}
 ];
 `;
   }

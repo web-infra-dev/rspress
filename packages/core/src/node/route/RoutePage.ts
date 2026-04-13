@@ -34,6 +34,26 @@ export class RoutePage {
     return new RoutePage(routeMeta, path.dirname(filepath));
   }
 
+  static createFrameworkFallback404(
+    routePath: string,
+    lang: string,
+    version: string,
+    docDir: string,
+  ): RoutePage {
+    const routePage = new RoutePage(
+      {
+        routePath,
+        absolutePath: '__rspress_internal__/404',
+        relativePath: '__rspress_internal__/404',
+        pageName: '__rspress_fallback_404__',
+        lang,
+        version,
+      },
+      docDir,
+    );
+    return routePage;
+  }
+
   private constructor(routeMeta: RouteMeta, docDir: string) {
     this.routeMeta = routeMeta;
     this.#docDir = docDir;

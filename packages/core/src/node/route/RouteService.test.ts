@@ -95,6 +95,17 @@ describe('RouteService', async () => {
             "version": "",
           },
         },
+        "/404" => RoutePage {
+          "pageIndexInfo": undefined,
+          "routeMeta": {
+            "absolutePath": "__rspress_internal__/404",
+            "lang": "",
+            "pageName": "__rspress_fallback_404__",
+            "relativePath": "__rspress_internal__/404",
+            "routePath": "/404",
+            "version": "",
+          },
+        },
       }
     `);
 
@@ -133,7 +144,8 @@ describe('RouteService', async () => {
       { path: '/', element: React.createElement(Route5), filePath: 'index.mdx', preload: async () => {
               await Route5.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
-            }, loader: () => initPageData('/'), lang: '', version: '' }
+            }, loader: () => initPageData('/'), lang: '', version: '' },
+      { path: '/404', element: React.createElement(React.Fragment), filePath: '', preload: async () => ({ default: React.Fragment }), loader: () => initPageData('/404'), lang: '', version: '' }
       ];
       "
     `);
@@ -202,6 +214,17 @@ describe('RouteService', async () => {
             "version": "",
           },
         },
+        "/404" => RoutePage {
+          "pageIndexInfo": undefined,
+          "routeMeta": {
+            "absolutePath": "__rspress_internal__/404",
+            "lang": "",
+            "pageName": "__rspress_fallback_404__",
+            "relativePath": "__rspress_internal__/404",
+            "routePath": "/404",
+            "version": "",
+          },
+        },
       }
     `);
     expect(routeCode).toMatchInlineSnapshot(`
@@ -234,7 +257,8 @@ describe('RouteService', async () => {
       { path: '/', element: React.createElement(Route4), filePath: 'index.mdx', preload: async () => {
               await Route4.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
-            }, loader: () => initPageData('/'), lang: '', version: '' }
+            }, loader: () => initPageData('/'), lang: '', version: '' },
+      { path: '/404', element: React.createElement(React.Fragment), filePath: '', preload: async () => ({ default: React.Fragment }), loader: () => initPageData('/404'), lang: '', version: '' }
       ];
       "
     `);
@@ -303,6 +327,17 @@ describe('RouteService', async () => {
             "version": "",
           },
         },
+        "/404" => RoutePage {
+          "pageIndexInfo": undefined,
+          "routeMeta": {
+            "absolutePath": "__rspress_internal__/404",
+            "lang": "",
+            "pageName": "__rspress_fallback_404__",
+            "relativePath": "__rspress_internal__/404",
+            "routePath": "/404",
+            "version": "",
+          },
+        },
       }
     `);
     expect(routeCode).toMatchInlineSnapshot(`
@@ -335,7 +370,8 @@ describe('RouteService', async () => {
       { path: '/', element: React.createElement(Route4), filePath: 'index.mdx', preload: async () => {
               await Route4.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
-            }, loader: () => initPageData('/'), lang: '', version: '' }
+            }, loader: () => initPageData('/'), lang: '', version: '' },
+      { path: '/404', element: React.createElement(React.Fragment), filePath: '', preload: async () => ({ default: React.Fragment }), loader: () => initPageData('/404'), lang: '', version: '' }
       ];
       "
     `);
@@ -451,6 +487,28 @@ describe('RouteService with i18n', async () => {
             "pageName": "zh_index",
             "relativePath": "zh/index.mdx",
             "routePath": "/zh/",
+            "version": "",
+          },
+        },
+        "/404" => RoutePage {
+          "pageIndexInfo": undefined,
+          "routeMeta": {
+            "absolutePath": "__rspress_internal__/404",
+            "lang": "en",
+            "pageName": "__rspress_fallback_404__",
+            "relativePath": "__rspress_internal__/404",
+            "routePath": "/404",
+            "version": "",
+          },
+        },
+        "/zh/404" => RoutePage {
+          "pageIndexInfo": undefined,
+          "routeMeta": {
+            "absolutePath": "__rspress_internal__/404",
+            "lang": "zh",
+            "pageName": "__rspress_fallback_404__",
+            "relativePath": "__rspress_internal__/404",
+            "routePath": "/zh/404",
             "version": "",
           },
         },
