@@ -1,15 +1,16 @@
 import {
-  BrowserRouter,
   PageContext,
+  createRspressBrowserRouter,
   removeTrailingSlash,
+  RouterProvider,
   ThemeContext,
   withBase,
 } from '@rspress/core/runtime';
 import { useThemeState } from '@theme';
 import { createHead, UnheadProvider } from '@unhead/react/client';
-import { useMemo, useState } from 'react';
-import { App } from './App';
+import { useMemo } from 'react';
 import type { Page } from './initPageData';
+import { routes } from 'virtual-routes';
 
 const head = createHead();
 
@@ -20,21 +21,21 @@ export function ClientApp({
 }: {
   initialPageData?: Page;
 }) {
-  const [data, setData] = useState(initialPageData);
   const [theme, setTheme] = useThemeState();
+  const basename = removeTrailingSlash(withBase('/'));
+  const router = useMemo(
+    () => createRspressBrowserRouter(routes, basename),
+    [basename],
+  );
 
   return (
     <ThemeContext.Provider
       value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}
     >
-      <PageContext.Provider
-        value={useMemo(() => ({ data, setData }), [data, setData])}
-      >
-        <BrowserRouter basename={removeTrailingSlash(withBase('/'))}>
-          <UnheadProvider head={head}>
-            <App />
-          </UnheadProvider>
-        </BrowserRouter>
+      <PageContext.Provider value={useMemo(() => ({ data: initialPageData }), [initialPageData])}>
+        <UnheadProvider head={head}>
+          <RouterProvider router={router} />
+        </UnheadProvider>
       </PageContext.Provider>
     </ThemeContext.Provider>
   );

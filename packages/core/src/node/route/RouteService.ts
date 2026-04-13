@@ -239,6 +239,7 @@ export class RouteService {
     return `
 import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";
+import { initPageData } from '@rspress/core/runtime';
 ${routeMeta
   .map((route, index) => {
     return `const Route${index} = lazyWithPreload(() => import('${route.absolutePath}'))`;
@@ -260,7 +261,7 @@ ${routeMeta
      *   filePath: '/Users/foo/bar/index.md'
      * }
      */
-    return `{ path: '${route.routePath}', element: React.createElement(${component}), filePath: '${route.relativePath}', preload: ${preload}, lang: '${route.lang}', version: '${route.version}' }`;
+    return `{ path: '${route.routePath}', element: React.createElement(${component}), Component: ${component}, filePath: '${route.relativePath}', preload: ${preload}, loader: () => initPageData('${route.routePath}'), lang: '${route.lang}', version: '${route.version}' }`;
   })
   .join(',\n')}
 ];
