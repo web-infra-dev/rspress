@@ -1,5 +1,6 @@
 import { describe, expect, test } from '@rstest/core';
 import {
+  isExternalUrl,
   normalizeHref,
   normalizePosixPath,
   parseUrl,
@@ -71,6 +72,9 @@ describe('test shared utils', () => {
       'mailto:bluth@example.com',
     );
     expect(normalizeHref('tel:123456789')).toBe('tel:123456789');
+    expect(normalizeHref('vscode://file/foo/bar.md')).toBe(
+      'vscode://file/foo/bar.md',
+    );
     expect(normalizeHref('/guide', true)).toBe('/guide');
     expect(normalizeHref('/guide/', true)).toBe('/guide/');
     expect(normalizeHref('/guide.html', true)).toBe('/guide');
@@ -86,6 +90,19 @@ describe('test shared utils', () => {
     expect(normalizeHref('/guide/version-0.1/', true)).toBe(
       '/guide/version-0.1/',
     );
+  });
+
+  test('isExternalUrl', () => {
+    expect(isExternalUrl('https://example.com/foo')).toBe(true);
+    expect(isExternalUrl('mailto:bluth@example.com')).toBe(true);
+    expect(isExternalUrl('tel:123456789')).toBe(true);
+    expect(isExternalUrl('vscode://file/foo/bar.md')).toBe(true);
+    expect(isExternalUrl('jetbrains://idea/navigate/reference')).toBe(true);
+    expect(isExternalUrl('/guide')).toBe(false);
+    expect(isExternalUrl('./guide')).toBe(false);
+    expect(isExternalUrl('//example.com/foo')).toBe(false);
+    expect(isExternalUrl('javascript:alert(1)')).toBe(false);
+    expect(isExternalUrl('data:text/plain,hello')).toBe(false);
   });
 
   describe('replaceLang', () => {
