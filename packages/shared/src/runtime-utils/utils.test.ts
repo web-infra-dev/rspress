@@ -101,6 +101,7 @@ describe('test shared utils', () => {
     expect(isExternalUrl('/guide')).toBe(false);
     expect(isExternalUrl('./guide')).toBe(false);
     expect(isExternalUrl('//example.com/foo')).toBe(false);
+    expect(isExternalUrl('file:///Users/test/docs/index.md')).toBe(false);
     expect(isExternalUrl('javascript:alert(1)')).toBe(false);
     expect(isExternalUrl('data:text/plain,hello')).toBe(false);
   });

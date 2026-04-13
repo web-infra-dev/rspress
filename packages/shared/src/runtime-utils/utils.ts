@@ -81,7 +81,7 @@ export function removeTrailingSlash(url: string) {
 }
 
 const EXTERNAL_URL_SCHEME_REGEXP = /^[a-zA-Z][a-zA-Z\d+\-.]*:/;
-const UNSAFE_EXTERNAL_URL_SCHEME_REGEXP = /^(?:javascript|data):/i;
+const UNSAFE_EXTERNAL_URL_SCHEME_REGEXP = /^(?:javascript|data|file):/i;
 
 export function isExternalUrl(url = '') {
   return (
