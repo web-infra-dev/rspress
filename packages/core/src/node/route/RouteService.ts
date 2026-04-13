@@ -261,7 +261,7 @@ ${routeMeta
      *   filePath: '/Users/foo/bar/index.md'
      * }
      */
-    return `{ path: '${route.routePath}', element: React.createElement(${component}), Component: ${component}, filePath: '${route.relativePath}', preload: ${preload}, loader: () => initPageData('${route.routePath}'), lang: '${route.lang}', version: '${route.version}' }`;
+    return `{ path: '${route.routePath}', element: React.createElement(${component}), filePath: '${route.relativePath}', preload: ${preload}, loader: () => initPageData('${route.routePath}'), lang: '${route.lang}', version: '${route.version}' }`;
   })
   .join(',\n')}
 ];

@@ -110,27 +110,27 @@ describe('RouteService', async () => {
       const Route4 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md'))
       const Route5 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx'))
       export const routes = [
-      { path: '/a', element: React.createElement(Route0), Component: Route0, filePath: 'a.mdx', preload: async () => {
+      { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
               await Route0.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx");
             }, loader: () => initPageData('/a'), lang: '', version: '' },
-      { path: '/guide/__e', element: React.createElement(Route1), Component: Route1, filePath: 'guide/__e.mdx', preload: async () => {
+      { path: '/guide/__e', element: React.createElement(Route1), filePath: 'guide/__e.mdx', preload: async () => {
               await Route1.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx");
             }, loader: () => initPageData('/guide/__e'), lang: '', version: '' },
-      { path: '/guide/b', element: React.createElement(Route2), Component: Route2, filePath: 'guide/b.mdx', preload: async () => {
+      { path: '/guide/b', element: React.createElement(Route2), filePath: 'guide/b.mdx', preload: async () => {
               await Route2.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx");
             }, loader: () => initPageData('/guide/b'), lang: '', version: '' },
-      { path: '/guide/c', element: React.createElement(Route3), Component: Route3, filePath: 'guide/c.tsx', preload: async () => {
+      { path: '/guide/c', element: React.createElement(Route3), filePath: 'guide/c.tsx', preload: async () => {
               await Route3.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx");
             }, loader: () => initPageData('/guide/c'), lang: '', version: '' },
-      { path: '/guide/', element: React.createElement(Route4), Component: Route4, filePath: 'guide/index.md', preload: async () => {
+      { path: '/guide/', element: React.createElement(Route4), filePath: 'guide/index.md', preload: async () => {
               await Route4.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md");
             }, loader: () => initPageData('/guide/'), lang: '', version: '' },
-      { path: '/', element: React.createElement(Route5), Component: Route5, filePath: 'index.mdx', preload: async () => {
+      { path: '/', element: React.createElement(Route5), filePath: 'index.mdx', preload: async () => {
               await Route5.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
             }, loader: () => initPageData('/'), lang: '', version: '' }
@@ -215,23 +215,23 @@ describe('RouteService', async () => {
       const Route3 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md'))
       const Route4 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx'))
       export const routes = [
-      { path: '/a', element: React.createElement(Route0), Component: Route0, filePath: 'a.mdx', preload: async () => {
+      { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
               await Route0.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx");
             }, loader: () => initPageData('/a'), lang: '', version: '' },
-      { path: '/guide/__e', element: React.createElement(Route1), Component: Route1, filePath: 'guide/__e.mdx', preload: async () => {
+      { path: '/guide/__e', element: React.createElement(Route1), filePath: 'guide/__e.mdx', preload: async () => {
               await Route1.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx");
             }, loader: () => initPageData('/guide/__e'), lang: '', version: '' },
-      { path: '/guide/c', element: React.createElement(Route2), Component: Route2, filePath: 'guide/c.tsx', preload: async () => {
+      { path: '/guide/c', element: React.createElement(Route2), filePath: 'guide/c.tsx', preload: async () => {
               await Route2.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx");
             }, loader: () => initPageData('/guide/c'), lang: '', version: '' },
-      { path: '/guide/', element: React.createElement(Route3), Component: Route3, filePath: 'guide/index.md', preload: async () => {
+      { path: '/guide/', element: React.createElement(Route3), filePath: 'guide/index.md', preload: async () => {
               await Route3.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md");
             }, loader: () => initPageData('/guide/'), lang: '', version: '' },
-      { path: '/', element: React.createElement(Route4), Component: Route4, filePath: 'index.mdx', preload: async () => {
+      { path: '/', element: React.createElement(Route4), filePath: 'index.mdx', preload: async () => {
               await Route4.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
             }, loader: () => initPageData('/'), lang: '', version: '' }
@@ -316,23 +316,23 @@ describe('RouteService', async () => {
       const Route3 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md'))
       const Route4 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx'))
       export const routes = [
-      { path: '/a', element: React.createElement(Route0), Component: Route0, filePath: 'a.mdx', preload: async () => {
+      { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
               await Route0.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx");
             }, loader: () => initPageData('/a'), lang: '', version: '' },
-      { path: '/guide/__e', element: React.createElement(Route1), Component: Route1, filePath: 'guide/__e.mdx', preload: async () => {
+      { path: '/guide/__e', element: React.createElement(Route1), filePath: 'guide/__e.mdx', preload: async () => {
               await Route1.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx");
             }, loader: () => initPageData('/guide/__e'), lang: '', version: '' },
-      { path: '/guide/b', element: React.createElement(Route2), Component: Route2, filePath: 'guide/b.mdx', preload: async () => {
+      { path: '/guide/b', element: React.createElement(Route2), filePath: 'guide/b.mdx', preload: async () => {
               await Route2.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx");
             }, loader: () => initPageData('/guide/b'), lang: '', version: '' },
-      { path: '/guide/', element: React.createElement(Route3), Component: Route3, filePath: 'guide/index.md', preload: async () => {
+      { path: '/guide/', element: React.createElement(Route3), filePath: 'guide/index.md', preload: async () => {
               await Route3.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md");
             }, loader: () => initPageData('/guide/'), lang: '', version: '' },
-      { path: '/', element: React.createElement(Route4), Component: Route4, filePath: 'index.mdx', preload: async () => {
+      { path: '/', element: React.createElement(Route4), filePath: 'index.mdx', preload: async () => {
               await Route4.preload();
               return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
             }, loader: () => initPageData('/'), lang: '', version: '' }
