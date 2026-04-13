@@ -193,6 +193,7 @@ export class RouteService {
       }),
     );
 
+    // 3. ensure 404 routes
     this.#ensureFramework404Routes();
   }
 
