@@ -1,6 +1,6 @@
 import { describe, expect, it, rs } from '@rstest/core';
 import { getSidebarDataGroup } from './hooks/useSidebar';
-import { isActive } from './route';
+import { isActive } from './pathnameToRouteService';
 
 rs.mock('virtual-i18n-text', () => {
   return { default: {} };

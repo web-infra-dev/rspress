@@ -43,3 +43,7 @@ declare module '*.svg' {
 declare module '@theme' {
   export * from '#theme';
 }
+
+declare module 'react-router-dom/server' {
+  export { createStaticRouter, StaticRouterProvider, createStaticHandler } from 'react-router-dom';
+}

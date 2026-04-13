@@ -8,7 +8,7 @@ import {
 } from '@rspress/shared';
 import { pageData } from 'virtual-page-data';
 import siteData from 'virtual-site-data';
-import { pathnameToRouteService } from './route';
+import { pathnameToRouteService } from './pathnameToRouteService';
 import { isEqualPath } from './utils';
 
 type PageMeta = {

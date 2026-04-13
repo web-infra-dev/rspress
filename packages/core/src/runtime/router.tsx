@@ -1,16 +1,16 @@
 import type { Route } from '@rspress/shared';
 import {
   createBrowserRouter,
-  createStaticHandler,
-  createStaticRouter,
-  RouterProvider,
-  StaticRouterProvider,
-  type StaticHandlerContext,
   useMatches,
+  type StaticHandlerContext
 } from 'react-router-dom';
-import type { Page } from './initPageData';
+
+// This is a workaround for react v6
+import { createStaticRouter, StaticRouterProvider, createStaticHandler } from 'react-router-dom/server'
+
 import { App } from './App';
 import { PageContext } from './hooks/usePage';
+import type { Page } from './initPageData';
 
 function AppShell() {
   const matches = useMatches();
@@ -61,4 +61,5 @@ export function createRspressStaticRouter(
   );
 }
 
-export { RouterProvider, StaticRouterProvider, createStaticHandler };
+export { StaticRouterProvider, createStaticHandler };
+

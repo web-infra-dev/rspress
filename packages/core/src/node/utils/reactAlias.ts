@@ -1,6 +1,6 @@
-import path from 'node:path';
 import { rspack } from '@rsbuild/core';
 import { logger } from '@rspress/shared/logger';
+import path from 'node:path';
 import picocolors from 'picocolors';
 import { PACKAGE_ROOT } from '../constants';
 import { hintReactVersion } from '../logger/hint';
@@ -28,34 +28,55 @@ export async function resolveReactRouterDomAlias(): Promise<
   Record<string, string>
 > {
   const hasInstalled = await detectPackageMajorVersion('react-router-dom');
-  const basedir = hasInstalled ? process.cwd() : PACKAGE_ROOT;
-  const alias: Record<string, string> = {};
+  
   const resolver = new Resolver({
     mainFields: ['browser', 'module', 'main'],
     extensions: ['.js'],
-    alias,
+    alias: {},
     enablePnp: !!process.versions.pnp,
   });
 
-  try {
-    const resolved = await resolver.async(
-      basedir,
-      'react-router-dom/package.json',
-    );
-    if (resolved.error) {
-      throw Error(resolved.error);
+    if (hasInstalled) {
+        try {
+          const baseDir = process.cwd() 
+          const resolved = await resolver.async(
+            baseDir,
+            'react-router-dom/package.json',
+          );
+          if (resolved.error) {
+            throw Error(resolved.error);
+          }
+        
+          if (!resolved.path) {
+            throw Error(`'react-router-dom' resolved to empty path`);
+          }
+
+          return hasInstalled >= 7 ? {
+            'react-router-dom': resolved.path,
+            'react-router-dom/server': resolved.path,
+          }  : {
+            'react-router-dom': path.dirname(resolved.path),
+          };;
+        } catch (e) {
+          logger.warn('react-router-dom not found: \n', e);
+        }
     }
 
-    if (!resolved.path) {
-      throw Error(`'react-router-dom' resolved to empty path`);
-    }
-    return {
-      'react-router-dom': path.dirname(resolved.path),
-    };
-  } catch (e) {
-    logger.warn('react-router-dom not found: \n', e);
+    // react-router-dom v7 default value
+  const resolved = await resolver.async(
+    PACKAGE_ROOT,
+    'react-router-dom/package.json',
+  );
+
+  if (!resolved.path) {
+    throw Error(`'react-router-dom' resolved to empty path`);
   }
-  return {};
+
+  return {
+    'react-router-dom': resolved.path,
+    'react-router-dom/server': resolved.path
+
+  };
 }
 
 export async function resolveReactAlias(isSSR: boolean) {
