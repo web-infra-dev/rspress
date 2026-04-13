@@ -28,7 +28,7 @@ export async function resolveReactRouterDomAlias(): Promise<
   Record<string, string>
 > {
   const hasInstalled = await detectPackageMajorVersion('react-router-dom');
-  
+
   const resolver = new Resolver({
     mainFields: ['browser', 'module', 'main'],
     extensions: ['.js'],
@@ -36,46 +36,43 @@ export async function resolveReactRouterDomAlias(): Promise<
     enablePnp: !!process.versions.pnp,
   });
 
-    if (hasInstalled) {
-        try {
-          const baseDir = process.cwd() 
-          const resolved = await resolver.async(
-            baseDir,
-            'react-router-dom/package.json',
-          );
-          if (resolved.error) {
-            throw Error(resolved.error);
-          }
-        
-          if (!resolved.path) {
-            throw Error(`'react-router-dom' resolved to empty path`);
-          }
+  async function resolvePackageDir(baseDir: string) {
+    const resolved = await resolver.async(baseDir, 'react-router-dom/package.json');
 
-          return hasInstalled >= 7 ? {
-            'react-router-dom': resolved.path,
-            'react-router-dom/server': resolved.path,
-          }  : {
-            'react-router-dom': path.dirname(resolved.path),
-          };;
-        } catch (e) {
-          logger.warn('react-router-dom not found: \n', e);
-        }
+    if (resolved.error) {
+      throw Error(resolved.error);
     }
 
-    // react-router-dom v7 default value
-  const resolved = await resolver.async(
-    PACKAGE_ROOT,
-    'react-router-dom/package.json',
-  );
+    if (!resolved.path) {
+      throw Error(`'react-router-dom' resolved to empty path`);
+    }
 
-  if (!resolved.path) {
-    throw Error(`'react-router-dom' resolved to empty path`);
+    return path.dirname(resolved.path);
   }
 
-  return {
-    'react-router-dom': resolved.path,
-    'react-router-dom/server': resolved.path
+  if (hasInstalled) {
+    try {
+      const packageDir = await resolvePackageDir(process.cwd());
 
+      return hasInstalled >= 7
+        ? {
+            'react-router-dom$': packageDir,
+            'react-router-dom/server$': packageDir,
+          }
+        : {
+            'react-router-dom': packageDir,
+          };
+    } catch (e) {
+      logger.warn('react-router-dom not found: \n', e);
+    }
+  }
+
+  // react-router-dom v7 default value
+  const packageDir = await resolvePackageDir(PACKAGE_ROOT);
+
+  return {
+    'react-router-dom$': packageDir,
+    'react-router-dom/server$': packageDir,
   };
 }
 

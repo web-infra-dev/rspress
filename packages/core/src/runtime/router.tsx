@@ -2,14 +2,20 @@ import type { Route } from '@rspress/shared';
 import {
   createBrowserRouter,
   useMatches,
-  type StaticHandlerContext
+  type StaticHandlerContext,
+  RouterProvider,
 } from 'react-router-dom';
 
-// This is a workaround for react v6
-import { createStaticRouter, StaticRouterProvider, createStaticHandler } from 'react-router-dom/server'
+// This is a workaround for react-router-dom v6
+import {
+  createStaticHandler,
+  createStaticRouter,
+  StaticRouterProvider,
+} from 'react-router-dom/server';
 
 import { App } from './App';
 import { PageContext } from './hooks/usePage';
+import { initPageData } from './initPageData';
 import type { Page } from './initPageData';
 
 function AppShell() {
@@ -29,8 +35,23 @@ function toRouteObject(route: Route, index: number) {
     id: `rspress-route-${index}`,
     path: route.path,
     loader: route.loader,
-    Component: route.Component,
+    element: route.element,
   };
+}
+
+function getChildRoutes(routes: Route[]) {
+  const children = routes.map((route, index) => toRouteObject(route, index));
+
+  if (!routes.some(route => route.path === '/404')) {
+    children.push({
+      id: 'rspress-route-404',
+      path: '/404',
+      loader: () => initPageData('/404'),
+      element: <></>,
+    });
+  }
+
+  return children;
 }
 
 export function createRspressBrowserRouter(routes: Route[], basename: string) {
@@ -38,8 +59,8 @@ export function createRspressBrowserRouter(routes: Route[], basename: string) {
     {
       id: 'rspress-app-shell',
       path: '/',
-      Component: AppShell,
-      children: routes.map((route, index) => toRouteObject(route, index)),
+      element: <AppShell />,
+      children: getChildRoutes(routes),
     },
   ], { basename });
 }
@@ -53,13 +74,13 @@ export function createRspressStaticRouter(
       {
         id: 'rspress-app-shell',
         path: '/',
-        Component: AppShell,
-        children: routes.map((route, index) => toRouteObject(route, index)),
+        element: <AppShell />,
+        children: getChildRoutes(routes),
       },
     ],
     context,
   );
 }
 
-export { StaticRouterProvider, createStaticHandler };
+export { RouterProvider, StaticRouterProvider, createStaticHandler };
 
