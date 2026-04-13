@@ -60,7 +60,8 @@ describe('resolveReactRouterDomAlias', () => {
 
     expect(alias).toMatchInlineSnapshot(`
       {
-        "react-router-dom": "<PNPM_INNER>/react-router-dom",
+        "react-router-dom$": "<PNPM_INNER>/react-router-dom",
+        "react-router-dom/server$": "<PNPM_INNER>/react-router-dom",
       }
     `);
   });
