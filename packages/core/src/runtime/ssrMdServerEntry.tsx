@@ -1,6 +1,6 @@
 import {
-  createStaticHandler,
   createRspressStaticRouter,
+  createStaticHandler,
   removeTrailingSlash,
   StaticRouterProvider,
   ThemeContext,
@@ -29,7 +29,9 @@ export async function render(
     },
   ];
   const handler = createStaticHandler(dataRoutes, { basename });
-  const context = await handler.query(new Request(`http://rspress.local${withBase(routePath)}`));
+  const context = await handler.query(
+    new Request(`http://rspress.local${withBase(routePath)}`),
+  );
 
   if (context instanceof Response) {
     throw new Error(`Unexpected static router response: ${context.status}`);

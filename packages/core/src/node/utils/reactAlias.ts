@@ -1,6 +1,6 @@
+import path from 'node:path';
 import { rspack } from '@rsbuild/core';
 import { logger } from '@rspress/shared/logger';
-import path from 'node:path';
 import picocolors from 'picocolors';
 import { PACKAGE_ROOT } from '../constants';
 import { hintReactVersion } from '../logger/hint';
@@ -37,7 +37,10 @@ export async function resolveReactRouterDomAlias(): Promise<
   });
 
   async function resolvePackageDir(baseDir: string) {
-    const resolved = await resolver.async(baseDir, 'react-router-dom/package.json');
+    const resolved = await resolver.async(
+      baseDir,
+      'react-router-dom/package.json',
+    );
 
     if (resolved.error) {
       throw Error(resolved.error);
