@@ -80,12 +80,13 @@ export function removeTrailingSlash(url: string) {
   return url.charAt(url.length - 1) === '/' ? url.slice(0, -1) : url;
 }
 
+const EXTERNAL_URL_SCHEME_REGEXP = /^[a-zA-Z][a-zA-Z\d+\-.]*:/;
+const UNSAFE_EXTERNAL_URL_SCHEME_REGEXP = /^(?:javascript|data|file):/i;
+
 export function isExternalUrl(url = '') {
   return (
-    url.startsWith('http://') ||
-    url.startsWith('https://') ||
-    url.startsWith('mailto:') ||
-    url.startsWith('tel:')
+    EXTERNAL_URL_SCHEME_REGEXP.test(url) &&
+    !UNSAFE_EXTERNAL_URL_SCHEME_REGEXP.test(url)
   );
 }
 
