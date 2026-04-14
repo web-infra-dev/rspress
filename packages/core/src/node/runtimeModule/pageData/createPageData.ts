@@ -1,6 +1,7 @@
 import { type PageData, SEARCH_INDEX_NAME } from '@rspress/shared';
 import { groupBy } from '@rspress/shared/lodash-es';
 import { extractPageData } from '../../route/extractPageData';
+import { FRAMEWORK_FALLBACK_404_FILEPATH } from '../../route/RoutePage';
 import { createHash } from '../../utils';
 import type { FactoryContext } from '../types';
 
@@ -54,23 +55,32 @@ export async function createPageData(context: FactoryContext): Promise<{
     extractDescription: userConfig.markdown?.extractDescription,
     searchEnabled,
   });
-  // modify page index by plugins
-  await pluginDriver.modifySearchIndexData(pages);
+  const sourceBackedPages = pages.filter(
+    page => page._filepath !== FRAMEWORK_FALLBACK_404_FILEPATH,
+  );
+
+  // Framework fallback 404 routes are virtual pages with no source file.
+  // Keep them in runtime page data, but exclude them from source-backed
+  // plugin/search pipelines that may read pageData._filepath.
+  await pluginDriver.modifySearchIndexData(sourceBackedPages);
 
   const versioned =
     typeof userConfig.search !== 'boolean' &&
     (userConfig.search?.versioned ?? true);
 
-  const groupedPages = groupBy(pages, (page: (typeof pages)[number]) => {
-    if (page.frontmatter?.pageType === 'home') {
-      return 'noindex';
-    }
+  const groupedPages = groupBy(
+    sourceBackedPages,
+    (page: (typeof pages)[number]) => {
+      if (page.frontmatter?.pageType === 'home') {
+        return 'noindex';
+      }
 
-    const version = versioned ? page.version : '';
-    const lang = page.lang || '';
+      const version = versioned ? page.version : '';
+      const lang = page.lang || '';
 
-    return `${version}###${lang}`;
-  });
+      return `${version}###${lang}`;
+    },
+  );
   // remove the pages marked as noindex
   delete groupedPages.noindex;
 
@@ -98,7 +108,7 @@ export async function createPageData(context: FactoryContext): Promise<{
 
   // Run extendPageData hook in plugins
   await Promise.all(
-    pages.map(async pageData => pluginDriver.extendPageData(pageData)),
+    sourceBackedPages.map(async pageData => pluginDriver.extendPageData(pageData)),
   );
 
   const filepaths: string[] = [];
@@ -106,7 +116,9 @@ export async function createPageData(context: FactoryContext): Promise<{
     pages: pages.map(page => {
       // omit some fields for runtime size
       const { content: _content, _filepath, _flattenContent, ...rest } = page;
-      filepaths.push(_filepath);
+      if (_filepath && _filepath !== FRAMEWORK_FALLBACK_404_FILEPATH) {
+        filepaths.push(_filepath);
+      }
       return rest;
     }),
   };

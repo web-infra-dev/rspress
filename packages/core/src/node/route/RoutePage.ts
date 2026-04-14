@@ -4,6 +4,9 @@ import { getPageKey } from '../utils/getPageKey';
 import { normalizePath, slash } from '../utils/normalizePath';
 import { RouteService } from './RouteService';
 
+export const FRAMEWORK_FALLBACK_404_FILEPATH = '__rspress_internal__/404';
+export const FRAMEWORK_FALLBACK_404_PAGE_NAME = '__rspress_fallback_404__';
+
 export class RoutePage {
   routeMeta: RouteMeta;
   // @ts-expect-error use this field in the future
@@ -43,9 +46,9 @@ export class RoutePage {
     const routePage = new RoutePage(
       {
         routePath,
-        absolutePath: '__rspress_internal__/404',
-        relativePath: '__rspress_internal__/404',
-        pageName: '__rspress_fallback_404__',
+        absolutePath: FRAMEWORK_FALLBACK_404_FILEPATH,
+        relativePath: FRAMEWORK_FALLBACK_404_FILEPATH,
+        pageName: FRAMEWORK_FALLBACK_404_PAGE_NAME,
         lang,
         version,
       },
