@@ -22,6 +22,7 @@ import {
 import {
   absolutePathToRelativePath,
   absolutePathToRoutePath,
+  FRAMEWORK_FALLBACK_404_PAGE_NAME,
   RoutePage,
 } from './RoutePage';
 
@@ -272,7 +273,7 @@ export class RouteService {
 
   private generateRoutesCodeByRouteMeta(routeMeta: RouteMeta[]) {
     const routeRecords = routeMeta.map((route, index) => {
-      if (route.pageName === '__rspress_fallback_404__') {
+      if (route.pageName === FRAMEWORK_FALLBACK_404_PAGE_NAME) {
         return `{ path: '${route.routePath}', element: React.createElement(React.Fragment), filePath: '', preload: async () => ({ default: React.Fragment }), loader: () => initPageData('${route.routePath}'), lang: '${route.lang}', version: '${route.version}' }`;
       }
 
@@ -289,7 +290,7 @@ import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";
 import { initPageData } from '@rspress/core/runtime';
 ${routeMeta
-  .filter(route => route.pageName !== '__rspress_fallback_404__')
+  .filter(route => route.pageName !== FRAMEWORK_FALLBACK_404_PAGE_NAME)
   .map((route, index) => {
     return `const Route${index} = lazyWithPreload(() => import('${route.absolutePath}'))`;
   })
