@@ -21,10 +21,36 @@ import { initPageData } from './initPageData';
 import { pathnameToRouteService } from './pathnameToRouteService';
 import { removeBase } from './utils';
 
+declare global {
+  interface Window {
+    __RSPRESS_DEBUG_PAGE_DATA__?: unknown;
+  }
+}
+
 function AppShell() {
   const matches = useMatches();
   const currentMatch = matches[matches.length - 1];
   const pageData = currentMatch?.data as Page | undefined;
+
+  if (typeof window !== 'undefined') {
+    window.__RSPRESS_DEBUG_PAGE_DATA__ = {
+      matches: matches.map(match => ({
+        id: match.id,
+        pathname: match.pathname,
+        params: match.params,
+        data: match.data,
+      })),
+      currentMatch: currentMatch
+        ? {
+            id: currentMatch.id,
+            pathname: currentMatch.pathname,
+            params: currentMatch.params,
+            data: currentMatch.data,
+          }
+        : null,
+      pageData,
+    };
+  }
 
   return (
     <PageContext.Provider value={{ data: pageData }}>

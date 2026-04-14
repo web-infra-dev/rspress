@@ -32,13 +32,9 @@ export function ClientApp({
     <ThemeContext.Provider
       value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}
     >
-      <PageContext.Provider
-        value={useMemo(() => ({ data: initialPageData }), [initialPageData])}
-      >
-        <UnheadProvider head={head}>
-          <RouterProvider router={router} />
-        </UnheadProvider>
-      </PageContext.Provider>
+      <UnheadProvider head={head}>
+        <RouterProvider router={router} />
+      </UnheadProvider>
     </ThemeContext.Provider>
   );
 }
