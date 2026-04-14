@@ -18,6 +18,7 @@ import { importStatementRegex } from '../constants';
 import { parseToc } from '../mdx/remarkPlugins/toc';
 import { flattenMdxContent } from '../utils';
 import { applyReplaceRules } from '../utils/applyReplaceRules';
+import { FRAMEWORK_FALLBACK_404_PAGE_NAME } from './RoutePage';
 import type { RouteService } from './RouteService';
 
 function applyReplaceRulesToNestedObject(
@@ -366,6 +367,18 @@ async function getPageIndexInfoByRoute(
       .split(path.sep)
       .join('/'),
   };
+
+  if (route.pageName === FRAMEWORK_FALLBACK_404_PAGE_NAME) {
+    return {
+      ...defaultIndexInfo,
+      title: '404',
+      frontmatter: {
+        pageType: '404',
+      },
+      _relativePath: route.relativePath,
+    } satisfies PageIndexInfo;
+  }
+
   if (!MDX_OR_MD_REGEXP.test(route.absolutePath)) {
     return defaultIndexInfo;
   }

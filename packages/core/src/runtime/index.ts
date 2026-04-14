@@ -26,9 +26,19 @@ export {
 export { useSite } from './hooks/useSite';
 export { useVersion } from './hooks/useVersion';
 export { useWindowSize } from './hooks/useWindowSize';
-export { initPageData, warmPageData } from './initPageData';
+export { initPageData } from './initPageData';
 export { NoSSR } from './NoSSR';
-export { isActive, pathnameToRouteService, preloadLink } from './route';
+export {
+  isActive,
+  pathnameToRouteService,
+  preloadLink,
+} from './pathnameToRouteService';
+export {
+  createRspressBrowserRouter,
+  createRspressStaticRouter,
+  createStaticHandler,
+  StaticRouterProvider,
+} from './router';
 export {
   addLeadingSlash,
   addTrailingSlash,

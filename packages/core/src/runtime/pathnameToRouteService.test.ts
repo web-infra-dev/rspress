@@ -1,5 +1,9 @@
 import { describe, expect, it, rs } from '@rstest/core';
-import { isActive, matchPath, pathnameToRouteService } from './route';
+import {
+  isActive,
+  matchPath,
+  pathnameToRouteService,
+} from './pathnameToRouteService';
 
 rs.mock('virtual-routes', () => {
   const element = rs.fn();
@@ -155,6 +159,9 @@ describe('pathnameToRouteService', () => {
       `"/"`,
     );
     expect(pathnameToRouteService('/index.md')?.path).toMatchInlineSnapshot(
+      `undefined`,
+    );
+    expect(pathnameToRouteService('/404')?.path).toMatchInlineSnapshot(
       `undefined`,
     );
   });

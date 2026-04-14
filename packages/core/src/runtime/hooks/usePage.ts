@@ -2,7 +2,7 @@ import type { PageDataLegacy } from '@rspress/shared';
 import { createContext, useContext } from 'react';
 
 interface IPageContext {
-  data: PageDataLegacy['page'];
+  data?: PageDataLegacy['page'];
   setData?: (data: PageDataLegacy['page']) => void;
 }
 
@@ -10,6 +10,9 @@ export const PageContext = createContext<IPageContext>({} as IPageContext);
 
 export function usePage(): { page: PageDataLegacy['page'] } {
   const ctx = useContext(PageContext);
+  if (!ctx.data) {
+    throw new Error('usePage must be used when page data is available');
+  }
   return {
     page: ctx.data,
   };

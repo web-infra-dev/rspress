@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { isActive } from '../route';
+import { isActive } from '../pathnameToRouteService';
 
 export const useActiveMatcher = () => {
   const { pathname: rawPathname } = useLocation();

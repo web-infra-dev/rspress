@@ -1,12 +1,7 @@
 import { PageContext, useLocation } from '@rspress/core/runtime';
 import { Layout, Root } from '@theme';
-import React, { useContext, useLayoutEffect } from 'react';
+import React, { useContext } from 'react';
 import globalComponents from 'virtual-global-components';
-import {
-  consumeCachedPageData,
-  initPageData,
-  setCurrentPageData,
-} from './initPageData';
 
 enum QueryStatus {
   Show = '1',
@@ -14,27 +9,10 @@ enum QueryStatus {
 }
 
 export function App() {
-  const { setData: setPageData, data } = useContext(PageContext);
-  const { pathname, search } = useLocation();
-  useLayoutEffect(() => {
-    const cached = consumeCachedPageData(pathname);
-    if (cached) {
-      setPageData?.(cached);
-      return;
-    }
-    async function refetchData() {
-      try {
-        const pageData = await initPageData(pathname);
-        setCurrentPageData(pathname, pageData);
-        setPageData?.(pageData);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    refetchData();
-  }, [pathname, setPageData]);
+  const { data } = useContext(PageContext);
+  const { search } = useLocation();
 
-  // during csr, data can be null because of using useLayoutEffect to update data
+  // during csr, data can be null because of router loading boundaries
   if (!data) {
     return <></>;
   }

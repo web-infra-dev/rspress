@@ -1,42 +1,49 @@
 import {
-  PageContext,
-  pathnameToRouteService,
+  createRspressStaticRouter,
+  createStaticHandler,
   removeTrailingSlash,
+  StaticRouterProvider,
   ThemeContext,
   withBase,
 } from '@rspress/core/runtime';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import { renderToMarkdownString } from 'react-render-to-markdown';
-import { StaticRouter } from 'react-router-dom';
-import { App } from './App';
-import { initPageData } from './initPageData';
+import { routes } from 'virtual-routes';
 
 const DEFAULT_THEME = 'light';
-
-async function preloadRoute(pathname: string) {
-  const route = pathnameToRouteService(pathname);
-  await route?.preload();
-}
 
 export async function render(
   routePath: string,
   head: Unhead,
 ): Promise<{ appMd: string }> {
-  const initialPageData = await initPageData(routePath);
-  await preloadRoute(routePath);
+  const basename = removeTrailingSlash(withBase('/'));
+  const dataRoutes = [
+    {
+      id: 'rspress-app-shell',
+      path: '/',
+      children: routes.map((route, index) => ({
+        id: `rspress-route-${index}`,
+        path: route.path,
+        loader: route.loader,
+      })),
+    },
+  ];
+  const handler = createStaticHandler(dataRoutes, { basename });
+  const context = await handler.query(
+    new Request(`http://rspress.local${withBase(routePath)}`),
+  );
+
+  if (context instanceof Response) {
+    throw new Error(`Unexpected static router response: ${context.status}`);
+  }
+
+  const router = createRspressStaticRouter(routes, context);
 
   const appMd = await renderToMarkdownString(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>
-      <PageContext.Provider value={{ data: initialPageData }}>
-        <StaticRouter
-          location={withBase(routePath)}
-          basename={removeTrailingSlash(withBase('/'))}
-        >
-          <UnheadProvider value={head}>
-            <App />
-          </UnheadProvider>
-        </StaticRouter>
-      </PageContext.Provider>
+      <UnheadProvider value={head}>
+        <StaticRouterProvider router={router} context={context} />
+      </UnheadProvider>
     </ThemeContext.Provider>,
   );
 
@@ -45,4 +52,4 @@ export async function render(
   };
 }
 
-export { routes } from 'virtual-routes';
+export { routes };

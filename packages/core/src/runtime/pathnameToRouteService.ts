@@ -40,6 +40,14 @@ export function matchPath(
   pattern: string,
   pathname: string,
 ): { path: string } | null {
+  if (pattern === '*') {
+    return { path: pattern };
+  }
+
+  if (pattern === '/' && normalizeRoutePath(pathname) !== '/') {
+    return null;
+  }
+
   // Normalize both pattern and pathname for comparison
   // Always add trailing slash for consistent comparison
   const normalizedPattern = normalizeRoutePath(pattern);
@@ -60,17 +68,28 @@ export function matchPath(
   return null;
 }
 
-// Sort routes by path length (longest first) to match most specific routes first
-const sortedRoutes = [...routes].sort((a, b) => {
-  const pathA = a.path || '';
-  const pathB = b.path || '';
-  return pathB.length - pathA.length;
-});
+// Sort routes by path length (longest first) to match most specific routes first.
+// Keep this lazy to avoid touching virtual-routes during module initialization.
+let sortedRoutes: Route[] | undefined;
+
+function getSortedRoutes() {
+  if (sortedRoutes) {
+    return sortedRoutes;
+  }
+
+  sortedRoutes = [...routes].sort((a, b) => {
+    const pathA = a.path || '';
+    const pathB = b.path || '';
+    return pathB.length - pathA.length;
+  });
+
+  return sortedRoutes;
+}
 
 /**
  * Simple implementation of matchRoutes to find matching routes
  * Better performance alternative of `import { matchRoutes } from 'react-router-dom'`
- * @param _routes - Array of routes (unused, uses pre-sorted sortedRoutes)
+ * @param _routes - Array of routes (unused, uses lazily sorted routes)
  * @param pathname - The pathname to match
  * @returns Array of matched routes with route object, or null if no match
  */
@@ -78,7 +97,7 @@ function matchRoutes(
   _routes: Route[],
   pathname: string,
 ): Array<{ route: Route }> | null {
-  for (const route of sortedRoutes) {
+  for (const route of getSortedRoutes()) {
     const routePath = route.path || '';
     const match = matchPath(routePath, pathname);
 
