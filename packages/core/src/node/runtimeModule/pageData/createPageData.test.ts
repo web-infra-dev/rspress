@@ -62,6 +62,7 @@ describe('createPageData', () => {
     expect(result.pageData.pages).toMatchInlineSnapshot(`
       [
         {
+          "_relativePath": "a.mdx",
           "description": undefined,
           "frontmatter": {
             "__content": undefined,
@@ -73,6 +74,7 @@ describe('createPageData', () => {
           "version": "",
         },
         {
+          "_relativePath": "__rspress_internal__/404",
           "frontmatter": {
             "pageType": "404",
           },

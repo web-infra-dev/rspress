@@ -212,7 +212,10 @@ export class RouteService {
     const existingRoutePaths = new Set(this.routeData.keys());
 
     const versions = this.#defaultVersion
-      ? [this.#defaultVersion, ...this.#versions.filter(v => v !== this.#defaultVersion)]
+      ? [
+          this.#defaultVersion,
+          ...this.#versions.filter(v => v !== this.#defaultVersion),
+        ]
       : [''];
     const langs = this.#defaultLang
       ? [this.#defaultLang, ...this.#langs.filter(l => l !== this.#defaultLang)]
@@ -220,7 +223,8 @@ export class RouteService {
 
     for (const version of versions) {
       for (const lang of langs) {
-        const versionPrefix = version && version !== this.#defaultVersion ? `/${version}` : '';
+        const versionPrefix =
+          version && version !== this.#defaultVersion ? `/${version}` : '';
         const langPrefix = lang && lang !== this.#defaultLang ? `/${lang}` : '';
         const routePath = `${versionPrefix}${langPrefix}/404`;
 

@@ -1,16 +1,16 @@
 import {
-  PageContext,
   createRspressBrowserRouter,
-  removeTrailingSlash,
+  PageContext,
   RouterProvider,
+  removeTrailingSlash,
   ThemeContext,
   withBase,
 } from '@rspress/core/runtime';
 import { useThemeState } from '@theme';
 import { createHead, UnheadProvider } from '@unhead/react/client';
 import { useMemo } from 'react';
-import type { Page } from './initPageData';
 import { routes } from 'virtual-routes';
+import type { Page } from './initPageData';
 
 const head = createHead();
 
@@ -32,7 +32,9 @@ export function ClientApp({
     <ThemeContext.Provider
       value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}
     >
-      <PageContext.Provider value={useMemo(() => ({ data: initialPageData }), [initialPageData])}>
+      <PageContext.Provider
+        value={useMemo(() => ({ data: initialPageData }), [initialPageData])}
+      >
         <UnheadProvider head={head}>
           <RouterProvider router={router} />
         </UnheadProvider>

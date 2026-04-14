@@ -6,6 +6,7 @@ export {
   normalizeHref,
 } from '@rspress/shared';
 export { Head, useHead } from '@unhead/react';
+export * from 'react-router-dom';
 export { Content } from './Content';
 export { useActiveMatcher } from './hooks/useActiveMatcher';
 export { ThemeContext, useDark } from './hooks/useDark';
@@ -28,12 +29,16 @@ export { useWindowSize } from './hooks/useWindowSize';
 export { initPageData } from './initPageData';
 export { NoSSR } from './NoSSR';
 export {
+  isActive,
+  pathnameToRouteService,
+  preloadLink,
+} from './pathnameToRouteService';
+export {
   createRspressBrowserRouter,
   createRspressStaticRouter,
-  StaticRouterProvider,
   createStaticHandler,
+  StaticRouterProvider,
 } from './router';
-export { isActive, pathnameToRouteService, preloadLink } from './pathnameToRouteService';
 export {
   addLeadingSlash,
   addTrailingSlash,
@@ -47,5 +52,3 @@ export {
   routePathToMdPath,
   withBase,
 } from './utils';
-export * from 'react-router-dom';
-

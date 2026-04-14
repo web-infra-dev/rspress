@@ -1,9 +1,10 @@
 import type { Route } from '@rspress/shared';
 import {
   createBrowserRouter,
-  useMatches,
-  type StaticHandlerContext,
   RouterProvider,
+  type StaticHandlerContext,
+  useLocation,
+  useMatches,
 } from 'react-router-dom';
 
 // This is a workaround for react-router-dom v6
@@ -16,6 +17,9 @@ import {
 import { App } from './App';
 import { PageContext } from './hooks/usePage';
 import type { Page } from './initPageData';
+import { initPageData } from './initPageData';
+import { pathnameToRouteService } from './pathnameToRouteService';
+import { removeBase } from './utils';
 
 function AppShell() {
   const matches = useMatches();
@@ -29,6 +33,13 @@ function AppShell() {
   );
 }
 
+function AliasRouteElement() {
+  const { pathname } = useLocation();
+  const matchedRoute = pathnameToRouteService(pathname);
+
+  return matchedRoute?.element ?? null;
+}
+
 function toRouteObject(route: Route, index: number) {
   return {
     id: `rspress-route-${index}`,
@@ -38,33 +49,33 @@ function toRouteObject(route: Route, index: number) {
   };
 }
 
+function createAppShellRoute(routes: Route[]) {
+  return {
+    id: 'rspress-app-shell',
+    path: '/',
+    element: <AppShell />,
+    children: [
+      ...routes.map((route, index) => toRouteObject(route, index)),
+      {
+        id: 'rspress-route-alias',
+        path: '*',
+        loader: ({ request }: { request: Request }) =>
+          initPageData(removeBase(new URL(request.url).pathname)),
+        element: <AliasRouteElement />,
+      },
+    ],
+  };
+}
+
 export function createRspressBrowserRouter(routes: Route[], basename: string) {
-  return createBrowserRouter([
-    {
-      id: 'rspress-app-shell',
-      path: '/',
-      element: <AppShell />,
-      children: routes.map((route, index) => toRouteObject(route, index)),
-    },
-  ], { basename });
+  return createBrowserRouter([createAppShellRoute(routes)], { basename });
 }
 
 export function createRspressStaticRouter(
   routes: Route[],
   context: StaticHandlerContext,
 ) {
-  return createStaticRouter(
-    [
-      {
-        id: 'rspress-app-shell',
-        path: '/',
-        element: <AppShell />,
-        children: routes.map((route, index) => toRouteObject(route, index)),
-      },
-    ],
-    context,
-  );
+  return createStaticRouter([createAppShellRoute(routes)], context);
 }
 
-export { RouterProvider, StaticRouterProvider, createStaticHandler };
-
+export { createStaticHandler, RouterProvider, StaticRouterProvider };

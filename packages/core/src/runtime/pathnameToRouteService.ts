@@ -40,6 +40,14 @@ export function matchPath(
   pattern: string,
   pathname: string,
 ): { path: string } | null {
+  if (pattern === '*') {
+    return { path: pattern };
+  }
+
+  if (pattern === '/' && normalizeRoutePath(pathname) !== '/') {
+    return null;
+  }
+
   // Normalize both pattern and pathname for comparison
   // Always add trailing slash for consistent comparison
   const normalizedPattern = normalizeRoutePath(pattern);

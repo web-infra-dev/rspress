@@ -108,7 +108,9 @@ export async function createPageData(context: FactoryContext): Promise<{
 
   // Run extendPageData hook in plugins
   await Promise.all(
-    sourceBackedPages.map(async pageData => pluginDriver.extendPageData(pageData)),
+    sourceBackedPages.map(async pageData =>
+      pluginDriver.extendPageData(pageData),
+    ),
   );
 
   const filepaths: string[] = [];
