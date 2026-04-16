@@ -1,5 +1,5 @@
 configDependencies:
-  pnpm-plugin-skills: 0.5.0+sha512-wgwqHeVDNe7KQ7sHuM1uL+/tmR7FmDJJBZNR6sHu3KTCO9K8OGdYGoPQzJSA8d2KxigjccFc7uPMSPfZ5WXbCg==
+  pnpm-plugin-skills: 0.6.2+sha512-76WjQLmPHi91jN3tyV/nAKx1FxrVtH7+2pyf6TJQRiS/1BwZUqosaiWdvR71HZBNBr0JSo1FN/ZV3f0qbWJdLw==
 
 packages:
   - scripts/config
