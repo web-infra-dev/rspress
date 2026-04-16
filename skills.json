@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/skills-package-manager@0.6.1/skills.schema.json",
+  "$schema": "https://unpkg.com/skills-package-manager@0.6.2/skills.schema.json",
   "installDir": ".agents/skills",
   "linkTargets": [".cursor/skills"],
   "pnpmPlugin": {
