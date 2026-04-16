@@ -13,7 +13,7 @@
     "format": "prettier . --write && biome check --write && heading-case --write",
     "generate-release-pr": "zx scripts/generateReleasePr.mjs",
     "lint": "biome check . --diagnostic-level=warn && prettier . --check && pnpm run check-spell",
-    "prepare": "pnpm run build && simple-git-hooks",
+    "prepare": "skills-package-manager install && pnpm run build && simple-git-hooks",
     "preview:website": "cd website && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:e2e": "playwright test",
@@ -58,6 +58,7 @@
     "prettier": "3.7.4",
     "prettier-plugin-packagejson": "^3.0.2",
     "simple-git-hooks": "^2.13.1",
+    "skills-package-manager": "0.7.0",
     "tree-kill": "^1.2.2",
     "zx": "^8.8.5"
   },

@@ -1,6 +1,3 @@
-configDependencies:
-  pnpm-plugin-skills: 0.6.2+sha512-76WjQLmPHi91jN3tyV/nAKx1FxrVtH7+2pyf6TJQRiS/1BwZUqosaiWdvR71HZBNBr0JSo1FN/ZV3f0qbWJdLw==
-
 packages:
   - scripts/config
   - packages/**

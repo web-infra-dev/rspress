@@ -71,6 +71,9 @@ importers:
       simple-git-hooks:
         specifier: ^2.13.1
         version: 2.13.1
+      skills-package-manager:
+        specifier: 0.7.0
+        version: 0.7.0
       tree-kill:
         specifier: ^1.2.2
         version: 1.2.2
@@ -6650,6 +6653,10 @@ packages:
     resolution: {integrity: sha512-WszCLXwT4h2k1ufIXAgsbiTOazqqevFCIncOuUBZJ91DdvWcC5+OFkluWRQPrcuSYd8fjq+o2y1QfWqYMoAToQ==}
     hasBin: true
 
+  skills-package-manager@0.7.0:
+    resolution: {integrity: sha512-PZm6xOTWwodNQEABzWIFZZj8WCFUEAVdlOzhGMm+21WBJE1W5ma/AlmHPwRxcvL1l39EjhP0EIiET4XHAjYEdw==}
+    hasBin: true
+
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -12997,6 +13004,8 @@ snapshots:
   signal-exit@4.1.0: {}
 
   simple-git-hooks@2.13.1: {}
+
+  skills-package-manager@0.7.0: {}
 
   slash@3.0.0: {}
 
