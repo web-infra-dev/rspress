@@ -4,13 +4,17 @@
  * @license MIT
  */
 import { useI18n, useSite } from '@rspress/core/runtime';
-import { IconDown, IconExternalLink, IconLink } from '@rspress/core/theme';
+import {
+  copyToClipboard,
+  IconDown,
+  IconExternalLink,
+  IconLink,
+  SvgWrapper,
+} from '@rspress/core/theme';
 import type React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 import './LlmsViewOptions.scss';
-import { copyToClipboard } from './copy';
 import { useMdUrl } from './useMdUrl';
 
 type Option =
