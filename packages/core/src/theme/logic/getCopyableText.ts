@@ -22,7 +22,9 @@ export function getCopyableText(
 
   let text = '';
   let node = walk.nextNode();
-  const seenListItems = new WeakSet<HTMLElement>();
+  const markdownState: MarkdownState = {
+    seenNodes: new WeakSet<HTMLElement>(),
+  };
   let previousBlock: HTMLElement | null = null;
 
   while (node) {
@@ -35,7 +37,6 @@ export function getCopyableText(
       ignoreSelectors.some(selector => parentElement.closest(selector));
 
     if (!shouldIgnore) {
-      const listItem = parentElement.closest('li');
       const currentBlock = getBlockElement(parentElement, element);
 
       if (
@@ -47,10 +48,7 @@ export function getCopyableText(
         text += '\n';
       }
 
-      if (listItem && !seenListItems.has(listItem)) {
-        text += getListItemPrefix(listItem);
-        seenListItems.add(listItem);
-      }
+      text += toMarkdown(parentElement, markdownState);
 
       text += node.nodeValue ?? '';
       previousBlock = currentBlock;
@@ -66,7 +64,9 @@ function getBlockElement(
   element: HTMLElement,
   rootElement: HTMLElement,
 ): HTMLElement | null {
-  const blockElement = element.closest('li, p, div, pre, blockquote');
+  const blockElement = element.closest<HTMLElement>(
+    'li, p, div, pre, blockquote',
+  );
   if (!blockElement) {
     return null;
   }
@@ -74,7 +74,36 @@ function getBlockElement(
   return rootElement.contains(blockElement) ? blockElement : null;
 }
 
-function getListItemPrefix(listItem: HTMLElement) {
+interface MarkdownState {
+  seenNodes: WeakSet<HTMLElement>;
+}
+
+// This is a lightweight markdown adapter for DOM-based copy text extraction.
+// We currently only cover the minimum node types needed by Prompt copy.
+// If Prompt copy needs broader markdown fidelity in the future, replace this
+// with a dedicated renderToMarkdownString-style conversion instead of growing
+// ad-hoc rules here indefinitely.
+function toMarkdown(node: Node, state: MarkdownState) {
+  if (node.nodeType !== Node.ELEMENT_NODE) {
+    return '';
+  }
+
+  const element = node as HTMLElement;
+  const listItem = element.closest('li');
+
+  if (listItem && !state.seenNodes.has(listItem)) {
+    state.seenNodes.add(listItem);
+    return toMarkdownListItem(listItem);
+  }
+
+  if (element.tagName === 'BR') {
+    return '\n';
+  }
+
+  return '';
+}
+
+function toMarkdownListItem(listItem: HTMLElement) {
   const list = listItem.parentElement;
   if (!list) {
     return '- ';
