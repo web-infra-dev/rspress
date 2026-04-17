@@ -50,12 +50,12 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "2.0.0-rc.1",
+    "@rsbuild/core": "2.0.0-rc.4",
     "@shikijs/rehype": "^4.0.2",
     "unified": "^11.0.5"
   },
   "devDependencies": {
-    "@rslib/core": "0.21.0",
+    "@rslib/core": "0.21.2",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.14",
