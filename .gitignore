@@ -13,6 +13,8 @@
 *.lcov
 lib-cov
 
+.husky
+
 node_modules/
 .npm
 .lock-wscript

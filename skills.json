@@ -1,4 +1,5 @@
 {
+  "$schema": "https://unpkg.com/skills-package-manager@0.7.0/skills.schema.json",
   "installDir": ".agents/skills",
   "linkTargets": [".cursor/skills"],
   "skills": {
