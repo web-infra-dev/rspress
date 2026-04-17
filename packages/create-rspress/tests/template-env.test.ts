@@ -14,10 +14,13 @@ describe('create-rspress template env types', () => {
   test('keeps the generated tsconfig scoped to docs, theme and rspress config', async () => {
     const tsconfigPath = path.join(templateCommonDir, 'tsconfig.json');
     const tsconfig = await readFile(tsconfigPath, 'utf8');
+    const tsconfigJson = JSON.parse(tsconfig) as { include?: string[] };
 
-    expect(tsconfig).toContain(
-      '"include": ["docs", "theme", "rspress.config.ts"]',
-    );
+    expect(tsconfigJson.include).toEqual([
+      'docs',
+      'theme',
+      'rspress.config.ts',
+    ]);
   });
 
   test('declares CSS and SSG_MD ambient types in the custom theme folder', async () => {
