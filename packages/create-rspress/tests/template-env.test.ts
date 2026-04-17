@@ -16,6 +16,9 @@ describe('create-rspress template env types', () => {
     const tsconfigPath = path.join(templateCommonDir, 'tsconfig.json');
     const tsconfig = await readFile(tsconfigPath, 'utf8');
     const parsedTsconfig = parseConfigFileTextToJson(tsconfigPath, tsconfig);
+
+    expect(parsedTsconfig.error).toBeUndefined();
+
     const tsconfigJson = parsedTsconfig.config as { include?: string[] };
 
     expect(tsconfigJson.include).toEqual([
