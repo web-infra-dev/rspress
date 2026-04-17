@@ -35,7 +35,7 @@
     "mdast-util-gfm": "^3.1.0",
     "mdast-util-to-hast": "^13.2.1",
     "picocolors": "^1.1.1",
-    "twoslash": "^0.3.6"
+    "twoslash": "^0.3.8"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.57.7",
@@ -45,7 +45,7 @@
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
     "@types/react": "^19.2.14",
-    "react": "^19.2.4",
+    "react": "^19.2.5",
     "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^5.8.2"
   },
