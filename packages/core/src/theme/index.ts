@@ -61,6 +61,7 @@ export {
   type PageTabsProps,
 } from './components/PageTabs/index';
 export { PrevNextPage } from './components/PrevNextPage/index';
+export { Prompt, type PromptProps } from './components/Prompt/index';
 export { ReadPercent } from './components/ReadPercent/index';
 export { useReadPercent } from './components/ReadPercent/useReadPercent';
 export { Root, type RootProps } from './components/Root/index';
@@ -117,6 +118,8 @@ export { DocLayout, type DocLayoutProps } from './layout/DocLayout';
 export { HomeLayout, type HomeLayoutProps } from './layout/HomeLayout/index';
 export { Layout, type LayoutProps } from './layout/Layout/index';
 export { NotFoundLayout } from './layout/NotFountLayout/index';
+export { copyToClipboard } from './logic/copyToClipboard';
+export { getCopyableText } from './logic/getCopyableText';
 // logic
 export { mergeRefs } from './logic/mergeRefs';
 export { useFullTextSearch } from './logic/useFullTextSearch';

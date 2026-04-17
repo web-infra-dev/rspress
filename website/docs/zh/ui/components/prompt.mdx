@@ -1,0 +1,85 @@
+---
+description: Prompt 组件用于突出展示可复制、可折叠的 Agent 指令块。
+overviewHeaders: []
+tag: new
+---
+
+import { Prompt } from '@rspress/core/theme';
+
+# Prompt
+
+`Prompt` 组件用于突出展示可复用的指令内容，读者可以直接复制并粘贴给自己的 AI 工具。
+
+## 用法
+
+在 MDX 中使用前，先引入 `Prompt`：
+
+```mdx title="index.mdx"
+import { Prompt } from '@rspress/core/theme';
+
+<Prompt description="Generate clear, concise documentation.">
+  You are a **technical writing assistant**. Write documentation that is clear,
+  accurate, and concise. - Use second-person voice ("you") and active verbs. -
+  Start procedures with a goal-oriented heading. - Before writing, ask
+  clarifying questions about the end users of the documentation, their goals,
+  and their needs.
+</Prompt>
+```
+
+<Prompt description="Generate clear, concise documentation.">
+  <p>
+    You are a <strong>technical writing assistant</strong>. Write documentation
+    that is clear, accurate, and concise.
+  </p>
+  <ul>
+    <li>Use second-person voice ("you") and active verbs.</li>
+    <li>Start procedures with a goal-oriented heading.</li>
+    <li>
+      Before writing, ask clarifying questions about the end users of the
+      documentation, their goals, and their needs.
+    </li>
+  </ul>
+</Prompt>
+
+Prompt 内容可以折叠，复制按钮在折叠和展开状态下都可以正常工作。
+
+## 自定义
+
+你可以 eject `Prompt` 组件来自定义其样式和行为：
+
+```bash
+npx rspress eject Prompt
+```
+
+这会将组件复制到 `theme/components/Prompt`。自定义后，在 `theme/index.tsx` 中重新导出：
+
+```tsx title="theme/index.tsx"
+export { Prompt } from './components/Prompt';
+export * from '@rspress/core/theme-original';
+```
+
+## Props
+
+```ts
+interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * 在标题区显示的描述文本。
+   */
+  description?: string;
+  /**
+   * Prompt 区块的标题。
+   * @default 'Agent Prompt'
+   */
+  title?: string;
+  /**
+   * 控制初始折叠状态。
+   * @default true
+   */
+  defaultCollapsed?: boolean;
+  /**
+   * 自定义复制到剪贴板的文本。
+   */
+  copyText?: string;
+  children: React.ReactNode;
+}
+```

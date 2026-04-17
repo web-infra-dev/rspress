@@ -4,12 +4,15 @@
  * @license MIT
  */
 import { useI18n } from '@rspress/core/runtime';
-import { IconCopy, IconSuccess } from '@rspress/core/theme';
+import {
+  copyToClipboard,
+  IconCopy,
+  IconSuccess,
+  SvgWrapper,
+} from '@rspress/core/theme';
 import { useCallback, useRef, useState } from 'react';
-import { SvgWrapper } from '../SvgWrapper';
 import './index.scss';
 import './LlmsCopyButton.scss';
-import { copyToClipboard } from './copy';
 import { useMdUrl } from './useMdUrl';
 
 export interface LlmsCopyButtonProps
@@ -52,9 +55,11 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
         cache.get(url) ?? (await fetch(url).then(res => res.text()));
 
       cache.set(url, content);
-      await copyToClipboard(content);
-    } finally {
-      setLoading(false);
+      const isCopied = await copyToClipboard(content);
+      if (!isCopied) {
+        return;
+      }
+
       setFinished(true);
       if (timer.current) {
         clearTimeout(timer.current);
@@ -64,6 +69,8 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
         setFinished(false);
         timer.current = null;
       }, 500);
+    } finally {
+      setLoading(false);
     }
   }, [pathname]);
 

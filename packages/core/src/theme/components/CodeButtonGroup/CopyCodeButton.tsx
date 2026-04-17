@@ -1,5 +1,10 @@
-import { IconCopy, IconSuccess, SvgWrapper } from '@rspress/core/theme';
-import copy from 'copy-to-clipboard';
+import {
+  copyToClipboard,
+  getCopyableText,
+  IconCopy,
+  IconSuccess,
+  SvgWrapper,
+} from '@rspress/core/theme';
 import { useRef } from 'react';
 import './CopyCodeButton.scss';
 import { useI18n } from '@rspress/core/runtime';
@@ -7,31 +12,20 @@ import { useI18n } from '@rspress/core/runtime';
 const timeoutIdMap: Map<HTMLElement, NodeJS.Timeout> = new Map();
 const COPIED_CLASS = 'rp-code-copy-button--copied';
 
-function copyCode(
+async function copyCode(
   codeBlockElement: HTMLElement | null,
   copyButtonElement: HTMLButtonElement | null,
 ) {
-  let text = '';
   if (!codeBlockElement) {
     return;
   }
-  const walk = document.createTreeWalker(
-    codeBlockElement,
-    NodeFilter.SHOW_TEXT,
-    null,
-  );
-  let node = walk.nextNode();
-  while (node) {
-    if (
-      !node.parentElement!.classList.contains('linenumber') &&
-      !node.parentElement!.closest('.rp-copy-ignore')
-    ) {
-      text += node.nodeValue;
-    }
-    node = walk.nextNode();
-  }
 
-  const isCopied = copy(text);
+  const text = getCopyableText(codeBlockElement, {
+    ignoreClasses: ['linenumber'],
+    ignoreSelectors: ['.rp-copy-ignore'],
+  });
+
+  const isCopied = await copyToClipboard(text);
 
   if (isCopied && copyButtonElement) {
     copyButtonElement.classList.add(COPIED_CLASS);
@@ -56,7 +50,9 @@ export function CopyCodeButton({
   return (
     <button
       className="rp-code-button-group__button rp-code-copy-button"
-      onClick={() => copyCode(codeBlockRef.current, copyButtonRef.current!)}
+      onClick={() => {
+        void copyCode(codeBlockRef.current, copyButtonRef.current);
+      }}
       ref={copyButtonRef}
       title={t('codeButtonGroupCopyButtonText')}
     >

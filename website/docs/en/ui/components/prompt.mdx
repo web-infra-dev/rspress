@@ -1,0 +1,85 @@
+---
+description: Prompt component for standout, copyable agent instructions with a collapsible layout.
+overviewHeaders: []
+tag: new
+---
+
+import { Prompt } from '@rspress/core/theme';
+
+# Prompt
+
+`Prompt` highlights reusable instructions that readers can copy and paste directly into their AI tools.
+
+## Usage
+
+Import `Prompt` in your MDX file before using it:
+
+```mdx title="index.mdx"
+import { Prompt } from '@rspress/core/theme';
+
+<Prompt description="Generate clear, concise documentation.">
+  You are a **technical writing assistant**. Write documentation that is clear,
+  accurate, and concise. - Use second-person voice ("you") and active verbs. -
+  Start procedures with a goal-oriented heading. - Before writing, ask
+  clarifying questions about the end users of the documentation, their goals,
+  and their needs.
+</Prompt>
+```
+
+<Prompt description="Generate clear, concise documentation.">
+  <p>
+    You are a <strong>technical writing assistant</strong>. Write documentation
+    that is clear, accurate, and concise.
+  </p>
+  <ul>
+    <li>Use second-person voice ("you") and active verbs.</li>
+    <li>Start procedures with a goal-oriented heading.</li>
+    <li>
+      Before writing, ask clarifying questions about the end users of the
+      documentation, their goals, and their needs.
+    </li>
+  </ul>
+</Prompt>
+
+The prompt content can be folded, while the copy button keeps working in both states.
+
+## Customization
+
+You can eject the `Prompt` component to customize its styles and behavior:
+
+```bash
+npx rspress eject Prompt
+```
+
+This copies the component into `theme/components/Prompt`. After customization, re-export it in your `theme/index.tsx`:
+
+```tsx title="theme/index.tsx"
+export { Prompt } from './components/Prompt';
+export * from '@rspress/core/theme-original';
+```
+
+## Props
+
+```ts
+interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * Inline description rendered in the prompt header.
+   */
+  description?: string;
+  /**
+   * Header label for the prompt block.
+   * @default 'Agent Prompt'
+   */
+  title?: string;
+  /**
+   * Controls the initial folded state.
+   * @default true
+   */
+  defaultCollapsed?: boolean;
+  /**
+   * Override text copied to the clipboard.
+   */
+  copyText?: string;
+  children: React.ReactNode;
+}
+```
