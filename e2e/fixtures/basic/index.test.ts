@@ -118,7 +118,8 @@ test.describe('CLI base option', async () => {
         element => element.getAttribute('href') ?? element.getAttribute('src'),
       ),
     );
-    expect(assetUrls.some(url => url?.startsWith(CLI_BASE))).toBe(true);
+    expect(assetUrls.length).toBeGreaterThan(0);
+    expect(assetUrls.every(url => url?.startsWith(CLI_BASE))).toBe(true);
   });
 });
 
