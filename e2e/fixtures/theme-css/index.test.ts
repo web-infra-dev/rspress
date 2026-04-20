@@ -25,7 +25,7 @@ test.describe('theme-css-order', async () => {
   });
 
   test('doc tables should keep a minimum cell width', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`, {
+    await page.goto(`http://localhost:${appPort}/prose/`, {
       waitUntil: 'networkidle',
     });
     const cell = page.locator('.rspress-doc table td').first();
