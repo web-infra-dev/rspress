@@ -49,26 +49,56 @@ In Rspress, in addition to declaring [nav](https://rspress.rs/api/config/config-
 
 ## Table
 
-| Header 1 | Header 2 |
-| -------- | -------- |
-| Data 1   | Data 2   |
-| Data 1   | Data 2   |
+| package              | v1  | v2  |
+| -------------------- | --- | --- |
+| `@rspack/core`       | 8   | 1   |
+| `@rspack/cli`        | 210 | 0   |
+| `@rspack/dev-server` | 192 | 1   |
+| `@rsbuild/core`      | 13  | 4   |
+
+| package              | v1  | v2  | v3  | v4  |
+| -------------------- | --- | --- | --- | --- |
+| `@rspack/core`       | 8   | 1   | 1   | 1   |
+| `@rspack/cli`        | 210 | 0   | 1   | 1   |
+| `@rspack/dev-server` | 192 | 1   | 1   | 1   |
+| `@rsbuild/core`      | 13  | 4   | 1   | 1   |
 
 <table>
   <thead>
     <tr>
-      <th>Header 1</th>
-      <th>Header 2</th>
+      <th>package</th>
+      <th>v1</th>
+      <th>v2</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Data 1</td>
-      <td>Data 2</td>
+      <td>
+        <code>@rspack/core</code>
+      </td>
+      <td>8</td>
+      <td>1</td>
     </tr>
     <tr>
-      <td>Data 1</td>
-      <td>Data 2</td>
+      <td>
+        <code>@rspack/cli</code>
+      </td>
+      <td>210</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>
+        <code>@rspack/dev-server</code>
+      </td>
+      <td>192</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>
+        <code>@rsbuild/core</code>
+      </td>
+      <td>13</td>
+      <td>4</td>
     </tr>
   </tbody>
 </table>
@@ -77,19 +107,36 @@ In Rspress, in addition to declaring [nav](https://rspress.rs/api/config/config-
   <table>
     <thead>
       <tr>
-        <th>Header 1</th>
-        <th>Header 2</th>
+        <th>package</th>
+        <th>v1</th>
+        <th>v2</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>Data 1</td>
-        <td>Data 2</td>
+        <td>
+          <code>@rspack/core</code>
+        </td>
+        <td>8</td>
+        <td>1</td>
       </tr>
       <tr>
-        <td>Data 1</td>
-        <td>Data 2</td>
+        <td>
+          <code>@rspack/cli</code>
+        </td>
+        <td>210</td>
+        <td>0</td>
       </tr>
     </tbody>
   </table>
 </div>
+
+## Long table
+
+| Skill                       | Package              | CLI command              | Description                                                                                                                                  |
+| --------------------------- | -------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Browser Automation          | `@midscene/web`      | `npx @midscene/web`      | Browser automation with three modes: default Puppeteer headless, `--bridge` to use your own Chrome, `--cdp <ws-endpoint>` to connect via CDP |
+| Desktop Computer Automation | `@midscene/computer` | `npx @midscene/computer` | macOS, Windows, Linux desktop control                                                                                                        |
+| Android Device Automation   | `@midscene/android`  | `npx @midscene/android`  | Android device control via ADB                                                                                                               |
+| iOS Device Automation       | `@midscene/ios`      | `npx @midscene/ios`      | iOS device control via WebDriverAgent                                                                                                        |
+| HarmonyOS Device Automation | `@midscene/harmony`  | `npx @midscene/harmony`  | HarmonyOS device control via HDC                                                                                                             |
