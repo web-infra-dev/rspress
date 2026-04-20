@@ -76,7 +76,7 @@ test.describe('basic test', async () => {
   });
 });
 
-test.describe('cli --base option', async () => {
+test.describe('CLI base option', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | undefined;
 
@@ -110,6 +110,15 @@ test.describe('cli --base option', async () => {
       waitUntil: 'networkidle',
     });
     await expect(page.locator('h1')).toContainText('Hello world');
+    const assetUrls = await page.evaluate(() =>
+      [
+        ...document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]'),
+        ...document.querySelectorAll<HTMLScriptElement>('script[src]'),
+      ].map(
+        element => element.getAttribute('href') ?? element.getAttribute('src'),
+      ),
+    );
+    expect(assetUrls.some(url => url?.startsWith(CLI_BASE))).toBe(true);
   });
 });
 
