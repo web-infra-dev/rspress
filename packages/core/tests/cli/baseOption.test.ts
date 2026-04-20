@@ -72,13 +72,12 @@ rs.mock('chokidar', () => ({
   },
 }));
 
-const cwd = process.cwd();
 const originalArgv = [...process.argv];
 const originalCwd = process.cwd();
 const originalNodeEnv = process.env.NODE_ENV;
 
 const createConfig = () => ({
-  root: path.join(cwd, 'docs'),
+  root: path.join(originalCwd, 'docs'),
   base: '/from-config/',
 });
 
@@ -91,11 +90,11 @@ describe('cli --base option', () => {
     rs.clearAllMocks();
     rs.resetModules();
     commandActions.clear();
-    process.chdir(cwd);
+    process.chdir(originalCwd);
 
     loadConfigFile.mockResolvedValue({
       config: createConfig(),
-      configFilePath: path.join(cwd, 'rspress.config.ts'),
+      configFilePath: path.join(originalCwd, 'rspress.config.ts'),
     });
     build.mockResolvedValue(undefined);
     dev.mockResolvedValue({
