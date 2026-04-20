@@ -21,11 +21,7 @@ type PageMeta = {
 export type Page = PageDataLegacy['page'];
 
 export async function initPageData(routePath: string): Promise<Page> {
-  const normalizedRoutePath = routePath
-    .replace(/\.html(?=#|\?|$)/, '')
-    .replace(/\/index(?=\/|$|#|\?)/, '/');
-
-  const matchedRoute = pathnameToRouteService(normalizedRoutePath);
+  const matchedRoute = pathnameToRouteService(routePath);
   if (matchedRoute) {
     // Preload route component
     const mod = await matchedRoute.preload();
@@ -33,24 +29,9 @@ export async function initPageData(routePath: string): Promise<Page> {
     const normalize = (p: string) =>
       // compat the path that has no / suffix and ignore case
       p.replace(/\/$/, '').toLowerCase();
-    const extractPageInfo: BaseRuntimePageInfo | undefined = pageData.pages.find(
-      page => isEqualPath(normalize(page.routePath), normalize(matchedRoute.path)),
-    );
-
-    if (!extractPageInfo) {
-      return {
-        pagePath: '',
-        pageType: '404',
-        routePath: '/404',
-        lang: siteData.lang || '',
-        frontmatter: {},
-        title: '404',
-        toc: [],
-        version: siteData.multiVersion?.default || '',
-        _filepath: '',
-        _relativePath: '',
-      };
-    }
+    const extractPageInfo: BaseRuntimePageInfo = pageData.pages.find(page =>
+      isEqualPath(normalize(page.routePath), normalize(matchedRoute.path)),
+    )!;
 
     // FIXME: when sidebar item is configured as link string, the sidebar text won't updated when page title changed
     // Reason: The sidebar item text depends on pageData, which is not updated when page title changed, because the pageData is computed once when build

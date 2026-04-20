@@ -1,4 +1,5 @@
 import {
+  createDataRoutes,
   createRspressStaticRouter,
   createStaticHandler,
   removeTrailingSlash,
@@ -17,17 +18,7 @@ export async function render(
   head: Unhead,
 ): Promise<{ appMd: string }> {
   const basename = removeTrailingSlash(withBase('/'));
-  const dataRoutes = [
-    {
-      id: 'rspress-app-shell',
-      path: '/',
-      children: routes.map((route, index) => ({
-        id: `rspress-route-${index}`,
-        path: route.path,
-        loader: route.loader,
-      })),
-    },
-  ];
+  const dataRoutes = createDataRoutes(routes);
   const handler = createStaticHandler(dataRoutes, { basename });
   const context = await handler.query(
     new Request(`http://rspress.local${withBase(routePath)}`),

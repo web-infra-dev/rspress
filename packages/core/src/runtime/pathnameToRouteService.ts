@@ -41,7 +41,7 @@ export function matchPath(
   pathname: string,
 ): { path: string } | null {
   if (pattern === '*') {
-    return { path: pattern };
+    return normalizeRoutePath(pathname) === '/404' ? { path: pattern } : null;
   }
 
   if (pattern === '/' && normalizeRoutePath(pathname) !== '/') {
