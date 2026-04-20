@@ -30,7 +30,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "feed": "^5.2.0"
+    "feed": "^5.2.1"
   },
   "devDependencies": {
     "@rslib/core": "0.21.2",
