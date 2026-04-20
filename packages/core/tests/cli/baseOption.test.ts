@@ -8,6 +8,7 @@ const serve = rs.fn();
 const watch = rs.fn();
 const commandActions = new Map<string, (...args: unknown[]) => unknown>();
 const parse = rs.fn();
+const CLI_BASE_OPTION = '/bar/';
 
 const cli = {
   version: () => cli,
@@ -71,7 +72,7 @@ rs.mock('chokidar', () => ({
   },
 }));
 
-const cwd = '/home/runner/work/rspress/rspress';
+const cwd = process.cwd();
 const originalArgv = [...process.argv];
 const originalCwd = process.cwd();
 const originalNodeEnv = process.env.NODE_ENV;
@@ -119,13 +120,13 @@ describe('cli --base option', () => {
     await loadCli();
 
     const action = commandActions.get('build [root]');
-    await action?.(undefined, { base: '/bar/' });
+    await action?.(undefined, { base: CLI_BASE_OPTION });
 
     expect(loadConfigFile).toHaveBeenCalledWith(undefined);
     expect(build).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
-          base: '/bar/',
+          base: CLI_BASE_OPTION,
         }),
       }),
     );
@@ -135,13 +136,13 @@ describe('cli --base option', () => {
     await loadCli();
 
     const action = commandActions.get('[root]');
-    await action?.(undefined, { base: '/bar/' });
+    await action?.(undefined, { base: CLI_BASE_OPTION });
 
     expect(loadConfigFile).toHaveBeenCalledWith(undefined);
     expect(dev).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
-          base: '/bar/',
+          base: CLI_BASE_OPTION,
         }),
       }),
     );
@@ -151,13 +152,13 @@ describe('cli --base option', () => {
     await loadCli();
 
     const action = commandActions.get('preview [root]');
-    await action?.(undefined, { base: '/bar/' });
+    await action?.(undefined, { base: CLI_BASE_OPTION });
 
     expect(loadConfigFile).toHaveBeenCalledWith(undefined);
     expect(serve).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
-          base: '/bar/',
+          base: CLI_BASE_OPTION,
         }),
       }),
     );
