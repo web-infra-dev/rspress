@@ -211,6 +211,7 @@
 
     &:where(th) {
       padding: 0.75rem 1.25rem;
+      min-width: 150px;
       font-weight: 600;
       font-size: 0.875rem;
       text-align: left;
@@ -225,6 +226,7 @@
 
     &:where(td) {
       padding: 0.75rem 1.25rem;
+      min-width: 150px;
       border-bottom: 1px solid var(--rp-c-divider-light);
 
       font-size: 0.875rem;

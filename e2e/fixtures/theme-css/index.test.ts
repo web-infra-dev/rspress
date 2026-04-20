@@ -23,4 +23,15 @@ test.describe('theme-css-order', async () => {
     const link = page.locator('.rspress-doc a:not(.rp-header-anchor)');
     await expect(link).toHaveCSS('color', 'rgb(255, 165, 0)');
   });
+
+  test('doc tables should keep a minimum cell width', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+    const cell = page.locator('.rspress-doc table td').first();
+    const headerCell = page.locator('.rspress-doc table th').first();
+
+    await expect(cell).toHaveCSS('min-width', '150px');
+    await expect(headerCell).toHaveCSS('min-width', '150px');
+  });
 });
