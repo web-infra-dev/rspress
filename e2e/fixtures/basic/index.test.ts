@@ -7,6 +7,8 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
+const CLI_BASE = '/bar/';
+
 test.describe('basic test', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
@@ -71,6 +73,43 @@ test.describe('basic test', async () => {
     });
     const link = page.locator('.rp-doc a').first();
     await expect(link).toHaveCSS('color', 'rgb(255, 165, 0)');
+  });
+});
+
+test.describe('cli --base option', async () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | undefined;
+
+  test.afterEach(async () => {
+    if (app) {
+      await killProcess(app);
+      app = undefined;
+    }
+  });
+
+  test('should serve dev pages from the CLI base path', async ({ page }) => {
+    const appDir = import.meta.dirname;
+    appPort = await getPort();
+    app = await runDevCommand(appDir, appPort, undefined, ['--base', CLI_BASE]);
+
+    await page.goto(`http://localhost:${appPort}${CLI_BASE}`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('h1')).toContainText('Hello world');
+  });
+
+  test('should serve preview pages from the CLI base path', async ({
+    page,
+  }) => {
+    const appDir = import.meta.dirname;
+    appPort = await getPort();
+    await runBuildCommand(appDir, undefined, ['--base', CLI_BASE]);
+    app = await runPreviewCommand(appDir, appPort, ['--base', CLI_BASE]);
+
+    await page.goto(`http://localhost:${appPort}${CLI_BASE}`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('h1')).toContainText('Hello world');
   });
 });
 
