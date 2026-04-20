@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@rsbuild/plugin-sass": "~1.5.1",
-    "@rsdoctor/rspack-plugin": "1.5.8",
+    "@rsdoctor/rspack-plugin": "1.5.9",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-llms": "workspace:*",
@@ -25,7 +25,7 @@
     "react-dom": "^19.2.5",
     "rsbuild-plugin-google-analytics": "^1.0.5",
     "rsbuild-plugin-open-graph": "^1.1.2",
-    "rspress-plugin-file-tree": "^1.0.4",
+    "rspress-plugin-file-tree": "^1.0.5",
     "rspress-plugin-font-open-sans": "^1.0.3",
     "rspress-plugin-og": "npm:@soonit/rspress-plugin-og@0.1.2",
     "tm-themes": "1.11.2",
