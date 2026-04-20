@@ -112,11 +112,15 @@ test.describe('CLI base option', async () => {
     await expect(page.locator('h1')).toContainText('Hello world');
     const assetUrls = await page.evaluate(() =>
       [
-        ...document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]'),
-        ...document.querySelectorAll<HTMLScriptElement>('script[src]'),
-      ].map(
-        element => element.getAttribute('href') ?? element.getAttribute('src'),
-      ),
+        ...[
+          ...document.querySelectorAll<HTMLLinkElement>(
+            'link[rel="stylesheet"]',
+          ),
+        ].map(element => element.getAttribute('href')),
+        ...[...document.querySelectorAll<HTMLScriptElement>('script[src]')].map(
+          element => element.getAttribute('src'),
+        ),
+      ].filter(Boolean),
     );
     expect(assetUrls.length).toBeGreaterThan(0);
     expect(assetUrls.every(url => url?.startsWith(CLI_BASE))).toBe(true);
