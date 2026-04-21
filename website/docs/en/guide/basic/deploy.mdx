@@ -135,7 +135,7 @@ jobs:
         run: pnpm install
       - name: Build with Rspress
         run: |
-          pnpm rspress build --base /<repository>/
+          pnpm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
