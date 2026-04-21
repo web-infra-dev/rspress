@@ -68,6 +68,8 @@ export default defineConfig({
 });
 ```
 
+更多说明可参考 [`base` 配置文档](/zh/api/config/config-basic#base)。
+
 ## 选择部署平台进行部署
 
 在完成了上面的配置之后，我们就可以将构建产物部署到服务器上了。你有很多种选择，比如 `Zephyr`、`GitHub Pages`、`Netlify`、`Vercel` 等等。这里我们以 `Zephyr`、`GitHub Pages` 和 `Netlify` 为例，来讲解如何部署。
@@ -133,7 +135,7 @@ jobs:
         run: pnpm install
       - name: Build with Rspress
         run: |
-          pnpm run build
+          pnpm rspress build --base /<repository>/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
