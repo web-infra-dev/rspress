@@ -28,7 +28,7 @@ cli
   .alias('dev')
   .option('--port [port]', 'port number')
   .option('--host [host]', 'hostname')
-  .option('--base [base]', 'deployment base path')
+  .option('--base <base>', 'deployment base path')
   .action(
     async (
       root,
@@ -123,7 +123,7 @@ cli
 
 cli
   .command('build [root]')
-  .option('--base [base]', 'deployment base path')
+  .option('--base <base>', 'deployment base path')
   .action(async (root, options) => {
     setNodeEnv('production');
     const cwd = process.cwd();
@@ -153,7 +153,7 @@ cli
   .alias('serve')
   .option('--port [port]', 'port number')
   .option('--host [host]', 'hostname')
-  .option('--base [base]', 'deployment base path')
+  .option('--base <base>', 'deployment base path')
   .action(
     async (
       root,
