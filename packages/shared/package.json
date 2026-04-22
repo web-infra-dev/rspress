@@ -50,7 +50,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "2.0.0-rc.4",
+    "@rsbuild/core": "~2.0.0",
     "@shikijs/rehype": "^4.0.2",
     "unified": "^11.0.5"
   },
