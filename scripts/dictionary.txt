@@ -87,6 +87,7 @@ mdxrs
 menlo
 metastring
 microhei
+midscene
 modularly
 napi
 networkidle
