@@ -65,7 +65,7 @@
   "dependencies": {
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@rsbuild/core": "2.0.0-rc.4",
+    "@rsbuild/core": "^2.0.0",
     "@rsbuild/plugin-react": "~1.4.6",
     "@rspress/shared": "workspace:*",
     "@shikijs/rehype": "^4.0.2",
