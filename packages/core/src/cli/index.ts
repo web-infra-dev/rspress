@@ -28,10 +28,16 @@ cli
   .alias('dev')
   .option('--port [port]', 'port number')
   .option('--host [host]', 'hostname')
+  .option('--base <base>', 'deployment base path')
   .action(
     async (
       root,
-      options?: { port?: number; host?: string; config?: string },
+      options?: {
+        port?: number;
+        host?: string;
+        base?: string;
+        config?: string;
+      },
     ) => {
       setNodeEnv('development');
       let isRestarting = false;
@@ -45,6 +51,10 @@ cli
         );
 
         config.root = resolveDocRoot(cwd, root, config.root);
+
+        if (options?.base) {
+          config.base = options.base;
+        }
 
         const docDirectory = config.root;
 
@@ -111,35 +121,48 @@ cli
     },
   );
 
-cli.command('build [root]').action(async (root, options) => {
-  setNodeEnv('production');
-  const cwd = process.cwd();
-  const { config, configFilePath } = await loadConfigFile(options.config);
+cli
+  .command('build [root]')
+  .option('--base <base>', 'deployment base path')
+  .action(async (root, options) => {
+    setNodeEnv('production');
+    const cwd = process.cwd();
+    const { config, configFilePath } = await loadConfigFile(options.config);
 
-  config.root = resolveDocRoot(cwd, root, config.root);
-  const docDirectory = config.root;
+    config.root = resolveDocRoot(cwd, root, config.root);
 
-  try {
-    await build({
-      docDirectory,
-      config,
-      configFilePath,
-    });
-  } catch (err) {
-    logger.error(err);
-    process.exit(1);
-  }
-});
+    if (options.base) {
+      config.base = options.base;
+    }
+    const docDirectory = config.root;
+
+    try {
+      await build({
+        docDirectory,
+        config,
+        configFilePath,
+      });
+    } catch (err) {
+      logger.error(err);
+      process.exit(1);
+    }
+  });
 
 cli
   .command('preview [root]')
   .alias('serve')
   .option('--port [port]', 'port number')
   .option('--host [host]', 'hostname')
+  .option('--base <base>', 'deployment base path')
   .action(
     async (
       root,
-      options?: { port?: number; host?: string; config?: string },
+      options?: {
+        port?: number;
+        host?: string;
+        base?: string;
+        config?: string;
+      },
     ) => {
       setNodeEnv('production');
       const cwd = process.cwd();
@@ -147,6 +170,10 @@ cli
       const { config, configFilePath } = await loadConfigFile(options?.config);
 
       config.root = resolveDocRoot(cwd, root, config.root);
+
+      if (options?.base) {
+        config.base = options.base;
+      }
 
       await serve({
         config,

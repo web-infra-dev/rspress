@@ -9,12 +9,7 @@ export interface CommandOptions {
   env: Record<string, string>;
 }
 
-export type Command =
-  | 'dev'
-  | `dev -- -c ${string}`
-  | 'build'
-  | `build -- -c ${string}`
-  | 'preview';
+export type Command = 'dev' | 'build' | 'preview';
 
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -23,10 +18,16 @@ export function sleep(ms: number) {
 export async function runNpmScript(
   commandName: Command,
   options: CommandOptions,
+  extraArgs: string[] = [],
 ) {
-  const command = commandName.split(' ')[0];
   return new Promise((resolve, reject) => {
-    const instance = spawn('npm', ['run', ...commandName.split(' ')], {
+    const commandArgs = ['run', commandName];
+
+    if (extraArgs.length) {
+      commandArgs.push('--', ...extraArgs);
+    }
+
+    const instance = spawn('npm', commandArgs, {
       cwd: options.appDir,
       env: {
         TEST: '1',
@@ -51,7 +52,7 @@ export async function runNpmScript(
         build: /File (web)/,
       };
 
-      if (markers[command].test(message)) {
+      if (markers[commandName].test(message)) {
         if (!didResolve) {
           didResolve = true;
           resolve(instance);
@@ -90,34 +91,55 @@ export async function runDevCommand(
   appDir: string,
   port: number,
   configFile?: string,
+  extraArgs: string[] = [],
 ) {
-  return runNpmScript(configFile ? `dev -- -c ${configFile}` : 'dev', {
-    appDir,
-    env: {
-      PORT: port.toString(),
-      // FIXME: Rspack's buildDependencies should collected the dependencies of rspress.config.ts, plugins change can not trigger the cache invalidate now
-      RSPRESS_PERSISTENT_CACHE: 'false',
+  return runNpmScript(
+    'dev',
+    {
+      appDir,
+      env: {
+        PORT: port.toString(),
+        // FIXME: Rspack's buildDependencies should collected the dependencies of rspress.config.ts, plugins change can not trigger the cache invalidate now
+        RSPRESS_PERSISTENT_CACHE: 'false',
 
-      // FIXME: disable lazy compilation to avoid windows flaky test in rspack prerelease
-      RSPRESS_LAZY_COMPILATION: 'false',
+        // FIXME: disable lazy compilation to avoid windows flaky test in rspack prerelease
+        RSPRESS_LAZY_COMPILATION: 'false',
+      },
     },
-  });
+    [...(configFile ? ['-c', configFile] : []), ...extraArgs],
+  );
 }
 
-export async function runBuildCommand(appDir: string, configFile?: string) {
-  return runNpmScript(configFile ? `build -- -c ${configFile}` : 'build', {
-    appDir,
-    env: {},
-  });
+export async function runBuildCommand(
+  appDir: string,
+  configFile?: string,
+  extraArgs: string[] = [],
+) {
+  return runNpmScript(
+    'build',
+    {
+      appDir,
+      env: {},
+    },
+    [...(configFile ? ['-c', configFile] : []), ...extraArgs],
+  );
 }
 
-export async function runPreviewCommand(appDir: string, port: number) {
-  return runNpmScript('preview', {
-    appDir,
-    env: {
-      PORT: port.toString(),
+export async function runPreviewCommand(
+  appDir: string,
+  port: number,
+  extraArgs: string[] = [],
+) {
+  return runNpmScript(
+    'preview',
+    {
+      appDir,
+      env: {
+        PORT: port.toString(),
+      },
     },
-  });
+    extraArgs,
+  );
 }
 
 export async function getPort() {

@@ -6,7 +6,7 @@
 
 `rspress dev` 命令用于启动一个本地开发服务器，提供一个文档进行预览和调试的开发环境。
 
-```bash
+```txt
 Usage: rspress dev [root] [options]
 
 Options:
@@ -14,6 +14,7 @@ Options:
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
   --port <port>         指定端口号
   --host <host>         指定 host
+  --base <base>         指定部署基础路径，并覆盖 config.base 配置
   -h, --help            显示命令帮助
 ```
 
@@ -21,12 +22,13 @@ Options:
 
 `rspress build` 命令用于构建出针对生产环境的文档产物。
 
-```bash
+```txt
 Usage: rspress build [root] [options]
 
 Options:
   root                  指定文档根目录，默认为当前工作目录下的 docs 目录，可选
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --base <base>         指定部署基础路径，并覆盖 config.base 配置
   -h, --help            显示命令帮助
 ```
 
@@ -34,7 +36,7 @@ Options:
 
 `rspress preview` 命令用于在本地预览 `rspress build` 命令构建出的产物。
 
-```bash
+```txt
 Usage: rspress preview [root] [options]
 
 Options:
@@ -42,6 +44,7 @@ Options:
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
   --port <port>         指定端口号
   --host <host>         指定 host
+  --base <base>         指定部署基础路径，并覆盖 config.base 配置
   -h, --help            显示命令帮助
 ```
 
@@ -49,7 +52,7 @@ Options:
 
 `rspress eject` 命令会将内置主题组件拷贝到你的项目中，便于自定义。
 
-```bash
+```txt
 Usage: rspress eject [component]
 
 Arguments:
