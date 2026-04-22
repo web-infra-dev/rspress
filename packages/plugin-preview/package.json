@@ -30,7 +30,7 @@
   "dependencies": {
     "@rsbuild/core": "^2.0.0",
     "@rsbuild/plugin-babel": "~1.1.2",
-    "@rsbuild/plugin-react": "~1.4.6",
+    "@rsbuild/plugin-react": "~2.0.0",
     "picocolors": "^1.1.1",
     "qrcode.react": "^4.2.0"
   },
