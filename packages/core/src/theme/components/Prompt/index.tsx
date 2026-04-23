@@ -189,8 +189,10 @@ export function Prompt({
             setCollapsed(value => !value);
           }}
           aria-expanded={!collapsed}
-          title={collapsed ? 'Expand prompt' : 'Collapse prompt'}
         >
+          <span className="rp-prompt__toggle-label">
+            {collapsed ? 'Expand' : 'Collapse'}
+          </span>
           <SvgWrapper
             icon={IconArrowDown}
             className={clsx(
