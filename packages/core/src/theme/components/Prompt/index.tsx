@@ -166,25 +166,6 @@ export function Prompt({
               />
               <span>{copied ? 'Copied' : 'Copy prompt'}</span>
             </button>
-            <button
-              type="button"
-              className="rp-prompt__action rp-prompt__action--toggle"
-              onClick={() => {
-                setCollapsed(value => !value);
-              }}
-              aria-expanded={!collapsed}
-              title={collapsed ? 'Expand prompt' : 'Collapse prompt'}
-            >
-              <span>{collapsed ? 'Expand' : 'Collapse'}</span>
-              <SvgWrapper
-                icon={IconArrowDown}
-                className={clsx(
-                  'rp-prompt__action-icon',
-                  'rp-prompt__toggle-icon',
-                  !collapsed && 'rp-prompt__toggle-icon--expanded',
-                )}
-              />
-            </button>
           </div>
         </div>
 
@@ -200,6 +181,24 @@ export function Prompt({
             </div>
           </div>
         </div>
+
+        <button
+          type="button"
+          className="rp-prompt__toggle"
+          onClick={() => {
+            setCollapsed(value => !value);
+          }}
+          aria-expanded={!collapsed}
+          title={collapsed ? 'Expand prompt' : 'Collapse prompt'}
+        >
+          <SvgWrapper
+            icon={IconArrowDown}
+            className={clsx(
+              'rp-prompt__toggle-icon',
+              !collapsed && 'rp-prompt__toggle-icon--expanded',
+            )}
+          />
+        </button>
       </div>
     </div>
   );
