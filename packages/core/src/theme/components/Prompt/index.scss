@@ -29,6 +29,7 @@
       transparent 60%
     );
   box-shadow: var(--rp-shadow-2);
+  transition: background 0.3s ease;
 }
 
 .rp-prompt__backdrop {
@@ -53,6 +54,7 @@
     );
   filter: blur(24px);
   opacity: 0.9;
+  transition: background 0.3s ease;
 }
 
 .rp-prompt__panel {
