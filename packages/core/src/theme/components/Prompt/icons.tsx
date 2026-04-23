@@ -31,22 +31,6 @@ export const AGENT_ICONS: AgentIcon[] = [
     ),
   },
   {
-    name: 'Robot',
-    color: '#22C55E',
-    svg: (
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M6 11h12a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6a2 2 0 012-2zm3-3h6v3H9V8zm3-5a2 2 0 012 2h-4a2 2 0 012-2zm-5 9a1 1 0 100 2 1 1 0 000-2zm10 0a1 1 0 100 2 1 1 0 000-2z"
-          fill="currentColor"
-        />
-      </svg>
-    ),
-  },
-  {
     name: 'Claude Code',
     color: '#D97757',
     svg: (
