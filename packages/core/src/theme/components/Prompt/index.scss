@@ -264,13 +264,25 @@
 }
 
 .rp-prompt__action--copied {
-  color: #047857;
-  border-color: color-mix(in srgb, #10b981 28%, transparent);
-  background: color-mix(in srgb, #10b981 8%, var(--rp-c-bg));
+  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+  border-color: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 40%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 14%,
+    var(--rp-c-bg)
+  );
   box-shadow: none;
 
   &:hover {
-    background: color-mix(in srgb, #10b981 16%, var(--rp-c-bg));
+    background: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 22%,
+      var(--rp-c-bg)
+    );
     box-shadow: none;
   }
 }
