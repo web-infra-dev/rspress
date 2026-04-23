@@ -5,7 +5,7 @@
   padding: 1px;
   overflow: hidden;
   isolation: isolate;
-  cursor: copy;
+  cursor: pointer;
   background:
     linear-gradient(
       135deg,
@@ -43,6 +43,11 @@
         transparent
       );
   transition: background 0.3s ease;
+
+  // &:hover {
+  // transform: translate(0, -1px);
+  // transition: transform 0.15s ease;
+  // }
 
   &:active {
     transform: scale(0.996);
@@ -157,17 +162,18 @@
   gap: 0.5rem;
   padding: 0.25rem 0.5rem 0.25rem 0.625rem;
   border-radius: 999px;
-  border: 1px solid
-    color-mix(
-      in srgb,
-      var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
-      transparent
-    );
-  background: color-mix(
-    in srgb,
-    var(--rp-prompt-accent, var(--rp-c-brand-light)) 8%,
-    var(--rp-c-bg)
-  );
+  // border: 1px solid
+  //   color-mix(
+  //     in srgb,
+  //     var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
+  //     transparent
+  //   );
+  background-color: rgba(0, 0, 0, 0.04);
+  // background: color-mix(
+  //   in srgb,
+  //   var(--rp-prompt-accent, var(--rp-c-brand-light)) 8%,
+  //   var(--rp-c-bg)
+  // );
   width: max-content;
   transition:
     border-color 0.3s ease,

@@ -74,7 +74,7 @@ export function Prompt({
   className,
   defaultCollapsed = true,
   description,
-  eyebrow = 'Agent',
+  eyebrow = 'For your Agent',
   icon = DEFAULT_TITLE_ICON,
   prompt,
   title = 'Agent Prompt',
@@ -194,25 +194,14 @@ export function Prompt({
             )}
           >
             <span className="rp-prompt__eyebrow">
-              {copied ? (
-                <>
-                  <span className="rp-prompt__icon">
-                    <SvgWrapper icon={IconSuccess} />
-                  </span>
-                  Copied!
-                </>
-              ) : (
-                <>
-                  <RotatingIcon index={iconIndex} fading={fading} />
-                  {eyebrow}
-                </>
-              )}
+              <RotatingIcon index={iconIndex} fading={fading} />
+              {eyebrow}
+              {/* {title} */}
             </span>
           </div>
           <div className="rp-prompt__header-row">
             <div className="rp-prompt__header-left">
               <div className="rp-prompt__title-with-icon">
-                <span className="rp-prompt__title-icon">{icon}</span>
                 <div className="rp-prompt__title">{title}</div>
               </div>
               {description ? (
@@ -239,7 +228,7 @@ export function Prompt({
                   icon={copied ? IconSuccess : IconCopy}
                   className="rp-prompt__action-icon"
                 />
-                <span>{copied ? 'Copied' : 'Copy'}</span>
+                <span>{copied ? 'Copied' : 'Copy Prompt'}</span>
               </button>
               <button
                 type="button"
@@ -251,9 +240,9 @@ export function Prompt({
                 aria-expanded={!collapsed}
                 title={collapsed ? 'Expand' : 'Collapse'}
               >
-                <span className="rp-prompt__action-toggle-label">
+                {/* <span className="rp-prompt__action-toggle-label">
                   {collapsed ? 'Expand' : 'Collapse'}
-                </span>
+                </span> */}
                 <SvgWrapper
                   icon={IconArrowDown}
                   className={clsx(
