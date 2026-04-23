@@ -45,6 +45,11 @@ export interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   title?: string;
   /**
+   * Eyebrow label shown above the title.
+   * @default 'For your agent'
+   */
+  eyebrow?: string;
+  /**
    * Controls the initial folded state.
    * @default true
    */
@@ -62,6 +67,7 @@ export function Prompt({
   copyText,
   defaultCollapsed = true,
   description,
+  eyebrow = 'For your agent',
   title = 'Agent Prompt',
   ...props
 }: PromptProps) {
@@ -130,7 +136,7 @@ export function Prompt({
           <div className="rp-prompt__header-main">
             <span className="rp-prompt__eyebrow">
               <RotatingIcon index={iconIndex} fading={fading} />
-              For your agent
+              {eyebrow}
             </span>
             <div className="rp-prompt__title-row">
               <div className="rp-prompt__title">{title}</div>
