@@ -41,7 +41,7 @@
     "@changesets/cli": "^2.30.0",
     "@playwright/test": "1.58.2",
     "@rspress/config": "workspace:*",
-    "@rstest/core": "^0.9.8",
+    "@rstest/core": "^0.9.9",
     "@types/cross-spawn": "^6.0.6",
     "@types/node": "^22.8.1",
     "check-dependency-version-consistency": "^5.0.1",
