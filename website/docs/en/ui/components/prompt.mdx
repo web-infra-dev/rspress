@@ -17,27 +17,27 @@ Import `Prompt` in your MDX file before using it:
 ```mdx title="index.mdx"
 import { Prompt } from '@rspress/core/theme';
 
-<Prompt description="Generate clear, concise documentation.">
-  You are a **technical writing assistant**. Write documentation that is clear,
-  accurate, and concise. - Use second-person voice ("you") and active verbs. -
-  Start procedures with a goal-oriented heading. - Before writing, ask
-  clarifying questions about the end users of the documentation, their goals,
-  and their needs.
+<Prompt description="Start a Rspress project in one shot.">
+  Create a Rspress project by following the official quick start guide at
+  https://rspress.rs/guide/start/getting-started.html. Scaffold the project with
+  `create rspress@latest`, install dependencies, start the dev server, and
+  verify the site renders correctly.
 </Prompt>
 ```
 
-<Prompt description="Generate clear, concise documentation.">
+<Prompt description="Start a Rspress project in one shot.">
   <p>
-    You are a <strong>technical writing assistant</strong>. Write documentation
-    that is clear, accurate, and concise.
+    Create a Rspress project by following the official quick start guide at{' '}
+    <a href="https://rspress.rs/guide/start/getting-started.html">
+      rspress.rs/guide/start/getting-started.html
+    </a>
+    .
   </p>
   <ul>
-    <li>Use second-person voice ("you") and active verbs.</li>
-    <li>Start procedures with a goal-oriented heading.</li>
-    <li>
-      Before writing, ask clarifying questions about the end users of the
-      documentation, their goals, and their needs.
-    </li>
+    <li>Scaffold the project with `create rspress@latest`.</li>
+    <li>Install dependencies.</li>
+    <li>Start the dev server.</li>
+    <li>Verify the site renders correctly.</li>
   </ul>
 </Prompt>
 
