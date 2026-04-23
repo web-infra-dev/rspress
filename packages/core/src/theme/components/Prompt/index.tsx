@@ -73,7 +73,7 @@ export function Prompt({
 }: PromptProps) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const [copied, setCopied] = useState(false);
-  const [iconIndex, setIconIndex] = useState(0);
+  const [iconIndex, setIconIndex] = useState(3);
   const [fading, setFading] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
