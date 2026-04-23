@@ -10,25 +10,37 @@
       135deg,
       color-mix(
         in srgb,
-        var(--rp-prompt-accent, var(--rp-c-brand-light)) 90%,
-        white 10%
+        var(--rp-prompt-accent, var(--rp-c-brand-light)) 100%,
+        transparent
       ),
       color-mix(
         in srgb,
-        var(--rp-prompt-accent, var(--rp-c-brand-dark)) 88%,
-        #9b8cff 12%
+        var(--rp-prompt-accent, var(--rp-c-brand)) 75%,
+        #a78bfa 25%
       )
     ),
     linear-gradient(
       135deg,
       color-mix(
         in srgb,
-        var(--rp-prompt-accent, var(--rp-c-brand)) 24%,
+        var(--rp-prompt-accent, var(--rp-c-brand)) 32%,
         transparent
       ),
-      transparent 60%
+      transparent 55%
     );
-  box-shadow: var(--rp-shadow-2);
+  box-shadow:
+    0 1px 2px
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand)) 8%,
+        transparent
+      ),
+    0 8px 24px -4px
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand)) 14%,
+        transparent
+      );
   transition: background 0.3s ease;
 }
 
@@ -64,8 +76,8 @@
   color: var(--rp-c-text-1);
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--rp-c-bg) 86%, transparent),
-    color-mix(in srgb, var(--rp-c-bg-soft) 94%, transparent)
+    color-mix(in srgb, var(--rp-c-bg) 92%, transparent),
+    color-mix(in srgb, var(--rp-c-bg-soft) 96%, transparent)
   );
   backdrop-filter: blur(12px);
 
@@ -99,18 +111,15 @@
 
 .rp-prompt__header {
   display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-  justify-content: space-between;
-
-  @media (max-width: 640px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.rp-prompt__header-main {
-  min-width: 0;
-  flex: 1;
+.rp-prompt__header-top {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .rp-prompt__eyebrow {
@@ -178,10 +187,6 @@
   display: flex;
   gap: 0.625rem;
   flex-wrap: wrap;
-
-  @media (max-width: 640px) {
-    width: 100%;
-  }
 }
 
 .rp-prompt__action {

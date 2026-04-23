@@ -133,23 +133,11 @@ export function Prompt({
       <div className="rp-prompt__backdrop" />
       <div className="rp-prompt__panel">
         <div className="rp-prompt__header">
-          <div className="rp-prompt__header-main">
+          <div className="rp-prompt__header-top">
             <span className="rp-prompt__eyebrow">
               <RotatingIcon index={iconIndex} fading={fading} />
               {eyebrow}
             </span>
-            <div className="rp-prompt__title-row">
-              <div className="rp-prompt__title">{title}</div>
-              {description ? (
-                <p
-                  className="rp-prompt__description"
-                  {...renderInlineMarkdown(description)}
-                />
-              ) : null}
-            </div>
-          </div>
-
-          <div className="rp-prompt__actions">
             <button
               type="button"
               className={clsx(
@@ -166,6 +154,15 @@ export function Prompt({
               />
               <span>{copied ? 'Copied' : 'Copy prompt'}</span>
             </button>
+          </div>
+          <div className="rp-prompt__title-row">
+            <div className="rp-prompt__title">{title}</div>
+            {description ? (
+              <p
+                className="rp-prompt__description"
+                {...renderInlineMarkdown(description)}
+              />
+            ) : null}
           </div>
         </div>
 
