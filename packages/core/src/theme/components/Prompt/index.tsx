@@ -12,7 +12,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { AGENT_ICONS } from './icons';
 import './index.scss';
 
-const ROTATE_INTERVAL = 6000;
+const ROTATE_INTERVAL = 4000;
 const FADE_DURATION = 400;
 
 function RotatingIcon({ index, fading }: { index: number; fading: boolean }) {
