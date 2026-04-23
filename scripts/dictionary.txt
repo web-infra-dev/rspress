@@ -182,3 +182,4 @@ zeabur
 zhihu
 zhong
 Zovn
+Gitea
