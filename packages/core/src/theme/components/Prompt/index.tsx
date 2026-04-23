@@ -13,6 +13,7 @@ import { AGENT_ICONS } from './icons';
 import './index.scss';
 
 const ROTATE_INTERVAL = 6000;
+const FADE_DURATION = 400;
 
 function RotatingIcon({ index, fading }: { index: number; fading: boolean }) {
   return (
@@ -77,7 +78,7 @@ export function Prompt({
       setTimeout(() => {
         setIconIndex(prev => (prev + 1) % AGENT_ICONS.length);
         setFading(false);
-      }, 200);
+      }, FADE_DURATION);
     }, ROTATE_INTERVAL);
     return () => clearInterval(timer);
   }, []);
