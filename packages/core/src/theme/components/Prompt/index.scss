@@ -121,6 +121,36 @@
   gap: 0.75rem;
 }
 
+.rp-prompt__header-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.rp-prompt__header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.rp-prompt__title-with-icon {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.rp-prompt__title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+}
+
 .rp-prompt__meta {
   display: inline-flex;
   align-items: center;
@@ -178,8 +208,11 @@
   transform: scale(0.85) translateY(3px);
 }
 
-.rp-prompt__title-row {
-  margin-top: 0.75rem;
+.rp-prompt__header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .rp-prompt__title {
@@ -340,43 +373,49 @@
 }
 
 .rp-prompt__action-icon {
-  width: 1rem;
-  height: 1rem;
+  width: 0.875rem;
+  height: 0.875rem;
   flex: 0 0 auto;
 }
 
-.rp-prompt__toggle {
+.rp-prompt__action-copy,
+.rp-prompt__action-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.375rem;
-  margin: 0.75rem auto 0;
-  padding: 0.375rem 0.875rem;
-  border: 1px solid color-mix(in srgb, var(--rp-c-divider) 55%, transparent);
+  height: 2.25rem;
+  padding: 0 0.75rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--rp-c-bg-soft) 86%, transparent);
+  border: 1px solid color-mix(in srgb, var(--rp-c-divider) 55%, transparent);
+  background: color-mix(in srgb, var(--rp-c-bg) 80%, transparent);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--rp-c-text-2);
+  color: var(--rp-c-text-1);
   cursor: pointer;
   transition:
-    color 0.2s ease,
-    background-color 0.2s ease,
+    transform 0.15s ease,
     border-color 0.2s ease,
-    transform 0.15s ease;
+    background-color 0.2s ease,
+    color 0.2s ease;
 
   &:hover {
-    color: var(--rp-c-text-0);
-    background: color-mix(in srgb, var(--rp-c-bg) 92%, transparent);
+    transform: translateY(-1px);
     border-color: color-mix(
       in srgb,
       var(--rp-prompt-accent, var(--rp-c-brand-light)) 50%,
       transparent
     );
+    background-color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 10%,
+      var(--rp-c-bg)
+    );
+    color: var(--rp-c-text-0);
   }
 
   &:active {
-    transform: scale(0.97);
+    transform: translateY(0) scale(0.97);
   }
 
   &:focus-visible {
@@ -390,11 +429,52 @@
   }
 }
 
-.rp-prompt__toggle-label {
-  line-height: 1;
+.rp-prompt__action-copy {
+  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+  border-color: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 8%,
+    var(--rp-c-bg)
+  );
+
+  &:hover {
+    background: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 16%,
+      var(--rp-c-bg)
+    );
+  }
 }
 
-.rp-prompt__toggle-icon {
+.rp-prompt__action-copy--copied {
+  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+  border-color: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 45%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 16%,
+    var(--rp-c-bg)
+  );
+}
+
+.rp-prompt__action-toggle {
+  color: var(--rp-c-text-2);
+  background: color-mix(in srgb, var(--rp-c-bg-soft) 86%, transparent);
+
+  &:hover {
+    color: var(--rp-c-text-0);
+  }
+}
+
+.rp-prompt__action-toggle-icon {
   width: 0.875rem;
   height: 0.875rem;
   transition: transform 0.25s ease;
@@ -503,7 +583,7 @@ html.rp-dark {
     }
   }
 
-  .rp-prompt__toggle {
+  .rp-prompt__action-toggle {
     background: color-mix(in srgb, var(--rp-c-bg-soft) 78%, transparent);
 
     &:hover {

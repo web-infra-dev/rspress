@@ -1,6 +1,7 @@
 import {
   copyToClipboard,
   IconArrowDown,
+  IconCopy,
   IconSuccess,
   renderInlineMarkdown,
   SvgWrapper,
@@ -23,6 +24,21 @@ function RotatingIcon({ index, fading }: { index: number; fading: boolean }) {
     </span>
   );
 }
+
+const DEFAULT_TITLE_ICON = (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+  </svg>
+);
 
 export interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -48,6 +64,10 @@ export interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
    * The prompt text to display and copy.
    */
   prompt: string;
+  /**
+   * Icon shown before the title.
+   */
+  icon?: React.ReactNode;
 }
 
 export function Prompt({
@@ -55,6 +75,7 @@ export function Prompt({
   defaultCollapsed = true,
   description,
   eyebrow = 'For your agent',
+  icon = DEFAULT_TITLE_ICON,
   prompt,
   title = 'Agent Prompt',
   ...props
@@ -117,7 +138,11 @@ export function Prompt({
       }
 
       const target = e.target as HTMLElement;
-      if (target.closest('a, button, .rp-prompt__toggle')) {
+      if (
+        target.closest(
+          'a, button, .rp-prompt__action-copy, .rp-prompt__action-toggle',
+        )
+      ) {
         return;
       }
 
@@ -184,14 +209,60 @@ export function Prompt({
               )}
             </span>
           </div>
-          <div className="rp-prompt__title-row">
-            <div className="rp-prompt__title">{title}</div>
-            {description ? (
-              <p
-                className="rp-prompt__description"
-                {...renderInlineMarkdown(description)}
-              />
-            ) : null}
+          <div className="rp-prompt__header-row">
+            <div className="rp-prompt__header-left">
+              <div className="rp-prompt__title-with-icon">
+                <span className="rp-prompt__title-icon">{icon}</span>
+                <div className="rp-prompt__title">{title}</div>
+              </div>
+              {description ? (
+                <p
+                  className="rp-prompt__description"
+                  {...renderInlineMarkdown(description)}
+                />
+              ) : null}
+            </div>
+            <div className="rp-prompt__header-actions">
+              <button
+                type="button"
+                className={clsx(
+                  'rp-prompt__action-copy',
+                  copied && 'rp-prompt__action-copy--copied',
+                )}
+                onClick={e => {
+                  e.stopPropagation();
+                  handleCopy();
+                }}
+                title="Copy prompt"
+              >
+                <SvgWrapper
+                  icon={copied ? IconSuccess : IconCopy}
+                  className="rp-prompt__action-icon"
+                />
+                <span>{copied ? 'Copied' : 'Copy'}</span>
+              </button>
+              <button
+                type="button"
+                className="rp-prompt__action-toggle"
+                onClick={e => {
+                  e.stopPropagation();
+                  setCollapsed(value => !value);
+                }}
+                aria-expanded={!collapsed}
+                title={collapsed ? 'Expand' : 'Collapse'}
+              >
+                <span className="rp-prompt__action-toggle-label">
+                  {collapsed ? 'Expand' : 'Collapse'}
+                </span>
+                <SvgWrapper
+                  icon={IconArrowDown}
+                  className={clsx(
+                    'rp-prompt__action-toggle-icon',
+                    !collapsed && 'rp-prompt__action-toggle-icon--expanded',
+                  )}
+                />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -210,27 +281,6 @@ export function Prompt({
             </div>
           </div>
         </div>
-
-        <button
-          type="button"
-          className="rp-prompt__toggle"
-          onClick={e => {
-            e.stopPropagation();
-            setCollapsed(value => !value);
-          }}
-          aria-expanded={!collapsed}
-        >
-          <span className="rp-prompt__toggle-label">
-            {collapsed ? 'Expand' : 'Collapse'}
-          </span>
-          <SvgWrapper
-            icon={IconArrowDown}
-            className={clsx(
-              'rp-prompt__toggle-icon',
-              !collapsed && 'rp-prompt__toggle-icon--expanded',
-            )}
-          />
-        </button>
       </div>
     </div>
   );
