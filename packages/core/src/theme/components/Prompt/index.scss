@@ -8,12 +8,24 @@
   background:
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--rp-c-brand-light) 90%, white 10%),
-      color-mix(in srgb, var(--rp-c-brand-dark) 88%, #9b8cff 12%)
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-light)) 90%,
+        white 10%
+      ),
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-dark)) 88%,
+        #9b8cff 12%
+      )
     ),
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--rp-c-brand) 24%, transparent),
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand)) 24%,
+        transparent
+      ),
       transparent 60%
     );
   box-shadow: var(--rp-shadow-3);
@@ -27,12 +39,16 @@
   background:
     radial-gradient(
       circle at top left,
-      color-mix(in srgb, var(--rp-c-brand-light) 26%, transparent),
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-light)) 26%,
+        transparent
+      ),
       transparent 45%
     ),
     radial-gradient(
       circle at right center,
-      color-mix(in srgb, #8b5cf6 20%, transparent),
+      color-mix(in srgb, var(--rp-prompt-accent, #8b5cf6) 20%, transparent),
       transparent 44%
     );
   filter: blur(24px);
@@ -98,14 +114,42 @@
 .rp-prompt__eyebrow {
   display: inline-flex;
   align-items: center;
+  gap: 0.375rem;
   padding: 0.25rem 0.625rem;
   border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--rp-c-brand-dark);
-  background-color: color-mix(in srgb, var(--rp-c-brand-lighter) 75%, white);
+  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+  background-color: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 12%,
+    transparent
+  );
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.rp-prompt__icon {
+  display: inline-flex;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  transition:
+    opacity 0.2s ease,
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.rp-prompt__icon--fade-out {
+  opacity: 0;
+  transform: scale(0.88) translateY(2px);
 }
 
 .rp-prompt__title-row {
@@ -151,16 +195,39 @@
   background: color-mix(in srgb, var(--rp-c-bg) 70%, transparent);
   cursor: pointer;
   transition:
-    transform 0.2s ease,
+    transform 0.15s ease,
     border-color 0.2s ease,
     background-color 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-1px);
-    border-color: color-mix(in srgb, var(--rp-c-brand-light) 55%, transparent);
-    background-color: color-mix(in srgb, var(--rp-c-brand-lighter) 42%, white);
+    border-color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 55%,
+      transparent
+    );
+    background-color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-lighter)) 12%,
+      transparent
+    );
     color: var(--rp-c-text-0);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  &:focus-visible {
+    outline: 2px solid
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-light)) 65%,
+        transparent
+      );
+    outline-offset: 2px;
   }
 }
 
@@ -169,18 +236,50 @@
   border-color: transparent;
   background: linear-gradient(
     135deg,
-    var(--rp-c-brand-light),
-    color-mix(in srgb, var(--rp-c-brand-dark) 82%, #7c3aed 18%)
+    color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 92%,
+      white
+    ),
+    color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-dark)) 78%,
+      #5b4dbf
+    )
   );
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--rp-c-brand) 22%, transparent);
+  box-shadow: 0 8px 20px
+    color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand)) 24%,
+      transparent
+    );
 
   &:hover {
     color: white;
+    transform: translateY(-1px);
     background: linear-gradient(
       135deg,
-      color-mix(in srgb, var(--rp-c-brand-light) 92%, white),
-      color-mix(in srgb, var(--rp-c-brand-dark) 78%, #7c3aed 22%)
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-light)) 96%,
+        white
+      ),
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-dark)) 72%,
+        #5b4dbf
+      )
     );
+    box-shadow: 0 12px 28px
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand)) 30%,
+        transparent
+      );
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.97);
   }
 }
 
@@ -190,6 +289,16 @@
     #10b981,
     color-mix(in srgb, #059669 86%, #065f46 14%)
   );
+  box-shadow: 0 8px 20px color-mix(in srgb, #10b981 24%, transparent);
+
+  &:hover {
+    background: linear-gradient(
+      135deg,
+      #34d399,
+      color-mix(in srgb, #059669 80%, #065f46 20%)
+    );
+    box-shadow: 0 12px 28px color-mix(in srgb, #10b981 30%, transparent);
+  }
 }
 
 .rp-prompt__action-icon {
@@ -282,15 +391,23 @@ html.rp-dark {
   }
 
   .rp-prompt__eyebrow {
-    color: #dbeafe;
-    background-color: color-mix(in srgb, var(--rp-c-brand) 24%, transparent);
+    color: color-mix(in srgb, var(--rp-prompt-accent, #dbeafe) 92%, white);
+    background-color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand)) 16%,
+      transparent
+    );
   }
 
   .rp-prompt__action {
     background: color-mix(in srgb, var(--rp-c-bg-soft) 82%, transparent);
 
     &:hover {
-      background-color: color-mix(in srgb, var(--rp-c-brand) 24%, transparent);
+      background-color: color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand)) 18%,
+        transparent
+      );
     }
   }
 

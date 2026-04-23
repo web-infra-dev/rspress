@@ -9,7 +9,21 @@ import {
 } from '@rspress/core/theme';
 import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { AGENT_ICONS } from './icons';
 import './index.scss';
+
+const ROTATE_INTERVAL = 6000;
+
+function RotatingIcon({ index, fading }: { index: number; fading: boolean }) {
+  return (
+    <span
+      className={clsx('rp-prompt__icon', fading && 'rp-prompt__icon--fade-out')}
+      title={AGENT_ICONS[index].name}
+    >
+      {AGENT_ICONS[index].svg}
+    </span>
+  );
+}
 
 function getPromptText(element: HTMLElement | null) {
   if (!element) {
@@ -52,8 +66,21 @@ export function Prompt({
 }: PromptProps) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const [copied, setCopied] = useState(false);
+  const [iconIndex, setIconIndex] = useState(0);
+  const [fading, setFading] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFading(true);
+      setTimeout(() => {
+        setIconIndex(prev => (prev + 1) % AGENT_ICONS.length);
+        setFading(false);
+      }, 200);
+    }, ROTATE_INTERVAL);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -87,12 +114,23 @@ export function Prompt({
   }, [copyText]);
 
   return (
-    <div {...props} className={clsx('rp-prompt', className)}>
+    <div
+      {...props}
+      className={clsx('rp-prompt', className)}
+      style={
+        {
+          '--rp-prompt-accent': AGENT_ICONS[iconIndex].color,
+        } as React.CSSProperties
+      }
+    >
       <div className="rp-prompt__backdrop" />
       <div className="rp-prompt__panel">
         <div className="rp-prompt__header">
           <div className="rp-prompt__header-main">
-            <span className="rp-prompt__eyebrow">For your agent</span>
+            <span className="rp-prompt__eyebrow">
+              <RotatingIcon index={iconIndex} fading={fading} />
+              For your agent
+            </span>
             <div className="rp-prompt__title-row">
               <div className="rp-prompt__title">{title}</div>
               {description ? (
