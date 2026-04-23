@@ -52,7 +52,7 @@ export interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   /**
    * Eyebrow label shown above the title.
-   * @default 'For your agent'
+   * @default 'Agent'
    */
   eyebrow?: string;
   /**
@@ -74,7 +74,7 @@ export function Prompt({
   className,
   defaultCollapsed = true,
   description,
-  eyebrow = 'For your agent',
+  eyebrow = 'Agent',
   icon = DEFAULT_TITLE_ICON,
   prompt,
   title = 'Agent Prompt',
