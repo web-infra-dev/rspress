@@ -1,6 +1,5 @@
 import {
   copyToClipboard,
-  getCopyableText,
   IconArrowDown,
   IconSuccess,
   renderInlineMarkdown,
@@ -25,14 +24,6 @@ function RotatingIcon({ index, fading }: { index: number; fading: boolean }) {
   );
 }
 
-function getPromptText(element: HTMLElement | null) {
-  if (!element) {
-    return '';
-  }
-
-  return getCopyableText(element).trim();
-}
-
 export interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Inline description rendered in the prompt header.
@@ -54,19 +45,17 @@ export interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   defaultCollapsed?: boolean;
   /**
-   * Override text copied to the clipboard.
+   * The prompt text to display and copy.
    */
-  copyText?: string;
-  children: React.ReactNode;
+  prompt: string;
 }
 
 export function Prompt({
-  children,
   className,
-  copyText,
   defaultCollapsed = true,
   description,
   eyebrow = 'For your agent',
+  prompt,
   title = 'Agent Prompt',
   ...props
 }: PromptProps) {
@@ -77,7 +66,6 @@ export function Prompt({
   const [ripples, setRipples] = useState<
     Array<{ id: number; x: number; y: number }>
   >([]);
-  const contentRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -101,12 +89,11 @@ export function Prompt({
   }, []);
 
   const handleCopy = useCallback(async () => {
-    const text = copyText ?? getPromptText(contentRef.current);
-    if (!text) {
+    if (!prompt) {
       return;
     }
 
-    const isCopied = await copyToClipboard(text);
+    const isCopied = await copyToClipboard(prompt);
     if (!isCopied) {
       return;
     }
@@ -121,16 +108,16 @@ export function Prompt({
       setCopied(false);
       copyTimerRef.current = null;
     }, 2000);
-  }, [copyText]);
+  }, [prompt]);
 
   const handleCardClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
+      if (window.getSelection()?.toString()) {
+        return;
+      }
+
       const target = e.target as HTMLElement;
-      if (
-        target.closest(
-          'a, button, pre, code, .rp-prompt__toggle, .rp-prompt__content-body',
-        )
-      ) {
+      if (target.closest('a, button, .rp-prompt__toggle')) {
         return;
       }
 
@@ -215,8 +202,11 @@ export function Prompt({
           )}
         >
           <div className="rp-prompt__content-inner">
-            <div className="rp-prompt__content-body" ref={contentRef}>
-              {children}
+            <div
+              className="rp-prompt__content-body"
+              style={{ whiteSpace: 'pre-wrap' }}
+            >
+              {prompt}
             </div>
           </div>
         </div>

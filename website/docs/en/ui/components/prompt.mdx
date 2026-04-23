@@ -20,34 +20,26 @@ import { Prompt } from '@rspress/core/theme';
 <Prompt
   title="Start a Rspress project in one shot"
   description="Copy this prompt and send it to your AI agent. It will scaffold a new Rspress site for you automatically."
->
-  Create a Rspress project by following the official quick start guide at
-  https://rspress.rs/guide/start/getting-started.html. Scaffold the project with
-  `create rspress@latest`, install dependencies, start the dev server, and
-  verify the site renders correctly.
-</Prompt>
+  prompt={`Create a Rspress project by following the official quick start guide at
+https://rspress.rs/guide/start/getting-started.html. Scaffold the project with
+\`create rspress@latest\`, install dependencies, start the dev server, and
+verify the site renders correctly.`}
+/>
 ```
 
 <Prompt
   title="Start a Rspress project in one shot"
   description="Copy this prompt and send it to your AI agent. It will scaffold a new Rspress site for you automatically."
->
-  <p>
-    Create a Rspress project by following the official quick start guide at{' '}
-    <a href="https://rspress.rs/guide/start/getting-started.html">
-      rspress.rs/guide/start/getting-started.html
-    </a>
-    .
-  </p>
-  <ul>
-    <li>Scaffold the project with `create rspress@latest`.</li>
-    <li>Install dependencies.</li>
-    <li>Start the dev server.</li>
-    <li>Verify the site renders correctly.</li>
-  </ul>
-</Prompt>
+  prompt={`Create a Rspress project by following the official quick start guide at
+https://rspress.rs/guide/start/getting-started.html.
 
-The prompt content can be folded, while the copy button keeps working in both states.
+1. Scaffold the project with \`create rspress@latest\`.
+2. Install dependencies.
+3. Start the dev server.
+4. Verify the site renders correctly.`}
+   />
+
+The prompt content can be folded. Click anywhere on the card to copy the full prompt text.
 
 ## Customization
 
@@ -88,9 +80,8 @@ interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   defaultCollapsed?: boolean;
   /**
-   * Override text copied to the clipboard.
+   * The prompt text to display and copy.
    */
-  copyText?: string;
-  children: React.ReactNode;
+  prompt: string;
 }
 ```
