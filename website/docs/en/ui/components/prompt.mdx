@@ -17,7 +17,10 @@ Import `Prompt` in your MDX file before using it:
 ```mdx title="index.mdx"
 import { Prompt } from '@rspress/core/theme';
 
-<Prompt description="Start a Rspress project in one shot.">
+<Prompt
+  title="Start a Rspress project in one shot"
+  description="Copy this prompt and send it to your AI agent. It will scaffold a new Rspress site for you automatically."
+>
   Create a Rspress project by following the official quick start guide at
   https://rspress.rs/guide/start/getting-started.html. Scaffold the project with
   `create rspress@latest`, install dependencies, start the dev server, and
@@ -25,7 +28,10 @@ import { Prompt } from '@rspress/core/theme';
 </Prompt>
 ```
 
-<Prompt description="Start a Rspress project in one shot.">
+<Prompt
+  title="Start a Rspress project in one shot"
+  description="Copy this prompt and send it to your AI agent. It will scaffold a new Rspress site for you automatically."
+>
   <p>
     Create a Rspress project by following the official quick start guide at{' '}
     <a href="https://rspress.rs/guide/start/getting-started.html">
