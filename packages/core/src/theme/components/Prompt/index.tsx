@@ -2,7 +2,6 @@ import {
   copyToClipboard,
   getCopyableText,
   IconArrowDown,
-  IconCopy,
   IconSuccess,
   renderInlineMarkdown,
   SvgWrapper,
@@ -75,7 +74,11 @@ export function Prompt({
   const [copied, setCopied] = useState(false);
   const [iconIndex, setIconIndex] = useState(0);
   const [fading, setFading] = useState(false);
+  const [ripples, setRipples] = useState<
+    Array<{ id: number; x: number; y: number }>
+  >([]);
   const contentRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -120,40 +123,79 @@ export function Prompt({
     }, 2000);
   }, [copyText]);
 
+  const handleCardClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const target = e.target as HTMLElement;
+      if (
+        target.closest(
+          'a, button, pre, code, .rp-prompt__toggle, .rp-prompt__content-body',
+        )
+      ) {
+        return;
+      }
+
+      const rect = cardRef.current?.getBoundingClientRect();
+      if (!rect) {
+        return;
+      }
+
+      const id = Date.now() + Math.random();
+      setRipples(prev => [
+        ...prev,
+        { id, x: e.clientX - rect.left, y: e.clientY - rect.top },
+      ]);
+      setTimeout(() => {
+        setRipples(prev => prev.filter(r => r.id !== id));
+      }, 600);
+
+      handleCopy();
+    },
+    [handleCopy],
+  );
+
   return (
     <div
       {...props}
+      ref={cardRef}
       className={clsx('rp-prompt', className)}
       style={
         {
           '--rp-prompt-accent': AGENT_ICONS[iconIndex].color,
         } as React.CSSProperties
       }
+      onClick={handleCardClick}
     >
       <div className="rp-prompt__backdrop" />
+      {ripples.map(r => (
+        <span
+          key={r.id}
+          className="rp-prompt__ripple"
+          style={{ left: r.x, top: r.y }}
+        />
+      ))}
       <div className="rp-prompt__panel">
         <div className="rp-prompt__header">
-          <div className="rp-prompt__header-top">
+          <div
+            className={clsx(
+              'rp-prompt__meta',
+              copied && 'rp-prompt__meta--copied',
+            )}
+          >
             <span className="rp-prompt__eyebrow">
-              <RotatingIcon index={iconIndex} fading={fading} />
-              {eyebrow}
-            </span>
-            <button
-              type="button"
-              className={clsx(
-                'rp-prompt__action',
-                'rp-prompt__action--copy',
-                copied && 'rp-prompt__action--copied',
+              {copied ? (
+                <>
+                  <span className="rp-prompt__icon">
+                    <SvgWrapper icon={IconSuccess} />
+                  </span>
+                  Copied!
+                </>
+              ) : (
+                <>
+                  <RotatingIcon index={iconIndex} fading={fading} />
+                  {eyebrow}
+                </>
               )}
-              onClick={handleCopy}
-              title="Copy prompt"
-            >
-              <SvgWrapper
-                icon={copied ? IconSuccess : IconCopy}
-                className="rp-prompt__action-icon"
-              />
-              <span>{copied ? 'Copied' : 'Copy prompt'}</span>
-            </button>
+            </span>
           </div>
           <div className="rp-prompt__title-row">
             <div className="rp-prompt__title">{title}</div>
@@ -182,7 +224,8 @@ export function Prompt({
         <button
           type="button"
           className="rp-prompt__toggle"
-          onClick={() => {
+          onClick={e => {
+            e.stopPropagation();
             setCollapsed(value => !value);
           }}
           aria-expanded={!collapsed}

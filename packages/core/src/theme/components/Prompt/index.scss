@@ -5,6 +5,7 @@
   padding: 1px;
   overflow: hidden;
   isolation: isolate;
+  cursor: copy;
   background:
     linear-gradient(
       135deg,
@@ -42,6 +43,11 @@
         transparent
       );
   transition: background 0.3s ease;
+
+  &:active {
+    transform: scale(0.996);
+    transition: transform 0.15s ease;
+  }
 }
 
 .rp-prompt__backdrop {
@@ -115,32 +121,39 @@
   gap: 0.75rem;
 }
 
-.rp-prompt__header-top {
-  display: flex;
-  gap: 1rem;
+.rp-prompt__meta {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.625rem;
+  border-radius: 999px;
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
+      transparent
+    );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 8%,
+    var(--rp-c-bg)
+  );
+  width: max-content;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .rp-prompt__eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
-  background-color: color-mix(
-    in srgb,
-    var(--rp-prompt-accent, var(--rp-c-brand-light)) 12%,
-    transparent
-  );
-  transition:
-    color 0.3s ease,
-    background-color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .rp-prompt__icon {
@@ -183,10 +196,42 @@
   color: var(--rp-c-text-2);
 }
 
-.rp-prompt__actions {
-  display: flex;
-  gap: 0.625rem;
-  flex-wrap: wrap;
+.rp-prompt__meta--copied {
+  border-color: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 55%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 16%,
+    var(--rp-c-bg)
+  );
+}
+
+.rp-prompt__ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  margin-top: -10px;
+  border-radius: 50%;
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 40%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 10;
+  transform: scale(0);
+  animation: rp-prompt-ripple 0.6s linear;
+}
+
+@keyframes rp-prompt-ripple {
+  to {
+    transform: scale(5);
+    opacity: 0;
+  }
 }
 
 .rp-prompt__action {
@@ -434,13 +479,16 @@ html.rp-dark {
     box-shadow: var(--rp-shadow-2);
   }
 
+  .rp-prompt__meta {
+    background: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand)) 12%,
+      var(--rp-c-bg)
+    );
+  }
+
   .rp-prompt__eyebrow {
     color: color-mix(in srgb, var(--rp-prompt-accent, #dbeafe) 92%, white);
-    background-color: color-mix(
-      in srgb,
-      var(--rp-prompt-accent, var(--rp-c-brand)) 16%,
-      transparent
-    );
   }
 
   .rp-prompt__action {
