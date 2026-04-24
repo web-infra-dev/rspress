@@ -21,9 +21,13 @@ import { Prompt } from '@rspress/core/theme';
   title="一键创建 Rspress 项目"
   description="复制这段 Prompt 发送给你的 AI Agent，它会自动帮你搭建一个全新的 Rspress 站点。"
   prompt={`按照官方快速开始指南 https://rspress.rs/guide/start/getting-started.html
-创建一个 Rspress 项目。使用 \`create rspress@latest\` 初始化项目、安装依赖、
-启动开发服务器，并确认页面正常渲染。`}
-/>
+创建一个 Rspress 项目。
+
+1. 使用 \`create rspress@latest\` 初始化项目。
+2. 安装依赖。
+3. 启动开发服务器。
+4. 确认页面正常渲染。`}
+   />
 ```
 
 <Prompt
@@ -39,6 +43,22 @@ import { Prompt } from '@rspress/core/theme';
    />
 
 Prompt 内容可以折叠，点击卡片任意位置即可复制完整的 prompt 文本。
+
+:::tip
+如果 prompt 内容较长，可以将其放到单独的文件中，通过 `?raw` 导入使用：
+
+```mdx title="index.mdx"
+import { Prompt } from '@rspress/core/theme';
+import promptText from './_prompt.txt?raw';
+
+<Prompt
+  title="一键创建 Rspress 项目"
+  description="复制这段 Prompt 发送给你的 AI Agent。"
+  prompt={promptText}
+/>
+```
+
+:::
 
 ## 自定义
 

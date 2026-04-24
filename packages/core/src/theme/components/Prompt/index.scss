@@ -6,42 +6,11 @@
   overflow: hidden;
   isolation: isolate;
   cursor: pointer;
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(
-        in srgb,
-        var(--rp-prompt-accent, var(--rp-c-brand-light)) 100%,
-        transparent
-      ),
-      color-mix(
-        in srgb,
-        var(--rp-prompt-accent, var(--rp-c-brand)) 75%,
-        #a78bfa 25%
-      )
-    ),
-    linear-gradient(
-      135deg,
-      color-mix(
-        in srgb,
-        var(--rp-prompt-accent, var(--rp-c-brand)) 32%,
-        transparent
-      ),
-      transparent 55%
-    );
-  box-shadow:
-    0 1px 2px
-      color-mix(
-        in srgb,
-        var(--rp-prompt-accent, var(--rp-c-brand)) 8%,
-        transparent
-      ),
-    0 8px 24px -4px
-      color-mix(
-        in srgb,
-        var(--rp-prompt-accent, var(--rp-c-brand)) 14%,
-        transparent
-      );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand)) 40%,
+    transparent
+  );
   transition: background 0.3s ease;
 
   // &:hover {
@@ -146,16 +115,6 @@
   align-items: center;
 }
 
-.rp-prompt__title-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  flex-shrink: 0;
-  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
-}
-
 .rp-prompt__meta {
   display: inline-flex;
   align-items: center;
@@ -168,12 +127,11 @@
   //     var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
   //     transparent
   //   );
-  background-color: rgba(0, 0, 0, 0.04);
-  // background: color-mix(
-  //   in srgb,
-  //   var(--rp-prompt-accent, var(--rp-c-brand-light)) 8%,
-  //   var(--rp-c-bg)
-  // );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 12%,
+    var(--rp-c-bg)
+  );
   width: max-content;
   transition:
     border-color 0.3s ease,
@@ -236,11 +194,6 @@
 }
 
 .rp-prompt__meta--copied {
-  border-color: color-mix(
-    in srgb,
-    var(--rp-prompt-accent, var(--rp-c-brand-light)) 55%,
-    transparent
-  );
   background: color-mix(
     in srgb,
     var(--rp-prompt-accent, var(--rp-c-brand-light)) 16%,
@@ -270,111 +223,6 @@
   to {
     transform: scale(5);
     opacity: 0;
-  }
-}
-
-.rp-prompt__action {
-  display: inline-flex;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.5rem;
-  border: 1px solid color-mix(in srgb, var(--rp-c-divider) 60%, transparent);
-  border-radius: 999px;
-  padding: 0 0.875rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--rp-c-text-1);
-  background: color-mix(in srgb, var(--rp-c-bg) 70%, transparent);
-  cursor: pointer;
-  transition:
-    transform 0.15s ease,
-    border-color 0.2s ease,
-    background-color 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    border-color: color-mix(
-      in srgb,
-      var(--rp-prompt-accent, var(--rp-c-brand-light)) 55%,
-      transparent
-    );
-    background-color: color-mix(
-      in srgb,
-      var(--rp-prompt-accent, var(--rp-c-brand-lighter)) 12%,
-      transparent
-    );
-    color: var(--rp-c-text-0);
-  }
-
-  &:active {
-    transform: translateY(0) scale(0.97);
-  }
-
-  &:focus-visible {
-    outline: 2px solid
-      color-mix(
-        in srgb,
-        var(--rp-prompt-accent, var(--rp-c-brand-light)) 65%,
-        transparent
-      );
-    outline-offset: 2px;
-  }
-}
-
-.rp-prompt__action--copy {
-  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
-  border-color: color-mix(
-    in srgb,
-    var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
-    transparent
-  );
-  background: color-mix(
-    in srgb,
-    var(--rp-prompt-accent, var(--rp-c-brand-light)) 8%,
-    var(--rp-c-bg)
-  );
-  box-shadow: none;
-
-  &:hover {
-    color: var(--rp-c-text-0);
-    transform: translateY(-1px);
-    background: color-mix(
-      in srgb,
-      var(--rp-prompt-accent, var(--rp-c-brand-light)) 16%,
-      var(--rp-c-bg)
-    );
-    box-shadow: none;
-  }
-
-  &:active {
-    transform: translateY(0) scale(0.97);
-  }
-}
-
-.rp-prompt__action--copied {
-  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
-  border-color: color-mix(
-    in srgb,
-    var(--rp-prompt-accent, var(--rp-c-brand-light)) 40%,
-    transparent
-  );
-  background: color-mix(
-    in srgb,
-    var(--rp-prompt-accent, var(--rp-c-brand-light)) 14%,
-    var(--rp-c-bg)
-  );
-  box-shadow: none;
-
-  &:hover {
-    background: color-mix(
-      in srgb,
-      var(--rp-prompt-accent, var(--rp-c-brand-light)) 22%,
-      var(--rp-c-bg)
-    );
-    box-shadow: none;
   }
 }
 
@@ -417,7 +265,6 @@
       var(--rp-prompt-accent, var(--rp-c-brand-light)) 10%,
       var(--rp-c-bg)
     );
-    color: var(--rp-c-text-0);
   }
 
   &:active {
@@ -436,6 +283,7 @@
 }
 
 .rp-prompt__action-copy {
+  width: 8.75rem;
   color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
   border-color: color-mix(
     in srgb,
@@ -472,11 +320,26 @@
 }
 
 .rp-prompt__action-toggle {
-  color: var(--rp-c-text-2);
-  background: color-mix(in srgb, var(--rp-c-bg-soft) 86%, transparent);
+  width: 2.25rem;
+  padding: 0;
+  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+  border-color: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 8%,
+    var(--rp-c-bg)
+  );
 
   &:hover {
-    color: var(--rp-c-text-0);
+    background: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 16%,
+      var(--rp-c-bg)
+    );
   }
 }
 
@@ -561,10 +424,6 @@
 }
 
 html.rp-dark {
-  .rp-prompt {
-    box-shadow: var(--rp-shadow-2);
-  }
-
   .rp-prompt__meta {
     background: color-mix(
       in srgb,
@@ -575,26 +434,6 @@ html.rp-dark {
 
   .rp-prompt__eyebrow {
     color: color-mix(in srgb, var(--rp-prompt-accent, #dbeafe) 92%, white);
-  }
-
-  .rp-prompt__action {
-    background: color-mix(in srgb, var(--rp-c-bg-soft) 82%, transparent);
-
-    &:hover {
-      background-color: color-mix(
-        in srgb,
-        var(--rp-prompt-accent, var(--rp-c-brand)) 18%,
-        transparent
-      );
-    }
-  }
-
-  .rp-prompt__action-toggle {
-    background: color-mix(in srgb, var(--rp-c-bg-soft) 78%, transparent);
-
-    &:hover {
-      background: color-mix(in srgb, var(--rp-c-bg) 86%, transparent);
-    }
   }
 
   .rp-prompt__content-body {

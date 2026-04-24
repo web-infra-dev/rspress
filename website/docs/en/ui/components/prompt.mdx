@@ -21,10 +21,13 @@ import { Prompt } from '@rspress/core/theme';
   title="Start a Rspress project in one shot"
   description="Copy this prompt and send it to your AI agent. It will scaffold a new Rspress site for you automatically."
   prompt={`Create a Rspress project by following the official quick start guide at
-https://rspress.rs/guide/start/getting-started.html. Scaffold the project with
-\`create rspress@latest\`, install dependencies, start the dev server, and
-verify the site renders correctly.`}
-/>
+https://rspress.rs/guide/start/getting-started.html.
+
+1. Scaffold the project with \`create rspress@latest\`.
+2. Install dependencies.
+3. Start the dev server.
+4. Verify the site renders correctly.`}
+   />
 ```
 
 <Prompt
@@ -40,6 +43,22 @@ https://rspress.rs/guide/start/getting-started.html.
    />
 
 The prompt content can be folded. Click anywhere on the card to copy the full prompt text.
+
+:::tip
+If the prompt content is long, you can put it in a separate file and import it via `?raw`:
+
+```mdx title="index.mdx"
+import { Prompt } from '@rspress/core/theme';
+import promptText from './_prompt.txt?raw';
+
+<Prompt
+  title="Start a Rspress project in one shot"
+  description="Copy this prompt and send it to your AI agent."
+  prompt={promptText}
+/>
+```
+
+:::
 
 ## Customization
 

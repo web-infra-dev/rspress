@@ -25,21 +25,6 @@ function RotatingIcon({ index, fading }: { index: number; fading: boolean }) {
   );
 }
 
-const DEFAULT_TITLE_ICON = (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-  </svg>
-);
-
 export interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Inline description rendered in the prompt header.
@@ -52,7 +37,7 @@ export interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   /**
    * Eyebrow label shown above the title.
-   * @default 'Agent'
+   * @default 'For your Agent'
    */
   eyebrow?: string;
   /**
@@ -64,10 +49,6 @@ export interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
    * The prompt text to display and copy.
    */
   prompt: string;
-  /**
-   * Icon shown before the title.
-   */
-  icon?: React.ReactNode;
 }
 
 export function Prompt({
@@ -75,7 +56,6 @@ export function Prompt({
   defaultCollapsed = true,
   description,
   eyebrow = 'For your Agent',
-  icon = DEFAULT_TITLE_ICON,
   prompt,
   title = 'Agent Prompt',
   ...props
@@ -89,6 +69,7 @@ export function Prompt({
   >([]);
   const cardRef = useRef<HTMLDivElement>(null);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rippleTimersRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -103,9 +84,9 @@ export function Prompt({
 
   useEffect(() => {
     return () => {
-      if (copyTimerRef.current) {
-        clearTimeout(copyTimerRef.current);
-      }
+      copyTimerRef.current && clearTimeout(copyTimerRef.current);
+      rippleTimersRef.current.forEach(clearTimeout);
+      rippleTimersRef.current.clear();
     };
   }, []);
 
@@ -156,9 +137,10 @@ export function Prompt({
         ...prev,
         { id, x: e.clientX - rect.left, y: e.clientY - rect.top },
       ]);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setRipples(prev => prev.filter(r => r.id !== id));
       }, 600);
+      rippleTimersRef.current.add(timer);
 
       handleCopy();
     },
@@ -196,7 +178,6 @@ export function Prompt({
             <span className="rp-prompt__eyebrow">
               <RotatingIcon index={iconIndex} fading={fading} />
               {eyebrow}
-              {/* {title} */}
             </span>
           </div>
           <div className="rp-prompt__header-row">
@@ -240,9 +221,6 @@ export function Prompt({
                 aria-expanded={!collapsed}
                 title={collapsed ? 'Expand' : 'Collapse'}
               >
-                {/* <span className="rp-prompt__action-toggle-label">
-                  {collapsed ? 'Expand' : 'Collapse'}
-                </span> */}
                 <SvgWrapper
                   icon={IconArrowDown}
                   className={clsx(
