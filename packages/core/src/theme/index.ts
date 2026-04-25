@@ -1,4 +1,6 @@
 // components
+
+export { useI18n } from '../runtime/hooks/useI18n';
 export { Badge, type BadgeProps } from './components/Badge/index';
 export { Banner, type BannerProps } from './components/Banner/index';
 export { Button, type ButtonProps } from './components/Button/index';

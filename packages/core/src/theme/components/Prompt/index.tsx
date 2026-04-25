@@ -5,6 +5,7 @@ import {
   IconSuccess,
   renderInlineMarkdown,
   SvgWrapper,
+  useI18n,
 } from '@rspress/core/theme';
 import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -60,6 +61,7 @@ export function Prompt({
   title = 'Agent Prompt',
   ...props
 }: PromptProps) {
+  const t = useI18n();
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const [copied, setCopied] = useState(false);
   const [iconIndex, setIconIndex] = useState(0);
@@ -70,16 +72,23 @@ export function Prompt({
   const cardRef = useRef<HTMLDivElement>(null);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rippleTimersRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
+  const rotateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setFading(true);
-      setTimeout(() => {
+      rotateTimeoutRef.current = setTimeout(() => {
         setIconIndex(prev => (prev + 1) % AGENT_ICONS.length);
         setFading(false);
+        rotateTimeoutRef.current = null;
       }, FADE_DURATION);
     }, ROTATE_INTERVAL);
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      if (rotateTimeoutRef.current) {
+        clearTimeout(rotateTimeoutRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -112,8 +121,17 @@ export function Prompt({
     }, 2000);
   }, [prompt]);
 
-  const handleCardClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleCardActivate = useCallback(
+    (
+      e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>,
+    ) => {
+      if ('key' in e && e.key !== 'Enter' && e.key !== ' ') {
+        return;
+      }
+      if ('key' in e) {
+        e.preventDefault();
+      }
+
       if (window.getSelection()?.toString()) {
         return;
       }
@@ -133,12 +151,15 @@ export function Prompt({
       }
 
       const id = Date.now() + Math.random();
-      setRipples(prev => [
-        ...prev,
-        { id, x: e.clientX - rect.left, y: e.clientY - rect.top },
-      ]);
+      if ('clientX' in e) {
+        setRipples(prev => [
+          ...prev,
+          { id, x: e.clientX - rect.left, y: e.clientY - rect.top },
+        ]);
+      }
       const timer = setTimeout(() => {
         setRipples(prev => prev.filter(r => r.id !== id));
+        rippleTimersRef.current.delete(timer);
       }, 600);
       rippleTimersRef.current.add(timer);
 
@@ -157,7 +178,10 @@ export function Prompt({
           '--rp-prompt-accent': AGENT_ICONS[iconIndex].color,
         } as React.CSSProperties
       }
-      onClick={handleCardClick}
+      role="button"
+      tabIndex={0}
+      onClick={handleCardActivate}
+      onKeyDown={handleCardActivate}
     >
       <div className="rp-prompt__backdrop" />
       {ripples.map(r => (
@@ -203,13 +227,15 @@ export function Prompt({
                   e.stopPropagation();
                   handleCopy();
                 }}
-                title="Copy prompt"
+                title={t('promptCopyTitleText')}
               >
                 <SvgWrapper
                   icon={copied ? IconSuccess : IconCopy}
                   className="rp-prompt__action-icon"
                 />
-                <span>{copied ? 'Copied' : 'Copy Prompt'}</span>
+                <span>
+                  {copied ? t('promptCopiedText') : t('promptCopyText')}
+                </span>
               </button>
               <button
                 type="button"
@@ -219,7 +245,9 @@ export function Prompt({
                   setCollapsed(value => !value);
                 }}
                 aria-expanded={!collapsed}
-                title={collapsed ? 'Expand' : 'Collapse'}
+                title={
+                  collapsed ? t('promptExpandText') : t('promptCollapseText')
+                }
               >
                 <SvgWrapper
                   icon={IconArrowDown}

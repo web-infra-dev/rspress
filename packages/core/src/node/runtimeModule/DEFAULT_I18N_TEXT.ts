@@ -170,6 +170,27 @@ export const DEFAULT_I18N_TEXT = {
     ko: '홈으로 이동',
     ru: 'Вернуться на главную',
   },
+
+  promptCopyText: {
+    en: 'Copy Prompt',
+    zh: '复制 Prompt',
+  },
+  promptCopiedText: {
+    en: 'Copied',
+    zh: '已复制',
+  },
+  promptCopyTitleText: {
+    en: 'Copy prompt',
+    zh: '复制 prompt',
+  },
+  promptExpandText: {
+    en: 'Expand',
+    zh: '展开',
+  },
+  promptCollapseText: {
+    en: 'Collapse',
+    zh: '折叠',
+  },
 } as const satisfies Required<I18nText>;
 
 // cspell:enable

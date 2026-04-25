@@ -44,4 +44,11 @@ export interface I18nText {
   // NotFoundLayout
   notFoundText?: I18nTextValue;
   takeMeHomeText?: I18nTextValue;
+
+  // prompt
+  promptCopyText?: I18nTextValue;
+  promptCopiedText?: I18nTextValue;
+  promptCopyTitleText?: I18nTextValue;
+  promptExpandText?: I18nTextValue;
+  promptCollapseText?: I18nTextValue;
 }
