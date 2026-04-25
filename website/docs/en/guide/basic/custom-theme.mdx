@@ -4,17 +4,22 @@ description: Customize theme via CSS variables, BEM classnames, component wrappi
 
 # Custom theme
 
-:::info For Agent
+import { Prompt } from '@rspress/core/theme';
 
-If you are using a Coding Agent, you can install the [rspress-custom-theme](https://github.com/rstackjs/agent-skills#rspress-custom-theme) Agent Skill to empower the Agent to generate a brand new theme for you.
+<Prompt
+  title="Customize Rspress Theme"
+  description="Copy this prompt and send it to your AI agent to customize the Rspress theme for you."
+  prompt={`Read the Rspress custom theme documentation at https://rspress.rs/guide/basic/custom-theme.md.
 
-For more information about AI-assisted development with Rspress, see the [AI](/guide/start/ai) page.
+1. Understand the customization options: CSS variables, BEM classnames, wrap mode, and eject mode.
+2. Install the rspress-custom-theme skill if available.
+3. Based on my requirements, choose the appropriate customization approach.
+4. Implement the theme changes following Rspress best practices.`}
+   />
 
-:::
+5. For CSS, Rspress provides [CSS variables](#css-variables) and [BEM classnames](#bem-classname) for customization.
 
-1. For CSS, Rspress provides [CSS variables](#css-variables) and [BEM classnames](#bem-classname) for customization.
-
-2. For JS / React, Rspress implements a runtime interface based on ESM re-exports, supporting modification or replacement of built-in components to implement your own home page, sidebar, search components, etc.
+6. For JS / React, Rspress implements a runtime interface based on ESM re-exports, supporting modification or replacement of built-in components to implement your own home page, sidebar, search components, etc.
 
    On top of this, there are two modes:
    - [**wrap**](#wrap): **Wrap** and enhance Rspress built-in components through props / slots.
