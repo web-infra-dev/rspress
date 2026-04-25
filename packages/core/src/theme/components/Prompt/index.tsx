@@ -178,10 +178,7 @@ export function Prompt({
           '--rp-prompt-accent': AGENT_ICONS[iconIndex].color,
         } as React.CSSProperties
       }
-      role="button"
-      tabIndex={0}
       onClick={handleCardActivate}
-      onKeyDown={handleCardActivate}
     >
       <div className="rp-prompt__backdrop" />
       {ripples.map(r => (

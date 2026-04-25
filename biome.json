@@ -116,8 +116,7 @@
         "noLabelWithoutControl": "off",
         "noAriaHiddenOnFocusable": "off",
         "noStaticElementInteractions": "off",
-        "useHtmlLang": "off",
-        "useSemanticElements": "off"
+        "useHtmlLang": "off"
       }
     }
   }
