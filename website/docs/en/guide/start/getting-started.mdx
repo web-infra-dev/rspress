@@ -5,6 +5,19 @@ description: Quickly create an Rspress project via CLI or manually, and learn th
 # Quick start
 
 import { PackageManagerTabs } from '@rspress/core/theme';
+import { Prompt } from '@rspress/core/theme';
+
+<Prompt
+  title="Start a Rspress project in one shot"
+  description="Copy this prompt and send it to your AI agent. It will scaffold a new Rspress site for you automatically."
+  prompt={`Create a Rspress project by following the official quick start guide at
+https://rspress.rs/guide/start/getting-started.md.
+
+1. Scaffold the project with \`create rspress@latest\`.
+2. Install dependencies.
+3. Start the dev server.
+4. Verify the site renders correctly.`}
+   />
 
 ## Environment preparation
 
