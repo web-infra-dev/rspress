@@ -41,6 +41,20 @@ test.describe('i18n test', async () => {
     await expect(englishOption).toHaveText('English');
   });
 
+  test('Should localize code wrap button title', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('button[title="切换代码换行"]')).toHaveCount(1);
+
+    await page.goto(`http://localhost:${appPort}/en/`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('button[title="Toggle code wrap"]')).toHaveCount(
+      1,
+    );
+  });
+
   test('Add language prefix in route automatically when current language is not default language', async ({
     page,
   }) => {
