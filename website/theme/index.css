@@ -1,11 +1,3 @@
-/* Simulate the centering behavior when sidebar: false  */
-/* Avoid having the visual center too far to the right */
-@media (min-width: 1280px) {
-  .rp-doc-layout__sidebar-placeholder {
-    width: 12vw !important;
-  }
-}
-
 .blog-back-button {
   margin-bottom: 1rem;
 }

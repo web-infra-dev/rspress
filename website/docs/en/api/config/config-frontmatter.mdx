@@ -81,6 +81,9 @@ titleSuffix: '| Rsbuild-based Static Site Generator'
 
 ## sidebar
 
+- **Type**: `boolean | 'placeholder'`
+- **Default**: `true`
+
 Whether to show the sidebar on the left. By default, the `doc` page will display the sidebar on the left. If you want to hide the sidebar on the left, you can use the following front matter config:
 
 ```yaml
@@ -90,7 +93,7 @@ sidebar: false
 ```
 
 :::tip
-`sidebar: false` only hides the sidebar, but the space originally occupied by the sidebar is still reserved. If you want the main content to occupy a wider screen space, you can use [`pageType: doc-wide`](#pagetype) with `sidebar: false`:
+`sidebar: false` hides the sidebar and keeps a `12vw` placeholder on the left to keep the content visually centered on large screens. If you want the main content to occupy a wider screen space, you can use [`pageType: doc-wide`](#pagetype) with `sidebar: false`:
 
 ```yaml
 ---
@@ -100,6 +103,15 @@ sidebar: false
 ```
 
 This way, the main content area will automatically expand to occupy the space originally used by the sidebar.
+
+If you want to keep the blank space for the left sidebar, use `sidebar: 'placeholder'`:
+
+```yaml
+---
+sidebar: 'placeholder'
+---
+```
+
 :::
 
 ## outline
