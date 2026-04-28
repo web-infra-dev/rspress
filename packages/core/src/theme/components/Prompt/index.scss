@@ -1,0 +1,491 @@
+.rp-prompt {
+  position: relative;
+  margin: 1.5rem 0;
+  border-radius: calc(var(--rp-radius) + 6px);
+  padding: 1px;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand)) 40%,
+    transparent
+  );
+  transition: background 0.3s ease;
+
+  // &:hover {
+  // transform: translate(0, -1px);
+  // transition: transform 0.15s ease;
+  // }
+
+  &:active {
+    transform: scale(0.996);
+    transition: transform 0.15s ease;
+  }
+}
+
+.rp-prompt--custom {
+  cursor: default;
+
+  &:active {
+    transform: none;
+  }
+}
+
+.rp-prompt__backdrop {
+  position: absolute;
+  inset: -20%;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at top left,
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-light)) 26%,
+        transparent
+      ),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at right center,
+      color-mix(in srgb, var(--rp-prompt-accent, #8b5cf6) 20%, transparent),
+      transparent 44%
+    );
+  filter: blur(24px);
+  opacity: 0.9;
+  transition: background 0.3s ease;
+}
+
+.rp-prompt__panel {
+  position: relative;
+  padding: 1rem;
+  border-radius: calc(var(--rp-radius) + 5px);
+  color: var(--rp-c-text-1);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--rp-c-bg) 92%, transparent),
+    color-mix(in srgb, var(--rp-c-bg-soft) 96%, transparent)
+  );
+  backdrop-filter: blur(12px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background-image:
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--rp-c-divider-light) 35%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--rp-c-divider-light) 28%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 20px 20px;
+    opacity: 0.28;
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.55),
+      transparent
+    );
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent);
+  }
+}
+
+.rp-prompt__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rp-prompt__header-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.rp-prompt__header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.rp-prompt__title-with-icon {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.rp-prompt__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.625rem;
+  border-radius: 999px;
+  // border: 1px solid
+  //   color-mix(
+  //     in srgb,
+  //     var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
+  //     transparent
+  //   );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 12%,
+    var(--rp-c-bg)
+  );
+  width: max-content;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.rp-prompt__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+  transition: color 0.3s ease;
+}
+
+.rp-prompt__icon {
+  display: inline-flex;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition:
+    opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.rp-prompt__icon--fade-out {
+  opacity: 0;
+  transform: scale(0.85) translateY(3px);
+}
+
+.rp-prompt__header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.rp-prompt__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--rp-c-text-0);
+}
+
+.rp-prompt__description {
+  margin: 0.375rem 0 0;
+  max-width: 65ch;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--rp-c-text-2);
+}
+
+.rp-prompt__meta--copied {
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 16%,
+    var(--rp-c-bg)
+  );
+}
+
+.rp-prompt__ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  margin-top: -10px;
+  border-radius: 50%;
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 40%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 10;
+  transform: scale(0);
+  animation: rp-prompt-ripple 0.6s linear;
+}
+
+@keyframes rp-prompt-ripple {
+  to {
+    transform: scale(5);
+    opacity: 0;
+  }
+}
+
+.rp-prompt__action-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex: 0 0 auto;
+}
+
+.rp-prompt__action-copy,
+.rp-prompt__action-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  height: 2.25rem;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--rp-c-divider) 55%, transparent);
+  background: color-mix(in srgb, var(--rp-c-bg) 80%, transparent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--rp-c-text-1);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 50%,
+      transparent
+    );
+    background-color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 10%,
+      var(--rp-c-bg)
+    );
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  &:focus-visible {
+    outline: 2px solid
+      color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-light)) 65%,
+        transparent
+      );
+    outline-offset: 2px;
+  }
+}
+
+.rp-prompt__action-copy {
+  width: 8.75rem;
+  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+  border-color: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 8%,
+    var(--rp-c-bg)
+  );
+
+  &:hover {
+    background: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 16%,
+      var(--rp-c-bg)
+    );
+  }
+}
+
+.rp-prompt__action-copy--copied {
+  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+  border-color: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 45%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 16%,
+    var(--rp-c-bg)
+  );
+}
+
+.rp-prompt__action-toggle {
+  width: 2.25rem;
+  padding: 0;
+  color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+  border-color: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--rp-prompt-accent, var(--rp-c-brand-light)) 8%,
+    var(--rp-c-bg)
+  );
+
+  &:hover {
+    background: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 16%,
+      var(--rp-c-bg)
+    );
+  }
+}
+
+.rp-prompt__action-toggle-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+  transition: transform 0.25s ease;
+
+  &--expanded {
+    transform: rotate(180deg);
+  }
+}
+
+.rp-prompt__content {
+  display: grid;
+  grid-template-rows: 1fr;
+  margin-top: 1rem;
+  transition: grid-template-rows 0.28s ease;
+
+  &--collapsed {
+    grid-template-rows: 0fr;
+  }
+}
+
+.rp-prompt__content-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.rp-prompt__content-body {
+  position: relative;
+  border: 1px solid
+    color-mix(in srgb, var(--rp-c-divider-light) 90%, transparent);
+  border-radius: calc(var(--rp-radius) - 2px);
+  padding: 1rem 1.125rem;
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--rp-c-text-1);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--rp-c-bg-soft) 88%, transparent),
+    color-mix(in srgb, var(--rp-c-bg) 94%, transparent)
+  );
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 45%, transparent);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    border: 1px solid color-mix(in srgb, white 45%, transparent);
+    -webkit-mask-image: linear-gradient(
+      160deg,
+      rgba(0, 0, 0, 0.85),
+      transparent 55%
+    );
+    mask-image: linear-gradient(160deg, rgba(0, 0, 0, 0.85), transparent 55%);
+  }
+
+  & > :first-child {
+    margin-top: 0;
+  }
+
+  & > :last-child {
+    margin-bottom: 0;
+  }
+
+  :where(p, ul, ol, pre, blockquote) {
+    margin: 0;
+  }
+
+  :where(p, ul, ol, pre, blockquote, table)
+    + :where(p, ul, ol, pre, blockquote, table) {
+    margin-top: 0.875rem;
+  }
+
+  :where(ul, ol) {
+    padding-left: 1.25rem;
+  }
+}
+
+.rp-prompt__custom-content {
+  margin-top: 1rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--rp-c-text-1);
+
+  p {
+    margin: 8px 0;
+  }
+
+  :where(ul, ol, pre, blockquote) {
+    margin: 8px 0;
+  }
+
+  :where(ul, ol) {
+    padding-left: 1.25rem;
+  }
+
+  a {
+    color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+    border-bottom: 1px solid currentColor;
+
+    & > code {
+      color: inherit;
+    }
+
+    &:hover > code {
+      color: inherit;
+    }
+  }
+
+  & > :first-child {
+    margin-top: 0;
+  }
+
+  & > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+html.rp-dark {
+  .rp-prompt__meta {
+    background: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand)) 12%,
+      var(--rp-c-bg)
+    );
+  }
+
+  .rp-prompt__eyebrow {
+    color: color-mix(in srgb, var(--rp-prompt-accent, #dbeafe) 92%, white);
+  }
+
+  .rp-prompt__content-body {
+    box-shadow: inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+  }
+}

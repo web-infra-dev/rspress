@@ -1,0 +1,129 @@
+---
+description: Prompt 组件用于突出展示可复制的 Agent 指令块或自定义 MDX 内容。
+overviewHeaders: []
+tag: new
+---
+
+import { Prompt } from '@rspress/core/theme';
+
+# Prompt
+
+`Prompt` 组件用于突出展示可复用的指令内容，读者可以直接复制并粘贴给自己的 AI 工具。
+
+## 用法
+
+在 MDX 中使用前，先引入 `Prompt`：
+
+```mdx title="index.mdx"
+import { Prompt } from '@rspress/core/theme';
+
+<Prompt
+  title="一键创建 Rspress 项目"
+  description="复制这段 Prompt 发送给你的 AI Agent，它会自动帮你搭建一个全新的 Rspress 站点。"
+  prompt={`按照官方快速开始指南 https://rspress.rs/guide/start/getting-started.md
+创建一个 Rspress 项目。
+
+1. 使用 \`create rspress@latest\` 初始化项目。
+2. 安装依赖。
+3. 启动开发服务器。
+4. 确认页面正常渲染。`}
+   />
+```
+
+<Prompt
+  title="一键创建 Rspress 项目"
+  description="复制这段 Prompt 发送给你的 AI Agent，它会自动帮你搭建一个全新的 Rspress 站点。"
+  prompt={`按照官方快速开始指南 https://rspress.rs/guide/start/getting-started.md
+创建一个 Rspress 项目。
+
+1. 使用 \`create rspress@latest\` 初始化项目。
+2. 安装依赖。
+3. 启动开发服务器。
+4. 确认页面正常渲染。`}
+   />
+
+Prompt 内容可以折叠，点击卡片任意位置即可复制完整的 prompt 文本。
+
+## 自定义内容
+
+设置 `custom` 后，组件只保留 eyebrow 和外边框，内部内容由 MDX children 渲染。Custom Prompt 不包含复制和折叠功能。
+
+```mdx title="index.mdx"
+<Prompt custom>
+
+**hello** world
+
+</Prompt>
+```
+
+<Prompt custom>
+
+**hello** world
+
+</Prompt>
+
+:::tip
+如果 prompt 内容较长，可以将其放到单独的文件中，通过 `?raw` 导入使用：
+
+```mdx title="index.mdx"
+import { Prompt } from '@rspress/core/theme';
+import promptText from './_prompt.txt?raw';
+
+<Prompt
+  title="一键创建 Rspress 项目"
+  description="复制这段 Prompt 发送给你的 AI Agent。"
+  prompt={promptText}
+/>
+```
+
+:::
+
+## 和自定义主题一起使用
+
+你可以 eject `Prompt` 组件来自定义其样式和行为：
+
+```bash
+npx rspress eject Prompt
+```
+
+这会将组件复制到 `theme/components/Prompt`。自定义后，在 `theme/index.tsx` 中重新导出：
+
+```tsx title="theme/index.tsx"
+export { Prompt } from './components/Prompt';
+export * from '@rspress/core/theme-original';
+```
+
+## Props
+
+```ts
+interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * 渲染自定义 MDX 内容，不包含复制和折叠功能。
+   * @default false
+   */
+  custom?: boolean;
+  /**
+   * 在标题区显示的描述文本。
+   */
+  description?: string;
+  /**
+   * Prompt 区块的标题。
+   * @default 'Agent Prompt'
+   */
+  title?: string;
+  /**
+   * 标题上方显示的 eyebrow 标签。
+   * @default 'For your Agent'
+   */
+  eyebrow?: string;
+  /**
+   * 控制初始折叠状态。
+   * @default true
+   */
+  defaultCollapsed?: boolean;
+  /**
+   * 要展示并复制的 prompt 文本。
+   */
+  prompt?: string;
+}
+```

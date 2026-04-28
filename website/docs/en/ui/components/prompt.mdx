@@ -1,0 +1,129 @@
+---
+description: Prompt component for standout, copyable agent instructions or custom MDX content.
+overviewHeaders: []
+tag: new
+---
+
+import { Prompt } from '@rspress/core/theme';
+
+# Prompt
+
+`Prompt` highlights reusable instructions that readers can copy and paste directly into their AI tools.
+
+## Usage
+
+Import `Prompt` in your MDX file before using it:
+
+```mdx title="index.mdx"
+import { Prompt } from '@rspress/core/theme';
+
+<Prompt
+  title="Start a Rspress project in one shot"
+  description="Copy this prompt and send it to your AI agent. It will scaffold a new Rspress site for you automatically."
+  prompt={`Create a Rspress project by following the official quick start guide at
+https://rspress.rs/guide/start/getting-started.md.
+
+1. Scaffold the project with \`create rspress@latest\`.
+2. Install dependencies.
+3. Start the dev server.
+4. Verify the site renders correctly.`}
+   />
+```
+
+<Prompt
+  title="Start a Rspress project in one shot"
+  description="Copy this prompt and send it to your AI agent. It will scaffold a new Rspress site for you automatically."
+  prompt={`Create a Rspress project by following the official quick start guide at
+https://rspress.rs/guide/start/getting-started.md.
+
+1. Scaffold the project with \`create rspress@latest\`.
+2. Install dependencies.
+3. Start the dev server.
+4. Verify the site renders correctly.`}
+   />
+
+The prompt content can be folded. Click anywhere on the card to copy the full prompt text.
+
+## Custom content
+
+Set `custom` to keep only the eyebrow and outer border, then render the inner content with MDX children. Custom prompts do not include copy or collapse behavior.
+
+```mdx title="index.mdx"
+<Prompt custom>
+
+**hello** world
+
+</Prompt>
+```
+
+<Prompt custom>
+
+**hello** world
+
+</Prompt>
+
+:::tip
+If the prompt content is long, you can put it in a separate file and import it via `?raw`:
+
+```mdx title="index.mdx"
+import { Prompt } from '@rspress/core/theme';
+import promptText from './_prompt.txt?raw';
+
+<Prompt
+  title="Start a Rspress project in one shot"
+  description="Copy this prompt and send it to your AI agent."
+  prompt={promptText}
+/>
+```
+
+:::
+
+## Use with custom themes
+
+You can eject the `Prompt` component to customize its styles and behavior:
+
+```bash
+npx rspress eject Prompt
+```
+
+This copies the component into `theme/components/Prompt`. After customization, re-export it in your `theme/index.tsx`:
+
+```tsx title="theme/index.tsx"
+export { Prompt } from './components/Prompt';
+export * from '@rspress/core/theme-original';
+```
+
+## Props
+
+```ts
+interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * Render custom MDX content without copy or collapse behavior.
+   * @default false
+   */
+  custom?: boolean;
+  /**
+   * Inline description rendered in the prompt header.
+   */
+  description?: string;
+  /**
+   * Header label for the prompt block.
+   * @default 'Agent Prompt'
+   */
+  title?: string;
+  /**
+   * Eyebrow label shown above the title.
+   * @default 'For your Agent'
+   */
+  eyebrow?: string;
+  /**
+   * Controls the initial folded state.
+   * @default true
+   */
+  defaultCollapsed?: boolean;
+  /**
+   * The prompt text to display and copy.
+   */
+  prompt?: string;
+}
+```
