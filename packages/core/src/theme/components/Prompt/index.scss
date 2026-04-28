@@ -13,11 +13,6 @@
   );
   transition: background 0.3s ease;
 
-  // &:hover {
-  // transform: translate(0, -1px);
-  // transition: transform 0.15s ease;
-  // }
-
   &:active {
     transform: scale(0.996);
     transition: transform 0.15s ease;
@@ -129,12 +124,6 @@
   gap: 0.5rem;
   padding: 0.25rem 0.5rem 0.25rem 0.625rem;
   border-radius: 999px;
-  // border: 1px solid
-  //   color-mix(
-  //     in srgb,
-  //     var(--rp-prompt-accent, var(--rp-c-brand-light)) 28%,
-  //     transparent
-  //   );
   background: color-mix(
     in srgb,
     var(--rp-prompt-accent, var(--rp-c-brand-light)) 12%,
@@ -256,13 +245,11 @@
   color: var(--rp-c-text-1);
   cursor: pointer;
   transition:
-    transform 0.15s ease,
     border-color 0.2s ease,
     background-color 0.2s ease,
     color 0.2s ease;
 
   &:hover {
-    transform: translateY(-1px);
     border-color: color-mix(
       in srgb,
       var(--rp-prompt-accent, var(--rp-c-brand-light)) 50%,
@@ -276,7 +263,7 @@
   }
 
   &:active {
-    transform: translateY(0) scale(0.97);
+    transform: none;
   }
 
   &:focus-visible {
