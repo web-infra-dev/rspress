@@ -1,5 +1,5 @@
 ---
-description: Prompt 组件用于突出展示可复制、可折叠的 Agent 指令块。
+description: Prompt 组件用于突出展示可复制的 Agent 指令块或自定义 MDX 内容。
 overviewHeaders: []
 tag: new
 ---
@@ -44,6 +44,24 @@ import { Prompt } from '@rspress/core/theme';
 
 Prompt 内容可以折叠，点击卡片任意位置即可复制完整的 prompt 文本。
 
+## 自定义内容
+
+设置 `custom` 后，组件只保留 eyebrow 和外边框，内部内容由 MDX children 渲染。Custom Prompt 不包含复制和折叠功能。
+
+```mdx title="index.mdx"
+<Prompt custom>
+
+**hello** world
+
+</Prompt>
+```
+
+<Prompt custom>
+
+**hello** world
+
+</Prompt>
+
 :::tip
 如果 prompt 内容较长，可以将其放到单独的文件中，通过 `?raw` 导入使用：
 
@@ -60,7 +78,7 @@ import promptText from './_prompt.txt?raw';
 
 :::
 
-## 自定义
+## 和自定义主题一起使用
 
 你可以 eject `Prompt` 组件来自定义其样式和行为：
 
@@ -79,6 +97,11 @@ export * from '@rspress/core/theme-original';
 
 ```ts
 interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * 渲染自定义 MDX 内容，不包含复制和折叠功能。
+   * @default false
+   */
+  custom?: boolean;
   /**
    * 在标题区显示的描述文本。
    */
@@ -101,6 +124,6 @@ interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * 要展示并复制的 prompt 文本。
    */
-  prompt: string;
+  prompt?: string;
 }
 ```

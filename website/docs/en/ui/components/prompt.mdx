@@ -1,5 +1,5 @@
 ---
-description: Prompt component for standout, copyable agent instructions with a collapsible layout.
+description: Prompt component for standout, copyable agent instructions or custom MDX content.
 overviewHeaders: []
 tag: new
 ---
@@ -44,6 +44,24 @@ https://rspress.rs/guide/start/getting-started.md.
 
 The prompt content can be folded. Click anywhere on the card to copy the full prompt text.
 
+## Custom content
+
+Set `custom` to keep only the eyebrow and outer border, then render the inner content with MDX children. Custom prompts do not include copy or collapse behavior.
+
+```mdx title="index.mdx"
+<Prompt custom>
+
+**hello** world
+
+</Prompt>
+```
+
+<Prompt custom>
+
+**hello** world
+
+</Prompt>
+
 :::tip
 If the prompt content is long, you can put it in a separate file and import it via `?raw`:
 
@@ -60,7 +78,7 @@ import promptText from './_prompt.txt?raw';
 
 :::
 
-## Customization
+## Use with custom themes
 
 You can eject the `Prompt` component to customize its styles and behavior:
 
@@ -79,6 +97,11 @@ export * from '@rspress/core/theme-original';
 
 ```ts
 interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * Render custom MDX content without copy or collapse behavior.
+   * @default false
+   */
+  custom?: boolean;
   /**
    * Inline description rendered in the prompt header.
    */
@@ -101,6 +124,6 @@ interface PromptProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * The prompt text to display and copy.
    */
-  prompt: string;
+  prompt?: string;
 }
 ```

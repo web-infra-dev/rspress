@@ -24,6 +24,14 @@
   }
 }
 
+.rp-prompt--custom {
+  cursor: default;
+
+  &:active {
+    transform: none;
+  }
+}
+
 .rp-prompt__backdrop {
   position: absolute;
   inset: -20%;
@@ -420,6 +428,47 @@
 
   :where(ul, ol) {
     padding-left: 1.25rem;
+  }
+}
+
+.rp-prompt__custom-content {
+  margin-top: 1rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--rp-c-text-1);
+
+  p {
+    margin: 8px 0;
+  }
+
+  :where(ul, ol, pre, blockquote) {
+    margin: 8px 0;
+  }
+
+  :where(ul, ol) {
+    padding-left: 1.25rem;
+  }
+
+  a {
+    color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
+    border-bottom: 1px solid currentColor;
+
+    & > code {
+      color: inherit;
+    }
+
+    &:hover > code {
+      color: inherit;
+    }
+  }
+
+  & > :first-child {
+    margin-top: 0;
+  }
+
+  & > :last-child {
+    margin-bottom: 0;
   }
 }
 
