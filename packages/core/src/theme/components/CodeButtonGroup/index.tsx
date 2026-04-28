@@ -1,4 +1,4 @@
-import { useSite } from '@rspress/core/runtime';
+import { useI18n, useSite } from '@rspress/core/runtime';
 import { IconWrap, IconWrapped, SvgWrapper } from '@rspress/core/theme';
 import clsx from 'clsx';
 import { useRef, useState } from 'react';
@@ -43,6 +43,8 @@ export function CodeButtonGroup({
   showWrapCodeButton = true,
   showCopyButton = true,
 }: CodeButtonGroupProps) {
+  const t = useI18n();
+
   return (
     <>
       <div className="rp-code-button-group">
@@ -54,7 +56,7 @@ export function CodeButtonGroup({
               wrapCode && 'rp-code-wrap-button--wrapped',
             )}
             onClick={() => toggleWrapCode()}
-            title="Toggle code wrap"
+            title={t('codeButtonGroupWrapButtonText')}
           >
             <SvgWrapper
               icon={IconWrapped}
