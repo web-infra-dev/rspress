@@ -1,8 +1,8 @@
 import type { Header } from '@rspress/core';
 
-const MAX_TITLE_LENGTH = 20;
-const kRegex = /[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]/u;
-const cyrillicRegex = /[\u0400-\u04FF]/u;
+export const MAX_TITLE_LENGTH = 20;
+export const kRegex = /[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]/u;
+export const cyrillicRegex = /[\u0400-\u04FF]/u;
 
 export function backTrackHeaders(
   rawHeaders: Header[],
@@ -39,16 +39,13 @@ export function formatText(text: string) {
 }
 
 export function normalizeTextCase(text: string | number) {
-  const textNormalized = text.toString().toLowerCase().normalize('NFD');
+  const textNormalized = text.toString().toLowerCase().normalize('NFC');
 
   if (cyrillicRegex.test(String(text))) {
-    return textNormalized.normalize('NFC');
+    return textNormalized;
   }
 
   const resultWithoutAccents = textNormalized.replace(/[\u0300-\u036f]/g, '');
-  if (kRegex.test(String(text))) {
-    return resultWithoutAccents.normalize('NFC');
-  }
   return resultWithoutAccents;
 }
 
