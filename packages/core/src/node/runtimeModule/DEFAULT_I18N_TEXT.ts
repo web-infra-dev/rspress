@@ -174,22 +174,37 @@ export const DEFAULT_I18N_TEXT = {
   promptCopyText: {
     en: 'Copy Prompt',
     zh: '复制 Prompt',
+    ja: 'Prompt をコピー',
+    ko: '프롬프트 복사',
+    ru: 'Скопировать Prompt',
   },
   promptCopiedText: {
     en: 'Copied',
     zh: '已复制',
+    ja: 'コピーしました',
+    ko: '복사됨',
+    ru: 'Скопировано',
   },
   promptCopyTitleText: {
     en: 'Copy prompt',
     zh: '复制 prompt',
+    ja: 'Prompt をコピー',
+    ko: '프롬프트 복사',
+    ru: 'Скопировать prompt',
   },
   promptExpandText: {
     en: 'Expand',
     zh: '展开',
+    ja: '展開',
+    ko: '펼치기',
+    ru: 'Развернуть',
   },
   promptCollapseText: {
     en: 'Collapse',
     zh: '折叠',
+    ja: '折りたたむ',
+    ko: '접기',
+    ru: 'Свернуть',
   },
 } as const satisfies Required<I18nText>;
 
