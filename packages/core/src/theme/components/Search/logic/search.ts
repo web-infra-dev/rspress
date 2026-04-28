@@ -247,7 +247,7 @@ export class PageSearcher {
       const currentHeader = getCurrentHeader(queryIndex);
       let statementStartIndex = content.slice(0, queryIndex).lastIndexOf('\n');
       statementStartIndex =
-        statementStartIndex === -1 ? queryIndex : statementStartIndex;
+        statementStartIndex === -1 ? 0 : statementStartIndex;
       let statementEndIndex = content.indexOf(
         '\n\n',
         queryIndex + query.length,
