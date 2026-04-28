@@ -247,16 +247,16 @@ export class PageSearcher {
       const currentHeader = getCurrentHeader(queryIndex);
       let statementStartIndex = content.slice(0, queryIndex).lastIndexOf('\n');
       statementStartIndex =
-        statementStartIndex === -1 ? 0 : statementStartIndex;
-      const statementEndIndex = content.indexOf(
+        statementStartIndex === -1 ? queryIndex : statementStartIndex;
+      let statementEndIndex = content.indexOf(
         '\n\n',
         queryIndex + query.length,
       );
+      statementEndIndex =
+        statementEndIndex === -1 ? content.length : statementEndIndex;
       let statement = content.slice(statementStartIndex, statementEndIndex);
-      if (statement.length > THRESHOLD_CONTENT_LENGTH) {
-        statement = this.#normalizeStatement(statement, query);
-      }
-      const highlightIndex = normalizeTextCase(statement).indexOf(query);
+      statement = this.#normalizeStatement(statement, query);
+      const highlightIndex = statement.indexOf(normalizeTextCase(query));
       const highlightInfoList = [
         {
           start: highlightIndex,
@@ -286,6 +286,9 @@ export class PageSearcher {
   }
 
   #normalizeStatement(statement: string, query: string) {
+    if (statement.length <= THRESHOLD_CONTENT_LENGTH) {
+      return statement;
+    }
     // If statement is too long, we will only show 120 characters
     const queryIndex = normalizeTextCase(statement).indexOf(
       normalizeTextCase(query),
