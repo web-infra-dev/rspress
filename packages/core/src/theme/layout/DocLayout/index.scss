@@ -150,8 +150,11 @@
     margin-left: var(--rp-sidebar-margin-left);
   }
   .rp-doc-layout__sidebar-placeholder {
-    width: var(--rp-sidebar-width);
+    width: 12vw;
     margin-left: var(--rp-sidebar-margin-left);
+  }
+  .rp-doc-layout__sidebar-placeholder--legacy {
+    width: var(--rp-sidebar-width);
   }
   .rp-doc-layout__outline {
     margin-right: var(--rp-outline-margin-right);

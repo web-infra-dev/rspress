@@ -37,8 +37,12 @@ export const SidebarMenu = forwardRef(
     const { scrolledHeader } = useActiveAnchor(headers);
 
     const {
-      frontmatter: { sidebar: showSidebar = true, outline: showOutline = true },
+      frontmatter: {
+        sidebar: sidebarConfig = true,
+        outline: showOutline = true,
+      },
     } = useFrontmatter();
+    const showSidebar = sidebarConfig === true;
 
     function openSidebar() {
       onIsSidebarOpenChange(true);
