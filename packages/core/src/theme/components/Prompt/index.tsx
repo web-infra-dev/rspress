@@ -1,3 +1,4 @@
+import { useI18n } from '@rspress/core/runtime';
 import {
   copyToClipboard,
   IconArrowDown,
@@ -5,10 +6,9 @@ import {
   IconSuccess,
   renderInlineMarkdown,
   SvgWrapper,
-  useI18n,
 } from '@rspress/core/theme';
 import clsx from 'clsx';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { AGENT_ICONS } from './icons';
 import './index.scss';
 
@@ -125,12 +125,14 @@ function CopyablePrompt({
   defaultCollapsed = true,
   description,
   eyebrow = 'For your Agent',
+  onClick,
   prompt,
   style,
   title = 'Agent Prompt',
   ...props
 }: PromptProps) {
   const t = useI18n();
+  const contentId = useId();
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const [copied, setCopied] = useState(false);
   const { fading, iconIndex } = useRotatingIcon();
@@ -172,14 +174,10 @@ function CopyablePrompt({
   }, [prompt]);
 
   const handleCardActivate = useCallback(
-    (
-      e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>,
-    ) => {
-      if ('key' in e && e.key !== 'Enter' && e.key !== ' ') {
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      onClick?.(e);
+      if (e.defaultPrevented) {
         return;
-      }
-      if ('key' in e) {
-        e.preventDefault();
       }
 
       if (window.getSelection()?.toString()) {
@@ -201,21 +199,19 @@ function CopyablePrompt({
       }
 
       const id = Date.now() + Math.random();
-      if ('clientX' in e) {
-        setRipples(prev => [
-          ...prev,
-          { id, x: e.clientX - rect.left, y: e.clientY - rect.top },
-        ]);
-      }
+      setRipples(prev => [
+        ...prev,
+        { id, x: e.clientX - rect.left, y: e.clientY - rect.top },
+      ]);
       const timer = setTimeout(() => {
         setRipples(prev => prev.filter(r => r.id !== id));
         rippleTimersRef.current.delete(timer);
       }, 600);
       rippleTimersRef.current.add(timer);
 
-      handleCopy();
+      void handleCopy();
     },
-    [handleCopy],
+    [handleCopy, onClick],
   );
 
   return (
@@ -273,9 +269,9 @@ function CopyablePrompt({
                 )}
                 onClick={e => {
                   e.stopPropagation();
-                  handleCopy();
+                  void handleCopy();
                 }}
-                title={t('promptCopyTitleText')}
+                title={t('promptCopyText')}
               >
                 <SvgWrapper
                   icon={copied ? IconSuccess : IconCopy}
@@ -292,6 +288,7 @@ function CopyablePrompt({
                   e.stopPropagation();
                   setCollapsed(value => !value);
                 }}
+                aria-controls={contentId}
                 aria-expanded={!collapsed}
                 title={
                   collapsed ? t('promptExpandText') : t('promptCollapseText')
@@ -310,10 +307,12 @@ function CopyablePrompt({
         </div>
 
         <div
+          id={contentId}
           className={clsx(
             'rp-prompt__content',
             collapsed && 'rp-prompt__content--collapsed',
           )}
+          aria-hidden={collapsed}
         >
           <div className="rp-prompt__content-inner">
             <div

@@ -40,6 +40,14 @@ export function getCopyableText(
       const currentBlock = getBlockElement(parentElement, element);
 
       if (
+        (node.previousSibling?.nodeName === 'BR' ||
+          parentElement.previousSibling?.nodeName === 'BR') &&
+        !text.endsWith('\n')
+      ) {
+        text += '\n';
+      }
+
+      if (
         currentBlock &&
         previousBlock &&
         currentBlock !== previousBlock &&
@@ -79,8 +87,9 @@ interface MarkdownState {
 }
 
 // This is a lightweight markdown adapter for DOM-based copy text extraction.
-// We currently only cover the minimum node types needed by Prompt copy.
-// If Prompt copy needs broader markdown fidelity in the future, replace this
+// We currently only cover the minimum node types needed by current callers
+// of getCopyableText, such as code block copy flows.
+// If those callers need broader markdown fidelity in the future, replace this
 // with a dedicated renderToMarkdownString-style conversion instead of growing
 // ad-hoc rules here indefinitely.
 function toMarkdown(node: Node, state: MarkdownState) {
@@ -94,10 +103,6 @@ function toMarkdown(node: Node, state: MarkdownState) {
   if (listItem && !state.seenNodes.has(listItem)) {
     state.seenNodes.add(listItem);
     return toMarkdownListItem(listItem);
-  }
-
-  if (element.tagName === 'BR') {
-    return '\n';
   }
 
   return '';

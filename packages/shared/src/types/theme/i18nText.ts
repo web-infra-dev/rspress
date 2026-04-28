@@ -48,7 +48,6 @@ export interface I18nText {
   // prompt
   promptCopyText?: I18nTextValue;
   promptCopiedText?: I18nTextValue;
-  promptCopyTitleText?: I18nTextValue;
   promptExpandText?: I18nTextValue;
   promptCollapseText?: I18nTextValue;
 }
