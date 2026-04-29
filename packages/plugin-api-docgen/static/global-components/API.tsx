@@ -4,9 +4,9 @@ import { getCustomMDXComponent } from '@theme';
 import GithubSlugger from 'github-slugger';
 import type { Content, Element, Root } from 'hast';
 import ReactMarkdown from 'react-markdown';
+import type { ElementType } from 'react';
 import remarkGfm from 'remark-gfm';
 import './API.css';
-import React from 'react';
 // @ts-expect-error virtual module
 import apiDocMap from 'rspress-plugin-api-docgen-map';
 import type { Plugin } from 'unified';
@@ -106,9 +106,7 @@ const API = (props: { moduleName: string }) => {
       <ReactMarkdown
         remarkPlugins={[[remarkGfm]]}
         rehypePlugins={[[rehypeHeaderAnchor]]}
-        components={
-          getCustomMDXComponent() as Record<string, React.ElementType>
-        }
+        components={getCustomMDXComponent() as Record<string, ElementType>}
         skipHtml={true}
       >
         {apiDoc}
