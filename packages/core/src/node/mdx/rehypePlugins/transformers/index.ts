@@ -1,7 +1,4 @@
-export {
-  SHIKI_TRANSFORMER_ADD_FOLD,
-  transformerAddFold,
-} from './add-fold';
+export { SHIKI_TRANSFORMER_ADD_FOLD, transformerAddFold } from './add-fold';
 export { SHIKI_TRANSFORMER_ADD_LANG, transformerAddLang } from './add-lang';
 export {
   SHIKI_TRANSFORMER_ADD_LINE_NUMBERS,

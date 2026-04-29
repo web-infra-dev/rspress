@@ -32,8 +32,7 @@ type Option =
   | 'chatgpt'
   | 'claude';
 
-export interface LlmsViewOptionsProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Default options for the dropdown.
    * @default ['markdownLink', 'chatgpt', 'claude']

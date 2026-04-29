@@ -10,9 +10,9 @@
     "check-spell": "pnpm cspell && heading-case",
     "dev": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t dev --exclude @rspress-fixture/* --exclude @rspress/docs",
     "dev:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:dev",
-    "format": "prettier . --write && biome check --write && heading-case --write",
+    "format": "rslint --fix && prettier . --write && heading-case --write",
     "generate-release-pr": "zx scripts/generateReleasePr.mjs",
-    "lint": "biome check . --diagnostic-level=warn && prettier . --check && pnpm run check-spell",
+    "lint": "rslint && prettier . --check && pnpm run check-spell",
     "prepare": "skills-package-manager install && pnpm run build && simple-git-hooks",
     "preview:website": "cd website && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
@@ -29,7 +29,8 @@
       "heading-case --write"
     ],
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "biome check --write"
+      "rslint --fix",
+      "prettier --write"
     ],
     "package.json": [
       "pnpm run check-dependency-version",
@@ -37,9 +38,9 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.13",
     "@changesets/cli": "^2.30.0",
     "@playwright/test": "1.58.2",
+    "@rslint/core": "^0.5.0",
     "@rspress/config": "workspace:*",
     "@rstest/core": "^0.9.9",
     "@types/cross-spawn": "^6.0.6",

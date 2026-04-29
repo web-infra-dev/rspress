@@ -5,8 +5,10 @@ import {
 import { useRef } from 'react';
 import styles from './LiveCodeEditor.module.scss';
 
-export interface LiveCodeEditorProps
-  extends Omit<CodeBlockRuntimeProps, 'code' | 'onChange'> {
+export interface LiveCodeEditorProps extends Omit<
+  CodeBlockRuntimeProps,
+  'code' | 'onChange'
+> {
   value: string;
   onChange: (value: string) => void;
   disabled?: boolean;

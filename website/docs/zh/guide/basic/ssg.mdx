@@ -173,7 +173,7 @@ doc_build/
      const [Editor, setEditor] = useState(null);
 
      useEffect(() => {
-       import('some-browser-only-library').then((mod) => {
+       import('some-browser-only-library').then(mod => {
          setEditor(() => mod.default);
        });
      }, []);

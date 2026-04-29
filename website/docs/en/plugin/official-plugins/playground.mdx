@@ -141,7 +141,7 @@ function App() {
 
   return (
     <div>
-      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <input value={text} onChange={e => setText(e.target.value)} />
       <p>You entered: {text}</p>
     </div>
   );
