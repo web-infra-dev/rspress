@@ -9,7 +9,7 @@ export default defineConfig([
       '**/dist-*/**',
       '**/doc_build/**',
       '**/node_modules/**',
-      '**/packages/create-rspress/template/rspress.config.ts',
+      '**/packages/create-rspress/template-*/rspress.config.ts',
     ],
   },
   js.configs.recommended,
