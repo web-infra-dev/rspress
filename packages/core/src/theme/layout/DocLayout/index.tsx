@@ -44,8 +44,12 @@ export function DocLayout(props: DocLayoutProps) {
 
   const isOverviewPage = frontmatter?.overview ?? false;
 
+  const sidebar = frontmatter?.sidebar ?? true;
+  const showSidebar = sidebar === true;
+  const showSidebarPlaceholder = sidebar === false || sidebar === 'placeholder';
+  const isLegacyPlaceholder = sidebar === 'placeholder';
+
   const {
-    sidebar: showSidebar = true,
     outline: showOutline = true,
     footer: showDocFooter = true,
     pageType,
@@ -96,12 +100,16 @@ export function DocLayout(props: DocLayoutProps) {
             <Sidebar />
             {afterSidebar}
           </aside>
-        ) : (
+        ) : showSidebarPlaceholder ? (
           <aside
-            className="rp-doc-layout__sidebar-placeholder"
+            className={clsx(
+              'rp-doc-layout__sidebar-placeholder',
+              isLegacyPlaceholder &&
+                'rp-doc-layout__sidebar-placeholder--legacy',
+            )}
             style={isDocWide ? { width: '0' } : {}}
           ></aside>
-        )}
+        ) : null}
 
         {/* Main document content */}
         {isOverviewPage ? (

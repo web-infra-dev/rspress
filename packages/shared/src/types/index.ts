@@ -446,7 +446,7 @@ export interface FrontMatterMeta {
 
   // ui
   navbar?: boolean;
-  sidebar?: boolean;
+  sidebar?: boolean | 'placeholder';
   outline?: boolean;
   footer?: boolean;
 
