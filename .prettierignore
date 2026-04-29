@@ -1,14 +1,11 @@
 # Ignore artifacts
 dist
+**/dist
+**/.rslib
 compiled
+**/compiled
 doc_build
-
-# ignore all JS/TS files, use Biome
-**/*.js
-**/*.mjs
-**/*.ts
-**/*.jsx
-**/*.tsx
+**/doc_build
 
 # ignore pnpm-lock
 pnpm-lock.yaml

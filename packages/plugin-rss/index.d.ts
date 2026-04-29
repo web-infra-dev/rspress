@@ -1,4 +1,4 @@
-import type { PageFeedData } from './dist'
+import type { PageFeedData } from './dist';
 
 declare module '@rspress/core' {
   interface PageIndexInfo {
@@ -6,4 +6,4 @@ declare module '@rspress/core' {
   }
 }
 
-export * from './dist'
+export * from './dist';

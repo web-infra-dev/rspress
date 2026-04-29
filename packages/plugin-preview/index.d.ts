@@ -4,4 +4,4 @@ declare module '@rspress/core' {
   }
 }
 
-export * from './dist'
+export * from './dist';

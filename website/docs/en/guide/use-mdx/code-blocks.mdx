@@ -32,7 +32,7 @@ You can use the `title="..."` attribute to add a title to a code block.
 
 ````mdx
 ```jsx title="src/components/HelloCodeBlockTitle.tsx"
-const HelloCodeBlockTitle = (props) => {
+const HelloCodeBlockTitle = props => {
   return <h1>Hello CodeBlock Title</h1>;
 };
 ```
@@ -41,7 +41,7 @@ const HelloCodeBlockTitle = (props) => {
 It will be rendered as:
 
 ```jsx title="src/components/HelloCodeBlockTitle.tsx"
-const HelloCodeBlockTitle = (props) => {
+const HelloCodeBlockTitle = props => {
   return <h1>Hello CodeBlock Title</h1>;
 };
 ```
@@ -318,7 +318,7 @@ export default () => {
       <div>Line 19</div>
       <div>Line 20</div>
       <div>{count}</div>
-      <button onClick={() => setCount((c) => c + 1)}>{count}</button>
+      <button onClick={() => setCount(c => c + 1)}>{count}</button>
     </div>
   );
 };
@@ -346,7 +346,7 @@ const lines = Array.from({ length: 20 }, (_, index) => `Line ${index + 1}`);
 export default function ScrollDemo() {
   return (
     <div>
-      {lines.map((line) => (
+      {lines.map(line => (
         <div key={line}>{line}</div>
       ))}
     </div>

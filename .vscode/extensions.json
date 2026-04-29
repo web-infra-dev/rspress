@@ -1,6 +1,6 @@
 {
   "recommendations": [
-    "biomejs.biome",
+    "rstack.rslint",
     "esbenp.prettier-vscode",
     "streetsidesoftware.code-spell-checker",
     "unifiedjs.vscode-mdx"

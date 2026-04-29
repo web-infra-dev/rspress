@@ -178,7 +178,7 @@ export default defineConfig({
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  i18nSource: async (source) => {
+  i18nSource: async source => {
     for (const key of Object.keys(source)) {
       source[key]['en_US'] = source[key]['en'];
     }
@@ -347,7 +347,7 @@ export default defineConfig({
     ['meta', { name: 'author', content: 'John Doe' }],
     // [htmlTag, { attrName: attrValue, attrName2: attrValue2 }]
     // or
-    (route) => {
+    route => {
       if (route.routePath.startsWith('/jane/'))
         return "<meta name='author' content='Jane Doe'>";
       if (route.routePath.startsWith('/john/'))
