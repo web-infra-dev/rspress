@@ -460,19 +460,148 @@
 }
 
 html.rp-dark {
+  .rp-prompt {
+    background: rgba(148, 163, 184, 0.34);
+  }
+
+  .rp-prompt__backdrop {
+    background: none;
+    filter: none;
+    opacity: 0;
+  }
+
+  .rp-prompt__panel {
+    background: #171a20;
+    box-shadow:
+      0 18px 42px rgba(0, 0, 0, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    &::before {
+      background-image: none;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+
   .rp-prompt__meta {
-    background: color-mix(
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .rp-prompt__meta--copied {
+    border-color: color-mix(
       in srgb,
-      var(--rp-prompt-accent, var(--rp-c-brand)) 12%,
-      var(--rp-c-bg)
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 36%,
+      rgba(255, 255, 255, 0.12)
     );
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .rp-prompt__eyebrow {
-    color: color-mix(in srgb, var(--rp-prompt-accent, #dbeafe) 92%, white);
+    color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 42%,
+      white
+    );
+  }
+
+  .rp-prompt__description {
+    color: rgba(255, 255, 245, 0.68);
+  }
+
+  .rp-prompt__ripple {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .rp-prompt__action-copy,
+  .rp-prompt__action-toggle {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: #20242c;
+    color: rgba(255, 255, 245, 0.9);
+
+    &:hover {
+      border-color: color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-light)) 38%,
+        rgba(255, 255, 255, 0.16)
+      );
+      background: #252a33;
+    }
+
+    &:focus-visible {
+      outline-color: color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-light)) 55%,
+        white
+      );
+    }
+  }
+
+  .rp-prompt__action-copy {
+    color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 40%,
+      white
+    );
+    border-color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 30%,
+      rgba(255, 255, 255, 0.12)
+    );
+    background: #20242c;
+
+    &:hover {
+      background: #282e38;
+    }
+  }
+
+  .rp-prompt__action-copy--copied {
+    color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 46%,
+      white
+    );
+    border-color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 42%,
+      rgba(255, 255, 255, 0.14)
+    );
+    background: #2a303a;
+  }
+
+  .rp-prompt__action-toggle {
+    color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 40%,
+      white
+    );
+    border-color: color-mix(
+      in srgb,
+      var(--rp-prompt-accent, var(--rp-c-brand-light)) 30%,
+      rgba(255, 255, 255, 0.12)
+    );
   }
 
   .rp-prompt__content-body {
-    box-shadow: inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 245, 0.88);
+    background: #11141a;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .rp-prompt__custom-content {
+    color: rgba(255, 255, 245, 0.88);
+
+    a {
+      color: color-mix(
+        in srgb,
+        var(--rp-prompt-accent, var(--rp-c-brand-light)) 42%,
+        white
+      );
+    }
   }
 }
