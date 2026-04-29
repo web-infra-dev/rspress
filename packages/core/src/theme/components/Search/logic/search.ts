@@ -256,7 +256,9 @@ export class PageSearcher {
         statementEndIndex === -1 ? content.length : statementEndIndex;
       let statement = content.slice(statementStartIndex, statementEndIndex);
       statement = this.#normalizeStatement(statement, query);
-      const highlightIndex = statement.indexOf(normalizeTextCase(query));
+      const highlightIndex = normalizeTextCase(statement).indexOf(
+        normalizeTextCase(query),
+      );
       const highlightInfoList = [
         {
           start: highlightIndex,
