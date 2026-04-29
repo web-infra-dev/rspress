@@ -24,9 +24,9 @@ const useBlogPages = () => {
       : defaultDate;
 
   const blogPages = pages
-    .filter((page) => page.lang === lang)
+    .filter(page => page.lang === lang)
     .filter(
-      (page) =>
+      page =>
         page.routePath.includes('/blog/') && !page.routePath.endsWith('/blog/'),
     )
     .sort((a, b) => {

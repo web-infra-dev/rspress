@@ -173,7 +173,7 @@ The core difference between the two modes lies in the HTML file content:
      const [Editor, setEditor] = useState(null);
 
      useEffect(() => {
-       import('some-browser-only-library').then((mod) => {
+       import('some-browser-only-library').then(mod => {
          setEditor(() => mod.default);
        });
      }, []);

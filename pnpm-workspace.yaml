@@ -12,7 +12,6 @@ hoistPattern: []
 linkWorkspacePackages: true
 
 onlyBuiltDependencies:
-  - '@biomejs/biome'
   - core-js
   - esbuild
   - nx

@@ -12,7 +12,6 @@ autohide
 autoreleasepool
 autospace
 bilibili
-biomejs
 Bluch
 brotli
 browserslistrc

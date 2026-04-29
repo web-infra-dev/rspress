@@ -82,9 +82,7 @@ export async function walk(
     // find the `_meta.json` file in the subdirectory
     const subDirs: string[] = (
       await Promise.all(
-        (
-          await fs.readdir(workDir)
-        ).map(v => {
+        (await fs.readdir(workDir)).map(v => {
           return fs.stat(path.join(workDir, v)).then(s => {
             if (s.isDirectory() && v !== 'node_modules') {
               return v;

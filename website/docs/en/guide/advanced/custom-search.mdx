@@ -159,10 +159,10 @@ interface ResultData {
 }
 
 // The render function for each search source
-const render: RenderSearchFunction<ResultData> = (item) => {
+const render: RenderSearchFunction<ResultData> = item => {
   return (
     <div>
-      {item.list.map((i) => (
+      {item.list.map(i => (
         <div>
           <a href={i.path}>{i.title}</a>
         </div>

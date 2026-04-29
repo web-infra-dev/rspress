@@ -48,9 +48,8 @@ test('getRoutePathParts', () => {
     ]
   `);
 
-  expect(
-    getRoutePathParts('/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
-  ).toMatchInlineSnapshot(`
+  expect(getRoutePathParts('/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']))
+    .toMatchInlineSnapshot(`
     [
       "",
       "",
@@ -174,9 +173,8 @@ test('normalizeRoutePath', () => {
     }
   `);
 
-  expect(
-    normalizeRoutePath('/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']),
-  ).toMatchInlineSnapshot(`
+  expect(normalizeRoutePath('/foo/bar', 'en', 'v1', ['zh', 'en'], ['v1', 'v2']))
+    .toMatchInlineSnapshot(`
     {
       "lang": "en",
       "pureRoutePath": "/foo/bar",

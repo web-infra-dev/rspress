@@ -6,7 +6,6 @@ import type { Content, Element, Root } from 'hast';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import './API.css';
-// biome-ignore lint/style/useImportType: <exact>
 import React from 'react';
 // @ts-expect-error virtual module
 import apiDocMap from 'rspress-plugin-api-docgen-map';

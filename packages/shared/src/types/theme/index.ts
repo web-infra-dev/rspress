@@ -145,8 +145,10 @@ export interface NormalizedLocales extends Omit<LocaleConfig, 'sidebar'> {
   sidebar: NormalizedSidebar;
 }
 
-export interface NormalizedThemeConfig
-  extends Omit<ThemeConfig, 'locales' | 'sidebar'> {
+export interface NormalizedThemeConfig extends Omit<
+  ThemeConfig,
+  'locales' | 'sidebar'
+> {
   locales: NormalizedLocales[];
   sidebar: NormalizedSidebar;
 }

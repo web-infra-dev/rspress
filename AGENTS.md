@@ -5,7 +5,7 @@
 - Monorepo via `pnpm` + `Nx`.
 - Packages: `packages/core` (CLI + `@rspress/core`), `packages/theme-default` (Default theme), `packages/plugin-*` (Official plugins), `packages/create-rspress` (scaffolder).
 - Tests: `packages/*/tests` (unit) and `e2e/` (end-to-end tests); website examples in `website/`.
-- Key config: `nx.json`, `biome.json`, `.prettierrc`, `playwright.config.ts`, `pnpm-workspace.yaml`.
+- Key config: `nx.json`, `rslint.config.ts`, `.prettierrc`, `playwright.config.ts`, `pnpm-workspace.yaml`.
 
 ## Build, test, and development commands
 
@@ -18,8 +18,8 @@
 ## Coding style & naming conventions
 
 - TypeScript + ESM; spaces; single quotes.
-- Biome is canonical linter/formatter; Prettier formats MD/CSS/JSON and `package.json`.
-- Filenames: `camelCase` or `PascalCase` (Biome enforced).
+- Rslint is the canonical linter; Prettier formats code, MD/CSS/JSON, and `package.json`.
+- Filenames: `camelCase` or `PascalCase`.
 
 ## Testing guidelines
 
