@@ -49,4 +49,36 @@ test.describe('search i18n test', async () => {
     const suggestItems3 = await searchInPage(page, 'Button');
     expect(await suggestItems3[0].textContent()).toContain('Button en');
   });
+
+  test('should return search results for voiced katakana content correctly', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    // Switch to Japanese locale
+    const langMenu = page
+      .locator('.rp-nav__others .rp-nav-menu__item__container')
+      .first();
+    await langMenu.click();
+    await page.getByRole('link', { name: '日本語' }).click();
+    await page.waitForURL(/\/ja\//);
+
+    const suggestItemsTitle = await searchInPage(page, 'ご');
+    expect(suggestItemsTitle.length).toBe(1);
+    expect(await suggestItemsTitle[0].textContent()).toContain('にほんご');
+
+    const suggestItemsHeader = await searchInPage(page, 'ヘッダー');
+    expect(suggestItemsHeader.length).toBe(2);
+    expect(await suggestItemsHeader[0].textContent()).toContain('ヘッダー');
+
+    const suggestItemsContent1 = await searchInPage(page, 'す');
+    expect(suggestItemsContent1.length).toBe(1);
+    expect(await suggestItemsContent1[0].textContent()).toContain('できます');
+
+    const suggestItemsContent2 = await searchInPage(page, 'さ');
+    expect(suggestItemsContent2.length).toBe(1);
+    expect(await suggestItemsContent2[0].textContent()).toContain('さい');
+  });
 });
