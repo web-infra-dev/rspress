@@ -41,6 +41,11 @@
   }
 }
 
+// Don't push content down when the mobile menu isn't being rendered.
+:root:has(.rp-doc-layout__container--no-menu) {
+  --rp-sidebar-menu-height: 0px;
+}
+
 .rp-doc-layout {
   &__container {
     width: 100%; // mobile
@@ -51,13 +56,6 @@
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
-
-    // When neither sidebar nor outline is shown, the menu wrapper is omitted
-    // from the DOM. Reset the height variable so descendant sidebar/outline
-    // margin top offsets dont compensate for space that no longer exists.
-    &--no-menu {
-      --rp-sidebar-menu-height: 0px;
-    }
   }
 
   &__doc {

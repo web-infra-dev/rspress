@@ -55,7 +55,7 @@ export function DocLayout(props: DocLayoutProps) {
     pageType,
   } = frontmatter;
 
-  const showSidebarMenu = showSidebar || showOutline;
+  const showSidebarMenu = showSidebar || (!isOverviewPage && showOutline);
 
   if (process.env.__SSR_MD__) {
     return (
