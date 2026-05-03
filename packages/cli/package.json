@@ -1,6 +1,7 @@
 {
   "name": "rspress",
   "version": "1.47.1",
+  "description": "Deprecated Rspress v1 CLI. Use @rspress/core for Rspress v2.",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rspress",
