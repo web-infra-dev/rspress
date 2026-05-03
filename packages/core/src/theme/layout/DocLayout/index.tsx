@@ -55,6 +55,8 @@ export function DocLayout(props: DocLayoutProps) {
     pageType,
   } = frontmatter;
 
+  const showSidebarMenu = showSidebar || showOutline;
+
   if (process.env.__SSR_MD__) {
     return (
       <>
@@ -83,9 +85,16 @@ export function DocLayout(props: DocLayoutProps) {
 
   return (
     <>
-      <div className="rp-doc-layout__menu">{sidebarMenu}</div>
+      {showSidebarMenu && (
+        <div className="rp-doc-layout__menu">{sidebarMenu}</div>
+      )}
       {beforeDoc}
-      <div className="rp-doc-layout__container">
+      <div
+        className={clsx(
+          'rp-doc-layout__container',
+          !showSidebarMenu && 'rp-doc-layout__container--no-menu',
+        )}
+      >
         {/* Sidebar */}
         {showSidebar ? (
           <aside

@@ -51,6 +51,13 @@
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
+
+    // When neither sidebar nor outline is shown, the menu wrapper is omitted
+    // from the DOM. Reset the height variable so descendant sidebar/outline
+    // margin top offsets dont compensate for space that no longer exists.
+    &--no-menu {
+      --rp-sidebar-menu-height: 0px;
+    }
   }
 
   &__doc {
