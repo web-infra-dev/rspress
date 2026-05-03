@@ -8,7 +8,9 @@
 
 ## Deprecated in Rspress 2.0
 
-This package has been renamed to `@rspress/core` in V2. If you are using or plan to use Rspress V2, please install `@rspress/core` instead of this package.
+This package has been renamed to [`@rspress/core`](https://www.npmjs.com/package/@rspress/core) in Rspress V2. If you are using or plan to use Rspress v2, please install `@rspress/core` instead.
+
+To learn more about package name and import path changes, see the [Rspress 1.x migration guide](https://rspress.rs/guide/migration/rspress-1-x#important-package-name-and-import-path-changes).
 
 ## Getting started
 
