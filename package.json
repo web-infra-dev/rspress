@@ -37,7 +37,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.13",
+    "@biomejs/biome": "^2.4.14",
     "@changesets/cli": "^2.30.0",
     "@playwright/test": "1.58.2",
     "@rspress/config": "workspace:*",
