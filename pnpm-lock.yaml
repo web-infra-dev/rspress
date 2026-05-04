@@ -1764,8 +1764,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-twoslash
       '@rstack-dev/doc-ui':
-        specifier: ^1.12.5
-        version: 1.12.5
+        specifier: ^1.13.3
+        version: 1.13.3
       '@shikijs/transformers':
         specifier: ^4.0.2
         version: 4.0.2
@@ -3388,8 +3388,8 @@ packages:
   '@rspack/resolver@0.2.8':
     resolution: {integrity: sha512-FBWqdHhzS8mcf/WN4Ktzr7EaeaN+hsxbN98EweegX3924beZuY6H70CSFWCv1fIHAieCUv/9XCjKggHvhCsLwA==}
 
-  '@rstack-dev/doc-ui@1.12.5':
-    resolution: {integrity: sha512-fwPRz8R52VHVW1u8SFH7uqon4IL2BAfYwrNDEPlB4rPAz+DrOkhag16oQtcQ2ApUXTInrQjEOXK9TaqfP02MXg==}
+  '@rstack-dev/doc-ui@1.13.3':
+    resolution: {integrity: sha512-g9T8mG1I5ch3CHnzktl/PPFwJmxgRBLUi8NC6pGDwp3JQfKzaylDNK2LcPM4kjLP60+9fv2gFDSrLHE6jFu8uQ==}
 
   '@rstest/core@0.9.10':
     resolution: {integrity: sha512-JUSUYYXWIHEBUn193u2RglZujvGPv46Blxpl17QFwc0y9vEXe2y/IfGwGrVsJfZz7PaWZ5NnbFf0J55YIIns+g==}
@@ -8952,7 +8952,7 @@ snapshots:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  '@rstack-dev/doc-ui@1.12.5': {}
+  '@rstack-dev/doc-ui@1.13.3': {}
 
   '@rstest/core@0.9.10':
     dependencies:
