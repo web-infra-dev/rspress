@@ -39,8 +39,8 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@docsearch/css": "^4.6.2",
-    "@docsearch/react": "^4.6.2"
+    "@docsearch/css": "^4.6.3",
+    "@docsearch/react": "^4.6.3"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.57.7",
