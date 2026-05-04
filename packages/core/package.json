@@ -86,7 +86,7 @@
     "react-lazy-with-preload": "^2.2.1",
     "react-reconciler": "0.33.0",
     "react-render-to-markdown": "19.0.1",
-    "react-router-dom": "^7.13.2",
+    "react-router-dom": "^7.14.2",
     "rehype-external-links": "^3.0.0",
     "rehype-raw": "^7.0.0",
     "remark-cjk-friendly": "^2.0.1",
