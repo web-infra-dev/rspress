@@ -1,7 +1,6 @@
 const { execSync } = require('node:child_process');
 
 const SKIP_FOLDERS = [
-  '.changeset',
   '.github',
   '.vscode',
   'apps',
