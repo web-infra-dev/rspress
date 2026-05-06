@@ -876,6 +876,16 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
 
+  e2e/fixtures/ssg-worker:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+
   e2e/fixtures/tabs-component:
     dependencies:
       '@rspress/core':
