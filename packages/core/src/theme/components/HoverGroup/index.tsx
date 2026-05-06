@@ -129,8 +129,10 @@ function HoverGroup({
   position = 'center',
   activeMatcher,
 }: HoverGroupProps) {
+  const Element = customChildren ? 'div' : 'ul';
+
   return (
-    <ul
+    <Element
       className={cls('rp-hover-group', {
         'rp-hover-group--hidden': !isOpen,
         'rp-hover-group--left': position === 'left',
@@ -146,7 +148,7 @@ function HoverGroup({
             activeMatcher={activeMatcher}
           />
         ))}
-    </ul>
+    </Element>
   );
 }
 

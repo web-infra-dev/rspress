@@ -17,7 +17,9 @@ export function NavHamburger() {
   const items = (
     <div className="rp-nav-hamburger__md__hover-group">
       <NavScreenAppearance />
-      <NavVersions />
+      <ul className="rp-nav-menu">
+        <NavVersions />
+      </ul>
       <NavScreenLangs />
       <NavScreenDivider />
       <SocialLinks />
@@ -41,6 +43,7 @@ export function NavHamburger() {
         )}
 
       <button
+        type="button"
         onClick={toggleScreen}
         aria-label="mobile hamburger"
         className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__sm', {
@@ -50,18 +53,23 @@ export function NavHamburger() {
         <SvgWrapper icon={IconSmallMenu} />
       </button>
 
-      <button
-        aria-label="mobile hamburger"
-        className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__md', {
-          'rp-nav-hamburger--active': isScreenOpen,
-        })}
-        onClick={handleMouseEnter}
+      <div
+        className="rp-nav-hamburger__md-wrapper"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <SvgWrapper icon={IconSmallMenu} />
+        <button
+          type="button"
+          onClick={handleMouseEnter}
+          aria-label="mobile hamburger"
+          className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__md', {
+            'rp-nav-hamburger--active': isScreenOpen,
+          })}
+        >
+          <SvgWrapper icon={IconSmallMenu} />
+        </button>
         {hoverGroup}
-      </button>
+      </div>
     </>
   );
 }

@@ -21,6 +21,15 @@
     }
   }
 
+  &__md-wrapper {
+    display: none;
+    position: relative;
+
+    @media (max-width: 1280px) and (min-width: 769px) {
+      display: block;
+    }
+  }
+
   &__sm {
     @media (max-width: 768px) {
       display: block;

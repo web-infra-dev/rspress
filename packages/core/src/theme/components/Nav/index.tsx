@@ -48,8 +48,10 @@ export function Nav(props: NavProps) {
         <NavMenu menuItems={navList} position="right" />
         <div className="rp-nav__others">
           <NavMenuDivider />
-          <NavLangs />
-          <NavVersions />
+          <ul className="rp-nav-menu">
+            <NavLangs />
+            <NavVersions />
+          </ul>
           {hasAppearanceSwitch && <SwitchAppearance />}
           <SocialLinks />
         </div>
