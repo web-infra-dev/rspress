@@ -1,6 +1,7 @@
 import type { Header } from '@rspress/core';
 
 const MAX_TITLE_LENGTH = 20;
+const jRegex = /[\u3040-\u309f\u30a0-\u30ff\u31f0-\u31ff]/u;
 const kRegex = /[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]/u;
 const cyrillicRegex = /[\u0400-\u04FF]/u;
 
@@ -46,9 +47,11 @@ export function normalizeTextCase(text: string | number) {
   }
 
   const resultWithoutAccents = textNormalized.replace(/[\u0300-\u036f]/g, '');
-  if (kRegex.test(String(text))) {
+
+  if (jRegex.test(String(text)) || kRegex.test(String(text))) {
     return resultWithoutAccents.normalize('NFC');
   }
+
   return resultWithoutAccents;
 }
 

@@ -14,6 +14,10 @@ export default defineConfig({
         lang: 'en',
         label: 'English',
       },
+      {
+        lang: 'ja',
+        label: '日本語',
+      },
     ],
     localeRedirect: 'never',
   },
