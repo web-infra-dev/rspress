@@ -1454,9 +1454,6 @@ importers:
       react-dom:
         specifier: ^19.2.5
         version: 19.2.5(react@19.2.5)
-      react-router-dom:
-        specifier: ^7.14.2
-        version: 7.14.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
@@ -1515,9 +1512,6 @@ importers:
       react-dom:
         specifier: ^19.2.5
         version: 19.2.5(react@19.2.5)
-      react-router-dom:
-        specifier: ^7.14.2
-        version: 7.14.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
