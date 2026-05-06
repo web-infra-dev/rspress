@@ -1,5 +1,13 @@
-import { describe, expect, test } from '@rstest/core';
-import { getStoredThemeConfig } from './appearance';
+import { describe, expect, rs, test } from '@rstest/core';
+import { getStoredThemeConfig } from './useThemeState';
+
+rs.mock('@rspress/core/runtime', () => ({
+  useSite: () => ({
+    site: {
+      themeConfig: {},
+    },
+  }),
+}));
 
 describe('getStoredThemeConfig', () => {
   test('returns auto when dark matches the system preference', () => {
