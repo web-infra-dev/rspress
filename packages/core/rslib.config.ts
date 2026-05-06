@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -5,6 +7,16 @@ import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
+
+const require = createRequire(import.meta.url);
+const tinypoolDistPath = path.join(
+  path.dirname(require.resolve('tinypool/package.json')),
+  'dist',
+);
+const tinypoolRuntimeFiles = fs
+  .readdirSync(tinypoolDistPath)
+  .filter(file => /^(common|utils)-.*\.js$/.test(file))
+  .sort();
 
 const COMMON_EXTERNALS = [
   'virtual-routes',
@@ -53,6 +65,18 @@ export default defineConfig({
       output: {
         target: 'node',
         externals: COMMON_EXTERNALS,
+        copy: [
+          {
+            from: 'entry',
+            to: 'entry',
+            context: tinypoolDistPath,
+          },
+          ...tinypoolRuntimeFiles.map(file => ({
+            from: file,
+            to: file,
+            context: tinypoolDistPath,
+          })),
+        ],
       },
       tools: {
         rspack: {
