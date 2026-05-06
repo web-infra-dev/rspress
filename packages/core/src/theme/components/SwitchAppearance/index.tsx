@@ -4,7 +4,6 @@ import { type MouseEvent, useContext } from 'react';
 import './global.scss';
 import './index.scss';
 import { flushSync } from 'react-dom';
-import { getStoredThemeConfig, type ThemeValue } from '../../logic/appearance';
 
 const supportAppearanceTransition = () => {
   return (
@@ -35,11 +34,7 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
     const supported = supportAppearanceTransition();
     const enabled = site?.themeConfig?.enableAppearanceAnimation;
 
-    const nextTheme: ThemeValue = theme === 'dark' ? 'light' : 'dark';
-    const nextStoredConfig = getStoredThemeConfig(
-      nextTheme,
-      window.matchMedia('(prefers-color-scheme: dark)').matches,
-    );
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
     const isDark = nextTheme === 'dark';
 
     if (supported && enabled) {
@@ -54,7 +49,7 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
       const dispose = removeClipViewTransition();
       const transition = document.startViewTransition(async () => {
         flushSync(() => {
-          setTheme(nextTheme, nextStoredConfig);
+          setTheme(nextTheme);
           onClick?.();
         });
       });
@@ -84,7 +79,7 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
           });
       });
     } else {
-      setTheme(nextTheme, nextStoredConfig);
+      setTheme(nextTheme);
       onClick?.();
     }
   };

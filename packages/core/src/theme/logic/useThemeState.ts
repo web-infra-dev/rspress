@@ -1,6 +1,10 @@
 import { useSite } from '@rspress/core/runtime';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
-import type { ThemeConfigValue, ThemeValue } from './appearance';
+import {
+  getStoredThemeConfig,
+  type ThemeConfigValue,
+  type ThemeValue,
+} from './appearance';
 import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';
 
@@ -67,13 +71,13 @@ export function useThemeState() {
   }, [disableDarkMode, prefersDark, storedConfig]);
 
   const setTheme = useCallback(
-    (value: ThemeValue, storeValue: ThemeConfigValue = value) => {
+    (value: ThemeValue) => {
       if (disableDarkMode) return;
 
-      setStoredConfig(storeValue);
+      setStoredConfig(getStoredThemeConfig(value, prefersDark));
       applyThemeToDOM(value);
     },
-    [disableDarkMode, setStoredConfig],
+    [disableDarkMode, prefersDark, setStoredConfig],
   );
 
   // Sync theme when storedConfig or system preference changes
