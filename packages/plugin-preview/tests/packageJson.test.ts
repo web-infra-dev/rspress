@@ -17,12 +17,12 @@ async function readPackageJson(packageDir: string) {
 }
 
 describe('plugin-preview package metadata', () => {
-  test('keeps react-router-dom peer dependency aligned with core', async () => {
+  test('supports react-router-dom v6 while remaining compatible with core', async () => {
     const pluginPreviewPackageJson = await readPackageJson(pluginPreviewDir);
     const corePackageJson = await readPackageJson(coreDir);
 
     expect(
       pluginPreviewPackageJson.peerDependencies?.['react-router-dom'],
-    ).toBe(corePackageJson.dependencies?.['react-router-dom']);
+    ).toBe(`^6 || ${corePackageJson.dependencies?.['react-router-dom']}`);
   });
 });
