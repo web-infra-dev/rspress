@@ -1,5 +1,5 @@
 import { describe, expect, rs, test } from '@rstest/core';
-import { getStoredThemeConfig } from './useThemeState';
+import { getResolvedTheme, getStoredThemeConfig } from './useThemeState';
 
 rs.mock('@rspress/core/runtime', () => ({
   useSite: () => ({
@@ -21,5 +21,17 @@ describe('getStoredThemeConfig', () => {
   test('keeps explicit theme when it differs from the system preference', () => {
     expect(getStoredThemeConfig('dark', false)).toBe('dark');
     expect(getStoredThemeConfig('light', true)).toBe('light');
+  });
+});
+
+describe('getResolvedTheme', () => {
+  test('resolves auto theme from the system preference', () => {
+    expect(getResolvedTheme('auto', true)).toBe('dark');
+    expect(getResolvedTheme('auto', false)).toBe('light');
+  });
+
+  test('keeps explicit theme config', () => {
+    expect(getResolvedTheme('dark', false)).toBe('dark');
+    expect(getResolvedTheme('light', true)).toBe('light');
   });
 });

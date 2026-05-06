@@ -1,14 +1,7 @@
 import { useSite } from '@rspress/core/runtime';
-import { useCallback, useLayoutEffect, useMemo } from 'react';
+import { useCallback, useLayoutEffect } from 'react';
 import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';
-
-declare global {
-  interface Window {
-    MODERN_THEME?: string;
-    RSPRESS_THEME?: string;
-  }
-}
 
 // ============================================================================
 // Constants
@@ -30,13 +23,21 @@ export type ThemeConfigValue = ThemeValue | 'auto';
 // Utils
 // ============================================================================
 
+const getSystemTheme = (prefersDark: boolean): ThemeValue =>
+  prefersDark ? 'dark' : 'light';
+
 export const getStoredThemeConfig = (
   theme: ThemeValue,
   prefersDark: boolean,
 ): ThemeConfigValue => {
-  const systemTheme = prefersDark ? 'dark' : 'light';
+  const systemTheme = getSystemTheme(prefersDark);
   return theme === systemTheme ? 'auto' : theme;
 };
+
+export const getResolvedTheme = (
+  config: ThemeConfigValue,
+  prefersDark: boolean,
+): ThemeValue => (config === 'auto' ? getSystemTheme(prefersDark) : config);
 
 const applyThemeToDOM = (theme: ThemeValue) => {
   if (!document?.documentElement) return;
@@ -53,34 +54,15 @@ const applyThemeToDOM = (theme: ThemeValue) => {
 export function useThemeState() {
   const { site } = useSite();
   const disableDarkMode = site.themeConfig.darkMode === false;
-
-  // System theme preference (auto-updates on change)
   const prefersDark = useMediaQuery(MEDIA_QUERY);
-
-  // Theme config stored in localStorage ('light' | 'dark' | 'auto')
-  // useStorageValue handles cross-tab sync automatically
   const [storedConfig, setStoredConfig] = useStorageValue<ThemeConfigValue>(
     APPEARANCE_KEY,
     'auto',
   );
 
-  // Resolve theme based on config and system preference
-  const resolvedTheme = useMemo((): ThemeValue => {
-    if (typeof window === 'undefined') return 'light';
-    if (disableDarkMode) return 'light';
-
-    // Prefer global variable for SSR hydration
-    const defaultTheme = window.RSPRESS_THEME;
-    if (defaultTheme) {
-      return defaultTheme === 'dark' ? 'dark' : 'light';
-    }
-
-    return storedConfig === 'auto'
-      ? prefersDark
-        ? 'dark'
-        : 'light'
-      : storedConfig;
-  }, [disableDarkMode, prefersDark, storedConfig]);
+  const theme = disableDarkMode
+    ? 'light'
+    : getResolvedTheme(storedConfig, prefersDark);
 
   const setTheme = useCallback(
     (value: ThemeValue) => {
@@ -94,10 +76,8 @@ export function useThemeState() {
 
   // Sync theme when storedConfig or system preference changes
   useLayoutEffect(() => {
-    if (disableDarkMode) return;
+    applyThemeToDOM(theme);
+  }, [theme]);
 
-    applyThemeToDOM(resolvedTheme);
-  }, [disableDarkMode, resolvedTheme]);
-
-  return [resolvedTheme, setTheme] as const;
+  return [theme, setTheme] as const;
 }
