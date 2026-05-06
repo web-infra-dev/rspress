@@ -30,7 +30,7 @@
 ## Commit & pull request guidelines
 
 - Conventional Commits (e.g., `feat(plugin-algolia): ...`); keep commits focused; run lint + tests.
-- User-facing changes should include description, linked issues, and doc/example updates when needed.
+- User-facing changes need a Changeset (`pnpm changeset`); PRs should include description, linked issues, and doc/example updates when needed.
 
 ### PR title format
 

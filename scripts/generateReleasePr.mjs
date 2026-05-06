@@ -16,71 +16,10 @@ async function getCurrentVersion() {
   return packageJson.version;
 }
 
-function parseVersion(version) {
-  const match = version.match(
-    /^(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z-]+)\.(\d+))?$/,
-  );
-
-  if (!match) {
-    throw new Error(`Invalid current version: ${version}`);
-  }
-
-  return {
-    major: Number(match[1]),
-    minor: Number(match[2]),
-    patch: Number(match[3]),
-    preid: match[4],
-    prereleaseVersion: match[5] === undefined ? undefined : Number(match[5]),
-  };
-}
-
-function compareVersions(a, b) {
-  const parsedA = parseVersion(a);
-  const parsedB = parseVersion(b);
-
-  for (const key of ['major', 'minor', 'patch']) {
-    if (parsedA[key] !== parsedB[key]) {
-      return parsedA[key] > parsedB[key] ? 1 : -1;
-    }
-  }
-
-  return 0;
-}
-
-function isPrerelease(version) {
-  return parseVersion(version).preid !== undefined;
-}
-
-function satisfiesCaretRange(version, rangeVersion) {
-  const parsedVersion = parseVersion(version);
-  const parsedRange = parseVersion(rangeVersion);
-
-  if (compareVersions(version, rangeVersion) < 0) {
-    return false;
-  }
-
-  if (parsedRange.major > 0) {
-    return parsedVersion.major === parsedRange.major;
-  }
-
-  if (parsedRange.minor > 0) {
-    return (
-      parsedVersion.major === parsedRange.major &&
-      parsedVersion.minor === parsedRange.minor
-    );
-  }
-
-  return (
-    parsedVersion.major === parsedRange.major &&
-    parsedVersion.minor === parsedRange.minor &&
-    parsedVersion.patch === parsedRange.patch
-  );
-}
-
 async function getNextVersion(currentVersion, type) {
-  const { major, minor, patch, preid, prereleaseVersion } =
-    parseVersion(currentVersion);
-
+  const [major, minor, patch, _, prereleaseVersion] = currentVersion
+    .split(/[.-]/)
+    .map(Number);
   switch (type) {
     case 'patch':
       return `${major}.${minor}.${patch + 1}`;
@@ -91,94 +30,27 @@ async function getNextVersion(currentVersion, type) {
     case 'alpha':
     case 'beta':
     case 'rc':
-      if (preid === type && prereleaseVersion !== undefined) {
-        return `${major}.${minor}.${patch}-${type}.${prereleaseVersion + 1}`;
-      }
-      return `${major}.${minor}.${patch + 1}-${type}.0`;
+      return `${major}.${minor}.${patch}-${type}.${prereleaseVersion + 1}`;
     default:
       throw new Error('Invalid version type');
   }
 }
 
-async function getPackageJsonPaths() {
-  const packagesDir = path.join(process.cwd(), 'packages');
-  const packageDirs = await fs.readdir(packagesDir, { withFileTypes: true });
-  const packageJsonPaths = [];
+async function generateChangesetFile(bumpType, nextVersion) {
+  const changesetDir = path.join(process.cwd(), '.changeset');
+  const timestamp = Date.now();
+  const filename = `${timestamp}-${bumpType}-release.md`;
+  const content = `---
+"@rspress/core": ${bumpType}
+---
 
-  for (const dirent of packageDirs) {
-    if (!dirent.isDirectory()) {
-      continue;
-    }
+Release version ${nextVersion}
+`;
 
-    const packageJsonPath = path.join(packagesDir, dirent.name, 'package.json');
+  await fs.mkdir(changesetDir, { recursive: true });
+  await fs.writeFile(path.join(changesetDir, filename), content);
 
-    try {
-      const packageJson = JSON.parse(
-        await fs.readFile(packageJsonPath, 'utf-8'),
-      );
-
-      if (!packageJson.private) {
-        packageJsonPaths.push(packageJsonPath);
-      }
-    } catch (error) {
-      if (error.code !== 'ENOENT') {
-        throw error;
-      }
-    }
-  }
-
-  return packageJsonPaths.sort();
-}
-
-async function updateInternalDependencyRanges(packageJsonPaths, nextVersion) {
-  const packageNames = new Set();
-
-  for (const packageJsonPath of packageJsonPaths) {
-    const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
-    packageNames.add(packageJson.name);
-  }
-
-  for (const packageJsonPath of packageJsonPaths) {
-    const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
-    let changed = false;
-
-    for (const field of [
-      'dependencies',
-      'devDependencies',
-      'peerDependencies',
-      'optionalDependencies',
-    ]) {
-      const dependencies = packageJson[field];
-
-      if (!dependencies) {
-        continue;
-      }
-
-      for (const [name, specifier] of Object.entries(dependencies)) {
-        if (!packageNames.has(name)) {
-          continue;
-        }
-
-        const match = specifier.match(/^workspace:\^(.+)$/);
-
-        if (
-          match &&
-          (isPrerelease(nextVersion) ||
-            !satisfiesCaretRange(nextVersion, match[1]))
-        ) {
-          dependencies[name] = `workspace:^${nextVersion}`;
-          changed = true;
-        }
-      }
-    }
-
-    if (changed) {
-      await fs.writeFile(
-        packageJsonPath,
-        `${JSON.stringify(packageJson, null, 2)}\n`,
-      );
-    }
-  }
+  console.log(chalk.blue(`Generated changeset file: ${filename}`));
 }
 
 async function main() {
@@ -220,12 +92,21 @@ async function main() {
 
     await $`git checkout -b ${branchName}`;
 
-    // 4. Bump all public packages in the fixed release group
-    const packageJsonPaths = await getPackageJsonPaths();
-    await $`pnpm exec bumpp ${packageJsonPaths} --release ${nextVersion} --yes --no-commit --no-tag --no-push --ignore-scripts`;
-    await updateInternalDependencyRanges(packageJsonPaths, nextVersion);
+    // 4. Generate changeset file
+    await generateChangesetFile(bumpType, nextVersion);
 
-    // 5. Update lockfile
+    // 5. Run changeset version and pnpm install
+    if (bumpType === 'alpha' || bumpType === 'beta' || bumpType === 'rc') {
+      try {
+        await fs.rm(path.join(process.cwd(), '.changeset', 'pre.json'), {
+          force: true,
+        });
+      } catch (error) {
+        console.warn(error);
+      }
+      await $`pnpm run changeset pre enter ${bumpType}`;
+    }
+    await $`pnpm run changeset version`;
     await $`pnpm install --ignore-scripts`;
 
     // 6. Commit changes
