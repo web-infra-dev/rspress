@@ -1,5 +1,6 @@
 import { useSite } from '@rspress/core/runtime';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
+import type { ThemeConfigValue, ThemeValue } from './appearance';
 import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';
 
@@ -18,15 +19,6 @@ const APPEARANCE_KEY = 'rspress-theme-appearance';
 const MEDIA_QUERY = '(prefers-color-scheme: dark)';
 
 // ============================================================================
-// Types
-// ============================================================================
-
-/** Resolved theme value used in the app */
-type ThemeValue = 'light' | 'dark';
-/** Theme config value stored in localStorage */
-type ThemeConfigValue = ThemeValue | 'auto';
-
-// ============================================================================
 // Utils
 // ============================================================================
 
@@ -37,10 +29,6 @@ const applyThemeToDOM = (theme: ThemeValue) => {
   root.classList.toggle('rp-dark', theme === 'dark');
   root.style.colorScheme = theme;
 };
-
-// ============================================================================
-// Hook
-// ============================================================================
 
 /**
  * State provider for theme context.
