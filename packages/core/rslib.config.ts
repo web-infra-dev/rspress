@@ -15,7 +15,8 @@ const tinypoolDistPath = path.join(
 );
 const tinypoolRuntimeFiles = fs
   .readdirSync(tinypoolDistPath)
-  .filter(file => /^(common|utils)-.*\.js$/.test(file));
+  .filter(file => /^(common|utils)-.*\.js$/.test(file))
+  .sort();
 
 const COMMON_EXTERNALS = [
   'virtual-routes',
