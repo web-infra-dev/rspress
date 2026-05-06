@@ -46,7 +46,14 @@ export type { UserConfigAsyncFn } from './config/defineConfig';
 // config
 export { defineConfig } from './config/defineConfig';
 // cli
-export { build, dev, remarkFileCodeBlock, remarkLink, serve } from './node';
+export {
+  build,
+  dev,
+  remarkFileCodeBlock,
+  remarkImage,
+  remarkLink,
+  serve,
+} from './node';
 export type {
   CustomLinkMeta,
   DirSectionHeaderSideMeta,
