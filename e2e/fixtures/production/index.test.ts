@@ -46,8 +46,11 @@ test('SSG should add alt attributes to rendered images', async () => {
   const html = await fs.readFile(path.join(appDir, 'doc_build', 'index.html'), {
     encoding: 'utf-8',
   });
-  const imageTags = html.match(/<img\b[^>]*>/g) ?? [];
 
-  expect(imageTags.length).toBeGreaterThan(0);
-  expect(imageTags.every(tag => /\balt=/.test(tag))).toBe(true);
+  expect(html.match(/<img[^>]*alt=""/g) ?? []).toHaveLength(3);
+  expect(html).toContain('src="/static/image/example-0.');
+  expect(html).toContain('<img src="/example-1.png" alt=""');
+  expect(html).toContain(
+    '<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rust.png" alt=""',
+  );
 });

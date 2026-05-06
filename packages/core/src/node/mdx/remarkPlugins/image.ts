@@ -169,7 +169,7 @@ export const remarkImage =
         name: 'img',
         children: [],
         attributes: [
-          getMdxAltAttribute(alt ?? ''),
+          getMdxAltAttribute(alt),
           getMdxSrcAttribute(tempVariableName),
         ].filter(Boolean),
       });
