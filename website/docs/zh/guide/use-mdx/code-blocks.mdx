@@ -79,6 +79,18 @@ const HelloCodeBlockTitle = (props) => {
 
 ```
 
+### 使用 `/` 前缀的绝对路径
+
+使用 `/` 前缀来引用相对于 docs 目录的绝对路径文件。当你需要从文档的不同位置引用共享的代码文件时，这非常有用：
+
+````mdx
+```tsx file="/components/Button.tsx"
+
+```
+````
+
+例如，如果你的 docs 目录是 `/project/docs`，那么 `/components/Button.tsx` 将解析为 `/project/docs/components/Button.tsx`。
+
 ### 使用 `<root>/` 前缀的绝对路径
 
 使用 `<root>/` 前缀来引用相对于项目根目录的绝对路径文件。当你需要从文档的不同位置引用共享的代码文件时，这非常有用：

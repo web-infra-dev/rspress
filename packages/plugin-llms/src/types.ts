@@ -69,6 +69,7 @@ export interface Options {
 export type RspressPluginLlmsOptions = Options | Options[];
 
 export interface rsbuildPluginLlmsOptions {
+  docDirectory: string;
   disableSSGRef: { current: boolean };
   titleRef: { current: string | undefined };
   descriptionRef: { current: string | undefined };

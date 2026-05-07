@@ -58,6 +58,31 @@ describe('remarkFileCodeBlock', () => {
     expect(result).toContain('Click me');
   });
 
+  it('should support absolute path with / prefix', async () => {
+    vol.fromJSON({
+      '/usr/rspress-project/docs/components/Button.tsx': `export const Button = () => {
+  return <button>Click me</button>;
+}
+`,
+    });
+    const result = await compile({
+      source: `
+\`\`\`tsx file="/components/Button.tsx"
+\`\`\`
+`,
+
+      docDirectory: '/usr/rspress-project/docs',
+      filepath: '/usr/rspress-project/docs/guide/components.mdx',
+      config: null,
+      pluginDriver: null,
+      routeService: null,
+    });
+    // The result should contain the transformed code with the Button component
+    expect(result).toContain('Button');
+    expect(result).toContain('button');
+    expect(result).toContain('Click me');
+  });
+
   it('should support nested absolute paths with <root>/ prefix', async () => {
     vol.fromJSON({
       '/usr/rspress-project/examples/code/demo.js': `const demo = 'test';
