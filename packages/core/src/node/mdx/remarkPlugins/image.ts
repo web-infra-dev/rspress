@@ -139,6 +139,13 @@ export const remarkImage =
         },
       };
     };
+    const getMdxAltAttribute = (alt = '') => {
+      return {
+        type: 'mdxJsxAttribute' as const,
+        name: 'alt',
+        value: alt,
+      };
+    };
 
     visit(tree, 'image', node => {
       const { alt, url } = node;
@@ -162,11 +169,7 @@ export const remarkImage =
         name: 'img',
         children: [],
         attributes: [
-          alt && {
-            type: 'mdxJsxAttribute',
-            name: 'alt',
-            value: alt,
-          },
+          getMdxAltAttribute(alt),
           getMdxSrcAttribute(tempVariableName),
         ].filter(Boolean),
       });
@@ -188,6 +191,11 @@ export const remarkImage =
 
       if (typeof srcAttr?.value !== 'string') {
         return;
+      }
+
+      const altAttr = getNodeAttribute(node, 'alt', true);
+      if (!altAttr) {
+        node.attributes.push(getMdxAltAttribute());
       }
 
       if (shouldCheckDeadImages) {

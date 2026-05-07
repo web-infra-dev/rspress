@@ -93,7 +93,7 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
         .join(' ')}
       onClick={onClick ?? handleClick}
     >
-      <div className="rp-llms-copy-button__icon-wrapper">
+      <span className="rp-llms-copy-button__icon-wrapper">
         <SvgWrapper
           icon={IconSuccess}
           className="rp-llms-copy-button__icon-success"
@@ -102,7 +102,7 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
           icon={IconCopy}
           className="rp-llms-copy-button__icon-copy"
         />
-      </div>
+      </span>
       <span>{t('copyMarkdownText')}</span>
     </button>
   );

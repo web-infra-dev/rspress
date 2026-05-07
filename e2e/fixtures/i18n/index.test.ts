@@ -1,5 +1,12 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runDevCommand,
+} from '../../utils/runCommands';
 
 test.describe('i18n test', async () => {
   let appPort: number;
@@ -296,4 +303,23 @@ test.describe('i18n test', async () => {
     await expect(englishLink).toHaveAttribute('hreflang', 'en');
     await expect(englishLink).toHaveAttribute('rel', 'alternate');
   });
+});
+
+test('SSG should not emit invalid nav nesting markup', async () => {
+  const appDir = import.meta.dirname;
+  await runBuildCommand(appDir);
+
+  const html = await fs.readFile(path.join(appDir, 'doc_build', 'index.html'), {
+    encoding: 'utf-8',
+  });
+
+  expect(html).toContain(
+    '<div class="rp-nav__others"><div class="rp-nav-menu__divider"></div><ul class="rp-nav-menu">',
+  );
+  expect(html).not.toContain(
+    '<div class="rp-nav__others"><div class="rp-nav-menu__divider"></div><li class="rp-nav-menu__item">',
+  );
+  expect(html).not.toMatch(
+    /<button[^>]*class="[^"]*rp-nav-hamburger__md[^"]*"[\s\S]*?<ul class="rp-hover-group"/,
+  );
 });

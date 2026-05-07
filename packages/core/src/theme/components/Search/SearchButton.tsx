@@ -18,19 +18,19 @@ export function SearchButton({ setFocused }: SearchButtonProps) {
   return (
     <>
       <button className="rp-search-button" onClick={() => setFocused(true)}>
-        <div className="rp-search-button__content">
+        <span className="rp-search-button__content">
           <SvgWrapper icon={IconSearch} className="rp-search-button__icon" />
           <span className="rp-search-button__word">
             {t('searchPlaceholderText')}
           </span>
-        </div>
-        <div
+        </span>
+        <span
           className="rp-search-button__hotkey"
           style={{ opacity: metaKey ? 1 : 0 }}
         >
           <span>{metaKey}</span>
           <span>K</span>
-        </div>
+        </span>
       </button>
       <div
         className="rp-search-button--mobile"
