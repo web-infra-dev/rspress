@@ -89,6 +89,9 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
     devDependencies:
+      '@rsdoctor/rspack-plugin':
+        specifier: 1.5.9
+        version: 1.5.9(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@2.0.2)(@rspack/core@2.0.0(@swc/helpers@0.5.21))
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
