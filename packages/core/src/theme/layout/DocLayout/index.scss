@@ -41,6 +41,11 @@
   }
 }
 
+// Don't push content down when the mobile menu isn't being rendered.
+:root:has(.rp-doc-layout__container--no-menu) {
+  --rp-sidebar-menu-height: 0px;
+}
+
 .rp-doc-layout {
   &__container {
     width: 100%; // mobile
