@@ -44,7 +44,6 @@
     "mdast-util-mdxjs-esm": "^2.0.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "react-router-dom": "^7.14.2",
     "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^5.8.2",
     "unified": "^11.0.5",
@@ -53,7 +52,7 @@
   "peerDependencies": {
     "@rspress/core": "workspace:^2.0.10",
     "react": ">=18.0.0",
-    "react-router-dom": "^6.8.1"
+    "react-dom": ">=18.0.0"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
