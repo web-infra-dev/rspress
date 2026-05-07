@@ -99,7 +99,10 @@ export default defineConfig({
       syntax: 'es2022',
       source: {
         entry: {
-          index: './src/runtime/**/*.{tsx,ts}',
+          index: [
+            './src/runtime/**/*.{tsx,ts}',
+            '!./src/runtime/**/*.test.{ts,tsx}',
+          ],
         },
       },
       output: {
@@ -129,7 +132,11 @@ export default defineConfig({
           __WEBPACK_PUBLIC_PATH__: '__webpack_public_path__',
         },
         entry: {
-          index: ['./src/theme/**', '!./src/theme/tsconfig.json'],
+          index: [
+            './src/theme/**',
+            '!./src/theme/**/*.test.{ts,tsx}',
+            '!./src/theme/tsconfig.json',
+          ],
         },
       },
       tools: {
