@@ -14,6 +14,7 @@ on:
           - rc
           - canary
           - latest
+          - previous
       branch:
         description: 'Branch to release'
         required: true
