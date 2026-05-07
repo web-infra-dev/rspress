@@ -14,7 +14,7 @@ on:
           - rc
           - canary
           - latest
-          - none
+          - latest-v1
       branch:
         description: 'Branch to release'
         required: true
@@ -45,7 +45,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
 
       # Update npm to the latest version to enable OIDC
@@ -58,12 +58,5 @@ jobs:
         run: pnpm install
 
       - name: Publish to npm
-        env:
-          NPM_TAG: ${{ github.event.inputs.npm_tag }}
-          RELEASE_BRANCH: ${{ github.event.inputs.branch }}
         run: |
-          if [ "$NPM_TAG" = "none" ]; then
-            pnpm -r publish --publish-branch "$RELEASE_BRANCH"
-          else
-            pnpm -r publish --tag "$NPM_TAG" --publish-branch "$RELEASE_BRANCH"
-          fi
+          pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}
