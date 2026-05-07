@@ -58,5 +58,12 @@ jobs:
         run: pnpm install
 
       - name: Publish to npm
+        env:
+          NPM_TAG: ${{ github.event.inputs.npm_tag }}
+          RELEASE_BRANCH: ${{ github.event.inputs.branch }}
         run: |
-          pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}
+          if [ "$NPM_TAG" = "none" ]; then
+            pnpm -r publish --publish-branch "$RELEASE_BRANCH"
+          else
+            pnpm -r publish --tag "$NPM_TAG" --publish-branch "$RELEASE_BRANCH"
+          fi
