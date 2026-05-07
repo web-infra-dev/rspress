@@ -29,11 +29,12 @@ export const remarkFileCodeBlock: Plugin<
   [
     {
       filepath: string;
+      docDirectory: string;
       addDependency?: Rspack.LoaderContext['addDependency'];
     },
   ],
   Root
-> = ({ filepath, addDependency }) => {
+> = ({ filepath, docDirectory, addDependency }) => {
   return async tree => {
     const promiseList: Promise<void>[] = [];
     visit(tree, 'code', node => {
@@ -46,10 +47,11 @@ export const remarkFileCodeBlock: Plugin<
 
       const originalMetaForErrorInfo = picocolors.cyan(`\`\`\`${lang} ${meta}`);
 
-      // Support relative paths and absolute paths with <root>/ prefix
+      // Support relative paths and absolute paths with / and <root>/ prefix
       if (
         file.startsWith('./') ||
         file.startsWith('../') ||
+        file.startsWith('/') ||
         file.startsWith('<root>/')
       ) {
         let resolvedFilePath: string;
@@ -57,6 +59,9 @@ export const remarkFileCodeBlock: Plugin<
         if (file.startsWith('<root>/')) {
           // Absolute path relative to project root directory
           resolvedFilePath = path.join(cwd(), file.slice('<root>/'.length));
+        } else if (file.startsWith('/')) {
+          // Absolute path relative to project root directory
+          resolvedFilePath = path.join(docDirectory, file.slice(1));
         } else {
           // Relative path to current file
           resolvedFilePath = path.join(path.dirname(filepath), file);
@@ -102,6 +107,11 @@ this usage is not allowed, please use below:
 Please use below:
 
 \`\`\`tsx file="./filename"
+\`\`\`
+
+or
+
+\`\`\`tsx file="/path/to/filename"
 \`\`\`
 
 or
