@@ -60,7 +60,7 @@ export const remarkFileCodeBlock: Plugin<
           // Absolute path relative to project root directory
           resolvedFilePath = path.join(cwd(), file.slice('<root>/'.length));
         } else if (file.startsWith('/')) {
-          // Absolute path relative to project root directory
+          // Absolute path relative to docs root directory
           resolvedFilePath = path.join(docDirectory, file.slice(1));
         } else {
           // Relative path to current file
