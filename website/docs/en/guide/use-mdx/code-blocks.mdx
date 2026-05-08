@@ -79,6 +79,18 @@ It will be rendered as:
 
 ```
 
+### Absolute paths with `/` prefix
+
+Use the `/` prefix to reference files using absolute paths relative to the docs directory. This is useful when you need to reference shared code files from different locations in your documentation:
+
+````mdx
+```tsx file="/components/Button.tsx"
+
+```
+````
+
+For example, if your docs directory is `/project/docs`, then `/components/Button.tsx` will resolve to `/project/docs/components/Button.tsx`.
+
 ### Absolute paths with `<root>/` prefix
 
 Use the `<root>/` prefix to reference files using absolute paths relative to the project root directory. This is useful when you need to reference shared code files from different locations in your documentation:

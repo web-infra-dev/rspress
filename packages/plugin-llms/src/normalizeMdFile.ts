@@ -41,6 +41,7 @@ const mdxToMdPlugin: Plugin<[], Root> = () => {
 function noopPlugin() {}
 
 async function normalizeMdFile(
+  docDirectory: string,
   content: string,
   filepath: string,
   routeService: RouteService,
@@ -54,6 +55,7 @@ async function normalizeMdFile(
     .use(isMd ? noopPlugin : remarkMdx)
     .use(remarkFileCodeBlock, {
       filepath,
+      docDirectory,
     })
     .use(!isMd && mdxToMd ? mdxToMdPlugin : noopPlugin)
     .use(remarkLink, {

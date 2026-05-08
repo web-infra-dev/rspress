@@ -51,6 +51,7 @@ function resolveNavForVersion(
 }
 
 const rsbuildPluginLlms = ({
+  docDirectory,
   disableSSGRef,
   baseRef,
   pageDataList,
@@ -107,6 +108,7 @@ const rsbuildPluginLlms = ({
           let mdContent: string | Buffer;
           try {
             mdContent = await normalizeMdFile(
+              docDirectory,
               content,
               filepath,
               routeServiceRef.current!,
@@ -425,10 +427,13 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
         config.builderConfig.plugins = [];
       }
 
+      const docDirectory = config.root!;
+
       config.builderConfig.plugins.push(
         ...(Array.isArray(mergedOptions)
           ? mergedOptions.map((item, index) => {
               return rsbuildPluginLlms({
+                docDirectory,
                 pageDataList,
                 routes,
                 titleRef,
@@ -447,6 +452,7 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
             })
           : [
               rsbuildPluginLlms({
+                docDirectory,
                 pageDataList,
                 routes,
                 titleRef,
