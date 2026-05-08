@@ -8,11 +8,7 @@ export default defineConfig({
       dts: {
         bundle: true,
       },
-      format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
-      syntax: 'es2022',
+      syntax: 'es2023',
     },
   ],
 });

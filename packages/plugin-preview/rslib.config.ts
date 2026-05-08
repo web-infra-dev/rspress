@@ -5,31 +5,23 @@ export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
     {
-      format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
       source: {
         entry: {
           index: 'src/index.ts',
         },
       },
-      syntax: 'es2022',
+      syntax: 'es2023',
       dts: {
         bundle: true,
       },
     },
     {
-      format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
       source: {
         entry: {
           utils: 'src/utils.ts',
         },
       },
-      syntax: 'es2022',
+      syntax: 'es2023',
       dts: {
         bundle: true,
       },

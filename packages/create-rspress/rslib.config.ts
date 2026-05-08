@@ -5,11 +5,7 @@ export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
     {
-      format: 'esm',
-      syntax: 'es2021',
-      experiments: {
-        advancedEsm: true,
-      },
+      syntax: 'es2023',
     },
   ],
 });

@@ -8,11 +8,7 @@ export default defineConfig({
       dts: {
         bundle: true,
       },
-      format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
-      syntax: 'esnext',
+      syntax: 'es2023',
       shims: {
         esm: {
           __dirname: true,

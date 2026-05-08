@@ -6,10 +6,6 @@ export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
     {
-      format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
       source: {
         entry: { index: 'src/cli/index.ts' },
       },
@@ -24,14 +20,10 @@ export default defineConfig({
         },
         externals: ['@types/react', 'rspress'],
       },
-      syntax: 'es2022',
+      syntax: 'es2023',
       dts: { bundle: true },
     },
     {
-      format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
       source: {
         entry: { index: 'src/web/index.ts' },
       },
@@ -42,7 +34,7 @@ export default defineConfig({
           root: 'dist/web',
         },
       },
-      syntax: 'es2022',
+      syntax: 'es2023',
       dts: { bundle: true },
     },
   ],
