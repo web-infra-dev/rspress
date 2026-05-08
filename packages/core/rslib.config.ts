@@ -56,14 +56,11 @@ export default defineConfig({
         },
       },
       dts: false,
-      experiments: {
-        advancedEsm: true,
-      },
+      syntax: 'es2023',
       performance: {
         buildCache: false,
       },
       output: {
-        target: 'node',
         externals: COMMON_EXTERNALS,
         copy: [
           {
@@ -95,7 +92,6 @@ export default defineConfig({
     {
       bundle: false,
       dts: false,
-      format: 'esm',
       syntax: 'es2022',
       source: {
         entry: {
@@ -114,7 +110,6 @@ export default defineConfig({
       plugins: [pluginReact()],
     },
     {
-      format: 'esm',
       bundle: false,
       dts: true,
       redirect: {

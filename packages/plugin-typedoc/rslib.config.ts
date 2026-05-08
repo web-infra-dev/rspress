@@ -7,18 +7,8 @@ export default defineConfig({
     {
       dts: {
         bundle: true,
-        distPath: './dist/types',
       },
-      format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
-      syntax: 'es2015',
-      output: {
-        distPath: {
-          root: './dist/es',
-        },
-      },
+      syntax: 'es2023',
     },
   ],
 });

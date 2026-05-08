@@ -12,11 +12,7 @@ export default defineConfig({
         },
       },
       dts: true,
-      format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
-      syntax: 'esnext',
+      syntax: 'es2023',
       redirect: {
         dts: {
           extension: true,
@@ -31,7 +27,6 @@ export default defineConfig({
       },
       outBase: './src',
       bundle: false,
-      format: 'esm',
       syntax: 'esnext',
       plugins: [pluginReact()],
       output: {

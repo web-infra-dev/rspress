@@ -15,10 +15,6 @@ export default defineConfig({
         },
       },
       bundle: true,
-      format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
       plugins: [pluginReact()],
       output: {
         externals: [
@@ -41,11 +37,7 @@ export default defineConfig({
           index: './src/index.ts',
         },
       },
-      format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
-      syntax: 'esnext',
+      syntax: 'es2023',
     },
   ],
 });
