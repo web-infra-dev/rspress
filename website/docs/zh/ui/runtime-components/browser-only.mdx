@@ -5,44 +5,47 @@ overviewHeaders: []
 
 # BrowserOnly
 
-`BrowserOnly` 会在 SSG 阶段渲染 fallback，并在浏览器完成 hydration 后再渲染 children。
+Rspress 在构建阶段会将 React 代码静态渲染为 HTML，这意味着代码在 Node.js 环境中执行，此时 `window`、`document`、`localStorage` 等浏览器全局对象并不存在。
 
-当组件或第三方库依赖 `window`、`document`、`localStorage` 等浏览器 API 时，可以使用它。
+当组件或第三方库依赖这些浏览器专属 API 时，你需要从 [静态站点生成（SSG）](/guide/basic/ssg) 中逃逸出来。`BrowserOnly` 会在 SSG 阶段渲染 fallback，并在浏览器完成 hydration 后再渲染 children。
 
 ## 用法
 
-```tsx title="index.mdx"
+```mdx title="index.mdx"
 import { BrowserOnly } from '@rspress/core/runtime';
 
-function MyComponent(props) {
-  return (
-    <BrowserOnly fallback={<div>Loading...</div>}>
-      {async () => {
-        const { LibComponent } = await import('some-lib-that-accesses-window');
-        return <LibComponent {...props} />;
-      }}
-    </BrowserOnly>
-  );
-}
+<BrowserOnly fallback={<div>Loading...</div>}>
+  {async () => {
+    const { LibComponent } = await import('some-lib-that-accesses-window');
+    return <LibComponent {...props} />;
+  }}
+</BrowserOnly>
 ```
 
-`BrowserOnly` 的 children 必须是一个返回 React 节点的函数，也可以是返回 React 节点的异步函数。
+import { BrowserOnly } from '@rspress/core/runtime';
 
-不要直接传入依赖浏览器 API 的 JSX：
+<BrowserOnly fallback={<div>Loading...</div>}>
+  {() => {
+    return (
+      <>{`LibComponent can access \`window.location.pathname\` via BrowserOnly: ${window.location.pathname}`}</>
+    );
+  }}
+</BrowserOnly>
 
-```tsx
+## 为什么 children 必须是函数？
+
+`BrowserOnly` 的 children 必须是一个返回 React 节点的函数。需要明确的是，children 不是 JSX 元素，而是函数，这是一个有意的设计决策。
+
+考虑下面这段错误的代码：
+
+```mdx
 import { BrowserOnly } from '@rspress/core/runtime';
 
 <BrowserOnly>
-  {/* 这里仍然会在 SSG 阶段求值 window */}
+  {/* 不要这样做——它仍会在 SSG 阶段求值 window */}
   <span>Current URL: {window.location.href}</span>
-</BrowserOnly>;
+</BrowserOnly>
+;
 ```
 
-在 SSG 阶段，React 会先求值 JSX 树，然后 `BrowserOnly` 才能决定渲染什么。使用函数可以把浏览器 API 的访问延迟到组件在浏览器中挂载之后。
-
-## 与 NoSSR 的区别
-
-`NoSSR` 是一个简单包装器，用于在 SSG 阶段跳过 children，并在 hydration 后渲染。
-
-当代码本身无法在 SSG 阶段求值时，尤其是需要动态导入浏览器专用依赖时，`BrowserOnly` 更合适。
+你可能期望 `BrowserOnly` 在 SSG 阶段隐藏 children，但实际上它做不到。当 React 渲染器尝试渲染这棵 JSX 树时，它会在 `BrowserOnly` 决定渲染什么之前，就把 `{window.location.href}` 表达式作为树的一个节点进行求值。使用函数可以确保渲染器只在组件挂载到浏览器时才去求值浏览器专属代码。

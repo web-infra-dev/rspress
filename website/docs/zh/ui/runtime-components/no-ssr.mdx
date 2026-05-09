@@ -1,11 +1,18 @@
 ---
 description: NoSSR 组件，用于禁用服务端渲染，仅在客户端渲染特定内容。
 overviewHeaders: []
+tag: deprecated
 ---
 
 # NoSSR
 
-`NoSSR` 用于禁用特定子树在服务端渲染，强制只在客户端渲染。
+:::danger 已废弃
+
+`NoSSR` 已废弃，请使用 [`BrowserOnly`](./browser-only)。
+
+:::
+
+`NoSSR` 用于跳过其子树的服务端渲染。
 
 ## 用法
 
@@ -17,6 +24,6 @@ import { NoSSR } from '@rspress/core/runtime';
 </NoSSR>
 ```
 
-常用于需要避免 SSR，但代码本身仍然可以在 SSG 阶段求值的组件。
+## 另见
 
-如果代码本身依赖浏览器 API，或者需要动态导入浏览器专用依赖，请使用 [`BrowserOnly`](./browser-only)。
+- [`BrowserOnly`](./browser-only) — 仅在浏览器 hydration 后渲染内容。
