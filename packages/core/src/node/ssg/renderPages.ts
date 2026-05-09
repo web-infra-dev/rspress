@@ -35,7 +35,7 @@ export async function renderPages(
 ) {
   logger.info('Rendering pages...');
   const startTime = Date.now();
-  const ssg = config.ssg || true;
+  const ssg = config.ssg ?? true;
 
   try {
     const routes = routeService.getRoutes();
