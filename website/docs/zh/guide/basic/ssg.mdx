@@ -138,7 +138,7 @@ doc_build/
 
 **解决方案**：
 
-1. **使用 `BrowserOnly` 进行仅浏览器渲染**：把无法在 SSG 阶段运行的代码放在函数中，并按需提供 SSG 和加载阶段展示的 fallback。
+1. **使用 [`BrowserOnly`](/ui/runtime-components/browser-only) 进行仅浏览器渲染**：把无法在 SSG 阶段运行的代码放在函数中。
 
    ```tsx
    import { BrowserOnly } from '@rspress/core/runtime';

@@ -48,4 +48,8 @@ import { BrowserOnly } from '@rspress/core/runtime';
 ;
 ```
 
-You might expect `BrowserOnly` to hide its children during SSG, but in fact it cannot. When the React renderer tries to render this JSX tree, it evaluates the `{window.location.href}` expression as a node of the tree before `BrowserOnly` can decide what to render. Using a function ensures that the renderer only evaluates the browser-only code when the component is mounted in the browser.
+If you pass JSX directly as children, React evaluates the expressions inside while building the JSX tree, before `window` and other browser objects are available, which causes errors. By writing children as a function, the expressions are not evaluated in advance. They only execute after BrowserOnly confirms it is running in the browser, thus avoiding browser API access during SSR.
+
+## How it works
+
+`BrowserOnly` is implemented using **useEffect + dynamic imports**, thus avoiding SSR compatibility issues.

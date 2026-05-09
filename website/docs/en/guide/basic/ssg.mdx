@@ -138,7 +138,7 @@ The core difference between the two modes lies in the HTML file content:
 
 **Solutions**:
 
-1. **Use `BrowserOnly` for browser-only rendering**: Wrap code that cannot run during SSG in a function, and optionally provide a fallback for SSG and loading states.
+1. **Use [`BrowserOnly`](/ui/runtime-components/browser-only) for browser-only rendering**: Wrap code that cannot run during SSG in a function.
 
    ```tsx
    import { BrowserOnly } from '@rspress/core/runtime';

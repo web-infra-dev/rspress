@@ -48,4 +48,8 @@ import { BrowserOnly } from '@rspress/core/runtime';
 ;
 ```
 
-你可能期望 `BrowserOnly` 在 SSG 阶段隐藏 children，但实际上它做不到。当 React 渲染器尝试渲染这棵 JSX 树时，它会在 `BrowserOnly` 决定渲染什么之前，就把 `{window.location.href}` 表达式作为树的一个节点进行求值。使用函数可以确保渲染器只在组件挂载到浏览器时才去求值浏览器专属代码。
+如果直接把 JSX 作为 children 传入，React 会在创建 JSX 树时就对其中的表达式求值，此时 `window` 等浏览器对象尚未就绪，会导致报错。将 children 写成函数后，表达式不会被提前求值，只有在 BrowserOnly 确认已进入浏览器环境后才会执行，从而避免在 SSR 阶段访问浏览器 API。
+
+## 原理
+
+`BrowserOnly` 使用 **useEffect + 动态导入** 实现，从而规避 SSR 兼容问题。
