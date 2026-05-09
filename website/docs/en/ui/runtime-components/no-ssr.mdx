@@ -17,4 +17,6 @@ import { NoSSR } from '@rspress/core/runtime';
 </NoSSR>
 ```
 
-Use it when a component depends on browser-only APIs or needs to avoid SSR.
+Use it when a component needs to avoid SSR but can still be evaluated during SSG.
+
+If the code itself depends on browser-only APIs or needs to dynamically import a browser-only dependency, use [`BrowserOnly`](./browser-only) instead.

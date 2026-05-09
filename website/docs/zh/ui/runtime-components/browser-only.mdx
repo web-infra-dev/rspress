@@ -1,0 +1,48 @@
+---
+description: BrowserOnly 组件，用于在 hydration 后仅在浏览器中渲染内容。
+overviewHeaders: []
+---
+
+# BrowserOnly
+
+`BrowserOnly` 会在 SSG 阶段渲染 fallback，并在浏览器完成 hydration 后再渲染 children。
+
+当组件或第三方库依赖 `window`、`document`、`localStorage` 等浏览器 API 时，可以使用它。
+
+## 用法
+
+```tsx title="index.mdx"
+import { BrowserOnly } from '@rspress/core/runtime';
+
+function MyComponent(props) {
+  return (
+    <BrowserOnly fallback={<div>Loading...</div>}>
+      {async () => {
+        const { LibComponent } = await import('some-lib-that-accesses-window');
+        return <LibComponent {...props} />;
+      }}
+    </BrowserOnly>
+  );
+}
+```
+
+`BrowserOnly` 的 children 必须是一个返回 React 节点的函数，也可以是返回 React 节点的异步函数。
+
+不要直接传入依赖浏览器 API 的 JSX：
+
+```tsx
+import { BrowserOnly } from '@rspress/core/runtime';
+
+<BrowserOnly>
+  {/* 这里仍然会在 SSG 阶段求值 window */}
+  <span>Current URL: {window.location.href}</span>
+</BrowserOnly>;
+```
+
+在 SSG 阶段，React 会先求值 JSX 树，然后 `BrowserOnly` 才能决定渲染什么。使用函数可以把浏览器 API 的访问延迟到组件在浏览器中挂载之后。
+
+## 与 NoSSR 的区别
+
+`NoSSR` 是一个简单包装器，用于在 SSG 阶段跳过 children，并在 hydration 后渲染。
+
+当代码本身无法在 SSG 阶段求值时，尤其是需要动态导入浏览器专用依赖时，`BrowserOnly` 更合适。

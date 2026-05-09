@@ -138,7 +138,27 @@ doc_build/
 
 **解决方案**：
 
-1. **使用 `useEffect` 延迟执行**：将浏览器 API 的调用放在 `useEffect` 中，确保只在客户端执行
+1. **使用 `BrowserOnly` 进行仅浏览器渲染**：把无法在 SSG 阶段运行的代码放在函数中，并按需提供 SSG 和加载阶段展示的 fallback。
+
+   ```tsx
+   import { BrowserOnly } from '@rspress/core/runtime';
+
+   function MyComponent(props) {
+     return (
+       <BrowserOnly fallback={<div>Loading...</div>}>
+         {async () => {
+           const { LibComponent } =
+             await import('some-lib-that-accesses-window');
+           return <LibComponent {...props} />;
+         }}
+       </BrowserOnly>
+     );
+   }
+   ```
+
+   children 必须是函数，而不是 JSX。否则 `window.location.href` 这类表达式仍然会在 React 构建 SSG 渲染树时被求值。
+
+2. **使用 `useEffect` 延迟执行**：将浏览器 API 的调用放在 `useEffect` 中，确保只在客户端执行
 
    ```tsx
    import { useEffect, useState } from 'react';
@@ -155,7 +175,7 @@ doc_build/
    }
    ```
 
-2. **条件检查**：在访问浏览器 API 前检查环境
+3. **条件检查**：在访问浏览器 API 前检查环境
 
    ```tsx
    if (typeof window !== 'undefined') {
@@ -164,7 +184,7 @@ doc_build/
    }
    ```
 
-3. **动态导入**：对于依赖浏览器 API 的第三方库，使用动态导入
+4. **在 `useEffect` 中动态导入**：对于依赖浏览器 API 的第三方库，在 `useEffect` 中使用动态导入
 
    ```tsx
    import { useEffect, useState } from 'react';

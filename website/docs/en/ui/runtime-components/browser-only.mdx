@@ -1,0 +1,48 @@
+---
+description: BrowserOnly component for rendering content only in the browser after hydration.
+overviewHeaders: []
+---
+
+# BrowserOnly
+
+`BrowserOnly` renders its fallback during SSG and renders its children only in the browser after hydration.
+
+Use it when a component or third-party library depends on browser-only APIs such as `window`, `document`, or `localStorage`.
+
+## Usage
+
+```tsx title="index.mdx"
+import { BrowserOnly } from '@rspress/core/runtime';
+
+function MyComponent(props) {
+  return (
+    <BrowserOnly fallback={<div>Loading...</div>}>
+      {async () => {
+        const { LibComponent } = await import('some-lib-that-accesses-window');
+        return <LibComponent {...props} />;
+      }}
+    </BrowserOnly>
+  );
+}
+```
+
+The `children` of `BrowserOnly` must be a function that returns a React node. It can also be an async function that returns a React node.
+
+Do not pass browser-only JSX directly:
+
+```tsx
+import { BrowserOnly } from '@rspress/core/runtime';
+
+<BrowserOnly>
+  {/* This still evaluates window during SSG */}
+  <span>Current URL: {window.location.href}</span>
+</BrowserOnly>;
+```
+
+During SSG, React still evaluates the JSX tree before `BrowserOnly` can decide what to render. Passing a function delays access to browser-only APIs until the component is mounted in the browser.
+
+## Difference from NoSSR
+
+`NoSSR` is a simple wrapper that skips rendering its children during SSG and renders them after hydration.
+
+`BrowserOnly` is more suitable when the code itself cannot be evaluated during SSG, especially when you need to dynamically import a browser-only dependency.

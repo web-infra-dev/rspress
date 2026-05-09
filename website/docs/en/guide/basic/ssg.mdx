@@ -138,7 +138,27 @@ The core difference between the two modes lies in the HTML file content:
 
 **Solutions**:
 
-1. **Use `useEffect` for delayed execution**: Place browser API calls inside `useEffect` to ensure they only run on the client
+1. **Use `BrowserOnly` for browser-only rendering**: Wrap code that cannot run during SSG in a function, and optionally provide a fallback for SSG and loading states.
+
+   ```tsx
+   import { BrowserOnly } from '@rspress/core/runtime';
+
+   function MyComponent(props) {
+     return (
+       <BrowserOnly fallback={<div>Loading...</div>}>
+         {async () => {
+           const { LibComponent } =
+             await import('some-lib-that-accesses-window');
+           return <LibComponent {...props} />;
+         }}
+       </BrowserOnly>
+     );
+   }
+   ```
+
+   The children must be a function, not JSX. Otherwise, expressions like `window.location.href` are still evaluated while React builds the SSG render tree.
+
+2. **Use `useEffect` for delayed execution**: Place browser API calls inside `useEffect` to ensure they only run on the client
 
    ```tsx
    import { useEffect, useState } from 'react';
@@ -155,7 +175,7 @@ The core difference between the two modes lies in the HTML file content:
    }
    ```
 
-2. **Conditional check**: Check the environment before accessing browser APIs
+3. **Conditional check**: Check the environment before accessing browser APIs
 
    ```tsx
    if (typeof window !== 'undefined') {
@@ -164,7 +184,7 @@ The core difference between the two modes lies in the HTML file content:
    }
    ```
 
-3. **Dynamic import**: For third-party libraries that depend on browser APIs, use dynamic imports
+4. **Dynamic import in `useEffect`**: For third-party libraries that depend on browser APIs, use dynamic imports in `useEffect`
 
    ```tsx
    import { useEffect, useState } from 'react';

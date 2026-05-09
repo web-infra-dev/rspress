@@ -17,4 +17,6 @@ import { NoSSR } from '@rspress/core/runtime';
 </NoSSR>
 ```
 
-常用于依赖浏览器 API 的组件，避免 SSR 阶段报错或与客户端渲染不一致。
+常用于需要避免 SSR，但代码本身仍然可以在 SSG 阶段求值的组件。
+
+如果代码本身依赖浏览器 API，或者需要动态导入浏览器专用依赖，请使用 [`BrowserOnly`](./browser-only)。

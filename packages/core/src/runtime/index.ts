@@ -7,6 +7,7 @@ export {
 } from '@rspress/shared';
 export { Head, useHead } from '@unhead/react';
 export * from 'react-router-dom';
+export { BrowserOnly, type BrowserOnlyProps } from './BrowserOnly';
 export { Content } from './Content';
 export { useActiveMatcher } from './hooks/useActiveMatcher';
 export { ThemeContext, useDark } from './hooks/useDark';
