@@ -18,7 +18,6 @@ declare module 'virtual-page-data' {
   export { pageData, searchIndexHash };
 }
 
-
 declare module 'virtual-global-components' {
   import { ComponentType } from 'react';
 

@@ -31,7 +31,7 @@
       groupName: 'dev-tools',
       matchPackageNames: [
         'cspell',
-        '@biomejs/biome',
+        '@rslint/core',
         'prettier',
         'lint-staged',
         '@microsoft/api-extractor',

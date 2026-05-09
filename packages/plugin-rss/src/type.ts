@@ -63,8 +63,10 @@ export interface FeedOutputOptions {
   transform?: FeedOutputTransformer;
 }
 
-export interface FeedChannel
-  extends PartialPartial<FeedOptions, 'title' | 'copyright'> {
+export interface FeedChannel extends PartialPartial<
+  FeedOptions,
+  'title' | 'copyright'
+> {
   /**
    * used as the basename of rss file, should be unique
    **/

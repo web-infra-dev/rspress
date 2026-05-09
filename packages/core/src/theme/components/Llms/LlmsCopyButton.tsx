@@ -15,8 +15,7 @@ import './index.scss';
 import './LlmsCopyButton.scss';
 import { useMdUrl } from './useMdUrl';
 
-export interface LlmsCopyButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Text by language, used with `useLang`.
    * @default en: 'Copy Markdown', zh: '\u590d\u5236 Markdown'

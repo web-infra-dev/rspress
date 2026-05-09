@@ -82,7 +82,7 @@ const Layout = () => (
     bottom={<div>bottom</div>}
     /* Custom MDX components */
     components={{
-      h1: (props) => {
+      h1: props => {
         const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
         return (
           <>
