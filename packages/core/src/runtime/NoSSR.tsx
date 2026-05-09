@@ -1,12 +1,16 @@
-import type { ReactNode } from 'react';
-import { createElement } from 'react';
-import { BrowserOnly, type BrowserOnlyProps } from './BrowserOnly';
+import { useEffect, useState } from 'react';
 
-export function NoSSR(props: { children: ReactNode }) {
+export function NoSSR(props: { children: React.ReactNode }) {
   const { children } = props;
-  const browserOnlyProps: BrowserOnlyProps = {
-    children: () => children,
-  };
+  const [isMounted, setIsMounted] = useState(false);
 
-  return createElement(BrowserOnly, browserOnlyProps);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
+  return <>{children}</>;
 }
