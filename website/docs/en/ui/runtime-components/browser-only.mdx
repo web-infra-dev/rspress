@@ -1,0 +1,55 @@
+---
+description: BrowserOnly component for rendering content only in the browser after hydration.
+overviewHeaders: []
+---
+
+# BrowserOnly
+
+Rspress statically renders your React code into HTML during the build phase. This means the code is executed in a Node.js environment, where browser globals like `window`, `document`, and `localStorage` do not exist.
+
+When a component or third-party library depends on these browser-only APIs, you need to escape from [static site generation (SSG)](/guide/basic/ssg). `BrowserOnly` renders a fallback during the SSG phase and renders its children only after hydration is complete in the browser.
+
+## Usage
+
+```mdx title="index.mdx"
+import { BrowserOnly } from '@rspress/core/runtime';
+
+<BrowserOnly fallback={<div>Loading...</div>}>
+  {async () => {
+    const { LibComponent } = await import('some-lib-that-accesses-window');
+    return <LibComponent {...props} />;
+  }}
+</BrowserOnly>
+```
+
+import { BrowserOnly } from '@rspress/core/runtime';
+
+<BrowserOnly fallback={<div>Loading...</div>}>
+  {() => {
+    return (
+      <>{`LibComponent can access \`window.location.pathname\` via BrowserOnly: ${window.location.pathname}`}</>
+    );
+  }}
+</BrowserOnly>
+
+## Why must children be a function?
+
+The `children` of `BrowserOnly` must be a function that returns a React node. It is important to realize that the children is not a JSX element, but a function. This is an intentional design decision.
+
+Consider this incorrect code:
+
+```mdx
+import { BrowserOnly } from '@rspress/core/runtime';
+
+<BrowserOnly>
+  {/* Do not do this — it still evaluates `window` during SSG */}
+  <span>Current URL: {window.location.href}</span>
+</BrowserOnly>
+;
+```
+
+If you pass JSX directly as children, React evaluates the expressions inside while building the JSX tree, before `window` and other browser objects are available, which causes errors. By writing children as a function, the expressions are not evaluated in advance. They only execute after BrowserOnly confirms it is running in the browser, thus avoiding browser API access during SSR.
+
+## How it works
+
+`BrowserOnly` is implemented using **useEffect + dynamic imports**, thus avoiding SSR compatibility issues.

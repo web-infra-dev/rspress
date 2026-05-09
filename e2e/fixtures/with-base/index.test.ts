@@ -57,4 +57,36 @@ test.describe('plugin test', async () => {
     const docContent = page.locator('.rspress-doc');
     await expect(docContent).toContainText('This is the index page');
   });
+
+  test('BrowserOnly should render fallback and update client content', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/base/en/`, {
+      waitUntil: 'domcontentloaded',
+    });
+
+    await expect(page.locator('#browser-only-async-fallback')).toHaveText(
+      'Async fallback initial',
+    );
+    await expect(page.locator('#browser-only-sync-content')).toHaveText(
+      'Sync 0',
+    );
+
+    await page.locator('#browser-only-sync-increment').click();
+    await expect(page.locator('#browser-only-sync-content')).toHaveText(
+      'Sync 1',
+    );
+
+    await expect(page.locator('#browser-only-async-content')).toHaveText(
+      'Async initial',
+    );
+
+    await page.locator('#browser-only-async-update').click();
+    await expect(page.locator('#browser-only-async-fallback')).toHaveText(
+      'Async fallback updated',
+    );
+    await expect(page.locator('#browser-only-async-content')).toHaveText(
+      'Async updated',
+    );
+  });
 });

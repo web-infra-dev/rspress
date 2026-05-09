@@ -955,6 +955,10 @@ importers:
         version: 22.19.15
 
   e2e/fixtures/with-base:
+    dependencies:
+      react:
+        specifier: ^19.2.5
+        version: 19.2.5
     devDependencies:
       '@rspress/core':
         specifier: workspace:*
@@ -962,6 +966,9 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.14
 
   packages/core:
     dependencies:

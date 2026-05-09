@@ -1,11 +1,18 @@
 ---
 description: NoSSR component for disabling server-side rendering and rendering content only on the client.
 overviewHeaders: []
+tag: deprecated
 ---
 
 # NoSSR
 
-`NoSSR` skips server-side rendering for its children.
+:::danger Deprecated
+
+`NoSSR` is deprecated. Use [`BrowserOnly`](./browser-only) instead.
+
+:::
+
+`NoSSR` is used to skip server-side rendering of its subtree.
 
 ## Usage
 
@@ -17,4 +24,6 @@ import { NoSSR } from '@rspress/core/runtime';
 </NoSSR>
 ```
 
-Use it when a component depends on browser-only APIs or needs to avoid SSR.
+## See also
+
+- [`BrowserOnly`](./browser-only) — render content only in the browser after hydration.

@@ -1,0 +1,55 @@
+---
+description: BrowserOnly 组件，用于在 hydration 后仅在浏览器中渲染内容。
+overviewHeaders: []
+---
+
+# BrowserOnly
+
+Rspress 在构建阶段会将 React 代码静态渲染为 HTML，这意味着代码在 Node.js 环境中执行，此时 `window`、`document`、`localStorage` 等浏览器全局对象并不存在。
+
+当组件或第三方库依赖这些浏览器专属 API 时，你需要从 [静态站点生成（SSG）](/guide/basic/ssg) 中逃逸出来。`BrowserOnly` 会在 SSG 阶段渲染 fallback，并在浏览器完成 hydration 后再渲染 children。
+
+## 用法
+
+```mdx title="index.mdx"
+import { BrowserOnly } from '@rspress/core/runtime';
+
+<BrowserOnly fallback={<div>Loading...</div>}>
+  {async () => {
+    const { LibComponent } = await import('some-lib-that-accesses-window');
+    return <LibComponent {...props} />;
+  }}
+</BrowserOnly>
+```
+
+import { BrowserOnly } from '@rspress/core/runtime';
+
+<BrowserOnly fallback={<div>Loading...</div>}>
+  {() => {
+    return (
+      <>{`LibComponent can access \`window.location.pathname\` via BrowserOnly: ${window.location.pathname}`}</>
+    );
+  }}
+</BrowserOnly>
+
+## 为什么 children 必须是函数？
+
+`BrowserOnly` 的 children 必须是一个返回 React 节点的函数。需要明确的是，children 不是 JSX 元素，而是函数，这是一个有意的设计决策。
+
+考虑下面这段错误的代码：
+
+```mdx
+import { BrowserOnly } from '@rspress/core/runtime';
+
+<BrowserOnly>
+  {/* 不要这样做——它仍会在 SSG 阶段求值 window */}
+  <span>Current URL: {window.location.href}</span>
+</BrowserOnly>
+;
+```
+
+如果直接把 JSX 作为 children 传入，React 会在创建 JSX 树时就对其中的表达式求值，此时 `window` 等浏览器对象尚未就绪，会导致报错。将 children 写成函数后，表达式不会被提前求值，只有在 BrowserOnly 确认已进入浏览器环境后才会执行，从而避免在 SSR 阶段访问浏览器 API。
+
+## 原理
+
+`BrowserOnly` 使用 **useEffect + 动态导入** 实现，从而规避 SSR 兼容问题。
