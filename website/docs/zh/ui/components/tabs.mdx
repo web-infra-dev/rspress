@@ -107,7 +107,7 @@ import {
 ```ts
 interface TabsProps {
   children: React.ReactNode;
-  values?: Array<React.ReactNode | { label: React.ReactNode; value: string }>;
+  values?: Array<{ label: React.ReactNode; value: string }>;
   defaultValue?: string;
   groupId?: string;
   tabPosition?: 'left' | 'center';

@@ -389,7 +389,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     }
 
     const tabValues = result.map(item => {
-      return item.group;
+      return {
+        label: item.group,
+        value: item.group,
+      };
     });
 
     const renderKey = 'render' as const;
@@ -406,7 +409,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         ref={searchResultTabRef}
       >
         {result.map(item => (
-          <Tab key={item.group}>
+          <Tab key={item.group} value={item.group}>
             {item.renderType === RenderType.Default &&
               renderSearchResultItem(item.result, query, isSearching)}
             {item.renderType === RenderType.Custom &&

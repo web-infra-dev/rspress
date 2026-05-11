@@ -13,15 +13,19 @@ import {
 import './index.scss';
 
 type TabItem = {
+  label: ReactNode;
+  value: string;
+};
+
+type ResolvedTabItem = {
   label?: ReactNode;
   value?: string;
   disabled?: boolean;
   content?: ReactNode;
 };
-type TabValue = ReactNode | TabItem;
 
 export interface TabsProps {
-  values?: TabValue[] | ReadonlyArray<TabValue>;
+  values?: ReadonlyArray<TabItem>;
   /**
    * @default 0
    */
@@ -48,43 +52,26 @@ export interface TabsProps {
 
 function getTabValuesFromChildren(
   children: ReactElement<TabProps>[],
-  defaultValues: TabValue[] | ReadonlyArray<TabValue> | undefined,
-): TabItem[] {
-  // 0. only values, values contain label and content
-  // <Tabs values={[{}, {}]}/>
-  if (defaultValues?.every(item => isTabItem(item) && item.content)) {
-    return defaultValues as TabItem[];
-  }
-
-  // 1. values only contain label
-  // <Tabs values={['Tab1', 'Tab2']}><Tab label="Tab1"/></Tab><Tab label="Tab2"/></Tab></Tabs>
+  defaultValues: ReadonlyArray<TabItem> | undefined,
+): ResolvedTabItem[] {
+  // 1. values contain label and value
+  // <Tabs values={[{ label: 'Tab1', value: 'tab1' }]}><Tab value="tab1" /></Tabs>
   if (defaultValues && defaultValues.length > 0) {
     return defaultValues.map((item, index) => {
-      const tabItem = isTabItem(item) ? item : { label: item };
       const content =
-        tabItem.content ??
-        (tabItem.value
-          ? children.find(child => child.props?.value === tabItem.value)
-          : undefined) ??
+        children.find(child => child.props?.value === item.value) ??
         children[index];
 
-      if (isTabItem(item)) {
-        return {
-          ...item,
-          content,
-        };
-      }
-
       return {
-        label: item,
+        ...item,
         content,
-      } satisfies TabItem;
+      } satisfies ResolvedTabItem;
     });
   }
 
   // 2. no values
   // <Tabs><Tab label="Tab1"/></Tab><Tab label="Tab2"/></Tab></Tabs>
-  return Children.map<TabItem, ReactElement<TabProps>>(
+  return Children.map<ResolvedTabItem, ReactElement<TabProps>>(
     children,
     (child, index) => {
       if (isValidElement(child)) {
@@ -93,22 +80,15 @@ function getTabValuesFromChildren(
           value: child.props?.value,
           disabled: child.props?.disabled,
           content: children[index],
-        } satisfies TabItem;
+        } satisfies ResolvedTabItem;
       }
 
       return {
         label: index,
         content: children[index],
-      } satisfies TabItem;
+      } satisfies ResolvedTabItem;
     },
   );
-}
-
-function isTabItem(item: unknown): item is TabItem {
-  if (item && typeof item === 'object' && 'label' in item) {
-    return true;
-  }
-  return false;
 }
 
 const groupIdPrefix = 'rspress.tabs.';
@@ -135,7 +115,7 @@ export const Tabs = forwardRef(
         isValidElement(child),
     ) as unknown as ReactElement<TabProps>[];
 
-    const tabValues: TabItem[] = useMemo(() => {
+    const tabValues: ResolvedTabItem[] = useMemo(() => {
       return getTabValuesFromChildren(children, values);
     }, [values, children]);
 
@@ -244,7 +224,10 @@ export const Tabs = forwardRef(
 
 Tabs.displayName = 'Tabs';
 
-export type TabProps = Pick<TabItem, 'label' | 'value' | 'disabled'> & {
+export type TabProps = {
+  label?: ReactNode;
+  value?: string;
+  disabled?: boolean;
   children: ReactNode;
 };
 
