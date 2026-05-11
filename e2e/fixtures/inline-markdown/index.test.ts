@@ -65,9 +65,7 @@ test.describe('Inline markdown test', async () => {
     }
 
     await expect(
-      sidebar
-        .nth(5)
-        .locator('.rp-sidebar-item__left span.rp-doc code'),
+      sidebar.nth(5).locator('.rp-sidebar-item__left span.rp-doc code'),
     ).toHaveText('<foo>');
   });
 
