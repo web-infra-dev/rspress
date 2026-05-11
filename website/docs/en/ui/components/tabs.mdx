@@ -43,21 +43,73 @@ const bar = require('bar');
 </Tabs>
 ````
 
+### Group synchronization
+
+Use the same `groupId` to synchronize the active tab across multiple `Tabs`.
+
+```mdx title="index.mdx" preview
+import { Tab, Tabs } from '@rspress/core/theme';
+
+<Tabs groupId="package-manager">
+  <Tab label="npm">npm install rspress</Tab>
+  <Tab label="pnpm">pnpm add rspress</Tab>
+</Tabs>
+
+<Tabs groupId="package-manager">
+  <Tab label="npm">npm run dev</Tab>
+  <Tab label="pnpm">pnpm dev</Tab>
+</Tabs>
+```
+
+### Custom labels
+
+Use `values` to define tab labels separately from panel content. Each item can provide a `value`, and the matching `<Tab value="...">` supplies the content.
+
+````mdx title="index.mdx" preview
+import { Tab, Tabs } from '@rspress/core/theme';
+
+<Tabs
+  defaultValue="ttml"
+  values={[
+    { label: <span>index.ttml</span>, value: 'ttml' },
+    { label: <span>index.js</span>, value: 'subscribe' },
+  ]}
+>
+<Tab value="ttml">
+
+```ts
+// index.ttml
+const template = 'content ttml';
+```
+
+</Tab>
+<Tab value="subscribe">
+
+```js
+// index.js
+const subscribe = 'content subscribe';
+```
+
+</Tab>
+</Tabs>
+````
+
 ### Props
 
 ```ts
 interface TabsProps {
   children: React.ReactNode;
+  values?: Array<React.ReactNode | { label: React.ReactNode; value: string }>;
   defaultValue?: string;
   groupId?: string;
   tabPosition?: 'left' | 'center';
 }
 
 interface TabProps {
-  label: string;
+  label?: React.ReactNode;
   value?: string;
   children: React.ReactNode;
 }
 ```
 
-Use `defaultValue` to preselect a tab (matches `value`); `groupId` syncs selection across multiple `Tabs`; `tabPosition` sets list alignment.
+Use `values` to define labels separately from panel content. `label` accepts any renderable React node, so it can include icons or custom markup. Use `defaultValue` to preselect a tab (matches `value`); `groupId` syncs selection across multiple `Tabs`; `tabPosition` sets list alignment.
