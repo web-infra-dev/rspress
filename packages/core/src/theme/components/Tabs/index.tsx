@@ -12,25 +12,17 @@ import {
 } from 'react';
 import './index.scss';
 
-type TabItem = {
-  label: ReactNode;
-  value: string;
-};
-
 type ResolvedTabItem = {
   label?: ReactNode;
-  value?: string;
   disabled?: boolean;
   content?: ReactNode;
 };
 
 export interface TabsProps {
-  values?: ReadonlyArray<TabItem>;
   /**
    * @default 0
    */
   defaultIndex?: number;
-  defaultValue?: string;
   onChange?: (index: number) => void;
   children: ReactNode;
   /**
@@ -52,32 +44,13 @@ export interface TabsProps {
 
 function getTabValuesFromChildren(
   children: ReactElement<TabProps>[],
-  defaultValues: ReadonlyArray<TabItem> | undefined,
 ): ResolvedTabItem[] {
-  // 1. values contain label and value
-  // <Tabs values={[{ label: 'Tab1', value: 'tab1' }]}><Tab value="tab1" /></Tabs>
-  if (defaultValues && defaultValues.length > 0) {
-    return defaultValues.map((item, index) => {
-      const content =
-        children.find(child => child.props?.value === item.value) ??
-        children[index];
-
-      return {
-        ...item,
-        content,
-      } satisfies ResolvedTabItem;
-    });
-  }
-
-  // 2. no values
-  // <Tabs><Tab label="Tab1"/></Tab><Tab label="Tab2"/></Tab></Tabs>
   return Children.map<ResolvedTabItem, ReactElement<TabProps>>(
     children,
     (child, index) => {
       if (isValidElement(child)) {
         return {
           label: child.props?.label || undefined,
-          value: child.props?.value,
           disabled: child.props?.disabled,
           content: children[index],
         } satisfies ResolvedTabItem;
@@ -96,9 +69,7 @@ const groupIdPrefix = 'rspress.tabs.';
 export const Tabs = forwardRef(
   (props: TabsProps, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
     const {
-      values,
       defaultIndex,
-      defaultValue,
       onChange,
       children: rawChildren,
       groupId,
@@ -116,8 +87,8 @@ export const Tabs = forwardRef(
     ) as unknown as ReactElement<TabProps>[];
 
     const tabValues: ResolvedTabItem[] = useMemo(() => {
-      return getTabValuesFromChildren(children, values);
-    }, [values, children]);
+      return getTabValuesFromChildren(children);
+    }, [children]);
 
     if (process.env.__SSR_MD__) {
       return (
@@ -135,12 +106,7 @@ export const Tabs = forwardRef(
       );
     }
 
-    const defaultActiveIndex =
-      defaultValue !== undefined
-        ? tabValues.findIndex(item => item.value === defaultValue)
-        : -1;
-    const initialActiveIndex =
-      defaultActiveIndex === -1 ? (defaultIndex ?? 0) : defaultActiveIndex;
+    const initialActiveIndex = defaultIndex ?? 0;
 
     const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
 
@@ -161,11 +127,11 @@ export const Tabs = forwardRef(
                 tabPosition === 'center' ? 'center' : 'flex-start',
             }}
           >
-            {tabValues.map(({ label, value, disabled }, index) => {
+            {tabValues.map(({ label, disabled }, index) => {
               const isActive = index === currentIndex;
               return (
                 <div
-                  key={value ?? (typeof label === 'string' ? label : index)}
+                  key={index}
                   className={clsx(
                     'rp-tabs__label__item',
                     isActive
@@ -193,7 +159,7 @@ export const Tabs = forwardRef(
           </div>
         ) : null}
         <div className="rp-tabs__content">
-          {tabValues.map(({ label, value, content }, index) => {
+          {tabValues.map(({ content }, index) => {
             const isActive = index === currentIndex;
             if (!keepDOM && !isActive) {
               return null;
@@ -201,7 +167,7 @@ export const Tabs = forwardRef(
 
             return (
               <div
-                key={value ?? (typeof label === 'string' ? label : index)}
+                key={index}
                 className={clsx(
                   'rp-tabs__content__item',
                   isActive
@@ -226,7 +192,6 @@ Tabs.displayName = 'Tabs';
 
 export type TabProps = {
   label?: ReactNode;
-  value?: string;
   disabled?: boolean;
   children: ReactNode;
 };

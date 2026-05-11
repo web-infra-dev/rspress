@@ -63,7 +63,7 @@ import { Tab, Tabs } from '@rspress/core/theme';
 
 ### Custom labels
 
-Use `values` to define tab labels separately from panel content. Each item can provide a `value`, and the matching `<Tab value="...">` supplies the content.
+Use `label` on each `Tab` to render custom tab labels.
 
 ```mdx title="index.mdx" preview
 import {
@@ -74,31 +74,27 @@ import {
   Tabs,
 } from '@rspress/core/theme';
 
-<Tabs
-  defaultValue="github"
-  values={[
-    {
-      label: (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <SvgWrapper icon={IconGithub} width={16} height={16} />
-          GitHub
-        </span>
-      ),
-      value: 'github',
-    },
-    {
-      label: (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <SvgWrapper icon={IconGitlab} width={16} height={16} />
-          GitLab
-        </span>
-      ),
-      value: 'gitlab',
-    },
-  ]}
->
-  <Tab value="github">GitHub repository settings</Tab>
-  <Tab value="gitlab">GitLab project settings</Tab>
+<Tabs>
+  <Tab
+    label={
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+        <SvgWrapper icon={IconGithub} width={16} height={16} />
+        GitHub
+      </span>
+    }
+  >
+    GitHub repository settings
+  </Tab>
+  <Tab
+    label={
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+        <SvgWrapper icon={IconGitlab} width={16} height={16} />
+        GitLab
+      </span>
+    }
+  >
+    GitLab project settings
+  </Tab>
 </Tabs>
 ```
 
@@ -107,17 +103,15 @@ import {
 ```ts
 interface TabsProps {
   children: React.ReactNode;
-  values?: Array<{ label: React.ReactNode; value: string }>;
-  defaultValue?: string;
+  defaultIndex?: number;
   groupId?: string;
   tabPosition?: 'left' | 'center';
 }
 
 interface TabProps {
   label?: React.ReactNode;
-  value?: string;
   children: React.ReactNode;
 }
 ```
 
-Use `values` to define labels separately from panel content. `label` accepts any renderable React node, so it can include icons or custom markup. Use `defaultValue` to preselect a tab (matches `value`); `groupId` syncs selection across multiple `Tabs`; `tabPosition` sets list alignment.
+`label` accepts any renderable React node, so it can include icons or custom markup. Use `defaultIndex` to preselect a tab; `groupId` syncs selection across multiple `Tabs`; `tabPosition` sets list alignment.

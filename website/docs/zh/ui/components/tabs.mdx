@@ -63,7 +63,7 @@ import { Tab, Tabs } from '@rspress/core/theme';
 
 ### 自定义标签
 
-使用 `values` 可以把标签和面板内容分开定义。每一项都可以提供 `value`，匹配的 `<Tab value="...">` 会提供对应内容。
+在每个 `Tab` 上使用 `label` 可以渲染自定义标签。
 
 ```mdx title="index.mdx" preview
 import {
@@ -74,31 +74,27 @@ import {
   Tabs,
 } from '@rspress/core/theme';
 
-<Tabs
-  defaultValue="github"
-  values={[
-    {
-      label: (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <SvgWrapper icon={IconGithub} width={16} height={16} />
-          GitHub
-        </span>
-      ),
-      value: 'github',
-    },
-    {
-      label: (
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <SvgWrapper icon={IconGitlab} width={16} height={16} />
-          GitLab
-        </span>
-      ),
-      value: 'gitlab',
-    },
-  ]}
->
-  <Tab value="github">GitHub 仓库设置</Tab>
-  <Tab value="gitlab">GitLab 项目设置</Tab>
+<Tabs>
+  <Tab
+    label={
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+        <SvgWrapper icon={IconGithub} width={16} height={16} />
+        GitHub
+      </span>
+    }
+  >
+    GitHub 仓库设置
+  </Tab>
+  <Tab
+    label={
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+        <SvgWrapper icon={IconGitlab} width={16} height={16} />
+        GitLab
+      </span>
+    }
+  >
+    GitLab 项目设置
+  </Tab>
 </Tabs>
 ```
 
@@ -107,17 +103,15 @@ import {
 ```ts
 interface TabsProps {
   children: React.ReactNode;
-  values?: Array<{ label: React.ReactNode; value: string }>;
-  defaultValue?: string;
+  defaultIndex?: number;
   groupId?: string;
   tabPosition?: 'left' | 'center';
 }
 
 interface TabProps {
   label?: React.ReactNode;
-  value?: string;
   children: React.ReactNode;
 }
 ```
 
-`values` 可用于把标签和面板内容分开定义。`label` 支持任意可渲染 React 节点，因此可以放入图标或自定义结构。`defaultValue` 可设置默认选中的标签（匹配 `value`）；`groupId` 可以让多个 `Tabs` 共享选择状态；`tabPosition` 控制标签列表的对齐方式。
+`label` 支持任意可渲染 React 节点，因此可以放入图标或自定义结构。`defaultIndex` 可设置默认选中的标签；`groupId` 可以让多个 `Tabs` 共享选择状态；`tabPosition` 控制标签列表的对齐方式。

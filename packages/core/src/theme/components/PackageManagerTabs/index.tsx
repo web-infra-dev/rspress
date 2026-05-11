@@ -231,30 +231,26 @@ export function PackageManagerTabs({
   }
 
   return (
-    <Tabs
-      groupId="package.manager"
-      values={Object.entries(commandInfo).map(([key]) => ({
-        label: (
-          <div
-            key={key}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: 15,
-            }}
-          >
-            {packageMangerToIcon[key]}
-            <span style={{ marginLeft: 6, marginBottom: 2 }}>{key}</span>
-          </div>
-        ),
-        value: key,
-      }))}
-    >
+    <Tabs groupId="package.manager">
       {Object.entries(commandInfo).map(([key, value]) => {
         const [packageManager, command] = splitTo2Parts(value);
 
         return (
-          <Tab key={key} value={key}>
+          <Tab
+            key={key}
+            label={
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  fontSize: 15,
+                }}
+              >
+                {packageMangerToIcon[key]}
+                <span style={{ marginLeft: 6, marginBottom: 2 }}>{key}</span>
+              </div>
+            }
+          >
             <Pre
               lang="bash"
               className="shiki css-variables"
