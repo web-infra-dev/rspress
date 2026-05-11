@@ -74,14 +74,12 @@ import {
   Tabs,
 } from '@rspress/core/theme';
 
-const labelStyle = { display: 'inline-flex', alignItems: 'center', gap: 6 };
-
 <Tabs
   defaultValue="github"
   values={[
     {
       label: (
-        <span style={labelStyle}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
           <SvgWrapper icon={IconGithub} width={16} height={16} />
           GitHub
         </span>
@@ -90,7 +88,7 @@ const labelStyle = { display: 'inline-flex', alignItems: 'center', gap: 6 };
     },
     {
       label: (
-        <span style={labelStyle}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
           <SvgWrapper icon={IconGitlab} width={16} height={16} />
           GitLab
         </span>
