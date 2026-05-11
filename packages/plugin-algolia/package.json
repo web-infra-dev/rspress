@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-algolia",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "A plugin for rspress to search with algolia in docs.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
