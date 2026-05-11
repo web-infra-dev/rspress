@@ -63,6 +63,12 @@ test.describe('Inline markdown test', async () => {
     for (const [index, html] of sidebarInnerHtml.entries()) {
       expect(html).toContain(expectedSidebarInnerHtml[index]);
     }
+
+    await expect(
+      sidebar
+        .nth(5)
+        .locator('.rp-sidebar-item__left span.rp-doc code'),
+    ).toHaveText('<foo>');
   });
 
   test('Should render inline markdown of overview page correctly', async ({
