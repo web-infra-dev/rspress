@@ -52,8 +52,8 @@ test.describe('tabs-component test', async () => {
     // Tab D
     const tabD = page.locator('.tabs-d');
     const activeContentD = tabD.locator('.rp-tabs__content__item--active');
-    await expect(tabD.locator('.tab-d-label')).toHaveText('index.ttml');
-    await expect(activeContentD).toContainText('content ttml');
+    await expect(tabD.locator('.tab-d-label')).toHaveText('index.markup');
+    await expect(activeContentD).toContainText('content markup');
     await expect(activeContentD).not.toContainText('content subscribe');
     await tabD
       .locator('.rp-tabs__label__item', { hasText: 'index.js' })

@@ -24,17 +24,20 @@ import { Tabs, Tab } from '@rspress/core/theme';
 
 <Tabs
   className="tabs-d"
-  defaultValue="ttml"
+  defaultValue="markup"
   values={[
-    { label: <span className="tab-d-label">index.ttml</span>, value: 'ttml' },
+    {
+      label: <span className="tab-d-label">index.markup</span>,
+      value: 'markup',
+    },
     { label: 'index.js', value: 'subscribe' },
   ]}
 >
-<Tab value="ttml">
+<Tab value="markup">
 
 ```ts
-// index.ttml
-const template = 'content ttml';
+// index.markup
+const template = 'content markup';
 ```
 
 </Tab>
