@@ -19,3 +19,19 @@ skills:
       commit: 89bd10a842356073382b281509b4c8af7f9eb5a8
       path: /skills/rspress-custom-theme
     digest: sha256-6699a1a869dd0172a78147bacbb0e5ec775823201fb004ec8975673d0d6270b4
+  rspress-best-practices:
+    specifier: https://github.com/rstackjs/agent-skills.git#b7e55b1367276dbd61a46065d6c1641f863a20f9&path:/skills/rspress-best-practices
+    resolution:
+      type: git
+      url: https://github.com/rstackjs/agent-skills.git
+      commit: b7e55b1367276dbd61a46065d6c1641f863a20f9
+      path: /skills/rspress-best-practices
+    digest: sha256-0431d027ef12b3040a7de584eebb0f3a89ff96af0f9cc4ed1b5210c6ae72a0f5
+  rspress-description-generator:
+    specifier: https://github.com/rstackjs/agent-skills.git#b7e55b1367276dbd61a46065d6c1641f863a20f9&path:/skills/rspress-description-generator
+    resolution:
+      type: git
+      url: https://github.com/rstackjs/agent-skills.git
+      commit: b7e55b1367276dbd61a46065d6c1641f863a20f9
+      path: /skills/rspress-description-generator
+    digest: sha256-a38d6e6e06340590c2e3cfaabd0878cf484b381025d1e093dcf3512d78e4c9a0
