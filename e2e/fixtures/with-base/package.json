@@ -9,7 +9,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "react": "^19.2.5"
+    "react": "^19.2.6"
   },
   "devDependencies": {
     "@rspress/core": "workspace:*",

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@rspress/core": "workspace:*",
-    "react": "^19.2.5"
+    "react": "^19.2.6"
   },
   "devDependencies": {
     "@rspress/plugin-algolia": "workspace:*",

@@ -9,14 +9,14 @@ importers:
   .:
     devDependencies:
       '@changesets/cli':
-        specifier: ^2.30.0
+        specifier: ^2.31.0
         version: 2.31.0(@types/node@22.19.15)
       '@playwright/test':
         specifier: 1.58.2
         version: 1.58.2
       '@rslint/core':
-        specifier: ^0.5.0
-        version: 0.5.1(jiti@2.6.1)
+        specifier: ^0.5.2
+        version: 0.5.2(jiti@2.6.1)
       '@rspress/config':
         specifier: workspace:*
         version: link:scripts/config
@@ -132,8 +132,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -247,11 +247,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -263,8 +263,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -319,8 +319,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -530,11 +530,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-playground
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
       solid-js:
         specifier: ^1.9.12
         version: 1.9.12
@@ -555,11 +555,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -580,11 +580,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -594,7 +594,7 @@ importers:
     dependencies:
       '@rsbuild/plugin-vue':
         specifier: ^1.2.7
-        version: 1.2.7(@rsbuild/core@2.0.3)(@rspack/core@2.0.1(@swc/helpers@0.5.21))(vue@3.5.33(typescript@5.9.3))
+        version: 1.2.7(@rsbuild/core@2.0.3)(@rspack/core@2.0.1(@swc/helpers@0.5.21))(vue@3.5.34(typescript@5.9.3))
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
@@ -602,17 +602,17 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
       solid-js:
         specifier: ^1.9.12
         version: 1.9.12
       vue:
-        specifier: ^3.5.33
-        version: 3.5.33(typescript@5.9.3)
+        specifier: ^3.5.34
+        version: 3.5.34(typescript@5.9.3)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -718,14 +718,14 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
       react-router-dom:
         specifier: ^7.14.2
-        version: 7.14.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 7.14.2(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -737,14 +737,14 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
       react-router-dom:
         specifier: ^6.30.3
-        version: 6.30.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 6.30.3(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -782,8 +782,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
     devDependencies:
       '@rspress/plugin-algolia':
         specifier: workspace:*
@@ -801,8 +801,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
     devDependencies:
       '@rspress/plugin-algolia':
         specifier: workspace:*
@@ -830,8 +830,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
     devDependencies:
       '@rspress/plugin-algolia':
         specifier: workspace:*
@@ -957,8 +957,8 @@ importers:
   e2e/fixtures/with-base:
     dependencies:
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
     devDependencies:
       '@rspress/core':
         specifier: workspace:*
@@ -977,7 +977,7 @@ importers:
         version: 3.1.1
       '@mdx-js/react':
         specifier: ^3.1.1
-        version: 3.1.1(@types/react@19.2.14)(react@19.2.5)
+        version: 3.1.1(@types/react@19.2.14)(react@19.2.6)
       '@rsbuild/core':
         specifier: ^2.0.3
         version: 2.0.3
@@ -994,8 +994,8 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       '@unhead/react':
-        specifier: ^2.1.13
-        version: 2.1.13(react@19.2.5)
+        specifier: ^2.1.15
+        version: 2.1.15(react@19.2.6)
       body-scroll-lock:
         specifier: 4.0.0-beta.0
         version: 4.0.0-beta.0
@@ -1027,23 +1027,23 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
       react-lazy-with-preload:
         specifier: ^2.2.1
         version: 2.2.1
       react-reconciler:
         specifier: 0.33.0
-        version: 0.33.0(react@19.2.5)
+        version: 0.33.0(react@19.2.6)
       react-render-to-markdown:
         specifier: 19.0.1
-        version: 19.0.1(react@19.2.5)
+        version: 19.0.1(react@19.2.6)
       react-router-dom:
         specifier: ^7.14.2
-        version: 7.14.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 7.14.2(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       rehype-external-links:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1154,8 +1154,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       postcss:
-        specifier: 8.5.13
-        version: 8.5.13
+        specifier: 8.5.14
+        version: 8.5.14
       remark-directive:
         specifier: ^4.0.0
         version: 4.0.0
@@ -1213,7 +1213,7 @@ importers:
         version: 4.6.3
       '@docsearch/react':
         specifier: ^4.6.3
-        version: 4.6.3(@algolia/client-search@5.50.0)(@types/react@19.2.14)(algoliasearch@5.50.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(search-insights@2.17.3)
+        version: 4.6.3(@algolia/client-search@5.50.0)(@types/react@19.2.14)(algoliasearch@5.50.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(search-insights@2.17.3)
       '@rspress/core':
         specifier: workspace:^2.0.10
         version: link:../core
@@ -1240,8 +1240,8 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.14)
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
@@ -1265,7 +1265,7 @@ importers:
         version: 2.4.0(typescript@5.9.3)
       react-markdown:
         specifier: ^10.1.0
-        version: 10.1.0(@types/react@19.2.14)(react@19.2.5)
+        version: 10.1.0(@types/react@19.2.14)(react@19.2.6)
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
@@ -1298,14 +1298,14 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.14)
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
       react-router-dom:
         specifier: ^7.14.2
-        version: 7.14.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 7.14.2(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
@@ -1341,8 +1341,8 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.14)
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
@@ -1396,8 +1396,8 @@ importers:
         specifier: ^19.2.14
         version: 19.2.14
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
@@ -1415,7 +1415,7 @@ importers:
         version: 3.1.1
       '@monaco-editor/react':
         specifier: ~4.7.0
-        version: 4.7.0(monaco-editor@0.55.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 4.7.0(monaco-editor@0.55.1)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@oxidation-compiler/napi':
         specifier: ^0.2.0
         version: 0.2.0
@@ -1469,11 +1469,11 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
@@ -1503,7 +1503,7 @@ importers:
         version: 1.1.1
       qrcode.react:
         specifier: ^4.2.0
-        version: 4.2.0(react@19.2.5)
+        version: 4.2.0(react@19.2.6)
     devDependencies:
       '@rslib/core':
         specifier: 0.21.3
@@ -1527,11 +1527,11 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
@@ -1564,8 +1564,8 @@ importers:
         specifier: ^19.2.14
         version: 19.2.14
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
@@ -1641,8 +1641,8 @@ importers:
         specifier: ^19.2.14
         version: 19.2.14
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
@@ -1681,8 +1681,8 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.14)
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.3)
@@ -1787,11 +1787,11 @@ importers:
         specifier: ^19.2.14
         version: 19.2.14
       react:
-        specifier: ^19.2.5
-        version: 19.2.5
+        specifier: ^19.2.6
+        version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
-        version: 19.2.5(react@19.2.5)
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
       rsbuild-plugin-google-analytics:
         specifier: ^1.0.5
         version: 1.0.5(@rsbuild/core@2.0.3)
@@ -2043,6 +2043,11 @@ packages:
 
   '@babel/parser@7.29.2':
     resolution: {integrity: sha512-4GgRzy/+fsBa72/RZVJmGKPmZu9Byn8o4MoLpmNe1m8ZfYnz5emHLQz3U4gLud6Zwl0RZIcgiLD7Uq7ySFuDLA==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
+  '@babel/parser@7.29.3':
+    resolution: {integrity: sha512-b3ctpQwp+PROvU/cttc4OYl4MzfJUWy6FZg+PMXfzmt/+39iHVF0sDfqay8TQM3JA2EUOyKcFZt75jWriQijsA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -3211,8 +3216,8 @@ packages:
       typescript:
         optional: true
 
-  '@rslint/core@0.5.1':
-    resolution: {integrity: sha512-UGcalhkpNvm4zN7E2DiQsuwM10LMi3CazOiANVevf5hn+NB7WKEMWYKn3bFySptg7Ll042IKMUlIXaFQjWs9lQ==}
+  '@rslint/core@0.5.2':
+    resolution: {integrity: sha512-RDP0uvg0ni1AXl/Jq9LglY8QmSIuM4HN4Lx9Pef6xL1QZrgXkQJ5GKPlBjkbMDu7Zdlfjo1L5D1S0cttaEjBHA==}
     hasBin: true
     peerDependencies:
       jiti: ^2.0.0
@@ -3220,33 +3225,33 @@ packages:
       jiti:
         optional: true
 
-  '@rslint/darwin-arm64@0.5.1':
-    resolution: {integrity: sha512-grbPKhrRv0BTKvdByIIlS5avc4ttF9vylaStJh/TTYS96cTkjCcTv7RAUv/ZI3VSaSZdRBcW4f6wW9pPWpt41w==}
+  '@rslint/darwin-arm64@0.5.2':
+    resolution: {integrity: sha512-gu7WyZnyZt9x/TMC+jtf0LYTC0Zq9Fq38utef5dcm8iVbdZNqt+EnwrOqVFaqI1ikYC18IOi9aIe7/bxVZp/aA==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rslint/darwin-x64@0.5.1':
-    resolution: {integrity: sha512-v7P5AYWzm4Xrly5nl5yXSAyHn6j9pwZyFFUTD9UCOodZMEVmBxW3WxdL9iq8PfnG5n8GXHqTqBSYwWfG1WWD0g==}
+  '@rslint/darwin-x64@0.5.2':
+    resolution: {integrity: sha512-sxvIAWldUBd/EeK+PkQhgVbRq6VwHBmUNxKNWyng5zL0gWu02X8ynhyzDgWfUKPXH7BgebSItQBfa4+qFQXhUw==}
     cpu: [x64]
     os: [darwin]
 
-  '@rslint/linux-arm64@0.5.1':
-    resolution: {integrity: sha512-czDNVvgea0LpTlqaRvZHulJn8RmmDso2DufIWedxIA9yfK+nEK4H0tANNVQL4NBTHiv/6cqQw8NveP3KD5I93g==}
+  '@rslint/linux-arm64@0.5.2':
+    resolution: {integrity: sha512-D8cmoMDqzwZqELtxbVZDX0jGMXkSwAejvOL9D1GXoFAxq74xuT/s0UdfbkzZtAAvIFrwa8PGskPXv3X/1w2WbA==}
     cpu: [arm64]
     os: [linux]
 
-  '@rslint/linux-x64@0.5.1':
-    resolution: {integrity: sha512-D0isbtok26OSjSQkWDDfTWPLQDqrufbTbiihMFxkDlIRKDGcU9HvnfTlEmgnwzkxt6Jm7CBZZiXdFtyhPgnWEg==}
+  '@rslint/linux-x64@0.5.2':
+    resolution: {integrity: sha512-b4Nato9LgkPX7OydaeXexUUvkfm4+tRAvp46T4xhe76k136/ziImRPBcM/G7pBNyaV5Rd6qp6CiYW330Q+0Gnw==}
     cpu: [x64]
     os: [linux]
 
-  '@rslint/win32-arm64@0.5.1':
-    resolution: {integrity: sha512-XnU369fuTR9EqFhRMmbg+rHO3T/gwC+VV2AC1HAvZ62/pgNjFQmlK6IEsU293sgXHOUnRIQ6IsC9J0imyrCMXQ==}
+  '@rslint/win32-arm64@0.5.2':
+    resolution: {integrity: sha512-3pfpABHaBv+Z551cKOX+pVllmGFJc7dLHDs2XignLxZ89xsxomlAx8CLhkaDECUkoBM7gj4/oQr57t9Ndhe3Lw==}
     cpu: [arm64]
     os: [win32]
 
-  '@rslint/win32-x64@0.5.1':
-    resolution: {integrity: sha512-7++ELodvfVPFDSYEMVWb7OA+BD2JeONXtwXP/vmbrcawBTff7E/6VREB8dGPYCNh/ypBuSQ2WYXUtYAxQxwSiQ==}
+  '@rslint/win32-x64@0.5.2':
+    resolution: {integrity: sha512-MnIp0ofyg7AXP+bgt1VW1ejJszkgyFKHJvSqZ3QePOllWKXA7Nhj4lMIluIcTN1D4C0f00+6POYOeIjSwI+aRQ==}
     cpu: [x64]
     os: [win32]
 
@@ -3824,55 +3829,56 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
-  '@unhead/react@2.1.13':
-    resolution: {integrity: sha512-gC48tNJ0UtbithkiKCc2WUlxbVVk5o171EtruS2w2hQUblfYFHzCPu2hljjT1e0tUHXXqN8EMv7mpxHddMB2sg==}
+  '@unhead/react@2.1.15':
+    resolution: {integrity: sha512-5hfAaZ3XJq9JkspRzZdSPsMrXXA8v/SKiEOxZcN9L40o44byF/50bcQuOLgSSCAx8802mI5VG32KZXWTtsLu9Q==}
     peerDependencies:
       react: '>=18.3.1'
 
   '@vue/compiler-core@3.5.31':
     resolution: {integrity: sha512-k/ueL14aNIEy5Onf0OVzR8kiqF/WThgLdFhxwa4e/KF/0qe38IwIdofoSWBTvvxQOesaz6riAFAUaYjoF9fLLQ==}
 
-  '@vue/compiler-core@3.5.33':
-    resolution: {integrity: sha512-3PZLQwFw4Za3TC8t0FvTy3wI16Kt+pmwcgNZca4Pj9iWL2E72a/gZlpBtAJvEdDMdCxdG/qq0C7PN0bsJuv0Rw==}
+  '@vue/compiler-core@3.5.34':
+    resolution: {integrity: sha512-s9cLyK5mLcvZ4Agva5QgRsQyLKvts9WbU9DB6NqiZkkGEdwmcEiylj5Jbwkp680drF/NNCV8OlAJSe+yMLxaJw==}
 
   '@vue/compiler-dom@3.5.31':
     resolution: {integrity: sha512-BMY/ozS/xxjYqRFL+tKdRpATJYDTTgWSo0+AJvJNg4ig+Hgb0dOsHPXvloHQ5hmlivUqw1Yt2pPIqp4e0v1GUw==}
 
-  '@vue/compiler-dom@3.5.33':
-    resolution: {integrity: sha512-PXq0yrfCLzzL07rbXO4awtXY1Z06LG2eu6Adg3RJFa/j3Cii217XxxLXG22N330gw7GmALCY0Z8RgXEviwgpjA==}
+  '@vue/compiler-dom@3.5.34':
+    resolution: {integrity: sha512-EbF/T++k0e2MMZlJsBhzK8Sgwt0HcIPOhzn1CTB/lv6sQcyk+OWf8YeiLxZp3ro7MbbLcAfAJ6sEvjFWuNgUCw==}
 
   '@vue/compiler-sfc@3.5.31':
     resolution: {integrity: sha512-M8wpPgR9UJ8MiRGjppvx9uWJfLV7A/T+/rL8s/y3QG3u0c2/YZgff3d6SuimKRIhcYnWg5fTfDMlz2E6seUW8Q==}
 
-  '@vue/compiler-sfc@3.5.33':
-    resolution: {integrity: sha512-UTUvRO9cY+rROrx/pvN9P5Z7FgA6QGfokUCfhQE4EnmUj3rVnK+CHI0LsEO1pg+I7//iRYMUfcNcCPe7tg0CoA==}
+  '@vue/compiler-sfc@3.5.34':
+    resolution: {integrity: sha512-D/ihr6uZeIt6r+pVZf46RWT1fAsLFMbUP7k8G1VkiiWexriED9GrX3echHd4Abbt17zjlfiFJ8z7a3BxZOPNjg==}
 
   '@vue/compiler-ssr@3.5.31':
     resolution: {integrity: sha512-h0xIMxrt/LHOvJKMri+vdYT92BrK3HFLtDqq9Pr/lVVfE4IyKZKvWf0vJFW10Yr6nX02OR4MkJwI0c1HDa1hog==}
 
-  '@vue/compiler-ssr@3.5.33':
-    resolution: {integrity: sha512-IErjYdnj1qIupG5xxiVIYiiRvDhGWV4zuh/RCrwfYpuL+HWQzeU6lCk/nF9r7olWMnjKxCAkOctT2qFWFkzb1A==}
+  '@vue/compiler-ssr@3.5.34':
+    resolution: {integrity: sha512-cDtTHKibkThKGHH1SP+WdccquNRYQDFH6rRjQCqT9G2ltFAfoR5pUftpab/z+aM5mW9HLLVQW7hfKKQe/1GBeQ==}
 
-  '@vue/reactivity@3.5.33':
-    resolution: {integrity: sha512-p8UfIqyIhb0rYGlSgSBV+lPhF2iUSBcRy7enhTmPqKWadHy9kcOFYF1AejYBP9P+avnd3OBbD49DU4pLWX/94A==}
+  '@vue/reactivity@3.5.34':
+    resolution: {integrity: sha512-y9XDjCEuBp+98k+UL5dbYkh57AHU4o6cxZedOPXw3bmrZZYLQsVHguGurq7hVrPCSrQtrnz1f9dssyFr+dMXfQ==}
 
-  '@vue/runtime-core@3.5.33':
-    resolution: {integrity: sha512-UpFF45RI9//a7rvq7RdOQblb4tup7hHG9QsmIrxkFQLzQ7R8/iNQ5LE15NhLZ1/WcHMU2b47u6P33CPUelHyIQ==}
+  '@vue/runtime-core@3.5.34':
+    resolution: {integrity: sha512-mKeBYvu8tcMSLhypAHBmriUFfWXKTCF/23Z4jiCoYK3UtWepkliViNLuR90V9XOyD62mUxs9p1jsrpK3CCGIzw==}
 
-  '@vue/runtime-dom@3.5.33':
-    resolution: {integrity: sha512-IOxMsAOwquhfITgmOgaPYl7/j8gKUxUFoflRc+u4LxyD3+783xne8vNta1PONVCvCV9A0w7hkyEepINDqfO0tw==}
+  '@vue/runtime-dom@3.5.34':
+    resolution: {integrity: sha512-e8kZzERmCwUnBRVsgSQlAfrfU2rGoy0FFKPBXSlfEjc/O3KfA7QP0t1/2ZylrbchjmIKB4dPTd07A6WPr0eOrg==}
 
-  '@vue/server-renderer@3.5.33':
-    resolution: {integrity: sha512-0xylq/8/h44lVG0pZFknv1XIdEgymq2E9n59uTWJBG+dIgiT0TMCSsxrN7nO16Z0MU0MPjFcguBbZV8Itk52Hw==}
+  '@vue/server-renderer@3.5.34':
+    resolution: {integrity: sha512-nHxmJoTrKsmrkbILRhkC9gY1G3moZbJTqCzDd7DOOzG5KH9oeJ0Unqrff5f9v0pW//jES05ZkJcNtfE8JjOIew==}
     peerDependencies:
-      vue: 3.5.33
+      vue: 3.5.34
 
   '@vue/shared@3.5.31':
     resolution: {integrity: sha512-nBxuiuS9Lj5bPkPbWogPUnjxxWpkRniX7e5UBQDWl6Fsf4roq9wwV+cR7ezQ4zXswNvPIlsdj1slcLB7XCsRAw==}
 
-  '@vue/shared@3.5.33':
-    resolution: {integrity: sha512-5vR2QIlmaLG77Ygd4pMP6+SGQ5yox9VhtnbDWTy9DzMzdmeLxZ1QqxrywEZ9sa1AVubfIJyaCG3ytyWU81ufcQ==}
+  '@vue/shared@3.5.34':
+    resolution: {integrity: sha512-24uqU4OIiX29ryC3MeWid/Xf2fa2EFRUVLb77nRhk+UrTVrh/XiGtFAFmJBAtBRbjwNdsPRP+jj/OL27Eg1NDA==}
 
   '@yarnpkg/lockfile@1.1.0':
     resolution: {integrity: sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==}
@@ -4784,6 +4790,7 @@ packages:
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
     engines: {node: '>=12'}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   global-directory@5.0.0:
     resolution: {integrity: sha512-1pgFdhK3J2LeM+dVf2Pd424yHx2ou338lC0ErNP2hPx4j8eW1Sp0XqSjNxtk6Tc4Kr5wlWtSvz8cn2yb7/SG/w==}
@@ -4961,6 +4968,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -6040,8 +6048,8 @@ packages:
     resolution: {integrity: sha512-W62t/Se6rA0Az3DfCL0AqJwXuKwBeYg6nOaIgzP+xZ7N5BFCI7DYi1qs6ygUYT6rvfi6t9k65UMLJC+PHZpDAA==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.5.13:
-    resolution: {integrity: sha512-qif0+jGGZoLWdHey3UFHHWP0H7Gbmsk8T5VEqyYFbWqPr1XqvLGBbk/sl8V5exGmcYJklJOhOQq1pV9IcsiFag==}
+  postcss@8.5.14:
+    resolution: {integrity: sha512-SoSL4+OSEtR99LHFZQiJLkT59C5B1amGO1NzTwj7TT1qCUgUO6hxOvzkOYxD+vMrXBM3XJIKzokoERdqQq/Zmg==}
     engines: {node: ^10 || ^12 || >=14}
 
   prettier-plugin-packagejson@3.0.2:
@@ -6115,10 +6123,10 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
-  react-dom@19.2.5:
-    resolution: {integrity: sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag==}
+  react-dom@19.2.6:
+    resolution: {integrity: sha512-0prMI+hvBbPjsWnxDLxlCGyM8PN6UuWjEUCYmZhO67xIV9Xasa/r/vDnq+Xyq4Lo27g8QSbO5YzARu0D1Sps3g==}
     peerDependencies:
-      react: ^19.2.5
+      react: ^19.2.6
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
@@ -6192,8 +6200,8 @@ packages:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
 
-  react@19.2.5:
-    resolution: {integrity: sha512-llUJLzz1zTUBrskt2pwZgLq59AemifIftw4aB7JxOqf1HY2FDaGDxgwpAPVzHU1kdWabH7FauP4i1oEeer2WCA==}
+  react@19.2.6:
+    resolution: {integrity: sha512-sfWGGfavi0xr8Pg0sVsyHMAOziVYKgPLNrS7ig+ivMNb3wbCBw3KxtflsGBAwD3gYQlE/AEZsTLgToRrSCjb0Q==}
     engines: {node: '>=0.10.0'}
 
   read-cache@1.0.0:
@@ -7021,8 +7029,8 @@ packages:
   undici-types@7.19.2:
     resolution: {integrity: sha512-qYVnV5OEm2AW8cJMCpdV20CDyaN3g0AjDlOGf1OW4iaDEx8MwdtChUp4zu4H0VP3nDRF/8RKWH+IPp9uW0YGZg==}
 
-  unhead@2.1.13:
-    resolution: {integrity: sha512-jO9M1sI6b2h/1KpIu4Jeu+ptumLmUKboRRLxys5pYHFeT+lqTzfNHbYUX9bxVDhC1FBszAGuWcUVlmvIPsah8Q==}
+  unhead@2.1.15:
+    resolution: {integrity: sha512-MCt5T90mCWyr3Z6pUCdM9lVRXoMoVBlL7z7U4CYVIiaDiuzad/UCfLuMqz5MeNmpZUgoBCQnrucJimU7EZR+XA==}
 
   unicorn-magic@0.3.0:
     resolution: {integrity: sha512-+QBBXBCvifc56fsbuxZQ6Sic3wqqc3WWaqxs58gvJrcOuN83HGTCwz3oS5phzU9LthRNE9VrJCFCLUgHeeFnfA==}
@@ -7162,8 +7170,8 @@ packages:
   vue-template-compiler@2.7.16:
     resolution: {integrity: sha512-AYbUWAJHLGGQM7+cNTELw+KsOG9nl2CnSv467WobS5Cv9uk3wFcnr1Etsz2sEIHEZvw1U+o9mRlEO6QbZvUPGQ==}
 
-  vue@3.5.33:
-    resolution: {integrity: sha512-1AgChhx5w3ALgT4oK3acm2Es/7jyZhWSVUfs3rOBlGQC0rjEDkS7G4lWlJJGGNQD+BV3reCwbQrOe1mPNwKHBQ==}
+  vue@3.5.34:
+    resolution: {integrity: sha512-WdLBG9gm02OgJIG9axd5Hpx0TFLdzVgfG2evFFu8Rur5O/IoGc5cMjnjh3tPL6GnRGsYvUhBSKVPYVcxRKpMCA==}
     peerDependencies:
       typescript: '*'
     peerDependenciesMeta:
@@ -7524,6 +7532,10 @@ snapshots:
       '@babel/types': 7.29.0
 
   '@babel/parser@7.29.2':
+    dependencies:
+      '@babel/types': 7.29.0
+
+  '@babel/parser@7.29.3':
     dependencies:
       '@babel/types': 7.29.0
 
@@ -7981,23 +7993,23 @@ snapshots:
 
   '@cspell/url@9.8.0': {}
 
-  '@docsearch/core@4.6.3(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@docsearch/core@4.6.3(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
     optionalDependencies:
       '@types/react': 19.2.14
-      react: 19.2.5
-      react-dom: 19.2.5(react@19.2.5)
+      react: 19.2.6
+      react-dom: 19.2.6(react@19.2.6)
 
   '@docsearch/css@4.6.3': {}
 
-  '@docsearch/react@4.6.3(@algolia/client-search@5.50.0)(@types/react@19.2.14)(algoliasearch@5.50.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(search-insights@2.17.3)':
+  '@docsearch/react@4.6.3(@algolia/client-search@5.50.0)(@types/react@19.2.14)(algoliasearch@5.50.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(search-insights@2.17.3)':
     dependencies:
       '@algolia/autocomplete-core': 1.19.2(@algolia/client-search@5.50.0)(algoliasearch@5.50.0)(search-insights@2.17.3)
-      '@docsearch/core': 4.6.3(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@docsearch/core': 4.6.3(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@docsearch/css': 4.6.3
     optionalDependencies:
       '@types/react': 19.2.14
-      react: 19.2.5
-      react-dom: 19.2.5(react@19.2.5)
+      react: 19.2.6
+      react-dom: 19.2.6(react@19.2.6)
       search-insights: 2.17.3
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -8351,11 +8363,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.2.14)(react@19.2.5)':
+  '@mdx-js/react@3.1.1(@types/react@19.2.14)(react@19.2.6)':
     dependencies:
       '@types/mdx': 2.0.13
       '@types/react': 19.2.14
-      react: 19.2.5
+      react: 19.2.6
 
   '@microsoft/api-extractor-model@7.33.4(@types/node@22.19.15)':
     dependencies:
@@ -8424,12 +8436,12 @@ snapshots:
     dependencies:
       state-local: 1.0.7
 
-  '@monaco-editor/react@4.7.0(monaco-editor@0.55.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@monaco-editor/react@4.7.0(monaco-editor@0.55.1)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@monaco-editor/loader': 1.7.0
       monaco-editor: 0.55.1
-      react: 19.2.5
-      react-dom: 19.2.5(react@19.2.5)
+      react: 19.2.6
+      react-dom: 19.2.6(react@19.2.6)
 
   '@napi-rs/wasm-runtime@0.2.4':
     dependencies:
@@ -8680,7 +8692,7 @@ snapshots:
     dependencies:
       deepmerge: 4.3.1
       loader-utils: 2.0.4
-      postcss: 8.5.13
+      postcss: 8.5.14
       reduce-configs: 1.1.2
       sass-embedded: 1.99.0
     optionalDependencies:
@@ -8701,9 +8713,9 @@ snapshots:
       - supports-color
       - typescript
 
-  '@rsbuild/plugin-vue@1.2.7(@rsbuild/core@2.0.3)(@rspack/core@2.0.1(@swc/helpers@0.5.21))(vue@3.5.33(typescript@5.9.3))':
+  '@rsbuild/plugin-vue@1.2.7(@rsbuild/core@2.0.3)(@rspack/core@2.0.1(@swc/helpers@0.5.21))(vue@3.5.34(typescript@5.9.3))':
     dependencies:
-      rspack-vue-loader: 17.5.0(@rspack/core@2.0.1(@swc/helpers@0.5.21))(vue@3.5.33(typescript@5.9.3))
+      rspack-vue-loader: 17.5.0(@rspack/core@2.0.1(@swc/helpers@0.5.21))(vue@3.5.34(typescript@5.9.3))
     optionalDependencies:
       '@rsbuild/core': 2.0.3
     transitivePeerDependencies:
@@ -8837,35 +8849,35 @@ snapshots:
       - '@typescript/native-preview'
       - core-js
 
-  '@rslint/core@0.5.1(jiti@2.6.1)':
+  '@rslint/core@0.5.2(jiti@2.6.1)':
     dependencies:
       picomatch: 4.0.4
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@rslint/darwin-arm64': 0.5.1
-      '@rslint/darwin-x64': 0.5.1
-      '@rslint/linux-arm64': 0.5.1
-      '@rslint/linux-x64': 0.5.1
-      '@rslint/win32-arm64': 0.5.1
-      '@rslint/win32-x64': 0.5.1
+      '@rslint/darwin-arm64': 0.5.2
+      '@rslint/darwin-x64': 0.5.2
+      '@rslint/linux-arm64': 0.5.2
+      '@rslint/linux-x64': 0.5.2
+      '@rslint/win32-arm64': 0.5.2
+      '@rslint/win32-x64': 0.5.2
       jiti: 2.6.1
 
-  '@rslint/darwin-arm64@0.5.1':
+  '@rslint/darwin-arm64@0.5.2':
     optional: true
 
-  '@rslint/darwin-x64@0.5.1':
+  '@rslint/darwin-x64@0.5.2':
     optional: true
 
-  '@rslint/linux-arm64@0.5.1':
+  '@rslint/linux-arm64@0.5.2':
     optional: true
 
-  '@rslint/linux-x64@0.5.1':
+  '@rslint/linux-x64@0.5.2':
     optional: true
 
-  '@rslint/win32-arm64@0.5.1':
+  '@rslint/win32-arm64@0.5.2':
     optional: true
 
-  '@rslint/win32-x64@0.5.1':
+  '@rslint/win32-x64@0.5.2':
     optional: true
 
   '@rspack/binding-darwin-arm64@2.0.1':
@@ -9478,10 +9490,10 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@unhead/react@2.1.13(react@19.2.5)':
+  '@unhead/react@2.1.15(react@19.2.6)':
     dependencies:
-      react: 19.2.5
-      unhead: 2.1.13
+      react: 19.2.6
+      unhead: 2.1.15
 
   '@vue/compiler-core@3.5.31':
     dependencies:
@@ -9492,10 +9504,10 @@ snapshots:
       source-map-js: 1.2.1
     optional: true
 
-  '@vue/compiler-core@3.5.33':
+  '@vue/compiler-core@3.5.34':
     dependencies:
-      '@babel/parser': 7.29.2
-      '@vue/shared': 3.5.33
+      '@babel/parser': 7.29.3
+      '@vue/shared': 3.5.34
       entities: 7.0.1
       estree-walker: 2.0.2
       source-map-js: 1.2.1
@@ -9506,10 +9518,10 @@ snapshots:
       '@vue/shared': 3.5.31
     optional: true
 
-  '@vue/compiler-dom@3.5.33':
+  '@vue/compiler-dom@3.5.34':
     dependencies:
-      '@vue/compiler-core': 3.5.33
-      '@vue/shared': 3.5.33
+      '@vue/compiler-core': 3.5.34
+      '@vue/shared': 3.5.34
 
   '@vue/compiler-sfc@3.5.31':
     dependencies:
@@ -9520,20 +9532,20 @@ snapshots:
       '@vue/shared': 3.5.31
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.13
+      postcss: 8.5.14
       source-map-js: 1.2.1
     optional: true
 
-  '@vue/compiler-sfc@3.5.33':
+  '@vue/compiler-sfc@3.5.34':
     dependencies:
-      '@babel/parser': 7.29.2
-      '@vue/compiler-core': 3.5.33
-      '@vue/compiler-dom': 3.5.33
-      '@vue/compiler-ssr': 3.5.33
-      '@vue/shared': 3.5.33
+      '@babel/parser': 7.29.3
+      '@vue/compiler-core': 3.5.34
+      '@vue/compiler-dom': 3.5.34
+      '@vue/compiler-ssr': 3.5.34
+      '@vue/shared': 3.5.34
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.13
+      postcss: 8.5.14
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.31':
@@ -9542,37 +9554,37 @@ snapshots:
       '@vue/shared': 3.5.31
     optional: true
 
-  '@vue/compiler-ssr@3.5.33':
+  '@vue/compiler-ssr@3.5.34':
     dependencies:
-      '@vue/compiler-dom': 3.5.33
-      '@vue/shared': 3.5.33
+      '@vue/compiler-dom': 3.5.34
+      '@vue/shared': 3.5.34
 
-  '@vue/reactivity@3.5.33':
+  '@vue/reactivity@3.5.34':
     dependencies:
-      '@vue/shared': 3.5.33
+      '@vue/shared': 3.5.34
 
-  '@vue/runtime-core@3.5.33':
+  '@vue/runtime-core@3.5.34':
     dependencies:
-      '@vue/reactivity': 3.5.33
-      '@vue/shared': 3.5.33
+      '@vue/reactivity': 3.5.34
+      '@vue/shared': 3.5.34
 
-  '@vue/runtime-dom@3.5.33':
+  '@vue/runtime-dom@3.5.34':
     dependencies:
-      '@vue/reactivity': 3.5.33
-      '@vue/runtime-core': 3.5.33
-      '@vue/shared': 3.5.33
+      '@vue/reactivity': 3.5.34
+      '@vue/runtime-core': 3.5.34
+      '@vue/shared': 3.5.34
       csstype: 3.2.3
 
-  '@vue/server-renderer@3.5.33(vue@3.5.33(typescript@5.9.3))':
+  '@vue/server-renderer@3.5.34(vue@3.5.34(typescript@5.9.3))':
     dependencies:
-      '@vue/compiler-ssr': 3.5.33
-      '@vue/shared': 3.5.33
-      vue: 3.5.33(typescript@5.9.3)
+      '@vue/compiler-ssr': 3.5.34
+      '@vue/shared': 3.5.34
+      vue: 3.5.34(typescript@5.9.3)
 
   '@vue/shared@3.5.31':
     optional: true
 
-  '@vue/shared@3.5.33': {}
+  '@vue/shared@3.5.34': {}
 
   '@yarnpkg/lockfile@1.1.0': {}
 
@@ -12254,29 +12266,29 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  postcss-import@15.1.0(postcss@8.5.13):
+  postcss-import@15.1.0(postcss@8.5.14):
     dependencies:
-      postcss: 8.5.13
+      postcss: 8.5.14
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.11
 
-  postcss-js@4.1.0(postcss@8.5.13):
+  postcss-js@4.1.0(postcss@8.5.14):
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.5.13
+      postcss: 8.5.14
 
-  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.5.13)(yaml@2.8.3):
+  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.5.14)(yaml@2.8.3):
     dependencies:
       lilconfig: 3.1.3
     optionalDependencies:
       jiti: 1.21.7
-      postcss: 8.5.13
+      postcss: 8.5.14
       yaml: 2.8.3
 
-  postcss-nested@6.2.0(postcss@8.5.13):
+  postcss-nested@6.2.0(postcss@8.5.14):
     dependencies:
-      postcss: 8.5.13
+      postcss: 8.5.14
       postcss-selector-parser: 6.1.2
 
   postcss-selector-parser@6.1.2:
@@ -12292,7 +12304,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postcss@8.5.13:
+  postcss@8.5.14:
     dependencies:
       nanoid: 3.3.11
       picocolors: 1.1.1
@@ -12331,9 +12343,9 @@ snapshots:
 
   punycode.js@2.3.1: {}
 
-  qrcode.react@4.2.0(react@19.2.5):
+  qrcode.react@4.2.0(react@19.2.6):
     dependencies:
-      react: 19.2.5
+      react: 19.2.6
 
   quansync@0.2.11: {}
 
@@ -12355,16 +12367,16 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-dom@19.2.5(react@19.2.5):
+  react-dom@19.2.6(react@19.2.6):
     dependencies:
-      react: 19.2.5
+      react: 19.2.6
       scheduler: 0.27.0
 
   react-is@18.3.1: {}
 
   react-lazy-with-preload@2.2.1: {}
 
-  react-markdown@10.1.0(@types/react@19.2.14)(react@19.2.5):
+  react-markdown@10.1.0(@types/react@19.2.14)(react@19.2.6):
     dependencies:
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
@@ -12373,7 +12385,7 @@ snapshots:
       hast-util-to-jsx-runtime: 2.3.6
       html-url-attributes: 3.0.1
       mdast-util-to-hast: 13.2.1
-      react: 19.2.5
+      react: 19.2.6
       remark-parse: 11.0.0
       remark-rehype: 11.1.2
       unified: 11.0.5
@@ -12388,9 +12400,9 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-reconciler@0.33.0(react@19.2.5):
+  react-reconciler@0.33.0(react@19.2.6):
     dependencies:
-      react: 19.2.5
+      react: 19.2.6
       scheduler: 0.27.0
 
   react-refresh@0.18.0: {}
@@ -12400,17 +12412,17 @@ snapshots:
       react: 18.3.1
       react-reconciler: 0.29.2(react@18.3.1)
 
-  react-render-to-markdown@19.0.1(react@19.2.5):
+  react-render-to-markdown@19.0.1(react@19.2.6):
     dependencies:
-      react: 19.2.5
-      react-reconciler: 0.33.0(react@19.2.5)
+      react: 19.2.6
+      react-reconciler: 0.33.0(react@19.2.6)
 
-  react-router-dom@6.30.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
+  react-router-dom@6.30.3(react-dom@19.2.6(react@19.2.6))(react@19.2.6):
     dependencies:
       '@remix-run/router': 1.23.2
-      react: 19.2.5
-      react-dom: 19.2.5(react@19.2.5)
-      react-router: 6.30.3(react@19.2.5)
+      react: 19.2.6
+      react-dom: 19.2.6(react@19.2.6)
+      react-router: 6.30.3(react@19.2.6)
 
   react-router-dom@7.14.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -12418,16 +12430,16 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-router: 7.14.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  react-router-dom@7.14.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
+  react-router-dom@7.14.2(react-dom@19.2.6(react@19.2.6))(react@19.2.6):
     dependencies:
-      react: 19.2.5
-      react-dom: 19.2.5(react@19.2.5)
-      react-router: 7.14.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      react: 19.2.6
+      react-dom: 19.2.6(react@19.2.6)
+      react-router: 7.14.2(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
 
-  react-router@6.30.3(react@19.2.5):
+  react-router@6.30.3(react@19.2.6):
     dependencies:
       '@remix-run/router': 1.23.2
-      react: 19.2.5
+      react: 19.2.6
 
   react-router@7.14.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -12437,19 +12449,19 @@ snapshots:
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
 
-  react-router@7.14.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
+  react-router@7.14.2(react-dom@19.2.6(react@19.2.6))(react@19.2.6):
     dependencies:
       cookie: 1.1.1
-      react: 19.2.5
+      react: 19.2.6
       set-cookie-parser: 2.7.2
     optionalDependencies:
-      react-dom: 19.2.5(react@19.2.5)
+      react-dom: 19.2.6(react@19.2.6)
 
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
 
-  react@19.2.5: {}
+  react@19.2.6: {}
 
   read-cache@1.0.0:
     dependencies:
@@ -12777,13 +12789,13 @@ snapshots:
     dependencies:
       fs-extra: 11.3.4
 
-  rspack-vue-loader@17.5.0(@rspack/core@2.0.1(@swc/helpers@0.5.21))(vue@3.5.33(typescript@5.9.3)):
+  rspack-vue-loader@17.5.0(@rspack/core@2.0.1(@swc/helpers@0.5.21))(vue@3.5.34(typescript@5.9.3)):
     dependencies:
       '@rspack/lite-tapable': 1.1.0
       chalk: 4.1.2
     optionalDependencies:
       '@rspack/core': 2.0.1(@swc/helpers@0.5.21)
-      vue: 3.5.33(typescript@5.9.3)
+      vue: 3.5.34(typescript@5.9.3)
 
   rspress-plugin-devkit@1.0.0(@rspress/core@packages+core):
     dependencies:
@@ -13252,11 +13264,11 @@ snapshots:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.1.1
-      postcss: 8.5.13
-      postcss-import: 15.1.0(postcss@8.5.13)
-      postcss-js: 4.1.0(postcss@8.5.13)
-      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.5.13)(yaml@2.8.3)
-      postcss-nested: 6.2.0(postcss@8.5.13)
+      postcss: 8.5.14
+      postcss-import: 15.1.0(postcss@8.5.14)
+      postcss-js: 4.1.0(postcss@8.5.14)
+      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.5.14)(yaml@2.8.3)
+      postcss-nested: 6.2.0(postcss@8.5.14)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.11
       sucrase: 3.35.1
@@ -13408,7 +13420,7 @@ snapshots:
 
   undici-types@7.19.2: {}
 
-  unhead@2.1.13:
+  unhead@2.1.15:
     dependencies:
       hookable: 6.1.0
 
@@ -13621,13 +13633,13 @@ snapshots:
       he: 1.2.0
     optional: true
 
-  vue@3.5.33(typescript@5.9.3):
+  vue@3.5.34(typescript@5.9.3):
     dependencies:
-      '@vue/compiler-dom': 3.5.33
-      '@vue/compiler-sfc': 3.5.33
-      '@vue/runtime-dom': 3.5.33
-      '@vue/server-renderer': 3.5.33(vue@3.5.33(typescript@5.9.3))
-      '@vue/shared': 3.5.33
+      '@vue/compiler-dom': 3.5.34
+      '@vue/compiler-sfc': 3.5.34
+      '@vue/runtime-dom': 3.5.34
+      '@vue/server-renderer': 3.5.34(vue@3.5.34(typescript@5.9.3))
+      '@vue/shared': 3.5.34
     optionalDependencies:
       typescript: 5.9.3
 

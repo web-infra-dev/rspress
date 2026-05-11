@@ -45,7 +45,7 @@
     "@types/hast": "^3.0.4",
     "@types/mdast": "^4.0.4",
     "@types/react": "^19.2.14",
-    "react": "^19.2.5",
+    "react": "^19.2.6",
     "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^5.8.2"
   },

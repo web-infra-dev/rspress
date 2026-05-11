@@ -37,9 +37,9 @@
     ]
   },
   "devDependencies": {
-    "@changesets/cli": "^2.30.0",
+    "@changesets/cli": "^2.31.0",
     "@playwright/test": "1.58.2",
-    "@rslint/core": "^0.5.0",
+    "@rslint/core": "^0.5.2",
     "@rspress/config": "workspace:*",
     "@rstest/core": "^0.9.10",
     "@types/cross-spawn": "^6.0.6",
@@ -63,10 +63,10 @@
     "tree-kill": "^1.2.2",
     "zx": "^8.8.5"
   },
-  "packageManager": "pnpm@10.33.2",
+  "packageManager": "pnpm@10.33.4",
   "engines": {
     "node": "^20.19.0 || >=22.12.0",
-    "pnpm": ">=10.33.2"
+    "pnpm": ">=10.33.4"
   },
   "publishConfig": {
     "access": "public",
