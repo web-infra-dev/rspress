@@ -65,34 +65,48 @@ import { Tab, Tabs } from '@rspress/core/theme';
 
 Use `values` to define tab labels separately from panel content. Each item can provide a `value`, and the matching `<Tab value="...">` supplies the content.
 
-````mdx title="index.mdx" preview
-import { Tab, Tabs } from '@rspress/core/theme';
+```mdx title="index.mdx" preview
+import {
+  IconGithub,
+  IconGitlab,
+  SvgWrapper,
+  Tab,
+  Tabs,
+} from '@rspress/core/theme';
+
+const labelStyle = { display: 'inline-flex', alignItems: 'center', gap: 6 };
 
 <Tabs
-  defaultValue="ttml"
+  defaultValue="github"
   values={[
-    { label: <span>index.ttml</span>, value: 'ttml' },
-    { label: <span>index.js</span>, value: 'subscribe' },
+    {
+      label: (
+        <span style={labelStyle}>
+          <SvgWrapper icon={IconGithub} width={16} height={16} />
+          GitHub
+        </span>
+      ),
+      value: 'github',
+    },
+    {
+      label: (
+        <span style={labelStyle}>
+          <SvgWrapper icon={IconGitlab} width={16} height={16} />
+          GitLab
+        </span>
+      ),
+      value: 'gitlab',
+    },
   ]}
 >
-<Tab value="ttml">
+<Tab value="github">
 
-```ts
-// index.ttml
-const template = 'content ttml';
-```
+GitHub repository settings
 
 </Tab>
-<Tab value="subscribe">
-
-```js
-// index.js
-const subscribe = 'content subscribe';
-```
-
-</Tab>
+<Tab value="gitlab">GitLab project settings</Tab>
 </Tabs>
-````
+```
 
 ### Props
 
