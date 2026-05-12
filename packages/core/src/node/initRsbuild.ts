@@ -397,6 +397,7 @@ async function createInternalBuildConfig(
         }
 
         if (isSsg) {
+          chain.output.merge({ asyncChunks: false });
           chain.output.filename(
             `${NODE_SSG_BUNDLE_FOLDER}/${NODE_SSG_BUNDLE_NAME}`,
           );
@@ -470,7 +471,6 @@ async function createInternalBuildConfig(
                 },
               },
               output: {
-                asyncChunks: false,
                 emitAssets: false,
                 target: 'node',
                 module: false,
