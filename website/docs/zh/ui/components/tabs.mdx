@@ -18,7 +18,7 @@ import { Tab, Tabs } from '@rspress/core/theme';
 </Tabs>
 ```
 
-### 代码块
+## 代码块
 
 ````mdx title="index.mdx" preview
 import { Tab, Tabs } from '@rspress/core/theme';
@@ -43,7 +43,7 @@ const bar = require('bar');
 </Tabs>
 ````
 
-### 分组同步
+## 分组同步
 
 使用相同的 `groupId`，可以让多个 `Tabs` 共享当前选中的标签。
 
@@ -61,7 +61,7 @@ import { Tab, Tabs } from '@rspress/core/theme';
 </Tabs>
 ```
 
-### 自定义标签
+## 自定义标签
 
 在每个 `Tab` 上使用 `label` 可以渲染自定义标签。
 
@@ -98,20 +98,44 @@ import {
 </Tabs>
 ```
 
-### Props
+## 分离标签和内容
+
+使用 `values` 可以把标签和面板内容分开定义。每一项提供一个 `value`，匹配的 `<Tab value="...">` 会提供对应内容。使用 `defaultValue` 可以按 `value` 预选标签页。
+
+```mdx title="index.mdx" preview
+import { Tab, Tabs } from '@rspress/core/theme';
+
+<Tabs
+  defaultValue="apple"
+  values={[
+    { label: 'Apple', value: 'apple' },
+    { label: 'Orange', value: 'orange' },
+    { label: 'Banana', value: 'banana' },
+  ]}
+>
+  <Tab value="apple">This is an apple 🍎</Tab>
+  <Tab value="orange">This is an orange 🍊</Tab>
+  <Tab value="banana">This is a banana 🍌</Tab>
+</Tabs>
+```
+
+## Props
 
 ```ts
 interface TabsProps {
   children: React.ReactNode;
+  values?: Array<{ label: React.ReactNode; value: string }>;
   defaultIndex?: number;
+  defaultValue?: string;
   groupId?: string;
   tabPosition?: 'left' | 'center';
 }
 
 interface TabProps {
   label?: React.ReactNode;
+  value?: string;
   children: React.ReactNode;
 }
 ```
 
-`label` 支持任意可渲染 React 节点，因此可以放入图标或自定义结构。`defaultIndex` 可设置默认选中的标签；`groupId` 可以让多个 `Tabs` 共享选择状态；`tabPosition` 控制标签列表的对齐方式。
+`label` 支持任意可渲染 React 节点，因此可以放入图标或自定义结构。`defaultIndex` 可按索引设置默认选中的标签，`defaultValue` 可按 `value` 设置默认选中的标签；`groupId` 可以让多个 `Tabs` 共享选择状态；`tabPosition` 控制标签列表的对齐方式。

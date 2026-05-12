@@ -12,17 +12,26 @@ import {
 } from 'react';
 import './index.scss';
 
+type TabItem = {
+  label: ReactNode;
+  value: string;
+  disabled?: boolean;
+};
+
 type ResolvedTabItem = {
   label?: ReactNode;
+  value?: string;
   disabled?: boolean;
   content?: ReactNode;
 };
 
 export interface TabsProps {
+  values?: ReadonlyArray<TabItem>;
   /**
    * @default 0
    */
   defaultIndex?: number;
+  defaultValue?: string;
   onChange?: (index: number) => void;
   children: ReactNode;
   /**
@@ -44,13 +53,28 @@ export interface TabsProps {
 
 function getTabValuesFromChildren(
   children: ReactElement<TabProps>[],
+  values: ReadonlyArray<TabItem> | undefined,
 ): ResolvedTabItem[] {
+  if (values && values.length > 0) {
+    return values.map((item, index) => {
+      const content =
+        children.find(child => child.props?.value === item.value) ??
+        children[index];
+
+      return {
+        ...item,
+        content,
+      } satisfies ResolvedTabItem;
+    });
+  }
+
   return Children.map<ResolvedTabItem, ReactElement<TabProps>>(
     children,
     (child, index) => {
       if (isValidElement(child)) {
         return {
           label: child.props?.label || undefined,
+          value: child.props?.value,
           disabled: child.props?.disabled,
           content: children[index],
         } satisfies ResolvedTabItem;
@@ -69,7 +93,9 @@ const groupIdPrefix = 'rspress.tabs.';
 export const Tabs = forwardRef(
   (props: TabsProps, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
     const {
+      values,
       defaultIndex,
+      defaultValue,
       onChange,
       children: rawChildren,
       groupId,
@@ -87,8 +113,8 @@ export const Tabs = forwardRef(
     ) as unknown as ReactElement<TabProps>[];
 
     const tabValues: ResolvedTabItem[] = useMemo(() => {
-      return getTabValuesFromChildren(children);
-    }, [children]);
+      return getTabValuesFromChildren(children, values);
+    }, [children, values]);
 
     if (process.env.__SSR_MD__) {
       return (
@@ -106,7 +132,12 @@ export const Tabs = forwardRef(
       );
     }
 
-    const initialActiveIndex = defaultIndex ?? 0;
+    const defaultValueIndex =
+      defaultValue !== undefined
+        ? tabValues.findIndex(item => item.value === defaultValue)
+        : -1;
+    const initialActiveIndex =
+      defaultValueIndex === -1 ? (defaultIndex ?? 0) : defaultValueIndex;
 
     const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
 
@@ -127,11 +158,11 @@ export const Tabs = forwardRef(
                 tabPosition === 'center' ? 'center' : 'flex-start',
             }}
           >
-            {tabValues.map(({ label, disabled }, index) => {
+            {tabValues.map(({ label, value, disabled }, index) => {
               const isActive = index === currentIndex;
               return (
                 <div
-                  key={index}
+                  key={value ?? index}
                   className={clsx(
                     'rp-tabs__label__item',
                     isActive
@@ -159,7 +190,7 @@ export const Tabs = forwardRef(
           </div>
         ) : null}
         <div className="rp-tabs__content">
-          {tabValues.map(({ content }, index) => {
+          {tabValues.map(({ value, content }, index) => {
             const isActive = index === currentIndex;
             if (!keepDOM && !isActive) {
               return null;
@@ -167,7 +198,7 @@ export const Tabs = forwardRef(
 
             return (
               <div
-                key={index}
+                key={value ?? index}
                 className={clsx(
                   'rp-tabs__content__item',
                   isActive
@@ -192,6 +223,7 @@ Tabs.displayName = 'Tabs';
 
 export type TabProps = {
   label?: ReactNode;
+  value?: string;
   disabled?: boolean;
   children: ReactNode;
 };

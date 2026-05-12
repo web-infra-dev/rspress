@@ -59,5 +59,17 @@ test.describe('tabs-component test', async () => {
       .locator('.rp-tabs__label__item', { hasText: 'index.js' })
       .click();
     await expect(activeContentD).toContainText('content subscribe');
+
+    // Tab E
+    const tabE = page.locator('.tabs-e');
+    const activeContentE = tabE.locator('.rp-tabs__content__item--active');
+    await expect(tabE.locator('.rp-tabs__label__item')).toHaveText([
+      'Apple',
+      'Orange',
+      'Banana',
+    ]);
+    await expect(activeContentE).toContainText('This is an orange');
+    await tabE.locator('.rp-tabs__label__item', { hasText: 'Banana' }).click();
+    await expect(activeContentE).toContainText('This is a banana');
   });
 });
