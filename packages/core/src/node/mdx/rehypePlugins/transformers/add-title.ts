@@ -6,14 +6,10 @@ function parseTitleFromMeta(meta: string | undefined): string {
   if (!meta) {
     return '';
   }
-  const kvList = meta.split(' ').filter(Boolean) as string[];
-  for (const item of kvList) {
-    const [k, v = ''] = item.split('=').filter(Boolean);
-    if (k === 'title' && v.length > 0) {
-      return v.replace(/["'`]/g, '');
-    }
-  }
-  return '';
+  const matched = meta.match(
+    /(?:^|\s)title=(?:"([^"]*)"|'([^']*)'|`([^`]*)`|([^\s]+))/,
+  );
+  return matched?.slice(1).find(Boolean) ?? '';
 }
 
 /**
