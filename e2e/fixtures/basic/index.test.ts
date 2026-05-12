@@ -224,6 +224,7 @@ test('ssg build should keep a single node bundle when async chunks are disabled'
   const appDir = import.meta.dirname;
   const previousDebug = process.env.DEBUG;
 
+  // Preserve the generated __ssg__ bundle files so the test can inspect them.
   process.env.DEBUG = 'rsbuild';
 
   try {
