@@ -5,7 +5,7 @@ export const SHIKI_TRANSFORMER_ADD_TITLE = 'shiki-transformer:add-title';
 // Match title=<value>, capturing either a quoted value (double/single/backtick)
 // or a single unquoted token.
 const TITLE_META_REGEX =
-  /(?:^|\s)title=(?:"([^"]*)"|'([^']*)'|`([^`]*)`|([^\s]+))/;
+  /(?:^|\s)title=(?:"([^"]*)"|'([^']*)'|`([^`]*)`|([^\s]+))(?=\s|$)/;
 
 function parseTitleFromMeta(meta: string | undefined): string {
   if (!meta) {

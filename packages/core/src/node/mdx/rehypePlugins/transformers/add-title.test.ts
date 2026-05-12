@@ -2,6 +2,14 @@ import { describe, expect, it } from '@rstest/core';
 import type { Element } from 'hast';
 import { transformerAddTitle } from './add-title';
 
+type TransformerPreContext = {
+  options: {
+    meta?: {
+      __raw: string;
+    };
+  };
+};
+
 function createPreElement(): Element {
   return {
     type: 'element',
@@ -20,8 +28,8 @@ function callTransformerPre(
     options: {
       meta: rawMeta !== undefined ? { __raw: rawMeta } : undefined,
     },
-  };
-  return transformer.pre!.call(context as any, pre) as Element;
+  } satisfies TransformerPreContext;
+  return transformer.pre!.call(context, pre) as Element;
 }
 
 describe('transformerAddTitle', () => {
