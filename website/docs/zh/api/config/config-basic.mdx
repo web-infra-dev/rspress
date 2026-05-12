@@ -643,6 +643,12 @@ export default defineConfig({
 
 开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁。
 
+:::warning 需要服务器支持
+
+启用此选项可能需要在托管平台上进行额外配置。要使其生效，服务器必须能够在访问 `/foo` 时不经过重定向直接提供 `/foo.html`。
+
+:::
+
 ```js title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
