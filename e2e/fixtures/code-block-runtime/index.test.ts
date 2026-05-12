@@ -31,31 +31,30 @@ test.describe('<CodeBlockRuntime />', async () => {
     const containers = page.locator('div.language-js');
     await expect(containers).toHaveCount(3);
 
-    await expect(containers.nth(0).locator('.rp-codeblock__title')).toHaveText(
-      'test.js',
-    );
-    await expect(
-      containers.nth(0).locator('.rp-codeblock__content code').first(),
-    ).toHaveText("console.log('Hello CodeBlock!');");
+    const expectedBlocks = [
+      {
+        title: 'test.js',
+        code: "console.log('Hello CodeBlock!');",
+      },
+      {
+        title: 'test.js',
+        code: "console.log('Hello CodeBlock!');",
+      },
+      {
+        title: 'Code Block',
+        code: "console.log('Hello Title!');",
+      },
+    ];
 
-    await expect(containers.nth(1).locator('.rp-codeblock__title')).toHaveText(
-      'test.js',
-    );
-    await expect(
-      containers.nth(1).locator('.rp-codeblock__content code').first(),
-    ).toHaveText("console.log('Hello CodeBlock!');");
-
-    await expect(containers.nth(2).locator('.rp-codeblock__title')).toHaveText(
-      'Code Block',
-    );
-    await expect(
-      containers.nth(2).locator('.rp-codeblock__content code').first(),
-    ).toHaveText("console.log('Hello Title!');");
-
-    const containerCount = await containers.count();
-    for (let index = 0; index < containerCount; index += 1) {
-      const shikiContainer = containers
-        .nth(index)
+    for (const [index, expected] of expectedBlocks.entries()) {
+      const container = containers.nth(index);
+      await expect(container.locator('.rp-codeblock__title')).toHaveText(
+        expected.title,
+      );
+      await expect(
+        container.locator('.rp-codeblock__content code').first(),
+      ).toHaveText(expected.code);
+      const shikiContainer = container
         .locator('.rp-codeblock__content .shiki.css-variables')
         .first();
       await expect(shikiContainer).toHaveJSProperty('tagName', 'PRE');
