@@ -166,6 +166,7 @@ tsbuildinfo
 tsdoc
 twoslash
 Twoslasher
+typesense
 Unhead
 unocss
 unpatch

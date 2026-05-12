@@ -1,0 +1,86 @@
+---
+tag: new
+---
+
+# rspress-plugin-typesense <SourceCode href="https://github.com/typesense/rspress-plugin-typesense" />
+
+import { SourceCode } from '@rspress/core/theme';
+
+This plugin replaces Rspress's built-in search with [Typesense](https://typesense.org/), an open-source, typo-tolerant search engine.
+
+The plugin **automatically indexes your documentation during the build process** (`rspress build`) and provides a highly-optimized search experience with support for Rspress multi-versioning and internationalization.
+
+:::note
+This is a community-maintained integration.
+:::
+
+## Installation
+
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+<PackageManagerTabs command="add rspress-plugin-typesense -D" />
+
+## Usage
+
+### 1. Start typesense server
+
+You can either self-host the Typesense server or use their cloud service. Follow their [getting started guide](https://typesense.org/docs/guide/install-typesense.html) to set up your server and obtain the API key and server URL.
+
+### 2. Configure the plugin
+
+First, add the plugin to your `rspress.config.ts`. You must provide your Typesense server details and an API key with **write permissions** so the plugin can create collections and index your documents during the build.
+
+```ts
+// rspress.config.ts
+import { defineConfig } from '@rspress/core';
+import { pluginTypesense } from 'rspress-plugin-typesense';
+
+export default defineConfig({
+  plugins: [
+    pluginTypesense({
+      collectionName: 'my_docs',
+      serverConfig: {
+        nodes: [{ url: 'YOUR_TYPESENSE_SERVER_URL' }],
+        apiKey: 'YOUR_TYPESENSE_ADMIN_API_KEY', // Requires Write permissions
+      },
+    }),
+  ],
+});
+```
+
+### 3. Override the search component
+
+Next, override Rspress's default `Search` component via a [Custom Theme](/guide/basic/custom-theme).
+
+Provide a **Search-Only API Key** here. For security reasons, **never expose your Admin API Key in the frontend**.
+
+```tsx
+// theme/index.tsx
+import { Search as PluginTypesenseSearch } from 'rspress-plugin-typesense/runtime';
+
+const Search = () => {
+  return (
+    <PluginTypesenseSearch
+      docSearchProps={{
+        typesenseServerConfig: {
+          nodes: [{ url: 'YOUR_TYPESENSE_SERVER_URL' }],
+          apiKey: 'YOUR_TYPESENSE_SEARCH_ONLY_API_KEY', // Safe for browsers
+        },
+      }}
+    />
+  );
+};
+
+export { Search };
+export * from '@rspress/core/theme-original';
+```
+
+### 4. Build and index
+
+Run the build command to generate your site and index your content into Typesense.
+
+<PackageManagerTabs command="run build" />
+
+All set! You've successfully integrated typo-tolerant search into your documentation. The plugin automatically handles filtering based on the user's current language and version.
+
+For more advanced configuration and usage, refer to [the plugin README](https://github.com/typesense/rspress-plugin-typesense/).

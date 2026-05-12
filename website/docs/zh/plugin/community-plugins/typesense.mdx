@@ -1,0 +1,86 @@
+---
+tag: new
+---
+
+# rspress-plugin-typesense <SourceCode href="https://github.com/typesense/rspress-plugin-typesense" />
+
+import { SourceCode } from '@rspress/core/theme';
+
+该插件使用 [Typesense](https://typesense.org/)（一个开源、支持容错拼写的搜索引擎）替换 Rspress 内置搜索。
+
+插件会在构建过程中 (`rspress build`) **自动为文档建立索引**，并提供高度优化的搜索体验，同时支持 Rspress 的多版本与国际化功能。
+
+:::note
+这是一个由社区维护的集成方案。
+:::
+
+## 安装
+
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+<PackageManagerTabs command="add rspress-plugin-typesense -D" />
+
+## 使用方式
+
+### 1. 启动 Typesense 服务
+
+你可以自行托管 Typesense 服务，也可以使用其云服务。请参考其[快速开始指南](https://typesense.org/docs/guide/install-typesense.html)来完成服务部署，并获取 API Key 与服务地址。
+
+### 2. 配置插件
+
+首先，在你的 `rspress.config.ts` 中添加插件。你必须提供 Typesense 服务信息，以及一个具有**写权限**的 API Key，以便插件能够在构建期间创建 collection 并为文档建立索引。
+
+```ts
+// rspress.config.ts
+import { defineConfig } from '@rspress/core';
+import { pluginTypesense } from 'rspress-plugin-typesense';
+
+export default defineConfig({
+  plugins: [
+    pluginTypesense({
+      collectionName: 'my_docs',
+      serverConfig: {
+        nodes: [{ url: 'YOUR_TYPESENSE_SERVER_URL' }],
+        apiKey: 'YOUR_TYPESENSE_ADMIN_API_KEY', // 需要写权限
+      },
+    }),
+  ],
+});
+```
+
+### 3. 覆盖搜索组件
+
+接下来，通过 [Custom Theme](/guide/basic/custom-theme) 覆盖 Rspress 默认的 `Search` 组件。
+
+这里请提供一个**仅搜索权限（Search-Only）**的 API Key。出于安全原因，**不要在前端暴露 Admin API Key**。
+
+```tsx
+// theme/index.tsx
+import { Search as PluginTypesenseSearch } from 'rspress-plugin-typesense/runtime';
+
+const Search = () => {
+  return (
+    <PluginTypesenseSearch
+      docSearchProps={{
+        typesenseServerConfig: {
+          nodes: [{ url: 'YOUR_TYPESENSE_SERVER_URL' }],
+          apiKey: 'YOUR_TYPESENSE_SEARCH_ONLY_API_KEY', // 可安全用于浏览器
+        },
+      }}
+    />
+  );
+};
+
+export { Search };
+export * from '@rspress/core/theme-original';
+```
+
+### 4. 构建并建立索引
+
+运行构建命令以生成站点，并将内容索引到 Typesense 中。
+
+<PackageManagerTabs command="run build" />
+
+大功告成！你已经成功为文档集成了支持容错拼写的搜索功能。插件会根据用户当前的语言与版本自动处理搜索过滤。
+
+如需了解更多高级配置与使用方式，请参阅[插件 README](https://github.com/typesense/rspress-plugin-typesense/)。
