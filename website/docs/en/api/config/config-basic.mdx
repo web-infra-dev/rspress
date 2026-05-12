@@ -643,6 +643,12 @@ export default defineConfig({
 
 Generate url without suffix when `cleanUrls` is `true` for shorter url link.
 
+:::warning Server Support Required
+
+Enabling this may require additional configuration on your hosting platform. For it to work, your server must be able to serve `/foo.html` when visiting `/foo` without a redirect.
+
+:::
+
 ```js
 import { defineConfig } from '@rspress/core';
 
