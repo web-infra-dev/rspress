@@ -7,14 +7,27 @@ packages:
   - '!**/tests/**'
   - '!packages/create-rspress/template-*'
 
+allowBuilds:
+  nx: false
+  sharp: true
+  simple-git-hooks: false
+
 hoistPattern: []
 
 linkWorkspacePackages: true
 
-onlyBuiltDependencies:
-  - core-js
-  - esbuild
-  - nx
-  - sharp
+# Reduce the risk of installing compromised packages
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - '@rspack/*'
+  - '@rsbuild/*'
+  - '@rslib/*'
+  - '@rspress/*'
+  - '@rstest/*'
+  - '@rsdoctor/*'
+  - '@rslint/*'
+
+# Prevent un-reviewed build scripts
+strictDepBuilds: true
 
 strictPeerDependencies: false
