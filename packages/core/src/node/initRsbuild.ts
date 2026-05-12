@@ -470,6 +470,7 @@ async function createInternalBuildConfig(
                 },
               },
               output: {
+                asyncChunks: false,
                 emitAssets: false,
                 target: 'node',
                 module: false,

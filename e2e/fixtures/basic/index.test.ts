@@ -1,3 +1,5 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import {
   getPort,
@@ -216,4 +218,28 @@ test.describe('SSG dark mode no flash', async () => {
 
     expect(isDarkAfterHydration).toBe(false);
   });
+});
+
+test('ssg build should keep a single node bundle when async chunks are disabled', async () => {
+  const appDir = import.meta.dirname;
+  const previousDebug = process.env.DEBUG;
+
+  process.env.DEBUG = 'rsbuild';
+
+  try {
+    await runBuildCommand(appDir);
+
+    const ssgDir = path.join(appDir, 'doc_build', '__ssg__');
+    const cjsFiles = (await fs.readdir(ssgDir))
+      .filter(file => file.endsWith('.cjs'))
+      .sort();
+
+    expect(cjsFiles).toEqual(['rspress-ssg-entry.cjs']);
+  } finally {
+    if (previousDebug === undefined) {
+      delete process.env.DEBUG;
+    } else {
+      process.env.DEBUG = previousDebug;
+    }
+  }
 });
