@@ -4,6 +4,7 @@ import test, { expect } from '@playwright/test';
 import { remarkImage } from '@rspress/core';
 import picocolors from 'picocolors';
 import { remark } from 'remark';
+import remarkStringify from 'remark-stringify';
 import { lintRule } from 'unified-lint-rule';
 
 import config from './rspress.config.mjs';
@@ -23,6 +24,7 @@ test.describe('check dead images', async () => {
     // if remarkImage transforms nodes even in lint mode
     const { messages } = await remark()
       .use(checkDeadImages)
+      .use(remarkStringify)
       .process({ path: filepath, value: await fs.readFile(filepath) });
     expect(messages).toHaveLength(1);
     expect(messages[0].reason).toBe(

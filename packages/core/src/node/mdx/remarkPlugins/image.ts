@@ -107,22 +107,41 @@ export const remarkImage =
   }: {
     docDirectory: string;
     remarkImageOptions?: MarkdownOptions['image'];
-    /**
-     * When true, skip transforming image nodes into MDX-specific AST nodes
-     * (mdxJsxFlowElement, mdxjsEsm). Use this when the output will be
-     * serialized back to Markdown (e.g. remark-stringify) rather than
-     * compiled as MDX, to avoid "Cannot handle unknown node" errors from
-     * mdast-util-to-markdown.
-     */
     lint?: boolean;
   }) =>
   (tree: Root, file: VFile) => {
     const { checkDeadImages: shouldCheckDeadImages = true } =
       remarkImageOptions ?? {};
     const deadImages = new Map<string, string>();
+    const images: MdxjsEsm[] = [];
+    const getMdxSrcAttribute = (tempVar: string) => {
+      return {
+        type: 'mdxJsxAttribute',
+        name: 'src',
+        value: {
+          type: 'mdxJsxAttributeValueExpression',
+          value: tempVar,
+          data: {
+            estree: {
+              type: 'Program',
+              sourceType: 'module',
+              body: [
+                {
+                  type: 'ExpressionStatement',
+                  expression: {
+                    type: 'Identifier',
+                    name: tempVar,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      };
+    };
 
     visit(tree, 'image', node => {
-      const { url } = node;
+      const { alt, url } = node;
       if (!url) {
         return;
       }
@@ -130,101 +149,69 @@ export const remarkImage =
       if (shouldCheckDeadImages) {
         resolveImage(url, file.path, docDirectory, deadImages);
       }
+
+      if (lint) {
+        return;
+      }
+
+      const imagePath = normalizeImageUrl(url);
+      if (!imagePath) {
+        return;
+      }
+      // relative path
+      const tempVariableName = `image${images.length}`;
+
+      Object.assign(node, {
+        type: 'mdxJsxFlowElement',
+        name: 'img',
+        children: [],
+        attributes: [
+          alt && {
+            type: 'mdxJsxAttribute',
+            name: 'alt',
+            value: alt,
+          },
+          getMdxSrcAttribute(tempVariableName),
+        ].filter(Boolean),
+      });
+
+      images.push(getDefaultImportAstNode(tempVariableName, imagePath));
     });
 
-    if (!lint) {
-      const images: MdxjsEsm[] = [];
-      const getMdxSrcAttribute = (tempVar: string) => {
-        return {
-          type: 'mdxJsxAttribute',
-          name: 'src',
-          value: {
-            type: 'mdxJsxAttributeValueExpression',
-            value: tempVar,
-            data: {
-              estree: {
-                type: 'Program',
-                sourceType: 'module',
-                body: [
-                  {
-                    type: 'ExpressionStatement',
-                    expression: {
-                      type: 'Identifier',
-                      name: tempVar,
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        };
-      };
+    visit(tree, node => {
+      if (
+        (node.type !== 'mdxJsxFlowElement' &&
+          node.type !== 'mdxJsxTextElement') ||
+        // get all img src
+        node.name !== 'img'
+      ) {
+        return;
+      }
 
-      visit(tree, 'image', node => {
-        const { alt, url } = node;
-        if (!url) {
-          return;
-        }
+      const srcAttr = getNodeAttribute(node, 'src', true);
 
-        const imagePath = normalizeImageUrl(url);
-        if (!imagePath) {
-          return;
-        }
-        // relative path
-        const tempVariableName = `image${images.length}`;
+      if (typeof srcAttr?.value !== 'string') {
+        return;
+      }
 
-        Object.assign(node, {
-          type: 'mdxJsxFlowElement',
-          name: 'img',
-          children: [],
-          attributes: [
-            alt && {
-              type: 'mdxJsxAttribute',
-              name: 'alt',
-              value: alt,
-            },
-            getMdxSrcAttribute(tempVariableName),
-          ].filter(Boolean),
-        });
+      if (shouldCheckDeadImages) {
+        resolveImage(srcAttr.value, file.path, docDirectory, deadImages);
+      }
 
-        images.push(getDefaultImportAstNode(tempVariableName, imagePath));
-      });
+      const imagePath = normalizeImageUrl(srcAttr.value);
 
-      visit(tree, node => {
-        if (
-          (node.type !== 'mdxJsxFlowElement' &&
-            node.type !== 'mdxJsxTextElement') ||
-          // get all img src
-          node.name !== 'img'
-        ) {
-          return;
-        }
+      if (!imagePath) {
+        return;
+      }
 
-        const srcAttr = getNodeAttribute(node, 'src', true);
+      const tempVariableName = `image${images.length}`;
 
-        if (typeof srcAttr?.value !== 'string') {
-          return;
-        }
+      Object.assign(srcAttr, getMdxSrcAttribute(tempVariableName));
 
-        if (shouldCheckDeadImages) {
-          resolveImage(srcAttr.value, file.path, docDirectory, deadImages);
-        }
+      images.push(getDefaultImportAstNode(tempVariableName, imagePath));
+    });
 
-        const imagePath = normalizeImageUrl(srcAttr.value);
-
-        if (!imagePath) {
-          return;
-        }
-
-        const tempVariableName = `image${images.length}`;
-
-        Object.assign(srcAttr, getMdxSrcAttribute(tempVariableName));
-
-        images.push(getDefaultImportAstNode(tempVariableName, imagePath));
-      });
-
-      tree.children.unshift(...images);
-    }
+    tree.children.unshift(...images);
 
     if (shouldCheckDeadImages) {
       checkDeadImages(shouldCheckDeadImages, deadImages, file, lint);

@@ -762,6 +762,9 @@ importers:
       remark:
         specifier: ^15.0.1
         version: 15.0.1
+      remark-stringify:
+        specifier: ^11.0.0
+        version: 11.0.0
       unified-lint-rule:
         specifier: ^3.0.1
         version: 3.0.1
