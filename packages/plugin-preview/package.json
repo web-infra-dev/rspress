@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "@rsbuild/core": "^2.0.5",
-    "@rsbuild/plugin-babel": "~1.1.2",
     "@rsbuild/plugin-react": "~2.0.0",
     "picocolors": "^1.1.1",
     "qrcode.react": "^4.2.0"
@@ -39,11 +38,8 @@
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "mdast-util-mdx-jsx": "^3.2.0",
     "mdast-util-mdxjs-esm": "^2.0.1",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6",
     "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^5.8.2",
     "unified": "^11.0.5",
