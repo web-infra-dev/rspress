@@ -1,6 +1,10 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: ['config:recommended', 'schedule:weekly'],
+  extends: [
+    'config:recommended',
+    'schedule:weekly',
+    'github>rstackjs/renovate:security',
+  ],
   packageRules: [
     // Use chore as semantic commit type for commit messages
     {
