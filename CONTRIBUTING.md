@@ -201,4 +201,4 @@ Repository maintainers can publish a new version of changed packages to npm.
 2. Create a pull request, the title should be `Release: v1.2.0`, ensure the CI check passes.
 3. Run the [release action](https://github.com/web-infra-dev/rspress/actions/workflows/release.yml) to publish packages to npm.
 4. Merge the release pull request to `main`.
-5. Generate the [release notes](https://github.com/web-infra-dev/rspress/releases) via GitHub, see [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
+5. Use the `create-draft-release-notes` skill to create a draft [GitHub release note](https://github.com/web-infra-dev/rspress/releases). Review the draft release note, optionally add release highlights, and publish it.
