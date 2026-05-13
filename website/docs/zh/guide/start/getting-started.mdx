@@ -43,7 +43,12 @@ Rspress 需要 Node.js 版本 20.19+, 22.12+。
 
 <PackageManagerTabs command="create rspress@latest" />
 
-然后按照提示输入项目名称，即可创建一个 Rspress 项目。
+运行命令后，CLI 会依次引导你完成以下选项：
+
+1. **输入项目名称或路径**。
+2. **选择是否自定义主题样式**。
+3. **选择额外工具**：可按需选择 Biome、ESLint 或 Prettier，用于 lint 和格式化。
+4. **选择可选的 [Agent Skills](/guide/start/ai#agent-skills)**：用于帮助 AI Agent 更好地理解和维护你的 Rspress 项目。默认可选项包括 `rspress-best-practices` 和 `rspress-description-generator`；如果选择了自定义主题模板，还会出现 `rspress-custom-theme`。
 
 ### 方式二：手动创建
 
