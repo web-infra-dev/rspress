@@ -1,8 +1,7 @@
 {
   "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
-    "declaration": true,
-    "baseUrl": "./"
+    "declaration": true
   },
   "include": [
     "rstest.config.ts",
