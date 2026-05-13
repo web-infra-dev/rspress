@@ -30,6 +30,6 @@
     "rspress-plugin-og": "npm:@soonit/rspress-plugin-og@0.1.2",
     "tm-themes": "1.12.2",
     "twoslash": "^0.3.8",
-    "typescript": "^5.8.2"
+    "typescript": "^6.0.3"
   }
 }

@@ -47,12 +47,12 @@
     "@types/react": "^19.2.14",
     "react": "^19.2.6",
     "rsbuild-plugin-publint": "^0.3.4",
-    "typescript": "^5.8.2"
+    "typescript": "^6.0.3"
   },
   "peerDependencies": {
     "@rspress/core": "workspace:^2.0.10",
     "react": ">=18.0.0",
-    "typescript": "^5.8.2"
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

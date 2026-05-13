@@ -133,7 +133,7 @@
     "tinyglobby": "^0.2.16",
     "tinypool": "^1.1.1",
     "ts-json-schema-generator": "^2.9.0",
-    "typescript": "^5.8.2",
+    "typescript": "^6.0.3",
     "vfile": "^6.0.3"
   },
   "engines": {

@@ -1,8 +1,7 @@
 {
   "extends": "@rspress/config/tsconfig",
-  "declaration": true,
   "compilerOptions": {
-    "baseUrl": "./"
+    "declaration": true
   },
   "include": ["src"],
   "exclude": ["**/node_modules", "**/template/**"]
