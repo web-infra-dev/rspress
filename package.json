@@ -11,7 +11,7 @@
     "dev:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:dev",
     "format": "rslint --fix && prettier . --write && heading-case --write",
     "generate-release-pr": "zx scripts/generateReleasePr.mjs",
-    "lint": "rslint && prettier . --check && pnpm run check-spell",
+    "lint": "rslint --type-check && prettier . --check && pnpm run check-spell",
     "prepare": "skills-package-manager install && pnpm run build && simple-git-hooks",
     "preview:website": "cd website && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
