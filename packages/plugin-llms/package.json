@@ -50,7 +50,7 @@
     "@types/react": "^19.2.14",
     "react": "^19.2.6",
     "rsbuild-plugin-publint": "^0.3.4",
-    "typescript": "^5.8.2",
+    "typescript": "^6.0.3",
     "vfile": "^6.0.3"
   },
   "peerDependencies": {
