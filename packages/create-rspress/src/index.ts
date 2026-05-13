@@ -5,6 +5,7 @@ import {
   checkCancel,
   create,
   type ESLintTemplateName,
+  type RslintTemplateName,
   select,
 } from 'create-rstack';
 
@@ -47,6 +48,10 @@ function mapESLintTemplate(): ESLintTemplateName {
   return 'vanilla-ts' as ESLintTemplateName;
 }
 
+function mapRslintTemplate(): RslintTemplateName {
+  return 'vanilla-ts' as RslintTemplateName;
+}
+
 create({
   root: path.resolve(__dirname, '..'),
   name: 'rspress',
@@ -54,4 +59,5 @@ create({
   templates: [...templates],
   getTemplateName,
   mapESLintTemplate,
+  mapRslintTemplate,
 });
