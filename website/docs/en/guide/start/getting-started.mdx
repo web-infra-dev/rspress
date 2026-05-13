@@ -43,12 +43,22 @@ You can create a Rspress project using the `create-rspress` cli:
 
 <PackageManagerTabs command="create rspress@latest" />
 
-After running the command, the CLI guides you through the following options:
+Input the project directory name, and then the cli will create the project for you.
 
-1. **Enter the project name or path**.
-2. **Choose whether to customize theme styles**.
-3. **Select additional tools**: choose Biome, ESLint, or Prettier as needed for linting and formatting.
-4. **Select optional [Agent Skills](/guide/start/ai#agent-skills)**: help AI agents better understand and maintain your Rspress project. The default options include `rspress-best-practices` and `rspress-description-generator`; if you choose the custom theme template, `rspress-custom-theme` is also available.
+#### Using Agent Skills
+
+If you plan to maintain the documentation site with an AI agent, you can select Agent Skills during project creation. The CLI will generate a `.agents/skills` directory in your project and add the selected skills there.
+
+For most documentation sites, we recommend selecting:
+
+- `rspress-best-practices`: provides Rspress project structure, config, MDX, theme, and deployment guidance for AI agents.
+- `rspress-description-generator`: helps AI agents write and maintain page descriptions for SEO, search, and AI-readable outputs.
+
+If you choose to customize the default theme, you can also select:
+
+- `rspress-custom-theme`: helps AI agents understand Rspress theme customization patterns, such as CSS variables, layout slots, and theme component overrides.
+
+These skills do not affect the runtime behavior of your Rspress site. They only provide local guidance for AI agents when editing or maintaining the project. If you do not use an AI agent, you can skip this option.
 
 ### Method 2: manual creation
 
