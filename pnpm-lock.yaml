@@ -750,6 +750,25 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
 
+  e2e/fixtures/remark-image:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+    devDependencies:
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
+      remark:
+        specifier: ^15.0.1
+        version: 15.0.1
+      remark-stringify:
+        specifier: ^11.0.0
+        version: 11.0.0
+      unified-lint-rule:
+        specifier: ^3.0.1
+        version: 3.0.1
+
   e2e/fixtures/remark-link:
     dependencies:
       '@rspress/core':

@@ -150,6 +150,10 @@ export const remarkImage =
         resolveImage(url, file.path, docDirectory, deadImages);
       }
 
+      if (lint) {
+        return;
+      }
+
       const imagePath = normalizeImageUrl(url);
       if (!imagePath) {
         return;
