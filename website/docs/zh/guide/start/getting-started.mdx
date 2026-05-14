@@ -45,6 +45,23 @@ Rspress 需要 Node.js 版本 20.19+, 22.12+。
 
 然后按照提示输入项目名称，即可创建一个 Rspress 项目。
 
+#### 使用 Agent Skills
+
+如果你计划使用 AI Agent 维护文档站点，可以在创建项目时选择 Agent Skills。CLI 会在项目中生成 `.agents/skills` 目录，并把选中的 Skills 放到该目录下。
+
+对于大多数文档站点，推荐选择：
+
+- [rspress-best-practices](https://github.com/rstackjs/agent-skills#rspress-best-practices)：为 AI Agent 提供 Rspress 项目结构、配置、MDX、主题和部署等最佳实践。
+- [rspress-description-generator](https://github.com/rstackjs/agent-skills#rspress-description-generator)：帮助 AI Agent 编写和维护页面 description，用于 SEO、搜索和 AI 可读产物。
+
+如果你选择了自定义默认主题，还可以选择：
+
+- [rspress-custom-theme](https://github.com/rstackjs/agent-skills#rspress-custom-theme)：让你的 AI Agent 为你定制 Rspress 主题，例如 CSS 变量、Layout slots 和主题组件覆盖。
+
+这些 Skills 不会影响 Rspress 站点的运行时行为，只是为 AI Agent 编辑和维护项目提供本地指导。如果你不使用 AI Agent，可以按回车跳过这个选项。
+
+关于 Agent Skills 和其他 AI 相关能力的更多介绍，可参考 [AI](/guide/start/ai)。
+
 ### 方式二：手动创建
 
 首先，你可以通过以下命令创建一个新目录：

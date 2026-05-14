@@ -60,4 +60,22 @@ create({
   getTemplateName,
   mapESLintTemplate,
   mapRslintTemplate,
+  extraSkills: [
+    {
+      value: 'rspress-best-practices',
+      label: 'Rspress best practices',
+      source: 'rstackjs/agent-skills',
+    },
+    {
+      value: 'rspress-custom-theme',
+      label: 'Rspress custom theme',
+      source: 'rstackjs/agent-skills',
+      when: templateName => templateName === 'custom-theme',
+    },
+    {
+      value: 'rspress-description-generator',
+      label: 'Rspress description generator',
+      source: 'rstackjs/agent-skills',
+    },
+  ],
 });
