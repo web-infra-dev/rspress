@@ -5,6 +5,7 @@ import {
   checkCancel,
   create,
   type ESLintTemplateName,
+  type RslintTemplateName,
   select,
 } from 'create-rstack';
 
@@ -44,7 +45,11 @@ async function getTemplateName(argv: Argv): Promise<TemplateName> {
 }
 
 function mapESLintTemplate(): ESLintTemplateName {
-  return 'vanilla-ts' as ESLintTemplateName;
+  return 'react-ts' as ESLintTemplateName;
+}
+
+function mapRslintTemplate(): RslintTemplateName {
+  return 'react-ts' as RslintTemplateName;
 }
 
 create({
@@ -54,6 +59,7 @@ create({
   templates: [...templates],
   getTemplateName,
   mapESLintTemplate,
+  mapRslintTemplate,
   extraSkills: [
     {
       value: 'rspress-best-practices',
