@@ -44,7 +44,8 @@ describe('create-rspress CLI scaffold', () => {
       );
       expect(rslintConfig).toContain('js.configs.recommended');
       expect(rslintConfig).toContain('ts.configs.recommended');
-      expect(rslintConfig).not.toContain('reactPlugin');
+      expect(rslintConfig).toContain('reactPlugin.configs.recommended');
+      expect(rslintConfig).toContain('reactHooksPlugin.configs.recommended');
     } finally {
       rmSync(tempDir, { recursive: true, force: true });
     }

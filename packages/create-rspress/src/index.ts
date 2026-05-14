@@ -45,11 +45,11 @@ async function getTemplateName(argv: Argv): Promise<TemplateName> {
 }
 
 function mapESLintTemplate(): ESLintTemplateName {
-  return 'vanilla-ts' as ESLintTemplateName;
+  return 'react-ts' as ESLintTemplateName;
 }
 
 function mapRslintTemplate(): RslintTemplateName {
-  return 'vanilla-ts' as RslintTemplateName;
+  return 'react-ts' as RslintTemplateName;
 }
 
 create({
