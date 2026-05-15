@@ -13,17 +13,25 @@ import {
 import './index.scss';
 
 type TabItem = {
-  label?: string | ReactNode;
+  label: ReactNode;
+  value: string;
+  disabled?: boolean;
+};
+
+type ResolvedTabItem = {
+  label?: ReactNode;
+  value?: string;
   disabled?: boolean;
   content?: ReactNode;
 };
 
 export interface TabsProps {
-  values?: ReactNode[] | ReadonlyArray<ReactNode> | TabItem[];
+  values?: ReadonlyArray<TabItem>;
   /**
    * @default 0
    */
   defaultIndex?: number;
+  defaultValue?: string;
   onChange?: (index: number) => void;
   children: ReactNode;
   /**
@@ -45,54 +53,39 @@ export interface TabsProps {
 
 function getTabValuesFromChildren(
   children: ReactElement<TabProps>[],
-  defaultValues: ReactNode[] | ReadonlyArray<ReactNode> | TabItem[] | undefined,
-): TabItem[] {
-  // 0. only values, values contain label and content
-  // <Tabs values={[{}, {}]}/>
-  if (defaultValues?.every(item => isTabItem(item) && item.content)) {
-    return defaultValues as TabItem[];
-  }
-
-  // 1. values only contain label
-  // <Tabs values={['Tab1', 'Tab2']}><Tab label="Tab1"/></Tab><Tab label="Tab2"/></Tab></Tabs>
-  if (defaultValues && defaultValues.length > 0) {
-    return defaultValues.map((item, index) => {
-      if (isTabItem(item)) {
-        return item;
-      }
+  values: ReadonlyArray<TabItem> | undefined,
+): ResolvedTabItem[] {
+  if (values && values.length > 0) {
+    return values.map((item, index) => {
+      const content =
+        children.find(child => child.props?.value === item.value) ??
+        children[index];
 
       return {
-        label: item,
-        content: children[index],
-      } satisfies TabItem;
+        ...item,
+        content,
+      } satisfies ResolvedTabItem;
     });
   }
 
-  // 2. no values
-  // <Tabs><Tab label="Tab1"/></Tab><Tab label="Tab2"/></Tab></Tabs>
-  return Children.map<TabItem, ReactElement<TabProps>>(
+  return Children.map<ResolvedTabItem, ReactElement<TabProps>>(
     children,
     (child, index) => {
       if (isValidElement(child)) {
         return {
           label: child.props?.label || undefined,
+          value: child.props?.value,
+          disabled: child.props?.disabled,
           content: children[index],
-        } satisfies TabItem;
+        } satisfies ResolvedTabItem;
       }
 
       return {
         label: index,
         content: children[index],
-      } satisfies TabItem;
+      } satisfies ResolvedTabItem;
     },
   );
-}
-
-function isTabItem(item: unknown): item is TabItem {
-  if (item && typeof item === 'object' && 'label' in item) {
-    return true;
-  }
-  return false;
 }
 
 const groupIdPrefix = 'rspress.tabs.';
@@ -102,6 +95,7 @@ export const Tabs = forwardRef(
     const {
       values,
       defaultIndex,
+      defaultValue,
       onChange,
       children: rawChildren,
       groupId,
@@ -118,9 +112,9 @@ export const Tabs = forwardRef(
         isValidElement(child),
     ) as unknown as ReactElement<TabProps>[];
 
-    const tabValues: TabItem[] = useMemo(() => {
+    const tabValues: ResolvedTabItem[] = useMemo(() => {
       return getTabValuesFromChildren(children, values);
-    }, [values, children]);
+    }, [children, values]);
 
     if (process.env.__SSR_MD__) {
       return (
@@ -138,11 +132,18 @@ export const Tabs = forwardRef(
       );
     }
 
-    const [activeIndex, setActiveIndex] = useState(defaultIndex ?? 0);
+    const defaultValueIndex =
+      defaultValue !== undefined
+        ? tabValues.findIndex(item => item.value === defaultValue)
+        : -1;
+    const initialActiveIndex =
+      defaultValueIndex === -1 ? (defaultIndex ?? 0) : defaultValueIndex;
+
+    const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
 
     const [storageIndex, setStorageIndex] = useStorageValue<string>(
       `${groupIdPrefix}${groupId}`,
-      activeIndex.toString(),
+      initialActiveIndex.toString(),
     );
 
     const currentIndex: number = groupId ? Number(storageIndex) : activeIndex;
@@ -157,11 +158,11 @@ export const Tabs = forwardRef(
                 tabPosition === 'center' ? 'center' : 'flex-start',
             }}
           >
-            {tabValues.map(({ label }, index) => {
+            {tabValues.map(({ label, value, disabled }, index) => {
               const isActive = index === currentIndex;
               return (
                 <div
-                  key={typeof label === 'string' ? label : index}
+                  key={value ?? index}
                   className={clsx(
                     'rp-tabs__label__item',
                     isActive
@@ -171,6 +172,9 @@ export const Tabs = forwardRef(
                   )}
                   data-index={index}
                   onClick={() => {
+                    if (disabled) {
+                      return;
+                    }
                     onChange?.(index);
                     if (groupId) {
                       setStorageIndex(index.toString());
@@ -186,7 +190,7 @@ export const Tabs = forwardRef(
           </div>
         ) : null}
         <div className="rp-tabs__content">
-          {tabValues.map(({ label, content }, index) => {
+          {tabValues.map(({ value, content }, index) => {
             const isActive = index === currentIndex;
             if (!keepDOM && !isActive) {
               return null;
@@ -194,7 +198,7 @@ export const Tabs = forwardRef(
 
             return (
               <div
-                key={typeof label === 'string' ? label : index}
+                key={value ?? index}
                 className={clsx(
                   'rp-tabs__content__item',
                   isActive
@@ -217,7 +221,10 @@ export const Tabs = forwardRef(
 
 Tabs.displayName = 'Tabs';
 
-export type TabProps = Pick<TabItem, 'label' | 'disabled'> & {
+export type TabProps = {
+  label?: ReactNode;
+  value?: string;
+  disabled?: boolean;
   children: ReactNode;
 };
 

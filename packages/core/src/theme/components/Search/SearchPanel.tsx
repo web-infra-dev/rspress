@@ -388,15 +388,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       );
     }
 
-    const tabValues = result.map(item => {
-      return item.group;
-    });
-
     const renderKey = 'render' as const;
 
     return (
       <Tabs
-        values={tabValues}
         className="rp-search-panel__tabs"
         onChange={index => {
           setResultTabIndex(index);
@@ -406,7 +401,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         ref={searchResultTabRef}
       >
         {result.map(item => (
-          <Tab key={item.group}>
+          <Tab key={item.group} label={item.group}>
             {item.renderType === RenderType.Default &&
               renderSearchResultItem(item.result, query, isSearching)}
             {item.renderType === RenderType.Custom &&
