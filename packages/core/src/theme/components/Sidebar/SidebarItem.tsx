@@ -56,7 +56,7 @@ export function SidebarItemRaw({
   const innerContent = (
     <>
       <div className="rp-sidebar-item__left" ref={ref}>
-        <span {...renderInlineMarkdown(text)}></span>
+        <span className="rp-doc" {...renderInlineMarkdown(text)}></span>
         {left}
       </div>
       <div className="rp-sidebar-item__right">
