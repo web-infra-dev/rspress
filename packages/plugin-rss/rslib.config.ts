@@ -8,6 +8,7 @@ export default defineConfig({
       bundle: true,
       syntax: 'es2023',
       dts: {
+        tsgo: true,
         bundle: true,
       },
     },

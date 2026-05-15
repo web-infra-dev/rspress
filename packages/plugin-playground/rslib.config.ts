@@ -21,7 +21,10 @@ export default defineConfig({
         externals: ['@types/react', 'rspress'],
       },
       syntax: 'es2023',
-      dts: { bundle: true },
+      dts: {
+        tsgo: true,
+        bundle: true,
+      },
     },
     {
       source: {
@@ -35,7 +38,10 @@ export default defineConfig({
         },
       },
       syntax: 'es2023',
-      dts: { bundle: true },
+      dts: {
+        tsgo: true,
+        bundle: true,
+      },
     },
   ],
 });

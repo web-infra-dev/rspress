@@ -111,7 +111,9 @@ export default defineConfig({
     },
     {
       bundle: false,
-      dts: true,
+      dts: {
+        tsgo: true,
+      },
       redirect: {
         dts: {
           extension: true,

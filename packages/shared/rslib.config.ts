@@ -5,6 +5,7 @@ export default defineConfig({
   lib: [
     {
       dts: {
+        tsgo: true,
         bundle: true,
       },
       syntax: 'es2023',

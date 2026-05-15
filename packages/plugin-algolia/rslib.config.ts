@@ -11,7 +11,9 @@ export default defineConfig({
           index: './src/index.ts',
         },
       },
-      dts: true,
+      dts: {
+        tsgo: true,
+      },
       syntax: 'es2023',
       redirect: {
         dts: {

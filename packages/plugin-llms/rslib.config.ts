@@ -7,6 +7,7 @@ export default defineConfig({
   lib: [
     {
       dts: {
+        tsgo: true,
         bundle: true,
       },
       source: {
@@ -30,6 +31,7 @@ export default defineConfig({
     },
     {
       dts: {
+        tsgo: true,
         bundle: true,
       },
       source: {

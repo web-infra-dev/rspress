@@ -12,6 +12,7 @@ export default defineConfig({
       },
       syntax: 'es2023',
       dts: {
+        tsgo: true,
         bundle: true,
       },
     },
@@ -23,6 +24,7 @@ export default defineConfig({
       },
       syntax: 'es2023',
       dts: {
+        tsgo: true,
         bundle: true,
       },
     },
