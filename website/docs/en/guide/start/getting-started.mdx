@@ -1,5 +1,5 @@
 ---
-description: Quickly create an Rspress project via CLI or manually, and learn the basic workflow of dev server startup, production build, and local preview.
+description: Quickly create an Rspress project via the scaffold or manual setup, and learn the basic workflow of dev server startup, production build, and local preview.
 ---
 
 # Quick start
@@ -15,8 +15,7 @@ https://rspress.rs/guide/start/getting-started.md.
 
 1. Scaffold the project with \`create rspress@latest\`.
 2. Install dependencies.
-3. Start the dev server.
-4. Verify the site renders correctly.`}
+3. Start the dev server.`}
    />
 
 ## Environment preparation
@@ -35,52 +34,144 @@ Rspress requires Node.js version 20.19+, 22.12+.
 
 :::
 
-## 1. Initialize the project
+## Online example
 
-### Method 1: create via CLI
+You can try Rspress directly in [CodeSandbox](https://codesandbox.io/p/github/web-infra-dev/rspress-codesandbox-template/main).
 
-You can create a Rspress project using the `create-rspress` cli:
+## Create a Rspress project
+
+The recommended way to start a new Rspress project is to use the `create-rspress` scaffold:
 
 <PackageManagerTabs command="create rspress@latest" />
 
-Input the project directory name, and then the cli will create the project for you.
+The scaffold will ask for the project name or path, whether to set up a custom theme folder, and which optional tools or skills to add.
 
-#### Using Agent Skills
+After the project is created, follow the next steps printed in the terminal:
 
-If you plan to maintain the documentation site with an AI agent, you can select Agent Skills during project creation. The CLI will generate a `.agents/skills` directory in your project and add the selected skills there.
+```bash
+cd rspress-project
+git init # optional
+npm install
+npm run dev
+```
+
+The dev server will print the local URL after startup. Open it in your browser to view the generated documentation site.
+
+### Templates
+
+Rspress provides the following built-in templates:
+
+| Template       | Description                                                                 |
+| -------------- | --------------------------------------------------------------------------- |
+| `basic`        | Creates a minimal Rspress documentation site that uses the default theme.   |
+| `custom-theme` | Creates a documentation site with a `theme` folder for theme customization. |
+
+### Optional tools
+
+During project creation, you can select optional tools for linting or formatting:
+
+| Tool       | Purpose                                |
+| ---------- | -------------------------------------- |
+| `rslint`   | Adds Rslint for linting.               |
+| `eslint`   | Adds ESLint for linting.               |
+| `prettier` | Adds Prettier for formatting.          |
+| `biome`    | Adds Biome for linting and formatting. |
+
+### Optional skills
+
+If you plan to maintain the documentation site with an AI agent, you can select optional Agent Skills during project creation. The CLI will generate a `.agents/skills` directory in your project and add the selected skills there.
 
 For most documentation sites, we recommend selecting:
 
 - [rspress-best-practices](https://github.com/rstackjs/agent-skills#rspress-best-practices): provides Rspress project structure, config, MDX, theme, and deployment guidance for AI agents.
 - [rspress-description-generator](https://github.com/rstackjs/agent-skills#rspress-description-generator): helps AI agents write and maintain page descriptions for SEO, search, and AI-readable outputs.
 
-If you choose to customize the default theme, you can also select:
+If you choose the `custom-theme` template, the following skill is selected by default:
 
 - [rspress-custom-theme](https://github.com/rstackjs/agent-skills#rspress-custom-theme): enables your AI agent to customize the Rspress theme, such as CSS variables, layout slots, and theme component overrides.
 
-These skills do not affect the runtime behavior of your Rspress site. They only provide local guidance for AI agents when editing or maintaining the project. If you do not use an AI agent, you can press Enter to skip this option.
+These skills do not affect the runtime behavior of your Rspress site. They only provide local guidance for AI agents when editing or maintaining the project. If you do not use an AI agent, you can deselect them or press Enter to skip this option.
 
 For more information about Agent Skills and other AI-related capabilities, see [AI](/guide/start/ai).
 
-### Method 2: manual creation
+### Current directory
 
-First, you can create a new directory with the following command:
+To create a project in the current directory, enter `.` as the project path when prompted:
+
+```bash
+◆  Create Rspress Project
+
+◇  Project name or path
+│  .
+```
+
+If the current directory is not empty, the CLI will ask whether to continue and overwrite files.
+
+### Non-interactive mode
+
+You can pass CLI options to create a project without interactive prompts:
+
+```bash
+npx -y create-rspress@latest my-docs --template custom-theme --tools rslint,prettier
+```
+
+You can also add Agent Skills explicitly:
+
+```bash
+npx -y create-rspress@latest my-docs --template custom-theme --skill rspress-best-practices,rspress-description-generator
+```
+
+All CLI flags supported by `create-rspress`:
+
+```bash
+Usage: create-rspress [dir] [options]
+
+Options:
+
+  -h, --help                display help for command
+  -d, --dir <dir>           create project in specified directory
+  -t, --template <tpl>      specify the template to use
+  --tools <tool>            add additional tools, comma separated
+  --skill <skill>           add optional skills, comma separated
+  --override                override files in target directory
+  --packageName <name>      specify the package name
+  --template-version <ver>  specify the npm template version
+
+Available templates:
+  basic, custom-theme
+
+Optional tools:
+  eslint, rslint, biome, prettier
+
+Optional skills:
+  rspress-best-practices, rspress-custom-theme, rspress-description-generator
+```
+
+## Manual setup
+
+If you want to add Rspress to an existing project or create the minimal files yourself, start by creating a directory:
 
 ```bash
 mkdir rspress-app && cd rspress-app
 ```
 
-Execute `npm init -y` to initialize a project. You can install Rspress using npm, pnpm, yarn or bun:
+Initialize a `package.json`:
+
+```bash
+npm init -y
+```
+
+Install Rspress:
 
 <PackageManagerTabs command="install @rspress/core -D" />
 
-Then create the file with the following command
+Create the first document:
 
 ```bash
 mkdir docs && echo '# Hello world' > docs/index.md
 ```
 
-Add the following script to `package.json`:
+Add the following scripts to `package.json`:
 
 ```json
 {
@@ -92,7 +183,7 @@ Add the following script to `package.json`:
 }
 ```
 
-Then initialize a configuration file `rspress.config.ts`:
+Create a configuration file:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -102,7 +193,7 @@ export default defineConfig({
 });
 ```
 
-And then create `tsconfig.json`, add the following config:
+Create `tsconfig.json`:
 
 ```json
 {
@@ -136,9 +227,9 @@ And then create `tsconfig.json`, add the following config:
 }
 ```
 
-## 2. Start dev server
+## Start dev server
 
-Start the local development service with the following command:
+Start the local development server with the following command:
 
 ```bash
 npm run dev
@@ -146,25 +237,32 @@ npm run dev
 
 :::tip TIP
 
-For the dev command, you can specify the port number or host of the development service with the `--port` or `--host` parameter, such as `rspress dev --port 8080 --host 0.0.0.0`.
+For the dev command, you can specify the port number or host of the development server with the `--port` or `--host` parameter, such as `rspress dev --port 8080 --host 0.0.0.0`.
 
 :::
 
-## 3. Build in production
+## Build for production
 
-Build the production bundle with the following command
-:
+Build the production bundle with the following command:
 
 ```bash
 npm run build
 ```
 
-By default, Rspress will set `doc_build` as the output directory.
+By default, Rspress will output the production files to the `doc_build` directory.
 
-## 4. Preview in local environment
+## Preview locally
 
-Start the local preview service with the following command:
+Start the local preview server with the following command:
 
 ```bash
 npm run preview
 ```
+
+The preview server serves the production output from `doc_build`.
+
+## Next steps
+
+- Read [Basic features](/guide/basic/conventional-route) to learn routing, home pages, static assets, deployment, and other common documentation site features.
+- Read [Use MDX](/guide/use-mdx/components) to learn how to write MDX and use components in documentation.
+- Read [Configuration](/api/config/config-basic) to learn all supported Rspress config options.
