@@ -15,15 +15,14 @@ import { Prompt } from '@rspress/core/theme';
 
 1. 使用 \`create rspress@latest\` 初始化项目。
 2. 安装依赖。
-3. 启动开发服务器。
-4. 确认页面正常渲染。`}
+3. 启动开发服务器。`}
    />
 
 ## 环境准备
 
 Rspress 支持使用 [Node.js](https://nodejs.org/)、[Deno](https://deno.com/) 或 [Bun](https://bun.sh/) 作为 JavaScript 运行时。
 
-请参考以下指南安装运行时：
+你可以参考以下安装指南，选择其中一种运行时：
 
 - [安装 Node.js](https://nodejs.org/en/download)
 - [安装 Bun](https://bun.com/docs/installation)
@@ -35,52 +34,157 @@ Rspress 需要 Node.js 版本 20.19+, 22.12+。
 
 :::
 
-## 1. 初始化项目
+## 在线示例
 
-### 方式一：通过脚手架创建
+我们提供了 Rspress 在线示例，无需本地安装即可体验 Rspress 的文档站点开发流程：
 
-你可以通过 Rspress 脚手架命令来创建项目:
+- [CodeSandbox 示例](https://codesandbox.io/p/github/web-infra-dev/rspress-codesandbox-template/main)
+
+## 创建 Rspress 项目
+
+使用 [`create-rspress`](https://www.npmjs.com/package/create-rspress) 来创建一个 Rspress 项目，运行以下命令：
 
 <PackageManagerTabs command="create rspress@latest" />
 
-然后按照提示输入项目名称，即可创建一个 Rspress 项目。
+按照提示一步步操作即可。在创建过程中，你可以输入项目名称或路径、选择是否创建自定义主题目录，以及是否添加可选工具或 Skills。
 
-#### 使用 Agent Skills
+项目创建完成后，你可以执行以下步骤：
 
-如果你计划使用 AI Agent 维护文档站点，可以在创建项目时选择 Agent Skills。CLI 会在项目中生成 `.agents/skills` 目录，并把选中的 Skills 放到该目录下。
+- 执行 `git init` 来初始化 Git 仓库。
+- 执行 `npm install`（或其他包管理器的 install 命令）安装 npm 依赖。
+- 执行 `npm run dev` 启动开发服务器。
+
+开发服务启动后会在终端输出本地访问地址，打开该地址即可查看生成的文档站点。
+
+### 模板
+
+Rspress 提供以下内置模板：
+
+| 模板           | 说明                                                  |
+| -------------- | ----------------------------------------------------- |
+| `basic`        | 创建一个使用默认主题的最小 Rspress 文档站点。         |
+| `custom-theme` | 创建一个带有 `theme` 目录的文档站点，便于自定义主题。 |
+
+### 可选工具
+
+`create-rspress` 能够帮助你设置以下常用工具，你可以使用上下箭头和空格进行选择。如果你不需要这些工具，可以直接按回车跳过。
+
+| 工具       | 用途                               |
+| ---------- | ---------------------------------- |
+| `rslint`   | 添加 Rslint，用于代码检查。        |
+| `eslint`   | 添加 ESLint，用于代码检查。        |
+| `prettier` | 添加 Prettier，用于格式化。        |
+| `biome`    | 添加 Biome，用于代码检查和格式化。 |
+
+### 可选 Skills
+
+如果你计划使用 AI Agent 维护文档站点，可以在创建项目时选择可选的 Agent Skills。CLI 会在项目中生成 `.agents/skills` 目录，并把选中的 Skills 放到该目录下。
 
 对于大多数文档站点，推荐选择：
 
 - [rspress-best-practices](https://github.com/rstackjs/agent-skills#rspress-best-practices)：为 AI Agent 提供 Rspress 项目结构、配置、MDX、主题和部署等最佳实践。
 - [rspress-description-generator](https://github.com/rstackjs/agent-skills#rspress-description-generator)：帮助 AI Agent 编写和维护页面 description，用于 SEO、搜索和 AI 可读产物。
 
-如果你选择了自定义默认主题，还可以选择：
+如果你选择了 `custom-theme` 模板，以下 Skill 会被默认勾选：
 
 - [rspress-custom-theme](https://github.com/rstackjs/agent-skills#rspress-custom-theme)：让你的 AI Agent 为你定制 Rspress 主题，例如 CSS 变量、Layout slots 和主题组件覆盖。
 
-这些 Skills 不会影响 Rspress 站点的运行时行为，只是为 AI Agent 编辑和维护项目提供本地指导。如果你不使用 AI Agent，可以按回车跳过这个选项。
+这些 Skills 不会影响 Rspress 站点的运行时行为，只是为 AI Agent 编辑和维护项目提供本地指导。如果你不使用 AI Agent，可以取消勾选，或按回车跳过这个选项。
 
 关于 Agent Skills 和其他 AI 相关能力的更多介绍，可参考 [AI](/guide/start/ai)。
 
-### 方式二：手动创建
+### 当前目录
 
-首先，你可以通过以下命令创建一个新目录：
+如果你需要在当前目录下创建项目，可以将 target folder 设置为 `.`：
+
+```bash
+◆  Create Rspress Project
+
+◇  Project name or path
+│  .
+```
+
+如果当前目录不为空，CLI 会询问是否继续并覆盖文件。
+
+### 非交互模式
+
+[`create-rspress`](https://www.npmjs.com/package/create-rspress) 支持通过命令行选项进入非交互模式。使用该模式可以跳过所有提示，直接创建项目，适合脚本、CI 以及 coding agents 等自动化场景。
+
+例如，以下命令将在 `my-docs` 目录中创建一个 Rspress 项目：
+
+```bash
+npx -y create-rspress@latest --dir my-docs --template custom-theme
+```
+
+使用缩写：
+
+```bash
+npx -y create-rspress@latest -d my-docs -t custom-theme
+```
+
+指定多个 tools：
+
+```bash
+npx -y create-rspress@latest -d my-docs -t custom-theme --tools rslint,prettier
+```
+
+安装可选的 Agent Skill：
+
+```bash
+npx -y create-rspress@latest -d my-docs -t custom-theme --skill rspress-best-practices
+```
+
+`create-rspress` 完整的 CLI 选项如下：
+
+```bash
+Usage: create-rspress [dir] [options]
+
+Options:
+
+  -h, --help                display help for command
+  -d, --dir <dir>           create project in specified directory
+  -t, --template <tpl>      specify the template to use
+  --tools <tool>            add additional tools, comma separated
+  --skill <skill>           add optional skills, comma separated
+  --override                override files in target directory
+  --packageName <name>      specify the package name
+  --template-version <ver>  specify the npm template version
+
+Available templates:
+  basic, custom-theme
+
+Optional tools:
+  eslint, rslint, biome, prettier
+
+Optional skills:
+  rspress-best-practices, rspress-custom-theme, rspress-description-generator
+```
+
+## 手动创建
+
+如果你想在已有项目中添加 Rspress，或希望自己创建最小文件，可以先创建一个目录：
 
 ```bash
 mkdir rspress-app && cd rspress-app
 ```
 
-执行 `npm init -y` 来初始化一个项目。你可以使用 npm、pnpm、yarn 或 bun 安装 Rspress:
+初始化 `package.json`：
+
+```bash
+npm init -y
+```
+
+安装 Rspress：
 
 <PackageManagerTabs command="install @rspress/core -D" />
 
-然后通过如下命令创建文件:
+创建第一篇文档：
 
 ```bash
 mkdir docs && echo '# Hello world' > docs/index.md
 ```
 
-在 `package.json` 中加上如下的脚本:
+在 `package.json` 中添加以下脚本：
 
 ```json
 {
@@ -92,7 +196,7 @@ mkdir docs && echo '# Hello world' > docs/index.md
 }
 ```
 
-然后初始化一个配置文件 `rspress.config.ts`:
+创建配置文件：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -103,7 +207,7 @@ export default defineConfig({
 });
 ```
 
-同时新建 `tsconfig.json`，内容如下:
+创建 `tsconfig.json`：
 
 ```json
 {
@@ -137,15 +241,13 @@ export default defineConfig({
 }
 ```
 
-## 2. 启动 Dev server
+## 启动 Dev server
 
-通过如下命令启动本地开发服务:
+通过如下命令启动本地开发服务：
 
 ```bash
 npm run dev
 ```
-
-这样 Rspress 将启动开发服务。
 
 :::tip 提示
 
@@ -153,22 +255,28 @@ npm run dev
 
 :::
 
-## 3. 生产环境构建
+## 生产环境构建
 
-通过如下命令构建生产环境的产物:
+通过如下命令构建生产环境的产物：
 
 ```bash
 npm run build
 ```
 
-默认情况下，Rspress 将会把产物打包到 `doc_build` 目录。
+默认情况下，Rspress 会把生产环境产物输出到 `doc_build` 目录。
 
-## 4. 本地预览产物
+## 本地预览产物
 
-通过如下命令启动本地预览服务:
+通过如下命令启动本地预览服务：
 
 ```bash
 npm run preview
 ```
 
-这样 Rspress 将启动产物预览服务。
+预览服务会基于 `doc_build` 中的生产环境产物启动。
+
+## 下一步
+
+- 阅读 [基础功能](/guide/basic/conventional-route)，了解路由、首页、静态资源、部署等常见文档站点能力。
+- 阅读 [使用 MDX](/guide/use-mdx/components)，了解如何编写 MDX，并在文档中使用组件。
+- 阅读 [配置](/api/config/config-basic)，了解所有 Rspress 配置项。
