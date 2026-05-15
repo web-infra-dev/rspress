@@ -340,6 +340,7 @@ export interface PageDataLegacy {
     headingTitle?: string;
     pagePath: string;
     lastUpdatedTime?: string;
+    lastUpdatedAuthor?: string;
     description?: string;
     pageType: PageType;
     [key: string]: unknown;

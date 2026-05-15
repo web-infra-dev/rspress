@@ -21,6 +21,7 @@ export interface I18nText {
 
   // docFooter
   lastUpdatedText?: I18nTextValue;
+  lastUpdatedAuthorText?: I18nTextValue;
   prevPageText?: I18nTextValue;
   nextPageText?: I18nTextValue;
   editLinkText?: I18nTextValue;

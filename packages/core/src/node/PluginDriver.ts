@@ -68,7 +68,7 @@ export class PluginDriver {
     const mediumZoomConfig = config?.mediumZoom ?? true;
     if (enableLastUpdated) {
       const { pluginLastUpdated } = await import('./last-updated/index');
-      this.addPlugin(pluginLastUpdated());
+      this.addPlugin(pluginLastUpdated(themeConfig?.lastUpdatedAuthor));
     }
     if (mediumZoomConfig) {
       const { pluginMediumZoom } = await import('./medium-zoom/index');

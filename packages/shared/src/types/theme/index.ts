@@ -87,6 +87,17 @@ export type ThemeConfig = {
    */
   lastUpdated?: boolean;
   /**
+   * Whether to display the last author of the file (from git log).
+   * Only effective when `lastUpdated` is enabled.
+   * - `false`: hide the author.
+   * - `true` (default when `lastUpdated` is on): show the commit author's name.
+   * - function: receives `{ name, email, filePath }` and returns the display string.
+   * @default true
+   */
+  lastUpdatedAuthor?:
+    | boolean
+    | ((info: { name: string; email: string; filePath: string }) => string);
+  /**
    * The social links to be displayed at the end of the nav bar. Perfect for
    * placing links to social services such as GitHub, X, Facebook, etc.
    * @default []
