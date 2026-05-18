@@ -28,14 +28,14 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "^2.0.5",
+    "@rsbuild/core": "^2.0.6",
     "@rsbuild/plugin-babel": "~1.1.2",
     "@rsbuild/plugin-react": "~2.0.0",
     "picocolors": "^1.1.1",
     "qrcode.react": "^4.2.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.21.4",
+    "@rslib/core": "0.21.5",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.14",
