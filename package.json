@@ -60,7 +60,7 @@
     "prettier": "3.7.4",
     "prettier-plugin-packagejson": "^3.0.2",
     "simple-git-hooks": "^2.13.1",
-    "skills-package-manager": "0.9.0",
+    "skills-package-manager": "0.10.0",
     "tree-kill": "^1.2.2",
     "zx": "^8.8.5"
   },
