@@ -36,10 +36,8 @@ skills:
       path: /skills/rspress-description-generator
     digest: sha256-a38d6e6e06340590c2e3cfaabd0878cf484b381025d1e093dcf3512d78e4c9a0
   create-draft-release-notes:
-    specifier: https://github.com/rstackjs/agent-skills.git#path:/skills/create-draft-release-notes
+    specifier: local:./.agents/skills/create-draft-release-notes
     resolution:
-      type: git
-      url: https://github.com/rstackjs/agent-skills.git
-      commit: 1df3aac8f6206ce792b616de5fbdb5e1859191b6
-      path: /skills/create-draft-release-notes
-    digest: sha256-3c6ce3afef5eaa6844f3c7b3df3dec19708da1247877771684f995ac99dd3936
+      type: local
+      path: .agents/skills/create-draft-release-notes
+    digest: ""

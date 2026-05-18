@@ -10,3 +10,9 @@ doc_build
 # ignore pnpm-lock
 pnpm-lock.yaml
 skills-lock.yaml
+
+# ignore generated skills
+.agents/skills/pr-creator
+.agents/skills/rspress-best-practices
+.agents/skills/rspress-custom-theme
+.agents/skills/rspress-description-generator
