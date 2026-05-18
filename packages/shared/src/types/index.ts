@@ -1,6 +1,7 @@
 import type { loadConfig, RsbuildConfig } from '@rsbuild/core';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
 import type { ZoomOptions } from 'medium-zoom';
+import type { ComponentType, ReactElement } from 'react';
 import type { PluggableList } from 'unified';
 import type { AdditionalPage, RspressPlugin } from './Plugin';
 import type {
@@ -46,9 +47,9 @@ export type { AdditionalPage, RspressPlugin, RspressPlugin as Plugin };
 
 export interface Route {
   path: string;
-  element: React.ReactElement;
+  element: ReactElement;
   filePath: string;
-  preload: () => Promise<PageModule<React.ComponentType<unknown>>>;
+  preload: () => Promise<PageModule<ComponentType<unknown>>>;
   lang: string;
 }
 
@@ -426,7 +427,7 @@ export interface Feature {
   link?: string;
 }
 
-export interface PageModule<T extends React.ComponentType<unknown>> {
+export interface PageModule<T extends ComponentType<unknown>> {
   default: T;
   frontmatter?: FrontMatterMeta;
   content?: string;

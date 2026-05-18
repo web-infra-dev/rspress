@@ -13,7 +13,7 @@
     "@rspress/plugin-playground": "workspace:*",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "solid-js": "^1.9.12"
+    "solid-js": "^1.9.13"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"

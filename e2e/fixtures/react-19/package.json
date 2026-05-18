@@ -12,7 +12,7 @@
     "@rspress/core": "workspace:*",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-router-dom": "^7.15.0"
+    "react-router-dom": "^7.15.1"
   },
   "devDependencies": {
     "@types/node": "^22.8.1"

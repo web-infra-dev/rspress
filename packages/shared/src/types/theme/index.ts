@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { LocaleConfig } from './locale';
 import type { NavItem } from './nav';
 import type { NormalizedSidebar, Sidebar } from './sidebar';
@@ -12,13 +13,13 @@ export type LlmsViewOption =
   | 'claude'
   | {
       title: string;
-      icon?: React.ReactNode;
+      icon?: ReactNode;
       onClick?: () => void;
     }
   | {
       title: string;
       href: string;
-      icon?: React.ReactNode;
+      icon?: ReactNode;
     };
 
 /**
