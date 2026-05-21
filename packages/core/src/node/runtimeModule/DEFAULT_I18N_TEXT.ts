@@ -156,6 +156,13 @@ export const DEFAULT_I18N_TEXT = {
     ko: '코드 복사',
     ru: 'Скопировать код',
   },
+  codeButtonGroupWrapButtonText: {
+    en: 'Toggle code wrap',
+    zh: '切换代码换行',
+    ja: 'コードの折り返しを切り替え',
+    ko: '코드 줄바꿈 전환',
+    ru: 'Переключить перенос кода',
+  },
   notFoundText: {
     en: 'PAGE NOT FOUND',
     zh: '页面未找到',
