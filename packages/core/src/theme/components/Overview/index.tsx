@@ -242,7 +242,7 @@ export function Overview(props: {
 
   const overviewTitle = title || 'Overview';
 
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return (
       <>
         <FallbackHeading level={1} title={overviewTitle} />

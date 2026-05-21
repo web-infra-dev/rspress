@@ -219,7 +219,7 @@ export function Layout(props: LayoutProps) {
     }
   };
 
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return <>{getContentLayout()}</>;
   }
 

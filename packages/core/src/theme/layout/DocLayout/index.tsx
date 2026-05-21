@@ -57,7 +57,7 @@ export function DocLayout(props: DocLayoutProps) {
 
   const showSidebarMenu = showSidebar || (!isOverviewPage && showOutline);
 
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return (
       <>
         {isOverviewPage ? (
