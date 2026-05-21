@@ -57,6 +57,7 @@ export function CodeButtonGroup({
             )}
             onClick={() => toggleWrapCode()}
             title={t('codeButtonGroupWrapButtonText')}
+            aria-label={t('codeButtonGroupWrapButtonText')}
           >
             <SvgWrapper
               icon={IconWrapped}
