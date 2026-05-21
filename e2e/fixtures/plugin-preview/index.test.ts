@@ -185,6 +185,33 @@ test.describe('plugin preview build', async () => {
     expect(externalDemoCodePreview).toBe('Hello World External');
     expect(transformedCodePreview).toBe('Render from JSON');
   });
+
+  test('build should skip demo output without iframe previews', async ({
+    page,
+  }) => {
+    const appDir = import.meta.dirname;
+    const noIframePort = await getPort();
+    const distDir = path.join(appDir, 'doc_build');
+
+    await fs.rm(distDir, { recursive: true, force: true });
+    await runBuildCommand(appDir, 'rspress.no-iframe.config.ts');
+    const noIframeApp = await runPreviewCommand(appDir, noIframePort, [
+      '-c',
+      'rspress.no-iframe.config.ts',
+    ]);
+
+    try {
+      await page.goto(`http://localhost:${noIframePort}`, {
+        waitUntil: 'networkidle',
+      });
+      await expect(page.locator('.rp-preview--internal__card')).toContainText(
+        'Internal preview only',
+      );
+      await expect(fs.access(path.join(distDir, '~demo'))).rejects.toThrow();
+    } finally {
+      await killProcess(noIframeApp);
+    }
+  });
 });
 
 test.describe('plugin preview HMR', async () => {
