@@ -26,6 +26,7 @@ minimumReleaseAgeExclude:
   - '@rstest/*'
   - '@rsdoctor/*'
   - '@rslint/*'
+  - 'react-render-to-markdown'
 
 # Prevent un-reviewed build scripts
 strictDepBuilds: true
