@@ -47,7 +47,9 @@
     /* anchor link: move to the front and ensure it's clickable */
     .rp-header-anchor {
       position: absolute;
+      top: 50%;
       left: calc(-1 * var(--rp-steps-gap) - var(--rp-steps-size) / 2);
+      transform: translate(0, -50%);
     }
   }
 }
