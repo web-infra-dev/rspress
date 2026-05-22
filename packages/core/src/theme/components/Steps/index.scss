@@ -20,9 +20,9 @@
       // position
       content: counter(step);
       position: absolute;
+      top: 50%;
       left: calc(-1 * var(--rp-steps-gap));
-      transform: translate(-50%, 0);
-      align-self: center;
+      transform: translate(-50%, -50%);
 
       // size
       width: var(--rp-steps-size);
