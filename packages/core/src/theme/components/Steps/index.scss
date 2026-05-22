@@ -14,16 +14,15 @@
     counter-increment: step;
     margin-top: 0;
     position: relative;
-    display: flex;
-    align-items: center;
     min-height: 30px;
 
     &::before {
       // position
       content: counter(step);
       position: absolute;
+      top: 50%;
       left: calc(-1 * var(--rp-steps-gap));
-      transform: translate(-50%, 0);
+      transform: translate(-50%, -50%);
 
       // size
       width: var(--rp-steps-size);
@@ -48,7 +47,9 @@
     /* anchor link: move to the front and ensure it's clickable */
     .rp-header-anchor {
       position: absolute;
+      top: 50%;
       left: calc(-1 * var(--rp-steps-gap) - var(--rp-steps-size) / 2);
+      transform: translate(0, -50%);
     }
   }
 }
