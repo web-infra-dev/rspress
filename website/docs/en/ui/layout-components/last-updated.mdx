@@ -37,17 +37,18 @@ When `lastUpdated` is enabled, the component automatically reads and formats the
 
 ### Displaying the author
 
-When `lastUpdated` is enabled, the last commit author is also shown by default. Customize via `lastUpdatedAuthor`:
+Configure `lastUpdated.author` to display the last commit author:
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
   themeConfig: {
-    lastUpdated: true,
-    // Hide the author:
-    // lastUpdatedAuthor: false,
+    lastUpdated: {
+      // Show the commit author's name:
+      // author: true,
 
-    // Custom display text:
-    lastUpdatedAuthor: ({ name, email }) => `${name} <${email}>`,
+      // Or use custom display text:
+      author: ({ name, email }) => `${name} <${email}>`,
+    },
   },
 });
 ```

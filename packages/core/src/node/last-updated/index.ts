@@ -39,7 +39,7 @@ async function getGitInfo(filePath: string): Promise<GitInfo | undefined> {
  * The plugin is used to add the last updated time and author to the page.
  */
 export function pluginLastUpdated(
-  authorOption: LastUpdatedAuthorOption = true,
+  authorOption: LastUpdatedAuthorOption = false,
 ): RspressPlugin {
   return {
     name: '@rspress/plugin-last-updated',

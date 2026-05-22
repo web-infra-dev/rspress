@@ -37,17 +37,18 @@ export default defineConfig({
 
 ### 显示作者
 
-启用 `lastUpdated` 后，默认会一并显示最后一次提交的作者。可通过 `lastUpdatedAuthor` 自定义：
+配置 `lastUpdated.author` 可以展示最后一次提交的作者：
 
 ```ts title="rspress.config.ts"
 export default defineConfig({
   themeConfig: {
-    lastUpdated: true,
-    // 隐藏作者：
-    // lastUpdatedAuthor: false,
+    lastUpdated: {
+      // 展示提交作者名称：
+      // author: true,
 
-    // 自定义显示文本：
-    lastUpdatedAuthor: ({ name, email }) => `${name} <${email}>`,
+      // 或使用自定义展示文本：
+      author: ({ name, email }) => `${name} <${email}>`,
+    },
   },
 });
 ```

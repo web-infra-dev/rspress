@@ -221,7 +221,7 @@ export default defineConfig({
 
 ## lastUpdated
 
-- **Type**: `boolean`
+- **Type**: `boolean | { author?: boolean | ((info: { name: string; email: string; filePath: string }) => string) }`
 - **Default**: `false`
 
 Whether to display the last updated time of each document page. Rspress reads this value from the file's latest Git commit.
@@ -238,22 +238,16 @@ export default defineConfig({
 
 When deploying in CI, make sure the Git history is available. For example, use `fetch-depth: 0` with `actions/checkout` on GitHub Actions.
 
-## lastUpdatedAuthor
-
-- **Type**: `boolean | ((info: { name: string; email: string; filePath: string }) => string)`
-- **Default**: `true` when `lastUpdated` is enabled
-
-Whether to display the last commit author of each document page. This option only takes effect when `lastUpdated` is enabled.
-
-Set it to `false` to hide the author, or pass a function to customize the rendered author text.
+Set `author` to display the last commit author as well. Pass a function to customize the rendered author text.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    lastUpdated: true,
-    lastUpdatedAuthor: ({ name, email }) => `${name} <${email}>`,
+    lastUpdated: {
+      author: ({ name, email }) => `${name} <${email}>`,
+    },
   },
 });
 ```

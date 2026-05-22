@@ -208,7 +208,7 @@ export default defineConfig({
 
 ## lastUpdated
 
-- **类型**：`boolean`
+- **类型**：`boolean | { author?: boolean | ((info: { name: string; email: string; filePath: string }) => string) }`
 - **默认值**： `false`
 
 是否展示每个文档页面的最后更新时间。Rspress 会从文件最新一次 Git 提交中读取该时间。
@@ -225,22 +225,16 @@ export default defineConfig({
 
 在 CI 中部署时，请确保可以访问完整的 Git 历史。例如在 GitHub Actions 中为 `actions/checkout` 配置 `fetch-depth: 0`。
 
-## lastUpdatedAuthor
-
-- **类型**：`boolean | ((info: { name: string; email: string; filePath: string }) => string)`
-- **默认值**：启用 `lastUpdated` 时为 `true`
-
-是否展示每个文档页面最后一次提交的作者。该选项仅在启用 `lastUpdated` 时生效。
-
-设置为 `false` 可以隐藏作者，也可以传入函数来自定义展示的作者文本。
+设置 `author` 可以同时展示最后一次提交的作者，也可以传入函数来自定义展示的作者文本。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    lastUpdated: true,
-    lastUpdatedAuthor: ({ name, email }) => `${name} <${email}>`,
+    lastUpdated: {
+      author: ({ name, email }) => `${name} <${email}>`,
+    },
   },
 });
 ```
