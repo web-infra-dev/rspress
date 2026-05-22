@@ -14,8 +14,6 @@
     counter-increment: step;
     margin-top: 0;
     position: relative;
-    display: flex;
-    align-items: center;
     min-height: 30px;
 
     &::before {
@@ -24,6 +22,7 @@
       position: absolute;
       left: calc(-1 * var(--rp-steps-gap));
       transform: translate(-50%, 0);
+      align-self: center;
 
       // size
       width: var(--rp-steps-size);
