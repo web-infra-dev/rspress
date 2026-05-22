@@ -39,8 +39,10 @@
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
     "@playwright/test": "1.58.2",
+    "@rsbuild/plugin-react": "~2.0.0",
     "@rslint/core": "^0.5.3",
     "@rspress/config": "workspace:*",
+    "@rstest/adapter-rslib": "0.10.0",
     "@rstest/core": "^0.10.0",
     "@types/cross-spawn": "^6.0.6",
     "@types/node": "^22.8.1",

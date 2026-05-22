@@ -81,7 +81,7 @@ export function CodeBlock({
   codeButtonGroupProps,
   children,
 }: CodeBlockProps) {
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return <>{children}</>;
   }
 

@@ -31,7 +31,7 @@ export function FallbackHeading({
   level: 1 | 2 | 3 | 4 | 5 | 6;
   title: string;
 }) {
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return <>{`${'#'.repeat(level)} ${title}\n\n`}</>;
   }
 

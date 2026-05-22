@@ -48,7 +48,7 @@ export function App() {
     frontmatter[GLOBAL_COMPONENTS_KEY] === false ||
     query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
 
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return (
       <Root>
         <Layout />
