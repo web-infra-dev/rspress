@@ -1800,8 +1800,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-twoslash
       '@rstack-dev/doc-ui':
-        specifier: ^1.14.1
-        version: 1.14.1(@rspress/core@packages+core)
+        specifier: ^1.14.2
+        version: 1.14.2(@rspress/core@packages+core)
       '@shikijs/transformers':
         specifier: ^4.0.2
         version: 4.0.2
@@ -3414,8 +3414,8 @@ packages:
   '@rspack/resolver@0.2.8':
     resolution: {integrity: sha512-FBWqdHhzS8mcf/WN4Ktzr7EaeaN+hsxbN98EweegX3924beZuY6H70CSFWCv1fIHAieCUv/9XCjKggHvhCsLwA==}
 
-  '@rstack-dev/doc-ui@1.14.1':
-    resolution: {integrity: sha512-I5ezYnGCmZ3RQlYrbFKTWxhXw0hQ335959d6MtS2Uo3B4LzOyoERzQfuKlC16S9tum/p0cSlQJw3bMgHjWY8Ug==}
+  '@rstack-dev/doc-ui@1.14.2':
+    resolution: {integrity: sha512-bnQY2rHLKvqOfEp/fGjEmMM9WTVsLEL9BwaQXN7jnX9zfA1AWx9ic2lBbOEBtuQ3/cg5uTB3pKNukXQTtytKwA==}
     peerDependencies:
       '@rspress/core': '>=2.0.0'
     peerDependenciesMeta:
@@ -9072,7 +9072,7 @@ snapshots:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  '@rstack-dev/doc-ui@1.14.1(@rspress/core@packages+core)':
+  '@rstack-dev/doc-ui@1.14.2(@rspress/core@packages+core)':
     optionalDependencies:
       '@rspress/core': link:packages/core
 
