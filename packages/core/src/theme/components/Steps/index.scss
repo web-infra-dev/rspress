@@ -1,6 +1,7 @@
 :root {
   --rp-steps-gap: 24px;
   --rp-steps-size: 30px;
+  --rp-steps-offset-y: 4px;
 }
 
 .rp-steps {
@@ -14,13 +15,13 @@
     counter-increment: step;
     margin-top: 0;
     position: relative;
-    min-height: 30px;
+    min-height: var(--rp-steps-size);
 
     &::before {
       // position
       content: counter(step);
       position: absolute;
-      top: 50%;
+      top: calc(var(--rp-steps-size) / 2 + var(--rp-steps-offset-y));
       left: calc(-1 * var(--rp-steps-gap));
       transform: translate(-50%, -50%);
 
@@ -47,7 +48,7 @@
     /* anchor link: move to the front and ensure it's clickable */
     .rp-header-anchor {
       position: absolute;
-      top: 50%;
+      top: calc(var(--rp-steps-size) / 2 + var(--rp-steps-offset-y));
       left: calc(-1 * var(--rp-steps-gap) - var(--rp-steps-size) / 2);
       transform: translate(0, -50%);
     }
