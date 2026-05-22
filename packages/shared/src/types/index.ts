@@ -128,6 +128,7 @@ export interface UserConfig {
   root?: string;
   /**
    * Path to the logo file in nav bar.
+   * @default ''
    */
   logo?: string | { dark: string; light: string };
   /**
@@ -147,6 +148,7 @@ export interface UserConfig {
   base?: string;
   /**
    * Path to html icon file.
+   * @default ''
    */
   icon?: string | URL;
   /**
@@ -180,11 +182,12 @@ export interface UserConfig {
   locales?: Locale[];
   /**
    * The i18n text data source path. Default is `i18n.json` in cwd.
-   * @default '<cwd>/i18n.json'
+   * @default path.join(process.cwd(), 'i18n.json')
    */
   i18nSourcePath?: string;
   /**
    * The i18n text data.
+   * @default {}
    */
   i18nSource?:
     | (I18nText & Record<string, Record<string, string>>)
@@ -215,18 +218,22 @@ export interface UserConfig {
   plugins?: RspressPlugin[];
   /**
    * Replace rule, will replace the content of the page.
+   * @default []
    */
   replaceRules?: ReplaceRule[];
   /**
    * Output directory
+   * @default 'doc_build'
    */
   outDir?: string;
   /**
    * User side custom theme directory
+   * @default path.join(process.cwd(), 'theme')
    */
   themeDir?: string;
   /**
    * Global components
+   * @default []
    */
   globalUIComponents?: (string | [string, object])[];
   /**
@@ -298,14 +305,17 @@ export interface UserConfig {
   languageParity?: {
     /**
      * Whether to enable language parity checking
+     * @default false
      */
     enabled?: boolean;
     /**
      * Directories to include in the parity check
+     * @default []
      */
     include?: string[];
     /**
      * Directories to exclude from the parity check
+     * @default []
      */
     exclude?: string[];
   };
@@ -462,7 +472,7 @@ export interface FrontMatterMeta {
 export interface RouteOptions {
   /**
    * The extension name of the filepath that will be converted to a route
-   * @default ['js','jsx','ts','tsx','md','mdx']
+   * @default ['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']
    */
   extensions?: string[];
   /**
@@ -536,10 +546,25 @@ export type RemarkImageOptions = {
 };
 
 export interface MarkdownOptions {
+  /**
+   * @default []
+   */
   remarkPlugins?: PluggableList;
+  /**
+   * @default []
+   */
   rehypePlugins?: PluggableList;
+  /**
+   * @default { checkDeadLinks: true, autoPrefix: true }
+   */
   link?: RemarkLinkOptions;
+  /**
+   * @default { checkDeadImages: true }
+   */
   image?: RemarkImageOptions;
+  /**
+   * @default false
+   */
   showLineNumbers?: boolean;
   /**
    * Whether to wrap code by default
@@ -564,6 +589,7 @@ export interface MarkdownOptions {
   };
   /**
    * Register global components in mdx files
+   * @default []
    */
   globalComponents?: string[];
   /**

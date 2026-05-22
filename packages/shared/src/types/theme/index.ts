@@ -69,6 +69,7 @@ export type ThemeConfig = {
   darkMode?: boolean;
   /**
    * The nav items. When it's an object, the key is the version of current doc.
+   * @default []
    */
   nav?: NavItem[] | { [key: string]: NavItem[] };
   /**
@@ -88,6 +89,7 @@ export type ThemeConfig = {
   /**
    * The social links to be displayed at the end of the nav bar. Perfect for
    * placing links to social services such as GitHub, X, Facebook, etc.
+   * @default []
    */
   socialLinks?: SocialLink[];
   /**
@@ -105,7 +107,7 @@ export type ThemeConfig = {
   /**
    * The behavior of hiding navbar
    * Currently, Rspress V2 does not implement `hideNavBar`
-   * @default 'never''
+   * @default 'never'
    */
   hideNavbar?: 'always' | 'auto' | 'never';
   /**
