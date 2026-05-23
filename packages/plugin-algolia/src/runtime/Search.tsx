@@ -5,7 +5,7 @@ import { removeBase, useLang, useNavigate } from '@rspress/core/runtime';
 import { Link } from '@theme';
 import '@docsearch/css';
 import './Search.css';
-import { useEffect } from 'react';
+import { preconnect } from 'react-dom';
 import type { Locales } from './locales';
 
 const Hit: DocSearchProps['hitComponent'] = ({ hit, children }) => {
@@ -26,18 +26,10 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
   const lang = useLang();
   const { translations, placeholder } = locales?.[lang] ?? {};
 
-  useEffect(() => {
-    const preconnect = document.createElement('link');
-    const appId = docSearchProps.appId;
-    preconnect.id = appId;
-    preconnect.rel = 'preconnect';
-    preconnect.href = `https://${appId}-dsn.algolia.net`;
-    preconnect.crossOrigin = '';
-    document.head.appendChild(preconnect);
-    return () => {
-      document.head.removeChild(preconnect);
-    };
-  }, [docSearchProps.appId]);
+  const appId = docSearchProps.appId;
+  if (appId) {
+    preconnect(`https://${appId}-dsn.algolia.net`, { crossOrigin: '' });
+  }
 
   return (
     <>
