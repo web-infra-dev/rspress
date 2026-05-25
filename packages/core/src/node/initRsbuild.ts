@@ -423,9 +423,10 @@ async function createInternalBuildConfig(
               enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
           },
           define: {
+            // import.meta.env.SSR is built in Rsbuild v2.0.7
+            // https://github.com/web-infra-dev/rsbuild/pull/7700
             'process.env.__SSR__': JSON.stringify(false),
             'process.env.__SSR_MD__': JSON.stringify(false),
-            'import.meta.env.SSR': false,
             'import.meta.env.SSG_MD': JSON.stringify(false),
           },
         },
@@ -460,7 +461,6 @@ async function createInternalBuildConfig(
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),
                   'process.env.__SSR_MD__': JSON.stringify(false),
-                  'import.meta.env.SSR': true,
                   'import.meta.env.SSG_MD': JSON.stringify(false),
                 },
               },
@@ -503,7 +503,6 @@ async function createInternalBuildConfig(
                 define: {
                   'process.env.__SSR__': JSON.stringify(true),
                   'process.env.__SSR_MD__': JSON.stringify(true),
-                  'import.meta.env.SSR': true,
                   'import.meta.env.SSG_MD': JSON.stringify(true),
                 },
               },

@@ -62,7 +62,7 @@ export function normalizePosixPath(id: string): string {
   return normalizedPath;
 }
 
-export const inBrowser = () => !process.env.__SSR__;
+export const inBrowser = () => !import.meta.env.SSR;
 
 export function addLeadingSlash(url: string) {
   return url.charAt(0) === '/' || isExternalUrl(url) ? url : `/${url}`;
