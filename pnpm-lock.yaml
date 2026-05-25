@@ -25,7 +25,7 @@ importers:
         version: link:scripts/config
       '@rstest/adapter-rslib':
         specifier: 0.10.0
-        version: 0.10.0(@rslib/core@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3))(@rstest/core@0.10.0)(typescript@6.0.3)
+        version: 0.10.0(@rslib/core@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3))(@rstest/core@0.10.0)(typescript@6.0.3)
       '@rstest/core':
         specifier: ^0.10.0
         version: 0.10.0
@@ -36,8 +36,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@typescript/native-preview':
-        specifier: 7.0.0-dev.20260516.1
-        version: 7.0.0-dev.20260516.1
+        specifier: 7.0.0-dev.20260523.1
+        version: 7.0.0-dev.20260523.1
       bumpp:
         specifier: ^11.1.0
         version: 11.1.0
@@ -148,8 +148,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
 
   e2e/fixtures/basic:
     dependencies:
@@ -279,8 +279,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
 
   e2e/fixtures/github-alert-mdxjs:
     dependencies:
@@ -335,8 +335,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
 
   e2e/fixtures/icon-file-url:
     dependencies:
@@ -820,8 +820,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
 
   e2e/fixtures/search-algolia:
     dependencies:
@@ -839,8 +839,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
 
   e2e/fixtures/search-code-blocks:
     dependencies:
@@ -868,8 +868,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
 
   e2e/fixtures/search-i18n:
     dependencies:
@@ -995,8 +995,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
 
   packages/core:
     dependencies:
@@ -1005,7 +1005,7 @@ importers:
         version: 3.1.1
       '@mdx-js/react':
         specifier: ^3.1.1
-        version: 3.1.1(@types/react@19.2.14)(react@19.2.6)
+        version: 3.1.1(@types/react@19.2.15)(react@19.2.6)
       '@rsbuild/core':
         specifier: ^2.0.6
         version: 2.0.6
@@ -1126,7 +1126,7 @@ importers:
         version: 2.0.2(@rsbuild/core@2.0.6)(@rspack/core@2.0.3(@swc/helpers@0.5.21))(typescript@6.0.3)
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1146,14 +1146,14 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       '@types/react-dom':
         specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.14)
+        version: 19.2.3(@types/react@19.2.15)
       '@types/react-reconciler':
         specifier: ^0.33.0
-        version: 0.33.0(@types/react@19.2.14)
+        version: 0.33.0(@types/react@19.2.15)
       '@types/web':
         specifier: ^0.0.349
         version: 0.0.349
@@ -1182,8 +1182,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       postcss:
-        specifier: 8.5.14
-        version: 8.5.14
+        specifier: 8.5.15
+        version: 8.5.15
       remark-directive:
         specifier: ^4.0.0
         version: 4.0.0
@@ -1223,7 +1223,7 @@ importers:
         version: 7.57.7(@types/node@22.19.15)
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
@@ -1241,7 +1241,7 @@ importers:
         version: 4.6.3
       '@docsearch/react':
         specifier: ^4.6.3
-        version: 4.6.3(@algolia/client-search@5.50.0)(@types/react@19.2.14)(algoliasearch@5.50.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(search-insights@2.17.3)
+        version: 4.6.3(@algolia/client-search@5.50.0)(@types/react@19.2.15)(algoliasearch@5.50.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(search-insights@2.17.3)
       '@rspress/core':
         specifier: workspace:^2.0.10
         version: link:../core
@@ -1254,7 +1254,7 @@ importers:
         version: 2.0.0(@rsbuild/core@2.0.6)(@rspack/core@2.0.3(@swc/helpers@0.5.21))
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1262,11 +1262,11 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       '@types/react-dom':
         specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.14)
+        version: 19.2.3(@types/react@19.2.15)
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -1293,7 +1293,7 @@ importers:
         version: 2.4.0(typescript@6.0.3)
       react-markdown:
         specifier: ^10.1.0
-        version: 10.1.0(@types/react@19.2.14)(react@19.2.6)
+        version: 10.1.0(@types/react@19.2.15)(react@19.2.6)
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
@@ -1309,7 +1309,7 @@ importers:
         version: 7.57.7(@types/node@22.19.15)
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
@@ -1320,11 +1320,11 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       '@types/react-dom':
         specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.14)
+        version: 19.2.3(@types/react@19.2.15)
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -1355,7 +1355,7 @@ importers:
         version: 7.57.7(@types/node@22.19.15)
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1363,11 +1363,11 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       '@types/react-dom':
         specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.14)
+        version: 19.2.3(@types/react@19.2.15)
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -1410,7 +1410,7 @@ importers:
         version: 2.0.0(@rsbuild/core@2.0.6)(@rspack/core@2.0.3(@swc/helpers@0.5.21))
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1421,8 +1421,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -1468,7 +1468,7 @@ importers:
         version: 2.0.0(@rsbuild/core@2.0.6)(@rspack/core@2.0.3(@swc/helpers@0.5.21))
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: 'link:'
@@ -1488,11 +1488,11 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       '@types/react-dom':
         specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.14)
+        version: 19.2.3(@types/react@19.2.15)
       mdast-util-mdx-jsx:
         specifier: ^3.2.0
         version: 3.2.0
@@ -1535,7 +1535,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -1543,11 +1543,11 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       '@types/react-dom':
         specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.14)
+        version: 19.2.3(@types/react@19.2.15)
       mdast-util-mdx-jsx:
         specifier: ^3.2.0
         version: 3.2.0
@@ -1584,13 +1584,13 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -1612,7 +1612,7 @@ importers:
         version: 7.57.7(@types/node@25.6.0)
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1652,7 +1652,7 @@ importers:
         version: 7.57.7(@types/node@25.6.0)
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1666,8 +1666,8 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -1695,7 +1695,7 @@ importers:
         version: 7.57.7(@types/node@22.19.15)
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1703,11 +1703,11 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       '@types/react-dom':
         specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.14)
+        version: 19.2.3(@types/react@19.2.15)
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -1732,7 +1732,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.21.5
-        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+        version: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -1740,8 +1740,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
@@ -1812,8 +1812,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.14
+        specifier: ^19.2.15
+        version: 19.2.15
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -3841,8 +3841,8 @@ packages:
     peerDependencies:
       '@types/react': '*'
 
-  '@types/react@19.2.14':
-    resolution: {integrity: sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==}
+  '@types/react@19.2.15':
+    resolution: {integrity: sha512-eRwcGNHve+E8qtEQSSRl6urh+rFop4v8gm6O8rGv25CodbvFdLjA1vVQ1KkiFE0w0UPOnb8tDiFKL5lp0rtY5Q==}
 
   '@types/supports-color@8.1.3':
     resolution: {integrity: sha512-Hy6UMpxhE3j1tLpl27exp1XqHD7n8chAiNPzWfz16LPZoMMoSc4dzLl6w9qijkEb/r5O1ozdu1CWGA2L83ZeZg==}
@@ -3865,50 +3865,50 @@ packages:
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260516.1':
-    resolution: {integrity: sha512-RWhsFuzf26MXZOCppITm7Vg3ouR0bxA9O6Q9zRJMk/feyuGUFwO1V9qxX3DgiONatHmHKNR6+sBZNpnSbeCNGA==}
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260523.1':
+    resolution: {integrity: sha512-4WHj9v41per176h00j3moITcHpR+8SNoAFdbDuJwUDCJiQkbrCjwulK8UwALxLPEGqyBdNARWcM6GXVTexBg1w==}
     engines: {node: '>=16.20.0'}
     cpu: [arm64]
     os: [darwin]
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260516.1':
-    resolution: {integrity: sha512-V+8gKoi/pT5y6wsGzhs4MXL3YpPRaOri0U9/5++E9eqJtcbsUFMsEB3cykvBfzfGN7MtJxzNl1PQ8xudoyADeg==}
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260523.1':
+    resolution: {integrity: sha512-WeVqasFLVwbnwmjLhBTwfNminhaTfCo+ptOW2JT+IgY2WYBGIKXQmhaPPU5bdsHCur7O2RmY5tUAmvqv7V+kog==}
     engines: {node: '>=16.20.0'}
     cpu: [x64]
     os: [darwin]
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260516.1':
-    resolution: {integrity: sha512-aBsfW6gq45WKSvyvnI3hgoW3ARHFHP+/BttGhob9n3wWx7SF7ALJdQ9lb7XKK0OVDyd8o3g3/DgYizc26DlWuw==}
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260523.1':
+    resolution: {integrity: sha512-2Jd0iJOd77LLwsEDFc9O5nfPxvs75d1FafG7BhGGlfD8RtxL4+BzAy8KYI0++TTmHL6aL7+VIr3+TQ58S68Sfw==}
     engines: {node: '>=16.20.0'}
     cpu: [arm64]
     os: [linux]
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20260516.1':
-    resolution: {integrity: sha512-FHVd7C2ogrMRcUj3KWc6R9VYU6x+FUll7I5fvJKHE8e8UtzpmkxmLH18uaOFMwoFQmSMqAZOcnGlgtRDSe/vqw==}
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20260523.1':
+    resolution: {integrity: sha512-C+fOL4DO/JTLkKT22Bw34FGiUpS4scqC+5AaaCVBCiHWXn1NknSrbvcMWEmg8HzCWPmiUwSQUryNZIFDqi8tUw==}
     engines: {node: '>=16.20.0'}
     cpu: [arm]
     os: [linux]
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20260516.1':
-    resolution: {integrity: sha512-U8CF9xzmNRAq9KfI2DrUlhylBDBoUNN3JK+B8fGoL4yl56/1/OSv/nAc3zQy9o65c7pUtbK5mJ7UsHsEfY/3VA==}
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20260523.1':
+    resolution: {integrity: sha512-DiJLdnzh/TolhvDuGxqD1sxlQNnCFLsLLnGPVN6i+/DUPC/cWy0c+5RHruow9lQbtPkZ3aapztkYP2wEP1Ll6Q==}
     engines: {node: '>=16.20.0'}
     cpu: [x64]
     os: [linux]
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260516.1':
-    resolution: {integrity: sha512-hjjyWSDlfUi6Ie9S7Uu+jQxzM0ZwzH8enaZ8uDy3/ntKfCizNHvC4vv1RNbLC6IW28A0LINr/s9ZmWXxYNgVmA==}
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260523.1':
+    resolution: {integrity: sha512-axyNrdvX4D6T5ZuZHhufFbPRiKzJyqxusLl5nI3wJqmGN3G5JYCJY9k39LjRYI6oB3ingyKng+3QJ2q7b3IHQA==}
     engines: {node: '>=16.20.0'}
     cpu: [arm64]
     os: [win32]
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20260516.1':
-    resolution: {integrity: sha512-Itbj6PB/FHisZuaDYJnmwKgbjd3EWuOyBsVUqakQR+BIEYuNdrmbf6ocxaPO0RZrGMLbrV12AE5/EZC+vqYN/w==}
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20260523.1':
+    resolution: {integrity: sha512-NRBlDy12DLqCC7smCWlEgsiwCxUUl0TAVLUikm+c+WvFhnsY909jk1X8FNUHhNZmR3APHS57AMOq2rreQwHdiQ==}
     engines: {node: '>=16.20.0'}
     cpu: [x64]
     os: [win32]
 
-  '@typescript/native-preview@7.0.0-dev.20260516.1':
-    resolution: {integrity: sha512-mRzRdR9whPRzkLcGk1+wa15/jlIAFMyYV3X9A5+zHQiPR0ZZl1ywSHNtPa/OZmba3Mzsu9jIIFLmPIsryVt3aQ==}
+  '@typescript/native-preview@7.0.0-dev.20260523.1':
+    resolution: {integrity: sha512-+pkICUeoIbnecsvkEQFmkBC7qQqR5ltQQl+bXuGpKBOURVu2/zDA4i09Ef4KWWD6Kmx7i/EMO2fMZ3IsZEdzPw==}
     engines: {node: '>=16.20.0'}
     hasBin: true
 
@@ -5851,6 +5851,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@3.3.12:
+    resolution: {integrity: sha512-ZB9RH/39qpq5Vu6Y+NmUaFhQR6pp+M2Xt76XBnEwDaGcVAqhlvxrl3B2bKS5D3NH3QR76v3aSrKaF/Kiy7lEtQ==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
   negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
@@ -6138,8 +6143,8 @@ packages:
     resolution: {integrity: sha512-W62t/Se6rA0Az3DfCL0AqJwXuKwBeYg6nOaIgzP+xZ7N5BFCI7DYi1qs6ygUYT6rvfi6t9k65UMLJC+PHZpDAA==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.5.14:
-    resolution: {integrity: sha512-SoSL4+OSEtR99LHFZQiJLkT59C5B1amGO1NzTwj7TT1qCUgUO6hxOvzkOYxD+vMrXBM3XJIKzokoERdqQq/Zmg==}
+  postcss@8.5.15:
+    resolution: {integrity: sha512-FfR8sjd4em2T6fb3I2MwAJU7HWVMr9zba+enmQeeWFfCbm+UOC/0X4DS8XtpUTMwWMGbjKYP7xjfNekzyGmB3A==}
     engines: {node: ^10 || ^12 || >=14}
 
   prettier-plugin-packagejson@3.0.2:
@@ -8089,21 +8094,21 @@ snapshots:
 
   '@cspell/url@9.8.0': {}
 
-  '@docsearch/core@4.6.3(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
+  '@docsearch/core@4.6.3(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
     optionalDependencies:
-      '@types/react': 19.2.14
+      '@types/react': 19.2.15
       react: 19.2.6
       react-dom: 19.2.6(react@19.2.6)
 
   '@docsearch/css@4.6.3': {}
 
-  '@docsearch/react@4.6.3(@algolia/client-search@5.50.0)(@types/react@19.2.14)(algoliasearch@5.50.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(search-insights@2.17.3)':
+  '@docsearch/react@4.6.3(@algolia/client-search@5.50.0)(@types/react@19.2.15)(algoliasearch@5.50.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(search-insights@2.17.3)':
     dependencies:
       '@algolia/autocomplete-core': 1.19.2(@algolia/client-search@5.50.0)(algoliasearch@5.50.0)(search-insights@2.17.3)
-      '@docsearch/core': 4.6.3(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@docsearch/core': 4.6.3(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@docsearch/css': 4.6.3
     optionalDependencies:
-      '@types/react': 19.2.14
+      '@types/react': 19.2.15
       react: 19.2.6
       react-dom: 19.2.6(react@19.2.6)
       search-insights: 2.17.3
@@ -8459,10 +8464,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.2.14)(react@19.2.6)':
+  '@mdx-js/react@3.1.1(@types/react@19.2.15)(react@19.2.6)':
     dependencies:
       '@types/mdx': 2.0.13
-      '@types/react': 19.2.14
+      '@types/react': 19.2.15
       react: 19.2.6
 
   '@microsoft/api-extractor-model@7.33.4(@types/node@22.19.15)':
@@ -8788,7 +8793,7 @@ snapshots:
     dependencies:
       deepmerge: 4.3.1
       loader-utils: 2.0.4
-      postcss: 8.5.14
+      postcss: 8.5.15
       reduce-configs: 1.1.2
       sass-embedded: 1.99.0
     optionalDependencies:
@@ -8921,10 +8926,10 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rslib/core@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)':
+  '@rslib/core@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)':
     dependencies:
       '@rsbuild/core': 2.0.6
-      rsbuild-plugin-dts: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@rsbuild/core@2.0.6)(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+      rsbuild-plugin-dts: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@rsbuild/core@2.0.6)(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
     optionalDependencies:
       '@microsoft/api-extractor': 7.57.7(@types/node@22.19.15)
       typescript: 6.0.3
@@ -8933,10 +8938,10 @@ snapshots:
       - '@typescript/native-preview'
       - core-js
 
-  '@rslib/core@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)':
+  '@rslib/core@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)':
     dependencies:
       '@rsbuild/core': 2.0.6
-      rsbuild-plugin-dts: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@25.6.0))(@rsbuild/core@2.0.6)(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+      rsbuild-plugin-dts: 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@25.6.0))(@rsbuild/core@2.0.6)(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
     optionalDependencies:
       '@microsoft/api-extractor': 7.57.7(@types/node@25.6.0)
       typescript: 6.0.3
@@ -9092,9 +9097,9 @@ snapshots:
     optionalDependencies:
       '@rspress/core': link:packages/core
 
-  '@rstest/adapter-rslib@0.10.0(@rslib/core@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3))(@rstest/core@0.10.0)(typescript@6.0.3)':
+  '@rstest/adapter-rslib@0.10.0(@rslib/core@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3))(@rstest/core@0.10.0)(typescript@6.0.3)':
     dependencies:
-      '@rslib/core': 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3)
+      '@rslib/core': 0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3)
       '@rstest/core': 0.10.0
     optionalDependencies:
       typescript: 6.0.3
@@ -9554,15 +9559,15 @@ snapshots:
 
   '@types/parse5@6.0.3': {}
 
-  '@types/react-dom@19.2.3(@types/react@19.2.14)':
+  '@types/react-dom@19.2.3(@types/react@19.2.15)':
     dependencies:
-      '@types/react': 19.2.14
+      '@types/react': 19.2.15
 
-  '@types/react-reconciler@0.33.0(@types/react@19.2.14)':
+  '@types/react-reconciler@0.33.0(@types/react@19.2.15)':
     dependencies:
-      '@types/react': 19.2.14
+      '@types/react': 19.2.15
 
-  '@types/react@19.2.14':
+  '@types/react@19.2.15':
     dependencies:
       csstype: 3.2.3
 
@@ -9585,36 +9590,36 @@ snapshots:
     dependencies:
       '@types/node': 22.19.15
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260516.1':
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260523.1':
     optional: true
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260516.1':
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260523.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260516.1':
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260523.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20260516.1':
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20260523.1':
     optional: true
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20260516.1':
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20260523.1':
     optional: true
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260516.1':
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260523.1':
     optional: true
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20260516.1':
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20260523.1':
     optional: true
 
-  '@typescript/native-preview@7.0.0-dev.20260516.1':
+  '@typescript/native-preview@7.0.0-dev.20260523.1':
     optionalDependencies:
-      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20260516.1
-      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20260516.1
-      '@typescript/native-preview-linux-arm': 7.0.0-dev.20260516.1
-      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20260516.1
-      '@typescript/native-preview-linux-x64': 7.0.0-dev.20260516.1
-      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20260516.1
-      '@typescript/native-preview-win32-x64': 7.0.0-dev.20260516.1
+      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20260523.1
+      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20260523.1
+      '@typescript/native-preview-linux-arm': 7.0.0-dev.20260523.1
+      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20260523.1
+      '@typescript/native-preview-linux-x64': 7.0.0-dev.20260523.1
+      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20260523.1
+      '@typescript/native-preview-win32-x64': 7.0.0-dev.20260523.1
 
   '@typescript/vfs@1.6.4(typescript@6.0.3)':
     dependencies:
@@ -9667,7 +9672,7 @@ snapshots:
       '@vue/shared': 3.5.31
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.14
+      postcss: 8.5.15
       source-map-js: 1.2.1
     optional: true
 
@@ -9680,7 +9685,7 @@ snapshots:
       '@vue/shared': 3.5.34
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.14
+      postcss: 8.5.15
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.31':
@@ -12140,6 +12145,8 @@ snapshots:
 
   nanoid@3.3.11: {}
 
+  nanoid@3.3.12: {}
+
   negotiator@0.6.3: {}
 
   no-case@3.0.4:
@@ -12401,29 +12408,29 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  postcss-import@15.1.0(postcss@8.5.14):
+  postcss-import@15.1.0(postcss@8.5.15):
     dependencies:
-      postcss: 8.5.14
+      postcss: 8.5.15
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.11
 
-  postcss-js@4.1.0(postcss@8.5.14):
+  postcss-js@4.1.0(postcss@8.5.15):
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.5.14
+      postcss: 8.5.15
 
-  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.5.14)(yaml@2.8.4):
+  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.5.15)(yaml@2.8.4):
     dependencies:
       lilconfig: 3.1.3
     optionalDependencies:
       jiti: 1.21.7
-      postcss: 8.5.14
+      postcss: 8.5.15
       yaml: 2.8.4
 
-  postcss-nested@6.2.0(postcss@8.5.14):
+  postcss-nested@6.2.0(postcss@8.5.15):
     dependencies:
-      postcss: 8.5.14
+      postcss: 8.5.15
       postcss-selector-parser: 6.1.2
 
   postcss-selector-parser@6.1.2:
@@ -12439,9 +12446,9 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postcss@8.5.14:
+  postcss@8.5.15:
     dependencies:
-      nanoid: 3.3.11
+      nanoid: 3.3.12
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -12511,11 +12518,11 @@ snapshots:
 
   react-lazy-with-preload@2.2.1: {}
 
-  react-markdown@10.1.0(@types/react@19.2.14)(react@19.2.6):
+  react-markdown@10.1.0(@types/react@19.2.15)(react@19.2.6):
     dependencies:
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
-      '@types/react': 19.2.14
+      '@types/react': 19.2.15
       devlop: 1.1.0
       hast-util-to-jsx-runtime: 2.3.6
       html-url-attributes: 3.0.1
@@ -12883,22 +12890,22 @@ snapshots:
       glob: 13.0.6
       package-json-from-dist: 1.0.1
 
-  rsbuild-plugin-dts@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@rsbuild/core@2.0.6)(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3):
+  rsbuild-plugin-dts@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@22.19.15))(@rsbuild/core@2.0.6)(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.0.6
     optionalDependencies:
       '@microsoft/api-extractor': 7.57.7(@types/node@22.19.15)
-      '@typescript/native-preview': 7.0.0-dev.20260516.1
+      '@typescript/native-preview': 7.0.0-dev.20260523.1
       typescript: 6.0.3
 
-  rsbuild-plugin-dts@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@25.6.0))(@rsbuild/core@2.0.6)(@typescript/native-preview@7.0.0-dev.20260516.1)(typescript@6.0.3):
+  rsbuild-plugin-dts@0.21.5(@microsoft/api-extractor@7.57.7(@types/node@25.6.0))(@rsbuild/core@2.0.6)(@typescript/native-preview@7.0.0-dev.20260523.1)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.0.6
     optionalDependencies:
       '@microsoft/api-extractor': 7.57.7(@types/node@25.6.0)
-      '@typescript/native-preview': 7.0.0-dev.20260516.1
+      '@typescript/native-preview': 7.0.0-dev.20260523.1
       typescript: 6.0.3
 
   rsbuild-plugin-google-analytics@1.0.5(@rsbuild/core@2.0.6):
@@ -13401,11 +13408,11 @@ snapshots:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.1.1
-      postcss: 8.5.14
-      postcss-import: 15.1.0(postcss@8.5.14)
-      postcss-js: 4.1.0(postcss@8.5.14)
-      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.5.14)(yaml@2.8.4)
-      postcss-nested: 6.2.0(postcss@8.5.14)
+      postcss: 8.5.15
+      postcss-import: 15.1.0(postcss@8.5.15)
+      postcss-js: 4.1.0(postcss@8.5.15)
+      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.5.15)(yaml@2.8.4)
+      postcss-nested: 6.2.0(postcss@8.5.15)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.11
       sucrase: 3.35.1
