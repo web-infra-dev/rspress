@@ -44,6 +44,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
   let devServer: StartServerResult | undefined;
   let clientConfig: RsbuildConfig;
   let port = devPort;
+  const hasIframeDemos = () =>
+    Object.values(globalDemos).some(demos => demos.length > 0);
 
   async function createDemoRsbuild() {
     const distPath = clientConfig?.output?.distPath;
@@ -127,11 +129,21 @@ export function pluginPreview(options?: Options): RspressPlugin {
   }
 
   async function buildDemo() {
+    if (!hasIframeDemos()) {
+      return;
+    }
     const rsbuildInstance = await createDemoRsbuild();
     await rsbuildInstance.build();
   }
 
   async function startDemoServer() {
+    if (!hasIframeDemos()) {
+      await devServer?.server.close();
+      devServer = undefined;
+      isDirtyRef.current = false;
+      return;
+    }
+
     if (devServer && !isDirtyRef.current) {
       return;
     }

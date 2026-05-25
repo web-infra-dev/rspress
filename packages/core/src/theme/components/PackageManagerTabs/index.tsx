@@ -218,7 +218,7 @@ export function PackageManagerTabs({
     commandInfo = command;
   }
 
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return Object.values(commandInfo).reduce((previous, current) => {
       const [packageManager, command] = splitTo2Parts(current);
       return (

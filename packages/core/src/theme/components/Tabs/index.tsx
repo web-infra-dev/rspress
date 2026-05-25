@@ -116,7 +116,7 @@ export const Tabs = forwardRef(
       return getTabValuesFromChildren(children, values);
     }, [children, values]);
 
-    if (process.env.__SSR_MD__) {
+    if (import.meta.env.SSG_MD) {
       return (
         <>
           {tabValues.map(({ label, content }) => {

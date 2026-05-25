@@ -62,7 +62,7 @@ export interface Group {
 }
 
 export const OverviewGroup = ({ group }: { group: Group }) => {
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return <OverviewGroupMarkdown group={group} />;
   }
 

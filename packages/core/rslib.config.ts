@@ -40,6 +40,11 @@ const COMMON_EXTERNALS = [
   'react-router-dom',
 ];
 
+// Keep import.meta.env.SSG_MD for the final Rspress app build to replace.
+const PRESERVE_IMPORT_META_ENV = {
+  'import.meta.env': 'import.meta.env',
+};
+
 export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
@@ -94,6 +99,7 @@ export default defineConfig({
       dts: false,
       syntax: 'es2022',
       source: {
+        define: PRESERVE_IMPORT_META_ENV,
         entry: {
           index: [
             './src/runtime/**/*.{tsx,ts}',
@@ -126,6 +132,7 @@ export default defineConfig({
       ],
       source: {
         define: {
+          ...PRESERVE_IMPORT_META_ENV,
           __WEBPACK_PUBLIC_PATH__: '__webpack_public_path__',
         },
         entry: {
