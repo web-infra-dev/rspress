@@ -1,6 +1,6 @@
 /*
-  Adapted from Tailwind CSS preflight:
-  https://tailwindcss.com/docs/preflight
+  Adapted from Tailwind CSS preflight source (v3.4.3):
+  https://github.com/tailwindlabs/tailwindcss/blob/v3.4.3/src/css/preflight.css
   We annotated dangerous global style that will pollute other component library styles.
 */
 
