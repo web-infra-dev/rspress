@@ -8,16 +8,17 @@
 <div className="text-3xl font-bold underline">Hello world!</div>
 ```
 
-Rspress is built on [Rsbuild](https://rsbuild.rs/), and the Tailwind CSS configuration is consistent with Rsbuild. For more details, see:
+Rspress is built on [Rsbuild](https://rsbuild.rs/), so Tailwind CSS v4 can be integrated with the same Rsbuild plugin recommended by Rsbuild. For more details, see:
 
 - [Rsbuild - Tailwind CSS v4](https://rsbuild.rs/guide/styling/tailwindcss)
 - [Rsbuild - Tailwind CSS v3](https://rsbuild.rs/guide/styling/tailwindcss-v3)
+- [Rsbuild - Tailwind CSS plugin](https://rsbuild.rs/plugins/list/plugin-tailwindcss)
 
 Below is a guide for integrating Tailwind CSS v4 with Rspress.
 
 :::tip
 
-All Rspress built-in components use BEM naming conventions and do not use Tailwind CSS internally, which avoids conflicts with Tailwind CSS classes. You can freely use Tailwind v4 or v3 without worrying about style collisions.
+All Rspress built-in components use BEM naming conventions and do not use Tailwind CSS internally. Your project owns the Tailwind CSS dependency and build plugin, which avoids version conflicts with Rspress.
 
 :::
 
@@ -27,19 +28,7 @@ import { PackageManagerTabs, Steps } from '@rspress/core/theme';
 
 ### Install dependencies
 
-<PackageManagerTabs command="add tailwindcss @tailwindcss/postcss -D" />
-
-### Create PostCSS config
-
-Create a `postcss.config.mjs` file in the root of your project:
-
-```js title="postcss.config.mjs"
-export default {
-  plugins: {
-    '@tailwindcss/postcss': {},
-  },
-};
-```
+<PackageManagerTabs command="add @rsbuild/plugin-tailwindcss tailwindcss -D" />
 
 ### Create Tailwind CSS file
 
@@ -49,6 +38,12 @@ Create a `tailwind.css` file in the root of your project:
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 ```
+
+:::tip
+
+Tailwind CSS v4 is not designed to be used with CSS preprocessors like Sass, Less, or Stylus. Keep `@import 'tailwindcss';` at the beginning of a `.css` file.
+
+:::
 
 :::tip Dark Mode
 
@@ -62,19 +57,25 @@ In your `rspress.config.ts`, use the `globalStyles` option to import the Tailwin
 
 ```ts title="rspress.config.ts"
 import * as path from 'node:path';
+import { pluginTailwindcss } from '@rsbuild/plugin-tailwindcss';
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  root: path.join(__dirname, 'doc'),
+  root: path.join(__dirname, 'docs'),
   globalStyles: path.join(__dirname, 'tailwind.css'),
+  builderConfig: {
+    plugins: [pluginTailwindcss()],
+  },
 });
 ```
+
+If your project already has a PostCSS setup, you can also follow the Rsbuild guide to use `@tailwindcss/postcss` instead.
 
 ### Usage
 
 Now you can use Tailwind utility classes in your MDX files:
 
-```mdx title="doc/foo.mdx"
+```mdx title="docs/foo.mdx"
 # Foo
 
 <div className="text-3xl font-bold underline">Hello world!</div>
