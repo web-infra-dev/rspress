@@ -9,7 +9,7 @@ import type { JSX } from 'react';
 import './index.scss';
 import { useCardAnimation } from './useCardAnimation';
 
-const getGridClass = (feature: Feature): string => {
+const getGridClass = (feature: Feature) => {
   const { span } = feature;
   switch (span) {
     case 2:
