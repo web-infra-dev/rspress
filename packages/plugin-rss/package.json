@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-rss",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "A plugin for rss generation for rspress",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@rslib/core": "0.21.5",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.15",
     "react": "^19.2.6",
     "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^6.0.3"

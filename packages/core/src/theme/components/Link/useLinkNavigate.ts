@@ -52,7 +52,7 @@ export function getHref(href: string): {
     return { linkType: linkType, withBaseHref: href, removeBaseHref: href };
   }
 
-  if (linkType === 'relative' && !process.env.__SSR__) {
+  if (linkType === 'relative' && !import.meta.env.SSR) {
     withBaseHref = new URL(href, window.location.href).pathname;
   } else {
     withBaseHref = withBase(cleanUrlByConfig(href));
@@ -84,7 +84,7 @@ export function useLinkNavigate(
 
       const preloadChunkThenNavigate = async () => {
         const inCurrPage = isActive(removeBaseHref, currPagePathname);
-        if (!process.env.__SSR__ && !inCurrPage) {
+        if (!import.meta.env.SSR && !inCurrPage) {
           const matchedRoute = pathnameToRouteService(removeBaseHref);
           if (matchedRoute) {
             const timer = setTimeout(() => {

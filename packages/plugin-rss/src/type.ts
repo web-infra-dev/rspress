@@ -108,7 +108,7 @@ export interface PluginRssOptions {
   siteUrl: string;
   /**
    * Feed options for each rss. If array is given, this plugin will produce multiple feed files.
-   * @default {{ id: 'blog', test: /^\/blog\// }}
+   * @default { id: 'blog', test: '/blog/' }
    */
   feed?: PartialPartial<FeedChannel, 'id' | 'test'> | FeedChannel[];
   /**
