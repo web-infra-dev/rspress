@@ -182,12 +182,15 @@ You can inject global scripts or styles into the iframe preview environment usin
 
 - **Dark mode handling**: Inject a `MutationObserver` to watch for `html.dark` class changes, then sync to `body.dark` or perform other dark mode processing.
 
-- **Using Tailwind CSS**: Since the iframe preview environment is a separate Rsbuild instance, if your previewed components depend on Tailwind CSS, you need to inject `@import "tailwindcss";` via `preEntry`.
+- **Using Tailwind CSS**: Since the iframe preview environment is a separate Rsbuild instance, if your previewed components depend on Tailwind CSS v4, configure `@rsbuild/plugin-tailwindcss` in `iframeOptions.builderConfig.plugins` and inject your Tailwind CSS entry via `preEntry`.
 
 ```ts title="rspress.config.ts"
+import { pluginTailwindcss } from '@rsbuild/plugin-tailwindcss';
+
 pluginPreview({
   iframeOptions: {
     builderConfig: {
+      plugins: [pluginTailwindcss()],
       source: {
         preEntry: [
           '@vant/touch-emulator',

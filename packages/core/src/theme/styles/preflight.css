@@ -1,5 +1,6 @@
 /*
-  Modify from https://unpkg.com/tailwindcss@3.4.3/src/css/preflight.css
+  Adapted from Tailwind CSS preflight:
+  https://tailwindcss.com/docs/preflight
   We annotated dangerous global style that will pollute other component library styles.
 */
 
