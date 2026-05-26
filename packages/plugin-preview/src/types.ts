@@ -4,7 +4,7 @@ import type { RouteMeta } from '@rspress/core';
 export type Options = {
   /**
    * determine how to handle a internal code block without meta like \`\`\`tsx
-   * @default 'preview'
+   * @default 'pure'
    */
   defaultRenderMode?: 'pure' | 'preview';
   /**
@@ -18,10 +18,12 @@ export type Options = {
   iframeOptions?: IframeOptions;
   /**
    * Supported languages to be previewed
+   * @default ['jsx', 'tsx']
    */
   previewLanguages?: string[];
   /**
    * Transform previewed code in custom way
+   * @default ({ code }) => code
    */
   previewCodeTransform?: (codeInfo: {
     language: string;
