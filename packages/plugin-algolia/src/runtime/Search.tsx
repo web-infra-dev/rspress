@@ -45,6 +45,8 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
     }
   }
 
+  // React 18 does not expose ReactDOM.preconnect, so keep the
+  // client-side preconnect fallback for older React versions.
   useEffect(() => {
     if (!appId || typeof safePreconnect === 'function') {
       return;
