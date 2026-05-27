@@ -511,6 +511,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     aria-label="SearchPanelInput"
                     autoComplete="off"
                     autoFocus
+                    inputMode="search"
                     onChange={e => handleQueryChange(e.target.value)}
                   />
                   <label>

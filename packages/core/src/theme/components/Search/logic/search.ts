@@ -213,24 +213,23 @@ export class PageSearcher {
         highlightStartIndex + THRESHOLD_CONTENT_LENGTH,
       );
       const statement = content.slice(statementStartIndex, statementEndIndex);
-      const highlightInfoList = (
-        item as RemotePageInfo
-      )._matchesPosition.content
-        .filter(
-          match =>
-            match.start >= highlightStartIndex &&
-            match.start + match.length <=
-              highlightStartIndex + THRESHOLD_CONTENT_LENGTH,
-        )
-        .map(match => {
+
+      const highlightInfoList: Array<{ start: number; length: number }> = [];
+      const limitIndex = highlightStartIndex + THRESHOLD_CONTENT_LENGTH;
+      for (const match of (item as RemotePageInfo)._matchesPosition?.content ||
+        []) {
+        const { start, length } = match;
+
+        if (start >= highlightStartIndex && start + length <= limitIndex) {
           const startCharIndex =
-            byteToCharIndex(content, match.start) - statementStartIndex + 3;
-          return {
-            // prefix `...` length is 3
+            byteToCharIndex(content, start) - statementStartIndex + 3; // prefix `...` length is 3
+
+          highlightInfoList.push({
             start: startCharIndex,
-            length: match.length,
-          };
-        });
+            length,
+          });
+        }
+      }
 
       matchedResult.push({
         type: 'content',
