@@ -5,12 +5,22 @@ import { removeBase, useLang, useNavigate } from '@rspress/core/runtime';
 import { Link } from '@theme';
 import '@docsearch/css';
 import './Search.css';
-import { preconnect } from 'react-dom';
+import { useEffect } from 'react';
+import * as ReactDOM from 'react-dom';
 import type { Locales } from './locales';
 
 const Hit: DocSearchProps['hitComponent'] = ({ hit, children }) => {
   return <Link href={hit.url}>{children}</Link>;
 };
+
+type ReactDOMWithPreconnect = typeof ReactDOM & {
+  preconnect?: (
+    href: string,
+    options?: { crossOrigin?: '' | 'anonymous' | 'use-credentials' },
+  ) => void;
+};
+
+const safePreconnect = (ReactDOM as ReactDOMWithPreconnect).preconnect;
 
 type SearchProps = {
   /**
@@ -28,8 +38,29 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
 
   const appId = docSearchProps.appId;
   if (appId) {
-    preconnect(`https://${appId}-dsn.algolia.net`, { crossOrigin: '' });
+    const algoliaUrl = `https://${appId}-dsn.algolia.net`;
+
+    if (typeof safePreconnect === 'function') {
+      safePreconnect(algoliaUrl, { crossOrigin: '' });
+    }
   }
+
+  useEffect(() => {
+    if (!appId || typeof safePreconnect === 'function') {
+      return;
+    }
+
+    const algoliaUrl = `https://${appId}-dsn.algolia.net`;
+    const preconnect = document.createElement('link');
+    preconnect.id = appId;
+    preconnect.rel = 'preconnect';
+    preconnect.href = algoliaUrl;
+    preconnect.crossOrigin = '';
+    document.head.appendChild(preconnect);
+    return () => {
+      document.head.removeChild(preconnect);
+    };
+  }, [appId]);
 
   return (
     <>
