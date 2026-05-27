@@ -100,6 +100,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
           onMouseEnter?.(event);
           preloadLink(removeBaseHref);
         }}
+        onTouchStart={() => {
+          preloadLink(removeBaseHref);
+        }}
         onClick={e => {
           onClick?.(e);
           if (
