@@ -6,11 +6,21 @@ import { Link } from '@theme';
 import '@docsearch/css';
 import './Search.css';
 import { useEffect } from 'react';
+import * as ReactDOM from 'react-dom';
 import type { Locales } from './locales';
 
 const Hit: DocSearchProps['hitComponent'] = ({ hit, children }) => {
   return <Link href={hit.url}>{children}</Link>;
 };
+
+type ReactDOMWithPreconnect = typeof ReactDOM & {
+  preconnect?: (
+    href: string,
+    options?: { crossOrigin?: '' | 'anonymous' | 'use-credentials' },
+  ) => void;
+};
+
+const safePreconnect = (ReactDOM as ReactDOMWithPreconnect).preconnect;
 
 type SearchProps = {
   /**
@@ -26,18 +36,33 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
   const lang = useLang();
   const { translations, placeholder } = locales?.[lang] ?? {};
 
+  const appId = docSearchProps.appId;
+  if (appId) {
+    const algoliaUrl = `https://${appId}-dsn.algolia.net`;
+
+    if (typeof safePreconnect === 'function') {
+      safePreconnect(algoliaUrl, { crossOrigin: '' });
+    }
+  }
+
+  // React 18 does not expose ReactDOM.preconnect, so keep the
+  // client-side preconnect fallback for older React versions.
   useEffect(() => {
+    if (!appId || typeof safePreconnect === 'function') {
+      return;
+    }
+
+    const algoliaUrl = `https://${appId}-dsn.algolia.net`;
     const preconnect = document.createElement('link');
-    const appId = docSearchProps.appId;
     preconnect.id = appId;
     preconnect.rel = 'preconnect';
-    preconnect.href = `https://${appId}-dsn.algolia.net`;
+    preconnect.href = algoliaUrl;
     preconnect.crossOrigin = '';
     document.head.appendChild(preconnect);
     return () => {
       document.head.removeChild(preconnect);
     };
-  }, [docSearchProps.appId]);
+  }, [appId]);
 
   return (
     <>

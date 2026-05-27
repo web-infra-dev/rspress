@@ -812,6 +812,9 @@ importers:
       react:
         specifier: ^19.2.6
         version: 19.2.6
+      react-dom:
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
     devDependencies:
       '@rspress/plugin-algolia':
         specifier: workspace:*
@@ -831,6 +834,9 @@ importers:
       react:
         specifier: ^19.2.6
         version: 19.2.6
+      react-dom:
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
     devDependencies:
       '@rspress/plugin-algolia':
         specifier: workspace:*
@@ -860,6 +866,9 @@ importers:
       react:
         specifier: ^19.2.6
         version: 19.2.6
+      react-dom:
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
     devDependencies:
       '@rspress/plugin-algolia':
         specifier: workspace:*
@@ -1267,6 +1276,9 @@ importers:
       react:
         specifier: ^19.2.6
         version: 19.2.6
+      react-dom:
+        specifier: ^19.2.6
+        version: 19.2.6(react@19.2.6)
       rsbuild-plugin-publint:
         specifier: ^0.3.4
         version: 0.3.4(@rsbuild/core@2.0.7)
