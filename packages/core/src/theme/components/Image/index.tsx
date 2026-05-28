@@ -25,6 +25,16 @@ type ReactDOMWithPreload = typeof ReactDOM & {
 };
 
 export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+  /**
+   * Determines whether the image resource should be eagerly preloaded.
+   *
+   * When set to `true`, and the `src` attribute is provided, the component calls
+   * `ReactDOM.preload` (available in React 19 and newer) to pre-load the image.
+   * This is recommended for critical, above-the-fold assets (such as hero images)
+   * to help improve Largest Contentful Paint (LCP) performance.
+   *
+   * @default false
+   */
   preload?: boolean;
 }
 
