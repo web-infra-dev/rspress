@@ -8,7 +8,7 @@ type ReactDOMWithPreload = typeof ReactDOM & {
       as: 'image';
       imageSrcSet?: string;
       imageSizes?: string;
-      fetchPriority: 'high' | 'low' | 'auto' | undefined;
+      fetchPriority?: 'high' | 'low' | 'auto';
       crossOrigin?: '' | 'anonymous' | 'use-credentials';
       referrerPolicy?:
         | ''
