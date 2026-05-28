@@ -100,6 +100,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
           onMouseEnter?.(event);
           preloadLink(removeBaseHref);
         }}
+        onTouchStart={() => {
+          preloadLink(removeBaseHref);
+        }}
         onClick={e => {
           onClick?.(e);
           if (
@@ -132,6 +135,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
       className={clsx(className, 'rp-link')}
       onMouseEnter={event => {
         onMouseEnter?.(event);
+        preloadLink(removeBaseHref);
+      }}
+      onTouchStart={() => {
         preloadLink(removeBaseHref);
       }}
       onClick={e => {
