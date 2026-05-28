@@ -8,6 +8,7 @@ type ReactDOMWithPreload = typeof ReactDOM & {
       as: 'image';
       imageSrcSet?: string;
       imageSizes?: string;
+      fetchPriority: 'high' | 'low' | 'auto' | undefined;
       crossOrigin?: '' | 'anonymous' | 'use-credentials';
       referrerPolicy?:
         | ''
@@ -35,6 +36,7 @@ const Image = forwardRef<HTMLImageElement, ImageProps>(
       src,
       srcSet,
       sizes,
+      fetchPriority,
       preload = false,
       referrerPolicy,
       crossOrigin,
@@ -46,6 +48,7 @@ const Image = forwardRef<HTMLImageElement, ImageProps>(
         as: 'image',
         imageSizes: sizes,
         imageSrcSet: srcSet,
+        fetchPriority: fetchPriority,
         crossOrigin: crossOrigin,
         referrerPolicy: referrerPolicy,
       });
@@ -58,6 +61,7 @@ const Image = forwardRef<HTMLImageElement, ImageProps>(
         src={src}
         srcSet={srcSet}
         sizes={sizes}
+        fetchPriority={fetchPriority}
         crossOrigin={crossOrigin}
         referrerPolicy={referrerPolicy}
         {...restImgProps}
