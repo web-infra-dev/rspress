@@ -12,6 +12,7 @@
     "@rspress/core": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^22.8.1"
+    "@types/node": "^22.8.1",
+    "@types/react": "^19.2.15"
   }
 }
