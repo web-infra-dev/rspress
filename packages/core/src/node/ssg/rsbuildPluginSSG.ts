@@ -118,6 +118,7 @@ export const rsbuildPluginSSG = ({
             mainCjsAbsolutePath,
             htmlTemplate,
             emitAsset,
+            distPath,
           );
 
           if (!isDebugMode()) {

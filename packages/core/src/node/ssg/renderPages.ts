@@ -6,6 +6,7 @@ import picocolors from 'picocolors';
 
 import { hintSSGFailed } from '../logger/hint';
 import type { RouteService } from '../route/RouteService';
+import { routePath2HtmlFileName } from './htmlFile';
 import { renderHtmlTemplate } from './renderHtmlTemplate';
 import { renderPage } from './renderPage';
 import {
@@ -15,25 +16,14 @@ import {
   SSGWorkerThreadTaskSize,
 } from './ssgEnv';
 
-const routePath2HtmlFileName = (routePath: string) => {
-  let fileName = routePath;
-  if (fileName.endsWith('/')) {
-    fileName = `${routePath}index.html`;
-  } else {
-    fileName = `${routePath}.html`;
-  }
-
-  return fileName.replace(/^\/+/, '');
-};
-
 export async function renderPages(
   routeService: RouteService,
   config: UserConfig,
   ssrBundlePath: string,
   htmlTemplate: string,
   emitAsset: (assetName: string, content: string | Buffer) => void,
+  workerOutputDistPath?: string,
 ) {
-  logger.info('Rendering pages...');
   const startTime = Date.now();
   const ssg = config.ssg ?? true;
 
@@ -96,6 +86,9 @@ export async function renderPages(
 
     if (typeof ssg === 'object' && ssg?.experimentalWorker) {
       const numberOfThreads = getNumberOfThreads(routes.length);
+      logger.info(
+        `Rendering pages with experimental SSG worker (${picocolors.yellow(numberOfThreads)} threads)...`,
+      );
       const Tinypool = await import('tinypool').then(m => m.default);
 
       const pool = new Tinypool({
@@ -115,6 +108,7 @@ export async function renderPages(
             htmlTemplate,
             head: config.head,
             ssrBundlePath,
+            distPath: workerOutputDistPath,
           },
         },
       });
@@ -123,6 +117,9 @@ export async function renderPages(
         chunk(routes, SSGWorkerThreadTaskSize()).map(
           async (routes: RouteMeta[]) => {
             const htmlList = await pool.run({ routes });
+            if (workerOutputDistPath) {
+              return;
+            }
             for (let i = 0; i < routes.length; i++) {
               const route = routes[i];
               const html = htmlList[i];
@@ -135,6 +132,7 @@ export async function renderPages(
 
       await pool.destroy();
     } else {
+      logger.info('Rendering pages...');
       await pMap(
         routes,
         async route => {
