@@ -35,7 +35,7 @@ When `preload` is active and a `src` is specified, the component uses `ReactDOM.
 import { Image } from '@rspress/core/theme';
 
 <Image
-  src="/rspress-light-logo.png"
+  src="https://lexmin0412.github.io/rspress-template/rspress-light-logo.png"
   alt="Preloaded Hero Logo"
   width="150"
   preload
@@ -51,7 +51,7 @@ The `preload` mechanism honors standard responsive properties. When preloading P
 import { Image } from '@rspress/core/theme';
 
 <Image
-  src="/rspress-light-logo.png"
+  src="https://lexmin0412.github.io/rspress-template/rspress-light-logo.png"
   srcSet="/rspress-light-logo.png 1x, /rspress-light-logo@2x.png 2x"
   sizes="(max-width: 600px) 100px, 200px"
   alt="Responsive Rspress Logo"
@@ -69,8 +69,8 @@ import { useRef, useEffect } from 'react';
 import { Image } from '@rspress/core/theme';
 
 export default function App() {
-  const imageRef = useRef<HTMLImageElement>(null);
 
+const imageRef = useRef<HTMLImageElement>(null);
 useEffect(() => {
 if (imageRef.current) {
 console.log('Image natural width:', imageRef.current.naturalWidth);
@@ -78,10 +78,9 @@ console.log('Image natural width:', imageRef.current.naturalWidth);
 }, []);
 
 return (
-
 <Image 
       ref={imageRef} 
-      src="/rspress-light-logo.png" 
+      src="https://lexmin0412.github.io/rspress-template/rspress-light-logo.png" 
       alt="Reference Image" 
       width="100" 
     />
