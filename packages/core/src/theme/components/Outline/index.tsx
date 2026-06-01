@@ -5,7 +5,6 @@ import {
   LlmsOpenRow,
   ReadPercent,
   Toc,
-  useDynamicToc,
 } from '@rspress/core/theme';
 import './index.scss';
 import { ScrollToTop } from './ScrollToTop';
@@ -13,16 +12,11 @@ import { ScrollToTop } from './ScrollToTop';
 export function Outline() {
   const t = useI18n();
 
-  const headers = useDynamicToc();
   const {
     site: {
       themeConfig: { enableScrollToTop = true, llmsUI },
     },
   } = useSite();
-
-  if (headers.length === 0) {
-    return <></>;
-  }
 
   const placement =
     typeof llmsUI === 'object' ? (llmsUI?.placement ?? 'title') : 'title';

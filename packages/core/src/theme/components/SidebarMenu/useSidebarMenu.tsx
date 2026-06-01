@@ -1,9 +1,9 @@
 import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { SidebarMenu } from '.';
 import { useClickOutside } from './useClickOutside';
 
-function useSidebarMenu() {
+function useSidebarMenu(beforeOutline?: ReactNode, afterOutline?: ReactNode) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isOutlineOpen, setIsOutlineOpen] = useState(false);
 
@@ -39,9 +39,18 @@ function useSidebarMenu() {
         isOutlineOpen={isOutlineOpen}
         onIsOutlineOpenChange={setIsOutlineOpen}
         ref={sidebarMenuRef}
+        beforeOutline={beforeOutline}
+        afterOutline={afterOutline}
       />
     );
-  }, [isOutlineOpen, isSidebarOpen, setIsOutlineOpen, setIsSidebarOpen]);
+  }, [
+    isOutlineOpen,
+    isSidebarOpen,
+    setIsOutlineOpen,
+    setIsSidebarOpen,
+    beforeOutline,
+    afterOutline,
+  ]);
 
   return {
     sidebarMenu,

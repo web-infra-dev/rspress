@@ -249,6 +249,9 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.15
+        version: 19.2.15
 
   e2e/fixtures/custom-plugin:
     dependencies:

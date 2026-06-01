@@ -8,7 +8,7 @@ import {
   useActiveAnchor,
   useDynamicToc,
 } from '@rspress/core/theme';
-import { forwardRef, useEffect, useRef } from 'react';
+import { forwardRef, type ReactNode, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import './index.scss';
 
@@ -20,11 +20,15 @@ export const SidebarMenu = forwardRef(
       onIsSidebarOpenChange,
       isOutlineOpen,
       onIsOutlineOpenChange,
+      beforeOutline,
+      afterOutline,
     }: {
       isSidebarOpen: boolean;
       onIsSidebarOpenChange: (isOpen: boolean) => void;
       isOutlineOpen: boolean;
       onIsOutlineOpenChange: (isOpen: boolean) => void;
+      beforeOutline?: ReactNode;
+      afterOutline?: ReactNode;
     },
     forwardedRef,
   ) => {
@@ -35,6 +39,9 @@ export const SidebarMenu = forwardRef(
 
     const headers = useDynamicToc();
     const { scrolledHeader } = useActiveAnchor(headers);
+
+    const outlineDisabled =
+      !beforeOutline && !afterOutline && headers.length === 0;
 
     const {
       frontmatter: {
@@ -98,7 +105,7 @@ export const SidebarMenu = forwardRef(
           {showOutline ? (
             <button
               type="button"
-              disabled={headers.length === 0}
+              disabled={outlineDisabled}
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -118,7 +125,7 @@ export const SidebarMenu = forwardRef(
               )}
               <ReadPercent size={14} strokeWidth={2} />
               {/* TODO: discussion */}
-              {headers.length !== 0 && (
+              {!outlineDisabled && (
                 <SvgWrapper
                   icon={IconArrowRight}
                   className="rp-sidebar-menu__right__icon"

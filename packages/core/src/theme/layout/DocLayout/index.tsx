@@ -79,7 +79,7 @@ export function DocLayout(props: DocLayoutProps) {
     sidebarMenu,
     asideLayoutRef,
     sidebarLayoutRef,
-  } = useSidebarMenu();
+  } = useSidebarMenu(beforeOutline, afterOutline);
 
   const { rspressDocRef } = useWatchToc();
 
