@@ -46,7 +46,7 @@ Rspress 需要 Node.js 版本 20.19+, 22.12+。
 
 <PackageManagerTabs command="create rspress@latest" />
 
-按照提示一步步操作即可。在创建过程中，你可以输入项目名称或路径、选择是否创建自定义主题目录，以及是否添加可选工具或 Skills。
+按照提示一步步操作即可。在创建过程中，你可以输入项目名称或路径、选择是否启用 i18n、是否创建用于自定义主题的 `theme` 目录，以及是否添加可选工具或 Skills。
 
 项目创建完成后，你可以执行以下步骤：
 
@@ -60,10 +60,12 @@ Rspress 需要 Node.js 版本 20.19+, 22.12+。
 
 Rspress 提供以下内置模板：
 
-| 模板           | 说明                                                  |
-| -------------- | ----------------------------------------------------- |
-| `basic`        | 创建一个使用默认主题的最小 Rspress 文档站点。         |
-| `custom-theme` | 创建一个带有 `theme` 目录的文档站点，便于自定义主题。 |
+| 模板          | 说明                                          |
+| ------------- | --------------------------------------------- |
+| `basic`       | 创建一个使用默认主题的最小 Rspress 文档站点。 |
+| `basic-theme` | 创建一个带有 `theme` 目录的单语言文档站点。   |
+| `i18n`        | 创建一个包含英文和中文内容的多语言文档站点。  |
+| `i18n-theme`  | 创建一个带有 `theme` 目录的多语言文档站点。   |
 
 ### 可选工具
 
@@ -85,7 +87,7 @@ Rspress 提供以下内置模板：
 - [rspress-best-practices](https://github.com/rstackjs/agent-skills#rspress-best-practices)：为 AI Agent 提供 Rspress 项目结构、配置、MDX、主题和部署等最佳实践。
 - [rspress-description-generator](https://github.com/rstackjs/agent-skills#rspress-description-generator)：帮助 AI Agent 编写和维护页面 description，用于 SEO、搜索和 AI 可读产物。
 
-如果你选择了 `custom-theme` 模板，以下 Skill 会被默认勾选：
+如果你选择了 `basic-theme` 或 `i18n-theme` 模板，以下 Skill 会被默认勾选：
 
 - [rspress-custom-theme](https://github.com/rstackjs/agent-skills#rspress-custom-theme)：让你的 AI Agent 为你定制 Rspress 主题，例如 CSS 变量、Layout slots 和主题组件覆盖。
 
@@ -113,25 +115,37 @@ Rspress 提供以下内置模板：
 例如，以下命令将在 `my-docs` 目录中创建一个 Rspress 项目：
 
 ```bash
-npx -y create-rspress@latest --dir my-docs --template custom-theme
+npx -y create-rspress@latest --dir my-docs --template basic-theme
 ```
 
 使用缩写：
 
 ```bash
-npx -y create-rspress@latest -d my-docs -t custom-theme
+npx -y create-rspress@latest -d my-docs -t basic-theme
 ```
 
 指定多个 tools：
 
 ```bash
-npx -y create-rspress@latest -d my-docs -t custom-theme --tools rslint,prettier
+npx -y create-rspress@latest -d my-docs -t basic-theme --tools rslint,prettier
+```
+
+创建多语言模板：
+
+```bash
+npx -y create-rspress@latest -d my-docs -t i18n
+```
+
+创建带 `theme` 目录的多语言模板：
+
+```bash
+npx -y create-rspress@latest -d my-docs -t i18n-theme
 ```
 
 安装可选的 Agent Skill：
 
 ```bash
-npx -y create-rspress@latest -d my-docs -t custom-theme --skill rspress-best-practices
+npx -y create-rspress@latest -d my-docs -t basic-theme --skill rspress-best-practices
 ```
 
 `create-rspress` 完整的 CLI 选项如下：
@@ -151,7 +165,7 @@ Options:
   --template-version <ver>  specify the npm template version
 
 Available templates:
-  basic, custom-theme
+  basic, basic-theme, i18n, i18n-theme
 
 Optional tools:
   eslint, rslint, biome, prettier

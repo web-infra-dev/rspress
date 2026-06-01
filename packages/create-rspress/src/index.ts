@@ -10,14 +10,20 @@ import {
 } from 'create-rstack';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const templates = ['basic', 'custom-theme'] as const;
+const templates = ['basic', 'basic-theme', 'i18n', 'i18n-theme'] as const;
 
 type TemplateName = (typeof templates)[number];
+type I18nChoice = 'basic' | 'i18n';
+type ThemeChoice = 'with-theme' | 'default-theme';
+
+function isTemplateName(templateName: string): templateName is TemplateName {
+  return templates.includes(templateName as TemplateName);
+}
 
 async function getTemplateName(argv: Argv): Promise<TemplateName> {
   if (argv.template) {
-    if (templates.includes(argv.template as TemplateName)) {
-      return argv.template as TemplateName;
+    if (isTemplateName(argv.template)) {
+      return argv.template;
     }
 
     throw new Error(
@@ -25,23 +31,44 @@ async function getTemplateName(argv: Argv): Promise<TemplateName> {
     );
   }
 
-  return checkCancel(
-    await select<TemplateName>({
-      message: 'Would you like to customize the theme styles?',
-      initialValue: 'custom-theme',
+  const i18nChoice = checkCancel<I18nChoice>(
+    await select<I18nChoice>({
+      message: 'Would you like to set up i18n?',
+      initialValue: 'basic',
       options: [
         {
-          value: 'custom-theme',
-          label: 'Yes, set up a "theme" folder for customization',
+          value: 'basic',
+          label: 'No, use a single language site',
+          hint: 'Create regular docs.',
+        },
+        {
+          value: 'i18n',
+          label: 'Yes, set up i18n docs',
+          hint: 'Create docs/en and docs/zh.',
+        },
+      ],
+    }),
+  );
+
+  const themeChoice = checkCancel<ThemeChoice>(
+    await select<ThemeChoice>({
+      message: 'Would you like to create a theme folder for customization?',
+      initialValue: 'with-theme',
+      options: [
+        {
+          value: 'with-theme',
+          label: 'Yes, set up a theme folder',
           hint: 'Modify styles and components later.',
         },
         {
-          value: 'basic',
+          value: 'default-theme',
           label: 'No, use the default theme',
         },
       ],
     }),
   );
+
+  return themeChoice === 'with-theme' ? `${i18nChoice}-theme` : i18nChoice;
 }
 
 function mapESLintTemplate(): ESLintTemplateName {
@@ -55,7 +82,6 @@ function mapRslintTemplate(): RslintTemplateName {
 create({
   root: path.resolve(__dirname, '..'),
   name: 'rspress',
-  skipFiles: ['template-placeholder'],
   templates: [...templates],
   getTemplateName,
   mapESLintTemplate,
@@ -70,7 +96,7 @@ create({
       value: 'rspress-custom-theme',
       label: 'Rspress custom theme',
       source: 'rstackjs/agent-skills',
-      when: templateName => templateName === 'custom-theme',
+      when: ({ templateName }) => templateName.endsWith('-theme'),
     },
     {
       value: 'rspress-description-generator',

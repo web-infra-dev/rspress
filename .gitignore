@@ -69,6 +69,9 @@ e2e/fixtures/plugin-typedoc/multi/doc/api/**/*.md
 meta-json-schema.json
 nav-json-schema.json
 
+# create-rspress generated templates
+packages/create-rspress/template-basic-theme/
+packages/create-rspress/template-i18n-theme/
 
 # website og fonts
 website/og-fonts/

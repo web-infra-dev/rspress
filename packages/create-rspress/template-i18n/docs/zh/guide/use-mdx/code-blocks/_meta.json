@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "title",
+    "label": "标题"
+  },
+  {
+    "type": "file",
+    "name": "meta",
+    "label": "元信息"
+  }
+]
