@@ -117,7 +117,7 @@ tag: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0
 
 ### Image URL
 
-You can use an external URL or data URL as a tag:
+You can use an external URL, data URL, or local image path as a tag:
 
 ```mdx
 ---
@@ -128,6 +128,12 @@ tag: https://example.com/icon.png
 ```mdx
 ---
 tag: data:image/svg+xml;base64,...
+---
+```
+
+```mdx
+---
+tag: /icons/status.svg
 ---
 ```
 
@@ -156,7 +162,7 @@ interface TagProps {
    * - Common tags: 'new', 'experimental', 'deprecated', 'updated'
    * - Multiple common tags: 'new, experimental'
    * - SVG string: '<svg>...</svg>'
-   * - Image URL: 'https://...' or 'data:...'
+   * - Image URL: 'https://...', 'data:...', or '/icons/status.svg'
    * - Plain text: any other string
    */
   tag?: string;
