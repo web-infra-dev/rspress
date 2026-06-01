@@ -20,8 +20,7 @@
   "files": [
     "template-*/**",
     "dist",
-    "bin.js",
-    "scripts"
+    "bin.js"
   ],
   "scripts": {
     "build": "node ./scripts/generate-theme-templates.mjs && rslib build",
