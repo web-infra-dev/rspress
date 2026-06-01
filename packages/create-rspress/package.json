@@ -18,13 +18,13 @@
     "create-rspress": "./bin.js"
   },
   "files": [
-    "template-*",
+    "template-*/**",
     "dist",
     "bin.js"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
+    "build": "node ./scripts/generate-theme-templates.mjs && rslib build",
+    "dev": "node ./scripts/generate-theme-templates.mjs && rslib build -w",
     "start": "node ./dist/index.js"
   },
   "dependencies": {

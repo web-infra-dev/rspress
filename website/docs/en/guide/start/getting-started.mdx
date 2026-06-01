@@ -44,7 +44,7 @@ The recommended way to start a new Rspress project is to use the `create-rspress
 
 <PackageManagerTabs command="create rspress@latest" />
 
-The scaffold will ask for the project name or path, whether to set up a custom theme folder, and which optional tools or skills to add.
+The scaffold will ask for the project name or path, whether to set up i18n, whether to create a `theme` folder for customization, and which optional tools or skills to add.
 
 After the project is created, follow the next steps printed in the terminal:
 
@@ -61,10 +61,12 @@ The dev server will print the local URL after startup. Open it in your browser t
 
 Rspress provides the following built-in templates:
 
-| Template       | Description                                                                 |
-| -------------- | --------------------------------------------------------------------------- |
-| `basic`        | Creates a minimal Rspress documentation site that uses the default theme.   |
-| `custom-theme` | Creates a documentation site with a `theme` folder for theme customization. |
+| Template      | Description                                                                 |
+| ------------- | --------------------------------------------------------------------------- |
+| `basic`       | Creates a minimal Rspress documentation site that uses the default theme.   |
+| `basic-theme` | Creates a single-language site with a `theme` folder for customization.     |
+| `i18n`        | Creates a multilingual documentation site with English and Chinese content. |
+| `i18n-theme`  | Creates a multilingual site with a `theme` folder for customization.        |
 
 ### Optional tools
 
@@ -86,7 +88,7 @@ For most documentation sites, we recommend selecting:
 - [rspress-best-practices](https://github.com/rstackjs/agent-skills#rspress-best-practices): provides Rspress project structure, config, MDX, theme, and deployment guidance for AI agents.
 - [rspress-description-generator](https://github.com/rstackjs/agent-skills#rspress-description-generator): helps AI agents write and maintain page descriptions for SEO, search, and AI-readable outputs.
 
-If you choose the `custom-theme` template, the following skill is selected by default:
+If you choose the `basic-theme` or `i18n-theme` template, the following skill is selected by default:
 
 - [rspress-custom-theme](https://github.com/rstackjs/agent-skills#rspress-custom-theme): enables your AI agent to customize the Rspress theme, such as CSS variables, layout slots, and theme component overrides.
 
@@ -112,13 +114,25 @@ If the current directory is not empty, the CLI will ask whether to continue and 
 You can pass CLI options to create a project without interactive prompts:
 
 ```bash
-npx -y create-rspress@latest my-docs --template custom-theme --tools rslint,prettier
+npx -y create-rspress@latest my-docs --template basic-theme --tools rslint,prettier
+```
+
+You can also scaffold the multilingual template:
+
+```bash
+npx -y create-rspress@latest my-docs --template i18n
+```
+
+Or scaffold a multilingual site with a `theme` folder:
+
+```bash
+npx -y create-rspress@latest my-docs --template i18n-theme
 ```
 
 You can also add Agent Skills explicitly:
 
 ```bash
-npx -y create-rspress@latest my-docs --template custom-theme --skill rspress-best-practices,rspress-description-generator
+npx -y create-rspress@latest my-docs --template basic-theme --skill rspress-best-practices,rspress-description-generator
 ```
 
 All CLI flags supported by `create-rspress`:
@@ -138,7 +152,7 @@ Options:
   --template-version <ver>  specify the npm template version
 
 Available templates:
-  basic, custom-theme
+  basic, basic-theme, i18n, i18n-theme
 
 Optional tools:
   eslint, rslint, biome, prettier
