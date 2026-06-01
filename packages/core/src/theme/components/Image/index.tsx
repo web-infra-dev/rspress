@@ -1,28 +1,26 @@
 import { forwardRef, ComponentProps } from 'react';
 import * as ReactDOM from 'react-dom';
 
-type ReactDOMWithPreload = typeof ReactDOM & {
-  preload?: (
-    href: string,
-    options?: {
-      as: 'image';
-      imageSrcSet?: string;
-      imageSizes?: string;
-      fetchPriority?: 'high' | 'low' | 'auto';
-      crossOrigin?: '' | 'anonymous' | 'use-credentials';
-      referrerPolicy?:
-        | ''
-        | 'no-referrer'
-        | 'no-referrer-when-downgrade'
-        | 'origin'
-        | 'origin-when-cross-origin'
-        | 'same-origin'
-        | 'strict-origin'
-        | 'strict-origin-when-cross-origin'
-        | 'unsafe-url';
-    },
-  ) => void;
-};
+type ReactDOMWithPreload = (
+  href: string,
+  options?: {
+    as: 'image';
+    imageSrcSet?: string;
+    imageSizes?: string;
+    fetchPriority?: 'high' | 'low' | 'auto';
+    crossOrigin?: '' | 'anonymous' | 'use-credentials';
+    referrerPolicy?:
+      | ''
+      | 'no-referrer'
+      | 'no-referrer-when-downgrade'
+      | 'origin'
+      | 'origin-when-cross-origin'
+      | 'same-origin'
+      | 'strict-origin'
+      | 'strict-origin-when-cross-origin'
+      | 'unsafe-url';
+  },
+) => void;
 
 export interface ImageProps extends ComponentProps<'img'> {
   /**
@@ -38,7 +36,13 @@ export interface ImageProps extends ComponentProps<'img'> {
   preload?: boolean;
 }
 
-const safePreload = (ReactDOM as ReactDOMWithPreload).preload;
+/* 
+  Cast through 'any' to bypass TS2352 compiler errors.
+  Use optional chaining (?.) to prevent SSR crashes if ReactDOM is undefined.
+  Check '.default' to handle ESM/CJS interop quirks gracefully. 
+*/
+const safePreload = ((ReactDOM as any)?.preload ||
+  (ReactDOM as any)?.default?.preload) as ReactDOMWithPreload | undefined;
 
 const Image = forwardRef<HTMLImageElement, ImageProps>(
   (imgProps: ImageProps, ref) => {
