@@ -1,4 +1,4 @@
-import { forwardRef, type ImgHTMLAttributes } from 'react';
+import { forwardRef, ComponentProps } from 'react';
 import * as ReactDOM from 'react-dom';
 
 type ReactDOMWithPreload = typeof ReactDOM & {
@@ -24,7 +24,7 @@ type ReactDOMWithPreload = typeof ReactDOM & {
   ) => void;
 };
 
-export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+export interface ImageProps extends ComponentProps<'img'> {
   /**
    * Determines whether the image resource should be eagerly preloaded.
    *
