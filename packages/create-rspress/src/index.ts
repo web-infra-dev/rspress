@@ -33,17 +33,18 @@ async function getTemplateName(argv: Argv): Promise<TemplateName> {
 
   const i18nChoice = checkCancel<I18nChoice>(
     await select<I18nChoice>({
-      message: 'Documentation language',
+      message: 'Choose how to set up documentation languages',
       initialValue: 'basic',
       options: [
         {
           value: 'basic',
           label: 'Single language',
+          hint: 'Creates docs/.',
         },
         {
           value: 'i18n',
-          label: 'Multilingual',
-          hint: 'English and Chinese docs.',
+          label: 'English + Chinese',
+          hint: 'Creates docs/en and docs/zh.',
         },
       ],
     }),
@@ -51,17 +52,18 @@ async function getTemplateName(argv: Argv): Promise<TemplateName> {
 
   const themeChoice = checkCancel<ThemeChoice>(
     await select<ThemeChoice>({
-      message: 'Theme customization',
+      message: 'Choose how to set up theme customization',
       initialValue: 'with-theme',
       options: [
         {
           value: 'with-theme',
-          label: 'Create theme folder',
+          label: 'Create theme/',
           hint: 'Customize styles and components.',
         },
         {
           value: 'default-theme',
           label: 'Default theme',
+          hint: 'Skip the theme/ folder.',
         },
       ],
     }),
