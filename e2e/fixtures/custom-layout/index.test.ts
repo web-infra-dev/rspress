@@ -56,4 +56,36 @@ test.describe('custom layout test', async () => {
     await expect(page.locator('.rp-home-hero')).toHaveCount(0);
     await expect(page.locator('.rp-doc-layout__container')).toHaveCount(0);
   });
+
+  test('should render custom outline slots without toc headings', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/no-headings`, {
+      waitUntil: 'networkidle',
+    });
+
+    await expect(page.locator('.rp-toc-item')).toHaveCount(0);
+    await expect(page.locator('.rp-outline__title')).toBeVisible();
+    await expect(page.getByTestId('before-outline')).toBeVisible();
+    await expect(page.getByTestId('after-outline')).toBeVisible();
+  });
+
+  test('should allow opening mobile outline with custom slots only', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 800, height: 600 });
+    await page.goto(`http://localhost:${appPort}/no-headings`, {
+      waitUntil: 'networkidle',
+    });
+
+    const outlineButton = page.locator('.rp-sidebar-menu__right');
+    await expect(outlineButton).toBeEnabled();
+    await outlineButton.click();
+
+    await expect(page.locator('.rp-doc-layout__outline')).toHaveClass(
+      /rp-doc-layout__outline--open/,
+    );
+    await expect(page.getByTestId('before-outline')).toBeVisible();
+    await expect(page.getByTestId('after-outline')).toBeVisible();
+  });
 });

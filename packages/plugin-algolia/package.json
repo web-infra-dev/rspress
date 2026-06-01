@@ -44,8 +44,8 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.57.7",
-    "@rsbuild/plugin-react": "~2.0.0",
-    "@rslib/core": "0.21.5",
+    "@rsbuild/plugin-react": "~2.0.1",
+    "@rslib/core": "0.22.0",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.15",
