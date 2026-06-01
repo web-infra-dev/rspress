@@ -39,7 +39,7 @@ describe('Tag', () => {
     expect(markup).toContain('transform="translate(0, 0)"');
   });
 
-  it('renders root-relative image paths as images', () => {
+  it('renders public folder image paths as images', () => {
     const markup = renderToStaticMarkup(<Tag tag="/my.svg" />);
 
     expect(markup).toContain('<img');

@@ -19,6 +19,8 @@ const BADGE_TAGS = {
   danger: 'danger',
 } as const;
 
+const IMAGE_EXT_REGEXP = /\.(?:avif|gif|ico|jpe?g|png|svg|webp)(?:[?#].*)?$/i;
+
 function parseCommonTagsArrayStr(tagStr: string): string[] | null {
   const tags = tagStr
     .split(',')
@@ -28,12 +30,8 @@ function parseCommonTagsArrayStr(tagStr: string): string[] | null {
   return tags;
 }
 
-function isLocalImagePath(tag: string): boolean {
-  if (!tag.startsWith('/') && !tag.startsWith('./') && !tag.startsWith('../')) {
-    return false;
-  }
-
-  return /\.(?:avif|gif|ico|jpe?g|png|svg|webp)(?:[?#].*)?$/i.test(tag);
+function isPublicFolderPath(tag: string): boolean {
+  return tag.startsWith('/');
 }
 
 const getTagType = (tag: string) => {
@@ -42,7 +40,7 @@ const getTagType = (tag: string) => {
   const isPic =
     isExternalUrl(normalizedTag) ||
     isDataUrl(normalizedTag) ||
-    isLocalImagePath(normalizedTag);
+    (isPublicFolderPath(normalizedTag) && IMAGE_EXT_REGEXP.test(normalizedTag));
 
   const tagsArray =
     isSvgTagString || isPic ? null : parseCommonTagsArrayStr(normalizedTag);
