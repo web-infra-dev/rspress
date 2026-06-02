@@ -1,6 +1,7 @@
 import type { SocialLink as ISocialLink } from '@rspress/core';
 import iconMap from 'virtual-social-links';
 import './index.scss';
+import { GithubStars } from './GithubStars';
 import { useHoverGroup } from '../HoverGroup/useHoverGroup';
 
 interface SocialLinkProps {
@@ -53,6 +54,10 @@ export const SocialLink = (props: SocialLinkProps) => {
         <div className="rp-social-links__icon">{IconComp}</div>
       </a>
     );
+  }
+
+  if (mode === 'github-stars') {
+    return <GithubStars content={content} icon={IconComp} />;
   }
 
   if (mode === 'text') {

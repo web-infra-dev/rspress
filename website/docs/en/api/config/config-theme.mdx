@@ -225,7 +225,7 @@ export default defineConfig({
 - **Default**: `[]`
 
 You can add related links through the following config, such as `github` links, `x` links, etc.
-Related links support four modes: `link mode` `text mode` `image mode` `dom mode`, for example:
+Related links support five modes: `link mode` `text mode` `image mode` `dom mode` `github-stars mode`, for example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -254,6 +254,11 @@ export default defineConfig({
         content:
           '<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-0904.png" alt="logo" id="logo" class="mr-4 rspress-logo dark:hidden">',
       },
+      {
+        icon: 'github',
+        mode: 'github-stars',
+        content: 'https://github.com/web-infra-dev/rspress',
+      },
     ],
   },
 });
@@ -263,6 +268,7 @@ export default defineConfig({
 - When in `text` mode, when the mouse moves over the icon, a pop-up box will be displayed, and the content of the pop-up box is the entered text
 - When in the `img` mode, moving the mouse over the icon will display a bullet box, and the content of the bullet box is the specified picture. It should be noted that the picture needs to be placed in the `public` directory.
 - When in dom mode, html to render can be passed directly into the content field. Use '' for wrapping
+- When in `github-stars` mode, `content` should be the GitHub repository URL. The repository's star count is fetched from the GitHub REST API and rendered next to the icon. The result is cached in `localStorage` for one hour to avoid hitting the API rate limit. If the request fails (offline, rate-limited, private repo), the icon falls back to a plain link.
 
 Related links support the following types of images, which can be selected through the icon attribute:
 
