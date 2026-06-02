@@ -39,17 +39,12 @@
   &__github-stars {
     flex-direction: row;
     gap: 6px;
-    padding: 0 8px;
-    border-radius: 6px;
     text-decoration: none;
     color: var(--rp-c-text-2);
-    transition:
-      color 0.2s ease,
-      background-color 0.2s ease;
+    transition: color 0.2s ease;
 
     &:hover {
       color: var(--rp-c-text-1);
-      background-color: var(--rp-c-bg-soft);
     }
   }
   &__github-stars-count {
