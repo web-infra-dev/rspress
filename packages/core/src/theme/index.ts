@@ -27,7 +27,6 @@ export { HomeFooter } from './components/HomeFooter/index';
 export { HomeHero, type HomeHeroProps } from './components/HomeHero/index';
 export { HoverGroup, type HoverGroupProps } from './components/HoverGroup';
 export { useHoverGroup } from './components/HoverGroup/useHoverGroup';
-export { Image, type ImageProps } from './components/Image/index';
 export { LastUpdated } from './components/LastUpdated/index';
 export { Link, type LinkProps } from './components/Link/index';
 export { useLinkNavigate } from './components/Link/useLinkNavigate';
