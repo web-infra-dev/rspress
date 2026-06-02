@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 
 const TTL_MS = 60 * 60 * 1000;
 
@@ -11,7 +11,8 @@ function storageKey(repo: string) {
 function parseRepo(content: string): string | null {
   try {
     const url = new URL(content);
-    if (url.hostname !== 'github.com') return null;
+    const host = url.hostname.replace(/^www\./, '');
+    if (host !== 'github.com') return null;
     const match = url.pathname.match(/^\/([^/]+)\/([^/]+)/);
     if (!match) return null;
     return `${match[1]}/${match[2].replace(/\.git$/, '')}`;
@@ -62,7 +63,7 @@ function formatCount(count: number): string {
 
 interface GithubStarsProps {
   content: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }
 
 export const GithubStars = (props: GithubStarsProps) => {
@@ -70,7 +71,7 @@ export const GithubStars = (props: GithubStarsProps) => {
   const repo = parseRepo(content);
 
   const [count, setCount] = useState<number | null>(() =>
-    repo ? readCache(repo)?.count ?? null : null,
+    repo ? (readCache(repo)?.count ?? null) : null,
   );
 
   useEffect(() => {
@@ -80,7 +81,7 @@ export const GithubStars = (props: GithubStarsProps) => {
 
     let cancelled = false;
     fetch(`https://api.github.com/repos/${repo}`)
-      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .then(res => (res.ok ? res.json() : Promise.reject(res.status)))
       .then((data: { stargazers_count: number }) => {
         if (cancelled) return;
         if (typeof data?.stargazers_count === 'number') {

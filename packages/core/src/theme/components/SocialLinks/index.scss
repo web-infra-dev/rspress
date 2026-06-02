@@ -43,7 +43,9 @@
     border-radius: 6px;
     text-decoration: none;
     color: var(--rp-c-text-2);
-    transition: color 0.2s ease, background-color 0.2s ease;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
 
     &:hover {
       color: var(--rp-c-text-1);
