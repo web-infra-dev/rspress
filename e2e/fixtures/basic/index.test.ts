@@ -74,6 +74,20 @@ test.describe('basic test', async () => {
     const link = page.locator('.rp-doc a').first();
     await expect(link).toHaveCSS('color', 'rgb(255, 165, 0)');
   });
+
+  test('importing markdown with raw query should return source text', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.getByTestId('raw-markdown-content')).toContainText(
+      '# Raw Markdown',
+    );
+    await expect(page.getByTestId('raw-markdown-content')).toContainText(
+      'This file should be imported as source text.',
+    );
+  });
 });
 
 test.describe('CLI base option', async () => {

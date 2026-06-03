@@ -68,6 +68,7 @@ function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
 }
 
 const require = createRequire(import.meta.url);
+const RAW_QUERY_REGEXP = /[?&]raw(?:&|=|$)/;
 
 async function getVirtualModulesFromPlugins(
   pluginDriver: PluginDriver,
@@ -344,14 +345,18 @@ async function createInternalBuildConfig(
 
         chain.module
           .rule('MDX')
-          .type('javascript/auto')
           .test(MDX_OR_MD_REGEXP)
           .resolve.merge({
             conditionNames: jsModuleRule.resolve.conditionNames.values(),
             mainFields: jsModuleRule.resolve.mainFields.values(),
           })
           .end()
+          .oneOf('MDXRaw')
+          .type('asset/source')
+          .resourceQuery(RAW_QUERY_REGEXP)
+          .end()
           .oneOf('MDXCompile')
+          .type('javascript/auto')
           .use('builtin:swc-loader')
           .loader('builtin:swc-loader')
           .options(swcLoaderOptions)
