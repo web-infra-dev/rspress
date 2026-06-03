@@ -1,3 +1,5 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import {
   getPort,
@@ -35,4 +37,20 @@ test.describe('basic test', async () => {
     await appearanceToggle.click();
     await expect.poll(getIsDark).toBe(!defaultIsDark);
   });
+});
+
+test('SSG should add alt attributes to rendered images', async () => {
+  const appDir = import.meta.dirname;
+  await runBuildCommand(appDir);
+
+  const html = await fs.readFile(path.join(appDir, 'doc_build', 'index.html'), {
+    encoding: 'utf-8',
+  });
+
+  expect(html.match(/<img[^>]*alt=""/g) ?? []).toHaveLength(3);
+  expect(html).toContain('src="/static/image/example-0.');
+  expect(html).toContain('<img src="/example-1.png" alt=""');
+  expect(html).toContain(
+    '<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rust.png" alt=""',
+  );
 });

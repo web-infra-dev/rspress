@@ -74,7 +74,7 @@ export const Tag = ({ tag }: { tag?: string }) => {
   }
 
   if (isPic) {
-    return <img src={tag} />;
+    return <img src={tag} alt="" />;
   }
 
   if (normalizedTag === 'experimental') {

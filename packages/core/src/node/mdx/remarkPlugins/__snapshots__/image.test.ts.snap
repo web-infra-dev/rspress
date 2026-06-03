@@ -21,7 +21,7 @@ function _createMdxContent(props) {
       })
     }), "\\n", _jsx("img", {
       src: image1,
-      alt: "alt2"
+      alt: ""
     })]
   });
 }

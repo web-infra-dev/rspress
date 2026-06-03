@@ -10,7 +10,7 @@ describe('mdx', () => {
       source: `
 ![alt1](./test3.jpg)
 
-<img src="./test4.png" alt="alt2" />
+<img src="./test4.png" />
 `,
 
       docDirectory: '/usr/rspress-project/docs',
