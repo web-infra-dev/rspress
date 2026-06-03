@@ -1,4 +1,8 @@
-import { isDataUrl, isExternalUrl } from '@rspress/core/runtime';
+import {
+  isDataUrl,
+  isExternalUrl,
+  normalizeImagePath,
+} from '@rspress/core/runtime';
 import {
   Badge,
   IconDeprecated,
@@ -15,6 +19,8 @@ const BADGE_TAGS = {
   danger: 'danger',
 } as const;
 
+const IMAGE_EXT_REGEXP = /\.(?:avif|gif|ico|jpe?g|png|svg|webp)(?:[?#].*)?$/i;
+
 function parseCommonTagsArrayStr(tagStr: string): string[] | null {
   const tags = tagStr
     .split(',')
@@ -24,12 +30,20 @@ function parseCommonTagsArrayStr(tagStr: string): string[] | null {
   return tags;
 }
 
+function isPublicFolderPath(tag: string): boolean {
+  return tag.startsWith('/');
+}
+
 const getTagType = (tag: string) => {
   const normalizedTag = tag.trim();
   const isSvgTagString = normalizedTag.startsWith('<svg');
-  const isPic = isExternalUrl(normalizedTag) || isDataUrl(normalizedTag);
+  const isPic =
+    isExternalUrl(normalizedTag) ||
+    isDataUrl(normalizedTag) ||
+    (isPublicFolderPath(normalizedTag) && IMAGE_EXT_REGEXP.test(normalizedTag));
 
-  const tagsArray = parseCommonTagsArrayStr(normalizedTag);
+  const tagsArray =
+    isSvgTagString || isPic ? null : parseCommonTagsArrayStr(normalizedTag);
 
   return {
     isSvgTagString,
@@ -67,14 +81,14 @@ export const Tag = ({ tag }: { tag?: string }) => {
     return (
       <div
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: tag }}
+        dangerouslySetInnerHTML={{ __html: normalizedTag }}
         style={{ width: 20, marginRight: 4 }}
       ></div>
     );
   }
 
   if (isPic) {
-    return <img src={tag} />;
+    return <img src={normalizeImagePath(normalizedTag)} />;
   }
 
   if (normalizedTag === 'experimental') {
