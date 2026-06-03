@@ -36,4 +36,21 @@
     flex-wrap: nowrap;
     gap: 1rem;
   }
+  &__github-stars {
+    flex-direction: row;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--rp-c-text-2);
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--rp-c-text-1);
+    }
+  }
+  &__github-stars-count {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
 }
