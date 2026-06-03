@@ -344,18 +344,18 @@ async function createInternalBuildConfig(
           .get('options');
 
         chain.module
-          .rule('MDX')
+          .rule('mdx')
           .test(MDX_OR_MD_REGEXP)
           .resolve.merge({
             conditionNames: jsModuleRule.resolve.conditionNames.values(),
             mainFields: jsModuleRule.resolve.mainFields.values(),
           })
           .end()
-          .oneOf('MDXRaw')
+          .oneOf('mdx-raw')
           .type('asset/source')
           .resourceQuery(RAW_QUERY_REGEXP)
           .end()
-          .oneOf('MDXCompile')
+          .oneOf('mdx')
           .type('javascript/auto')
           .use('builtin:swc-loader')
           .loader('builtin:swc-loader')
