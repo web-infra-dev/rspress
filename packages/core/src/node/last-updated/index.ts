@@ -1,9 +1,5 @@
-import type { RspressPlugin } from '@rspress/shared';
+import type { LastUpdatedAuthor, RspressPlugin } from '@rspress/shared';
 import { execa } from 'execa';
-
-type LastUpdatedAuthorOption =
-  | boolean
-  | ((info: { name: string; email: string; filePath: string }) => string);
 
 function transform(timestamp: number, lang: string) {
   return new Date(timestamp).toLocaleString(lang || 'zh');
@@ -21,6 +17,7 @@ async function getGitInfo(filePath: string): Promise<GitInfo | undefined> {
       'log',
       '-1',
       '--format=%at%n%an%n%ae',
+      '--',
       filePath,
     ]);
     const [at, an, ae] = stdout.split('\n');
@@ -39,7 +36,7 @@ async function getGitInfo(filePath: string): Promise<GitInfo | undefined> {
  * The plugin is used to add the last updated time and author to the page.
  */
 export function pluginLastUpdated(
-  authorOption: LastUpdatedAuthorOption = false,
+  authorOption: LastUpdatedAuthor = false,
 ): RspressPlugin {
   return {
     name: '@rspress/plugin-last-updated',

@@ -65,6 +65,8 @@ export type LastUpdatedAuthor =
   | boolean
   | ((info: { name: string; email: string; filePath: string }) => string);
 
+export type NormalizedLastUpdated = boolean | { author?: boolean };
+
 export type LastUpdated =
   | boolean
   | {
@@ -168,8 +170,9 @@ export interface NormalizedLocales extends Omit<LocaleConfig, 'sidebar'> {
 
 export interface NormalizedThemeConfig extends Omit<
   ThemeConfig,
-  'locales' | 'sidebar'
+  'lastUpdated' | 'locales' | 'sidebar'
 > {
+  lastUpdated?: NormalizedLastUpdated;
   locales: NormalizedLocales[];
   sidebar: NormalizedSidebar;
 }

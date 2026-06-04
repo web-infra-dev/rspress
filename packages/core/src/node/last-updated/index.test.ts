@@ -63,6 +63,7 @@ describe('pluginLastUpdated', () => {
       'log',
       '-1',
       '--format=%at%n%an%n%ae',
+      '--',
       'docs/index.mdx',
     ]);
   });
