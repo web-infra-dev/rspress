@@ -33,4 +33,41 @@ test.describe('tabs-component test', async () => {
     );
     expect(stored).toBe('true');
   });
+
+  test('Banner message stays single line on narrow viewport', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+    await page.waitForSelector('.rp-banner');
+
+    const layout = await page.locator('.rp-banner').evaluate(element => {
+      const link = element.querySelector('.rp-banner__link');
+      const close = element.querySelector('.rp-banner__close');
+
+      if (!link || !close) {
+        throw new Error('Banner link or close button not found');
+      }
+
+      const linkStyle = window.getComputedStyle(link);
+      const bannerRect = element.getBoundingClientRect();
+      const linkRect = link.getBoundingClientRect();
+      const closeRect = close.getBoundingClientRect();
+
+      return {
+        bannerHeight: bannerRect.height,
+        closeLeft: closeRect.left,
+        linkHeight: linkRect.height,
+        linkRight: linkRect.right,
+        whiteSpace: linkStyle.whiteSpace,
+      };
+    });
+
+    expect(layout.bannerHeight).toBe(36);
+    expect(layout.linkHeight).toBeLessThanOrEqual(layout.bannerHeight);
+    expect(layout.linkRight).toBeLessThanOrEqual(layout.closeLeft);
+    expect(layout.whiteSpace).toBe('nowrap');
+  });
 });
