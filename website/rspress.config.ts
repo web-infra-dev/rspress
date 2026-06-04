@@ -181,7 +181,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        mode: 'link',
+        mode: 'github-stars',
         content: 'https://github.com/web-infra-dev/rspress',
       },
       {
