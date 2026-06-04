@@ -69,6 +69,13 @@ function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
 
 const require = createRequire(import.meta.url);
 const RAW_QUERY_REGEXP = /[?&]raw(?:&|=|$)/;
+const NODE_RSPACK_OPTIMIZATION = {
+  concatenateModules: false,
+  // Keep readable ids to make SSG error stacks easy to understand.
+  moduleIds: 'named',
+  chunkIds: 'named',
+  minimize: false,
+} as const;
 
 async function getVirtualModulesFromPlugins(
   pluginDriver: PluginDriver,
@@ -474,6 +481,11 @@ async function createInternalBuildConfig(
                   compressed: true,
                 },
               },
+              tools: {
+                rspack: {
+                  optimization: NODE_RSPACK_OPTIMIZATION,
+                },
+              },
               output: {
                 emitAssets: false,
                 target: 'node',
@@ -495,10 +507,7 @@ async function createInternalBuildConfig(
               },
               tools: {
                 rspack: {
-                  optimization: {
-                    moduleIds: 'named',
-                    chunkIds: 'named',
-                  },
+                  optimization: NODE_RSPACK_OPTIMIZATION,
                 },
               },
               source: {
