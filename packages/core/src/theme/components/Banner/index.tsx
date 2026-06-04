@@ -97,7 +97,11 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
         <div className={clsx('rp-banner', className)} ref={ref}>
           {customChildren ?? (
             <>
-              <Link href={href} className="rp-banner__link">
+              <Link
+                href={href}
+                className="rp-banner__link"
+                title={typeof message === 'string' ? message : undefined}
+              >
                 {message}
               </Link>
               <SvgWrapper
