@@ -84,8 +84,8 @@ importers:
         specifier: ^2.13.1
         version: 2.13.1
       skills-package-manager:
-        specifier: https://pkg.pr.new/skills-package-manager@d9156af
-        version: https://pkg.pr.new/skills-package-manager@d9156af
+        specifier: 0.11.0
+        version: 0.11.0
       tree-kill:
         specifier: ^1.2.2
         version: 1.2.2
@@ -6898,9 +6898,8 @@ packages:
     resolution: {integrity: sha512-WszCLXwT4h2k1ufIXAgsbiTOazqqevFCIncOuUBZJ91DdvWcC5+OFkluWRQPrcuSYd8fjq+o2y1QfWqYMoAToQ==}
     hasBin: true
 
-  skills-package-manager@https://pkg.pr.new/skills-package-manager@d9156af:
-    resolution: {integrity: sha512-Vwoxmo2103UgAHjDQeLj9EmhXjtP8LFW47yVPoJtABtN97BJZ2K6zCfSyIJUDFwKQLuZeSH4AjOAr3oIswxndA==, tarball: https://pkg.pr.new/skills-package-manager@d9156af}
-    version: 0.10.0
+  skills-package-manager@0.11.0:
+    resolution: {integrity: sha512-WD7JgUNefusVOBzOAacuT4XqL2aIPSvtP2brDHqM9gyby8rMU/vLZphoL9jwxQz6RWtHOAvobqDqvCcS5bf9iw==}
     hasBin: true
 
   slash@3.0.0:
@@ -13523,7 +13522,7 @@ snapshots:
 
   simple-git-hooks@2.13.1: {}
 
-  skills-package-manager@https://pkg.pr.new/skills-package-manager@d9156af: {}
+  skills-package-manager@0.11.0: {}
 
   slash@3.0.0: {}
 
