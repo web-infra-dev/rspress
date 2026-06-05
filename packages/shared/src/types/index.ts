@@ -1,6 +1,5 @@
 import type { loadConfig, RsbuildConfig } from '@rsbuild/core';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
-import type { ZoomOptions } from 'medium-zoom';
 import type { ComponentType, ReactElement } from 'react';
 import type { PluggableList } from 'unified';
 import type { AdditionalPage, RspressPlugin } from './Plugin';
@@ -275,16 +274,6 @@ export interface UserConfig {
          * @experimental
          */
         remarkSplitMdxOptions?: RemarkSplitMdxOptions;
-      };
-  /**
-   * Whether to enable medium-zoom
-   * @default true
-   */
-  mediumZoom?:
-    | boolean
-    | {
-        selector?: string;
-        options?: ZoomOptions;
       };
   /**
    * Multi version config
