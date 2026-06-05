@@ -64,11 +64,17 @@ export class PluginDriver {
     this.clearPlugins();
     const config = this.#config;
     const themeConfig = config?.themeConfig || {};
-    const enableLastUpdated = themeConfig?.lastUpdated;
+    const lastUpdatedConfig = themeConfig?.lastUpdated;
     const mediumZoomConfig = config?.mediumZoom ?? true;
-    if (enableLastUpdated) {
+    if (lastUpdatedConfig) {
       const { pluginLastUpdated } = await import('./last-updated/index');
-      this.addPlugin(pluginLastUpdated());
+      this.addPlugin(
+        pluginLastUpdated(
+          typeof lastUpdatedConfig === 'object'
+            ? lastUpdatedConfig.author
+            : false,
+        ),
+      );
     }
     if (mediumZoomConfig) {
       const { pluginMediumZoom } = await import('./medium-zoom/index');

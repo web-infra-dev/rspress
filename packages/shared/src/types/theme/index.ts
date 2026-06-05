@@ -61,6 +61,25 @@ export interface Footer {
   message?: string;
 }
 
+export type LastUpdatedAuthor =
+  | boolean
+  | ((info: { name: string; email: string; filePath: string }) => string);
+
+export type NormalizedLastUpdated = boolean | { author?: boolean };
+
+export type LastUpdated =
+  | boolean
+  | {
+      /**
+       * Whether to display the last author of the file (from git log).
+       * - `false`: hide the author.
+       * - `true`: show the commit author's name.
+       * - function: receives `{ name, email, filePath }` and returns the display string.
+       * @default false
+       */
+      author?: LastUpdatedAuthor;
+    };
+
 export type ThemeConfig = {
   /**
    * Whether to enable dark mode.
@@ -83,9 +102,10 @@ export type ThemeConfig = {
   editLink?: EditLink;
   /**
    * Whether to display the last update time of the file.
+   * Set `author` to show the last commit author.
    * @default false
    */
-  lastUpdated?: boolean;
+  lastUpdated?: LastUpdated;
   /**
    * The social links to be displayed at the end of the nav bar. Perfect for
    * placing links to social services such as GitHub, X, Facebook, etc.
@@ -150,8 +170,9 @@ export interface NormalizedLocales extends Omit<LocaleConfig, 'sidebar'> {
 
 export interface NormalizedThemeConfig extends Omit<
   ThemeConfig,
-  'locales' | 'sidebar'
+  'lastUpdated' | 'locales' | 'sidebar'
 > {
+  lastUpdated?: NormalizedLastUpdated;
   locales: NormalizedLocales[];
   sidebar: NormalizedSidebar;
 }

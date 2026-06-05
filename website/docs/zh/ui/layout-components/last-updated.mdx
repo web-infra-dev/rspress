@@ -1,11 +1,11 @@
 ---
-description: LastUpdated 最后更新时间组件，用于展示页面的最后更新时间。
+description: LastUpdated 最后更新时间组件，用于展示页面的最后更新时间与作者。
 overviewHeaders: []
 ---
 
 # LastUpdated
 
-`LastUpdated` 展示页面的最后更新时间。通常配合主题的 `lastUpdated` 配置使用。
+`LastUpdated` 展示页面的最后更新时间，并可选择显示最后的作者。通常配合主题的 `lastUpdated` 配置使用。
 
 ## 用法
 
@@ -34,5 +34,25 @@ export default defineConfig({
 ```
 
 当启用 `lastUpdated` 时，组件会自动读取页面元数据并格式化显示。
+
+### 显示作者
+
+配置 `lastUpdated.author` 可以展示最后一次提交的作者：
+
+```ts title="rspress.config.ts"
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: {
+      // 展示提交作者名称：
+      // author: true,
+
+      // 或使用自定义展示文本：
+      author: ({ name, email }) => `${name} <${email}>`,
+    },
+  },
+});
+```
+
+回调函数会收到 `{ name, email, filePath }`（来自 `git log` 的作者信息以及源文件路径），返回值即为要展示的字符串。
 
 如需自定义展示文案或时间格式，可通过 `rspress eject LastUpdated` 导出并修改 `theme/components/LastUpdated/index.tsx`。

@@ -51,6 +51,13 @@ export const DEFAULT_I18N_TEXT = {
     ko: '업데이트 날짜',
     ru: 'Последнее обновление',
   },
+  lastUpdatedAuthorText: {
+    en: 'by',
+    zh: '作者',
+    ja: '更新者',
+    ko: '작성자',
+    ru: 'автор',
+  },
   prevPageText: {
     en: 'Previous page',
     zh: '上一页',

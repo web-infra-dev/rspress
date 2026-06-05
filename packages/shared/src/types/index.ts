@@ -15,8 +15,11 @@ export type { I18nText } from './theme/i18nText';
 export type {
   EditLink,
   Footer,
+  LastUpdated,
+  LastUpdatedAuthor,
   LlmsUI,
   LlmsViewOption,
+  NormalizedLastUpdated,
   NormalizedLocales,
   NormalizedThemeConfig,
   ThemeConfig,
@@ -340,6 +343,7 @@ export interface PageDataLegacy {
     headingTitle?: string;
     pagePath: string;
     lastUpdatedTime?: string;
+    lastUpdatedAuthor?: string;
     description?: string;
     pageType: PageType;
     [key: string]: unknown;

@@ -3,7 +3,7 @@ import './index.scss';
 
 export function LastUpdated() {
   const {
-    page: { lastUpdatedTime },
+    page: { lastUpdatedTime, lastUpdatedAuthor },
   } = usePage();
   const { site } = useSite();
   const { themeConfig } = site;
@@ -11,7 +11,7 @@ export function LastUpdated() {
 
   const t = useI18n();
 
-  if (!showLastUpdated) {
+  if (!showLastUpdated || !lastUpdatedTime) {
     return null;
   }
 
@@ -19,6 +19,12 @@ export function LastUpdated() {
     <div className="rp-last-updated">
       <p>
         {t('lastUpdatedText')}: <span>{lastUpdatedTime}</span>
+        {lastUpdatedAuthor && (
+          <>
+            {' '}
+            {t('lastUpdatedAuthorText')} <span>{lastUpdatedAuthor}</span>
+          </>
+        )}
       </p>
     </div>
   );

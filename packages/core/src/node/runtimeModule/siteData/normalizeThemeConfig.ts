@@ -4,6 +4,7 @@ import {
   isExternalUrl,
   type NavItem,
   type NormalizedDefaultThemeConfig,
+  type NormalizedLastUpdated,
   type NormalizedSidebarGroup,
   normalizeHref,
   type Sidebar,
@@ -64,6 +65,20 @@ export async function normalizeThemeConfig(
 
   const textReplace = (text: string, currentLang: string) => {
     return applyReplaceRules(getI18nText(text, currentLang), replaceRules);
+  };
+
+  const normalizeLastUpdated = (
+    lastUpdated: DefaultThemeConfig['lastUpdated'],
+  ): NormalizedLastUpdated | undefined => {
+    if (typeof lastUpdated !== 'object' || lastUpdated === null) {
+      return lastUpdated;
+    }
+
+    return {
+      ...lastUpdated,
+      author:
+        typeof lastUpdated.author === 'function' ? true : lastUpdated.author,
+    };
   };
 
   // Normalize sidebar
@@ -206,5 +221,8 @@ export async function normalizeThemeConfig(
     themeConfig.sidebar = normalizeSidebar(themeConfig?.sidebar, '');
     themeConfig.nav = normalizeNav(themeConfig?.nav, '');
   }
-  return themeConfig as NormalizedDefaultThemeConfig;
+  return {
+    ...themeConfig,
+    lastUpdated: normalizeLastUpdated(themeConfig.lastUpdated),
+  } as NormalizedDefaultThemeConfig;
 }
