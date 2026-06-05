@@ -216,7 +216,7 @@ Rspress supports adding anchor navigation in links, using the `#` symbol to spec
 ```mdx
 [Jump to #File Path Format](#file-path-format)
 
-[Jump to Getting Started#1-Initialize Project](../start/getting-started.mdx#1-initialize-project)
+[Jump to Getting Started#Create a Rspress project](../start/getting-started.mdx#create-a-rspress-project)
 ```
 
 </Tab>
@@ -252,6 +252,24 @@ export default defineConfig({
   markdown: {
     link: {
       checkDeadLinks: true,
+    },
+  },
+});
+```
+
+## Dead anchors checking
+
+Rspress can also check whether internal link anchors exist in the target page. It checks same-page anchors, relative links, and absolute links, but skips external URL anchors.
+
+Configure through [markdown.link.checkAnchors](/api/config/config-build#markdownlinkcheckanchors) to automatically check for invalid anchors.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkAnchors: true,
     },
   },
 });
