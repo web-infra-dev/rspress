@@ -213,22 +213,26 @@ export class RouteService {
   }
 
   isExistRoute(link: string): boolean {
-    function linkToRoutePath(routePath: string) {
-      return decodeURIComponent(routePath.split('#')[0])
-        .replace(/\.html$/, '')
-        .replace(/\/index$/, '/');
-    }
+    return Boolean(this.getRoutePageByRouteLink(link));
+  }
 
-    const cleanLinkPath = linkToRoutePath(link);
+  getRoutePageByRouteLink(link: string): RoutePage | undefined {
+    const cleanLinkPath = this.#linkToRoutePath(link);
     // allow fuzzy matching, e.g: /guide/ and /guide is equal
     // This is a simple judgment, the performance will be better than "matchPath" in react-router-dom
-    if (
-      !this.routeData.has(removeTrailingSlash(cleanLinkPath)) &&
-      !this.routeData.has(addTrailingSlash(cleanLinkPath))
-    ) {
-      return false;
-    }
-    return true;
+    return (
+      this.routeData.get(removeTrailingSlash(cleanLinkPath)) ??
+      this.routeData.get(addTrailingSlash(cleanLinkPath))
+    );
+  }
+
+  getRoutePageByFilePath(filePath: string): RoutePage | undefined {
+    const normalizedFilePath = path.normalize(filePath);
+    return Array.from(this.routeData.values()).find(routePage => {
+      return (
+        path.normalize(routePage.routeMeta.absolutePath) === normalizedFilePath
+      );
+    });
   }
 
   generateRoutesCode(): string {
@@ -315,6 +319,12 @@ ${routeMeta
     const tempFilePath = path.join(this.#tempDir, `temp-${index}.mdx`);
     await fs.writeFile(tempFilePath, content);
     return tempFilePath;
+  }
+
+  #linkToRoutePath(routePath: string) {
+    return decodeURIComponent(routePath.split('#')[0])
+      .replace(/\.html$/, '')
+      .replace(/\/index$/, '/');
   }
 
   getRoutePageByRoutePath(routePath: string) {
