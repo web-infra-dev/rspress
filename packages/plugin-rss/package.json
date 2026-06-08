@@ -35,8 +35,8 @@
   "devDependencies": {
     "@rslib/core": "0.22.0",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.15",
-    "react": "^19.2.6",
+    "@types/react": "^19.2.17",
+    "react": "^19.2.7",
     "rsbuild-plugin-publint": "^0.3.4",
     "typescript": "^6.0.3"
   },
