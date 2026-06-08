@@ -46,7 +46,7 @@ jobs:
           RSDOCTOR=1 pnpm run build
 
       - name: Report Compressed Size
-        uses: web-infra-dev/rsdoctor-action@1fde8519f7fe0db592ffc56a47344fb428450f19 # main
+        uses: web-infra-dev/rsdoctor-action@fd79f554b23d01f3e3d02f8bda2096181d0d4e8a # main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           file_path: 'website/doc_build/diff-rsdoctor/**/rsdoctor-data.json'
