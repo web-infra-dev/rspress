@@ -238,7 +238,7 @@ test.describe('i18n test', async () => {
     expect(overviewContentEn ?? '').not.toContain('zh');
   });
 
-  test('Language switch links should have lang and hrefLang attributes in HoverGroup', async ({
+  test('Language switch should only render non-active languages as links in HoverGroup', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}`, {
@@ -257,19 +257,56 @@ test.describe('i18n test', async () => {
       .locator('xpath=ancestor::*[contains(@class, "rp-nav")]')
       .locator('.rp-hover-group');
 
-    // Verify English link has correct lang/hreflang attributes
+    // Verify non-active English item has correct lang/hreflang attributes.
     const englishLink = hoverGroup.locator('.rp-hover-group__item a', {
       hasText: 'English',
     });
     await expect(englishLink).toHaveAttribute('lang', 'en');
     await expect(englishLink).toHaveAttribute('hreflang', 'en');
+    await expect(englishLink).toHaveAttribute('rel', 'alternate');
 
-    // Verify Chinese link has correct lang/hreflang attributes
-    const chineseLink = page.locator('.rp-hover-group__item a', {
+    // Verify active Chinese item is not a link.
+    const chineseItem = hoverGroup.locator(
+      '.rp-hover-group__item--active .rp-hover-group__item__link',
+      {
+        hasText: '简体中文',
+      },
+    );
+    const chineseTagName = await chineseItem.evaluate(el => el.tagName);
+    expect(chineseTagName).toBe('DIV');
+    await expect(chineseItem).not.toHaveAttribute('href');
+    await expect(chineseItem).not.toHaveAttribute('hreflang');
+    await expect(chineseItem).not.toHaveAttribute('rel');
+    await expect(
+      hoverGroup.locator('.rp-hover-group__item a', {
+        hasText: '简体中文',
+      }),
+    ).toHaveCount(0);
+  });
+
+  test('Language switch link to default language should keep lang and hrefLang attributes in HoverGroup', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/en/`, {
+      waitUntil: 'networkidle',
+    });
+
+    const languageSwitcher = page.locator(
+      '.rp-nav__others .rp-nav-menu__item__container',
+      { hasText: 'English' },
+    );
+    await languageSwitcher.hover();
+
+    const hoverGroup = languageSwitcher
+      .locator('xpath=ancestor::*[contains(@class, "rp-nav")]')
+      .locator('.rp-hover-group');
+
+    const chineseLink = hoverGroup.locator('.rp-hover-group__item a', {
       hasText: '简体中文',
     });
     await expect(chineseLink).toHaveAttribute('lang', 'zh');
     await expect(chineseLink).toHaveAttribute('hreflang', 'zh');
+    await expect(chineseLink).toHaveAttribute('rel', 'alternate');
   });
 
   test('NavScreen language links should have lang, hrefLang and rel attributes', async ({
