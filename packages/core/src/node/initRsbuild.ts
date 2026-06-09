@@ -287,6 +287,13 @@ async function createInternalBuildConfig(
       },
     },
     performance: {
+      // Keep this default at the top-level Rsbuild config so user
+      // `builderConfig.performance.printFileSize` can override it through
+      // mergeRsbuildConfig. Environment-level defaults are harder to override
+      // from the user's shared builderConfig.
+      printFileSize: {
+        compressed: true,
+      },
       ...(process.env.RSPRESS_PERSISTENT_CACHE !== 'false'
         ? {
             buildCache: {
@@ -476,11 +483,6 @@ async function createInternalBuildConfig(
                   'import.meta.env.SSG_MD': JSON.stringify(false),
                 },
               },
-              performance: {
-                printFileSize: {
-                  compressed: true,
-                },
-              },
               tools: {
                 rspack: {
                   optimization: NODE_RSPACK_OPTIMIZATION,
@@ -518,11 +520,6 @@ async function createInternalBuildConfig(
                   'process.env.__SSR__': JSON.stringify(true),
                   'process.env.__SSR_MD__': JSON.stringify(true),
                   'import.meta.env.SSG_MD': JSON.stringify(true),
-                },
-              },
-              performance: {
-                printFileSize: {
-                  compressed: true,
                 },
               },
               output: {
