@@ -21,19 +21,19 @@ test.describe('Multi version global sidebar test', async () => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
-    await expect(page.locator('h1')).toContainText('Version One');
+    await expect(page.locator('h1')).toContainText('Version one');
     expect(await getSidebarTexts(page)).toEqual([
-      'Version One',
-      'Version One Guide',
+      'Version one',
+      'Version one guide',
     ]);
 
     await page.goto(`http://localhost:${appPort}/v2/`, {
       waitUntil: 'networkidle',
     });
-    await expect(page.locator('h1')).toContainText('Version Two');
+    await expect(page.locator('h1')).toContainText('Version two');
     expect(await getSidebarTexts(page)).toEqual([
-      'Version Two',
-      'Version Two Guide',
+      'Version two',
+      'Version two guide',
     ]);
   });
 });
