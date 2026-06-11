@@ -65,7 +65,7 @@ export async function walk(
     return {
       nav: navConfig,
       sidebar: {
-        '/': await scanSideMeta(
+        [addRoutePrefix(workDir, docsDir, '/')]: await scanSideMeta(
           workDir,
           docsDir,
           extensions,
@@ -119,7 +119,7 @@ export async function walk(
   return {
     nav: [],
     sidebar: {
-      '/': await scanSideMeta(
+      [addRoutePrefix(workDir, docsDir, '/')]: await scanSideMeta(
         workDir,
         docsDir,
         extensions,
