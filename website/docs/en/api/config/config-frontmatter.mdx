@@ -184,6 +184,21 @@ The DOM structure of the final generated sidebar is abbreviated as follows:
 </div>
 ```
 
+## search
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+Whether to include the current page in the built-in search index. By default every `doc` page is indexed for full-text search. If you want to exclude a specific page from the search results, set `search` to `false`:
+
+```yaml
+---
+search: false
+---
+```
+
+This only affects the built-in search. Pages with `pageType: home` are always excluded from the search index regardless of this field.
+
 ## head
 
 - **Type**: `[string, Record<string, string>][]`
