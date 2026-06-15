@@ -103,7 +103,7 @@
     "unist-util-visit-children": "^3.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.58.7",
+    "@microsoft/api-extractor": "^7.58.9",
     "@rsbuild/plugin-sass": "~1.5.3",
     "@rsbuild/plugin-svgr": "^2.0.3",
     "@rslib/core": "0.22.1",
@@ -122,7 +122,7 @@
     "execa": "8.0.1",
     "mdast-util-directive": "^3.1.0",
     "mdast-util-mdx-expression": "^2.0.1",
-    "memfs": "^4.57.6",
+    "memfs": "^4.57.7",
     "p-map": "^7.0.4",
     "picocolors": "^1.1.1",
     "postcss": "8.5.15",
