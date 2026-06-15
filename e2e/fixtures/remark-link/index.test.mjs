@@ -39,4 +39,37 @@ test.describe('check dead links', async () => {
       `Dead links found:\n  ${picocolors.green(`"[..](./not-exist)"`)} ${picocolors.gray('/not-exist.html')}`,
     );
   });
+
+  test('should report dead anchors via remark message', async () => {
+    const filepath = path.resolve(import.meta.dirname, 'doc/anchor.md');
+    const { messages } = await remark()
+      .use(checkDeadLinks)
+      .process({ path: filepath, value: await fs.readFile(filepath) });
+    expect(messages).toHaveLength(1);
+    expect(messages[0].reason).toBe(
+      `Dead anchors found:\n  ${picocolors.green(`"[..](./target#missing)"`)} ${picocolors.gray('/target.html#missing')}`,
+    );
+  });
+
+  test('should support disabling anchor checks', async () => {
+    const filepath = path.resolve(import.meta.dirname, 'doc/anchor.md');
+    const checkDeadLinksWithoutAnchors = lintRule(
+      'check-dead-links-without-anchors',
+      async (tree, file) => {
+        remarkLink({
+          cleanUrls: false,
+          routeService,
+          remarkLinkOptions: {
+            checkDeadLinks: config.markdown.link.checkDeadLinks,
+            checkAnchors: false,
+          },
+          lint: true,
+        })(tree, file);
+      },
+    );
+    const { messages } = await remark()
+      .use(checkDeadLinksWithoutAnchors)
+      .process({ path: filepath, value: await fs.readFile(filepath) });
+    expect(messages).toHaveLength(0);
+  });
 });

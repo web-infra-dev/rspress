@@ -533,6 +533,11 @@ export type RemarkLinkOptions = {
     | boolean
     | { excludes: string[] | ((url: string) => boolean) };
   /**
+   * Whether to enable check dead anchors
+   * @default true
+   */
+  checkAnchors?: boolean | { excludes: string[] | ((url: string) => boolean) };
+  /**
    * [](/v3/zh/guide) [](/zh/guide) [](/guide) will be regarded as the same [](/v3/zh/guide) according to the directory.
    * @default true
    */
@@ -559,7 +564,7 @@ export interface MarkdownOptions {
    */
   rehypePlugins?: PluggableList;
   /**
-   * @default { checkDeadLinks: true, autoPrefix: true }
+   * @default { checkDeadLinks: true, checkAnchors: true, autoPrefix: true }
    */
   link?: RemarkLinkOptions;
   /**

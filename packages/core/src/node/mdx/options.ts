@@ -85,6 +85,7 @@ export async function createMDXOptions(options: {
               routeService,
               remarkLinkOptions: {
                 checkDeadLinks: false,
+                checkAnchors: false,
                 autoPrefix: true,
               },
               __base: config?.base,

@@ -217,11 +217,12 @@ export type RemarkLinkOptions = {
   checkDeadLinks?:
     | boolean
     | { excludes: string[] | ((url: string) => boolean) };
+  checkAnchors?: boolean | { excludes: string[] | ((url: string) => boolean) };
   autoPrefix?: boolean;
 };
 ```
 
-- **默认值**: `{ checkDeadLinks: true, autoPrefix: true }`
+- **默认值**: `{ checkDeadLinks: true, checkAnchors: true, autoPrefix: true }`
 
 配置链接相关的配置。
 
@@ -242,6 +243,29 @@ export default defineConfig({
     link: {
       checkDeadLinks: {
         excludes: ['/guide/getting-started', '/llms.txt'],
+      },
+    },
+  },
+});
+```
+
+#### markdown.link.checkAnchors
+
+- **类型**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
+- **默认值**: `true`
+
+开启这个配置后，Rspress 会检查站内链接中的锚点是否存在于目标 Markdown 或 MDX 页面中。它会检查当前页面锚点、相对路径链接和绝对路径链接，但会跳过外部 URL 中的锚点。
+
+如果存在误判锚点的情况，可以通过 `excludes` 配置忽略该错误：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkAnchors: {
+        excludes: ['/guide/getting-started#custom-anchor'],
       },
     },
   },
