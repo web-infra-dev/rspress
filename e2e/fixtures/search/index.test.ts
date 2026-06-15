@@ -89,20 +89,16 @@ test.describe('search keyboard', async () => {
       waitUntil: 'networkidle',
     });
 
-    // Open search panel
-    const searchButton = await page.$('.rp-search-button');
-    await searchButton?.click();
-    await page.waitForSelector('.rp-search-panel__input');
+    await page.locator('.rp-search-button').click();
 
     // The Quux keyword only lives on the excluded page, so searching for it
     // should not return any suggestions.
-    const searchInput = await page.$('.rp-search-panel__input');
-    await searchInput?.focus();
-    await page.keyboard.type('Quux');
-    await page.waitForTimeout(400);
+    const searchInput = page.locator('.rp-search-panel__input');
+    await expect(searchInput).toBeVisible();
+    await searchInput.fill('Quux');
 
-    const suggestItems = await page.$$('.rp-suggest-item');
-    expect(suggestItems.length).toBe(0);
+    await expect(page.locator('.rp-no-search-result')).toBeVisible();
+    await expect(page.locator('.rp-suggest-item')).toHaveCount(0);
   });
 
   test('ESC key should close search panel', async ({ page }) => {

@@ -184,6 +184,21 @@ context: 'context-bar'
 </div>
 ```
 
+## search
+
+- **类型**： `boolean`
+- **默认值**： `true`
+
+是否将当前页面加入内置搜索索引。默认情况下，每个 `doc` 页面都会被加入全文搜索索引。如果想从搜索结果中排除某个页面，可以将 `search` 设置为 `false`：
+
+```yaml
+---
+search: false
+---
+```
+
+该配置只影响内置搜索。设置了 `pageType: home` 的页面无论是否配置该字段，都会从搜索索引中排除。
+
 ## head
 
 - **类型**： `[string, Record<string, string>][]`
