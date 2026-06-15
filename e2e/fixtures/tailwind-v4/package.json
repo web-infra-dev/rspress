@@ -12,7 +12,7 @@
     "@rspress/core": "workspace:*"
   },
   "devDependencies": {
-    "@rsbuild/plugin-tailwindcss": "^2.0.1",
+    "@rsbuild/plugin-tailwindcss": "^2.0.3",
     "@types/node": "^22.8.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
