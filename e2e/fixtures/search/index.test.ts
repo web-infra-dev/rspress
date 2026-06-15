@@ -82,6 +82,29 @@ test.describe('search keyboard', async () => {
     expect(searchPanel).toBeNull();
   });
 
+  test('page with search: false should be excluded from the index', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+
+    // Open search panel
+    const searchButton = await page.$('.rp-search-button');
+    await searchButton?.click();
+    await page.waitForSelector('.rp-search-panel__input');
+
+    // The Quux keyword only lives on the excluded page, so searching for it
+    // should not return any suggestions.
+    const searchInput = await page.$('.rp-search-panel__input');
+    await searchInput?.focus();
+    await page.keyboard.type('Quux');
+    await page.waitForTimeout(400);
+
+    const suggestItems = await page.$$('.rp-suggest-item');
+    expect(suggestItems.length).toBe(0);
+  });
+
   test('ESC key should close search panel', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/`, {
       waitUntil: 'networkidle',

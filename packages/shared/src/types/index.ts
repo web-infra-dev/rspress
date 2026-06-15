@@ -470,6 +470,8 @@ export interface FrontMatterMeta {
   titleSuffix?: string;
   head?: [string, Record<string, string>][];
   context?: string;
+  // set to false to exclude the page from the built-in search index
+  search?: boolean;
   [key: string]: unknown;
 }
 
