@@ -48,8 +48,11 @@ export const rsbuildPluginSSG = ({
                 return;
               }
 
-              for (const [assetName, assetSource] of Object.entries(assets)) {
+              // Rspack resolves `assets[name]` through the Rust-JS bridge, so
+              // keep enumeration to names and read the Source only after match.
+              for (const assetName of Object.keys(assets)) {
                 if (assetName === 'index.html') {
+                  const assetSource = assets[assetName];
                   htmlTemplate = assetSource.source().toString();
                   compilation.deleteAsset(assetName);
                   resolveOnce();
@@ -96,8 +99,11 @@ export const rsbuildPluginSSG = ({
 
           await mkdir(ssgFolderPath, { recursive: true });
           await Promise.all(
-            Object.entries(assets).map(async ([assetName, assetSource]) => {
+            // Rspack resolves `assets[name]` through the Rust-JS bridge, so
+            // keep enumeration to names and read the Source only after match.
+            Object.keys(assets).map(async assetName => {
               if (assetName.startsWith(`${NODE_SSG_BUNDLE_FOLDER}/`)) {
+                const assetSource = assets[assetName];
                 const fileAbsolutePath = join(distPath, assetName);
                 await writeFile(
                   fileAbsolutePath,

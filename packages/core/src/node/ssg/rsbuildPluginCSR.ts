@@ -31,8 +31,11 @@ export const rsbuildPluginCSR = ({
           };
 
           let htmlTemplate: string = '';
-          for (const [assetName, assetSource] of Object.entries(assets)) {
+          // Rspack resolves `assets[name]` through the Rust-JS bridge, so keep
+          // enumeration to names and read the Source only after match.
+          for (const assetName of Object.keys(assets)) {
             if (assetName === 'index.html') {
+              const assetSource = assets[assetName];
               htmlTemplate = assetSource.source().toString();
               compilation.deleteAsset(assetName);
               break;
