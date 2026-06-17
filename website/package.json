@@ -19,7 +19,7 @@
     "@rspress/plugin-sitemap": "workspace:*",
     "@rspress/plugin-twoslash": "workspace:*",
     "@rstack-dev/doc-ui": "^1.14.4",
-    "@shikijs/transformers": "^4.0.2",
+    "@shikijs/transformers": "^4.2.0",
     "@types/react": "^19.2.17",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
