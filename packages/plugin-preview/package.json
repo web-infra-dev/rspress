@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@rsbuild/core": "^2.0.14",
-    "@rsbuild/plugin-babel": "~1.2.1",
+    "@rsbuild/plugin-babel": "~2.0.0",
     "@rsbuild/plugin-react": "~2.0.1",
     "picocolors": "^1.1.1",
     "qrcode.react": "^4.2.0"
@@ -44,7 +44,7 @@
     "mdast-util-mdxjs-esm": "^2.0.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "rsbuild-plugin-publint": "^0.3.4",
+    "rsbuild-plugin-publint": "^1.0.0",
     "typescript": "^6.0.3",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0"

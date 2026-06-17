@@ -127,7 +127,7 @@
     "picocolors": "^1.1.1",
     "postcss": "8.5.15",
     "remark-directive": "^4.0.0",
-    "rsbuild-plugin-publint": "^0.3.4",
+    "rsbuild-plugin-publint": "^1.0.0",
     "rsbuild-plugin-virtual-module": "0.4.4",
     "tinyglobby": "^0.2.17",
     "tinypool": "^1.1.1",
