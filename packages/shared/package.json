@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@rsbuild/core": "^2.0.14",
-    "@shikijs/rehype": "^4.0.2",
+    "@shikijs/rehype": "^4.2.0",
     "unified": "^11.0.5"
   },
   "devDependencies": {
