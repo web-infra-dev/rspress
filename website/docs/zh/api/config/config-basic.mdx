@@ -39,6 +39,24 @@ export default defineConfig({
 });
 ```
 
+## url
+
+- **类型**： `string`
+- **默认值**： `""`
+
+站点的部署 URL，例如 `https://foo.github.io`。
+
+Rspress 在生成绝对 URL 时会结合该值和 [`base`](#base)，例如 `llms.txt` 链接或插件输出。如果你的站点部署到 `https://foo.github.io/bar/`，请将 `url` 设置为 `"https://foo.github.io"`，并将 `base` 设置为 `"/bar/"`：
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  url: 'https://foo.github.io',
+  base: '/bar/',
+});
+```
+
 ## title
 
 - **类型**： `string`

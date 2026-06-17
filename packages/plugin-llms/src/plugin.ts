@@ -59,6 +59,7 @@ const rsbuildPluginLlms = ({
   titleRef,
   descriptionRef,
   langRef,
+  siteUrlRef,
   sidebar,
   routeServiceRef,
   nav,
@@ -187,6 +188,7 @@ const rsbuildPluginLlms = ({
             titleRef.current,
             descriptionRef.current,
             baseRef.current,
+            siteUrlRef.current,
           );
           api.processAssets(
             {
@@ -207,6 +209,7 @@ const rsbuildPluginLlms = ({
             navList,
             others,
             baseRef.current,
+            siteUrlRef.current,
           );
           api.processAssets(
             { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
@@ -376,6 +379,7 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
   const titleRef: { current: string | undefined } = { current: '' };
   const descriptionRef: { current: string | undefined } = { current: '' };
   const langRef: { current: string | undefined } = { current: '' };
+  const siteUrlRef: { current: string | undefined } = { current: '' };
   const pageDataList: PageIndexInfo[] = [];
   const routes: RouteMeta[] = [];
   const sidebar: Sidebar = {};
@@ -428,6 +432,8 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
       }
 
       const docDirectory = config.root!;
+      baseRef.current = config.base ?? '/';
+      siteUrlRef.current = config.url;
 
       config.builderConfig.plugins.push(
         ...(Array.isArray(mergedOptions)
@@ -439,6 +445,7 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
                 titleRef,
                 descriptionRef,
                 langRef,
+                siteUrlRef,
                 sidebar,
                 routeServiceRef,
                 nav,
@@ -458,6 +465,7 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
                 titleRef,
                 descriptionRef,
                 langRef,
+                siteUrlRef,
                 sidebar,
                 routeServiceRef,
                 nav,
@@ -501,6 +509,7 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
       titleRef.current = config.title;
       descriptionRef.current = config.description;
       langRef.current = config.lang ?? '';
+      siteUrlRef.current = config.url;
       baseRef.current = config.base ?? '/';
       docDirectoryRef.current = config.root ?? 'docs';
 

@@ -83,11 +83,11 @@ export interface PluginSitemapOptions {
 ### siteUrl
 
 - **Type**: `string`
-- **Required**
+- **Default**: [`url`](/api/config/config-basic#url) with [`base`](/api/config/config-basic#base)
 
 The site URL for deployment access, for example `https://example.com`.
 
-When there is a `base` configuration, `siteUrl` needs to include the `base` path. For example:
+When there is a `base` configuration, `siteUrl` needs to include the `base` path. If [`url`](/api/config/config-basic#url) and [`base`](/api/config/config-basic#base) are configured, you can omit `siteUrl`:
 
 ```ts
 // rspress.config.ts
@@ -96,11 +96,11 @@ import { defineConfig } from '@rspress/core';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
+  url: 'https://example.com',
   base: '/base/',
   plugins: [
-    pluginSitemap({
-      siteUrl: 'https://example.com/base/',
-    }),
+    // siteUrl defaults to 'https://example.com/base/'
+    pluginSitemap(),
   ],
 });
 ```

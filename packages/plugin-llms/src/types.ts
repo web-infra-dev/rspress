@@ -75,6 +75,7 @@ export interface rsbuildPluginLlmsOptions {
   descriptionRef: { current: string | undefined };
   langRef: { current: string | undefined };
   baseRef: { current: string };
+  siteUrlRef: { current: string | undefined };
   pageDataList: PageIndexInfo[];
   routeServiceRef: { current: RouteService | undefined };
   routes: RouteMeta[];

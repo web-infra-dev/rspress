@@ -83,11 +83,11 @@ export interface PluginSitemapOptions {
 ### siteUrl
 
 - **类型**： `string`
-- **必填**
+- **默认值**：[`url`](/zh/api/config/config-basic#url) 与 [`base`](/zh/api/config/config-basic#base)
 
 部署访问的站点 URL，例如 `https://example.com`。
 
-当存在 `base` 配置时，`siteUrl` 需要包含 `base` 的路径。例如：
+当存在 `base` 配置时，`siteUrl` 需要包含 `base` 的路径。如果已经配置了 [`url`](/zh/api/config/config-basic#url) 和 [`base`](/zh/api/config/config-basic#base)，可以省略 `siteUrl`：
 
 ```ts
 // rspress.config.ts
@@ -96,11 +96,11 @@ import { defineConfig } from '@rspress/core';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
+  url: 'https://example.com',
   base: '/base/',
   plugins: [
-    pluginSitemap({
-      siteUrl: 'https://example.com/base/',
-    }),
+    // siteUrl 默认为 'https://example.com/base/'
+    pluginSitemap(),
   ],
 });
 ```

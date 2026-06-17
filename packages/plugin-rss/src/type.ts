@@ -103,9 +103,9 @@ export interface FeedChannel extends PartialPartial<
 export interface PluginRssOptions {
   /**
    * site url of this rspress site. it will be used in feed files and feed link.
-   * @requires
+   * @default rspress `url` config with `base`
    */
-  siteUrl: string;
+  siteUrl?: string;
   /**
    * Feed options for each rss. If array is given, this plugin will produce multiple feed files.
    * @default { id: 'blog', test: '/blog/' }

@@ -141,7 +141,7 @@ Options of the plugin.
 
 ```ts
 export interface PluginRssOptions {
-  siteUrl: string;
+  siteUrl?: string;
   feed?: Partial<FeedChannel> | FeedChannel[];
   output?: Omit<FeedOutputOptions, 'filename'>;
 }
@@ -150,11 +150,11 @@ export interface PluginRssOptions {
 #### `siteUrl`
 
 - **Type**: `string`
-- **Required**
+- **Default**: [`url`](/api/config/config-basic#url) with [`base`](/api/config/config-basic#base)
 
 The site URL of the current document site. It will be used in the RSS file.
 
-When there is a `base` configuration, `siteUrl` needs to include the `base` path. For example:
+When there is a `base` configuration, `siteUrl` needs to include the `base` path. If [`url`](/api/config/config-basic#url) and [`base`](/api/config/config-basic#base) are configured, you can omit `siteUrl`:
 
 ```ts
 // rspress.config.ts
@@ -163,11 +163,11 @@ import { defineConfig } from '@rspress/core';
 import { pluginRss } from '@rspress/plugin-rss';
 
 export default defineConfig({
+  url: 'https://example.com',
   base: '/base/',
   plugins: [
-    pluginRss({
-      siteUrl: 'https://example.com/base/',
-    }),
+    // siteUrl defaults to 'https://example.com/base/'
+    pluginRss(),
   ],
 });
 ```

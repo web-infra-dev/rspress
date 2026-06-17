@@ -1,5 +1,6 @@
 {
   "base": "/sub/",
+  "url": "http://localhost:4173",
   "siteUrl": "http://localhost:4173/sub/",
   "title": "FooBar"
 }

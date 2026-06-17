@@ -7,9 +7,9 @@ export default defineConfig({
   root: NodePath.resolve(import.meta.dirname, 'doc'),
   title: fixture.title,
   base: fixture.base,
+  url: fixture.url,
   plugins: [
     pluginRss({
-      siteUrl: fixture.siteUrl,
       feed: [
         {
           id: 'blog',

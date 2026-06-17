@@ -1,6 +1,12 @@
 import { mkdir, stat, writeFile } from 'node:fs/promises';
 import { dirname, isAbsolute } from 'node:path';
-import { logger, type RspressPlugin } from '@rspress/core';
+import {
+  logger,
+  type RspressPlugin,
+  type UserConfig,
+  withBase,
+  withSiteUrl,
+} from '@rspress/core';
 
 type ChangeFreq =
   | 'always'
@@ -37,10 +43,22 @@ interface CustomMaps {
 }
 
 export interface PluginSitemapOptions {
-  siteUrl: string;
+  siteUrl?: string;
   customMaps?: CustomMaps;
   defaultPriority?: Priority;
   defaultChangeFreq?: ChangeFreq;
+}
+
+function getSiteUrl(siteUrl: string | undefined, config: UserConfig) {
+  if (siteUrl) {
+    return siteUrl;
+  }
+  if (!config.url) {
+    throw new Error(
+      '[plugin-sitemap] Sitemap plugin requires `siteUrl` in plugin options or `url` in rspress.config.ts.',
+    );
+  }
+  return withSiteUrl(withBase('/', config.base ?? '/'), config.url);
 }
 
 const generateNode = (sitemap: Sitemap): string => {
@@ -60,7 +78,9 @@ const generateXml = (sitemaps: Sitemap[]) => {
   )}</urlset>`;
 };
 
-export function pluginSitemap(options: PluginSitemapOptions): RspressPlugin {
+export function pluginSitemap(
+  options: PluginSitemapOptions = {},
+): RspressPlugin {
   const {
     siteUrl,
     customMaps = {},
@@ -69,15 +89,21 @@ export function pluginSitemap(options: PluginSitemapOptions): RspressPlugin {
   } = options;
   const sitemaps: Sitemap[] = [];
   const set = new Set();
+  let resolvedSiteUrl = '';
   return {
     name: '@rspress/plugin-sitemap',
+    beforeBuild(config, isProd) {
+      if (isProd) {
+        resolvedSiteUrl = getSiteUrl(siteUrl, config);
+      }
+    },
     async extendPageData(pageData, isProd) {
       if (isProd) {
         if (!set.has(pageData.routePath)) {
           set.add(pageData.routePath);
           sitemaps.push({
             // @ts-expect-error
-            loc: `${siteUrl.replace(/\/$/, '')}${pageData.routePath}`,
+            loc: `${resolvedSiteUrl.replace(/\/$/, '')}${pageData.routePath}`,
             lastmod: (await stat(pageData._filepath)).mtime.toISOString(),
             priority: pageData.routePath === '/' ? '1.0' : defaultPriority,
             changefreq: defaultChangeFreq,

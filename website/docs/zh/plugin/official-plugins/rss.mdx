@@ -141,7 +141,7 @@ RSS 文件由两部分组成，一部分是 RSS 的基础信息，在 RSS 格式
 
 ```ts
 export interface PluginRssOptions {
-  siteUrl: string;
+  siteUrl?: string;
   feed?: Partial<FeedChannel> | FeedChannel[];
   output?: Omit<FeedOutputOptions, 'filename'>;
 }
@@ -150,11 +150,11 @@ export interface PluginRssOptions {
 #### `siteUrl`
 
 - **类型**： `string`
-- **必填**
+- **默认值**：[`url`](/zh/api/config/config-basic#url) 与 [`base`](/zh/api/config/config-basic#base)
 
 当前文档站点的站点 URL。将在 RSS 文件中使用。
 
-当存在 `base` 配置时，`siteUrl` 需要包含 `base` 的路径。例如：
+当存在 `base` 配置时，`siteUrl` 需要包含 `base` 的路径。如果已经配置了 [`url`](/zh/api/config/config-basic#url) 和 [`base`](/zh/api/config/config-basic#base)，可以省略 `siteUrl`：
 
 ```ts
 // rspress.config.ts
@@ -163,11 +163,11 @@ import { defineConfig } from '@rspress/core';
 import { pluginRss } from '@rspress/plugin-rss';
 
 export default defineConfig({
+  url: 'https://example.com',
   base: '/base/',
   plugins: [
-    pluginRss({
-      siteUrl: 'https://example.com/base/',
-    }),
+    // siteUrl 默认为 'https://example.com/base/'
+    pluginRss(),
   ],
 });
 ```
