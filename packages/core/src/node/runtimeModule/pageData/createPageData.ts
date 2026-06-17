@@ -66,6 +66,11 @@ export async function createPageData(context: FactoryContext): Promise<{
       return 'noindex';
     }
 
+    // allow a page to opt out of search with `search: false` in its frontmatter
+    if (page.frontmatter?.search === false) {
+      return 'noindex';
+    }
+
     const version = versioned ? page.version : '';
     const lang = page.lang || '';
 
