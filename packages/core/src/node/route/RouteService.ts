@@ -31,6 +31,8 @@ interface InitOptions {
   externalPages: AdditionalPage[];
 }
 
+type RouteAnchorIdsConsumer = (anchorIds: Set<string>) => void;
+
 export interface Route {
   path: string;
   element: React.ReactElement;
@@ -47,6 +49,10 @@ export interface RouteOptions {
 
 export class RouteService {
   routeData = new Map<string, RoutePage>();
+
+  #routeAnchorIds = new Map<string, Set<string>>();
+
+  #routeAnchorIdsConsumers = new Map<string, RouteAnchorIdsConsumer[]>();
 
   #scanDir: string;
 
@@ -233,6 +239,52 @@ export class RouteService {
         path.normalize(routePage.routeMeta.absolutePath) === normalizedFilePath
       );
     });
+  }
+
+  setRouteAnchorIds(filePath: string, anchorIds: Set<string>): void {
+    const routePage = this.getRoutePageByFilePath(filePath);
+    if (!routePage) {
+      return;
+    }
+
+    const { routePath } = routePage.routeMeta;
+    this.#routeAnchorIds.set(routePath, anchorIds);
+
+    const consumers = this.#routeAnchorIdsConsumers.get(routePath);
+    if (!consumers) {
+      return;
+    }
+
+    this.#routeAnchorIdsConsumers.delete(routePath);
+    for (const consumer of consumers) {
+      consumer(anchorIds);
+    }
+  }
+
+  getRouteAnchorIds(routeLink: string): Set<string> | undefined {
+    const routePage = this.getRoutePageByRouteLink(routeLink);
+    if (!routePage) {
+      return;
+    }
+    return this.#routeAnchorIds.get(routePage.routeMeta.routePath);
+  }
+
+  onRouteAnchorIds(routeLink: string, consumer: RouteAnchorIdsConsumer): void {
+    const routePage = this.getRoutePageByRouteLink(routeLink);
+    if (!routePage) {
+      return;
+    }
+
+    const { routePath } = routePage.routeMeta;
+    const anchorIds = this.#routeAnchorIds.get(routePath);
+    if (anchorIds) {
+      consumer(anchorIds);
+      return;
+    }
+
+    const consumers = this.#routeAnchorIdsConsumers.get(routePath) ?? [];
+    consumers.push(consumer);
+    this.#routeAnchorIdsConsumers.set(routePath, consumers);
   }
 
   generateRoutesCode(): string {

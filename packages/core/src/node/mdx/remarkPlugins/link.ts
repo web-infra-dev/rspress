@@ -3,6 +3,7 @@ import {
   addLeadingSlash,
   isExternalUrl,
   isProduction,
+  MDX_OR_MD_REGEXP,
   type MarkdownOptions,
   normalizeHref,
   parseUrl,
@@ -16,7 +17,6 @@ import type { VFile } from 'vfile';
 import { hintRelativeMarkdownLink } from '../../logger/hint';
 import type { RouteService } from '../../route/RouteService';
 import { createError } from '../../utils';
-import { getRouteAnchorIds } from './anchor';
 
 type LinkCheckOption =
   | boolean
@@ -87,7 +87,6 @@ function checkDeadAnchors(
   checkAnchors: LinkCheckOption,
   anchorLinks: Map<string, NormalizedLink>,
   routeService: RouteService,
-  tree: Root,
   file: VFile,
   lint?: boolean,
 ) {
@@ -103,22 +102,47 @@ function checkDeadAnchors(
     if (!routePage) {
       return;
     }
-
-    const anchorIds = getRouteAnchorIds(
-      routePage,
-      routeService,
-      tree,
-      file.path,
-    );
-    if (!anchorIds) {
+    if (!MDX_OR_MD_REGEXP.test(routePage.routeMeta.absolutePath)) {
       return;
     }
-    const hash = decodeHash(link.hash);
-    if (!anchorIds.has(hash)) {
-      errorInfos.push([nodeUrl, `${link.routePath}#${link.hash}`]);
+
+    const anchorIds = routeService.getRouteAnchorIds(link.routePath);
+    if (anchorIds) {
+      collectDeadAnchor(errorInfos, anchorIds, nodeUrl, link);
+      return;
     }
+
+    routeService.onRouteAnchorIds(link.routePath, targetAnchorIds => {
+      const deferredErrorInfos: [string, string][] = [];
+      collectDeadAnchor(deferredErrorInfos, targetAnchorIds, nodeUrl, link);
+      reportDeadAnchors(deferredErrorInfos, file, lint);
+    });
   });
 
+  reportDeadAnchors(errorInfos, file, lint);
+}
+
+function collectDeadAnchor(
+  errorInfos: [string, string][],
+  anchorIds: Set<string>,
+  nodeUrl: string,
+  link: NormalizedLink,
+) {
+  if (!link.hash || !link.routePath) {
+    return;
+  }
+
+  const hash = decodeHash(link.hash);
+  if (!anchorIds.has(hash)) {
+    errorInfos.push([nodeUrl, `${link.routePath}#${link.hash}`]);
+  }
+}
+
+function reportDeadAnchors(
+  errorInfos: [string, string][],
+  file: VFile,
+  lint?: boolean,
+) {
   if (errorInfos.length > 0) {
     const message = `Dead anchors found${lint ? '' : ` in ${picocolors.cyan(file.path)}`}:
 ${errorInfos.map(([nodeUrl, link]) => `  ${picocolors.green(`"[..](${nodeUrl})"`)} ${picocolors.gray(link)}`).join('\n')}`;
@@ -328,7 +352,6 @@ export const remarkLink =
         shouldCheckAnchors,
         anchorLinks,
         routeService,
-        tree,
         file,
         lint,
       );

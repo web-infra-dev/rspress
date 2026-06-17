@@ -18,6 +18,9 @@ const routeService = await RouteService.create({
   scanDir: config.root,
   externalPages: await pluginDriver.addPages(),
 });
+const registerRouteAnchors = (filepath, anchorIds) => {
+  routeService.setRouteAnchorIds(filepath, new Set(anchorIds));
+};
 
 const checkDeadLinks = lintRule('check-dead-links', async (tree, file) => {
   remarkLink({
@@ -42,6 +45,12 @@ test.describe('check dead links', async () => {
 
   test('should report dead anchors via remark message', async () => {
     const filepath = path.resolve(import.meta.dirname, 'doc/anchor.md');
+    registerRouteAnchors(path.resolve(import.meta.dirname, 'doc/target.md'), [
+      'target',
+      'target-heading',
+      'custom-heading',
+    ]);
+
     const { messages } = await remark()
       .use(checkDeadLinks)
       .process({ path: filepath, value: await fs.readFile(filepath) });

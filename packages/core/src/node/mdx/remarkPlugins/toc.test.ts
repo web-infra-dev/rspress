@@ -123,6 +123,50 @@ describe('parseToc', () => {
     const result = parseToc(tree);
     expect(result.title).toBe('');
     expect(result.toc).toEqual([]);
+    expect(result.anchorIds).toEqual(['too-deep', 'even-deeper']);
+  });
+
+  test('collects h1-h6 anchor ids', () => {
+    const tree: MdastRoot = {
+      type: 'root',
+      children: [1, 2, 3, 4, 5, 6].map(depth => ({
+        type: 'heading',
+        depth,
+        children: [{ type: 'text', value: `Heading ${depth}` }],
+      })),
+    };
+    const result = parseToc(tree);
+    expect(result.anchorIds).toEqual([
+      'heading-1',
+      'heading-2',
+      'heading-3',
+      'heading-4',
+      'heading-5',
+      'heading-6',
+    ]);
+  });
+
+  test('uses h1 in anchor id duplicate counting', () => {
+    const tree: MdastRoot = {
+      type: 'root',
+      children: [
+        {
+          type: 'heading',
+          depth: 1,
+          children: [{ type: 'text', value: 'Duplicate' }],
+        },
+        {
+          type: 'heading',
+          depth: 2,
+          children: [{ type: 'text', value: 'Duplicate' }],
+        },
+      ],
+    };
+    const result = parseToc(tree);
+    expect(result.anchorIds).toEqual(['duplicate', 'duplicate-1']);
+    expect(result.toc).toEqual([
+      { id: 'duplicate-1', text: 'Duplicate', depth: 2 },
+    ]);
   });
 
   test('handles link in heading', () => {

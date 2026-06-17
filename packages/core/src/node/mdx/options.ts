@@ -73,7 +73,7 @@ export async function createMDXOptions(options: {
       remarkGFM,
       cjkFriendlyEmphasis && remarkCjkFriendly,
       cjkFriendlyEmphasis && remarkCjkFriendlyGfmStrikethrough,
-      remarkToc,
+      [remarkToc, { routeService }],
       !isSsgMd && remarkContainerSyntax,
       [remarkFileCodeBlock, { filepath, docDirectory, addDependency }],
       [
