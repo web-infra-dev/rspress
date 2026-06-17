@@ -39,6 +39,28 @@ export default defineConfig({
 });
 ```
 
+## siteOrigin
+
+- **Type**: `string`
+- **Default**: `""`
+
+The optional deployment origin of the site, for example `https://foo.github.io`.
+
+Rspress uses this value together with [`base`](#base) when generated files need absolute URLs, such as `llms.txt` links or plugin outputs. The full URL concatenation order is `siteOrigin + base + routePath`.
+
+If `siteOrigin` is not configured, Rspress uses `base + routePath` as the fallback.
+
+If your site is deployed to `https://foo.github.io/bar/`, set `siteOrigin` to `"https://foo.github.io"` and `base` to `"/bar/"`:
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://foo.github.io',
+  base: '/bar/',
+});
+```
+
 ## title
 
 - **Type**: `string`

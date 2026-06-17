@@ -35,7 +35,13 @@ export default defineConfig({
 
 ```ts
 type ChangeFreq =
-  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+  | 'always'
+  | 'hourly'
+  | 'daily'
+  | 'weekly'
+  | 'monthly'
+  | 'yearly'
+  | 'never';
 
 type Priority =
   | '0.0'
@@ -73,11 +79,11 @@ export interface PluginSitemapOptions {
 ### siteUrl
 
 - **类型**： `string`
-- **必填**
+- **默认值**：[`siteOrigin`](/zh/api/config/config-basic#siteorigin) 与 [`base`](/zh/api/config/config-basic#base)，未配置 `siteOrigin` 时使用 `base`
 
 部署访问的站点 URL，例如 `https://example.com`。
 
-当存在 `base` 配置时，`siteUrl` 需要包含 `base` 的路径。例如：
+当存在 `base` 配置时，插件级 `siteUrl` 需要包含 `base` 的路径。如果已经在 Rspress 中配置了 [`siteOrigin`](/zh/api/config/config-basic#siteorigin) 和 [`base`](/zh/api/config/config-basic#base)，可以省略插件级 `siteUrl`。完整 URL 拼接顺序是 `siteOrigin + base + routePath`：
 
 ```ts
 // rspress.config.ts
@@ -86,11 +92,11 @@ import { defineConfig } from '@rspress/core';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
+  siteOrigin: 'https://example.com',
   base: '/base/',
   plugins: [
-    pluginSitemap({
-      siteUrl: 'https://example.com/base/',
-    }),
+    // siteUrl 默认为 'https://example.com/base/'
+    pluginSitemap(),
   ],
 });
 ```

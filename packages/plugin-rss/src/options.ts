@@ -77,7 +77,7 @@ export function getOutputInfo(
   {
     siteUrl,
     output: globalOutput,
-  }: Pick<PluginRssOptions, 'output' | 'siteUrl'>,
+  }: { siteUrl: string; output?: PluginRssOptions['output'] },
 ): ResolvedOutput {
   const type = output?.type || globalOutput?.type || 'atom';
   const { extension, mime, getContent } = getFeedFileType(type);
