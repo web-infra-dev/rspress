@@ -46,7 +46,7 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.15.1",
-    "rsbuild-plugin-publint": "^0.3.4",
+    "rsbuild-plugin-publint": "^1.0.0",
     "rsbuild-plugin-virtual-module": "0.4.4",
     "typescript": "^6.0.3"
   },
