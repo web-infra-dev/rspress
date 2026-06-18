@@ -10,6 +10,12 @@ import { useStorageValue } from './useStorageValue';
 const APPEARANCE_KEY = 'rspress-theme-appearance';
 const MEDIA_QUERY = '(prefers-color-scheme: dark)';
 
+declare global {
+  interface Window {
+    RSPRESS_THEME?: string;
+  }
+}
+
 // ============================================================================
 // Types
 // ============================================================================
@@ -39,6 +45,14 @@ export const getResolvedTheme = (
   prefersDark: boolean,
 ): ThemeValue => (config === 'auto' ? getSystemTheme(prefersDark) : config);
 
+export const getDefaultThemeConfig = () => {
+  if (typeof window === 'undefined') return 'auto';
+  const defaultTheme = window.RSPRESS_THEME;
+  return defaultTheme === 'dark' || defaultTheme === 'light'
+    ? defaultTheme
+    : 'auto';
+};
+
 const applyThemeToDOM = (theme: ThemeValue) => {
   if (!document?.documentElement) return;
   const root = document.documentElement;
@@ -57,7 +71,7 @@ export function useThemeState() {
   const prefersDark = useMediaQuery(MEDIA_QUERY);
   const [storedConfig, setStoredConfig] = useStorageValue<ThemeConfigValue>(
     APPEARANCE_KEY,
-    'auto',
+    getDefaultThemeConfig(),
   );
 
   const theme = disableDarkMode
