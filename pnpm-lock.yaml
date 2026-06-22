@@ -25,7 +25,7 @@ importers:
         version: link:scripts/config
       '@rstest/adapter-rslib':
         specifier: 0.10.5
-        version: 0.10.5(@rslib/core@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3))(@rstest/core@0.10.5)(typescript@6.0.3)
+        version: 0.10.5(@rslib/core@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3))(@rstest/core@0.10.5)(typescript@6.0.3)
       '@rstest/core':
         specifier: ^0.10.5
         version: 0.10.5
@@ -36,8 +36,8 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
       '@typescript/native-preview':
-        specifier: 7.0.0-dev.20260613.1
-        version: 7.0.0-dev.20260613.1
+        specifier: 7.0.0-dev.20260620.1
+        version: 7.0.0-dev.20260620.1
       bumpp:
         specifier: ^11.1.0
         version: 11.1.0
@@ -1148,7 +1148,7 @@ importers:
         version: 2.0.4(@rsbuild/core@2.0.15)(@rspack/core@2.0.8(@swc/helpers@0.5.23))(typescript@6.0.3)
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1195,8 +1195,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       memfs:
-        specifier: ^4.57.7
-        version: 4.57.7(tslib@2.8.1)
+        specifier: ^4.57.8
+        version: 4.57.8(tslib@2.8.1)
       p-map:
         specifier: ^7.0.4
         version: 7.0.4
@@ -1242,7 +1242,7 @@ importers:
         version: 7.58.9(@types/node@22.19.15)
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
@@ -1273,7 +1273,7 @@ importers:
         version: 2.0.1(@rsbuild/core@2.0.15)(@rspack/core@2.0.8(@swc/helpers@0.5.23))
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1331,7 +1331,7 @@ importers:
         version: 7.58.9(@types/node@22.19.15)
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
@@ -1377,7 +1377,7 @@ importers:
         version: 7.58.9(@types/node@22.19.15)
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1432,7 +1432,7 @@ importers:
         version: 2.0.1(@rsbuild/core@2.0.15)(@rspack/core@2.0.8(@swc/helpers@0.5.23))
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1490,7 +1490,7 @@ importers:
         version: 2.0.1(@rsbuild/core@2.0.15)(@rspack/core@2.0.8(@swc/helpers@0.5.23))
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: 'link:'
@@ -1554,7 +1554,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
@@ -1603,7 +1603,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
@@ -1631,7 +1631,7 @@ importers:
         version: 7.58.9(@types/node@25.6.0)
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1671,7 +1671,7 @@ importers:
         version: 7.58.9(@types/node@25.6.0)
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1714,7 +1714,7 @@ importers:
         version: 7.58.9(@types/node@22.19.15)
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
@@ -1751,7 +1751,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.23.0
-        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+        version: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -2696,50 +2696,50 @@ packages:
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-core@4.57.7':
-    resolution: {integrity: sha512-GDKuYHjP7vAI1kjBo73V+STKr9XIMZknW/xirpRW/EcShX0IKSev/ALafeRfC8Q331nodrXUFu04PugPB0MAhw==}
+  '@jsonjoy.com/fs-core@4.57.8':
+    resolution: {integrity: sha512-YzVbwggV9452VCeHgo0bjsTaUt1O7JE0XpEsPar93nn/+RAwXk0mb1Y+f5EDJ3TRtRCFe+Ck5RuojdfB4jeHVw==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-fsa@4.57.7':
-    resolution: {integrity: sha512-1rWsah2nZtRbNeP+c61QcfGfVrJXBmBD0Hm7Akvv4C9MKEasXnbiOS//iH3T3HwUSSBATGrfSp0Xi8nlNhATeQ==}
+  '@jsonjoy.com/fs-fsa@4.57.8':
+    resolution: {integrity: sha512-vmClyvCQMxgqz7uamDiGtRfp4MjzOznk3pcQjCxlIwJcw7TWeyr+bF30hI0x8NxdtNOGMg1pHM74VDIXOeyjuw==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-node-builtins@4.57.7':
-    resolution: {integrity: sha512-LWqfY1m+uAosjwM1RrKhMkUnP9jcq1RUczHsNO779ovm1E9v8I/pmj04eBAcoBjhC7ltcPbNFGyRJ5JqSJ7Jdg==}
+  '@jsonjoy.com/fs-node-builtins@4.57.8':
+    resolution: {integrity: sha512-mxXSXw8zZwRVakcjLqR2I/psy4gURFSASZS10kKJ2kJw05GC2nXGroGrWVHxwgkxXgQLsFQnB74QaLzsxzdL/w==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-node-to-fsa@4.57.7':
-    resolution: {integrity: sha512-9T0zC9LKcAWXDoTLRdLMoJ0seOvJ5bgDKq1tSBoQAFQpPDstQUeV1Oe7PLypdu7F2D3ddRstmwgeNUEN/VaZ4Q==}
+  '@jsonjoy.com/fs-node-to-fsa@4.57.8':
+    resolution: {integrity: sha512-AWZcT/4+H+iDl4XCukbXrarvwEgOrf/prFI5/7eg4ix9FxqVsZysIDJd1Kjd+AjlCeHKHJOaRqjLd5HiGSCJEw==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-node-utils@4.57.7':
-    resolution: {integrity: sha512-jjWSDOsfcog2cZnUCwX5AHmlIq6b6wx5Pz/2LAcNjJ62Rajwg89Fy7ubN+lDHew0/1reLDa9Z5urybYadhh37g==}
+  '@jsonjoy.com/fs-node-utils@4.57.8':
+    resolution: {integrity: sha512-E/bJ7sQAb4pu9nbeJhbULU3WnqWrswte4N9Js/oHt7aHB746S8/XBqKlcbrqIgnD3095XluovNEZuu5ONT230g==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-node@4.57.7':
-    resolution: {integrity: sha512-xhnyeyEVTiIOibFvda/5n89nChMLCPKHHM2WQ+GGDf6+U/IrQBW3Qx6x+Uq1bkDbxBkybLOdIGoBtVBrE8Nngg==}
+  '@jsonjoy.com/fs-node@4.57.8':
+    resolution: {integrity: sha512-IPEOlDYSnTDYpjQlQg2F8h+eqxKQN3sdbroI0WrteRiQZ462HzVpBo9ZZX485njz4nAacoe3fd4iDiIhk+k5Hg==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-print@4.57.7':
-    resolution: {integrity: sha512-mFM4P4Gjq0QQHkLnXzPYPEMFrAoe6a5Myedgb6+CmL+nGd3MKvTxYPuD7N1dLIH9RBy1fLdzxd80qvuK8xrx3Q==}
+  '@jsonjoy.com/fs-print@4.57.8':
+    resolution: {integrity: sha512-DfzhOBpmvNu5P/KSe4NNQaOnvNliTdcf0qrh/4EReErF/XUQXYkd0vZl/OiJCm/qjEEo8DWRstliw2/JNS84dA==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
 
-  '@jsonjoy.com/fs-snapshot@4.57.7':
-    resolution: {integrity: sha512-1GS3+plfm2giB3PqokiqyydyqYTPLcCQIKSkp0TdMNRh3KVk7rqRM6U785FLlVRG7XLmkc0KWr215OY+22K3QA==}
+  '@jsonjoy.com/fs-snapshot@4.57.8':
+    resolution: {integrity: sha512-L+eqKaWOHLDaiMv1dh/EWQ4hA+o6xAhWSumTo3Teg7OM18jU/KE13/e8Mfal+eAZ/pSl4wIhKHcDiwapJzC8Wg==}
     engines: {node: '>=10.0'}
     peerDependencies:
       tslib: '2'
@@ -3844,50 +3844,50 @@ packages:
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260613.1':
-    resolution: {integrity: sha512-znTFp/M0SpN91/FM3FrsTycdTZr+bLszmHObm2LaR5sgo1c2wiK4qYsMnrhLeP0vSMD2LuiNg5J21501h7Aj6g==}
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260620.1':
+    resolution: {integrity: sha512-1qwEjLW1JCRkDYrS8OyWdfXoL9bNHV28kP3ouQxytZmNpghWSMKZutsxDjVVbnlsbydBdYqqZMttPuTUlm3y0A==}
     engines: {node: '>=16.20.0'}
     cpu: [arm64]
     os: [darwin]
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260613.1':
-    resolution: {integrity: sha512-7zXTq3SVw6XCLdm06VRIhMzayG032Ky14xCZ3isnlcm1KD/p4Ev4XL9TN9fZmIV0bVPGMQr4qGS7a2+te8x7lg==}
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260620.1':
+    resolution: {integrity: sha512-/Z5Jx8V22RTuHSVR/QCbCT2eFq6NoYc5oLah5/yDoymZaTlmvuwuc50N6y9YXF0zAh+z4QGoyAqd561cAGSNOA==}
     engines: {node: '>=16.20.0'}
     cpu: [x64]
     os: [darwin]
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260613.1':
-    resolution: {integrity: sha512-yYiDEMT4ok7Wd1VtbyB+0YqBdTkU/yzE36edZCbfA/Ljt6L1xZMEn0a7XGlmRtRfwPGHfjtFRFsxrA2nc7jHnw==}
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260620.1':
+    resolution: {integrity: sha512-rz7JoRJE5zaL2RoTOHLUliz6UkDqjUngJEF1/GiSR032v8k8tp8GTezxFoosaCssQSf80cjA5wYup5zrCp4zIg==}
     engines: {node: '>=16.20.0'}
     cpu: [arm64]
     os: [linux]
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20260613.1':
-    resolution: {integrity: sha512-xpA7nXiRE3fwvTUK2ibhkPr7hn6D4i3pB9WjlcX7CSPB2pYGMdHAsL55EAFlR3eNKyNM/geoLfqq4L4PIeOWsQ==}
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20260620.1':
+    resolution: {integrity: sha512-wuqpmYeMkOvHEx+log3bi913JRacYRo7DwkABMbD5wQMEy2GCdp3461aQ5sGrRD/lL4rylZJxE5B5aQqyhkQYA==}
     engines: {node: '>=16.20.0'}
     cpu: [arm]
     os: [linux]
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20260613.1':
-    resolution: {integrity: sha512-mZO9hIwXek9VO+N+gs6IKDOf0fPnrQg/SvaOsCDcDwsk7a60yPbacyY7IiXFnxhNgZDLsYqs8j9ojDGl6+Tp5g==}
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20260620.1':
+    resolution: {integrity: sha512-8zhjBFu0RuL16iFr0TlUU8RRMdmvUY+NuSSxaVeitxmvORFoy0EwIaz+ZK9+xRhfHCIcugi6mEcTqEPv48X3oQ==}
     engines: {node: '>=16.20.0'}
     cpu: [x64]
     os: [linux]
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260613.1':
-    resolution: {integrity: sha512-JtMTHRt7auXTCvvOtcn7aX1gdCPByQl4c5vc8e1d+8PcqtMqeSpH1j0Vp06F9vugTA+YMIzFsJQA91sUK1oHeg==}
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260620.1':
+    resolution: {integrity: sha512-Bax5HY/6NUcbk7h+SLJIbRL8TvGRLP1mbvI9T4ah6wfYKRp3rwBlXHP3N+BEYdzOFTUlzBJLknxcjtxWd5cFPw==}
     engines: {node: '>=16.20.0'}
     cpu: [arm64]
     os: [win32]
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20260613.1':
-    resolution: {integrity: sha512-aCZaFWHDt5n8B++F2FrTK2pF7muAFfkvi8qkUnC0N0SNBGdVnqlO28IbdjScIfI2JFOvgZtUoYWeATGWdrLXBA==}
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20260620.1':
+    resolution: {integrity: sha512-+revF2e9JCBx1rLQCX+ny8KuZ0Tl5de7+YpYd4PUNKgF5yPi9n2+TmXtci8/3yBl7QRyLWG1td28RMa/8eIynQ==}
     engines: {node: '>=16.20.0'}
     cpu: [x64]
     os: [win32]
 
-  '@typescript/native-preview@7.0.0-dev.20260613.1':
-    resolution: {integrity: sha512-RJ3YrYNoshFGVY862CwZ/WcICvMW0u9XtezI8AAU81I71Cr3/IJoHPUGsGKUr2gVcPfKRQiaI8YTndFzUGvSug==}
+  '@typescript/native-preview@7.0.0-dev.20260620.1':
+    resolution: {integrity: sha512-W5XiTTbIGZSAJUMJqynchbfcjPcoNn29U8dnd+FK+x+Mj9VT9NNTymZ0YAIf+hU2uYAxx3AGe6/U/2OF2TpQwg==}
     engines: {node: '>=16.20.0'}
     hasBin: true
 
@@ -5634,8 +5634,8 @@ packages:
   medium-zoom@1.1.0:
     resolution: {integrity: sha512-ewyDsp7k4InCUp3jRmwHBRFGyjBimKps/AJLjRSox+2q/2H4p/PNpQf+pwONWlJiOudkBXtbdmVbFjqyybfTmQ==}
 
-  memfs@4.57.7:
-    resolution: {integrity: sha512-YZPphUQZSRGk6ddPlsNuMbztrLwsbUATFNZcqKscSbSJZ4g0+Y3vSZLJ/rfnGZaB1FFhC7SrywZXev6i8lnHgg==}
+  memfs@4.57.8:
+    resolution: {integrity: sha512-bApYhn8BLpFAnAQmFfEl/NPN+8qx5Ar3V4Qt3ek23mVwBEElzV7c6XoPkb/PCG8ZFpowCEpHcPwMFTwHS7tSMA==}
     peerDependencies:
       tslib: '2'
 
@@ -8313,58 +8313,58 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-core@4.57.7(tslib@2.8.1)':
+  '@jsonjoy.com/fs-core@4.57.8(tslib@2.8.1)':
     dependencies:
-      '@jsonjoy.com/fs-node-builtins': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.57.7(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-builtins': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.8(tslib@2.8.1)
       thingies: 2.6.0(tslib@2.8.1)
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-fsa@4.57.7(tslib@2.8.1)':
+  '@jsonjoy.com/fs-fsa@4.57.8(tslib@2.8.1)':
     dependencies:
-      '@jsonjoy.com/fs-core': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-builtins': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.57.7(tslib@2.8.1)
+      '@jsonjoy.com/fs-core': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-builtins': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.8(tslib@2.8.1)
       thingies: 2.6.0(tslib@2.8.1)
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-node-builtins@4.57.7(tslib@2.8.1)':
+  '@jsonjoy.com/fs-node-builtins@4.57.8(tslib@2.8.1)':
     dependencies:
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-node-to-fsa@4.57.7(tslib@2.8.1)':
+  '@jsonjoy.com/fs-node-to-fsa@4.57.8(tslib@2.8.1)':
     dependencies:
-      '@jsonjoy.com/fs-fsa': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-builtins': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.57.7(tslib@2.8.1)
+      '@jsonjoy.com/fs-fsa': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-builtins': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.8(tslib@2.8.1)
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-node-utils@4.57.7(tslib@2.8.1)':
+  '@jsonjoy.com/fs-node-utils@4.57.8(tslib@2.8.1)':
     dependencies:
-      '@jsonjoy.com/fs-node-builtins': 4.57.7(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-builtins': 4.57.8(tslib@2.8.1)
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-node@4.57.7(tslib@2.8.1)':
+  '@jsonjoy.com/fs-node@4.57.8(tslib@2.8.1)':
     dependencies:
-      '@jsonjoy.com/fs-core': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-builtins': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-print': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-snapshot': 4.57.7(tslib@2.8.1)
+      '@jsonjoy.com/fs-core': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-builtins': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-print': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-snapshot': 4.57.8(tslib@2.8.1)
       glob-to-regex.js: 1.2.0(tslib@2.8.1)
       thingies: 2.6.0(tslib@2.8.1)
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-print@4.57.7(tslib@2.8.1)':
+  '@jsonjoy.com/fs-print@4.57.8(tslib@2.8.1)':
     dependencies:
-      '@jsonjoy.com/fs-node-utils': 4.57.7(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.8(tslib@2.8.1)
       tree-dump: 1.1.0(tslib@2.8.1)
       tslib: 2.8.1
 
-  '@jsonjoy.com/fs-snapshot@4.57.7(tslib@2.8.1)':
+  '@jsonjoy.com/fs-snapshot@4.57.8(tslib@2.8.1)':
     dependencies:
       '@jsonjoy.com/buffers': 17.67.0(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.57.7(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.8(tslib@2.8.1)
       '@jsonjoy.com/json-pack': 17.67.0(tslib@2.8.1)
       '@jsonjoy.com/util': 17.67.0(tslib@2.8.1)
       tslib: 2.8.1
@@ -8919,10 +8919,10 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rslib/core@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)':
+  '@rslib/core@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)':
     dependencies:
       '@rsbuild/core': 2.0.15
-      rsbuild-plugin-dts: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@rsbuild/core@2.0.15)(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+      rsbuild-plugin-dts: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@rsbuild/core@2.0.15)(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.9(@types/node@22.19.15)
       typescript: 6.0.3
@@ -8931,10 +8931,10 @@ snapshots:
       - '@typescript/native-preview'
       - core-js
 
-  '@rslib/core@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)':
+  '@rslib/core@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@25.6.0))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)':
     dependencies:
       '@rsbuild/core': 2.0.15
-      rsbuild-plugin-dts: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@25.6.0))(@rsbuild/core@2.0.15)(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+      rsbuild-plugin-dts: 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@25.6.0))(@rsbuild/core@2.0.15)(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.9(@types/node@25.6.0)
       typescript: 6.0.3
@@ -9090,9 +9090,9 @@ snapshots:
     optionalDependencies:
       '@rspress/core': link:packages/core
 
-  '@rstest/adapter-rslib@0.10.5(@rslib/core@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3))(@rstest/core@0.10.5)(typescript@6.0.3)':
+  '@rstest/adapter-rslib@0.10.5(@rslib/core@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3))(@rstest/core@0.10.5)(typescript@6.0.3)':
     dependencies:
-      '@rslib/core': 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3)
+      '@rslib/core': 0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3)
       '@rstest/core': 0.10.5
     optionalDependencies:
       typescript: 6.0.3
@@ -9585,36 +9585,36 @@ snapshots:
     dependencies:
       '@types/node': 22.19.15
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260613.1':
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260620.1':
     optional: true
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260613.1':
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260620.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260613.1':
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260620.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20260613.1':
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20260620.1':
     optional: true
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20260613.1':
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20260620.1':
     optional: true
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260613.1':
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260620.1':
     optional: true
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20260613.1':
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20260620.1':
     optional: true
 
-  '@typescript/native-preview@7.0.0-dev.20260613.1':
+  '@typescript/native-preview@7.0.0-dev.20260620.1':
     optionalDependencies:
-      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20260613.1
-      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20260613.1
-      '@typescript/native-preview-linux-arm': 7.0.0-dev.20260613.1
-      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20260613.1
-      '@typescript/native-preview-linux-x64': 7.0.0-dev.20260613.1
-      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20260613.1
-      '@typescript/native-preview-win32-x64': 7.0.0-dev.20260613.1
+      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20260620.1
+      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20260620.1
+      '@typescript/native-preview-linux-arm': 7.0.0-dev.20260620.1
+      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20260620.1
+      '@typescript/native-preview-linux-x64': 7.0.0-dev.20260620.1
+      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20260620.1
+      '@typescript/native-preview-win32-x64': 7.0.0-dev.20260620.1
 
   '@typescript/vfs@1.6.4(typescript@6.0.3)':
     dependencies:
@@ -11732,16 +11732,16 @@ snapshots:
 
   medium-zoom@1.1.0: {}
 
-  memfs@4.57.7(tslib@2.8.1):
+  memfs@4.57.8(tslib@2.8.1):
     dependencies:
-      '@jsonjoy.com/fs-core': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-fsa': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-builtins': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-to-fsa': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-node-utils': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-print': 4.57.7(tslib@2.8.1)
-      '@jsonjoy.com/fs-snapshot': 4.57.7(tslib@2.8.1)
+      '@jsonjoy.com/fs-core': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-fsa': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-builtins': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-to-fsa': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-node-utils': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-print': 4.57.8(tslib@2.8.1)
+      '@jsonjoy.com/fs-snapshot': 4.57.8(tslib@2.8.1)
       '@jsonjoy.com/json-pack': 1.21.0(tslib@2.8.1)
       '@jsonjoy.com/util': 1.9.0(tslib@2.8.1)
       glob-to-regex.js: 1.2.0(tslib@2.8.1)
@@ -13002,22 +13002,22 @@ snapshots:
       glob: 13.0.6
       package-json-from-dist: 1.0.1
 
-  rsbuild-plugin-dts@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@rsbuild/core@2.0.15)(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3):
+  rsbuild-plugin-dts@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@22.19.15))(@rsbuild/core@2.0.15)(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.0.15
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.9(@types/node@22.19.15)
-      '@typescript/native-preview': 7.0.0-dev.20260613.1
+      '@typescript/native-preview': 7.0.0-dev.20260620.1
       typescript: 6.0.3
 
-  rsbuild-plugin-dts@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@25.6.0))(@rsbuild/core@2.0.15)(@typescript/native-preview@7.0.0-dev.20260613.1)(typescript@6.0.3):
+  rsbuild-plugin-dts@0.23.0(@microsoft/api-extractor@7.58.9(@types/node@25.6.0))(@rsbuild/core@2.0.15)(@typescript/native-preview@7.0.0-dev.20260620.1)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.0.15
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.9(@types/node@25.6.0)
-      '@typescript/native-preview': 7.0.0-dev.20260613.1
+      '@typescript/native-preview': 7.0.0-dev.20260620.1
       typescript: 6.0.3
 
   rsbuild-plugin-google-analytics@1.0.6(@rsbuild/core@2.0.15):
