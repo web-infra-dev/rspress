@@ -380,37 +380,28 @@ export interface LocaleConfig {
 
 ## darkMode
 
-- **类型**：`boolean`
+- **类型**：`boolean | 'dark' | 'light' | 'auto' | 'force-light' | 'force-dark' | 'force-auto'`
 - **默认值**： `true`
 
-是否出现暗黑模式/白天模式切换按钮。比如：
+配置暗黑模式/白天模式的行为：
+
+- `true`：行为和 `'auto'` 一致。
+- `false`：行为和 `'force-light'` 一致。
+- `'light'`：显示切换按钮，当用户没有保存过偏好时默认使用浅色模式。
+- `'dark'`：显示切换按钮，当用户没有保存过偏好时默认使用暗黑模式。
+- `'auto'`：显示切换按钮，当用户没有保存过偏好时默认跟随系统偏好。
+- `'force-light'`：始终使用浅色模式，并隐藏切换按钮。
+- `'force-dark'`：始终使用暗黑模式，并隐藏切换按钮。
+- `'force-auto'`：始终跟随系统偏好，并隐藏切换按钮。
+
+比如，将暗黑模式设置为默认主题，同时保留切换按钮：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    darkMode: true,
-  },
-});
-```
-
-同时，你也可以通过在 HTML 中注入如下的全局变量来指定默认的主题模式：
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  builderConfig: {
-    html: {
-      tags: [
-        {
-          tag: 'script',
-          // 通过 window.RSPRESS_THEME 变量来指定默认的主题模式，可选值为 'dark' 和 'light'
-          children: "window.RSPRESS_THEME = 'dark';",
-        },
-      ],
-    },
+    darkMode: 'dark',
   },
 });
 ```

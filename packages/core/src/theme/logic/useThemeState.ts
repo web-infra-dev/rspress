@@ -1,4 +1,8 @@
 import { useSite } from '@rspress/core/runtime';
+import {
+  getDefaultDarkModeValue,
+  isDarkModeSwitchEnabled,
+} from '@rspress/shared';
 import { useCallback, useLayoutEffect } from 'react';
 import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';
@@ -25,6 +29,17 @@ export type ThemeConfigValue = ThemeValue | 'auto';
 
 const getSystemTheme = (prefersDark: boolean): ThemeValue =>
   prefersDark ? 'dark' : 'light';
+
+const normalizeThemeConfigValue = (
+  config: ThemeConfigValue,
+  defaultValue: ThemeConfigValue,
+): ThemeConfigValue => {
+  if (config === 'light' || config === 'dark' || config === 'auto') {
+    return config;
+  }
+
+  return defaultValue;
+};
 
 export const getStoredThemeConfig = (
   theme: ThemeValue,
@@ -53,25 +68,28 @@ const applyThemeToDOM = (theme: ThemeValue) => {
  */
 export function useThemeState() {
   const { site } = useSite();
-  const disableDarkMode = site.themeConfig.darkMode === false;
+  const { darkMode } = site.themeConfig;
+  const canSwitchDarkMode = isDarkModeSwitchEnabled(darkMode);
+  const defaultThemeConfig = getDefaultDarkModeValue(darkMode);
   const prefersDark = useMediaQuery(MEDIA_QUERY);
   const [storedConfig, setStoredConfig] = useStorageValue<ThemeConfigValue>(
     APPEARANCE_KEY,
-    'auto',
+    defaultThemeConfig,
   );
 
-  const theme = disableDarkMode
-    ? 'light'
-    : getResolvedTheme(storedConfig, prefersDark);
+  const themeConfig = canSwitchDarkMode
+    ? normalizeThemeConfigValue(storedConfig, defaultThemeConfig)
+    : defaultThemeConfig;
+  const theme = getResolvedTheme(themeConfig, prefersDark);
 
   const setTheme = useCallback(
     (value: ThemeValue) => {
-      if (disableDarkMode) return;
+      if (!canSwitchDarkMode) return;
 
       setStoredConfig(getStoredThemeConfig(value, prefersDark));
       applyThemeToDOM(value);
     },
-    [disableDarkMode, prefersDark, setStoredConfig],
+    [canSwitchDarkMode, prefersDark, setStoredConfig],
   );
 
   // Sync theme when storedConfig or system preference changes

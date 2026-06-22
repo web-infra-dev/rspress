@@ -4,6 +4,12 @@ export {
   matchSidebar,
 } from './runtime-utils/sidebar';
 export {
+  getDefaultDarkModeValue,
+  isDarkModeSwitchEnabled,
+  normalizeDarkMode,
+} from './runtime-utils/darkMode';
+export type { DarkModeDefaultValue } from './runtime-utils/darkMode';
+export {
   addLeadingSlash,
   addTrailingSlash,
   cleanUrl,

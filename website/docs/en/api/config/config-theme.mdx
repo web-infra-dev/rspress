@@ -393,37 +393,28 @@ export interface LocaleConfig {
 
 ## darkMode
 
-- **Type**: `boolean`
+- **Type**: `boolean | 'dark' | 'light' | 'auto' | 'force-light' | 'force-dark' | 'force-auto'`
 - **Default**: `true`
 
-Whether a Dark/Light mode toggle button appears. for example:
+Configure the Dark/Light mode behavior:
+
+- `true`: same as `'auto'`.
+- `false`: same as `'force-light'`.
+- `'light'`: show the toggle button and use light mode by default when the user has no saved preference.
+- `'dark'`: show the toggle button and use dark mode by default when the user has no saved preference.
+- `'auto'`: show the toggle button and follow the user's system preference by default when the user has no saved preference.
+- `'force-light'`: always use light mode and hide the toggle button.
+- `'force-dark'`: always use dark mode and hide the toggle button.
+- `'force-auto'`: always follow the user's system preference and hide the toggle button.
+
+For example, set dark mode as the default theme while keeping the toggle button:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    darkMode: true,
-  },
-});
-```
-
-You can also specify the default theme mode through inject global variable into html template, for example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  builderConfig: {
-    html: {
-      tags: [
-        {
-          tag: 'script',
-          // Specify the default theme mode, which can be `dark` or `light`
-          children: "window.RSPRESS_THEME = 'dark';",
-        },
-      ],
-    },
+    darkMode: 'dark',
   },
 });
 ```

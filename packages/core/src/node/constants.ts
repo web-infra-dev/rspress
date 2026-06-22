@@ -1,5 +1,10 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
+import {
+  getDefaultDarkModeValue,
+  type DarkMode,
+  normalizeDarkMode,
+} from '@rspress/shared';
 import { version } from '../../package.json';
 
 const require = createRequire(import.meta.url);
@@ -14,20 +19,28 @@ export const isProduction = () => process.env.NODE_ENV === 'production';
 export const importStatementRegex =
   /import\s+(.*?)\s+from\s+(['"])(.*?)(?:"|');?/gm;
 
-// In the first render, the theme will be set according to the user's system theme
+// In the first render, the theme will be resolved before hydration.
 // - Should be injected into both development and production modes
 // - Class hooks are set for theme styles and user CSS frameworks
 // - Style hook (colorScheme) is set for external use (CSS media queries or `light-dark()` function)
-export const inlineThemeScript = `{
-  const saved = localStorage.getItem('${APPEARANCE_KEY}')
+export const getInlineThemeScript = (darkMode: DarkMode | undefined) => {
+  const normalizedDarkMode = normalizeDarkMode(darkMode);
+  const defaultTheme = getDefaultDarkModeValue(darkMode);
+  const shouldReadStorage = !normalizedDarkMode.startsWith('force-');
+
+  return `{
+  const saved = ${shouldReadStorage ? `localStorage.getItem('${APPEARANCE_KEY}')` : 'null'}
   const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  const isDark = !saved || saved === 'auto' ? preferDark : saved === 'dark'
+  const defaultTheme = '${defaultTheme}'
+  const theme = saved === 'light' || saved === 'dark' || saved === 'auto' ? saved : defaultTheme
+  const isDark = theme === 'auto' ? preferDark : theme === 'dark'
   document.documentElement.classList.toggle('dark', isDark)
   document.documentElement.classList.toggle('rp-dark', isDark)
   document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
 }`
-  .replace(/\n/g, ';')
-  .replace(/\s{2,}/g, '');
+    .replace(/\n/g, ';')
+    .replace(/\s{2,}/g, '');
+};
 
 export const PACKAGE_ROOT = path.dirname(
   require.resolve('@rspress/core/package.json'),
