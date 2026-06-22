@@ -396,6 +396,14 @@ export interface LocaleConfig {
 - **Type**: `boolean | 'dark' | 'light' | 'auto' | 'force-light' | 'force-dark' | 'force-auto'`
 - **Default**: `true`
 
+When dark mode is active, Rspress adds the `dark` class to the `<html>` element. You can use the `html.dark` selector to customize dark mode styles:
+
+```css
+html.dark .custom-content {
+  color: white;
+}
+```
+
 Configure the Dark/Light mode behavior:
 
 - `true`: same as `'auto'`.
@@ -407,14 +415,14 @@ Configure the Dark/Light mode behavior:
 - `'force-dark'`: always use dark mode and hide the toggle button.
 - `'force-auto'`: always follow the user's system preference and hide the toggle button.
 
-For example, set dark mode as the default theme while keeping the toggle button:
+For example, always use dark mode and hide the toggle button:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    darkMode: 'dark',
+    darkMode: 'force-dark',
   },
 });
 ```

@@ -7,52 +7,11 @@ import { useCallback, useLayoutEffect } from 'react';
 import { useMediaQuery } from './useMediaQuery';
 import { useStorageValue } from './useStorageValue';
 
-// ============================================================================
-// Constants
-// ============================================================================
-
 const APPEARANCE_KEY = 'rspress-theme-appearance';
 const MEDIA_QUERY = '(prefers-color-scheme: dark)';
 
-// ============================================================================
-// Types
-// ============================================================================
-
-/** Resolved theme value used in the app */
-export type ThemeValue = 'light' | 'dark';
-/** Theme config value stored in localStorage */
-export type ThemeConfigValue = ThemeValue | 'auto';
-
-// ============================================================================
-// Utils
-// ============================================================================
-
-const getSystemTheme = (prefersDark: boolean): ThemeValue =>
-  prefersDark ? 'dark' : 'light';
-
-const normalizeThemeConfigValue = (
-  config: ThemeConfigValue,
-  defaultValue: ThemeConfigValue,
-): ThemeConfigValue => {
-  if (config === 'light' || config === 'dark' || config === 'auto') {
-    return config;
-  }
-
-  return defaultValue;
-};
-
-export const getStoredThemeConfig = (
-  theme: ThemeValue,
-  prefersDark: boolean,
-): ThemeConfigValue => {
-  const systemTheme = getSystemTheme(prefersDark);
-  return theme === systemTheme ? 'auto' : theme;
-};
-
-export const getResolvedTheme = (
-  config: ThemeConfigValue,
-  prefersDark: boolean,
-): ThemeValue => (config === 'auto' ? getSystemTheme(prefersDark) : config);
+type ThemeValue = 'dark' | 'light';
+type ThemeConfigValue = ThemeValue | 'auto';
 
 const applyThemeToDOM = (theme: ThemeValue) => {
   if (!document?.documentElement) return;
@@ -62,34 +21,53 @@ const applyThemeToDOM = (theme: ThemeValue) => {
   root.style.colorScheme = theme;
 };
 
+function useSystemTheme(): ThemeValue {
+  const prefersDark = useMediaQuery(MEDIA_QUERY);
+  const system = prefersDark ? 'dark' : 'light';
+  return system;
+}
+
 /**
  * State provider for theme context.
  * @internal
  */
-export function useThemeState() {
+export function useThemeState(): readonly [
+  ThemeValue,
+  (value: ThemeValue) => void,
+] {
   const { site } = useSite();
   const { darkMode } = site.themeConfig;
   const canSwitchDarkMode = isDarkModeSwitchEnabled(darkMode);
   const defaultThemeConfig = getDefaultDarkModeValue(darkMode);
-  const prefersDark = useMediaQuery(MEDIA_QUERY);
-  const [storedConfig, setStoredConfig] = useStorageValue<ThemeConfigValue>(
+  const [storedConfig, setStoredConfig] = useStorageValue<string>(
     APPEARANCE_KEY,
     defaultThemeConfig,
   );
 
-  const themeConfig = canSwitchDarkMode
-    ? normalizeThemeConfigValue(storedConfig, defaultThemeConfig)
+  const validatedStoredConfig: ThemeConfigValue | null =
+    storedConfig === 'light' ||
+    storedConfig === 'dark' ||
+    storedConfig === 'auto'
+      ? storedConfig
+      : null;
+
+  const system = useSystemTheme();
+
+  const themeConfigValue = canSwitchDarkMode
+    ? (validatedStoredConfig ?? defaultThemeConfig)
     : defaultThemeConfig;
-  const theme = getResolvedTheme(themeConfig, prefersDark);
+
+  const theme = themeConfigValue === 'auto' ? system : themeConfigValue;
 
   const setTheme = useCallback(
     (value: ThemeValue) => {
       if (!canSwitchDarkMode) return;
 
-      setStoredConfig(getStoredThemeConfig(value, prefersDark));
+      setStoredConfig(system === value ? 'auto' : value);
+
       applyThemeToDOM(value);
     },
-    [canSwitchDarkMode, prefersDark, setStoredConfig],
+    [canSwitchDarkMode, system, setStoredConfig],
   );
 
   // Sync theme when storedConfig or system preference changes

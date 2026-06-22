@@ -383,6 +383,14 @@ export interface LocaleConfig {
 - **类型**：`boolean | 'dark' | 'light' | 'auto' | 'force-light' | 'force-dark' | 'force-auto'`
 - **默认值**： `true`
 
+暗黑模式启用时，Rspress 会在 `<html>` 元素上添加 `dark` class。你可以使用 `html.dark` 选择器来自定义暗黑模式样式：
+
+```css
+html.dark .custom-content {
+  color: white;
+}
+```
+
 配置暗黑模式/白天模式的行为：
 
 - `true`：行为和 `'auto'` 一致。
@@ -394,14 +402,14 @@ export interface LocaleConfig {
 - `'force-dark'`：始终使用暗黑模式，并隐藏切换按钮。
 - `'force-auto'`：始终跟随系统偏好，并隐藏切换按钮。
 
-比如，将暗黑模式设置为默认主题，同时保留切换按钮：
+比如，始终使用暗黑模式，并隐藏切换按钮：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    darkMode: 'dark',
+    darkMode: 'force-dark',
   },
 });
 ```
