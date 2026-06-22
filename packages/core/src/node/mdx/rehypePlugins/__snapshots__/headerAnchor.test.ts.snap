@@ -157,7 +157,7 @@ export default function MDXContent(props = {}) {
 
 
 MDXContent.__RSPRESS_PAGE_META = {};
-MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World \`inline code\`","headingTitle":"Hello World \`inline code\`","frontmatter":{}};
+MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World inline code","headingTitle":"Hello World inline code","frontmatter":{}};
 "
 `;
 
@@ -200,7 +200,7 @@ export default function MDXContent(props = {}) {
 
 
 MDXContent.__RSPRESS_PAGE_META = {};
-MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World \`inline code\`","headingTitle":"Hello World \`inline code\`","frontmatter":{}};
+MDXContent.__RSPRESS_PAGE_META["inline-code.mdx"] = {"toc":[],"title":"Hello World inline code","headingTitle":"Hello World inline code","frontmatter":{}};
 "
 `;
 

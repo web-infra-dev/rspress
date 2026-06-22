@@ -24,24 +24,43 @@ interface Heading {
   children?: ChildNode[];
 }
 
-const extractChildText = (child: ChildNode): string => {
+const extractChildText = (
+  child: ChildNode,
+  preserveInlineMarkdown = true,
+): string => {
   if (child.type === 'link') {
-    return child.children?.map(extractChildText).join('') ?? '';
+    return (
+      child.children
+        ?.map(child => extractChildText(child, preserveInlineMarkdown))
+        .join('') ?? ''
+    );
   }
   if (child.type === 'strong') {
-    return `**${child.children?.map(extractChildText).join('') ?? ''}**`;
+    const text =
+      child.children
+        ?.map(child => extractChildText(child, preserveInlineMarkdown))
+        .join('') ?? '';
+    return preserveInlineMarkdown ? `**${text}**` : text;
   }
   if (child.type === 'emphasis') {
-    return `*${child.children?.map(extractChildText).join('') ?? ''}*`;
+    const text =
+      child.children
+        ?.map(child => extractChildText(child, preserveInlineMarkdown))
+        .join('') ?? '';
+    return preserveInlineMarkdown ? `*${text}*` : text;
   }
   if (child.type === 'delete') {
-    return `~~${child.children?.map(extractChildText).join('') ?? ''}~~`;
+    const text =
+      child.children
+        ?.map(child => extractChildText(child, preserveInlineMarkdown))
+        .join('') ?? '';
+    return preserveInlineMarkdown ? `~~${text}~~` : text;
   }
   if (child.type === 'text') {
     return child.value;
   }
   if (child.type === 'inlineCode') {
-    return `\`${child.value}\``;
+    return preserveInlineMarkdown ? `\`${child.value}\`` : child.value;
   }
   return '';
 };
@@ -69,9 +88,19 @@ export const parseToc = (tree: MdastRoot | HastRoot) => {
         })
         .join('')
         .trim();
+      const titleText = node.children
+        .map((child: ChildNode) => {
+          if (child.type === 'text') {
+            const [textPart] = extractTextAndId(child.value);
+            return textPart;
+          }
+          return extractChildText(child, false);
+        })
+        .join('')
+        .trim();
 
       if (node.depth === 1) {
-        if (!title) title = text;
+        if (!title) title = titleText;
       } else {
         const id = customId ? customId : slugger.slug(text);
         const { depth } = node;

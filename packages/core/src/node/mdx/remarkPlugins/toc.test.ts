@@ -53,6 +53,22 @@ describe('parseToc', () => {
     expect(result.toc).toEqual([]);
   });
 
+  test('extracts plain title from h1 with inline code', () => {
+    const tree: MdastRoot = {
+      type: 'root',
+      children: [
+        {
+          type: 'heading',
+          depth: 1,
+          children: [{ type: 'inlineCode', value: '__ReplaceElements' }],
+        },
+      ],
+    };
+    const result = parseToc(tree);
+    expect(result.title).toBe('__ReplaceElements');
+    expect(result.toc).toEqual([]);
+  });
+
   test('extracts h2-h4 headings into toc', () => {
     const tree: MdastRoot = {
       type: 'root',
