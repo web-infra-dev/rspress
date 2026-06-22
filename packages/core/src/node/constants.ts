@@ -1,10 +1,10 @@
-import { createRequire } from 'node:module';
-import path from 'node:path';
 import {
   getDefaultDarkModeValue,
+  isDarkModeSwitchEnabled,
   type DarkMode,
-  normalizeDarkMode,
 } from '@rspress/shared';
+import { createRequire } from 'node:module';
+import path from 'node:path';
 import { version } from '../../package.json';
 
 const require = createRequire(import.meta.url);
@@ -24,9 +24,8 @@ export const importStatementRegex =
 // - Class hooks are set for theme styles and user CSS frameworks
 // - Style hook (colorScheme) is set for external use (CSS media queries or `light-dark()` function)
 export const getInlineThemeScript = (darkMode: DarkMode | undefined) => {
-  const normalizedDarkMode = normalizeDarkMode(darkMode);
   const defaultTheme = getDefaultDarkModeValue(darkMode);
-  const shouldReadStorage = !normalizedDarkMode.startsWith('force-');
+  const shouldReadStorage = isDarkModeSwitchEnabled(darkMode);
 
   return `{
   const saved = ${shouldReadStorage ? `localStorage.getItem('${APPEARANCE_KEY}')` : 'null'}
