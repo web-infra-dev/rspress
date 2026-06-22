@@ -51,6 +51,22 @@ const useDebounce = <T extends (...args: any[]) => any>(cb: T) => {
   return debounced;
 };
 
+const normalizeSuggestions = (
+  suggestions: DefaultMatchResult['result'],
+): Map<string, DefaultMatchResultItem[]> => {
+  return suggestions.reduce(
+    (groups, item) => {
+      const group = item.title;
+      if (!groups.has(group)) {
+        groups.set(group, []);
+      }
+      groups.get(group)!.push(item);
+      return groups;
+    },
+    new Map() as Map<string, DefaultMatchResult['result']>,
+  );
+};
+
 export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const [query, setQuery] = useState('');
   const [searchResult, setSearchResult] = useState<MatchResult>([]);
@@ -277,12 +293,18 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   // Prefetch the search index when the page is idle
   useEffect(() => {
+    let idleCallbackID: number | undefined;
     if ('requestIdleCallback' in window && !pageSearcherRef.current) {
-      window.requestIdleCallback(() => {
+      idleCallbackID = window.requestIdleCallback(() => {
         const searcher = createSearcher();
         searcher.fetchSearchIndex();
       });
     }
+    return () => {
+      if (idleCallbackID !== undefined && 'cancelIdleCallback' in window) {
+        window.cancelIdleCallback(idleCallbackID);
+      }
+    };
   }, []);
 
   // init pageSearcher again when lang or version changed
@@ -357,22 +379,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   };
 
   const handleQueryChange = useDebounce(handleQueryChangedImpl);
-
-  const normalizeSuggestions = (
-    suggestions: DefaultMatchResult['result'],
-  ): Map<string, DefaultMatchResultItem[]> => {
-    return suggestions.reduce(
-      (groups, item) => {
-        const group = item.title;
-        if (!groups.has(group)) {
-          groups.set(group, []);
-        }
-        groups.get(group)!.push(item);
-        return groups;
-      },
-      new Map() as Map<string, DefaultMatchResult['result']>,
-    );
-  };
 
   const renderSearchResult = (result: MatchResult, isSearching: boolean) => {
     if (result.length === 1) {
