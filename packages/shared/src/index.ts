@@ -8,7 +8,6 @@ export {
   isDarkModeSwitchEnabled,
   normalizeDarkMode,
 } from './runtime-utils/darkMode';
-export type { DarkModeDefaultValue } from './runtime-utils/darkMode';
 export {
   addLeadingSlash,
   addTrailingSlash,

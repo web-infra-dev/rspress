@@ -1,6 +1,6 @@
 import type { DarkMode, NormalizedDarkMode } from '../types/theme';
 
-export type DarkModeDefaultValue = 'light' | 'dark' | 'auto';
+type ThemeConfigValue = 'light' | 'dark' | 'auto';
 
 export const normalizeDarkMode = (
   darkMode: DarkMode | undefined,
@@ -18,14 +18,14 @@ export const normalizeDarkMode = (
 
 export const getDefaultDarkModeValue = (
   darkMode: DarkMode | undefined,
-): DarkModeDefaultValue => {
+): ThemeConfigValue => {
   const normalizedDarkMode = normalizeDarkMode(darkMode);
 
   if (normalizedDarkMode.startsWith('force-')) {
-    return normalizedDarkMode.slice('force-'.length) as DarkModeDefaultValue;
+    return normalizedDarkMode.slice('force-'.length) as ThemeConfigValue;
   }
 
-  return normalizedDarkMode as DarkModeDefaultValue;
+  return normalizedDarkMode as ThemeConfigValue;
 };
 
 export const isDarkModeSwitchEnabled = (
