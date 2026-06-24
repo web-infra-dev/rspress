@@ -51,6 +51,21 @@ describe('rehypeHeadAnchor', () => {
     expect(result).toMatchSnapshot();
   });
 
+  it('should include nested link text in title id', async () => {
+    const result = await compile({
+      source: `
+## this is bold link [**rsbuild**](https://rsbuild.rs)
+`,
+
+      docDirectory: '/usr/rspress-project/docs',
+      filepath: '/usr/rspress-project/docs/nested-link.mdx',
+      config: null,
+      pluginDriver: null,
+      routeService: null,
+    });
+    expect(result).toMatchSnapshot();
+  });
+
   it('should support custom id', async () => {
     const result = await compile({
       source: `

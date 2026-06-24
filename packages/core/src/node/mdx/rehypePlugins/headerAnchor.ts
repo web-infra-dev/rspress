@@ -37,13 +37,15 @@ export const collectHeaderText = (node: Element) => {
       const [textPart, idPart] = extractTextAndId(child.value);
       child.value = textPart;
       text += textPart;
-      id = idPart;
+      if (idPart) {
+        id = idPart;
+      }
     } else if (child.type === 'element') {
-      child.children.forEach(c => {
-        if (c.type === 'text') {
-          text += c.value;
-        }
-      });
+      const [childText, childId] = collectHeaderText(child);
+      text += childText;
+      if (childId) {
+        id = childId;
+      }
     }
   });
   return [text, id];
