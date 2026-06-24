@@ -12,8 +12,7 @@
   {
     "type": "dir-section-header",
     "label": "Markdown & MDX",
-    "name": "use-mdx",
-    "tag": "updated"
+    "name": "use-mdx"
   },
   {
     "type": "dir-section-header",
