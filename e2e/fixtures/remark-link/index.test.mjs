@@ -81,4 +81,25 @@ test.describe('check dead links', async () => {
       .process({ path: filepath, value: await fs.readFile(filepath) });
     expect(messages).toHaveLength(0);
   });
+
+  test('should disable anchor checks by default', async () => {
+    const filepath = path.resolve(import.meta.dirname, 'doc/anchor.md');
+    const checkDeadLinksWithoutAnchorOption = lintRule(
+      'check-dead-links-without-anchor-option',
+      async (tree, file) => {
+        remarkLink({
+          cleanUrls: false,
+          routeService,
+          remarkLinkOptions: {
+            checkDeadLinks: config.markdown.link.checkDeadLinks,
+          },
+          lint: true,
+        })(tree, file);
+      },
+    );
+    const { messages } = await remark()
+      .use(checkDeadLinksWithoutAnchorOption)
+      .process({ path: filepath, value: await fs.readFile(filepath) });
+    expect(messages).toHaveLength(0);
+  });
 });

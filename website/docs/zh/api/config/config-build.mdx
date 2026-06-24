@@ -222,7 +222,7 @@ export type RemarkLinkOptions = {
 };
 ```
 
-- **默认值**: `{ checkDeadLinks: true, checkAnchors: true, autoPrefix: true }`
+- **默认值**: `{ checkDeadLinks: true, checkAnchors: false, autoPrefix: true }`
 
 配置链接相关的配置。
 
@@ -252,7 +252,11 @@ export default defineConfig({
 #### markdown.link.checkAnchors
 
 - **类型**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
-- **默认值**: `true`
+- **默认值**: `false`
+
+:::info
+`checkAnchors` 当前默认关闭，未来版本会将默认值设置为 `true`。
+:::
 
 开启这个配置后，Rspress 会检查站内链接中的锚点是否存在于目标 Markdown 或 MDX 页面中。它会检查当前页面锚点、相对路径链接和绝对路径链接，但会跳过外部 URL 中的锚点。
 

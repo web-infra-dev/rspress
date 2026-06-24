@@ -3,4 +3,9 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc-anchor-error'),
+  markdown: {
+    link: {
+      checkAnchors: true,
+    },
+  },
 });
