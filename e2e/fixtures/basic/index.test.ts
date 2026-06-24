@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 import {
   getPort,
   killProcess,
@@ -8,6 +8,9 @@ import {
 } from '../../utils/runCommands';
 
 const CLI_BASE = '/bar/';
+
+const getIsDark = (page: Page) =>
+  page.evaluate(() => document.documentElement.classList.contains('rp-dark'));
 
 test.describe('basic test', async () => {
   let appPort: number;
@@ -45,15 +48,11 @@ test.describe('basic test', async () => {
       waitUntil: 'networkidle',
     });
     const appearanceToggle = page.locator('.rp-switch-appearance').first();
-    const getIsDark = () =>
-      page.evaluate(() =>
-        document.documentElement.classList.contains('rp-dark'),
-      );
-    const defaultIsDark = await getIsDark();
+    const defaultIsDark = await getIsDark(page);
     await appearanceToggle.click();
-    await expect.poll(getIsDark).toBe(!defaultIsDark);
+    await expect.poll(() => getIsDark(page)).toBe(!defaultIsDark);
     await appearanceToggle.click();
-    await expect.poll(getIsDark).toBe(defaultIsDark);
+    await expect.poll(() => getIsDark(page)).toBe(defaultIsDark);
   });
 
   test('Hover over social links', async ({ page }) => {
@@ -87,6 +86,69 @@ test.describe('basic test', async () => {
     await expect(page.getByTestId('raw-markdown-content')).toContainText(
       'This file should be imported as source text.',
     );
+  });
+});
+
+test.describe('themeConfig.darkMode', async () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | undefined;
+
+  test.afterEach(async () => {
+    if (app) {
+      await killProcess(app);
+      app = undefined;
+    }
+  });
+
+  async function startApp(configFile: string) {
+    const appDir = import.meta.dirname;
+    appPort = await getPort();
+    app = await runDevCommand(appDir, appPort, configFile);
+  }
+
+  test('true follows the system preference and keeps the switch visible', async ({
+    page,
+  }) => {
+    await startApp('rspress.true.config.ts');
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    await expect.poll(() => getIsDark(page)).toBe(true);
+    await expect(page.locator('.rp-switch-appearance').first()).toBeVisible();
+
+    await page.emulateMedia({ colorScheme: 'light' });
+    await expect.poll(() => getIsDark(page)).toBe(false);
+  });
+
+  test('dark defaults to dark mode when there is no saved preference', async ({
+    page,
+  }) => {
+    await startApp('rspress.dark.config.ts');
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    await expect.poll(() => getIsDark(page)).toBe(true);
+    await expect(page.locator('.rp-switch-appearance').first()).toBeVisible();
+  });
+
+  test('force-dark ignores saved preferences and hides the switch', async ({
+    page,
+  }) => {
+    await startApp('rspress.force-dark.config.ts');
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.addInitScript(() => {
+      localStorage.setItem('rspress-theme-appearance', 'light');
+    });
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    await expect.poll(() => getIsDark(page)).toBe(true);
+    await expect(page.locator('.rp-switch-appearance')).toHaveCount(0);
   });
 });
 

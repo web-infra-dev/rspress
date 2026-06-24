@@ -7,6 +7,8 @@ const SYNC_STORAGE_EVENT_NAME = 'RSPRESS_SYNC_STORAGE_EVENT_NAME';
  * @internal
  */
 export const useStorageValue = <T>(key: string, defaultValue: T) => {
+  // Why not `useState(typeof window === 'undefined' ? defaultValue : (localStorage.getItem(key) as T) ?? defaultValue);` ?
+  // Avoid hydration mismatch by initializing with defaultValue and then updating it in useEffect
   const [value, setValueInternal] = useState<T>(defaultValue);
 
   // Use useEffect instead of useLayoutEffect for SSR compatibility
