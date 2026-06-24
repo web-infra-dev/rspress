@@ -13,12 +13,14 @@ import type { I18nText } from './theme/i18nText';
 // #region theme
 export type { I18nText } from './theme/i18nText';
 export type {
+  DarkMode,
   EditLink,
   Footer,
   LastUpdated,
   LastUpdatedAuthor,
   LlmsUI,
   LlmsViewOption,
+  NormalizedDarkMode,
   NormalizedLastUpdated,
   NormalizedLocales,
   NormalizedThemeConfig,

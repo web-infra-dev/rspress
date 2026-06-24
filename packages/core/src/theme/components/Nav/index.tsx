@@ -6,6 +6,7 @@ import {
   SocialLinks,
   SwitchAppearance,
 } from '@rspress/core/theme';
+import { isDarkModeSwitchEnabled } from '@rspress/shared';
 import './index.scss';
 import { NavLangs, NavMenu, NavMenuDivider, NavVersions } from './NavMenu';
 
@@ -28,7 +29,9 @@ export function Nav(props: NavProps) {
   } = props;
   const navList = useNav();
   const { site } = useSite();
-  const hasAppearanceSwitch = site.themeConfig.darkMode !== false;
+  const hasAppearanceSwitch = isDarkModeSwitchEnabled(
+    site.themeConfig.darkMode,
+  );
 
   return (
     <header className="rp-nav">

@@ -1,6 +1,7 @@
 // TODO: do not expose so much pubic API
 
 export type {
+  DarkMode,
   EditLink,
   Feature,
   FrontMatterMeta,

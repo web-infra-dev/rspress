@@ -12,6 +12,7 @@ import { version as rspressVersion } from '@rspress/core/package.json';
 import {
   addTrailingSlash,
   MDX_OR_MD_REGEXP,
+  normalizeDarkMode,
   removeTrailingSlash,
   type UserConfig,
 } from '@rspress/shared';
@@ -20,7 +21,7 @@ import {
   CSR_CLIENT_ENTRY,
   DEFAULT_THEME,
   DEFAULT_TITLE,
-  inlineThemeScript,
+  getInlineThemeScript,
   isProduction,
   NODE_SSG_BUNDLE_FOLDER,
   NODE_SSG_BUNDLE_NAME,
@@ -234,10 +235,10 @@ async function createInternalBuildConfig(
       favicon: normalizeIcon(config?.icon),
       template: TEMPLATE_PATH,
       tags: [
-        config.themeConfig?.darkMode !== false
+        normalizeDarkMode(config.themeConfig?.darkMode) !== 'force-light'
           ? {
               tag: 'script',
-              children: inlineThemeScript,
+              children: getInlineThemeScript(config.themeConfig?.darkMode),
               append: false,
             }
           : null!,
