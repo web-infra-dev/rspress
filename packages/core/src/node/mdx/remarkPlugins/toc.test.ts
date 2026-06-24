@@ -1,7 +1,11 @@
+import path from 'node:path';
 import { describe, expect, test } from '@rstest/core';
 import type { Root as MdastRoot } from 'mdast';
+import { RouteService } from '../../route/RouteService';
 import { compile } from '../processor';
 import { parseToc } from './toc';
+
+const BASIC_DIR = path.join(__dirname, '../../route/fixtures/basic');
 
 describe('toc', async () => {
   const process = (source: string) => {
@@ -33,6 +37,62 @@ import { Link } from '@theme';
 ## this is bold code link [**\`rsbuild\`**](https://rsbuild.rs)
 `);
     expect(result).toMatchSnapshot();
+  });
+
+  test('registers fallback heading anchor from frontmatter title', async () => {
+    const routeService = await RouteService.create({
+      config: {},
+      scanDir: BASIC_DIR,
+      externalPages: [],
+    });
+    await compile({
+      source: `---
+title: Getting Started
+---
+
+Content without h1
+`,
+      docDirectory: BASIC_DIR,
+      filepath: path.join(BASIC_DIR, 'index.mdx'),
+      config: {},
+      pluginDriver: null,
+      routeService,
+    });
+
+    expect([...(routeService.getRouteAnchorIds('/') ?? [])]).toEqual([
+      'getting-started',
+    ]);
+  });
+
+  test('does not register fallback heading anchor when disabled', async () => {
+    const routeService = await RouteService.create({
+      config: {
+        themeConfig: {
+          fallbackHeadingTitle: false,
+        },
+      },
+      scanDir: BASIC_DIR,
+      externalPages: [],
+    });
+    await compile({
+      source: `---
+title: Getting Started
+---
+
+Content without h1
+`,
+      docDirectory: BASIC_DIR,
+      filepath: path.join(BASIC_DIR, 'index.mdx'),
+      config: {
+        themeConfig: {
+          fallbackHeadingTitle: false,
+        },
+      },
+      pluginDriver: null,
+      routeService,
+    });
+
+    expect([...(routeService.getRouteAnchorIds('/') ?? [])]).toEqual([]);
   });
 });
 

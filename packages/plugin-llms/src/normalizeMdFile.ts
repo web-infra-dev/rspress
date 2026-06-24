@@ -63,6 +63,7 @@ async function normalizeMdFile(
       routeService,
       remarkLinkOptions: {
         checkDeadLinks: false,
+        checkAnchors: false,
         autoPrefix: true,
       },
       __base: base,

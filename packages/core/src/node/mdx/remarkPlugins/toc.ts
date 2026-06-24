@@ -1,4 +1,4 @@
-import Slugger from '@rspress/shared/github-slugger';
+import Slugger, { slug } from '@rspress/shared/github-slugger';
 import { extractTextAndId } from '@rspress/shared/node-utils';
 import type { Root as HastRoot } from 'hast';
 import type { Root as MdastRoot } from 'mdast';
@@ -122,6 +122,7 @@ export const parseToc = (tree: MdastRoot | HastRoot) => {
 
 interface RemarkTocOptions {
   routeService?: RouteService | null;
+  fallbackHeadingTitle?: boolean;
 }
 
 export const remarkToc: Plugin<[RemarkTocOptions?], HastRoot> = function (
@@ -137,7 +138,19 @@ export const remarkToc: Plugin<[RemarkTocOptions?], HastRoot> = function (
       data.pageMeta.title = title;
     }
     if (file.path) {
-      options.routeService?.setRouteAnchorIds(file.path, new Set(anchorIds));
+      const registeredAnchorIds = new Set(anchorIds);
+      const fallbackHeadingTitle = data.pageMeta.frontmatter?.title;
+      if (
+        !title &&
+        options.fallbackHeadingTitle !== false &&
+        typeof fallbackHeadingTitle === 'string'
+      ) {
+        const fallbackHeadingAnchorId = slug(fallbackHeadingTitle.trim());
+        if (fallbackHeadingAnchorId) {
+          registeredAnchorIds.add(fallbackHeadingAnchorId);
+        }
+      }
+      options.routeService?.setRouteAnchorIds(file.path, registeredAnchorIds);
     }
   };
 };

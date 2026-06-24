@@ -537,7 +537,7 @@ export type RemarkLinkOptions = {
     | boolean
     | { excludes: string[] | ((url: string) => boolean) };
   /**
-   * Whether to enable check dead anchors
+   * Whether to enable dead anchor checks
    * @default false
    */
   checkAnchors?: boolean | { excludes: string[] | ((url: string) => boolean) };

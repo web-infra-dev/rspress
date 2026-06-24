@@ -50,6 +50,8 @@ export interface RouteOptions {
 export class RouteService {
   routeData = new Map<string, RoutePage>();
 
+  #routeDataByFilePath = new Map<string, RoutePage>();
+
   #routeAnchorIds = new Map<string, Set<string>>();
 
   #routeAnchorIdsConsumers = new Map<string, RouteAnchorIdsConsumer[]>();
@@ -208,6 +210,10 @@ export class RouteService {
       throw createError(`routePath ${routePath} has already been added`);
     }
     this.routeData.set(routePath, routePage);
+    this.#routeDataByFilePath.set(
+      path.normalize(routePage.routeMeta.absolutePath),
+      routePage,
+    );
   }
 
   getRoutes(): RouteMeta[] {
@@ -233,12 +239,7 @@ export class RouteService {
   }
 
   getRoutePageByFilePath(filePath: string): RoutePage | undefined {
-    const normalizedFilePath = path.normalize(filePath);
-    return Array.from(this.routeData.values()).find(routePage => {
-      return (
-        path.normalize(routePage.routeMeta.absolutePath) === normalizedFilePath
-      );
-    });
+    return this.#routeDataByFilePath.get(path.normalize(filePath));
   }
 
   setRouteAnchorIds(filePath: string, anchorIds: Set<string>): void {

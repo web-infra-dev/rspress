@@ -159,6 +159,9 @@ describe('RouteService', async () => {
       'intro',
       'api',
     ]);
+    expect(
+      routeService.getRoutePageByFilePath(filePath)?.routeMeta.routePath,
+    ).toBe('/guide/');
   });
 
   it('RouteService with route.exclude', async () => {
