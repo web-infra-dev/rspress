@@ -80,12 +80,24 @@ export type LastUpdated =
       author?: LastUpdatedAuthor;
     };
 
+export type NormalizedDarkMode =
+  | 'light'
+  | 'dark'
+  | 'auto'
+  | 'force-light'
+  | 'force-dark'
+  | 'force-auto';
+
+export type DarkMode = boolean | NormalizedDarkMode;
+
 export type ThemeConfig = {
   /**
-   * Whether to enable dark mode.
+   * Whether to enable dark mode and how to resolve the default theme.
+   * - `true`: same as `'auto'`.
+   * - `false`: same as `'force-light'`.
    * @default true
    */
-  darkMode?: boolean;
+  darkMode?: DarkMode;
   /**
    * The nav items. When it's an object, the key is the version of current doc.
    * @default []
