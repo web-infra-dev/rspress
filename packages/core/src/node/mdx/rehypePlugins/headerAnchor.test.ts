@@ -66,6 +66,21 @@ describe('rehypeHeadAnchor', () => {
     expect(result).toMatchSnapshot();
   });
 
+  it('should preserve nested custom id-like text', async () => {
+    const result = await compile({
+      source: `
+## **literal {#inner} text** suffix
+`,
+
+      docDirectory: '/usr/rspress-project/docs',
+      filepath: '/usr/rspress-project/docs/nested-id-text.mdx',
+      config: null,
+      pluginDriver: null,
+      routeService: null,
+    });
+    expect(result).toMatchSnapshot();
+  });
+
   it('should support custom id', async () => {
     const result = await compile({
       source: `
