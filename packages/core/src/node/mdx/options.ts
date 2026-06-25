@@ -73,7 +73,13 @@ export async function createMDXOptions(options: {
       remarkGFM,
       cjkFriendlyEmphasis && remarkCjkFriendly,
       cjkFriendlyEmphasis && remarkCjkFriendlyGfmStrikethrough,
-      remarkToc,
+      [
+        remarkToc,
+        {
+          routeService,
+          fallbackHeadingTitle: config?.themeConfig?.fallbackHeadingTitle,
+        },
+      ],
       !isSsgMd && remarkContainerSyntax,
       [remarkFileCodeBlock, { filepath, docDirectory, addDependency }],
       [
@@ -85,6 +91,7 @@ export async function createMDXOptions(options: {
               routeService,
               remarkLinkOptions: {
                 checkDeadLinks: false,
+                checkAnchors: false,
                 autoPrefix: true,
               },
               __base: config?.base,

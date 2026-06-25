@@ -3,6 +3,7 @@ import {
   addLeadingSlash,
   isExternalUrl,
   isProduction,
+  MDX_OR_MD_REGEXP,
   type MarkdownOptions,
   normalizeHref,
   parseUrl,
@@ -17,27 +18,41 @@ import { hintRelativeMarkdownLink } from '../../logger/hint';
 import type { RouteService } from '../../route/RouteService';
 import { createError } from '../../utils';
 
-// TODO: checkDeadLinks support external links and anchor hash links
+type LinkCheckOption =
+  | boolean
+  | { excludes: string[] | ((url: string) => boolean) };
+
+interface NormalizedLink {
+  url: string;
+  routePath?: string;
+  hash?: string;
+}
+
+function createExcluder(checkOption: LinkCheckOption) {
+  const excludes =
+    typeof checkOption === 'object' ? checkOption.excludes : undefined;
+  const excludesUrl = Array.isArray(excludes) ? new Set(excludes) : undefined;
+  const excludesFn = typeof excludes === 'function' ? excludes : undefined;
+
+  return (url: string) => {
+    return Boolean(excludesUrl?.has(url) || excludesFn?.(url));
+  };
+}
+
+// TODO: checkDeadLinks support external links
 function checkDeadLinks(
-  checkDeadLinks: boolean | { excludes: string[] | ((url: string) => boolean) },
+  checkDeadLinks: LinkCheckOption,
   internalLinks: Map<string, string>,
   file: VFile,
   lint?: boolean,
 ) {
   const errorInfos: [string, string][] = [];
-  const excludes =
-    typeof checkDeadLinks === 'object' ? checkDeadLinks.excludes : undefined;
-  const excludesUrl = Array.isArray(excludes) ? new Set(excludes) : undefined;
-  const excludesFn = typeof excludes === 'function' ? excludes : undefined;
+  const isExcluded = createExcluder(checkDeadLinks);
 
   let possibleBreakingChange = false;
 
   [...internalLinks.entries()].forEach(([nodeUrl, link]) => {
-    if (excludesUrl?.has(nodeUrl)) {
-      return;
-    }
-
-    if (excludesFn?.(nodeUrl)) {
+    if (isExcluded(nodeUrl)) {
       return;
     }
 
@@ -65,6 +80,90 @@ ${errorInfos.map(([nodeUrl, link]) => `  ${picocolors.green(`"[..](${nodeUrl})"`
         throw createError('Dead link found');
       }
     }
+  }
+}
+
+function checkDeadAnchors(
+  checkAnchors: LinkCheckOption,
+  anchorLinks: Map<string, NormalizedLink>,
+  routeService: RouteService,
+  file: VFile,
+  lint?: boolean,
+) {
+  const errorInfos: [string, string][] = [];
+  const isExcluded = createExcluder(checkAnchors);
+
+  [...anchorLinks.entries()].forEach(([nodeUrl, link]) => {
+    if (isExcluded(nodeUrl) || !link.hash || !link.routePath) {
+      return;
+    }
+
+    const routePage = routeService.getRoutePageByRouteLink(link.routePath);
+    if (!routePage) {
+      return;
+    }
+    if (!MDX_OR_MD_REGEXP.test(routePage.routeMeta.absolutePath)) {
+      return;
+    }
+
+    const anchorIds = routeService.getRouteAnchorIds(link.routePath);
+    if (anchorIds) {
+      collectDeadAnchor(errorInfos, anchorIds, nodeUrl, link);
+      return;
+    }
+
+    routeService.onRouteAnchorIds(link.routePath, targetAnchorIds => {
+      const deferredErrorInfos: [string, string][] = [];
+      collectDeadAnchor(deferredErrorInfos, targetAnchorIds, nodeUrl, link);
+      reportDeadAnchors(deferredErrorInfos, file, lint);
+    });
+  });
+
+  reportDeadAnchors(errorInfos, file, lint);
+}
+
+function collectDeadAnchor(
+  errorInfos: [string, string][],
+  anchorIds: Set<string>,
+  nodeUrl: string,
+  link: NormalizedLink,
+) {
+  if (!link.hash || !link.routePath) {
+    return;
+  }
+
+  const hash = decodeHash(link.hash);
+  if (!anchorIds.has(hash)) {
+    errorInfos.push([nodeUrl, `${link.routePath}#${link.hash}`]);
+  }
+}
+
+function reportDeadAnchors(
+  errorInfos: [string, string][],
+  file: VFile,
+  lint?: boolean,
+) {
+  if (errorInfos.length > 0) {
+    const message = `Dead anchors found${lint ? '' : ` in ${picocolors.cyan(file.path)}`}:
+${errorInfos.map(([nodeUrl, link]) => `  ${picocolors.green(`"[..](${nodeUrl})"`)} ${picocolors.gray(link)}`).join('\n')}`;
+
+    if (lint) {
+      file.message(message);
+    } else {
+      logger.error(message);
+
+      if (isProduction()) {
+        throw createError('Dead anchor found');
+      }
+    }
+  }
+}
+
+function decodeHash(hash: string): string {
+  try {
+    return decodeURIComponent(hash);
+  } catch {
+    return hash;
   }
 }
 
@@ -115,18 +214,24 @@ function normalizeLink(
   autoPrefix: boolean,
   deadLinks: Map<string, string>,
   __base?: string, // just for plugin-llms, we should normalize the link with base
-): string {
+): NormalizedLink {
   if (!nodeUrl) {
-    return '';
+    return { url: '' };
   }
   if (nodeUrl.startsWith('#')) {
-    return nodeUrl;
+    const routePath =
+      routeService?.getRoutePageByFilePath(filePath)?.routeMeta.routePath;
+    return {
+      url: nodeUrl,
+      routePath,
+      hash: nodeUrl.slice(1),
+    };
   }
   if (isExternalUrl(nodeUrl)) {
-    return nodeUrl;
+    return { url: nodeUrl };
   }
   if (!routeService) {
-    return nodeUrl;
+    return { url: nodeUrl };
   }
 
   let { url, hash, search } = parseUrl(nodeUrl);
@@ -152,17 +257,19 @@ function normalizeLink(
     // preserve dead links
     if (!routeService.isExistRoute(url)) {
       deadLinks.set(nodeUrl, url);
-      return nodeUrl;
+      return { url: nodeUrl };
     }
   } else {
     url = normalizeHref(url, false);
     // preserve dead links
     if (!routeService.isExistRoute(url)) {
       deadLinks.set(nodeUrl, url);
-      return nodeUrl;
+      return { url: nodeUrl };
     }
     url = url.replace(/\.html$/, cleanUrls);
   }
+
+  const routePath = url;
 
   if (search) {
     url += `?${search}`;
@@ -173,7 +280,7 @@ function normalizeLink(
   if (__base) {
     url = withBase(url, __base);
   }
-  return url;
+  return { url, routePath, hash };
 }
 
 /**
@@ -196,9 +303,13 @@ export const remarkLink =
     __base?: string;
   }) =>
   (tree: Root, file: VFile) => {
-    const { checkDeadLinks: shouldCheckDeadLinks = true, autoPrefix = true } =
-      remarkLinkOptions ?? {};
+    const {
+      checkAnchors: shouldCheckAnchors = false,
+      checkDeadLinks: shouldCheckDeadLinks = true,
+      autoPrefix = true,
+    } = remarkLinkOptions ?? {};
     const deadLinks = new Map<string, string>();
+    const anchorLinks = new Map<string, NormalizedLink>();
     visit(tree, 'link', node => {
       const { url: nodeUrl } = node;
       const link = normalizeLink(
@@ -210,7 +321,10 @@ export const remarkLink =
         deadLinks,
         __base,
       );
-      node.url = link;
+      if (link.hash) {
+        anchorLinks.set(nodeUrl, link);
+      }
+      node.url = link.url;
     });
 
     visit(tree, 'definition', node => {
@@ -224,10 +338,22 @@ export const remarkLink =
         deadLinks,
         __base,
       );
-      node.url = link;
+      if (link.hash) {
+        anchorLinks.set(nodeUrl, link);
+      }
+      node.url = link.url;
     });
 
     if (shouldCheckDeadLinks && routeService) {
       checkDeadLinks(shouldCheckDeadLinks, deadLinks, file, lint);
+    }
+    if (shouldCheckAnchors && routeService) {
+      checkDeadAnchors(
+        shouldCheckAnchors,
+        anchorLinks,
+        routeService,
+        file,
+        lint,
+      );
     }
   };
