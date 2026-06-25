@@ -1,7 +1,11 @@
+import path from 'node:path';
 import { describe, expect, test } from '@rstest/core';
 import type { Root as MdastRoot } from 'mdast';
+import { RouteService } from '../../route/RouteService';
 import { compile } from '../processor';
 import { parseToc } from './toc';
+
+const BASIC_DIR = path.join(__dirname, '../../route/fixtures/basic');
 
 describe('toc', async () => {
   const process = (source: string) => {
@@ -33,6 +37,87 @@ import { Link } from '@theme';
 ## this is bold code link [**\`rsbuild\`**](https://rsbuild.rs)
 `);
     expect(result).toMatchSnapshot();
+  });
+
+  test('registers fallback heading anchor from frontmatter title', async () => {
+    const routeService = await RouteService.create({
+      config: {},
+      scanDir: BASIC_DIR,
+      externalPages: [],
+    });
+    await compile({
+      source: `---
+title: Getting Started
+---
+
+Content without h1
+`,
+      docDirectory: BASIC_DIR,
+      filepath: path.join(BASIC_DIR, 'index.mdx'),
+      config: {},
+      pluginDriver: null,
+      routeService,
+    });
+
+    expect([...(routeService.getRouteAnchorIds('/') ?? [])]).toEqual([
+      'getting-started',
+    ]);
+  });
+
+  test('registers fallback heading anchor without frontmatter custom id', async () => {
+    const routeService = await RouteService.create({
+      config: {},
+      scanDir: BASIC_DIR,
+      externalPages: [],
+    });
+    await compile({
+      source: `---
+title: My Page {#ignored}
+---
+
+Content without h1
+`,
+      docDirectory: BASIC_DIR,
+      filepath: path.join(BASIC_DIR, 'index.mdx'),
+      config: {},
+      pluginDriver: null,
+      routeService,
+    });
+
+    expect([...(routeService.getRouteAnchorIds('/') ?? [])]).toEqual([
+      'my-page',
+    ]);
+  });
+
+  test('does not register fallback heading anchor when disabled', async () => {
+    const routeService = await RouteService.create({
+      config: {
+        themeConfig: {
+          fallbackHeadingTitle: false,
+        },
+      },
+      scanDir: BASIC_DIR,
+      externalPages: [],
+    });
+    await compile({
+      source: `---
+title: Getting Started
+---
+
+Content without h1
+`,
+      docDirectory: BASIC_DIR,
+      filepath: path.join(BASIC_DIR, 'index.mdx'),
+      config: {
+        themeConfig: {
+          fallbackHeadingTitle: false,
+        },
+      },
+      pluginDriver: null,
+      routeService,
+    });
+
+    expect([...(routeService.getRouteAnchorIds('/') ?? [])]).toEqual([]);
   });
 });
 
@@ -123,6 +208,50 @@ describe('parseToc', () => {
     const result = parseToc(tree);
     expect(result.title).toBe('');
     expect(result.toc).toEqual([]);
+    expect(result.anchorIds).toEqual(['too-deep', 'even-deeper']);
+  });
+
+  test('collects h1-h6 anchor ids', () => {
+    const tree: MdastRoot = {
+      type: 'root',
+      children: [1, 2, 3, 4, 5, 6].map(depth => ({
+        type: 'heading',
+        depth,
+        children: [{ type: 'text', value: `Heading ${depth}` }],
+      })),
+    };
+    const result = parseToc(tree);
+    expect(result.anchorIds).toEqual([
+      'heading-1',
+      'heading-2',
+      'heading-3',
+      'heading-4',
+      'heading-5',
+      'heading-6',
+    ]);
+  });
+
+  test('uses h1 in anchor id duplicate counting', () => {
+    const tree: MdastRoot = {
+      type: 'root',
+      children: [
+        {
+          type: 'heading',
+          depth: 1,
+          children: [{ type: 'text', value: 'Duplicate' }],
+        },
+        {
+          type: 'heading',
+          depth: 2,
+          children: [{ type: 'text', value: 'Duplicate' }],
+        },
+      ],
+    };
+    const result = parseToc(tree);
+    expect(result.anchorIds).toEqual(['duplicate', 'duplicate-1']);
+    expect(result.toc).toEqual([
+      { id: 'duplicate-1', text: 'Duplicate', depth: 2 },
+    ]);
   });
 
   test('handles link in heading', () => {

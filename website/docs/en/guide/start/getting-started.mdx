@@ -85,6 +85,7 @@ If you plan to maintain the documentation site with an AI agent, you can select 
 
 For most documentation sites, we recommend selecting:
 
+- [rspress-docs-generator](https://github.com/rstackjs/agent-skills#rspress-docs-generator): helps AI agents create and maintain Rspress documentation sites, especially when a monorepo keeps a dedicated Rspress project as its docs site.
 - [rspress-best-practices](https://github.com/rstackjs/agent-skills#rspress-best-practices): provides Rspress project structure, config, MDX, theme, and deployment guidance for AI agents.
 - [rspress-description-generator](https://github.com/rstackjs/agent-skills#rspress-description-generator): helps AI agents write and maintain page descriptions for SEO, search, and AI-readable outputs.
 
@@ -132,7 +133,7 @@ npx -y create-rspress@latest my-docs --template i18n-theme
 You can also add Agent Skills explicitly:
 
 ```bash
-npx -y create-rspress@latest my-docs --template basic-theme --skill rspress-best-practices,rspress-description-generator
+npx -y create-rspress@latest my-docs --template basic-theme --skill rspress-docs-generator,rspress-best-practices,rspress-description-generator
 ```
 
 All CLI flags supported by `create-rspress`:
@@ -158,7 +159,7 @@ Optional tools:
   eslint, rslint, biome, prettier
 
 Optional skills:
-  rspress-best-practices, rspress-custom-theme, rspress-description-generator
+  rspress-docs-generator, rspress-best-practices, rspress-custom-theme, rspress-description-generator
 ```
 
 ## Manual setup

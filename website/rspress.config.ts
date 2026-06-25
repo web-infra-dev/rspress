@@ -81,6 +81,7 @@ export default defineConfig({
       checkDeadLinks: {
         excludes: ['/og-image.png', '/llms-full.txt'],
       },
+      checkAnchors: true,
     },
   },
   plugins: [
