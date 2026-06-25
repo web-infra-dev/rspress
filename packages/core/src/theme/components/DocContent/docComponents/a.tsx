@@ -1,4 +1,4 @@
-eimport { useSite } from '@rspress/core/runtime';
+import { useSite } from '@rspress/core/runtime';
 import { Link } from '@rspress/core/theme';
 import { startTransition, type ComponentProps } from 'react';
 
