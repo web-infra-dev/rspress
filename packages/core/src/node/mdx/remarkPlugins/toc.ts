@@ -145,7 +145,8 @@ export const remarkToc: Plugin<[RemarkTocOptions?], HastRoot> = function (
         options.fallbackHeadingTitle !== false &&
         typeof fallbackHeadingTitle === 'string'
       ) {
-        const fallbackHeadingAnchorId = slug(fallbackHeadingTitle.trim());
+        const [fallbackHeadingText] = extractTextAndId(fallbackHeadingTitle);
+        const fallbackHeadingAnchorId = slug(fallbackHeadingText.trim());
         if (fallbackHeadingAnchorId) {
           registeredAnchorIds.add(fallbackHeadingAnchorId);
         }

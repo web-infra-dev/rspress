@@ -64,6 +64,31 @@ Content without h1
     ]);
   });
 
+  test('registers fallback heading anchor without frontmatter custom id', async () => {
+    const routeService = await RouteService.create({
+      config: {},
+      scanDir: BASIC_DIR,
+      externalPages: [],
+    });
+    await compile({
+      source: `---
+title: My Page {#ignored}
+---
+
+Content without h1
+`,
+      docDirectory: BASIC_DIR,
+      filepath: path.join(BASIC_DIR, 'index.mdx'),
+      config: {},
+      pluginDriver: null,
+      routeService,
+    });
+
+    expect([...(routeService.getRouteAnchorIds('/') ?? [])]).toEqual([
+      'my-page',
+    ]);
+  });
+
   test('does not register fallback heading anchor when disabled', async () => {
     const routeService = await RouteService.create({
       config: {
