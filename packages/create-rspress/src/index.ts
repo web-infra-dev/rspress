@@ -88,6 +88,11 @@ create({
   mapRslintTemplate,
   extraSkills: [
     {
+      value: 'rspress-docs-generator',
+      label: 'Rspress docs generator',
+      source: 'rstackjs/agent-skills',
+    },
+    {
       value: 'rspress-best-practices',
       label: 'Rspress best practices',
       source: 'rstackjs/agent-skills',

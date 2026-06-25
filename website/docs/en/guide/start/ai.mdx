@@ -15,6 +15,7 @@ Agent Skills are domain-specific knowledge packs that can be installed into Agen
 
 In the [rstackjs/agent-skills](https://github.com/rstackjs/agent-skills) repository, there are many skills for the Rstack ecosystem. The skills related to Rspress include:
 
+- [rspress-docs-generator](https://github.com/rstackjs/agent-skills#rspress-docs-generator): Recommended for creating and maintaining Rspress documentation sites, especially when a monorepo keeps a dedicated Rspress project as its documentation site.
 - [rspress-best-practices](https://github.com/rstackjs/agent-skills#rspress-best-practices): Rspress best practices for config, CLI workflow, content organization, frontmatter, MDX, themes, i18n, search, static assets, deployment, and debugging.
 - [rspress-v2-upgrade](https://github.com/rstackjs/agent-skills#rspress-v2-upgrade): Migrate Rspress projects from v1 to v2.
 - [rspress-custom-theme](https://github.com/rstackjs/agent-skills#rspress-custom-theme): Customize Rspress themes using CSS variables, Layout slots, component wrapping, or component ejection.
@@ -23,14 +24,14 @@ In the [rstackjs/agent-skills](https://github.com/rstackjs/agent-skills) reposit
 In Coding Agents that support skills, you can use the [skills](https://www.npmjs.com/package/skills) package to install a specific skill with the following command:
 
 <PackageManagerTabs
-  command="skills add rstackjs/agent-skills --skill rspress-v2-upgrade"
+  command="skills add rstackjs/agent-skills --skill rspress-docs-generator"
   dlx
 />
 
 After installation, simply use natural language prompts to trigger the skill, for example:
 
 ```
-Help me upgrade this Rspress v1 project to v2
+Help me update the Rspress documentation project in this monorepo for the current feature branch
 ```
 
 ## llms.txt
