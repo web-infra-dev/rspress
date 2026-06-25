@@ -663,6 +663,28 @@ export default defineConfig({
 });
 ```
 
+### route.concurrentRoute
+
+- **Type**: `Boolean`
+- **Default**: `false`
+
+:::warning Unstable
+This feature is currently unstable and its behavior may change in future versions.
+:::
+
+Enable concurrent, optimized routing for markdown links, which specifically applies to links located inside `.md` and `.mdx` files.
+
+By default, this option is disabled. When enabled, page transitions triggered by markdown links are wrapped inside React's `startTransition`. This prevents the heavy rendering of new markdown content from blocking user input, keeping the page responsive and interactive during navigation.
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    concurrentRoute: true,
+  },
+});
+
 ## ssg
 
 - **Type**: `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
