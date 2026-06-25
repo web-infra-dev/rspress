@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 const useTopArrived = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -26,7 +26,7 @@ const useTopArrived = () => {
 export const useNavTransparent = () => {
   const { topArrived } = useTopArrived();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (topArrived) {
       document.body.classList.remove('notTopArrived');
     } else {

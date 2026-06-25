@@ -258,6 +258,28 @@ export default defineConfig({
 });
 ```
 
+## 失效锚点检查
+
+Rspress 也可以检查站内链接中的锚点是否存在于目标页面中。它会检查当前页面锚点、相对路径链接和绝对路径链接，但会跳过外部 URL 中的锚点。
+
+:::info
+锚点检查当前默认关闭，未来版本会默认开启。
+:::
+
+通过 [markdown.link.checkAnchors](/api/config/config-build#markdownlinkcheckanchors) 配置即可自动检查无效锚点。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkAnchors: true,
+    },
+  },
+});
+```
+
 ## 失效图片检查
 
 类似于死链检查，Rspress 也可以检查文档中的失效图片引用。这能够发现指向不存在本地文件的图片，包括相对路径图片和引用 `public` 目录的绝对路径图片。

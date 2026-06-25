@@ -215,11 +215,12 @@ export type RemarkLinkOptions = {
   checkDeadLinks?:
     | boolean
     | { excludes: string[] | ((url: string) => boolean) };
+  checkAnchors?: boolean | { excludes: string[] | ((url: string) => boolean) };
   autoPrefix?: boolean;
 };
 ```
 
-- **Default**: `{ checkDeadLinks: true, autoPrefix: true }`
+- **Default**: `{ checkDeadLinks: true, checkAnchors: false, autoPrefix: true }`
 
 Configure link-related options.
 
@@ -240,6 +241,33 @@ export default defineConfig({
     link: {
       checkDeadLinks: {
         excludes: ['/guide/getting-started', '/llms.txt'],
+      },
+    },
+  },
+});
+```
+
+#### markdown.link.checkAnchors
+
+- **Type**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
+- **Default**: `false`
+
+:::info
+`checkAnchors` is currently disabled by default. It will be enabled by default in a future version.
+:::
+
+After enabling this configuration, Rspress will check whether internal link anchors exist in the target Markdown or MDX page. It checks same-page anchors, relative links, and absolute links, but skips external URL anchors.
+
+If there is a misjudgment of anchors, you can ignore the error through the `excludes` configuration:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkAnchors: {
+        excludes: ['/guide/getting-started#custom-anchor'],
       },
     },
   },

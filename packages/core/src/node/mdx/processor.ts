@@ -82,7 +82,12 @@ async function compile(options: CompileOptions): Promise<string> {
 
     const compiler = createProcessor(mdxOptions);
 
-    compiler.data('pageMeta' as any, { toc: [], title: '' });
+    compiler.data('pageMeta' as any, {
+      toc: [],
+      title: '',
+      headingTitle: '',
+      frontmatter,
+    });
     const vFile = await compiler.process({
       value: preprocessedContent,
       path: filepath,

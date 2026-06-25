@@ -19,6 +19,7 @@ async function initRouteService(
   const routeCode = routeService.generateRoutesCode();
 
   return {
+    routeService,
     routeData,
     routeCode,
   };
@@ -136,6 +137,31 @@ describe('RouteService', async () => {
       ];
       "
     `);
+  });
+
+  it('stores route anchor ids and notifies consumers', async () => {
+    const { routeService } = await initRouteService({});
+    const filePath = path.join(BASIC_DIR, 'guide/index.md');
+    let deferredAnchorIds: string[] = [];
+    let immediateAnchorIds: string[] = [];
+
+    routeService.onRouteAnchorIds('/guide/', anchorIds => {
+      deferredAnchorIds = [...anchorIds];
+    });
+    routeService.setRouteAnchorIds(filePath, new Set(['intro', 'api']));
+    routeService.onRouteAnchorIds('/guide/index', anchorIds => {
+      immediateAnchorIds = [...anchorIds];
+    });
+
+    expect(deferredAnchorIds).toEqual(['intro', 'api']);
+    expect(immediateAnchorIds).toEqual(['intro', 'api']);
+    expect([...(routeService.getRouteAnchorIds('/guide') ?? [])]).toEqual([
+      'intro',
+      'api',
+    ]);
+    expect(
+      routeService.getRoutePageByFilePath(filePath)?.routeMeta.routePath,
+    ).toBe('/guide/');
   });
 
   it('RouteService with route.exclude', async () => {

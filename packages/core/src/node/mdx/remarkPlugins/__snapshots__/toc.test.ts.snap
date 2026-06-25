@@ -48,11 +48,11 @@ function _createMdxContent(props) {
         href: "https://rsbuild.rs"
       })]
     }), "\\n", _jsxs(_components.h2, {
-      id: "this-is-bold-link",
+      id: "this-is-bold-link-rsbuild",
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
-        href: "#this-is-bold-link",
+        href: "#this-is-bold-link-rsbuild",
         children: "#"
       }), "this is bold link ", _jsx(_components.a, {
         href: "https://rsbuild.rs",
@@ -63,11 +63,11 @@ function _createMdxContent(props) {
         })
       })]
     }), "\\n", _jsxs(_components.h2, {
-      id: "this-is-code-link",
+      id: "this-is-code-link-rsbuild",
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
-        href: "#this-is-code-link",
+        href: "#this-is-code-link-rsbuild",
         children: "#"
       }), "this is code link ", _jsx(_components.a, {
         href: "https://rsbuild.rs",
@@ -78,11 +78,11 @@ function _createMdxContent(props) {
         })
       })]
     }), "\\n", _jsxs(_components.h2, {
-      id: "this-is-bold-code-link",
+      id: "this-is-bold-code-link-rsbuild",
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
-        href: "#this-is-bold-code-link",
+        href: "#this-is-bold-code-link-rsbuild",
         children: "#"
       }), "this is bold code link ", _jsx(_components.a, {
         href: "https://rsbuild.rs",
