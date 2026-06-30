@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 
 function useClickOutside(
   ref:
-    | React.RefObject<HTMLElement | null>
-    | React.RefObject<HTMLElement | null>[],
+    React.RefObject<HTMLElement | null> | React.RefObject<HTMLElement | null>[],
   handler: (event: MouseEvent | TouchEvent) => void,
 ) {
   useEffect(() => {
