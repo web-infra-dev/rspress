@@ -53,6 +53,7 @@ fullhash
 fumadocs
 Geass
 giscus
+Graphviz
 htmr
 iconify
 icss
