@@ -251,10 +251,7 @@ function processMixedContent(
   importMap: Map<string, string>,
   options: RemarkSplitMdxOptions,
 ): (
-  | MdxJsxFlowElement
-  | MdxJsxTextElement
-  | MdxFlowExpression
-  | MdxTextExpression
+  MdxJsxFlowElement | MdxJsxTextElement | MdxFlowExpression | MdxTextExpression
 )[] {
   const result: (
     | MdxJsxFlowElement

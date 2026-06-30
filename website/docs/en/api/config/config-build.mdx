@@ -213,8 +213,7 @@ Configure Shiki-related options. For details, see [RehypeShikiOptions](https://g
 ```ts
 export type RemarkLinkOptions = {
   checkDeadLinks?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
   checkAnchors?: boolean | { excludes: string[] | ((url: string) => boolean) };
   autoPrefix?: boolean;
 };
@@ -290,8 +289,7 @@ If a user writes a link `[](/guide/getting-started)` in `docs/zh/guide/index.md`
 ```ts
 export type RemarkImageOptions = {
   checkDeadImages?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
 };
 ```
 

@@ -81,12 +81,7 @@ export type LastUpdated =
     };
 
 export type NormalizedDarkMode =
-  | 'light'
-  | 'dark'
-  | 'auto'
-  | 'force-light'
-  | 'force-dark'
-  | 'force-auto';
+  'light' | 'dark' | 'auto' | 'force-light' | 'force-dark' | 'force-auto';
 
 export type DarkMode = boolean | NormalizedDarkMode;
 

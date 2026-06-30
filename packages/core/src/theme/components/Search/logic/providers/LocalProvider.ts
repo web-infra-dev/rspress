@@ -29,7 +29,9 @@ interface PageIndexForFlexSearch extends PageIndexInfo {
 // Create a type that satisfies DocumentData constraints by mapping all properties
 // to DocumentValue | DocumentValue[] while preserving the original structure
 type FlexSearchCompatibleData = {
-  [K in keyof PageIndexForFlexSearch]: PageIndexForFlexSearch[K] extends DocumentValue
+  [
+    K in keyof PageIndexForFlexSearch
+  ]: PageIndexForFlexSearch[K] extends DocumentValue
     ? PageIndexForFlexSearch[K]
     : DocumentValue;
 } & {
