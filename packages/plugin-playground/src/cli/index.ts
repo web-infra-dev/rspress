@@ -157,8 +157,12 @@ export function pluginPlayground(
               }
             });
           } catch (e) {
-            console.error(e);
-            throw e;
+            const message = `[Playground]: Failed to parse ${filepath}.`;
+            if (e instanceof Error) {
+              e.message = `${message}\n${e.message}`;
+              throw e;
+            }
+            throw new Error(`${message}\n${String(e)}`);
           }
         }),
       );
