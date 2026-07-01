@@ -1,12 +1,12 @@
 # Plugin API
 
-In the previous section, we introduced the basic structure of the plugin. In this section, we will introduce the API of the plugin to help you understand the abilities of the plugin in more detail.
+The previous section introduced the basic plugin structure. This page explains the plugin APIs and what each one can extend.
 
 ### globalStyles
 
 - **Type**：`string`
 
-It is used to add a global style, and the absolute path of a style file is passed in, and the usage is as follows:
+Adds a global style file. Pass the absolute path of the style file:
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';
@@ -39,7 +39,7 @@ For example, if you want to modify the theme color, you can do so by adding a gl
 
 - **Type**：`(string | [string, object])[]`
 
-It is used to add global components, passing in an array, each item in the array is the absolute path of a component, the usage is as follows:
+Adds global components. Pass an array where each item is the absolute path of a component:
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';
@@ -56,7 +56,7 @@ export function pluginForDoc(): RspressPlugin {
 }
 ```
 
-The item of `globalUIComponents` can be a string, which is the path of the component file, or an array, the first item is the path of the component file, and the second item is the component props, for example:
+Each `globalUIComponents` item can be either a component file path string or a tuple. In the tuple form, the first item is the component file path and the second item is the component props. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -88,9 +88,9 @@ import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
 
 - **Type**：`RsbuildConfig`
 
-Rspress uses [Rsbuild](https://github.com/web-infra-dev/rsbuild) as the build tool. Rsbuild can be configured through `builderConfig`. For specific configuration options, please refer to [Rsbuild](https://rsbuild.rs/config/).
+Rspress uses [Rsbuild](https://github.com/web-infra-dev/rsbuild) as its build tool. Configure Rsbuild through `builderConfig`. For specific configuration options, see [Rsbuild](https://rsbuild.rs/config/).
 
-> Of course, if you want to configure Rspack directly, you can also configure it through `builderConfig.tools.rspack`.
+> To configure Rspack directly, use `builderConfig.tools.rspack`.
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';
@@ -130,7 +130,7 @@ interface ConfigUtils {
 }
 ```
 
-It is used to modify/extend the configuration of Rspress itself. For example, if you want to modify the title of the document, you can do it through `config`:
+Modifies or extends the Rspress config itself. For example, use `config` to change the site title:
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';
@@ -139,7 +139,7 @@ export function pluginForDoc(): RspressPlugin {
   return {
     // Plugin name
     name: 'plugin-name',
-    // Extend the config of the Rspress itself
+    // Extend the Rspress config itself
     config(config) {
       return {
         ...config,
@@ -150,7 +150,7 @@ export function pluginForDoc(): RspressPlugin {
 }
 ```
 
-If it involves adding and removing a plugin, you need to implement it through `addPlugin` and `removePlugin`:
+To add or remove plugins, use `addPlugin` and `removePlugin`:
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';
@@ -178,7 +178,7 @@ export function pluginForDoc(): RspressPlugin {
 
 - **Type**：`(config: DocConfig, isProd: boolean) => void | Promise<void>`
 
-It is used to perform some operations before/after the document is built. The first parameter is the config of the document, and the second parameter is whether it is currently a production environment. The usage is as follows:
+Runs operations before or after the docs are built. The first parameter is the resolved docs config, and the second parameter indicates whether the current build is production:
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';
@@ -199,14 +199,14 @@ export function pluginForDoc(): RspressPlugin {
 ```
 
 :::tip
-When the `beforeBuild` hook is executed, the `config` plugins of all plugins have been processed, so the config parameter already represents the final document configuration.
+When `beforeBuild` runs, all plugins' `config` hooks have already been processed, so the `config` parameter represents the final docs configuration.
 :::
 
 ### markdown
 
 - **Type**：`{ remarkPlugins?: Plugin[]; rehypePlugins?: Plugin[] }`
 
-It is used to extend the compilation ability of Markdown/MDX. If you want to add custom remark/rehype plugins or MDX globalComponents, you can use `markdown` options to achieve:
+Extends Markdown/MDX compilation. Use `markdown` to add custom remark/rehype plugins or MDX `globalComponents`:
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';
@@ -264,7 +264,7 @@ export function MyComponent() {
 
 - **Type**: `(config: UserConfig) => AdditionalPage[] | Promise<AdditionalPage[]>`
 
-The `config` parameter is the `doc` config of `rspress.config.ts`, and the `AdditionalPage` type is defined as follows:
+The `config` parameter is the docs config from `rspress.config.ts`, and the `AdditionalPage` type is:
 
 ```tsx
 interface AdditionalPage {
@@ -274,7 +274,7 @@ interface AdditionalPage {
 }
 ```
 
-Used to add additional pages, you can return an array in the `addPages` function, each item in the array is a page config, you can specify the route of the page through `routePath`, through `filepath` or `content` to specify the content of the page. For example:
+Adds additional pages. Return an array from `addPages`; each item is a page config. Use `routePath` to specify the page route, and use `filepath` or `content` to specify the page content. For example:
 
 ```tsx
 import path from 'path';
@@ -285,12 +285,12 @@ export function docPluginDemo(): RspressPlugin {
     name: 'add-pages',
     addPages(config, isProd) {
       return [
-        //  Support the absolute path of the real file (filepath), which will read the content of md(x) in the disk
+        //  Supports the absolute path of a real file (`filepath`) and reads md(x) content from disk
         {
           routePath: '/filepath-route',
           filepath: path.join(__dirname, 'blog', 'index.md'),
         },
-        //  Support to directly pass in the content of md(x) through the content parameter
+        //  Supports directly passing md(x) content through the `content` parameter
         {
           routePath: '/content-route',
           content: '# Demo2',
@@ -301,13 +301,13 @@ export function docPluginDemo(): RspressPlugin {
 }
 ```
 
-`addPages` accepts two parameters, `config` is the config of the current document site, `isProd` indicates whether it is a production environment.
+`addPages` accepts two parameters: `config` is the current documentation site config, and `isProd` indicates whether the current build is production.
 
 ### routeGenerated
 
 - **Type**：`(routeMeta: RouteMeta[]) => void | Promise<void>`
 
-In this hook, you can get all the route meta information. The structure of each route meta information is as follows
+This hook receives all route metadata. Each route metadata item has the following structure:
 
 ```ts
 export interface RouteMeta {
@@ -317,7 +317,7 @@ export interface RouteMeta {
   absolutePath: string;
   // The page name, as part of the chunk filename
   pageName: string;
-  // language of current route
+  // language of the current route
   lang: string;
 }
 ```
@@ -343,7 +343,7 @@ export function pluginForDoc(): RspressPlugin {
 
 - **Type**: `(config: UserConfig, isProd: boolean) => Record<string, string> | Promise<Record<string, string>>;`
 
-Used to add additional runtime modules. For example, if you want to use some compile-time information in the document, you can achieve this through `addRuntimeModules`:
+Adds additional runtime modules. For example, use `addRuntimeModules` to expose compile-time information to docs:
 
 ```tsx title="plugin.ts"
 import type { RspressPlugin } from '@rspress/core';
@@ -367,7 +367,7 @@ export function pluginForDoc(): RspressPlugin {
 }
 ```
 
-In this way, you can use the `virtual-foo` module in the runtime component:
+You can then use the `virtual-foo` module in a runtime component:
 
 ```jsx
 import myData from 'virtual-foo';
@@ -387,7 +387,7 @@ This hook is executed after the `routeGenerated` hook.
 
 - **Type**: `(source: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>`
 
-Used to add or modify internationalization (i18n) text data. You can use this hook to extend or modify the theme's i18n text.
+Adds or modifies internationalization (i18n) text data. Use this hook to extend or override the theme's i18n text.
 
 The `source` parameter is an object with the following structure:
 
@@ -399,7 +399,7 @@ The `source` parameter is an object with the following structure:
 }
 ```
 
-Where the first-level `textKey` is the text key name, the second-level `locale` is the language code (e.g., `zh`, `en`), and the value is the translated text for the corresponding language.
+The first-level `textKey` is the text key, the second-level `locale` is the language code (for example, `zh` or `en`), and the value is the translated text for that language.
 
 Usage example:
 
@@ -429,7 +429,7 @@ export function pluginForDoc(): RspressPlugin {
 }
 ```
 
-If your plugin provides runtime components at the same time, you can use these texts via the `useI18n` hook:
+If your plugin also provides runtime components, read these texts with the `useI18n` hook:
 
 ```tsx
 import { useI18n } from '@rspress/core/runtime';

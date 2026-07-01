@@ -1,6 +1,6 @@
 # Write a plugin
 
-Let's inject a global component as an example to see how to define and use plugins.
+This example injects a global component to show how to define and use plugins.
 
 ### 1. Define a plugin
 
@@ -8,7 +8,7 @@ Let's inject a global component as an example to see how to define and use plugi
 import type { RspressPlugin } from '@rspress/core';
 
 export function pluginExample(slug: string): RspressPlugin {
-  // Component path, you need to implement the content of the component yourself
+  // Component path. You need to implement the component yourself.
   const componentPath = path.join(__dirname, 'Example.tsx');
   return {
     name: 'plugin-example',
@@ -37,9 +37,9 @@ const Example = () => {
 export default Example;
 ```
 
-A plugin is generally a function that receives some plugin params (optional) and returns an object that contains the name of the plugin and other config.
+A plugin is usually a function that receives optional plugin parameters and returns an object containing the plugin name and other config.
 
-In the above example, we define a plugin named `plugin-example`, which will define a global environment variable `process.env.SLUG` during the build phase, and inject a global component `Example.tsx` in the document.
+In the example above, we define a plugin named `plugin-example`. It defines a global environment variable, `process.env.SLUG`, during the build phase and injects the global component `Example.tsx` into the page.
 
 ### 2. Use a plugin
 
@@ -53,4 +53,4 @@ export default {
 };
 ```
 
-Then the `Example` component will be injected into the page and we can access the `process.env.SLUG` variable in the component.
+The `Example` component is then injected into the page, and the component can access `process.env.SLUG`.

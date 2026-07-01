@@ -1,12 +1,12 @@
 ---
-description: Configure home page content via frontmatter including hero section, feature cards, and custom components.
+description: Configure homepage content with frontmatter, including the hero section, feature cards, and custom components.
 ---
 
-# Home page
+# Homepage
 
-Rspress provides an out-of-the-box Home page feature. Users can declare `pageType: home` in frontmatter to quickly generate a usable site homepage.
+Rspress provides a homepage layout out of the box. Set `pageType: home` in frontmatter to quickly generate a usable site homepage.
 
-You can define the content of the Home page through frontmatter, see [FrontMatter Config](/api/config/config-frontmatter.html#hero) for detailed types. Here is a simple example:
+Define homepage content through frontmatter. See [Frontmatter Config](/api/config/config-frontmatter.html#hero) for the full types. Here is a simple example:
 
 ```yaml title="docs/index.mdx"
 ---
@@ -31,17 +31,17 @@ features:
     details: MDX is a powerful way to write content. You can use React components in Markdown.
     icon: 📦
   - title: 'Feature Rich'
-    details: Out of box support for i18n, full-text search etc.
+    details: Out-of-the-box support for i18n, full-text search, and more.
     icon: 🎨
   - title: 'Customizable'
-    details: You can customize the theme ui and the build process.
+    details: Customize the theme UI and build process.
     icon: 🚀
 ---
 ```
 
 ## Home components
 
-The Rspress Home page consists of these components, which you can customize via [Custom Theme - ESM Re-export](/guide/basic/custom-theme#reexport):
+The Rspress homepage consists of these components, which you can customize through [Custom Theme - ESM Re-export](/guide/basic/custom-theme#reexport):
 
 - [HomeHero](/ui/layout-components/home-hero)
 - [HomeFeature](/ui/layout-components/home-feature)
@@ -50,10 +50,10 @@ The Rspress Home page consists of these components, which you can customize via 
 
 :::tip
 
-You can also customize the entire homepage directly by overriding the [`HomeLayout`](/ui/layout-components/home-layout) component. If you do this, it should be noted that the homepage related configuration and these frontmatter fields will not take effect.
+You can also customize the entire homepage by overriding the [`HomeLayout`](/ui/layout-components/home-layout) component. If you do this, homepage-related configuration and these frontmatter fields will no longer take effect.
 
 :::
 
 ## Configuration details
 
-For complete frontmatter configuration options for the Home page, please refer to [Frontmatter Config](/api/config/config-frontmatter.html#hero).
+For complete homepage frontmatter options, see [Frontmatter Config](/api/config/config-frontmatter.html#hero).

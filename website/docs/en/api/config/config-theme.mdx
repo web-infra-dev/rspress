@@ -1,6 +1,6 @@
 # Theme config
 
-Theme config is located under `themeConfig` in the `doc` param. For example:
+Theme configuration is defined under `themeConfig`. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -34,7 +34,7 @@ interface NavItem {
 }
 ```
 
-`activeMatch` is used to match the current route, when the route matches the `activeMatch` rule, the nav item will be highlighted. By default, `activeMatch` is the `link` of the nav item.
+`activeMatch` matches the current route. When the route matches the `activeMatch` rule, the nav item is highlighted. By default, `activeMatch` uses the nav item's `link`.
 
 For example:
 
@@ -57,7 +57,7 @@ export default defineConfig({
 });
 ```
 
-Of course, multi-level menus can also be configured in the `nav` array with the following types:
+You can also configure multi-level menus in the `nav` array with the following type:
 
 ```ts
 interface NavGroup {
@@ -69,7 +69,7 @@ interface NavGroup {
 }
 ```
 
-For example the following configuration:
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -92,7 +92,7 @@ export default defineConfig({
             text: 'Advanced',
             link: '/guide/advanced',
           },
-          // Also support sub group menu
+          // Also supports nested groups
           {
             text: 'Group',
             items: [
@@ -117,7 +117,7 @@ export default defineConfig({
 
 - **Type**: `Object`
 
-The sidebar of the website. The config is an object with the following types:
+Site sidebar configuration. It is an object with the following type:
 
 ```ts
 // The key is the path of SidebarGroup
@@ -128,7 +128,7 @@ interface SidebarGroup {
   text: string;
   link?: string;
   items: SidebarItem[];
-  // whether to be collapsible
+  // Whether the group can be collapsed
   collapsible?: boolean;
   // Whether to be collapsed by default
   collapsed?: boolean;
@@ -192,9 +192,9 @@ export default defineConfig({
 - **Type**: `Object`
 - **Default**: `{}`
 
-The footer of the home page.
+Homepage footer configuration.
 
-The `footer` config is an object of `Footer`, which has the following types:
+The `footer` config is a `Footer` object:
 
 ```ts
 export interface Footer {
@@ -224,7 +224,7 @@ export default defineConfig({
 - **Type**: `boolean | { author?: boolean | ((info: { name: string; email: string; filePath: string }) => string) }`
 - **Default**: `false`
 
-Whether to display the last updated time of each document page. Rspress reads this value from the file's latest Git commit.
+Controls whether each doc page shows its last updated time. Rspress reads this value from the file's latest Git commit.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -257,8 +257,7 @@ export default defineConfig({
 - **Type**: `Array`
 - **Default**: `[]`
 
-You can add related links through the following config, such as `github` links, `x` links, etc.
-Related links support five modes: `link` `text` `img` `dom` `github-stars`, for example:
+Add related links, such as GitHub or X links. Related links support five modes: `link`, `text`, `img`, `dom`, and `github-stars`. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -297,13 +296,13 @@ export default defineConfig({
 });
 ```
 
-- When in `link` mode, click the icon to jump to the link.
-- When in `text` mode, when the mouse moves over the icon, a pop-up box will be displayed, and the content of the pop-up box is the entered text
-- When in the `img` mode, moving the mouse over the icon will display a bullet box, and the content of the bullet box is the specified picture. It should be noted that the picture needs to be placed in the `public` directory.
-- When in dom mode, html to render can be passed directly into the content field. Use '' for wrapping
+- In `link` mode, clicking the icon opens the link.
+- In `text` mode, hovering over the icon displays a tooltip with the configured text.
+- In `img` mode, hovering over the icon displays a tooltip with the configured image. The image must be placed in the `public` directory.
+- In `dom` mode, pass the HTML string to render directly to `content`. Wrap it in quotes.
 - When in `github-stars` mode, `content` should be the GitHub repository URL. The repository's star count is fetched from the GitHub REST API and rendered next to the icon. The result is cached in `localStorage` for one hour to avoid hitting the API rate limit. If the request fails (offline, rate-limited, private repo), the icon falls back to a plain link.
 
-Related links support the following types of images, which can be selected through the icon attribute:
+Related links support the following icons via the `icon` field:
 
 ```ts
 export type SocialLinkIcon =
@@ -329,7 +328,7 @@ export type SocialLinkIcon =
   | { svg: string };
 ```
 
-If you need to customize the icon, you can pass in an object with `svg attribute`, and the value of svg is the content of the custom icon, for example:
+To use a custom icon, pass an object with an `svg` field. The `svg` value is the custom icon content:
 
 ```js
 import { defineConfig } from '@rspress/core';
@@ -354,7 +353,7 @@ export default defineConfig({
 - **Type**: `string`
 - **Default**: `Next Page`
 
-Text for the next page. for example:
+Text for the next page link. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -371,7 +370,7 @@ export default defineConfig({
 - **Type**: `Array<LocaleConfig>`
 - **Default**: `undefined`
 
-I18n config. This config is an array, and every item of it is `LocaleConfig`, and the types are as follows:
+I18n configuration. This is an array of `LocaleConfig` objects:
 
 ```ts
 export interface LocaleConfig {
@@ -389,7 +388,7 @@ export interface LocaleConfig {
 }
 ```
 
-`LocaleConfig` contains many of the same configuration options as the theme config, but the former will have a higher priority.
+`LocaleConfig` contains many of the same options as the theme config, but locale-specific values have higher priority.
 
 ## darkMode
 
@@ -464,7 +463,7 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `false`
 
-Whether there is animation effect when switching between pages. It is implemented with [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
+Controls whether page transitions are animated. This is implemented with the [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
 
 > The animation is not configurable for now.
 
@@ -483,7 +482,7 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `false`
 
-Whether there is animation effect when switching between light and dark theme. It is implemented with [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
+Controls whether switching between light and dark mode is animated. This is implemented with the [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
 
 > The animation is not configurable for now.
 
@@ -519,7 +518,7 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `true`
 
-Enable scroll to top button on documentation. For example:
+Enables the scroll-to-top button in docs pages. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -536,7 +535,7 @@ export default defineConfig({
 - **Type**: `'auto' | 'never' | 'only-default-lang'`
 - **Default**: `'auto'`
 
-Whether to redirect to the locale closest to `window.navigator.language` when the user visits the site, the default is `auto`, which means that the user will be redirected on the first visit. If you set it to `never`, the user will not be redirected. If you set it to `only-default-lang`, the user will only be redirected when visiting the default locale. For example:
+Controls whether users are redirected to the locale closest to `window.navigator.language`. The default is `auto`, which redirects on the first visit. Set it to `never` to disable redirects, or `only-default-lang` to redirect only when the user visits the default locale. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -553,7 +552,7 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `true`
 
-Whether to use [`frontmatter.title`](./config-frontmatter#title) as fallback when the document does not have an H1 heading. For example:
+Controls whether [`frontmatter.title`](./config-frontmatter#title) is used as a fallback when a document has no H1 heading. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -594,12 +593,12 @@ type LlmsUI =
 
 - **Default**: `false` (automatically set to `true` when `llms: true` is configured)
 
-Configuration for LLMS UI components. When enabled, `LlmsCopyButton` and `LlmsViewOptions` components will be automatically added below all H1 headers (default), or as rows in the outline panel.
+Configuration for the llms UI components. When enabled, `LlmsCopyButton` and `LlmsViewOptions` are automatically added below all H1 headings by default, or as rows in the outline panel.
 
-This is useful when using the [llms](/guide/basic/ssg-md) feature to generate llms.txt files, allowing users to easily copy or open the markdown content in AI tools.
+This is useful when using the [llms](/guide/basic/ssg-md) feature to generate llms.txt files, because users can copy or open Markdown content in AI tools.
 
 :::warning
-ssg-md only takes effect during the build process, so copying Markdown content in `dev` mode will not work. Please use `rspress build` first, then debug with `rspress preview`. See [Differences between dev and build](/guide/basic/ssg#differences-between-dev-and-build) for details.
+SSG-MD only runs during builds, so copying Markdown content does not work in `dev` mode. Run `rspress build` first, then debug with `rspress preview`. See [Differences between dev and build](/guide/basic/ssg#differences-between-dev-and-build) for details.
 :::
 
 For example:

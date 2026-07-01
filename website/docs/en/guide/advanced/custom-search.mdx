@@ -4,20 +4,19 @@ description: Extend search functionality with searchHooks for keyword processing
 
 # Customize search functions
 
-In some scenarios, we need to customize the search function, such as:
+You may need to customize search behavior for scenarios such as:
 
-- Processing keywords in the search process, such as removing sensitive words.
+- Processing search keywords, such as removing sensitive words.
 - Filtering the default full-text search results.
 - Reporting the search keywords.
 - Customizing the search data source, such as searching from the database.
-- Rendering the custom search data source.
-- ......
+- Rendering custom search data sources.
 
-Faced with these flexible custom requirements, we provide corresponding interfaces to extend the search components of the default theme, making it easy for you to customize the search function.
+Rspress provides interfaces for extending the default theme's search components so you can customize search behavior.
 
 ## Understanding `searchHooks`
 
-In the Rspress config, we provide a `search.searchHooks` config item for configuring the hook functions of the search components, as follows:
+Use the `search.searchHooks` option in the Rspress config to register search component hooks:
 
 ```js
 import { defineConfig } from '@rspress/core';
@@ -30,31 +29,31 @@ export default defineConfig({
 });
 ```
 
-The value of the `search.searchHooks` config item is a file path. This file will export the corresponding hook logic, such as `onSearch`, so that you can customize the capabilities of the search at run time. We can call this file a **`searchHooks` module**.
+The value of `search.searchHooks` is a file path. This file exports hook logic such as `onSearch`, allowing you to customize search at runtime. We call this file a **`searchHooks` module**.
 
 ## Hook functions in searchHooks
 
-Next, let us introduce the hook functions in searchHooks, namely `beforeSearch`, `onSearch`, `afterRender` and `render`.
+The `searchHooks` module supports `beforeSearch`, `onSearch`, `afterRender`, and `render`.
 
 :::tip
 
-In the searchHooks module, you only need to export the hook functions you need, instead of necessarily exporting all the hook functions.
+In the `searchHooks` module, export only the hook functions you need.
 
 :::
 
 ### beforeSearch
 
-The `beforeSearch` hook function will be executed before the search starts, you can use it to process the search keywords, such as removing sensitive words, or reporting the search keywords.
+The `beforeSearch` hook runs before search starts. Use it to process or report search keywords.
 
 > This hook supports asynchronous operations.
 
-Here is an example of usage:
+Example:
 
 ```ts
 import type { BeforeSearch } from '@rspress/core/theme';
 
 const beforeSearch: BeforeSearch = (query: string) => {
-  // Some operations before search can be done here
+  // Do something before search
   console.log('beforeSearch');
   // Return the processed query
   return query.replace(' ', '');
@@ -65,27 +64,27 @@ export { beforeSearch };
 
 ### onSearch
 
-The `onSearch` hook function will be executed after the default full-text search logic is finished. You can use this hook function to filter or report the search results, or you can add a custom search data source in this hook function.
+The `onSearch` hook runs after the default full-text search finishes. Use it to filter or report search results, or to add a custom search data source.
 
 > This hook supports asynchronous operations.
 
-Here is an example of how to use it:
+Example:
 
 ```ts
 import type { OnSearch } from '@rspress/core/theme';
 import { RenderType } from '@rspress/core/theme';
 
 const onSearch: OnSearch = async (query, defaultSearchResult) => {
-  // Can request data based on query
+  // Request data based on query
   console.log(query);
   // The results of the default search source, which is an array
   console.log(defaultSearchResult);
   // const customResult = await searchQuery(query);
 
-  // Can directly operate the default search results.
+  // Operate on the default search results directly.
   defaultSearchResult.pop();
 
-  // The return value is an array, each item in the array is a search source result, and they will be added to the search result
+  // The return value is an array. Each item is a search source result that is added to the final search result.
   return [
     {
       group: 'Custom',
@@ -109,25 +108,25 @@ const onSearch: OnSearch = async (query, defaultSearchResult) => {
 export { onSearch };
 ```
 
-Note that the return value of the `onSearch` hook function is an array, each item in the array is a search source result, and each item has the following structure:
+The `onSearch` hook returns an array of search source results. Each item has the following structure:
 
 ```ts
 {
-  group: string; // The group name of the search result, which will be displayed in the search results.
+  group: string; // The search result group name displayed in the UI.
   result: unknown;
   renderType: RenderType; // The type of the search result, which can be `RenderType.Default` or `RenderType.Custom`. `RenderType.custom` by default.
 }
 ```
 
-The `result` is the search result, you can customize its internal structure. The `renderType` is the type of the search result, which can be `RenderType.Default` or `RenderType.Custom`. If it is `RenderType.Default`, the default search result rendering logic will be used; if it is `RenderType.Custom`, the `render` function will be used to render the search result.
+`result` is the search result and can have any structure you need. `renderType` controls how the result is rendered. When it is `RenderType.Default`, Rspress uses the default rendering logic. When it is `RenderType.Custom`, Rspress uses the `render` function.
 
 ### afterSearch
 
-The `afterSearch` hook function will be executed after the search result is rendered. You can get the final search keywords and search results in this hook.
+The `afterSearch` hook runs after search results are rendered. Use it to access the final search keywords and results.
 
 > This hook supports asynchronous operations.
 
-Here is an example of usage:
+Example:
 
 ```ts
 import type { AfterSearch } from '@rspress/core/theme';
