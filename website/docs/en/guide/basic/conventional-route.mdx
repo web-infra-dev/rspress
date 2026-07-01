@@ -1,14 +1,14 @@
 ---
-description: Rspress uses file system routing to map file paths to URL routes, supporting custom routing with frontmatter pageType and route configuration.
+description: Rspress uses file system routing to map file paths to URL routes, with support for frontmatter pageType and custom route configuration.
 ---
 
 # Conventional route
 
 ## What is it?
 
-Rspress uses file system routing, and the file path of the page is simply mapped to the routing path, which makes the routing of the entire project very intuitive.
+Rspress uses file system routing: each page file path maps directly to a route path, making project routes easy to understand.
 
-For example, if there is a file named `foo.md` in the `docs` directory, the routing path for that file will be `/foo`.
+For example, a file named `foo.md` in the `docs` directory is routed to `/foo`.
 
 ## Mapping rules
 
@@ -23,7 +23,7 @@ docs
 └── index.md
 ```
 
-Then `bar.md` will be routed to `/foo/bar` and `/foo/index.md` will be routed to `/foo/`.
+Then `bar.md` is routed to `/foo/bar`, and `/foo/index.md` is routed to `/foo/`.
 
 The specific mapping rules are as follows:
 
@@ -36,7 +36,7 @@ The specific mapping rules are as follows:
 
 :::warning
 
-Do not have files and folders with the same name, which will cause routing conflicts. For example, the following file structure is not allowed:
+Do not create files and folders with the same name, because they cause routing conflicts. For example, the following file structure is not allowed:
 
 ```tree
 docs
@@ -49,7 +49,7 @@ docs
 
 ## TSX routing
 
-In conventional routing, in addition to `.md(x)` files, you can also use `.tsx` files as route components. By default, a component is exported in `.tsx`, and this component will be automatically registered in the route. For example:
+In conventional routing, `.tsx` files can also act as route components in addition to `.md(x)` files. By default, the component exported from a `.tsx` file is automatically registered as a route. For example:
 
 ```tsx title="foo.tsx"
 export default () => {
@@ -57,7 +57,7 @@ export default () => {
 };
 ```
 
-Of course, if you want to customize the layout, you can add an export to declare the layout type. For example:
+To customize the layout, export `frontmatter` and declare the layout type:
 
 ```tsx title="foo.tsx"
 export const frontmatter = {
@@ -67,7 +67,7 @@ export const frontmatter = {
 };
 ```
 
-For detailed meanings of each `pageType`, please refer to the [API documentation](/api/config/config-frontmatter#pagetype).
+For the meaning of each `pageType`, see the [API documentation](/api/config/config-frontmatter#pagetype).
 
 ## Custom behavior
 
@@ -94,11 +94,11 @@ import RouteConvention from '@en/fragments/route-convention.mdx';
 
 ## Best practices
 
-We recommend that you place documentation files in the `docs` directory to make your project more clear. For non-documentation content, such as custom components, util functions, etc., they can be maintained outside the `docs` directory. If placed in the `docs` directory, you need to use `route.exclude` together.
+We recommend placing documentation files in the `docs` directory to keep the project structure clear. Keep non-documentation content, such as custom components and utility functions, outside `docs` when possible. If they must live in `docs`, exclude them with `route.exclude`.
 
 :::tip
 
-If you want to place custom components or document fragments in the `docs` directory, you need to use `route.exclude` together, otherwise these files will be automatically registered as routes, which may cause some unexpected issues.
+If you place custom components or document fragments in the `docs` directory, use `route.exclude`; otherwise, those files are automatically registered as routes and may cause unexpected behavior.
 
 :::
 

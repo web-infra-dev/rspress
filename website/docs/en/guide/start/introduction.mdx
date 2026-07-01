@@ -4,38 +4,38 @@ description: Rspress is a high-performance static site generator based on Rsbuil
 
 # Introduction
 
-Rspress is a static site generator based on [Rsbuild](https://rsbuild.rs/), rendered with the React framework. It comes with a default documentation theme, and you can quickly build a documentation site with Rspress. You can also customize the theme to meet your personalized static site needs, such as blog sites, product homepages, etc. Of course, you can also integrate the corresponding plugins provided by the official to easily build component library documentation.
+Rspress is a React-based static site generator built on [Rsbuild](https://rsbuild.rs/). It ships with a default documentation theme so you can quickly build a documentation site, customize the theme for blogs or product homepages, and use official plugins for component library docs.
 
 ## Why Rspress
 
 Rspress is designed around the following core features:
 
-- **Build Performance**. Ensuring a fast enough startup speed brings a good development experience.
+- **Build Performance**. Fast startup keeps the authoring experience smooth.
 - **AI-native**. Technical documentation not only serves human readers but can also be better understood and utilized by AI through SSG-MD.
-- **Theme and Customization**. A brand new default theme with multiple customization layers, including CSS variables, BEM class names, re-export overrides, and eject.
-- **MDX Support**. Through MDX, we can conveniently reuse document fragments and render custom React components in documents.
+- **Theme and Customization**. A brand-new default theme with multiple customization layers, including CSS variables, BEM class names, re-export overrides, and eject.
+- **MDX Support**. MDX lets you reuse document fragments and render custom React components in docs.
 - **Documentation DX**. Continuous improvements for authoring with navigation metadata, code blocks, and dead link checks.
-- **Basic Capabilities of Documentation Site**. Including internationalization, multi-version support, full-text search, component library documentation, etc.
-- **Extensibility**. Provides a built-in plugin system, supports extending Rspress through plugin API.
+- **Documentation Site Essentials**. Internationalization, multi-version docs, full-text search, component library docs, and more.
+- **Extensibility**. A built-in plugin system for extending Rspress through plugin APIs.
 
-These also represent some core requirements for static site development. The following will introduce these aspects separately.
+These are also core requirements for static site development. The following sections cover them in detail.
 
 ### Build performance
 
-As the project becomes larger and larger, team members often worry about the lengthy project startup time, which negatively affects the development experience. The longer the project development time, the more obvious this deterioration of experience.
+As projects grow, long startup times become a major drag on development. The longer a project lives, the more noticeable this cost becomes.
 
-We couldn't help but start thinking, can we break the limitations of the current community tool chain, break through the performance bottleneck of the existing SSG framework, and achieve the effect of instant startup for most project scenarios?
+We started from a simple question: can an SSG framework break through the performance limits of the existing JavaScript toolchain and deliver near-instant startup for most projects?
 
-Then, we continued to explore in this direction and finally achieved this effect on Rspress.
+Rspress was built to answer that question.
 
 Rspress achieves strong performance through multiple optimization strategies:
 
 - **`lazyCompilation`**. `lazyCompilation` compiles on-demand in dev mode. Pages are only compiled when you visit them, significantly improving development startup speed and even achieving millisecond-level cold starts.
 - **Route Preload**. When hovering over links, Rspress preloads target route resources ahead of time, pairing with `lazyCompilation` for a near-lossless dev experience.
 - **Persistent Cache**. For production builds, persistent cache is enabled by default, reusing previous compilation results during warm starts to improve build speed by 30%-60%.
-- **Rspack Bundler**. Rspress uses Rspack developed by the team. Rspack is a Bundler based on Rust, with built-in multiple performance optimization methods, such as multi-threaded parallel compilation, incremental compilation, etc., which are 5 to 10 times more efficient than traditional packaging tools in the community.
+- **Rspack Bundler**. Rspress uses Rspack, the Rust-based bundler from the same team. Rspack includes optimizations such as multi-threaded parallel compilation and incremental compilation, making it 5 to 10 times faster than traditional JavaScript bundlers in many scenarios.
 
-At the same time, Rspress internally also applies many other build optimization methods. These optimization methods, combined with the powerful Rust front-end toolchain, push the compilation performance of the SSG framework to a new height.
+Rspress also applies additional build optimizations internally. Combined with the Rust-powered front-end toolchain, these optimizations raise the performance ceiling for SSG frameworks.
 
 ### AI-native
 
@@ -55,9 +55,9 @@ Once enabled, the build output will include `llms.txt` (an index file showing pa
 
 For custom components, you can also use `import.meta.env.SSG_MD` to output AI-friendly plain text in SSG-MD mode, balancing interactive UX with higher-quality static information.
 
-Just as SSG can generate static HTML files to improve SEO, SSG-MD can relatively improve GEO (Generative Engine Optimization) and the quality of static information for large models.
+Just as SSG generates static HTML to improve SEO, SSG-MD improves GEO (Generative Engine Optimization) and provides higher-quality static information for large language models.
 
-For detailed usage, please refer to the [SSG-MD documentation](/guide/basic/ssg-md).
+For detailed usage, see the [SSG-MD documentation](/guide/basic/ssg-md).
 
 Beyond build performance and AI-native capabilities, Rspress also provides a default theme, automatic layout generation, MDX, Shiki code highlighting, internationalization, multi-version docs, full-text search, and a plugin system. The following sections cover these capabilities in more detail.
 
@@ -77,7 +77,7 @@ Rspress provides a well-designed default theme with a strong reading experience 
 }
 ```
 
-The default theme exposes more CSS variables for theme colors, code blocks, homepage components, and more. All built-in components also follow the [BEM naming convention](https://getbem.com/), making it easier to override styles with standard CSS selectors. If CSS is not enough, you can go deeper by overriding built-in components through ESM re-exports in `theme/index.tsx`.
+The default theme exposes CSS variables for theme colors, code blocks, homepage components, and more. All built-in components follow the [BEM naming convention](https://getbem.com/), making styles easier to override with standard CSS selectors. If CSS is not enough, you can override built-in components through ESM re-exports in `theme/index.tsx`.
 
 #### `rspress eject` Command
 
@@ -94,33 +94,33 @@ Rspress provides a [Tag component](/ui/layout-components/tag). You can define `t
 
 ### Automatic layout generation
 
-For the construction of a documentation site, in addition to displaying the main content, we generally need the following layout modules:
+Most documentation sites need these layout modules in addition to the main content:
 
-- Navigation bar, used to provide global navigation entrance.
-- Sidebar, used to display the article directory under the current navigation.
-- Article outline column, used to display the outline structure of the current page.
+- Navbar for global navigation.
+- Sidebar for the page tree under the current nav item.
+- Outline for the heading structure of the current page.
 
-For the document outline, Rspress will automatically extract the various titles in the document, generate outline information, and display it on the right side of the article page by default, without any other operations.
+For the document outline, Rspress automatically extracts headings from the current page and displays them on the right side by default.
 
-For the navigation bar and sidebar, we provide two config methods, you can choose one of them:
+For the navbar and sidebar, Rspress supports two configuration methods:
 
-- **Declarative config**. Configure the corresponding data by declaring `_meta.json` in the directory, such as:
+- **Declarative config**. Configure the corresponding data by declaring `_meta.json` in the directory:
 
 ```json title="_meta.json"
 ["introduction", "install", "start"]
 ```
 
-You can read the [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar) for config details.
+See [Autogenerated navigation](/guide/basic/auto-nav-sidebar) for details.
 
-- **Programming config**. Implement it by specifying the [nav](/api/config/config-theme#nav) and [sidebar](/api/config/config-theme#sidebar) config items in the Rspress config.
+- **Programmatic config**. Specify [nav](/api/config/config-theme#nav) and [sidebar](/api/config/config-theme#sidebar) directly in the Rspress config.
 
-We recommend using `declarative config` under normal scenes, which has many benefits:
+We recommend declarative config for most sites because it:
 
-1. Make config file is more concise and clear.
-2. The correspondence between the `file directory structure` and the `sidebar directory structure` is more intuitive.
-3. When adding or deleting a sidebar directory, operate directly in the current directory, instead of going to the `rspress.config.ts` config file to locate the corresponding position and then add/delete the config, thereby reducing the cost of switching development context.
+1. Keeps the config file concise.
+2. Makes the relationship between the file tree and sidebar tree more intuitive.
+3. Lets you add or remove sidebar entries in the current directory instead of jumping back to `rspress.config.ts`.
 
-The `programming config` is very useful in some scenarios where dynamic config generation is needed. For example, the official Rspress [TypeDoc plugin](/plugin/official-plugins/typedoc) will automatically convert a json data provided by TypeDoc into `nav` and `sidebar` configs.
+Programmatic config is useful when the navigation needs to be generated dynamically. For example, the official Rspress [TypeDoc plugin](/plugin/official-plugins/typedoc) converts TypeDoc JSON data into `nav` and `sidebar` config.
 
 ### MDX support
 
@@ -131,10 +131,10 @@ MDX is a powerful content development format. You can not only write Markdown fi
 In addition, Rspress also supports some specific syntax, such as:
 
 - Custom container syntax.
-- FrontMatter metadata definition.
+- Frontmatter metadata definition.
 - Code line highlighting syntax.
 
-Details can be found in the [Use MDX Document](/guide/use-mdx/components).
+See [Use MDX](/guide/use-mdx/components) for details.
 
 ### Code highlighting with [Shiki](https://shiki.style/)
 
@@ -155,28 +155,28 @@ For concrete `preview` and `playground` examples, see the [Component documentati
 
 ### SSG
 
-Rspress is a SSG framework. In the build process in the production environment, it will automatically help you generate static sites, that is, generate HTML content for each page. After the build process is completed, HTML will appear in the default output directory.
+Rspress is an SSG framework. During a production build, it generates static HTML for each page and writes the result to the output directory.
 
-Then, you can deploy the contents of this product directory to any static site hosting service, such as GitHub Pages, Netlify, Vercel, etc.
+You can deploy the generated output to any static hosting service, such as GitHub Pages, Netlify, or Vercel.
 
-At the same time, we also provide config to easily customize the HTML content generated by SSG. For details, please refer to the [Static Site Generation Document](/guide/basic/ssg).
+Rspress also provides configuration for customizing the HTML generated by SSG. For details, see [Static Site Generation](/guide/basic/ssg).
 
 ### Internationalization (I18n)
 
-Internationalization is a common requirement in a document-type site, and Rspress encapsulates the ability of internationalization to be simple and easy to use. In Rspress, we abstract internationalization into the following requirements:
+Internationalization is common for documentation sites. Rspress keeps i18n straightforward by modeling it around these tasks:
 
-- How to define I18n data source?
-- How to configure the site under different languages?
-- How to organize the document directory of different language versions?
-- How to use I18n data source in custom components?
+- Define the i18n data source.
+- Configure the site for each language.
+- Organize docs for different languages.
+- Use i18n text in custom components.
 
-Rspress includes translations for Chinese, English, Japanese, Korean, and more languages built-in, with more to come. The system automatically performs "Tree Shaking" based on language configuration and usage, bundling only the text you need. You can also easily extend or override translations through the [`i18nSource`](/api/config/config-basic#i18nsource) configuration option.
+Rspress includes built-in translations for Chinese, English, Japanese, Korean, and more languages, with more to come. The system tree-shakes language text based on your configuration and usage, bundling only what you need. You can also extend or override translations through [`i18nSource`](/api/config/config-basic#i18nsource).
 
 You can follow the [I18n Tutorial](/guide/basic/i18n) to implement internationalization for your site step by step.
 
-### Multi-version Documents
+### Multi-version
 
-In some scenarios, we need to manage multi-version documents, and Rspress has built-in support for multi-version documents. On the one hand, you can enable this capability through simple config. On the other hand, you only need to organize the directory as usual, without introducing unnecessary directories and concepts, minimizing the mental burden:
+Some sites need to maintain docs for multiple product versions. Rspress has built-in multi-version support: enable it with a small config block, then organize versioned directories naturally without extra concepts.
 
 ```ts
 // config file
@@ -204,7 +204,7 @@ docs
 
 ### Full text search
 
-Rspress provides out-of-the-box full-text search capabilities, which you can access without any config. It is based on the open-source FlexSearch engine, with the following effect:
+Rspress provides full-text search out of the box, with no configuration required. It is based on the open-source FlexSearch engine:
 
 <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/rspress-search.png" />
 
@@ -224,13 +224,13 @@ export { Layout };
 export * from '@rspress/core/theme-original';
 ```
 
-2.  Fully customized theme. If you want to develop a custom theme from scratch, you can customize the content of Layout and use various Runtime APIs provided by Rspress (such as `usePageData`) to obtain compile-time data, routing information, etc.
+2. Fully customized theme. If you want to build a custom theme from scratch, customize the `Layout` content and use Rspress runtime APIs such as `usePageData` to access compile-time data, routing information, and more.
 
-For details about custom themes, you can refer to the [Custom Theme Documentation](/guide/basic/custom-theme).
+For details about custom themes, see [Custom Theme](/guide/basic/custom-theme).
 
 ### Plugin system
 
-The plugin system is a crucial part of Rspress, which can help you conveniently extend Rspress's functionality during site construction. Details can be found in the [Plugin Introduction Documentation](/plugin/system/introduction).
+The plugin system is a core part of Rspress and lets you extend site build behavior. For details, see [Plugin Introduction](/plugin/system/introduction).
 
 ### Component documentation
 
@@ -260,7 +260,7 @@ export default App;
 ```
 ````
 
-The rendering result is as follows:
+It renders as follows:
 
 ```tsx preview
 import { useState } from 'react';
@@ -306,7 +306,7 @@ export default App;
 ```
 ````
 
-The rendering result is as follows:
+It renders as follows:
 
 ```tsx playground
 import { useState } from 'react';
@@ -336,16 +336,16 @@ For iframe preview mode, layout direction, and combining it with `preview`, see 
 
 1. Rspress provides better build performance through lazyCompilation and persistent cache, achieving millisecond-level cold starts. For details, see [Build Performance](#build-performance).
 
-2. Rspress has simpler config and lower learning curve. Rspress's config is simpler, does not introduce too many concepts, and reduces cognitive load as much as possible. For example, it provides out-of-the-box search functionality, intuitive multi-version document management, etc.
+2. Rspress has simpler configuration and a lower learning curve. It avoids unnecessary concepts and reduces cognitive load where possible, with built-in search and intuitive multi-version docs.
 
-3. Rspress provides a higher level of abstraction for Bundler in its architecture. For low-level Bundlers like webpack and Rspack, their config items are complex and not easy to get started with. Docusaurus chooses to directly expose the config items of the underlying Bundler, while Rspress provides a higher level of abstraction for Bundler, offering simpler and more user-friendly config items. For instance, you can easily add tags in `<head>` through `builderConfig.html.tags`, without having to register related plugins via Bundler like `html-webpack-plugin`.
+3. Rspress provides a higher-level abstraction over the bundler. Low-level bundlers such as webpack and Rspack expose complex configuration. Docusaurus exposes the underlying bundler config directly, while Rspress offers simpler, user-friendly options. For example, you can add tags to `<head>` through `builderConfig.html.tags` without registering a bundler plugin such as `html-webpack-plugin`.
 
 ### Differences from Nextra
 
 [Nextra](https://nextra.vercel.app/ 'Nextra') is an open-source SSG framework by Vercel. Like Rspress, it also uses React as the rendering framework and supports MDX. The main differences between Rspress and Nextra are:
 
-1. Rspress has better build performance. This point can be referred to "Differences from Docusaurus".
-2. Rspress is overall lighter. Nextra relies on Next.js, and its SSG process is also based on Next.js. Therefore, the SSG output is not purely HTML files, but includes some runtime code from Next.js. On one hand, this leads to a larger size of Nextra's output. On the other hand, it needs to be deployed as an application (using the `next start` command) rather than being deployed as a pure static site. But Rspress is not bound to any application framework, so its output is lighter and can be conveniently deployed as a pure static site.
+1. Rspress has better build performance. See "Differences from Docusaurus" for details.
+2. Rspress is lighter overall. Nextra depends on Next.js, and its SSG pipeline is based on Next.js. Its output is therefore not pure HTML; it also includes Next.js runtime code. This increases output size and usually requires deployment as an application with `next start` rather than as a pure static site. Rspress is not tied to an application framework, so its output is lighter and can be deployed as a pure static site.
 
 ### Differences from VitePress
 
@@ -353,7 +353,7 @@ For iframe preview mode, layout direction, and combining it with `preview`, see 
 
 1. Rspress uses React as the rendering framework, while VitePress uses Vue.
 2. Rspress uses MDX for content development, while VitePress uses Markdown and supports Vue components in Markdown, which also leads to differences in the implementation of the underlying compilation toolchain.
-3. In terms of build performance, during the development phase, both Rspress and VitePress can quickly start a project. However, in the production environment, VitePress needs to bundle the project based on Rollup, so it will face similar performance issues with other JavaScript-based toolchains. At this time, Rspress will have faster build speed.
+3. For build performance, both Rspress and VitePress can start quickly in development. In production, VitePress bundles with Rollup and faces similar performance limits to other JavaScript-based toolchains. Rspress is faster in this phase.
 
 ## Try Rspress
 

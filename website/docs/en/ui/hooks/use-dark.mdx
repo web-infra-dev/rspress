@@ -21,7 +21,7 @@ export default function ThemeSwitchHint() {
 
 During SSG, `useDark` cannot accurately reflect the user's browser theme setting because SSG is executed at build time. This hook will only return the correct theme value after client-side hydration is complete.
 
-If you need to apply dark theme styles during SSG, it's recommended to use the CSS selector `.dark` for styling. Rspress adds the `dark` class name to the document root element, which works correctly in both SSG and client-side rendering:
+If you need to apply dark theme styles during SSG, use the `.dark` CSS selector. Rspress adds the `dark` class name to the document root element, which works correctly in both SSG and client-side rendering:
 
 ```css
 /* Light mode */

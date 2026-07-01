@@ -110,12 +110,12 @@ export default defineConfig({
 });
 ```
 
-For more configuration details, please refer to the [Rsbuild html.tags documentation](https://rsbuild.rs/config/html/tags).
+For more configuration details, see the [Rsbuild html.tags documentation](https://rsbuild.rs/config/html/tags).
 
 :::tip Difference from Rspress head configuration
 
-- **Rspress head configuration**: Can access route-related information, supports dynamically setting head tags based on different pages
-- **Rsbuild html.tags**: A static build-time configuration, suitable for global uniform tag injection (such as analytics code)
+- **Rspress head configuration**: Can access route-related information and dynamically set head tags for different pages.
+- **Rsbuild html.tags**: A static build-time configuration suitable for globally injecting the same tags, such as analytics code.
 
 If you need to dynamically adjust head content based on page routes, use [Global head configuration](#global-head-configuration), the [Head component](#head-component), or the [useHead hook](#usehead-hook).
 
