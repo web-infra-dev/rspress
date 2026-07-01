@@ -2,20 +2,23 @@
 
 通过本章节，你可以了解到 Rspress 内置的命令有哪些，以及如何使用这些命令。
 
+对于 `dev`、`build` 和 `preview` 命令，可选的 `[root]` 参数用于指定文档根目录。省略时，Rspress 会优先使用配置文件中的 `root`；如果未配置 `root`，则使用当前目录下的 `docs` 目录。
+
 ## rspress dev
 
 `rspress dev` 命令用于启动一个本地开发服务器，提供一个文档进行预览和调试的开发环境。
 
 ```txt
-Usage: rspress dev [root] [options]
+Usage:
+  $ rspress dev [root]
 
 Options:
-  root                  指定文档根目录，默认为当前工作目录下的 docs 目录，可选
-  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  --port <port>         指定端口号
-  --host <host>         指定 host
-  --base <base>         指定部署基础路径，并覆盖 config.base 配置
-  -h, --help            显示命令帮助
+  --port <port>          设置服务监听的端口号
+  --host [host]          设置服务监听的 host
+  --base <base>          设置基础路径，并覆盖 config.base 配置
+  -v, --version          显示版本号
+  -h, --help             显示帮助信息
+  -c, --config <config>  设置配置文件（相对路径或绝对路径）
 ```
 
 ## rspress build
@@ -23,13 +26,13 @@ Options:
 `rspress build` 命令用于构建出针对生产环境的文档产物。
 
 ```txt
-Usage: rspress build [root] [options]
+Usage:
+  $ rspress build [root]
 
 Options:
-  root                  指定文档根目录，默认为当前工作目录下的 docs 目录，可选
-  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  --base <base>         指定部署基础路径，并覆盖 config.base 配置
-  -h, --help            显示命令帮助
+  --base <base>          设置基础路径，并覆盖 config.base 配置
+  -h, --help             显示帮助信息
+  -c, --config <config>  设置配置文件（相对路径或绝对路径）
 ```
 
 ## rspress preview
@@ -37,15 +40,15 @@ Options:
 `rspress preview` 命令用于在本地预览 `rspress build` 命令构建出的产物。
 
 ```txt
-Usage: rspress preview [root] [options]
+Usage:
+  $ rspress preview [root]
 
 Options:
-  root                  指定文档根目录，默认为当前工作目录下的 docs 目录，可选
-  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  --port <port>         指定端口号
-  --host <host>         指定 host
-  --base <base>         指定部署基础路径，并覆盖 config.base 配置
-  -h, --help            显示命令帮助
+  --port <port>          设置服务监听的端口号
+  --host [host]          设置服务监听的 host
+  --base <base>          设置基础路径，并覆盖 config.base 配置
+  -h, --help             显示帮助信息
+  -c, --config <config>  设置配置文件（相对路径或绝对路径）
 ```
 
 ## rspress eject
@@ -53,10 +56,14 @@ Options:
 `rspress eject` 命令会将内置主题组件拷贝到你的项目中，便于自定义。
 
 ```txt
-Usage: rspress eject [component]
+Usage:
+  $ rspress eject [component]
 
-Arguments:
-  component             （可选）要导出的主题组件名；留空则列出所有可导出的组件
+Options:
+  -h, --help             显示帮助信息
+  -c, --config <config>  设置配置文件（相对路径或绝对路径）
 ```
+
+其中 `[component]` 是可选参数，用于指定要导出的主题组件名；省略时，Rspress 会列出所有可导出的组件。
 
 组件会被放置到 `theme/components/<ComponentName>` 目录下。请在 `theme/index.tsx` 中重新导出该组件以使用你的自定义版本。

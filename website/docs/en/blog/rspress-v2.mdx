@@ -124,9 +124,9 @@ import { Tag } from '@rspress/core/theme';
 
 #### Built-in Multi-language Support
 
-In version 1.x, Rspress only had English text built-in. Using other languages like zh required configuring all text manually, which was cumbersome. Now the 2.0 theme includes built-in translations for zh, en, ja, ko, ru, and more languages. The system automatically performs "Tree Shaking" based on language configuration and usage, bundling only the text and languages you use. Languages not built-in will fall back to en text. You can also extend or override translations through the [`i18nSource`](/api/config/config-basic#i18nsource) configuration option.
+In version 1.x, Rspress included only English UI text. Using other languages such as zh required manually configuring every string, which was cumbersome. The 2.0 theme now includes built-in translations for zh, en, ja, ko, ru, and more languages. The system automatically tree-shakes translations based on language configuration and usage, bundling only the text and languages you use. Languages that are not built in fall back to en text. You can also extend or override translations through the [`i18nSource`](/api/config/config-basic#i18nsource) configuration option.
 
-Rspress will support more built-in languages in the future. If you're interested, please refer to [this contributor's Pull Request](https://github.com/web-infra-dev/rspress/pull/2827).
+Rspress will add more built-in languages in the future. If you're interested, see [this contributor's Pull Request](https://github.com/web-infra-dev/rspress/pull/2827).
 
 ### llms.txt: SSG-MD for High-Quality Markdown content \{#llms-txt-ssg-md}
 
@@ -167,7 +167,7 @@ export default defineConfig({
 });
 ```
 
-After building, the following structure will be generated:
+After the build, Rspress generates the following structure:
 
 ```tree
 doc_build

@@ -38,7 +38,7 @@ Pass `lang`, `title`, and `code` to render the block; `shikiOptions` customizes 
 
 :::warning
 
-It is recommended to use `CodeBlockRuntime` only when necessary, as it increases runtime bundle size, especially when multiple languages need to be included, and cannot benefit from compile-time highlighting performance.
+Use `CodeBlockRuntime` only when necessary. It increases runtime bundle size, especially when multiple languages are included, and cannot benefit from compile-time highlighting.
 
 :::
 
@@ -92,6 +92,6 @@ This approach is suitable for scenarios where you need to dynamically display ex
 
 :::warning
 
-If you just need to reference external files as code blocks, it is recommended to use the static [file code block](/guide/use-mdx/code-blocks#file-code-block) syntax, which is processed at compile time with better performance and smaller bundle size.
+If you only need to reference external files as code blocks, use the static [file code block](/guide/use-mdx/code-blocks#file-code-block) syntax. It is processed at compile time, with better performance and a smaller bundle size.
 
 :::

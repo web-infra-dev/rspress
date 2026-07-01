@@ -8,11 +8,11 @@ import { Badge, Tag } from '@rspress/core/theme';
 
 # Tag
 
-The Tag component is used for UI display in the **sidebar or navbar**. It supports multiple formats including common tags, SVG icons, images, and plain text.
+The Tag component displays labels in the **sidebar or navbar**. It supports multiple formats, including common tags, SVG icons, images, and plain text.
 
 ## Usage
 
-Use through [frontmatter](../../guide/use-mdx/frontmatter.mdx), and it will be displayed in the sidebar or navbar:
+Add it through [frontmatter](../../guide/use-mdx/frontmatter.mdx) to display it in the sidebar or navbar:
 
 ```mdx title="foo.mdx"
 ---
@@ -38,7 +38,7 @@ tag: new, experimental
   <Tag tag="new, experimental" />
 </div>
 
-Can also be used in `_meta.json`, for example:
+You can also use it in `_meta.json`. For example:
 
 ```json title="_meta.json"
 [
@@ -52,7 +52,7 @@ Can also be used in `_meta.json`, for example:
 
 :::tip
 
-UI display in the **sidebar or navbar** mainly uses the Tag component as entry point. Additionally, the **outline bar** on the right side for displaying headings is more flexible and supports any React component.
+The **sidebar** and **navbar** use the Tag component as the entry point for label rendering. The right-side **outline** is more flexible and supports any React component inside headings.
 
 ```mdx title="index.mdx"
 # Foo
@@ -64,7 +64,7 @@ UI display in the **sidebar or navbar** mainly uses the Tag component as entry p
 
 ## Tag types
 
-To make passing values in frontmatter convenient, the Tag component supports the following tag types:
+To keep frontmatter values convenient, the Tag component supports the following tag types:
 
 ### Common tags <Tag tag="new" />
 

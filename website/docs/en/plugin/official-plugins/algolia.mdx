@@ -2,7 +2,7 @@
 
 import { SourceCode } from '@rspress/core/theme';
 
-Based on [docsearch](https://docsearch.algolia.com), this plugin replaces Rspress's built-in search with [algolia](https://www.algolia.com/).
+This plugin replaces Rspress's built-in search with [Algolia](https://www.algolia.com/) through [DocSearch](https://docsearch.algolia.com).
 
 ## Installation
 
@@ -25,7 +25,7 @@ export default defineConfig({
 });
 ```
 
-Then override the `Search` component with an algolia-supported search box via [Custom Theme](/guide/basic/custom-theme).
+Then override the `Search` component with an Algolia-powered search box through [Custom Theme](/guide/basic/custom-theme).
 
 ```tsx
 // theme/index.tsx
@@ -61,7 +61,7 @@ interface Options {
 - **Type**: `string | undefined`
 - **Default**: `undefined`
 
-Used for meta tag verification when creating algolia crawler. Format: `<meta name="algolia-site-verification" content="YOUR_VERIFICATION_CONTENT" />`. Refer to [Create a new crawler - algolia](https://www.algolia.com/doc/tools/crawler/getting-started/create-crawler/#dns)
+Used for meta tag verification when creating an Algolia crawler. Format: `<meta name="algolia-site-verification" content="YOUR_VERIFICATION_CONTENT" />`. See [Create a new crawler - Algolia](https://www.algolia.com/doc/tools/crawler/getting-started/create-crawler/#dns).
 
 ## SearchProps
 
@@ -88,7 +88,7 @@ type SearchProps = {
 - **Type**: `import('@docsearch/react').DocSearchProps`
 - **Default**: `undefined`
 
-`docSearchProps` will be directly passed to the `<DocSearch />` component in `@docsearch/react`. For specific types, please refer to [docsearch documentation](https://docsearch.algolia.com/docs/api).
+`docSearchProps` is passed directly to the `<DocSearch />` component from `@docsearch/react`. For specific types, see the [DocSearch documentation](https://docsearch.algolia.com/docs/api).
 
 ### locales
 
@@ -103,7 +103,7 @@ type Locales = Record<
 
 - **Default**: `{}`
 
-For customizing translated text in different languages, Rspress provides the following translated text, which can be imported through import.
+For customizing translated text in different languages, Rspress provides the following translated text for import.
 
 <details>
 
@@ -113,7 +113,7 @@ For customizing translated text in different languages, Rspress provides the fol
 
 </details>
 
-Rspress provides Chinese translation by default, and you can customize translated text in different languages ​​through `locales`.
+Rspress provides Chinese translations by default, and you can customize translated text for different languages through `locales`.
 
 - Example:
 

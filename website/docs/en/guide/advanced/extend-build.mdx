@@ -1,16 +1,16 @@
 ---
-description: Extend build capabilities with Rsbuild configuration, Rspack plugins, and custom MDX remark/rehype plugins.
+description: Extend build behavior with Rsbuild configuration, Rspack plugins, and custom MDX remark/rehype plugins.
 ---
 
 # Build extension
 
 ## Rsbuild
 
-Rspress builds documents based on [Rsbuild](https://github.com/web-infra-dev/rsbuild).
+Rspress builds docs with [Rsbuild](https://github.com/web-infra-dev/rsbuild).
 
 ### Configure Rsbuild
 
-Rsbuild provides a rich set of build configurations. You can customize these configurations through [builderConfig](/api/config/config-build.html#builderconfig). For example, change the output directory to `doc_dist`:
+Rsbuild provides a rich set of build options. Customize them through [builderConfig](/api/config/config-build.html#builderconfig). For example, change the output directory to `doc_dist`:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -26,9 +26,9 @@ export default defineConfig({
 });
 ```
 
-Rspress also provides the [builderConfig.plugins](/api/config/config-build#builderconfigplugins) config to register Rsbuild plugins. You can leverage Rsbuild's extensive plugin ecosystem to enhance and extend your build capabilities.
+Rspress also provides [builderConfig.plugins](/api/config/config-build#builderconfigplugins) for registering Rsbuild plugins. Use Rsbuild's plugin ecosystem to extend build behavior.
 
-For example, add Google analytics through [rsbuild-plugin-google-analytics](https://github.com/rstackjs/rsbuild-plugin-google-analytics):
+For example, add Google Analytics with [rsbuild-plugin-google-analytics](https://github.com/rstackjs/rsbuild-plugin-google-analytics):
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -47,7 +47,7 @@ export default defineConfig({
 ```
 
 :::tip
-You can learn more about the configuration options through [Rsbuild - Config](https://rsbuild.rs/config/) documentation.
+Learn more in the [Rsbuild - Config](https://rsbuild.rs/config/) documentation.
 :::
 
 ### Configure Rspack
@@ -70,8 +70,7 @@ export default defineConfig({
 
 ## MDX compilation
 
-The compilation of MDX in Rspress is based on [unified](https://github.com/unifiedjs/unified), and you can add related compilation plugins through `markdown` configuration. for example
-:
+Rspress compiles MDX with [unified](https://github.com/unifiedjs/unified). Add related compilation plugins through the `markdown` configuration. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

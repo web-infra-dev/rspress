@@ -1,5 +1,5 @@
 ---
-description: Customize theme via CSS variables, BEM classnames, component wrapping with slots, or ejecting built-in components for full control.
+description: Customize themes with CSS variables, BEM class names, component wrapping with slots, or ejected built-in components for full control.
 ---
 
 # Custom theme
@@ -8,32 +8,32 @@ import { Prompt } from '@rspress/core/theme';
 
 <Prompt custom>
 
-If you are using a Coding Agent, you can install the [`rspress-custom-theme` Agent Skill](https://github.com/rstackjs/agent-skills#rspress-custom-theme) to empower the Agent to generate a brand new theme for you.
+If you are using a coding agent, install the [`rspress-custom-theme` Agent Skill](https://github.com/rstackjs/agent-skills#rspress-custom-theme) to help the agent generate a brand-new theme for you.
 
 For more information about AI-assisted development with Rspress, see the [AI page](../start/ai.mdx).
 
 </Prompt>
 
-1. For CSS, Rspress provides [CSS variables](#css-variables) and [BEM classnames](#bem-classname) for customization.
+1. For CSS, Rspress provides [CSS variables](#css-variables) and [BEM class names](#bem-classname) for customization.
 
-2. For JS / React, Rspress implements a runtime interface based on ESM re-exports, supporting modification or replacement of built-in components to implement your own home page, sidebar, search components, etc.
+2. For JS / React, Rspress provides a runtime interface based on ESM re-exports, so you can modify or replace built-in components for your own homepage, sidebar, search components, and more.
 
    On top of this, there are two modes:
-   - [**wrap**](#wrap): **Wrap** and enhance Rspress built-in components through props / slots.
+   - [**wrap**](#wrap): **Wrap** and enhance Rspress built-in components with props or slots.
    - [**eject**](#eject): Directly **override** the entire component. You can use the [`rspress eject`](../../api/commands.mdx#rspress-eject) command to copy the source code locally and modify it directly.
 
-The following will introduce them in order according to the degree of theme customization.
+The following sections introduce these approaches from lighter to deeper customization.
 
 ## CSS variables \{#css-variables}
 
-Rspress exposes some commonly used CSS variables. Compared to rewriting Rspress built-in React components, overriding CSS variables for customization is simpler and easier to maintain. You can view these CSS variables on the [UI - CSS Variables](../../ui/vars.mdx) page, and override them through:
+Rspress exposes commonly used CSS variables. Compared with rewriting built-in React components, overriding CSS variables is simpler and easier to maintain. View these CSS variables on the [UI - CSS Variables](../../ui/vars.mdx) page, then override them with:
 
 ```tree
 ├── docs
 │   └── index.mdx
 ├── theme
 │   ├── index.tsx
-│   └── index.css  <-- Copy CSS variable code here for style overriding
+│   └── index.css  <-- Copy CSS variable code here to override styles
 └── rspress.config.ts
 ```
 
@@ -53,9 +53,9 @@ export default defineConfig({
 });
 ```
 
-## BEM classname \{#bem-classname}
+## BEM class names \{#bem-classname}
 
-Rspress built-in components all use BEM naming convention. You can use these classnames to override styles, in the same way as [CSS Variables](#css-variables).
+All built-in Rspress components use the BEM naming convention. You can use these class names to override styles, similar to [CSS Variables](#css-variables).
 
 ```css
 .rp-[component-name]__[element-name]--[modifier-name] {
@@ -85,7 +85,7 @@ For example:
 
 ## Override built-in components using ESM re-exports \{#reexport}
 
-By default, you need to create a `theme` directory under the project root directory, and then create an `index.ts` or `index.tsx` file under the `theme` directory, which is used to export the theme components.
+By default, create a `theme` directory under the project root, then create an `index.ts` or `index.tsx` file inside it to export theme components.
 
 ```tree
 ├── docs
@@ -105,11 +105,11 @@ export { Layout }; //[!code highlight]
 export * from '@rspress/core/theme-original'; //[!code highlight]
 ```
 
-By **ESM re-export** to override built-in components, all Rspress internal references to built-in components will preferentially use your re-exported version.
+When you override built-in components with **ESM re-exports**, Rspress internal references to those components use your re-exported version first.
 
 :::note About @rspress/core/theme-original
 
-`@rspress/core/theme-original` is used to avoid circular references, only use it when customizing themes.
+`@rspress/core/theme-original` avoids circular references. Use it only when customizing themes.
 
 ```tree
 ├── docs
@@ -127,7 +127,7 @@ By **ESM re-export** to override built-in components, all Rspress internal refer
 
 ### Wrap: Pass props/slots \{#wrap}
 
-Wrap means adding props to re-exported components. Here's an example of inserting some content before the navbar title:
+Wrapping means adding props to re-exported components. Here is an example that inserts content before the navbar title:
 
 import { Tabs, Tab } from '@rspress/core/theme';
 
@@ -172,9 +172,9 @@ The [`Layout`](/ui/layout-components/layout) component is designed with a series
 
 ### Eject: Directly override the entire component \{#eject}
 
-Eject means directly overriding a single Rspress built-in component, using your own version entirely. For this, Rspress provides the [`rspress eject [component]`](../../api/commands.mdx#rspress-eject) command to copy the source code of built-in components locally and modify them directly. The steps are as follows:
+Ejecting means fully replacing a built-in Rspress component with your own version. Rspress provides the [`rspress eject [component]`](../../api/commands.mdx#rspress-eject) command to copy built-in component source code locally so you can modify it directly:
 
-1. Execute CLI, Rspress will eject the source code of the specified component to the local `theme/components` directory, without ejecting dependencies.
+1. Run the CLI. Rspress ejects the specified component source code to the local `theme/components` directory without ejecting its dependencies.
 
 2. Update `theme/index.tsx` re-export:
 
@@ -186,12 +186,12 @@ export * from '@rspress/core/theme-original';
 
 3. Modify `theme/components/DocFooter.tsx` as needed to meet your requirements.
 
-To make it easier for users to eject, Rspress components are split with fine granularity. You can see which components are suitable for eject in [Layout Components](/ui/layout-components/).
+Rspress components are split into fine-grained pieces to make ejecting practical. See which components can be ejected in [Layout Components](/ui/layout-components/).
 
 :::warning Do you really need eject?
 
-Eject will increase maintenance costs, because when Rspress is updated in the future, these ejected components will not automatically receive updates, and you need to manually compare and merge changes.
+Ejecting increases maintenance cost. When Rspress is updated, ejected components do not receive updates automatically, so you need to compare and merge changes manually.
 
-Please check if wrap can meet your needs first. Only consider eject when wrap cannot meet your needs.
+Check whether wrapping meets your needs first. Use eject only when wrapping is not enough.
 
 :::

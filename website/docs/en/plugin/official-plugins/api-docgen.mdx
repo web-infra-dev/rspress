@@ -2,7 +2,7 @@
 
 import { SourceCode } from '@rspress/core/theme';
 
-The plugin is used to generate api document description automatically, powered by [react-docgen-typescript](https://github.com/styleguidist/react-docgen-typescript) and [documentation](https://github.com/documentationjs/documentation).
+This plugin generates API reference content automatically, powered by [react-docgen-typescript](https://github.com/styleguidist/react-docgen-typescript) and [documentation](https://github.com/documentationjs/documentation).
 
 ## Install
 
@@ -12,7 +12,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 
 ## Usage
 
-First of all, you need to add following config:
+First, add the following configuration:
 
 ```ts
 // rspress.config.ts
@@ -32,7 +32,7 @@ export default defineConfig({
 });
 ```
 
-Then you can use API component to inject api documentation to your mdx file:
+Then use the `API` component to inject API documentation into an MDX file:
 
 ```mdx
 ## API
@@ -44,7 +44,7 @@ This is API Table
 
 ## Config
 
-The plugin accepts an object, which has the following types:
+The plugin accepts an object with the following type:
 
 ```ts
 interface Options {
@@ -57,20 +57,20 @@ interface Options {
 
 ### appDir
 
-`appDir` is used to configure the base directory for parsing，default `process.cwd()`.
+`appDir` configures the base directory for parsing. The default is `process.cwd()`.
 
 ### entries
 
-`entries` is used to configure the basic info for parsing.
+`entries` configures the files to parse.
 
-- key is an identifier that serves as the `moduleName` attribute of the API component.
-- value is the relative path to the parsed file.
+- The key is an identifier used as the `moduleName` attribute of the `API` component.
+- The value is the relative path to the file being parsed.
 
 ### apiParseTool
 
-`apiParseTool` is used to choose the tool for parsing，default `react-docgen-typescript`:
+`apiParseTool` selects the parser. The default is `react-docgen-typescript`:
 
-- `react-docgen-typescript`is used for component library scenarios, only props will be parsed to generate tables.
+- `react-docgen-typescript` is used for component library scenarios. It parses props to generate tables.
 
 ```tsx
 export type ButtonProps = {
@@ -87,10 +87,10 @@ export type ButtonProps = {
 export const Button = (props?: ButtonProps) => {};
 ```
 
-The above is a standard writeup where `ButtonProps` will be extracted into the form and `Button` will be used as the form title.
-If you use the default export, the filename will be used as the form title.
+In this standard form, `ButtonProps` is extracted into a table and `Button` is used as the table title.
+If you use a default export, the file name is used as the table title.
 
-Notice that export features declared elsewhere are not available.
+Note that exports declared elsewhere are not available.
 
 ```tsx
 const A = () => {};
@@ -113,7 +113,7 @@ The generated content is as follows:
 ```
 
 :::warning
-If React types are used in Props, you need to add the types in tsconfig.json, otherwise the types will not be resolved under the React namespace.
+If props use React types, add those types in `tsconfig.json`; otherwise, types under the React namespace cannot be resolved.
 
 ```json
 {
@@ -123,7 +123,7 @@ If React types are used in Props, you need to add the types in tsconfig.json, ot
 }
 ```
 
-The best way is that you import the type directly:
+The best approach is to import the type directly:
 
 ```tsx
 import { FC } from 'react';
@@ -131,8 +131,8 @@ import { FC } from 'react';
 
 :::
 
-- `documentation` is used in tool library scenarios to parse JSDoc annotations.
-  Here is a greet function with JSDoc annotations.
+- `documentation` is used in utility library scenarios to parse JSDoc annotations.
+  Here is a `greet` function with JSDoc annotations.
 
 ```ts
 /**
@@ -167,7 +167,7 @@ Returns **[string][1]** The greeting message.
 
 ### parseToolOptions
 
-`parseToolOptions` is used to pass options to the corresponding parse tool, whose types are as follows:
+`parseToolOptions` passes options to the selected parser. Its type is:
 
 ```ts
 type ParseToolOptions = {
@@ -179,6 +179,6 @@ type ParseToolOptions = {
 };
 ```
 
-Please refer to [ParserOptions](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/src/parser.ts#L84-L95) and [DocumentationArgs](https://github.com/documentationjs/documentation/blob/master/docs/NODE_API.md#parameters-1) to learn about available options.
+See [ParserOptions](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/src/parser.ts#L84-L95) and [DocumentationArgs](https://github.com/documentationjs/documentation/blob/master/docs/NODE_API.md#parameters-1) for available options.
 
-If the parser is `react-docgen-typescript`, the `withDefaultConfig` method is used by default to create a parser instance. If `tsconfigPath` or `compilerOptions` is configured, `tsconfigPath` and `compilerOptions` can be set separately for each `entry`, the `withCompilerOptions` and `withCustomConfig` methods are used to create the parser instance respectively. See [Custom Parsers](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/README.md#usage) for details.
+When the parser is `react-docgen-typescript`, `withDefaultConfig` creates the parser instance by default. If `tsconfigPath` or `compilerOptions` is configured, they can be set separately for each `entry`; `withCompilerOptions` and `withCustomConfig` are used to create the parser instance respectively. See [Custom Parsers](https://github.com/styleguidist/react-docgen-typescript/blob/b7ea0a235efb7c78a1158ca12d864de2bc2ee30e/README.md#usage) for details.

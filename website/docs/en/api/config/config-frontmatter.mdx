@@ -1,42 +1,42 @@
-# Front matter config
+# Frontmatter config
 
-This document introduces how to configure various properties of a page using front matter, including title, description, page type, navbar, etc.
+This page explains how to configure page-level properties with frontmatter, including title, description, page type, and navbar visibility.
 
-See [Frontmatter](/guide/use-mdx/frontmatter) for what front matter is and how to use it, and see [useFrontmatter](/ui/hooks/use-frontmatter) for how to access front matter in code.
+See [Frontmatter](/guide/use-mdx/frontmatter) for the frontmatter syntax, and [useFrontmatter](/ui/hooks/use-frontmatter) for accessing frontmatter in code.
 
 ## title
 
 - **Type**: `string`
 
-The title of the page. By default, the page's h1 heading will be used as the title of the HTML document. But if you want to use a different title, you can use front matter to specify the title of the page. For example:
+The page title. By default, Rspress uses the page's H1 heading as the HTML document title. To use a different title, set it in frontmatter:
 
 ```mdx
 ---
-title: My Home Page
+title: My Homepage
 ---
 
-This is my **home page content**.
+This is my **homepage content**.
 ```
 
 It is equivalent to:
 
 ```mdx
-# My home page
+# My homepage
 
-This is my **home page content**.
+This is my **homepage content**.
 ```
 
 ## description
 
 - **Type**: `string`
 
-A custom description for the page. It will generate a `<meta name="description" content="..." />` tag on the page for SEO optimization.
+A custom description for the page. Rspress uses it to generate a `<meta name="description" content="..." />` tag on the page for SEO optimization.
 
 By default, Rspress extracts the first contentful paragraph below the `h1` heading as the description (see [`markdown.extractDescription`](/api/config/config-build#markdownextractdescription)). If the extracted result does not meet your needs, you can use this field to override it. For more details, see [Custom Head - How description is determined](/guide/advanced/custom-head#how-description-is-determined).
 
 ```yaml
 ---
-description: This is my home page
+description: This is my homepage
 ---
 ```
 
@@ -45,7 +45,7 @@ description: This is my home page
 - **Type**: `'home' | 'doc' | 'doc-wide' | 'custom' | 'blank' | '404'`
 - **Default**: `'doc'`
 
-The type of the page. By default, the page type is `doc`. But if you want to use a different page type, you can use the front matter field `pageType` to specify the page type. E.g:
+The page type. The default is `doc`. To use a different page type, set the `pageType` frontmatter field:
 
 ```yaml
 ---
@@ -71,7 +71,7 @@ titleSuffix: 'Rsbuild-based Static Site Generator'
 ---
 ```
 
-The default separator between the title and the suffix is `-`, you can also use `|` for separation:
+The default separator between the title and suffix is `-`. You can also use `|`:
 
 ```yaml
 ---
@@ -84,7 +84,7 @@ titleSuffix: '| Rsbuild-based Static Site Generator'
 - **Type**: `boolean | 'placeholder'`
 - **Default**: `true`
 
-Whether to show the sidebar on the left. By default, the `doc` page will display the sidebar on the left. If you want to hide the sidebar on the left, you can use the following front matter config:
+Controls whether the left sidebar is shown. By default, `doc` pages display the left sidebar. To hide it, use the following frontmatter:
 
 ```yaml
 ---
@@ -102,7 +102,7 @@ sidebar: false
 ---
 ```
 
-This way, the main content area will automatically expand to occupy the space originally used by the sidebar.
+The main content area will then expand into the space normally used by the sidebar.
 
 If you want to keep the blank space for the left sidebar, use `sidebar: 'placeholder'`:
 
@@ -116,7 +116,7 @@ sidebar: 'placeholder'
 
 ## outline
 
-Whether to display the outline column on the right. By default, the `doc` page displays the outline column on the right. You can hide the outline column with the following config:
+Controls whether the right-side outline is shown. By default, `doc` pages display the right-side outline. To hide it, use:
 
 ```yaml
 ---
@@ -134,12 +134,12 @@ outline: false
 ---
 ```
 
-This way, the main content area will automatically expand to occupy the space originally used by the outline column.
+The main content area will then expand into the space normally used by the outline.
 :::
 
 ## footer
 
-Whether to display the components at the bottom of the document (such as previous/next page). By default, the `doc` page will display the footer at the bottom. You can hide the footer with the following config:
+Controls whether footer components, such as previous/next page links, are shown at the bottom of the page. By default, `doc` pages display the footer. To hide it, use:
 
 ```yaml
 ---
@@ -149,7 +149,7 @@ footer: false
 
 ## navbar
 
-Whether to show the top navigation bar. By default, all pages will display the top navigation bar. But if you want to hide the top navigation bar, you can use the following front matter config:
+Controls whether the top navbar is shown. By default, all pages display the top navbar. To hide it, use:
 
 ```yaml
 ---
@@ -161,7 +161,7 @@ navbar: false
 
 - **Type**: `string`
 
-After configuration, the `data-context` attribute will be added to the DOM node when the sidebar is generated, and the value is the configured value.
+When configured, Rspress adds a `data-context` attribute with this value to the generated sidebar DOM node.
 
 ```yaml title="foo.mdx"
 ---
@@ -240,7 +240,7 @@ The following configurations are related to the [Overview Page](/guide/advanced/
 - **Type**: `boolean`
 - **Default**: `false`
 
-Enable the overview page feature in the document page. If set to `true`, it means the current page is an [Overview Page](../../guide/advanced/overview-page.mdx). For example:
+Enables the overview page feature for the current doc page. When set to `true`, the current page becomes an [Overview Page](../../guide/advanced/overview-page.mdx). For example:
 
 ```yaml
 ---
@@ -253,7 +253,7 @@ overview: true
 - **Type**: `number[]`
 - **Default**: `[2]`
 
-The header levels shown in the overview page. By default, the displayed header is h2. But if you want to display different header levels, you can specify it using the `overviewHeaders` front matter field. For example:
+Heading levels to show on the overview page. By default, H2 headings are shown. To display other heading levels, set the `overviewHeaders` frontmatter field:
 
 ```yaml
 ---
@@ -270,15 +270,15 @@ overviewHeaders: [2, 3]
 ---
 ```
 
-## Home page related
+## Homepage related
 
-The following configurations are related to the [Home Page](/guide/basic/home-page) feature.
+The following options are related to the [homepage](/guide/basic/home-page) feature.
 
 ### hero
 
 - **Type**: `Object`
 
-The hero config for the `home` page. It has the following types:
+Hero configuration for the `home` page. It has the following type:
 
 ```ts
 interface Hero {
@@ -289,8 +289,8 @@ interface Hero {
     src: string | { dark: string; light: string };
     alt: string;
     /**
-     * `srcset` and `sizes` are attributes of `<img>` tag. Please refer to https://mdn.io/srcset for the usage.
-     * When the value is an array, rspress will join array members with commas.
+     * `srcset` and `sizes` are `<img>` attributes. See https://mdn.io/srcset for usage.
+     * When the value is an array, Rspress joins array members with commas.
      **/
     srcset?: string | string[];
     sizes?: string | string[];
@@ -303,7 +303,7 @@ interface Hero {
 }
 ```
 
-For example, you can use the following front matter to specify a page's hero config:
+For example, use the following frontmatter to specify a page's hero configuration:
 
 ```yaml
 ---
@@ -336,7 +336,7 @@ hero:
     Solution
 ```
 
-Or you can use `HTML` to specify the hero config for the page:
+You can also use `HTML` in the page's hero configuration:
 
 ```yaml
 ---
@@ -361,7 +361,7 @@ hero:
 - **Type**: `Array`
 - **Default**: `[]`
 
-The features config of the `home` page. It has the following types:
+Feature configuration for the `home` page. It has the following type:
 
 ```ts
 interface Feature {
@@ -377,7 +377,7 @@ interface Feature {
 export type Features = Feature[];
 ```
 
-For example, you could use the following to specify the features configuration for the `home` page:
+For example, use the following frontmatter to specify the features for the `home` page:
 
 ```yaml
 ---
@@ -388,10 +388,10 @@ features:
     details: MDX is a powerful way to write content. You can use React components in Markdown.
     icon: 📦
   - title: 'Feature Rich: One-stop solution'
-    details: Out of the box support for full-text search, i18n, and other common features.
+    details: Out-of-the-box support for full-text search, i18n, and other common features.
     icon: 🎨
-  - title: 'Highly Extensible: Provides multiple customization capabilities'
-    details: Through its extension mechanism, you can easily extend the theme UI and build capabilities.
+  - title: 'Highly Extensible: Multiple customization paths'
+    details: Use extension APIs to customize the theme UI and build behavior.
     icon: 🚀
 ---
 ```

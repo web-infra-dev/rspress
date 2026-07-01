@@ -21,14 +21,17 @@ const setNodeEnv = (env: 'development' | 'production') => {
   process.env.NODE_ENV = env;
 };
 
-cli.option('-c,--config [config]', 'Specify the path to the config file');
+cli.option(
+  '-c, --config <config>',
+  'Set the configuration file (relative or absolute path)',
+);
 
 cli
-  .command('[root]', 'start dev server') // default command
+  .command('[root]', 'Start the dev server') // default command
   .alias('dev')
-  .option('--port [port]', 'port number')
-  .option('--host [host]', 'hostname')
-  .option('--base <base>', 'deployment base path')
+  .option('--port <port>', 'Set the port number for the server')
+  .option('--host [host]', 'Set the host that the server listens to')
+  .option('--base <base>', 'Set the base path and override config.base')
   .action(
     async (
       root,
@@ -122,8 +125,8 @@ cli
   );
 
 cli
-  .command('build [root]')
-  .option('--base <base>', 'deployment base path')
+  .command('build [root]', 'Build the documentation site for production')
+  .option('--base <base>', 'Set the base path and override config.base')
   .action(async (root, options) => {
     setNodeEnv('production');
     const cwd = process.cwd();
@@ -149,11 +152,11 @@ cli
   });
 
 cli
-  .command('preview [root]')
+  .command('preview [root]', 'Preview the production build locally')
   .alias('serve')
-  .option('--port [port]', 'port number')
-  .option('--host [host]', 'hostname')
-  .option('--base <base>', 'deployment base path')
+  .option('--port <port>', 'Set the port number for the server')
+  .option('--host [host]', 'Set the host that the server listens to')
+  .option('--base <base>', 'Set the base path and override config.base')
   .action(
     async (
       root,
@@ -185,7 +188,7 @@ cli
   );
 
 cli
-  .command('eject [component]', 'Eject a theme component to customize it')
+  .command('eject [component]', 'Eject a theme component for customization')
   .action(async (component?: string) => {
     if (!component) {
       await listComponents();

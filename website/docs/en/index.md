@@ -19,7 +19,7 @@ hero:
     alt: Rspress Logo
 features:
   - title: Blazing fast build speed
-    details: The core compilation module is based on the Rust front-end toolchain, providing a more ultimate development experience.
+    details: Built on the Rust-powered front-end toolchain for a faster development experience.
     icon: /speed.svg
     link: ./guide/start/introduction
   - title: Support for MDX
@@ -27,19 +27,19 @@ features:
     icon: /mdx.svg
     link: ./guide/use-mdx/components
   - title: Built-in full-text search
-    details: Automatically generates a full-text search index for you during construction, providing out-of-the-box full-text search capabilities.
+    details: Automatically generates a full-text search index during builds, with search available out of the box.
     icon: /search.svg
     link: ./guide/advanced/custom-search
   - title: AI-friendly
-    details: Generate llms.txt and Markdown files compliant with the llms.txt specification through SSG-MD, making it easier for large language models to understand and use your documentation.
+    details: Use SSG-MD to generate llms.txt-compliant indexes and Markdown files so large language models can better understand your docs.
     icon: /ai.svg
     link: ./guide/basic/ssg-md
   - title: Static site generation
-    details: In production, it automatically builds into static HTML files, which can be easily deployed anywhere.
+    details: Builds static HTML files for production so your site can be deployed anywhere.
     icon: /static.svg
     link: ./guide/basic/ssg
-  - title: Providing multiple custom capabilities
-    details: Through its extension mechanism, you can easily extend theme UI and build process.
+  - title: Flexible customization
+    details: Extend the theme UI and build process through Rspress extension APIs.
     icon: /custom.svg
     link: ./guide/basic/custom-theme
 ---

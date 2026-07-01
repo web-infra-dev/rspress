@@ -1,14 +1,14 @@
 ---
-description: Manage multi-version documentation with simple configuration, intuitive directory structure, version selector in the navbar, and version-specific search.
+description: Manage multi-version docs with simple configuration, intuitive directory structure, a version selector in the navbar, and version-specific search.
 ---
 
-# Multi version
+# Multi-version docs
 
-Rspress's default theme supports multi-version document management. Next, we will introduce how to access multi-version documents.
+Rspress's default theme supports multi-version docs. This guide shows how to enable and organize them.
 
 ## `multiVersion` config
 
-Configure the version list and default version through `multiVersion`, for example:
+Configure the version list and default version with `multiVersion`:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -23,9 +23,9 @@ export default defineConfig({
 
 Here, `default` is the default version, and `versions` is the version list.
 
-## Adding multi-version documents
+## Add multi-version docs
 
-According to the version list you configured, add multi-version documents under the `docs` directory, for example:
+Based on the configured version list, add versioned docs under the `docs` directory:
 
 ```tree
 docs
@@ -39,17 +39,17 @@ docs
         └── index.mdx
 ```
 
-In Rspress's conventional routing, for the default version, the version path prefix will be automatically omitted. For example, `v1/index.mdx` will be rendered as the `/` route, while `v2/index.mdx` will be rendered as the `/v2/` route.
+In Rspress conventional routing, the version path prefix is omitted for the default version. For example, `v1/index.mdx` is rendered as `/`, while `v2/index.mdx` is rendered as `/v2/`.
 
 :::tip Tip
 
-For links in the document, you do not need to manually add the version prefix. Rspress will automatically add the corresponding version prefix according to the version of the current document. For example, the link `/guide/` in `v2/index.mdx` will be rendered as `/v2/guide/`.
+For document links, you do not need to manually add the version prefix. Rspress adds the corresponding prefix based on the current document version. For example, `/guide/` in `v2/index.mdx` is rendered as `/v2/guide/`.
 
 :::
 
 ## Using with i18n
 
-Multi-version can be used together with [internationalization](/guide/basic/i18n). When both are enabled, the directory structure uses **version as the top level, then language subdirectories** within each version:
+You can use multi-version docs together with [internationalization](/guide/basic/i18n). When both are enabled, the directory structure uses **versions at the top level, then language subdirectories** within each version:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -73,7 +73,7 @@ export default defineConfig({
 });
 ```
 
-The document directory structure should be organized as follows:
+Organize the docs directory as follows:
 
 ```tree
 docs
@@ -112,7 +112,7 @@ The generated routes follow the pattern `/{version}/{lang}/`:
 
 ## Get the current version in components
 
-In components, you can get the current version through [`useVersion`](/ui/hooks/use-version), for example:
+In components, get the current version with [`useVersion`](/ui/hooks/use-version):
 
 ```tsx
 import { useVersion } from '@rspress/core/runtime';
