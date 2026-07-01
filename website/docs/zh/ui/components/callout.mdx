@@ -66,7 +66,15 @@ interface CalloutProps {
   /**
    * callout 的类型，决定其颜色和图标。
    */
-  type: 'tip' | 'note' | 'warning' | 'caution' | 'danger' | 'info' | 'details';
+  type:
+    | 'tip'
+    | 'note'
+    | 'important'
+    | 'warning'
+    | 'caution'
+    | 'danger'
+    | 'info'
+    | 'details';
   /**
    * callout 的自定义标题。如果未提供，将使用首字母大写的类型名。
    */

@@ -202,6 +202,22 @@ This is a details block.
     expect(result).toMatchSnapshot();
   });
 
+  test('github alerts ~ important', async () => {
+    const result = await process(`> [!IMPORTANT]
+> Key information users need to know to achieve their goal.
+`);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  test('important container via ::: syntax', async () => {
+    const result = await process(`:::important
+This is an important block.
+:::`);
+
+    expect(result).toMatchSnapshot();
+  });
+
   test('github alerts ~ multi-line plain content', async () => {
     const result = await process(`> [!NOTE]
 > Line 1
@@ -372,7 +388,7 @@ Line 2 with [link](http://example.com).
   // :::
   // `),
   //     ).rejects.toThrow(
-  //       '[remarkContainerSyntax] Unknown container directive type "Tip". Supported types: tip, note, warning, caution, danger, info, details',
+  //       '[remarkContainerSyntax] Unknown container directive type "Tip". Supported types: tip, note, important, warning, caution, danger, info, details',
   //     );
   //   });
 
