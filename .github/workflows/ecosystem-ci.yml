@@ -48,7 +48,7 @@ jobs:
       pull-requests: read
     steps:
       - name: Trigger Ecosystem CI
-        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@3cbb84659edaf3713e10831715d39de0d5c02df7 # main
+        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@ecca2c865c3830f56824fe7a3c6513bac77f5c8f # main
         with:
           github-token: ${{ secrets.REPO_rspress_ECO_CI_GITHUB_TOKEN_NEXT }}
           ecosystem-owner: web-infra-dev
@@ -66,7 +66,7 @@ jobs:
       contents: write
     steps:
       - name: Trigger Ecosystem CI
-        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@3cbb84659edaf3713e10831715d39de0d5c02df7 # main
+        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@ecca2c865c3830f56824fe7a3c6513bac77f5c8f # main
         with:
           github-token: ${{ secrets.REPO_RSPRESS_ECO_CI_GITHUB_TOKEN_NEXT }}
           ecosystem-owner: web-infra-dev
