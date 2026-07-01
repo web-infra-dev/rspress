@@ -393,11 +393,7 @@ export const remarkContainerSyntax: Plugin<[], Root> = () => {
   return tree => {
     transformer(tree, warnUnknownType);
     tree.children.unshift(
-      getNamedImportAstNode(
-        'Callout',
-        CALLOUT_COMPONENT,
-        '@rspress/core/theme',
-      ),
+      getNamedImportAstNode('Callout', CALLOUT_COMPONENT, '@theme'),
     );
   };
 };
