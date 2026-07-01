@@ -39,6 +39,24 @@ export default defineConfig({
 });
 ```
 
+## url
+
+- **Type**: `string`
+- **Default**: `""`
+
+The deployment URL of the site, for example `https://foo.github.io`.
+
+Rspress uses this value together with [`base`](#base) when generating absolute URLs, such as `llms.txt` links or plugin outputs. If your site is deployed to `https://foo.github.io/bar/`, set `url` to `"https://foo.github.io"` and `base` to `"/bar/"`:
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  url: 'https://foo.github.io',
+  base: '/bar/',
+});
+```
+
 ## title
 
 - **Type**: `string`

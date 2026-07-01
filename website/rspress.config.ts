@@ -38,6 +38,7 @@ const commonRsdoctorConfig = {
 export default defineConfig({
   title: 'Rspress',
   description: 'Rsbuild based static site generator',
+  url: siteUrl,
   lang: 'en',
   logo: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
   logoText: 'Rspress',

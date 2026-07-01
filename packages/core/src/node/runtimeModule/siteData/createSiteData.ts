@@ -15,6 +15,7 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
 
   const siteData: Omit<SiteData, 'root' | 'pages'> = {
     base: userConfig.base ?? '/',
+    url: userConfig.url ?? '',
     title: userConfig?.title || '',
     description: userConfig?.description || '',
     icon: getIconUrlPath(userConfig?.icon) || '',
