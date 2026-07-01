@@ -26,7 +26,7 @@ const COMMON_EXTERNALS = [
   'virtual-global-components',
   'virtual-search-hooks',
   'virtual-i18n-text',
-  '@theme',
+  '@rspress/core/theme',
   // To be externalized when bundling d.ts.
   '@types/react',
   '@rspress/core/runtime',

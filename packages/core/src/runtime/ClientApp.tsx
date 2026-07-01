@@ -5,7 +5,7 @@ import {
   ThemeContext,
   withBase,
 } from '@rspress/core/runtime';
-import { useThemeState } from '@theme';
+import { useThemeState } from '@rspress/core/theme';
 import { createHead, UnheadProvider } from '@unhead/react/client';
 import { useMemo, useState } from 'react';
 import { App } from './App';
