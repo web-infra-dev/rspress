@@ -20,7 +20,6 @@ export default defineConfig({
       output: {
         externals: [
           '@rspress/core/theme',
-          '@rspress/core/theme',
           'react',
           '@types/react',
           'react/jsx-runtime',

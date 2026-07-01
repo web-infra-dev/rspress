@@ -1,5 +1,4 @@
 import { useLang } from '@rspress/core/runtime';
-// @ts-expect-error @theme is overridden by alias in @rspress/core
 import { getCustomMDXComponent } from '@rspress/core/theme';
 import GithubSlugger from 'github-slugger';
 import type { Content, Element, Root } from 'hast';
