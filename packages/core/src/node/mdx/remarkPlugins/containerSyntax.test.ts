@@ -202,6 +202,37 @@ This is a details block.
     expect(result).toMatchSnapshot();
   });
 
+  test('github alerts ~ multi-line plain content', async () => {
+    const result = await process(`> [!NOTE]
+> Line 1
+> Line 2
+> Line 3
+`);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  test('github alerts ~ multi-line content with inline emphasis', async () => {
+    const result = await process(`> [!NOTE]
+> Line 1
+> *Line* 2
+> Line 3
+`);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  test('github alerts ~ marker followed by content on same paragraph then more blocks', async () => {
+    const result = await process(`> [!TIP]
+> First paragraph line 1
+> First paragraph line 2
+>
+> Second paragraph
+`);
+
+    expect(result).toMatchSnapshot();
+  });
+
   test('nested in ordered list', async () => {
     const result = await process(`
 1. Title1
