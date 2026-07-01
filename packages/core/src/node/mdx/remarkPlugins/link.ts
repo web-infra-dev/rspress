@@ -19,8 +19,7 @@ import type { RouteService } from '../../route/RouteService';
 import { createError } from '../../utils';
 
 type LinkCheckOption =
-  | boolean
-  | { excludes: string[] | ((url: string) => boolean) };
+  boolean | { excludes: string[] | ((url: string) => boolean) };
 
 interface NormalizedLink {
   url: string;

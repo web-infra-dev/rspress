@@ -194,10 +194,7 @@ RSS 配置，多值数组可以生成多个 RSS 文件。
 export interface FeedChannel extends Partial<FeedOptions> {
   id: string;
   test:
-    | RegExp
-    | string
-    | (RegExp | string)[]
-    | ((item: PageIndexInfo) => boolean);
+    RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo) => boolean);
   item?: (
     item: FeedItem,
     page: PageIndexInfo,

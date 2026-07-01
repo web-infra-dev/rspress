@@ -27,8 +27,7 @@ const normalizeImageUrl = (imageUrl: string): string => {
 
 function checkDeadImages(
   checkDeadImages:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) },
+    boolean | { excludes: string[] | ((url: string) => boolean) },
   deadImages: Map<string, string>,
   file: VFile,
   lint?: boolean,

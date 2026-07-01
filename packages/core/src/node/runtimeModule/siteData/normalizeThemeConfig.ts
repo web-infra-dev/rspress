@@ -122,8 +122,7 @@ export async function normalizeThemeConfig(
           collapsible: item.collapsible ?? true,
           items: item.items.map(subItem => {
             return normalizeSidebarItem(subItem) as
-              | NormalizedSidebarGroup
-              | SidebarItem;
+              NormalizedSidebarGroup | SidebarItem;
           }),
         };
       }
@@ -139,8 +138,7 @@ export async function normalizeThemeConfig(
       Object.keys(sidebar).forEach(key => {
         const value = sidebar[key];
         normalizedSidebar[key] = value.map(normalizeSidebarItem) as (
-          | NormalizedSidebarGroup
-          | SidebarItem
+          NormalizedSidebarGroup | SidebarItem
         )[];
       });
     };

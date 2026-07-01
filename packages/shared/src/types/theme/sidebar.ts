@@ -1,9 +1,6 @@
 export interface Sidebar {
   [path: string]: (
-    | SidebarGroup
-    | SidebarItem
-    | SidebarDivider
-    | SidebarSectionHeader
+    SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader
   )[];
 }
 
@@ -43,10 +40,7 @@ export type SidebarSectionHeader = {
 
 // normalized config ---------------------------------------------------------
 export type SidebarData = (
-  | SidebarDivider
-  | SidebarItem
-  | SidebarSectionHeader
-  | NormalizedSidebarGroup
+  SidebarDivider | SidebarItem | SidebarSectionHeader | NormalizedSidebarGroup
 )[];
 
 export interface NormalizedSidebarGroup extends Omit<SidebarGroup, 'items'> {

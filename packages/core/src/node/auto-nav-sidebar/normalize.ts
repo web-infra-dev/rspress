@@ -319,10 +319,7 @@ async function metaDirItemToSidebarItem(
       ),
     );
     return items.flat().filter(Boolean) as (
-      | SidebarItem
-      | SidebarGroup
-      | SidebarDivider
-      | SidebarSectionHeader
+      SidebarItem | SidebarGroup | SidebarDivider | SidebarSectionHeader
     )[];
   }
 

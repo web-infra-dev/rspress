@@ -37,7 +37,8 @@ export const DIRECTIVE_TYPES = [
 ] as const;
 export const REGEX_BEGIN = /^\s*:::\s*(\w+)\s*(.*)?/;
 export const REGEX_END = /\s*:::$/;
-export const REGEX_GH_BEGIN = /^\s*\s*\[!(\w+)\]\s*(.*)?/;
+export const REGEX_GH_BEGIN = /^\s*\[!(\w+)\]/;
+export const REGEX_GH_MARKER = /^\s*\[!\w+\][^\S\n]*\n?/;
 export const TITLE_REGEX_IN_MD = /{\s*title=["']?(.+)}\s*/;
 export const TITLE_REGEX_IN_MDX = /\s*title=["']?(.+)\s*/;
 
@@ -157,7 +158,9 @@ function transformer(
       node.children[0].children?.[0] &&
       'value' in node.children[0].children[0]
     ) {
-      const initiatorTag = node.children[0].children[0].value;
+      const firstParagraph = node.children[0];
+      const firstTextNode = firstParagraph.children[0] as Literal;
+      const initiatorTag = firstTextNode.value;
       const match = initiatorTag.match(REGEX_GH_BEGIN);
 
       if (match) {
@@ -167,18 +170,22 @@ function transformer(
           i++;
           continue;
         }
-        if (
-          node.children.length === 1 &&
-          node.children[0].type === 'paragraph'
-        ) {
-          node.children[0].children[0].value = match[2] ?? '';
-        }
+        // Strip only the `[!TYPE]` marker (and the single line break separating it
+        // from the body) from the first text node, preserving the remaining body
+        // content (soft line breaks and sibling phrasing nodes such as emphasis).
+        firstTextNode.value = initiatorTag.replace(REGEX_GH_MARKER, '');
+        // If removing the marker leaves an empty leading paragraph (the body lives
+        // in subsequent block nodes), drop it; otherwise keep all children.
+        const isFirstParagraphEmpty = firstParagraph.children.every(
+          child => child.type === 'text' && child.value.trim() === '',
+        );
+        const children = (
+          isFirstParagraphEmpty ? node.children.slice(1) : node.children
+        ) as BlockContent[];
         const newChild = createContainer(
           type.toLowerCase(),
           type.toUpperCase(),
-          (node.children.slice(1).length === 0
-            ? node.children.slice(0)
-            : node.children.slice(1)) as BlockContent[],
+          children,
         );
         tree.children.splice(i, 1, newChild as RootContent);
       }

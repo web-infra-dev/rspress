@@ -534,8 +534,7 @@ export type RemarkLinkOptions = {
    * @default true
    */
   checkDeadLinks?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
   /**
    * Whether to enable dead anchor checks
    * @default false
@@ -554,8 +553,7 @@ export type RemarkImageOptions = {
    * @default true
    */
   checkDeadImages?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
 };
 
 export interface MarkdownOptions {

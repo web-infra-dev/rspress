@@ -3,13 +3,7 @@ import { dirname, isAbsolute } from 'node:path';
 import { logger, type RspressPlugin } from '@rspress/core';
 
 type ChangeFreq =
-  | 'always'
-  | 'hourly'
-  | 'daily'
-  | 'weekly'
-  | 'monthly'
-  | 'yearly'
-  | 'never';
+  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
 
 type Priority =
   | '0.0'
