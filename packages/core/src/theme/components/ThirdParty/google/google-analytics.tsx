@@ -2,12 +2,6 @@
 
 import { Script } from '@rspress/core/theme';
 
-declare global {
-  interface Window {
-    [key: string]: any;
-  }
-}
-
 export type GAParams = {
   gaId: string;
   dataLayerName?: string;
@@ -52,10 +46,10 @@ export function sendGAEvent(..._args: any[]) {
     console.warn(`Rspress Third Parties: GA has not been initialized`);
     return;
   }
-
-  if (window[currDataLayerName]) {
+  const win = window as any;
+  if (win[currDataLayerName]) {
     // eslint-disable-next-line prefer-rest-params
-    window[currDataLayerName].push(arguments);
+    win[currDataLayerName].push(arguments);
   } else {
     console.warn(
       `Rspress Third Parties: GA dataLayer "${currDataLayerName}" does not exist`,

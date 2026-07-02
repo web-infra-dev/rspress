@@ -23,13 +23,6 @@ type GTMParamsWithScriptUrl = GTMParamsBaseParams & {
   gtmScriptUrl: string;
 };
 
-declare global {
-  interface Window {
-    dataLayer?: Object[];
-    [key: string]: any;
-  }
-}
-
 export type GTMParams = GTMParamsWithId | GTMParamsWithScriptUrl;
 
 let currDataLayerName = 'dataLayer';
