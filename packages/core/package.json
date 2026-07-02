@@ -97,6 +97,7 @@
     "remark-stringify": "^11.0.0",
     "scroll-into-view-if-needed": "^3.1.0",
     "shiki": "^4.2.0",
+    "third-party-capital": "^3.0.0",
     "unified": "^11.0.5",
     "unist-util-remove": "^4.0.0",
     "unist-util-visit": "^5.1.0",

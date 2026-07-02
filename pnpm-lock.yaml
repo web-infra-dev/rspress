@@ -1124,6 +1124,9 @@ importers:
       shiki:
         specifier: ^4.2.0
         version: 4.2.0
+      third-party-capital:
+        specifier: ^3.0.0
+        version: 3.0.0
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -7055,6 +7058,9 @@ packages:
     engines: {node: '>=10.18'}
     peerDependencies:
       tslib: ^2
+
+  third-party-capital@3.0.0:
+    resolution: {integrity: sha512-zCrYkb4lnFTpsz0cyZ7c3q9aqQ5zX4po1Gy4utqOf8UkIV9Jx45P8ty6kpF1gLVvfkfNB36nEKv3isQhJv7Ftw==}
 
   tinyexec@1.1.2:
     resolution: {integrity: sha512-dAqSqE/RabpBKI8+h26GfLq6Vb3JVXs30XYQjdMjaj/c2tS8IYYMbIzP599KtRj7c57/wYApb3QjgRgXmrCukA==}
@@ -13570,6 +13576,10 @@ snapshots:
   thingies@2.6.0(tslib@2.8.1):
     dependencies:
       tslib: 2.8.1
+
+  third-party-capital@3.0.0:
+    dependencies:
+      semver: 7.7.4
 
   tinyexec@1.1.2: {}
 
