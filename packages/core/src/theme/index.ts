@@ -67,6 +67,7 @@ export { ReadPercent } from './components/ReadPercent/index';
 export { useReadPercent } from './components/ReadPercent/useReadPercent';
 export { Root, type RootProps } from './components/Root/index';
 export { Script, type ScriptProps } from './components/ThirdParty/core/index';
+export * from './components/ThirdParty/google/index';
 export { Search } from './components/Search/index';
 export type {
   AfterSearch,
