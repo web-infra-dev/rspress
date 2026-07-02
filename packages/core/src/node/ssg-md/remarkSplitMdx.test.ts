@@ -610,7 +610,7 @@ This is a <Button>click me</Button> and <Link href="/test">link</Link> example.`
     `);
 
     const input2 = `
-import { Tabs, Tab } from '@theme';
+import { Tabs, Tab } from '@rspress/core/theme';
 
 <Tabs>
 <Tab>
@@ -630,7 +630,7 @@ import Button from './_button.mdx';
     expect(result2).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
-      import {Tabs, Tab} from '@theme';
+      import {Tabs, Tab} from '@rspress/core/theme';
       import Button from './_button.mdx';
       function _createMdxContent(props) {
         return <Tabs><Tab><Button /></Tab><Tab /></Tabs>;

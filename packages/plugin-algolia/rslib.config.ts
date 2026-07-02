@@ -33,7 +33,7 @@ export default defineConfig({
       plugins: [pluginReact()],
       output: {
         externals: [
-          '@theme',
+          '@rspress/core/theme',
           'react',
           'react/jsx-runtime',
           'react/jsx-dev-runtime',

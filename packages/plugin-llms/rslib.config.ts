@@ -19,7 +19,6 @@ export default defineConfig({
       plugins: [pluginReact()],
       output: {
         externals: [
-          '@theme',
           '@rspress/core/theme',
           'react',
           '@types/react',
