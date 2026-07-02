@@ -4,7 +4,6 @@ import { Script } from '@rspress/core/theme';
 
 declare global {
   interface Window {
-    dataLayer?: Object[];
     [key: string]: any;
   }
 }
@@ -31,41 +30,35 @@ export function GoogleAnalytics(props: GAParams) {
         id="_rspress-ga-init"
         dangerouslySetInnerHTML={{
           __html: `
-          window['${dataLayerName}'] = window['${dataLayerName}'] || [];
-          function gtag(){window['${dataLayerName}'].push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', '${gaId}' ${debugMode ? ",{ 'debug_mode': true }" : ''});`,
+            window['${dataLayerName}'] = window['${dataLayerName}'] || [];
+            function gtag(){window['${dataLayerName}'].push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gaId}' ${debugMode ? ",{ 'debug_mode': true }" : ''});
+          `,
         }}
         nonce={nonce}
       />
       <Script
-        id="_next-ga"
+        id="_rspress-ga"
         src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
         nonce={nonce}
       />
     </>
   );
 }
-export function sendGAEvent(...args: any[]) {
-  if (typeof window === 'undefined') {
-    return;
-  }
 
+export function sendGAEvent(..._args: any[]) {
   if (currDataLayerName === undefined) {
-    console.warn(
-      `[Rspress] GA has not been initialized. Please render the GoogleAnalytics component first.`,
-    );
+    console.warn(`Rspress Third Parties: GA has not been initialized`);
     return;
   }
 
-  const dataLayer = (window as any)[currDataLayerName];
-
-  if (dataLayer && typeof dataLayer.push === 'function') {
-    dataLayer.push(...args);
+  if (window[currDataLayerName]) {
+    // eslint-disable-next-line prefer-rest-params
+    window[currDataLayerName].push(arguments);
   } else {
     console.warn(
-      `[Rspress] GA dataLayer "${currDataLayerName}" does not exist on the window object.`,
+      `Rspress Third Parties: GA dataLayer "${currDataLayerName}" does not exist`,
     );
   }
 }
