@@ -1,3 +1,5 @@
+// cspell:ignore videoid playlabel
+
 import type { ScriptProps } from '@rspress/core/theme';
 import { Script } from '@rspress/core/theme';
 import { YouTubeEmbed as TPCYouTubeEmbed } from 'third-party-capital';

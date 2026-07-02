@@ -1,4 +1,5 @@
 'use client';
+// cspell:ignore preinit Preinit
 
 import ReactDOM from 'react-dom';
 import React, { useEffect, useRef } from 'react';
@@ -242,7 +243,7 @@ export function Script(props: ScriptProps): React.JSX.Element | null {
     });
   }
 
-  // Server-Side Rendering (SSG) phase during Rspress builds
+  // Server-Side Rendering (SSG) build phase
   if (typeof window === 'undefined') {
     // Optimize preloading using React 19 APIs if available
     if (

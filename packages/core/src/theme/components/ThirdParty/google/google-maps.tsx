@@ -1,3 +1,5 @@
+// cspell:ignore streetview maptype
+
 import { GoogleMapsEmbed as TPCGoogleMapEmbed } from 'third-party-capital';
 
 import ThirdPartyScriptEmbed from '../ThirdPartyScripts';
