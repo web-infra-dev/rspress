@@ -29,6 +29,7 @@ import { getNamedImportAstNode } from '../../utils';
 export const DIRECTIVE_TYPES = [
   'tip',
   'note',
+  'important',
   'warning',
   'caution',
   'danger',
