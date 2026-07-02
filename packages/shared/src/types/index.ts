@@ -503,6 +503,13 @@ export interface RouteOptions {
    * @default false
    */
   cleanUrls?: boolean;
+  /**
+   * Enable concurrent, optimized routing for markdown links.
+   * Only applies to links located inside `.md` and `.mdx` files.
+   * @default false
+   * @unstable
+   */
+  concurrentRoute?: boolean;
 }
 
 export interface SearchHooks {
