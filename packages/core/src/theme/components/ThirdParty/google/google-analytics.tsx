@@ -47,3 +47,25 @@ export function GoogleAnalytics(props: GAParams) {
     </>
   );
 }
+export function sendGAEvent(...args: any[]) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  if (currDataLayerName === undefined) {
+    console.warn(
+      `[Rspress] GA has not been initialized. Please render the GoogleAnalytics component first.`,
+    );
+    return;
+  }
+
+  const dataLayer = (window as any)[currDataLayerName];
+
+  if (dataLayer && typeof dataLayer.push === 'function') {
+    dataLayer.push(...args);
+  } else {
+    console.warn(
+      `[Rspress] GA dataLayer "${currDataLayerName}" does not exist on the window object.`,
+    );
+  }
+}
