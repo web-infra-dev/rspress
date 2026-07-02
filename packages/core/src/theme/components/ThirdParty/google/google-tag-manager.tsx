@@ -25,8 +25,6 @@ type GTMParamsWithScriptUrl = GTMParamsBaseParams & {
 
 export type GTMParams = GTMParamsWithId | GTMParamsWithScriptUrl;
 
-let currDataLayerName = 'dataLayer';
-
 export function GoogleTagManager(props: GTMParams) {
   const {
     gtmId,
@@ -37,8 +35,6 @@ export function GoogleTagManager(props: GTMParams) {
     dataLayer,
     nonce,
   } = props;
-
-  currDataLayerName = dataLayerName;
 
   const scriptUrl = new URL(
     gtmScriptUrl || 'https://www.googletagmanager.com/gtm.js',
