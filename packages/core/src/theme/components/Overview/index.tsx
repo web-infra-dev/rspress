@@ -109,8 +109,7 @@ export function Overview(props: {
   const { pages } = siteData;
   const overviewModules = pages.filter(page => subFilter(page.routePath));
   let overviewSidebarGroups = useSidebar() as (
-    | NormalizedSidebarGroup
-    | SidebarItem
+    NormalizedSidebarGroup | SidebarItem
   )[];
 
   if (overviewSidebarGroups[0]?.link !== routePath) {

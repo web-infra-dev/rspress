@@ -99,7 +99,7 @@ export function useLinkNavigate(
             return;
           }
         }
-        navigate(removeBaseHref, { replace: false });
+        await navigate(removeBaseHref, { replace: false });
       };
 
       if (startTransition) {

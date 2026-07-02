@@ -2,7 +2,7 @@
 
 import { SourceCode, PackageManagerTabs, Tabs, Tab } from '@rspress/core/theme';
 
-Used to preview components in the code block of md(x) files, suitable for writing component library documentation.
+Preview components from code blocks in MDX files. This is useful for component library documentation.
 
 ## Installation
 
@@ -12,7 +12,7 @@ Used to preview components in the code block of md(x) files, suitable for writin
 
 ### 1. Install the plugin
 
-First, write the following config in the config file:
+First, add the following configuration:
 
 ```ts title="rspress.config.ts" twoslash
 import { defineConfig } from '@rspress/core';
@@ -25,7 +25,7 @@ export default defineConfig({
 
 ### 2. Use in mdx files
 
-Use the ` ```tsx preview ` syntax in mdx files:
+Use the ` ```tsx preview ` syntax in MDX files:
 
 ````mdx title="example.mdx"
 ```tsx preview
@@ -47,7 +47,7 @@ export default App;
 ```
 ````
 
-The rendering result is as follows:
+It renders as follows:
 
 ```tsx preview
 import { useState } from 'react';
@@ -70,13 +70,13 @@ export default App;
 :::tip
 
 1. Currently only works in `.mdx` files.
-2. You need to export the component as default, and Rspress will automatically render this component.
+2. Export the component as the default export, and Rspress will render it automatically.
 
 :::
 
 ### 3. Write component code in other files (optional)
 
-In addition to writing component code in the code block of the mdx file, you can also use it with [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) to write the example code in other files.
+Instead of writing component code directly in an MDX code block, you can use it with [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) and keep example code in separate files.
 
 ````mdx title="example.mdx"
 ```tsx file="./_demo.tsx" preview
@@ -88,7 +88,7 @@ In addition to writing component code in the code block of the mdx file, you can
 
 ```
 
-The rendering result is as follows:
+It renders as follows:
 
 ```tsx file="./_demo.tsx" preview
 
@@ -102,11 +102,11 @@ This plugin supports multiple preview modes. You can switch between them by adju
 
 :::tip
 
-iframe preview mode has a separate compilation and runtime environment.
+Iframe preview mode has separate compilation and runtime environments.
 
-1. Separate compilation environment, the example code in the code block will be compiled as an entry by a separate Rsbuild instance, allowing injection of sass or less variables, etc.
+1. Separate compilation environment: example code in the code block is compiled as an entry by a separate Rsbuild instance, allowing Sass/Less variables and other setup to be injected.
 
-2. Separate runtime environment, effectively avoiding style conflicts with the documentation site, and can load the component library's own `base.css`.
+2. Separate runtime environment: style conflicts with the documentation site are avoided, and the component library can load its own `base.css`.
 
 :::
 

@@ -18,7 +18,7 @@
     "@rspress/plugin-preview": "workspace:*",
     "@rspress/plugin-sitemap": "workspace:*",
     "@rspress/plugin-twoslash": "workspace:*",
-    "@rstack-dev/doc-ui": "^1.14.4",
+    "@rstack-dev/doc-ui": "^1.14.5",
     "@shikijs/transformers": "^4.2.0",
     "@types/react": "^19.2.17",
     "react": "^19.2.7",
@@ -29,7 +29,7 @@
     "rspress-plugin-font-open-sans": "^1.0.4",
     "rspress-plugin-og": "npm:@soonit/rspress-plugin-og@0.1.2",
     "tm-themes": "1.12.2",
-    "twoslash": "^0.3.8",
+    "twoslash": "^0.3.9",
     "typescript": "^6.0.3"
   }
 }

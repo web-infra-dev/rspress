@@ -2,7 +2,7 @@
 description: Complete migration guide from Rspress 1.x to V2, covering package name changes, import paths, custom themes, Shiki code highlighting, and more.
 ---
 
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 # Migrating from Rspress 1.x
 
@@ -87,7 +87,7 @@ If you developed an Rspress plugin, change the plugin's peerDependencies from `r
 | `rspress/theme`              | Use `@rspress/core/theme` in docs directory           |
 | `@rspress/theme-default`     | Use `@rspress/core/theme-original` in theme directory |
 
-It's recommended to use a global find-and-replace to update import paths.
+We recommend using a global find-and-replace to update import paths.
 
 Example:
 
@@ -107,7 +107,7 @@ import type { RspressPlugin } from '@rspress/core';
 
 ### Removed standalone packages
 
-The following packages are now built into `@rspress/core`. If upgrading from 1.x, please refer to the import path changes table above to update your import paths:
+The following packages are now built into `@rspress/core`. If you are upgrading from 1.x, use the import path changes table above to update your import paths:
 
 - `rspress` - Renamed to `@rspress/core`
 - `@rspress/runtime` - Runtime is built-in

@@ -24,7 +24,7 @@ test.describe('github alert syntax in mdx-js', async () => {
     });
 
     const topLevelCallouts = page.locator('.rspress-doc > .rp-callout');
-    await expect(topLevelCallouts).toHaveCount(7);
+    await expect(topLevelCallouts).toHaveCount(9);
 
     const listCallouts = page.locator(
       '.rspress-doc > ol li > .rp-callout, .rspress-doc > ul li > .rp-callout',
@@ -33,6 +33,12 @@ test.describe('github alert syntax in mdx-js', async () => {
 
     const stepsCallouts = page.locator('.rp-steps .rp-callout');
     await expect(stepsCallouts).toHaveCount(2);
+
+    const multiLineCallout = topLevelCallouts.nth(8);
+    const multiLineText = await multiLineCallout.innerText();
+    expect(multiLineText).toContain('Multi-line line 1');
+    expect(multiLineText).toContain('Multi-line line 2');
+    expect(multiLineText).toContain('Multi-line line 3');
 
     const allCallouts = [topLevelCallouts, listCallouts, stepsCallouts];
     const containerTypes: string[] = [];
@@ -53,9 +59,11 @@ test.describe('github alert syntax in mdx-js', async () => {
       'note',
       'warning',
       'caution',
+      'important',
       'danger',
       'info',
       'details',
+      'note',
       'info',
       'warning',
       'info',

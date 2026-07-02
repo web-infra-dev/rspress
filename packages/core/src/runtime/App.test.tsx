@@ -24,7 +24,7 @@ rs.mock('@rspress/core/runtime', () => ({
   }),
 }));
 
-rs.mock('@theme', () => ({
+rs.mock('@rspress/core/theme', () => ({
   Layout: () => 'Layout content',
   Root: ({ children }: { children: ReactNode }) => children,
 }));

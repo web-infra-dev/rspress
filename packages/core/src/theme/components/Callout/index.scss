@@ -18,6 +18,11 @@
   --rp-container-info-bg: rgba(0, 149, 255, 0.06);
   --rp-container-info-code-bg: rgba(0, 149, 255, 0.1);
 
+  --rp-container-important-border: rgba(137, 87, 229, 0.3);
+  --rp-container-important-text: #8250df;
+  --rp-container-important-bg: rgba(137, 87, 229, 0.08);
+  --rp-container-important-code-bg: rgba(137, 87, 229, 0.1);
+
   --rp-container-warning-border: rgba(255, 197, 23, 0.4);
   --rp-container-warning-text: #887233;
   --rp-container-warning-bg: rgba(255, 197, 23, 0.1);
@@ -51,6 +56,10 @@
 
   --rp-container-info-text: #66c2ff;
   --rp-container-info-bg: rgba(0, 149, 255, 0.1);
+
+  --rp-container-important-text: #b083f0;
+  --rp-container-important-border: rgba(137, 87, 229, 0.35);
+  --rp-container-important-bg: rgba(137, 87, 229, 0.12);
 
   --rp-container-warning-text: rgb(251, 180, 81);
   --rp-container-warning-border: rgba(255, 197, 23, 0.25);
@@ -173,6 +182,29 @@
 
   a {
     color: var(--rp-container-info-text);
+  }
+}
+
+// important
+.rp-callout--important {
+  border-color: var(--rp-container-important-border);
+  background-color: var(--rp-container-important-bg);
+
+  .rp-callout__title {
+    color: var(--rp-container-important-text);
+    &::before {
+      background-color: var(--rp-container-important-text);
+    }
+  }
+
+  // inline code
+  :not(pre) > code {
+    color: var(--rp-container-important-text);
+    background-color: var(--rp-container-important-code-bg);
+  }
+
+  a {
+    color: var(--rp-container-important-text);
   }
 }
 

@@ -1,16 +1,16 @@
 # Introduction
 
-The plugin system is a crucial part of Rspress, which allows you to easily extend the abilities of Rspress during the process of building a site. So, what ability can you extend with plugins? Let's take a look at the overall architecture of Rspress first.
+The plugin system is a core part of Rspress. It lets you extend Rspress during the site build process. First, let's look at the overall Rspress architecture.
 
 The overall architecture of Rspress is shown in the figure below:
 
 ![Rspress Architecture](https://assets.rspack.rs/rspress/assets/rspress-architecture.png)
 
-Rspress is divided into two parts: **Node Side** and **Browser Runtime**. Through the plugin system, you can easily extend the abilities of these two parts. Specifically, you can extend the ability to:
+Rspress has two main parts: **Node Side** and **Browser Runtime**. The plugin system lets you extend both parts. Specifically, plugins can:
 
-- [**Markdown/MDX compilation**](/plugin/system/plugin-api#markdown)。You can add [`remark`](https://github.com/remarkjs/remark)/[`rehype`](https://github.com/rehypejs/rehype) plugins to extend the compilation ability of Markdown/MDX.
-- [**Add custom page**](/plugin/system/plugin-api#addpages). On the basis of Rspress's conventional routing, you can also add new routes through plugins, such as adding a `/blog` route to display a list of blogs, and the content is defined by yourself.
-- [**Custom build tool behavior**](/plugin/system/plugin-api#builderconfig).In Rspress plugin, you can customize the config of the underlying build tool [Rsbuild](https://rsbuild.rs), and you can also add some Rspack or Rsbuild plugins.
-- [**Extend page metadata**](/plugin/system/plugin-api#extendpagedata). For each page, some metadata will be calculated inside Rspress, such as `title`, `description`, etc. You can extend the calculation logic of these metadata through plugins, and pass [usePageData](/ui/hooks/use-page-data) hook access.
-- Insert some [**custom logic**](/plugin/system/plugin-api#beforebuildafterbuild) before and after the build process. Such as closing some event listeners after the build process ends.
-- [**Add global components**](/plugin/system/plugin-api#globaluicomponents). Rspress internally uses React for rendering. You can flexibly extend the runtime page by defining global React components, such as `adding a global BackToTop (return to top) component`, `adding a global side effect logic`.
+- Extend [**Markdown/MDX compilation**](/plugin/system/plugin-api#markdown) by adding [`remark`](https://github.com/remarkjs/remark) or [`rehype`](https://github.com/rehypejs/rehype) plugins.
+- [**Add custom pages**](/plugin/system/plugin-api#addpages) on top of Rspress's conventional routing, such as a `/blog` route that renders a custom blog list.
+- [**Customize build tool behavior**](/plugin/system/plugin-api#builderconfig) by modifying the underlying [Rsbuild](https://rsbuild.rs) config or adding Rspack/Rsbuild plugins.
+- [**Extend page metadata**](/plugin/system/plugin-api#extendpagedata). Rspress calculates metadata such as `title` and `description` for each page. Plugins can extend that logic, and theme code can read the result with [usePageData](/ui/hooks/use-page-data).
+- Run [**custom logic**](/plugin/system/plugin-api#beforebuildafterbuild) before and after builds, such as closing event listeners after a build ends.
+- [**Add global components**](/plugin/system/plugin-api#globaluicomponents). Since Rspress renders with React, plugins can add global React components such as a BackToTop component or global side-effect component.

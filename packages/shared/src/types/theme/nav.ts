@@ -3,9 +3,7 @@
 export type Nav = NavItem[] | { [key: string]: NavItem[] };
 
 export type NavItem =
-  | NavItemWithLink
-  | NavItemWithChildren
-  | NavItemWithLinkAndChildren;
+  NavItemWithLink | NavItemWithChildren | NavItemWithLinkAndChildren;
 
 export type NavItemWithLink = {
   text: string;

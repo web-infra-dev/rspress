@@ -2,7 +2,7 @@
 
 import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
-Integration of [TypeDoc](https://github.com/TypeStrong/typedoc)'s Rspress Plugin for Automatically Generating API Documentation for TS Modules.
+Rspress plugin for integrating [TypeDoc](https://github.com/TypeStrong/typedoc) and automatically generating API documentation for TypeScript modules.
 
 ## Installation
 
@@ -63,7 +63,7 @@ export function multi(
 }
 ```
 
-When you start/build the project, the plugin will automatically generate an `api` directory in your document root directory. The directory structure is as follows:
+When you start or build the project, the plugin automatically generates an `api` directory in your docs root. The directory structure is:
 
 ```tree
 api
@@ -80,33 +80,33 @@ api
     └── foo.md
 ```
 
-This means that the plugin will internally call TypeDoc to automatically generate API documentation for your modules, including module lists, `Interface` details, function details (parameters, return values, description), etc.
+The plugin calls TypeDoc internally to generate API documentation for your modules, including module lists, interface details, and function details such as parameters, return values, and descriptions.
 
 Note that the `.md` documentation files are regenerated every time you start the project to reflect the latest module content. Therefore, we recommend adding the `.md` files in the `api` directory to `.gitignore`, for example `docs/api/**/*.md`. If you customize the output directory with the `outDir` parameter below, you should also add the corresponding `.md` files to `.gitignore`.
 
 The `_meta.json` file is only automatically generated on the first run and will not be overwritten afterwards. This means you can manually edit it to customize the sidebar structure (e.g., add dividers, adjust order, etc.) and commit it to git.
 
-We do not recommend modifying the generated `.md` documents in the `api` directory because these documents will be overwritten each time the project is started due to changes in module content.
+Do not modify the generated `.md` documents in the `api` directory, because they are overwritten each time the project starts to reflect module content changes.
 
-## Parameter description
+## Options
 
 ### entryPoints
 
 - **Type**: `string[]`
 - **Default**: `[]`
 
-Specifies the absolute path of the TS modules for which documentation should be generated.
+Specifies the absolute paths of the TypeScript modules for which documentation should be generated.
 
 ### outDir
 
 - **Type**: `string`
 - **Default**: `api`
 
-Customize the output directory for the documentation. You need to provide a relative path, such as `api/custom`.
+Customizes the documentation output directory. Provide a relative path, such as `api/custom`.
 
 ### setup
 
 - **Type**: `(app: Application) => Promise<Application> | Promise<void> | void`
 - **Default**: `() => {}`
 
-A function to setup the TypeDoc Application. You can use this to customize the TypeDoc configuration before it generates the documentation.
+A function for setting up the TypeDoc application. Use it to customize TypeDoc configuration before documentation is generated.

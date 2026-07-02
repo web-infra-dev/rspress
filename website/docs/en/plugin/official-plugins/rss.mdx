@@ -2,7 +2,7 @@
 
 import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
-Generates RSS files for specific document pages with [feed](https://github.com/jpmonette/feed).
+Generates RSS files for selected documentation pages with [feed](https://github.com/jpmonette/feed).
 
 ## Installation
 
@@ -17,7 +17,7 @@ import { pluginRss } from '@rspress/plugin-rss';
 export default defineConfig({
   plugins: [
     pluginRss({
-      // The URL of your document site
+      // The URL of your documentation site
       siteUrl: 'https://example.com',
       // ...more configurations below
     }),
@@ -37,7 +37,7 @@ This plugin only works with `rspress build` and does not generate RSS files on `
 
 ### Selecting pages to be included in RSS
 
-Use the `feed.test` option to select which pages to be included in the RSS file.
+Use the `feed.test` option to select which pages are included in the RSS file.
 
 ```ts
 pluginRss({
@@ -48,7 +48,7 @@ pluginRss({
 
 ### Requirements
 
-All documents included in the RSS must have either `date` or `published_at` in their frontmatter to ensure that the RSS updates are stable on the user side.
+All documents included in the RSS must have either `date` or `published_at` in frontmatter to keep RSS updates stable for readers.
 
 ```md
 ---
@@ -60,9 +60,9 @@ Or frontmatter `date`.
 
 ### Generating multiple RSS files
 
-Sometimes, you may need to generate multiple RSS files for, e.g., different languages or categories.
+Sometimes you may need to generate multiple RSS files, for example for different languages or categories.
 
-You can provide a list of RSS options to the `feed` option. For instance:
+Pass a list of RSS options to `feed`:
 
 ```ts
 pluginRss({
@@ -96,20 +96,20 @@ The options above will generate four RSS files: `blog.xml`, `blog-zh.xml`, `rspa
 
 You can customize the output path using the `output` and `feed.output` parameters.
 
-Please refer to the [FeedOutputOptions](#feedoutputoptions) below.
+See [FeedOutputOptions](#feedoutputoptions) below.
 
-### Linking RSS to document pages
+### Linking RSS to doc pages
 
-By default, this plugin will insert a `<link rel="alternate">` tag in the selected pages that are included in the RSS, linking to the URL of the RSS file. RSS readers can automatically detect the RSS URL.
+By default, this plugin inserts a `<link rel="alternate">` tag into selected pages included in the RSS. The tag points to the RSS file URL, so RSS readers can detect it automatically.
 
-If you want to insert this tag in pages that are not included in the RSS (such as the homepage), you can add the `link-rss` frontmatter to the document, with the value being the feed id. For example:
+To insert this tag into pages that are not included in the RSS, such as the homepage, add `link-rss` frontmatter with the feed ID as the value. For example:
 
 ```markdown
 ---
 link-rss: blog
 ---
 
-This frontmatter will insert a `<link rel="alternate">` tag in the page of this document, pointing to the RSS URL of the `blog` feed.
+This frontmatter inserts a `<link rel="alternate">` tag into this page and points it to the RSS URL of the `blog` feed.
 
 However, this page itself will not be included in that RSS.
 ```
@@ -124,20 +124,20 @@ link-rss:
 ---
 ```
 
-### Cook the RSS content
+### Customize RSS content
 
 The RSS file consists of two parts: the RSS basic information, known as the `channel` in the RSS format, and the list of articles, known as the `item` in the RSS format.
 
-Here's how you can cook each part:
+Customize each part as follows:
 
-- The `channel` can be fully modified through the `feed` parameter. Please refer to the [Other Options](#other-options) below.
-- The `item` can be fully modified through the `feed.item` parameter. Please refer to the [item](#item) section below.
+- The `channel` can be fully modified through the `feed` option. See [Other Options](#other-options) below.
+- The `item` can be fully modified through the `feed.item` option. See the [item](#item) section below.
 
 ## Options
 
 ### PluginRssOptions
 
-Options of the plugin.
+Plugin options.
 
 ```ts
 export interface PluginRssOptions {
@@ -152,9 +152,9 @@ export interface PluginRssOptions {
 - **Type**: `string`
 - **Required**
 
-The site URL of the current document site. It will be used in the RSS file.
+The site URL of the current documentation site. It is used in the RSS file.
 
-When there is a `base` configuration, `siteUrl` needs to include the `base` path. For example:
+When `base` is configured, `siteUrl` must include the `base` path. For example:
 
 ```ts
 // rspress.config.ts
@@ -177,7 +177,7 @@ export default defineConfig({
 - **Type**: `FeedChannel | FeedChannel[]`
 - **Default**: `{ id: 'blog', test: '/blog/' }`
 
-RSS configuration, multiple value array can generate multiple RSS files.
+RSS configuration. Pass an array to generate multiple RSS files.
 
 See [FeedChannel](#feedchannel) for more information.
 
@@ -186,20 +186,17 @@ See [FeedChannel](#feedchannel) for more information.
 - **Type**: `Omit<FeedOutputOptions, "filename">`
 - **Default**: `{ dir: 'rss', type: 'atom' }`
 
-Options for document output. Please refer to [FeedOutputOptions](#feedoutputoptions) below.
+Output options. See [FeedOutputOptions](#feedoutputoptions) below.
 
 ### FeedChannel
 
-Options for RSS file.
+RSS file options.
 
 ```ts
 export interface FeedChannel extends Partial<FeedOptions> {
   id: string;
   test:
-    | RegExp
-    | string
-    | (RegExp | string)[]
-    | ((item: PageIndexInfo) => boolean);
+    RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo) => boolean);
   item?: (
     item: FeedItem,
     page: PageIndexInfo,
@@ -214,17 +211,17 @@ export interface FeedChannel extends Partial<FeedOptions> {
 - **Type**: `string`
 - **Required**
 
-The ID of an RSS, unique among multiple RSS options. It is also the default file basename for the RSS file.
+The RSS feed ID, which must be unique across multiple RSS options. It is also the default file basename for the RSS file.
 
 #### `test`
 
 - **Type**: `RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo) => boolean)`
 - **Required**
 
-Used to select documents to be included in the RSS. The types are as follows:
+Selects documents to include in the RSS. Supported values:
 
-- `RegExp`: Regular expression to match the document's route.
-- `string`: Prefix-based matching to the document's route.
+- `RegExp`: Regular expression that matches the document route.
+- `string`: Prefix-based match against the document route.
 - `(item: PageIndexInfo) => boolean`: Match pages based on page data and frontmatter. This is also the recommended way to include a route prefix while excluding specific pages such as `/blog/`.
 
 :::tip
@@ -253,11 +250,11 @@ Generates structured data for each article in the RSS file.
 
 Refer to the type of structured data: <SourceCode href="https://github.com/jpmonette/feed/blob/8ca7f3e4e8e421e2a2632bb9524385e86f30744c/src/typings/index.ts#L1-L25" />
 
-The plugin has a built-in generator that utilizes the document's frontmatter and page data.
+The plugin has a built-in generator that uses document frontmatter and page data.
 
-For example, the `content` in the RSS will prioritize the `summary` from frontmatter, and then try the document content.
+For example, RSS `content` uses `summary` from frontmatter first, then falls back to document content.
 
-You can provide the `item` function to modify the generated data which will be passed as the first parameter to the function you provided.
+Provide the `item` function to modify the generated data passed as the first parameter.
 
 For example, the following configuration truncates the content of articles in the RSS:
 
@@ -273,17 +270,17 @@ const item: FeedChannel['item'] = item => ({
 - **Type**: `FeedOutputOptions`
 - **Default**: Uses the plugin's `output` option by default
 
-In addition to the plugin's `output` option, there is an additional `filename` to modify the output filename.
+Compared with the plugin-level `output` option, this option also includes `filename` for changing the output filename.
 
-Please refer to [FeedOutputOptions](#feedoutputoptions) below.
+See [FeedOutputOptions](#feedoutputoptions) below.
 
 #### Other options
 
-`FeedChannel` also inherits the `FeedOptions` from the feed package. Please refer to <SourceCode href="https://github.com/jpmonette/feed/blob/8ca7f3e4e8e421e2a2632bb9524385e86f30744c/src/typings/index.ts#L48-L67" /> for parameters that are not listed.
+`FeedChannel` also inherits `FeedOptions` from the feed package. See <SourceCode href="https://github.com/jpmonette/feed/blob/8ca7f3e4e8e421e2a2632bb9524385e86f30744c/src/typings/index.ts#L48-L67" /> for options not listed here.
 
 ### FeedOutputOptions
 
-Output options for RSS files, available at both the top level of the plugin options and the `feed` level. Using the following type:
+RSS output options. They are available both at the plugin level and the `feed` level, with the following type:
 
 ```ts
 interface FeedOutputOptions {
@@ -347,7 +344,7 @@ Output folder for RSS files, relative to `doc_build`.
 - **Type**: `"atom" | "rss" | "json"`
 - **Default**: `atom`
 
-Output format of the RSS file, `atom` by default. Details of these types:
+RSS output format. The default is `atom`:
 
 | Value  | Format                                                 | Default Extension | MIME Type              |
 | ------ | ------------------------------------------------------ | ----------------- | ---------------------- |
@@ -360,20 +357,20 @@ Output format of the RSS file, `atom` by default. Details of these types:
 - **Type**: `string`
 - **Default**: ID as the file basename; extension by RSS output format
 
-Modify the full filename of the RSS file.
+Modifies the full filename of the RSS file.
 
 #### `publicPath`
 
 - **Type**: `string`
 - **Default**: the value of `siteUrl`
 
-URL Prefix for the RSS file. An RSS URL is composed of `publicPath`, `dir`, and `filename`.
+URL prefix for the RSS file. An RSS URL is composed of `publicPath`, `dir`, and `filename`.
 
 #### `sorting`
 
 - **Type**：`sorting?: (left: FeedItem, right: FeedItem) => number;`
 
-Used for sorting the articles. By default, the newest articles go first, followed by the older ones.
+Sorts articles. By default, newest articles appear first.
 
 #### `transform`
 

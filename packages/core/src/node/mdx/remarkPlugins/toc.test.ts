@@ -22,7 +22,7 @@ describe('toc', async () => {
 
   test('basic link in heading', async () => {
     const result = await process(`
-import { Link } from '@theme';
+import { Link } from '@rspress/core/theme';
 
 # link
 

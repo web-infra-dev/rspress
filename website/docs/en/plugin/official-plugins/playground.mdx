@@ -2,10 +2,10 @@
 
 import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
-Provide a real-time editable Playground to preview components in MDX file code blocks.
+Provides a live editable playground for previewing components in MDX code blocks.
 
 :::tip
-This plugin can be used together with [@rspress/plugin-preview](./preview). Unlike plugin-preview, plugin-playground compiles code in the browser, so it has more usage limitations (e.g., it does not support importing modules from local files). It is recommended to use plugin-playground as a supplement to plugin-preview for scenarios that require real-time code editing.
+Use this plugin alongside [@rspress/plugin-preview](./preview). Unlike `plugin-preview`, `plugin-playground` compiles code in the browser, so it has more limitations. For example, it cannot import modules from local files. Use `plugin-playground` as a supplement to `plugin-preview` when live code editing is required.
 :::
 
 ## Installation
@@ -27,9 +27,9 @@ export default defineConfig({
 });
 ```
 
-### 2. Use in mdx files
+### 2. Use in MDX files
 
-Use the ` ```tsx playground ` syntax in mdx files:
+Use the ` ```tsx playground ` syntax in MDX files:
 
 ````mdx title="example.mdx"
 ```tsx playground
@@ -51,7 +51,7 @@ export default App;
 ```
 ````
 
-The rendering result is as follows:
+It renders as follows:
 
 ```tsx playground
 import { useState } from 'react';
@@ -73,9 +73,9 @@ export default App;
 
 :::tip
 
-1. Currently only works in `.mdx` files.
-2. You need to export the component as default, and Rspress will automatically render this component.
-3. If you use tsx, type checking is currently not performed.
+1. It currently works only in `.mdx` files.
+2. Export the component as default; Rspress renders it automatically.
+3. Type checking is currently not performed for TSX.
 
 :::
 
@@ -93,7 +93,7 @@ In addition to writing component code in the code block of the mdx file, you can
 
 ```
 
-The rendering result is as follows:
+It renders as follows:
 
 ```tsx file="./_playgroundDemo.jsx" playground
 

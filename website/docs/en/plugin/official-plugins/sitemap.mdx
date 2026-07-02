@@ -2,7 +2,7 @@
 
 import { SourceCode } from '@rspress/core/theme';
 
-Automatically generate [sitemap](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview) for SEO, which helps search engines crawl your site.
+Automatically generate a [sitemap](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview) for SEO so search engines can crawl your site more easily.
 
 ## Installation
 
@@ -31,17 +31,11 @@ export default defineConfig({
 
 ## Configuration
 
-This plugin accepts an object parameter with the following type:
+This plugin accepts an options object with the following type:
 
 ```ts
 type ChangeFreq =
-  | 'always'
-  | 'hourly'
-  | 'daily'
-  | 'weekly'
-  | 'monthly'
-  | 'yearly'
-  | 'never';
+  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
 
 type Priority =
   | '0.0'
@@ -83,7 +77,7 @@ export interface PluginSitemapOptions {
 
 The site URL for deployment access, for example `https://example.com`.
 
-When there is a `base` configuration, `siteUrl` needs to include the `base` path. For example:
+When `base` is configured, `siteUrl` must include the `base` path. For example:
 
 ```ts
 // rspress.config.ts
@@ -120,7 +114,7 @@ interface CustomMaps {
 
 - **Default**: `{}`
 
-Used to set custom sitemap values for certain important pages individually.
+Sets custom sitemap values for specific important pages.
 
 ### defaultChangeFreq
 

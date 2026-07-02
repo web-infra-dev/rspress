@@ -215,8 +215,7 @@ const shikiOptions = {
 ```ts
 export type RemarkLinkOptions = {
   checkDeadLinks?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
   checkAnchors?: boolean | { excludes: string[] | ((url: string) => boolean) };
   autoPrefix?: boolean;
 };
@@ -292,8 +291,7 @@ export default defineConfig({
 ```ts
 export type RemarkImageOptions = {
   checkDeadImages?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
 };
 ```
 

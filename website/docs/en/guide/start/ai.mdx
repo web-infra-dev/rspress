@@ -1,8 +1,8 @@
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 # AI
 
-To help AI better understand Rspress's features, configuration, and best practices so it can provide more accurate assistance during day-to-day development and troubleshooting, Rspress provides the following capabilities:
+Rspress provides the following capabilities to help AI understand its features, configuration, and best practices, so it can provide more accurate assistance during day-to-day development and troubleshooting:
 
 - [Agent Skills](#agent-skills)
 - [llms.txt](#llmstxt)
@@ -11,7 +11,7 @@ To help AI better understand Rspress's features, configuration, and best practic
 
 ## Agent Skills
 
-Agent Skills are domain-specific knowledge packs that can be installed into Agents, enabling them to give more accurate and professional suggestions or perform actions in specific scenarios.
+Agent Skills are domain-specific knowledge packs that can be installed into coding agents, enabling more accurate, domain-specific suggestions and actions in supported scenarios.
 
 In the [rstackjs/agent-skills](https://github.com/rstackjs/agent-skills) repository, there are many skills for the Rstack ecosystem. The skills related to Rspress include:
 
@@ -28,7 +28,7 @@ In Coding Agents that support skills, you can use the [skills](https://www.npmjs
   dlx
 />
 
-After installation, simply use natural language prompts to trigger the skill, for example:
+After installation, use natural language prompts to trigger the skill. For example:
 
 ```
 Help me update the Rspress documentation project in this monorepo for the current feature branch
@@ -55,7 +55,7 @@ You can choose the file that best fits your use case:
 - `llms.txt` is smaller and consumes fewer tokens, making it suitable for AI to fetch specific pages on demand.
 - `llms-full.txt` contains the complete documentation content, so AI doesn't need to follow individual links — ideal when you need AI to have a comprehensive understanding of Rspress, though it consumes more tokens and is best used with AI tools that support large context windows.
 
-Furthermore, Rspress has built-in [SSG-MD](/guide/basic/ssg-md) capability, which can generate `llms.txt` compliant files for your own documentation sites. Simply enable `llms: true` in the config to use it.
+Rspress also has built-in [SSG-MD](/guide/basic/ssg-md) support, which can generate `llms.txt`-compliant files for your own documentation sites. Enable `llms: true` in the config to use it.
 
 ## Markdown docs
 
@@ -91,7 +91,7 @@ You are an expert in JavaScript, Rspress, and documentation site development. Yo
 - Rspack: https://rspack.rs/llms.txt
 ```
 
-You can customize it for your project, adding more details about the project structure, overall architecture, and other relevant information so Agents can better understand your project.
+You can customize it for your project by adding details about the project structure, overall architecture, and other relevant information so agents can better understand your project.
 
 ::: tip
 

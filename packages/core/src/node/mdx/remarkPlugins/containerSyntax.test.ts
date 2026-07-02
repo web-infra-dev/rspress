@@ -202,6 +202,53 @@ This is a details block.
     expect(result).toMatchSnapshot();
   });
 
+  test('github alerts ~ important', async () => {
+    const result = await process(`> [!IMPORTANT]
+> Key information users need to know to achieve their goal.
+`);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  test('important container via ::: syntax', async () => {
+    const result = await process(`:::important
+This is an important block.
+:::`);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  test('github alerts ~ multi-line plain content', async () => {
+    const result = await process(`> [!NOTE]
+> Line 1
+> Line 2
+> Line 3
+`);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  test('github alerts ~ multi-line content with inline emphasis', async () => {
+    const result = await process(`> [!NOTE]
+> Line 1
+> *Line* 2
+> Line 3
+`);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  test('github alerts ~ marker followed by content on same paragraph then more blocks', async () => {
+    const result = await process(`> [!TIP]
+> First paragraph line 1
+> First paragraph line 2
+>
+> Second paragraph
+`);
+
+    expect(result).toMatchSnapshot();
+  });
+
   test('nested in ordered list', async () => {
     const result = await process(`
 1. Title1
@@ -341,7 +388,7 @@ Line 2 with [link](http://example.com).
   // :::
   // `),
   //     ).rejects.toThrow(
-  //       '[remarkContainerSyntax] Unknown container directive type "Tip". Supported types: tip, note, warning, caution, danger, info, details',
+  //       '[remarkContainerSyntax] Unknown container directive type "Tip". Supported types: tip, note, important, warning, caution, danger, info, details',
   //     );
   //   });
 

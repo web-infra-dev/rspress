@@ -1,35 +1,38 @@
 # Commands
 
-Through this chapter, you can learn about the built-in commands of Rspress and how to use them.
+This page introduces the built-in Rspress commands and their common options.
+
+For `dev`, `build`, and `preview`, the optional `[root]` argument specifies the docs root directory. If omitted, Rspress uses `root` from the config file, or `docs` in the current directory when `root` is not configured.
 
 ## rspress dev
 
-The `rspress dev` command is used to start a local development server, providing a development environment for document preview and debugging.
+The `rspress dev` command starts a local development server for previewing and debugging your docs.
 
 ```txt
-Usage: rspress dev [root] [options]
+Usage:
+  $ rspress dev [root]
 
 Options:
-   root                 specify the root directory of the project, which is `docs` in current directory by default, Optional
-   -c --config <config> specify config file path, which can be a relative path or an absolute path
-   --port <port>        specify port number
-   --host <host>        specify host
-   --base <base>        specify deployment base path and override config.base
-   -h, --help           show command help
+  --port <port>          Set the port number for the server
+  --host [host]          Set the host that the server listens to
+  --base <base>          Set the base path and override config.base
+  -v, --version          Display version number
+  -h, --help             Display this message
+  -c, --config <config>  Set the configuration file (relative or absolute path)
 ```
 
 ## rspress build
 
-The `rspress build` command is used to build documentation site for production.
+The `rspress build` command builds the documentation site for production.
 
 ```txt
-Usage: rspress build [root] [options]
+Usage:
+  $ rspress build [root]
 
 Options:
-   root                 specify the root directory of the project, which is `docs` in current directory by default, Optional
-   -c --config <config> specify config file path, which can be a relative path or an absolute path
-   --base <base>        specify deployment base path and override config.base
-   -h, --help           show command help
+  --base <base>          Set the base path and override config.base
+  -h, --help             Display this message
+  -c, --config <config>  Set the configuration file (relative or absolute path)
 ```
 
 ## rspress preview
@@ -37,15 +40,15 @@ Options:
 The `rspress preview` command is used to preview the output files of the `rspress build` command locally.
 
 ```txt
-Usage: rspress preview [root] [options]
+Usage:
+  $ rspress preview [root]
 
 Options:
-   root                 specify the root directory of the project, which is `docs` in current directory by default, Optional
-   -c --config <config> specify config file path, which can be a relative path or an absolute path
-   --port <port>        specify port number
-   --host <host>        specify host
-   --base <base>        specify deployment base path and override config.base
-   -h, --help           show command help
+  --port <port>          Set the port number for the server
+  --host [host]          Set the host that the server listens to
+  --base <base>          Set the base path and override config.base
+  -h, --help             Display this message
+  -c, --config <config>  Set the configuration file (relative or absolute path)
 ```
 
 ## rspress eject
@@ -53,10 +56,14 @@ Options:
 The `rspress eject` command copies a built-in theme component to your project so you can customize it.
 
 ```txt
-Usage: rspress eject [component]
+Usage:
+  $ rspress eject [component]
 
-Arguments:
-   component             (optional) the theme component to eject; if omitted, all available components are listed
+Options:
+  -h, --help             Display this message
+  -c, --config <config>  Set the configuration file (relative or absolute path)
 ```
+
+The optional `[component]` argument is the theme component to eject. If omitted, Rspress lists all ejectable components.
 
 After ejection, the component files are placed in `theme/components/<ComponentName>`. Re-export the component in `theme/index.tsx` to use your customized version.

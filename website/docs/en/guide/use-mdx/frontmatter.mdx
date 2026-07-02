@@ -4,23 +4,23 @@ description: Define page metadata using YAML frontmatter including title, descri
 
 # Frontmatter
 
-You can add front matter at the beginning of your Markdown file. It is a [YAML](https://yaml.org/) block wrapped by the three dashes `---` and is used to define metadata.
+You can add frontmatter at the beginning of a Markdown file. It is a [YAML](https://yaml.org/) block wrapped with three dashes `---` and used to define metadata.
 
-For example, use [title](/api/config/config-frontmatter#title) to specify the title of the page. By default, the page's h1 heading will be used as the title of the HTML document. If you want to use a different title, you can use front matter to specify the title of the page:
+For example, use [title](/api/config/config-frontmatter#title) to specify the page title. By default, Rspress uses the page's H1 heading as the HTML document title. To use a different title, set it in frontmatter:
 
 ```mdx
 ---
-title: My Home Page
+title: My Homepage
 ---
 
-This is my **home page content**.
+This is my **homepage content**.
 ```
 
 You can also use [description](/api/config/config-frontmatter#description) to specify a custom page description. By default, Rspress extracts the first contentful paragraph below the `h1` heading as the description (see [How description is determined](/guide/advanced/custom-head#how-description-is-determined)). If the extracted result does not meet your needs, you can override it:
 
 ```mdx
 ---
-description: A brief introduction to my home page for SEO and social sharing.
+description: A brief introduction to my homepage for SEO and social sharing.
 ---
 ```
 
@@ -42,5 +42,5 @@ head:
 ```
 
 :::tip
-See [Front matter config](/api/config/config-frontmatter) for available front matter configurations, and see [useFrontmatter](/ui/hooks/use-frontmatter) for how to access front matter in code.
+See [Frontmatter config](/api/config/config-frontmatter) for available frontmatter options, and [useFrontmatter](/ui/hooks/use-frontmatter) for accessing frontmatter in code.
 :::

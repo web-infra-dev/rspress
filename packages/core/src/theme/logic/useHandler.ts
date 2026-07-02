@@ -7,8 +7,6 @@ type AnyFunction = (...args: any[]) => any;
 export const useHandler = <T extends AnyFunction>(handler: T) => {
   const handlerRef = useRef<T>(handler);
   handlerRef.current = handler;
-  return useRef(
-    ((...args: Parameters<T>): ReturnType<T> =>
-      handlerRef.current(...args)) as T,
-  ).current;
+  return useRef(((...args: Parameters<T>): ReturnType<T> =>
+    handlerRef.current(...args)) as T).current;
 };
