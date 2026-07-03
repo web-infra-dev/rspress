@@ -6,8 +6,12 @@ import React, { useEffect, useRef } from 'react';
 import type { ScriptHTMLAttributes } from 'react';
 import { requestIdleCallback, setAttributesFromProps } from './utils';
 
-const ScriptCache = new Map<string, Promise<void>>();
+// Cache to prevent duplicate loads of the same network scripts
+const ScriptCache = new Map<string, Promise<Event>>();
 const LoadCache = new Set<string>();
+
+// Deduplication tracker for React 18 stylesheets
+const insertedStylesheets = new Set<string>();
 
 export interface ScriptProps extends ScriptHTMLAttributes<HTMLScriptElement> {
   strategy?: 'afterInteractive' | 'lazyOnload' | 'beforeInteractive';
@@ -23,8 +27,10 @@ const safePreinit = (
   href: string,
   options: { as: 'style' | 'script'; [key: string]: any },
 ) => {
-  if (typeof (ReactDOM as any).preinit === 'function') {
-    (ReactDOM as any).preinit(href, options);
+  const preinitFn =
+    (ReactDOM as any).preinit || (ReactDOM as any).experimental_preinit;
+  if (typeof preinitFn === 'function') {
+    preinitFn(href, options);
   }
 };
 
@@ -32,29 +38,43 @@ const safePreload = (
   href: string,
   options: { as: 'style' | 'script'; [key: string]: any },
 ) => {
-  if (typeof (ReactDOM as any).preload === 'function') {
-    (ReactDOM as any).preload(href, options);
+  const preloadFn =
+    (ReactDOM as any).preload || (ReactDOM as any).experimental_preload;
+  if (typeof preloadFn === 'function') {
+    preloadFn(href, options);
   }
 };
 
 const insertStylesheets = (stylesheets: string[]) => {
-  // Try using ReactDOM.preinit if available (React 19)
-  if (typeof (ReactDOM as any).preinit === 'function') {
+  // Use ReactDOM.preinit if available (React 19)
+  const preinitFn =
+    (ReactDOM as any).preinit || (ReactDOM as any).experimental_preinit;
+  if (typeof preinitFn === 'function') {
     stylesheets.forEach((stylesheet: string) => {
       safePreinit(stylesheet, { as: 'style' });
     });
     return;
   }
 
-  // Fall back to standard DOM manipulation on React 18 stable client-side
+  // Fall back to standard DOM manipulation on React 18 client-side
   if (typeof window !== 'undefined') {
     const head = document.head;
     stylesheets.forEach((stylesheet: string) => {
+      if (insertedStylesheets.has(stylesheet)) return;
+
+      // Prevent appending duplicates to document head
+      if (head.querySelector(`link[href="${stylesheet}"]`)) {
+        insertedStylesheets.add(stylesheet);
+        return;
+      }
+
       const link = document.createElement('link');
       link.type = 'text/css';
       link.rel = 'stylesheet';
       link.href = stylesheet;
       head.appendChild(link);
+
+      insertedStylesheets.add(stylesheet);
     });
   }
 };
@@ -63,35 +83,23 @@ const loadScript = (props: ScriptProps): void => {
   const {
     src,
     id,
-    onLoad = () => {},
+    onLoad,
     onReady = null,
     dangerouslySetInnerHTML,
     children = '',
     strategy = 'afterInteractive',
     onError,
     stylesheets,
+    ...restProps
   } = props;
 
   const cacheKey = id || src;
 
-  // Script has already loaded
+  // Exit if the script has already finished loading
   if (cacheKey && LoadCache.has(cacheKey)) {
     return;
   }
 
-  // Contents of this script are already loading/loaded
-  if (src && ScriptCache.has(src)) {
-    if (cacheKey) {
-      LoadCache.add(cacheKey);
-    }
-    const cachedPromise = ScriptCache.get(src);
-    if (cachedPromise) {
-      cachedPromise.then(onLoad, onError);
-    }
-    return;
-  }
-
-  /** Execute after the script first loaded */
   const afterLoad = () => {
     if (onReady) {
       onReady();
@@ -101,20 +109,43 @@ const loadScript = (props: ScriptProps): void => {
     }
   };
 
+  // If this script is already in the process of loading, chain callbacks
+  if (src && ScriptCache.has(src)) {
+    if (cacheKey) {
+      LoadCache.add(cacheKey);
+    }
+    const cachedPromise = ScriptCache.get(src);
+    if (cachedPromise) {
+      cachedPromise.then(e => {
+        if (onLoad) {
+          onLoad(e);
+        }
+        afterLoad();
+      }, onError);
+    }
+    return;
+  }
+
   const el = document.createElement('script');
 
-  const loadPromise = new Promise<void>((resolve, reject) => {
+  const loadPromise = new Promise<Event>((resolve, reject) => {
     el.addEventListener('load', function (e) {
-      resolve();
+      resolve(e);
       if (onLoad) {
         onLoad.call(this, e);
       }
       afterLoad();
     });
     el.addEventListener('error', function (e) {
+      // Remove from cache on load failure so subsequent attempts can retry
+      if (src) {
+        ScriptCache.delete(src);
+      }
       reject(e);
     });
-  }).catch(function (e) {
+  });
+
+  loadPromise.catch(e => {
     if (onError) {
       onError(e);
     }
@@ -136,7 +167,8 @@ const loadScript = (props: ScriptProps): void => {
     ScriptCache.set(src, loadPromise);
   }
 
-  setAttributesFromProps(el, props);
+  // Prevent invalid HTML attribute pollution by only passing standard props
+  setAttributesFromProps(el, restProps);
 
   el.setAttribute('data-rspress-script', strategy);
 
@@ -193,7 +225,7 @@ export function Script(props: ScriptProps): React.JSX.Element | null {
   const {
     id,
     src = '',
-    onLoad = () => {},
+    onLoad,
     onReady = null,
     strategy = 'afterInteractive',
     onError,
@@ -204,24 +236,27 @@ export function Script(props: ScriptProps): React.JSX.Element | null {
     ...restProps
   } = props;
 
-  const hasOnReadyEffectCalled = useRef(false);
+  const cacheKey = id || src;
+  const lastLoadedSrcOrId = useRef<string | null>(null);
 
-  // Run onReady if script has loaded before but component is re-mounted
+  // Run onReady if script has loaded before, or if the script is updated dynamically
   useEffect(() => {
-    const cacheKey = id || src;
-    if (!hasOnReadyEffectCalled.current) {
+    if (lastLoadedSrcOrId.current !== cacheKey) {
       if (onReady && cacheKey && LoadCache.has(cacheKey)) {
         onReady();
       }
-      hasOnReadyEffectCalled.current = true;
+      lastLoadedSrcOrId.current = cacheKey;
     }
-  }, [onReady, id, src]);
+  }, [onReady, cacheKey]);
 
-  const hasLoadScriptEffectCalled = useRef(false);
+  const lastInitializedKey = useRef<string | null>(null);
+  const inlineContent =
+    dangerouslySetInnerHTML?.__html ||
+    (typeof children === 'string' ? children : '');
 
   // Load scripts post-hydration or on-mount for browser strategies
   useEffect(() => {
-    if (!hasLoadScriptEffectCalled.current) {
+    if (lastInitializedKey.current !== cacheKey) {
       addBeforeInteractiveToCache();
 
       if (strategy === 'afterInteractive') {
@@ -229,12 +264,12 @@ export function Script(props: ScriptProps): React.JSX.Element | null {
       } else if (strategy === 'lazyOnload') {
         loadLazyScript(props);
       } else if (strategy === 'beforeInteractive') {
-        // Client-side fallback check in case the script didn't execute during the static SSR render
+        // Fallback execution check
         loadScript(props);
       }
-      hasLoadScriptEffectCalled.current = true;
+      lastInitializedKey.current = cacheKey;
     }
-  }, [props, strategy]);
+  }, [cacheKey, strategy, inlineContent]);
 
   // Optimize stylesheet resource preloading dynamically on React 19
   if (stylesheets) {
@@ -245,7 +280,6 @@ export function Script(props: ScriptProps): React.JSX.Element | null {
 
   // Server-Side Rendering (SSG) build phase
   if (typeof window === 'undefined') {
-    // Optimize preloading using React 19 APIs if available
     if (
       src &&
       (strategy === 'beforeInteractive' || strategy === 'afterInteractive')
@@ -263,10 +297,8 @@ export function Script(props: ScriptProps): React.JSX.Element | null {
       );
     }
 
-    // Render standard native script tags during build-time (SSR) for beforeInteractive
     if (strategy === 'beforeInteractive') {
       if (!src) {
-        // Inline script handling
         const innerHTML = dangerouslySetInnerHTML
           ? (dangerouslySetInnerHTML.__html as string)
           : typeof children === 'string'
@@ -284,7 +316,6 @@ export function Script(props: ScriptProps): React.JSX.Element | null {
           />
         );
       } else {
-        // External script handling
         return (
           <script
             src={src}
