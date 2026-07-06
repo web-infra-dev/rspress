@@ -46,7 +46,7 @@
     "@rstest/core": "^0.10.5",
     "@types/cross-spawn": "^6.0.6",
     "@types/node": "^22.8.1",
-    "@typescript/native-preview": "7.0.0-dev.20260628.1",
+    "@typescript/native-preview": "7.0.0-dev.20260704.1",
     "bumpp": "^11.1.0",
     "check-dependency-version-consistency": "^5.0.1",
     "cross-env": "^10.1.0",
@@ -59,17 +59,17 @@
     "nx": "21.6.11",
     "path-serializer": "0.6.0",
     "playwright": "1.61.1",
-    "prettier": "3.9.1",
+    "prettier": "3.9.4",
     "prettier-plugin-packagejson": "^3.0.2",
     "simple-git-hooks": "^2.13.1",
     "skills-package-manager": "0.11.0",
     "tree-kill": "^1.2.2",
     "zx": "^8.8.5"
   },
-  "packageManager": "pnpm@11.5.1",
+  "packageManager": "pnpm@11.10.0",
   "engines": {
     "node": "^20.19.0 || >=22.12.0",
-    "pnpm": ">=11.5.1"
+    "pnpm": ">=11.10.0"
   },
   "publishConfig": {
     "access": "public",
