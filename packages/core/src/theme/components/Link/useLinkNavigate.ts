@@ -77,7 +77,7 @@ export function useLinkNavigate(
   const { pathname: currPagePathname } = useLocation();
   const navigate = useNavigateInner();
   const { site } = useSite();
-  const concurrentRoute = site?.route?.concurrentRoute ?? true;
+  const concurrentRoute = site?.route?.concurrentRoute;
 
   return useCallback(
     async (href: string) => {
