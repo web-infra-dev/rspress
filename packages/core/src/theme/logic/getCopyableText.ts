@@ -98,6 +98,14 @@ function toMarkdown(node: Node, state: MarkdownState) {
   }
 
   const element = node as HTMLElement;
+
+  // Skip markdown rendering for code blocks inside list items.
+  // Preserving list markers in code content breaks UX (users expect just the code).
+  // See: https://github.com/web-infra-dev/rspress/issues/...
+  if (element.closest('pre') || element.closest('code')) {
+    return '';
+  }
+
   const listItem = element.closest('li');
 
   if (listItem && !state.seenNodes.has(listItem)) {

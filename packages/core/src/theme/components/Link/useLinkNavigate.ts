@@ -87,8 +87,10 @@ export function useLinkNavigate(
         return;
       }
 
+      const isTransitionable = !!(useTransitions && startTransition);
       const preloadChunkThenNavigate = async () => {
         const inCurrPage = isActive(removeBaseHref, currPagePathname);
+
         if (!import.meta.env.SSR && !inCurrPage) {
           const matchedRoute = pathnameToRouteService(removeBaseHref);
           if (matchedRoute) {
@@ -104,10 +106,16 @@ export function useLinkNavigate(
             return;
           }
         }
-        await navigate(removeBaseHref, { replace: false });
+        if (isTransitionable) {
+          startTransition(async () => {
+            await navigate(removeBaseHref, { replace: false });
+          });
+        } else {
+          await navigate(removeBaseHref, { replace: false });
+        }
       };
 
-      if (startTransition && useTransitions) {
+      if (isTransitionable) {
         startTransition(preloadChunkThenNavigate);
       } else {
         preloadChunkThenNavigate();
