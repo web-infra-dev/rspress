@@ -18,7 +18,10 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
     title: userConfig?.title || '',
     description: userConfig?.description || '',
     icon: getIconUrlPath(userConfig?.icon) || '',
-    route: userConfig?.route || {},
+    route: {
+      useTransitions: true,
+      ...userConfig?.route,
+    },
     themeConfig: await normalizeThemeConfig(userConfig),
     lang: userConfig?.lang || '',
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],

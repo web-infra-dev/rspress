@@ -503,6 +503,12 @@ export interface RouteOptions {
    * @default false
    */
   cleanUrls?: boolean;
+  /**
+   * Enable concurrent, optimized routing for internal links rendered by
+   * Rspress' default Link component.
+   * @default true
+   */
+  useTransitions?: boolean;
 }
 
 export interface SearchHooks {
