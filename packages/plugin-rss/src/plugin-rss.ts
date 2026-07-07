@@ -59,12 +59,34 @@ class FeedsSet {
   }
 }
 
+function ensureTrailingSlash(url: string) {
+  return url.endsWith('/') ? url : `${url}/`;
+}
+
+function normalizeSiteUrl(siteUrl: string): string {
+  try {
+    const url = new URL(siteUrl);
+    url.pathname = ensureTrailingSlash(url.pathname);
+    return url.href;
+  } catch {
+    throw new Error(
+      '[plugin-rss] `siteUrl` must be a valid absolute URL with protocol, such as `https://example.com/base/`.',
+    );
+  }
+}
+
 function getSiteUrl(siteUrl: string | undefined, config: UserConfig) {
   if (siteUrl) {
-    return siteUrl;
+    return normalizeSiteUrl(siteUrl);
   }
   const base = withBase('/', config.base ?? '/');
-  return config.siteOrigin ? withSiteOrigin(base, config.siteOrigin) : base;
+  try {
+    return config.siteOrigin ? withSiteOrigin(base, config.siteOrigin) : base;
+  } catch {
+    throw new Error(
+      '[plugin-rss] `siteOrigin` in rspress.config.ts must be a valid absolute URL origin with protocol, such as `https://example.com`.',
+    );
+  }
 }
 
 interface PageRssInfo {

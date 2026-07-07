@@ -56,6 +56,10 @@ export function getFeedFileType(type: FeedOutputType) {
   }
 }
 
+function ensureTrailingSlash(url: string) {
+  return url.endsWith('/') ? url : `${url}/`;
+}
+
 export async function renderFeedContent(
   feed: Feed,
   channel: FeedChannel,
@@ -83,7 +87,9 @@ export function getOutputInfo(
   const { extension, mime, getContent } = getFeedFileType(type);
   const filename = output?.filename || `${id}.${extension}`;
   const dir = output?.dir || globalOutput?.dir || 'rss';
-  const publicPath = output?.publicPath || globalOutput?.publicPath || siteUrl;
+  const publicPath = ensureTrailingSlash(
+    output?.publicPath || globalOutput?.publicPath || siteUrl,
+  );
   const url = [publicPath, `${dir}/`, filename].reduce((u, part) =>
     u ? resolveUrl(u, part) : part,
   );
