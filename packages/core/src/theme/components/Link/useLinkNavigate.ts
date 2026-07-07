@@ -77,7 +77,7 @@ export function useLinkNavigate(
   const { pathname: currPagePathname } = useLocation();
   const navigate = useNavigateInner();
   const { site } = useSite();
-  const concurrentRoute = site?.route?.concurrentRoute;
+  const useTransitions = site?.route?.useTransitions;
 
   return useCallback(
     async (href: string) => {
@@ -107,12 +107,12 @@ export function useLinkNavigate(
         await navigate(removeBaseHref, { replace: false });
       };
 
-      if (startTransition && concurrentRoute) {
+      if (startTransition && useTransitions) {
         startTransition(preloadChunkThenNavigate);
       } else {
         preloadChunkThenNavigate();
       }
     },
-    [concurrentRoute, currPagePathname, navigate, startTransition],
+    [useTransitions, currPagePathname, navigate, startTransition],
   );
 }

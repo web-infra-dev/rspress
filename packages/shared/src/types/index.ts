@@ -507,9 +507,8 @@ export interface RouteOptions {
    * Enable concurrent, optimized routing for internal links rendered by
    * Rspress' default Link component.
    * @default true
-   * @unstable
    */
-  concurrentRoute?: boolean;
+  useTransitions?: boolean;
 }
 
 export interface SearchHooks {

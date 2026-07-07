@@ -19,7 +19,7 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
     description: userConfig?.description || '',
     icon: getIconUrlPath(userConfig?.icon) || '',
     route: {
-      concurrentRoute: true,
+      useTransitions: true,
       ...userConfig?.route,
     },
     themeConfig: await normalizeThemeConfig(userConfig),

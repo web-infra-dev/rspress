@@ -3,6 +3,7 @@ import {
   PageContext,
   removeTrailingSlash,
   ThemeContext,
+  useSite,
   withBase,
 } from '@rspress/core/runtime';
 import { useThemeState } from '@rspress/core/theme';
@@ -22,6 +23,7 @@ export function ClientApp({
 }) {
   const [data, setData] = useState(initialPageData);
   const [theme, setTheme] = useThemeState();
+  const { site } = useSite();
 
   return (
     <ThemeContext.Provider
@@ -32,7 +34,7 @@ export function ClientApp({
       >
         <BrowserRouter
           basename={removeTrailingSlash(withBase('/'))}
-          useTransitions={true}
+          useTransitions={site.route.useTransitions}
         >
           <UnheadProvider head={head}>
             <App />

@@ -663,25 +663,21 @@ export default defineConfig({
 });
 ```
 
-### route.concurrentRoute
+### route.useTransitions
 
 - **Type**: `Boolean`
 - **Default**: `true`
 
-:::warning Unstable
-This feature is currently unstable and its behavior may change in future versions.
-:::
-
 Enable concurrent, optimized routing for internal links rendered by Rspress' default `Link` component. This covers links in markdown and MDX content, as well as default theme navigation links such as sidebar items.
 
-By default, this option is enabled. Internal page transitions are wrapped inside React's `startTransition` unless you explicitly set `concurrentRoute` to `false`. This prevents the heavy rendering of new page content from blocking user input, keeping the page responsive and interactive during navigation.
+By default, this option is enabled. Internal page transitions are wrapped inside React's `startTransition` unless you explicitly set `useTransitions` to `false`. This prevents the heavy rendering of new page content from blocking user input, keeping the page responsive and interactive during navigation.
 
 ```js title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    concurrentRoute: false,
+    useTransitions: false,
   },
 });
 ```
