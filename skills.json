@@ -1,12 +1,13 @@
 {
-  "$schema": "https://unpkg.com/skills-package-manager@0.7.0/skills.schema.json",
+  "$schema": "https://unpkg.com/skills-package-manager@0.11.0/skills.schema.json",
   "installDir": ".agents/skills",
   "linkTargets": [".cursor/skills"],
   "skills": {
-    "pr-creator": "github:rstackjs/agent-skills#768809457cbb70da5e7ac86066ae84dcf43f00d9&path:/skills/pr-creator",
-    "rspress-custom-theme": "github:rstackjs/agent-skills#768809457cbb70da5e7ac86066ae84dcf43f00d9&path:/skills/rspress-custom-theme",
-    "rspress-best-practices": "github:rstackjs/agent-skills#768809457cbb70da5e7ac86066ae84dcf43f00d9&path:/skills/rspress-best-practices",
-    "rspress-description-generator": "github:rstackjs/agent-skills#768809457cbb70da5e7ac86066ae84dcf43f00d9&path:/skills/rspress-description-generator",
-    "create-draft-release-notes": "github:rstackjs/agent-skills#768809457cbb70da5e7ac86066ae84dcf43f00d9&path:/skills/create-draft-release-notes"
+    "pr-creator": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/.agents/skills/pr-creator",
+    "rspress-custom-theme": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-custom-theme",
+    "rspress-best-practices": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-best-practices",
+    "rspress-description-generator": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-description-generator",
+    "rspress-docs-generator": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-docs-generator",
+    "create-draft-release-notes": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/.agents/skills/create-draft-release-notes"
   }
 }
