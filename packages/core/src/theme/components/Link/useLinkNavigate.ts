@@ -7,6 +7,7 @@ import {
   removeBase,
   useLocation,
   useNavigate as useNavigateInner,
+  useSite,
   warmPageData,
   withBase,
 } from '@rspress/core/runtime';
@@ -67,12 +68,16 @@ export function getHref(href: string): {
  * useNavigate with preload logic
  */
 export function useLinkNavigate(
-  { startTransition }: { startTransition?: TransitionStartFunction } = {
+  {
+    startTransition = reactStartTransition,
+  }: { startTransition?: TransitionStartFunction } = {
     startTransition: reactStartTransition,
   },
 ): (href: string) => Promise<void> {
   const { pathname: currPagePathname } = useLocation();
   const navigate = useNavigateInner();
+  const { site } = useSite();
+  const concurrentRoute = site?.route?.concurrentRoute ?? true;
 
   return useCallback(
     async (href: string) => {
@@ -102,12 +107,12 @@ export function useLinkNavigate(
         await navigate(removeBaseHref, { replace: false });
       };
 
-      if (startTransition) {
+      if (startTransition && concurrentRoute) {
         startTransition(preloadChunkThenNavigate);
       } else {
         preloadChunkThenNavigate();
       }
     },
-    [currPagePathname, navigate],
+    [concurrentRoute, currPagePathname, navigate, startTransition],
   );
 }

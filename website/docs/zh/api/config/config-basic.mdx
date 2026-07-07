@@ -663,6 +663,29 @@ export default defineConfig({
 });
 ```
 
+### route.concurrentRoute
+
+- **类型**： `boolean`
+- **默认值**： `true`
+
+:::warning 不稳定
+该功能目前仍不稳定，其行为可能在未来版本中发生变化。
+:::
+
+启用针对 Rspress 默认 `Link` 组件的并发优化路由。它覆盖 Markdown 和 MDX 内容中的链接，也覆盖侧边栏项等默认主题导航链接。
+
+默认情况下，该选项开启。除非你显式将 `concurrentRoute` 设置为 `false`，否则内部页面跳转都会被包裹在 React 的 `startTransition` 中。这可以避免新页面内容的重渲染阻塞用户输入，使页面在导航过程中保持响应和可交互。
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    concurrentRoute: false,
+  },
+});
+```
+
 ## ssg
 
 - **类型**： `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`

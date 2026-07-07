@@ -504,9 +504,9 @@ export interface RouteOptions {
    */
   cleanUrls?: boolean;
   /**
-   * Enable concurrent, optimized routing for markdown links.
-   * Only applies to links located inside `.md` and `.mdx` files.
-   * @default false
+   * Enable concurrent, optimized routing for internal links rendered by
+   * Rspress' default Link component.
+   * @default true
    * @unstable
    */
   concurrentRoute?: boolean;
