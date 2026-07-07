@@ -98,7 +98,6 @@ function toMarkdown(node: Node, state: MarkdownState) {
   }
 
   const element = node as HTMLElement;
-
   const listItem = element.closest('li');
 
   if (listItem && !state.seenNodes.has(listItem)) {
