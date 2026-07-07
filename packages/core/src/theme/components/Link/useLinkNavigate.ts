@@ -107,11 +107,11 @@ export function useLinkNavigate(
           }
         }
         if (isTransitionable) {
-          startTransition(async () => {
-            await navigate(removeBaseHref, { replace: false });
+          startTransition(() => {
+            return navigate(removeBaseHref, { replace: false });
           });
         } else {
-          await navigate(removeBaseHref, { replace: false });
+          navigate(removeBaseHref, { replace: false });
         }
       };
 
