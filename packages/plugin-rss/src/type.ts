@@ -76,7 +76,10 @@ export interface FeedChannel extends PartialPartial<
    * if RegExp is given, it will match against the route path of each page
    **/
   test:
-    RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo) => boolean);
+    | RegExp
+    | string
+    | (RegExp | string)[]
+    | ((item: PageIndexInfo) => boolean);
   /**
    * a function to modify feed item
    * @param item pre-generated feed item
@@ -100,7 +103,7 @@ export interface FeedChannel extends PartialPartial<
 export interface PluginRssOptions {
   /**
    * site url of this rspress site. it will be used in feed files and feed link.
-   * @default rspress `url` config with `base`
+   * @default rspress `siteOrigin` config with `base`, or `base` when `siteOrigin` is not configured
    */
   siteUrl?: string;
   /**

@@ -286,7 +286,7 @@ export function withSiteOrigin(url: string, siteOrigin?: string): string {
   if (!siteOrigin || isExternalUrl(url)) {
     return url;
   }
-  return new URL(removeLeadingSlash(url), addTrailingSlash(siteOrigin)).href;
+  return new URL(addLeadingSlash(url), addTrailingSlash(siteOrigin)).href;
 }
 
 export function removeBase(url: string, base: string) {

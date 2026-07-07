@@ -41,6 +41,9 @@ describe('test shared utils', () => {
     expect(withSiteOrigin('/base/guide/index.md', 'https://example.com/')).toBe(
       'https://example.com/base/guide/index.md',
     );
+    expect(withSiteOrigin('/foo:bar/index.md', 'https://example.com')).toBe(
+      'https://example.com/foo:bar/index.md',
+    );
     expect(withSiteOrigin('/', 'https://example.com')).toBe(
       'https://example.com/',
     );
