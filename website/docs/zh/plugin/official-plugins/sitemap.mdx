@@ -77,7 +77,9 @@ export interface PluginSitemapOptions {
 
 部署访问的站点 URL，例如 `https://example.com`。
 
-当存在 `base` 配置时，插件级 `siteUrl` 需要包含 `base` 的路径。如果已经在 Rspress 中配置了 [`siteOrigin`](/zh/api/config/config-basic#siteorigin) 和 [`base`](/zh/api/config/config-basic#base)，可以省略插件级 `siteUrl`。完整 URL 拼接顺序是 `siteOrigin + base + routePath`：
+sitemap 的 `<loc>` 应是包含协议和域名的绝对 URL，例如 `https://example.com/base/`。当存在 `base` 配置时，插件级 `siteUrl` 需要包含 `base` 的路径。
+
+如果已经在 Rspress 中配置了 [`siteOrigin`](/zh/api/config/config-basic#siteorigin) 和 [`base`](/zh/api/config/config-basic#base)，可以省略插件级 `siteUrl`。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。如果既没有配置插件级 `siteUrl`，也没有配置 `siteOrigin`，插件会回退使用 `base`，这会保留已有的相对路径行为，但不会生成绝对 sitemap URL：
 
 ```ts
 // rspress.config.ts

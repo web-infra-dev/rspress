@@ -154,7 +154,9 @@ export interface PluginRssOptions {
 
 当前文档站点的站点 URL。将在 RSS 文件中使用。
 
-当存在 `base` 配置时，插件级 `siteUrl` 需要包含 `base` 的路径。如果已经在 Rspress 中配置了 [`siteOrigin`](/zh/api/config/config-basic#siteorigin) 和 [`base`](/zh/api/config/config-basic#base)，可以省略插件级 `siteUrl`。完整 URL 拼接顺序是 `siteOrigin + base + routePath`：
+RSS 链接会在文档页面上下文之外被消费，因此应配置包含协议和域名的绝对 URL，例如 `https://example.com/base/`。当存在 `base` 配置时，插件级 `siteUrl` 需要包含 `base` 的路径。
+
+如果已经在 Rspress 中配置了 [`siteOrigin`](/zh/api/config/config-basic#siteorigin) 和 [`base`](/zh/api/config/config-basic#base)，可以省略插件级 `siteUrl`。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。如果既没有配置插件级 `siteUrl`，也没有配置 `siteOrigin`，插件会回退使用 `base`，这会保留已有的相对路径行为，但不会生成绝对 RSS 链接：
 
 ```ts
 // rspress.config.ts

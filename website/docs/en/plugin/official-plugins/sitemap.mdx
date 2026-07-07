@@ -77,7 +77,9 @@ export interface PluginSitemapOptions {
 
 The site URL for deployment access, for example `https://example.com`.
 
-When `base` is configured, plugin-level `siteUrl` must include the `base` path. If [`siteOrigin`](/api/config/config-basic#siteorigin) and [`base`](/api/config/config-basic#base) are configured in Rspress, you can omit the plugin-level `siteUrl`. The full URL concatenation order is `siteOrigin + base + routePath`.
+Sitemap `<loc>` entries should be absolute URLs with protocol and domain, such as `https://example.com/base/`. When `base` is configured, plugin-level `siteUrl` must include the `base` path.
+
+If [`siteOrigin`](/api/config/config-basic#siteorigin) and [`base`](/api/config/config-basic#base) are configured in Rspress, you can omit the plugin-level `siteUrl`. The full URL concatenation order is `siteOrigin + base + routePath`. If neither plugin-level `siteUrl` nor `siteOrigin` is configured, the plugin falls back to `base`, which keeps existing relative path behavior but does not generate absolute sitemap URLs.
 
 ```ts
 // rspress.config.ts
