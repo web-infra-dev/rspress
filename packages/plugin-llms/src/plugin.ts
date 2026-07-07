@@ -280,11 +280,7 @@ function mergeRouteMetaWithPageData(
 
 function flatSidebar(
   sidebar: (
-    | SidebarGroup
-    | SidebarItem
-    | SidebarDivider
-    | SidebarSectionHeader
-    | string
+    SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader | string
   )[],
 ): string[] {
   if (!sidebar) {

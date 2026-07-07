@@ -76,10 +76,7 @@ export interface FeedChannel extends PartialPartial<
    * if RegExp is given, it will match against the route path of each page
    **/
   test:
-    | RegExp
-    | string
-    | (RegExp | string)[]
-    | ((item: PageIndexInfo) => boolean);
+    RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo) => boolean);
   /**
    * a function to modify feed item
    * @param item pre-generated feed item

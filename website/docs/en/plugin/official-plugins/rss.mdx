@@ -196,10 +196,7 @@ RSS file options.
 export interface FeedChannel extends Partial<FeedOptions> {
   id: string;
   test:
-    | RegExp
-    | string
-    | (RegExp | string)[]
-    | ((item: PageIndexInfo) => boolean);
+    RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo) => boolean);
   item?: (
     item: FeedItem,
     page: PageIndexInfo,
