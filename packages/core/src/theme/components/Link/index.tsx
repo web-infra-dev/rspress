@@ -41,7 +41,7 @@ nprogress.configure({ showSpinner: false });
  * Link can tell whether it's in current site or external site.
  * 1. If external, open a new page and navigate to it.
  * 2. If inCurrentPage, scroll to anchor.
- * 3. If inCurrentSite, it will navigate and scroll to anchor, preload the asyncChunk onHover the link
+ * 3. If inCurrentSite, it will navigate and scroll to anchor, prefetch route resources when hovering over the link.
  * 4. Link is styled.
  */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {

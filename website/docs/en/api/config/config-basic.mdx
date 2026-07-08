@@ -682,6 +682,31 @@ export default defineConfig({
 });
 ```
 
+### route.prefetchLink
+
+- **Type**: `Boolean`
+- **Default**: `true`
+
+By default, Rspress' `Link` component prefetches resources for the matching route when users hover over internal links, and it applies the same behavior on touch devices. This is a performance optimization. Set this option to `false` to disable it.
+
+:::tip
+
+In development, link prefetching is designed to work together with [`dev.lazyCompilation`](https://rsbuild.rs/config/dev/lazy-compilation), which Rspress enables by default. Lazy compilation improves startup speed by compiling pages only when they are visited, while link prefetching starts compiling the target route on hover to reduce the wait when the target route is opened for the first time.
+
+:::
+
+Example:
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    prefetchLink: false,
+  },
+});
+```
+
 ## ssg
 
 - **Type**: `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`

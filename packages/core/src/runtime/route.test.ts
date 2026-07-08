@@ -1,5 +1,20 @@
-import { describe, expect, it, rs } from '@rstest/core';
-import { isActive, matchPath, pathnameToRouteService } from './route';
+import { afterEach, describe, expect, it, rs } from '@rstest/core';
+import siteData from 'virtual-site-data';
+import {
+  isActive,
+  matchPath,
+  pathnameToRouteService,
+  preloadLink,
+} from './route';
+
+rs.mock('virtual-site-data', () => {
+  return {
+    default: {
+      base: '/',
+      route: {},
+    },
+  };
+});
 
 rs.mock('virtual-routes', () => {
   const element = rs.fn();
@@ -8,7 +23,7 @@ rs.mock('virtual-routes', () => {
       path: '/api/config',
       element,
       filePath: 'api/config.mdx',
-      preload: async () => {},
+      preload: rs.fn(),
       lang: '',
       version: '',
     },
@@ -16,7 +31,7 @@ rs.mock('virtual-routes', () => {
       path: '/api/config/',
       element,
       filePath: 'api/config/index.mdx',
-      preload: async () => {},
+      preload: rs.fn(),
       lang: '',
       version: '',
     },
@@ -24,12 +39,17 @@ rs.mock('virtual-routes', () => {
       path: '/',
       element,
       filePath: 'index.mdx',
-      preload: async () => {},
+      preload: rs.fn(),
       lang: '',
       version: '',
     },
   ];
   return { routes };
+});
+
+afterEach(() => {
+  (siteData.route as { prefetchLink?: boolean }).prefetchLink = undefined;
+  rs.clearAllMocks();
 });
 
 describe('matchPath', () => {
@@ -207,5 +227,24 @@ describe('pathnameToRouteService', () => {
     expect(
       pathnameToRouteService('/api/CONFIG#hash')?.path,
     ).toMatchInlineSnapshot(`"/api/config/"`);
+  });
+});
+
+describe('preloadLink', () => {
+  it('preloads matched routes by default', () => {
+    const route = pathnameToRouteService('/api/config');
+
+    preloadLink('/api/config');
+
+    expect(route?.preload).toHaveBeenCalledTimes(1);
+  });
+
+  it('skips route preload when route.prefetchLink is false', () => {
+    (siteData.route as { prefetchLink?: boolean }).prefetchLink = false;
+    const route = pathnameToRouteService('/api/config');
+
+    preloadLink('/api/config');
+
+    expect(route?.preload).not.toHaveBeenCalled();
   });
 });
