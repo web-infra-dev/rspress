@@ -47,6 +47,7 @@ export type { UserConfigAsyncFn } from './config/defineConfig';
 // config
 export { defineConfig } from './config/defineConfig';
 // cli
+export { type RunCLIOptions, runCLI } from './cli';
 export {
   build,
   dev,
