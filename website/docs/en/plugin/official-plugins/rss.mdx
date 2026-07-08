@@ -141,7 +141,7 @@ Plugin options.
 
 ```ts
 export interface PluginRssOptions {
-  siteUrl: string;
+  siteUrl?: string;
   feed?: Partial<FeedChannel> | FeedChannel[];
   output?: Omit<FeedOutputOptions, 'filename'>;
 }
@@ -150,11 +150,13 @@ export interface PluginRssOptions {
 #### `siteUrl`
 
 - **Type**: `string`
-- **Required**
+- **Default**: [`siteOrigin`](/api/config/config-basic#siteorigin) + [`base`](/api/config/config-basic#base), or `base` when `siteOrigin` is not configured
 
 The site URL of the current documentation site. It is used in the RSS file.
 
-When `base` is configured, `siteUrl` must include the `base` path. For example:
+RSS links are consumed outside the documentation page context, so configure an absolute URL with protocol and domain, such as `https://example.com/base/`. When `base` is configured, plugin-level `siteUrl` must include the `base` path.
+
+If [`siteOrigin`](/api/config/config-basic#siteorigin) and [`base`](/api/config/config-basic#base) are configured in Rspress, you can omit the plugin-level `siteUrl`. The full URL concatenation order is `siteOrigin + base + routePath`. If neither plugin-level `siteUrl` nor `siteOrigin` is configured, the plugin falls back to `base`, which keeps existing relative path behavior but does not generate absolute RSS links.
 
 ```ts
 // rspress.config.ts
@@ -163,11 +165,11 @@ import { defineConfig } from '@rspress/core';
 import { pluginRss } from '@rspress/plugin-rss';
 
 export default defineConfig({
+  siteOrigin: 'https://example.com',
   base: '/base/',
   plugins: [
-    pluginRss({
-      siteUrl: 'https://example.com/base/',
-    }),
+    // siteUrl defaults to 'https://example.com/base/'
+    pluginRss(),
   ],
 });
 ```

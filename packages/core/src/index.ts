@@ -35,6 +35,7 @@ export {
   RSPRESS_TEMP_DIR,
   removeTrailingSlash,
   withBase,
+  withSiteOrigin,
 } from '@rspress/shared';
 export { logger } from '@rspress/shared/logger';
 export {

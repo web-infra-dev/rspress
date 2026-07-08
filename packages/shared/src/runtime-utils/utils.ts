@@ -282,6 +282,13 @@ export function withBase(url: string, base: string): string {
   return `${normalizedBase}${normalizedUrl}`;
 }
 
+export function withSiteOrigin(url: string, siteOrigin?: string): string {
+  if (!siteOrigin || isExternalUrl(url)) {
+    return url;
+  }
+  return new URL(addLeadingSlash(url), addTrailingSlash(siteOrigin)).href;
+}
+
 export function removeBase(url: string, base: string) {
   const normalizedUrl = addLeadingSlash(url);
   const normalizedBase = normalizeSlash(base);

@@ -152,6 +152,10 @@ export interface UserConfig {
    */
   base?: string;
   /**
+   * Origin of the site, such as `https://example.com`.
+   */
+  siteOrigin?: string;
+  /**
    * Path to html icon file.
    * @default ''
    */
@@ -354,6 +358,7 @@ export interface PageDataLegacy {
 
 export interface SiteData {
   base: string;
+  siteOrigin: string;
   lang: string;
   route: RouteOptions;
   locales: { lang: string; label: string }[];

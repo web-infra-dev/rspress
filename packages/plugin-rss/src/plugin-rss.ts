@@ -3,7 +3,7 @@
 import NodePath from 'node:path';
 import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo, RspressPlugin, UserConfig } from '@rspress/core';
-import { getIconUrlPath } from '@rspress/core';
+import { getIconUrlPath, withBase, withSiteOrigin } from '@rspress/core';
 import { Feed } from 'feed';
 
 import { createFeed, generateFeedItem } from './createFeed';
@@ -30,7 +30,7 @@ type TransformedFeedChannel = FeedChannel & { output: ResolvedOutput };
 class FeedsSet {
   feeds: TransformedFeedChannel[] = [];
   feedsMapById: Record<string, TransformedFeedChannel> = Object.create(null);
-  set({ feed, output, siteUrl }: PluginRssOptions, config: UserConfig) {
+  set({ feed, output }: PluginRssOptions, config: UserConfig, siteUrl: string) {
     this.feeds = (
       Array.isArray(feed) ? feed : [{ ...getDefaultFeedOption(), ...feed }]
     ).map(options => ({
@@ -56,6 +56,36 @@ class FeedsSet {
       return this.feedsMapById[id] || null;
     }
     return this.feeds.slice(0);
+  }
+}
+
+function ensureTrailingSlash(url: string) {
+  return url.endsWith('/') ? url : `${url}/`;
+}
+
+function normalizeSiteUrl(siteUrl: string): string {
+  try {
+    const url = new URL(siteUrl);
+    url.pathname = ensureTrailingSlash(url.pathname);
+    return url.href;
+  } catch {
+    throw new Error(
+      '[plugin-rss] `siteUrl` must be a valid absolute URL with protocol, such as `https://example.com/base/`.',
+    );
+  }
+}
+
+function getSiteUrl(siteUrl: string | undefined, config: UserConfig) {
+  if (siteUrl) {
+    return normalizeSiteUrl(siteUrl);
+  }
+  const base = withBase('/', config.base ?? '/');
+  try {
+    return config.siteOrigin ? withSiteOrigin(base, config.siteOrigin) : base;
+  } catch {
+    throw new Error(
+      '[plugin-rss] `siteOrigin` in rspress.config.ts must be a valid absolute URL origin with protocol, such as `https://example.com`.',
+    );
   }
 }
 
@@ -85,7 +115,9 @@ async function getRssItems(
   );
 }
 
-export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
+export function pluginRss(
+  pluginRssOptions: PluginRssOptions = {},
+): RspressPlugin {
   const feedsSet = new FeedsSet();
 
   /**
@@ -93,6 +125,7 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
    * Key: routePath, Value: PageRssInfo
    */
   let _pagesForRss: null | Map<string, PageRssInfo> = null;
+  let _siteUrl = '';
 
   return {
     name: PluginName,
@@ -113,7 +146,8 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
       }
 
       _pagesForRss = new Map();
-      feedsSet.set(pluginRssOptions, config);
+      _siteUrl = getSiteUrl(pluginRssOptions.siteUrl, config);
+      feedsSet.set(pluginRssOptions, config, _siteUrl);
     },
     async extendPageData(pageData) {
       if (!_pagesForRss) return;
@@ -170,7 +204,7 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
         const items = await getRssItems(
           channels.map(id => feedsSet.get(id)!),
           page,
-          pluginRssOptions.siteUrl,
+          _siteUrl,
           htmlContent,
         );
 
@@ -195,6 +229,7 @@ export function pluginRss(pluginRssOptions: PluginRssOptions): RspressPlugin {
       }
 
       _pagesForRss = null;
+      _siteUrl = '';
     },
   };
 }
