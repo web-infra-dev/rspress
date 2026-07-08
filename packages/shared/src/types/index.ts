@@ -509,6 +509,12 @@ export interface RouteOptions {
    * @default true
    */
   useTransitions?: boolean;
+  /**
+   * Whether to enable prefetching for matching internal routes from Rspress'
+   * default Link component.
+   * @default true
+   */
+  prefetchLink?: boolean;
 }
 
 export interface SearchHooks {
