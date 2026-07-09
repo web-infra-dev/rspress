@@ -41,11 +41,9 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
   const { translations, placeholder } = locales?.[lang] ?? {};
 
   const appId = docSearchProps.appId;
-  const algoliaUrl = `https://${appId}-dsn.algolia.net`;
-
   if (appId) {
     if (typeof safePreconnect === 'function') {
-      safePreconnect(algoliaUrl, { crossOrigin: '' });
+      safePreconnect(`https://${appId}-dsn.algolia.net`, { crossOrigin: '' });
     }
   }
 
@@ -59,7 +57,7 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
     const preconnect = document.createElement('link');
     preconnect.id = appId;
     preconnect.rel = 'preconnect';
-    preconnect.href = algoliaUrl;
+    preconnect.href = `https://${appId}-dsn.algolia.net`;
     preconnect.crossOrigin = '';
     document.head.appendChild(preconnect);
     return () => {
