@@ -1,10 +1,15 @@
 import type { DocSearchProps } from '@docsearch/react';
 import { DocSearch } from '@docsearch/react';
-import { removeBase, useLang, useNavigate } from '@rspress/core/runtime';
+import {
+  removeBase,
+  useLang,
+  useNavigate,
+  useSite,
+} from '@rspress/core/runtime';
 import { Link } from '@rspress/core/theme';
 import '@docsearch/css';
 import './Search.css';
-import { useEffect } from 'react';
+import { startTransition, useEffect } from 'react';
 import * as ReactDOM from 'react-dom';
 import type { Locales } from './locales';
 
@@ -36,9 +41,9 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
   const { translations, placeholder } = locales?.[lang] ?? {};
 
   const appId = docSearchProps.appId;
-  if (appId) {
-    const algoliaUrl = `https://${appId}-dsn.algolia.net`;
+  const algoliaUrl = `https://${appId}-dsn.algolia.net`;
 
+  if (appId) {
     if (typeof safePreconnect === 'function') {
       safePreconnect(algoliaUrl, { crossOrigin: '' });
     }
@@ -51,7 +56,6 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
       return;
     }
 
-    const algoliaUrl = `https://${appId}-dsn.algolia.net`;
     const preconnect = document.createElement('link');
     preconnect.id = appId;
     preconnect.rel = 'preconnect';
@@ -63,6 +67,9 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
     };
   }, [appId]);
 
+  const { site } = useSite();
+  const useTransitions = site?.route?.useTransitions;
+
   return (
     <>
       <DocSearch
@@ -71,7 +78,13 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
         maxResultsPerGroup={20}
         navigator={{
           navigate({ itemUrl }: { itemUrl: string }) {
-            navigate(itemUrl);
+            if (useTransitions) {
+              startTransition(() => {
+                return navigate(itemUrl);
+              });
+            } else {
+              navigate(itemUrl);
+            }
           },
         }}
         transformItems={(items: any[]) => {
