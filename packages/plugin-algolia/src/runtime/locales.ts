@@ -93,4 +93,49 @@ export const RU_LOCALES: Locales = {
     },
   },
 } as const;
+
+export const TA_LOCALES: Locales = {
+  ta: {
+    placeholder: 'ஆவணங்களைத் தேடுக...',
+    translations: {
+      button: {
+        buttonText: 'தேடுக',
+        buttonAriaLabel: 'தேடுக',
+      },
+      modal: {
+        searchBox: {
+          clearButtonTitle: 'தேடலை நீக்கவும்',
+          clearButtonAriaLabel: 'தேடலை நீக்கவும்',
+          closeButtonText: 'இரத்து செய்',
+          closeButtonAriaLabel: 'இரத்து செய்',
+        },
+        startScreen: {
+          recentSearchesTitle: 'சமீபத்திய தேடல்கள்',
+          noRecentSearchesText: 'சமீபத்திய தேடல்கள் எதுவும் இல்லை',
+          saveRecentSearchButtonTitle: 'தேடல் வரலாற்றில் சேர்க்கவும்',
+          removeRecentSearchButtonTitle: 'தேடல் வரலாற்றிலிருந்து நீக்கவும்',
+          favoriteSearchesTitle: 'பிடித்தவை',
+          removeFavoriteSearchButtonTitle: 'பிடித்தவையிலிருந்து நீக்கவும்',
+        },
+        errorScreen: {
+          titleText: 'முடிவுகளைப் பெற முடியவில்லை',
+          helpText: 'உங்கள் இணைய இணைப்பைச் சரிபார்க்கவும்',
+        },
+        footer: {
+          selectText: 'தேர்ந்தெடுக்க',
+          navigateText: 'நகர்த்த',
+          closeText: 'மூட',
+          poweredByText: 'வழங்குபவர்',
+        },
+        noResultsScreen: {
+          noResultsText: 'முடிவுகள் கிடைக்கவில்லை',
+          suggestedQueryText: 'இவற்றைத் தேட முயற்சிக்கவும்',
+          reportMissingResultsText:
+            'இதற்கு முடிவுகள் கிடைத்திருக்க வேண்டும் என நினைக்கிறீர்களா?',
+          reportMissingResultsLinkText: 'எங்களுக்குத் தெரியப்படுத்துங்கள்',
+        },
+      },
+    },
+  },
+} as const;
 // cspell:enable
