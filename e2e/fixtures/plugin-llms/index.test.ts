@@ -52,17 +52,25 @@ test.describe('plugin-llms', async () => {
     expect(llmsTxt).toContain('## Guide');
     expect(llmsTxt).toContain('## Api');
     // Guide routes should be grouped under Guide section
-    expect(llmsTxt).toContain('- [Guide](/guide/index.md)');
+    expect(llmsTxt).toContain(
+      '- [Guide](https://example.com/docs/guide/index.md)',
+    );
     // Api routes should be grouped under Api section
-    expect(llmsTxt).toContain('- [Commands](/api/commands.md)');
+    expect(llmsTxt).toContain(
+      '- [Commands](https://example.com/docs/api/commands.md)',
+    );
 
     // Verify llms-full.txt has markdown content with url frontmatter
     const llmsFullTxt = await readFile(
       path.resolve(appDir, 'doc_build', 'llms-full.txt'),
       'utf-8',
     );
-    expect(llmsFullTxt).toContain('url: /guide/index.md');
-    expect(llmsFullTxt).toContain('url: /api/commands.md');
+    expect(llmsFullTxt).toContain(
+      'url: https://example.com/docs/guide/index.md',
+    );
+    expect(llmsFullTxt).toContain(
+      'url: https://example.com/docs/api/commands.md',
+    );
   });
 
   test('should order llms.txt entries according to _meta.json', async () => {

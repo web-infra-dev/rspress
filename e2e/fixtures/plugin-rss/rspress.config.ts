@@ -9,7 +9,6 @@ export default defineConfig({
   base: fixture.base,
   plugins: [
     pluginRss({
-      siteUrl: fixture.siteUrl,
       feed: [
         {
           id: 'blog',

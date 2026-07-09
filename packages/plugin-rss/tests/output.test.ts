@@ -118,4 +118,14 @@ describe('plugin-rss output transform', () => {
     expect(content).toContain('<feed:id>local</feed:id>');
     expect(content).not.toContain('<folo:id>blog-rss</folo:id>');
   });
+
+  test('should preserve base path when siteUrl has no trailing slash', () => {
+    const channel = createChannel('rss');
+    const output = getOutputInfo(channel, {
+      siteUrl: 'https://example.com/base',
+    });
+
+    expect(output.publicPath).toBe('https://example.com/base/');
+    expect(output.url).toBe('https://example.com/base/rss/blog-rss.rss');
+  });
 });

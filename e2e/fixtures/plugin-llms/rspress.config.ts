@@ -4,6 +4,8 @@ import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
+  base: '/docs/',
+  siteOrigin: 'https://example.com',
   ssg: false,
   plugins: [pluginLlms()],
   title: 'Plugin LLMS',

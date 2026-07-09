@@ -35,6 +35,7 @@ export {
   RSPRESS_TEMP_DIR,
   removeTrailingSlash,
   withBase,
+  withSiteOrigin,
 } from '@rspress/shared';
 export { logger } from '@rspress/shared/logger';
 export {
@@ -47,6 +48,7 @@ export type { UserConfigAsyncFn } from './config/defineConfig';
 // config
 export { defineConfig } from './config/defineConfig';
 // cli
+export { type RunCLIOptions, runCLI } from './cli';
 export {
   build,
   dev,

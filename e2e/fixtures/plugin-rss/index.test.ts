@@ -8,7 +8,7 @@ import {
 import fixture from './fixture.json' with { type: 'json' };
 
 const appDir = import.meta.dirname;
-const { siteUrl } = fixture;
+const feedUrl = `${fixture.base}rss/blog.xml`;
 
 test.describe('plugin rss test', async () => {
   let appPort: number;
@@ -32,9 +32,7 @@ test.describe('plugin rss test', async () => {
 
     const link = page.locator('link[rel="alternate"]', {});
 
-    await expect(link.getAttribute('href')).resolves.toBe(
-      `${siteUrl}rss/blog.xml`,
-    );
+    await expect(link.getAttribute('href')).resolves.toBe(feedUrl);
   });
 
   test('should add rss <link> to pages matched', async ({ page }) => {
@@ -42,9 +40,7 @@ test.describe('plugin rss test', async () => {
 
     const link = page.locator('link[rel="alternate"]', {});
 
-    await expect(link.getAttribute('href')).resolves.toBe(
-      `${siteUrl}rss/blog.xml`,
-    );
+    await expect(link.getAttribute('href')).resolves.toBe(feedUrl);
   });
 
   test('should change output dir if dir is given', async ({ page }) => {
@@ -82,7 +78,7 @@ test.describe('plugin rss test', async () => {
 
       await expect(
         page.locator('rss>channel>link').textContent(),
-      ).resolves.toBe(fixture.siteUrl);
+      ).resolves.toBe(fixture.base);
 
       const foo = page
         .locator('rss>channel>item')

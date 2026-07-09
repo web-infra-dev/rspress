@@ -8,6 +8,7 @@ import {
   replaceLang,
   replaceVersion,
   withBase,
+  withSiteOrigin,
   withoutLang,
 } from './utils';
 
@@ -31,6 +32,25 @@ describe('test shared utils', () => {
     expect(firstResult).toBe('/my-base/guide/');
     const secondResult = withBase(firstResult, base);
     expect(secondResult).toBe('/my-base/guide/');
+  });
+
+  test('withSiteOrigin', () => {
+    expect(withSiteOrigin('/guide/index.md', 'https://example.com')).toBe(
+      'https://example.com/guide/index.md',
+    );
+    expect(withSiteOrigin('/base/guide/index.md', 'https://example.com/')).toBe(
+      'https://example.com/base/guide/index.md',
+    );
+    expect(withSiteOrigin('/foo:bar/index.md', 'https://example.com')).toBe(
+      'https://example.com/foo:bar/index.md',
+    );
+    expect(withSiteOrigin('/', 'https://example.com')).toBe(
+      'https://example.com/',
+    );
+    expect(withSiteOrigin('https://example.com/guide/index.md', '/base/')).toBe(
+      'https://example.com/guide/index.md',
+    );
+    expect(withSiteOrigin('/guide/index.md')).toBe('/guide/index.md');
   });
 
   test('removeBase', () => {
