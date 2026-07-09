@@ -39,6 +39,28 @@ export default defineConfig({
 });
 ```
 
+## siteOrigin
+
+- **Type**: `string`
+- **Default**: `""`
+
+The optional deployment origin of the site, for example `https://foo.github.io`.
+
+Rspress uses this value together with [`base`](#base) when generated files need absolute URLs, such as `llms.txt` links or plugin outputs. The full URL concatenation order is `siteOrigin + base + routePath`.
+
+If `siteOrigin` is not configured, Rspress uses `base + routePath` as the fallback.
+
+If your site is deployed to `https://foo.github.io/bar/`, set `siteOrigin` to `"https://foo.github.io"` and `base` to `"/bar/"`:
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://foo.github.io',
+  base: '/bar/',
+});
+```
+
 ## title
 
 - **Type**: `string`
@@ -678,6 +700,31 @@ import { defineConfig } from '@rspress/core';
 export default defineConfig({
   route: {
     useTransitions: false,
+  },
+});
+```
+
+### route.prefetchLink
+
+- **Type**: `Boolean`
+- **Default**: `true`
+
+By default, Rspress' `Link` component prefetches resources for the matching route when users hover over internal links, and it applies the same behavior on touch devices. This is a performance optimization. Set this option to `false` to disable it.
+
+:::tip
+
+In development, link prefetching is designed to work together with [`dev.lazyCompilation`](https://rsbuild.rs/config/dev/lazy-compilation), which Rspress enables by default. Lazy compilation improves startup speed by compiling pages only when they are visited, while link prefetching starts compiling the target route on hover to reduce the wait when the target route is opened for the first time.
+
+:::
+
+Example:
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    prefetchLink: false,
   },
 });
 ```

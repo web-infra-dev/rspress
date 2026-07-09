@@ -1,6 +1,6 @@
 {
   "name": "@rspress/shared",
-  "version": "2.0.16",
+  "version": "2.0.17",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/web-infra-dev/rspress.git",
@@ -50,12 +50,12 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "^2.0.15",
+    "@rsbuild/core": "^2.1.5",
     "@shikijs/rehype": "^4.2.0",
     "unified": "^11.0.5"
   },
   "devDependencies": {
-    "@rslib/core": "0.23.0",
+    "@rslib/core": "0.23.2",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.17",

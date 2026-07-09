@@ -1,13 +1,22 @@
-import { type NavItemWithLink, normalizeHref, withBase } from '@rspress/shared';
+import {
+  type NavItemWithLink,
+  normalizeHref,
+  withBase,
+  withSiteOrigin,
+} from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { extractInfoFromFrontmatterWithAbsolutePath } from '../../auto-nav-sidebar/utils';
 import type { RouteService } from '../../route/RouteService';
 
-function routePathToMdPath(routePath: string, base: string): string {
+function routePathToMdPath(
+  routePath: string,
+  base: string,
+  siteOrigin?: string,
+): string {
   let url: string = routePath;
   url = normalizeHref(url, false);
   url = url.replace(/\.html$/, '.md');
-  return withBase(url, base);
+  return withSiteOrigin(withBase(url, base), siteOrigin);
 }
 
 async function generateLlmsTxt(
@@ -17,6 +26,7 @@ async function generateLlmsTxt(
   title: string | undefined,
   description: string | undefined,
   base: string,
+  siteOrigin: string | undefined,
   routeService: RouteService,
 ): Promise<string> {
   const lines: string[] = [];
@@ -68,7 +78,7 @@ async function generateLlmsTxt(
             description = info.description;
           }
 
-          return `- [${title}](${routePathToMdPath(routePath, base)})${description ? `: ${description}` : ''}`;
+          return `- [${title}](${routePathToMdPath(routePath, base, siteOrigin)})${description ? `: ${description}` : ''}`;
         }),
       )
     ).filter((i): i is string => Boolean(i));
@@ -113,6 +123,7 @@ function generateLlmsFullTxt(
   navList: (NavItemWithLink & { lang: string })[],
   others: string[],
   base: string,
+  siteOrigin: string | undefined,
   mdContents: Map<string, string>,
 ): string {
   const lines: string[] = [];
@@ -124,7 +135,7 @@ function generateLlmsFullTxt(
     }
     for (const routePath of routeGroup) {
       lines.push(`---
-url: ${routePathToMdPath(routePath, base)}
+url: ${routePathToMdPath(routePath, base, siteOrigin)}
 ---
 `);
       lines.push(mdContents.get(routePath) ?? '');
@@ -133,7 +144,7 @@ url: ${routePathToMdPath(routePath, base)}
   }
   for (const routePath of others) {
     lines.push(`---
-url: ${routePathToMdPath(routePath, base)}
+url: ${routePathToMdPath(routePath, base, siteOrigin)}
 ---
 `);
     lines.push(mdContents.get(routePath) ?? '');

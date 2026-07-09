@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
 test('llms should be successful', async () => {
@@ -17,6 +17,12 @@ test('llms should be successful', async () => {
       throw new Error(`Expected non-empty file: ${filePath}`);
     }
   }
+
+  const llmsFullTxt = await fs.readFile(
+    path.join(docBuildDir, 'llms-full.txt'),
+    'utf-8',
+  );
+  expect(llmsFullTxt).toContain('url: https://example.com/docs/index.md');
 });
 
 test('csr should be successful', async () => {

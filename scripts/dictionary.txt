@@ -162,6 +162,7 @@ tailwindcss
 taskkill
 templating
 transpiling
+transitionable
 treeshaking
 tsbuildinfo
 tsdoc

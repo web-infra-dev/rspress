@@ -39,6 +39,28 @@ export default defineConfig({
 });
 ```
 
+## siteOrigin
+
+- **类型**： `string`
+- **默认值**： `""`
+
+站点的可选部署 origin，例如 `https://foo.github.io`。
+
+Rspress 在生成需要绝对 URL 的文件时会结合该值和 [`base`](#base)，例如 `llms.txt` 链接或插件输出。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。
+
+如果没有配置 `siteOrigin`，Rspress 会回退使用 `base + routePath`。
+
+如果你的站点部署到 `https://foo.github.io/bar/`，请将 `siteOrigin` 设置为 `"https://foo.github.io"`，并将 `base` 设置为 `"/bar/"`：
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://foo.github.io',
+  base: '/bar/',
+});
+```
+
 ## title
 
 - **类型**： `string`
@@ -678,6 +700,31 @@ import { defineConfig } from '@rspress/core';
 export default defineConfig({
   route: {
     useTransitions: false,
+  },
+});
+```
+
+### route.prefetchLink
+
+- **类型**： `boolean`
+- **默认值**： `true`
+
+默认情况下，Rspress 的 `Link` 组件会在用户 hover 链接时，预请求对应内部路由的资源；在 touch 设备上也会触发同样的行为。这是一个性能优化手段。将该配置设置为 `false` 可禁用这一行为。
+
+:::tip
+
+在开发环境下，链接预取会和 Rspress 默认开启的 [`dev.lazyCompilation`](https://rsbuild.rs/zh/config/dev/lazy-compilation) 配合使用。按需编译让页面只在被访问时才编译，从而提升启动速度；链接预取则会在 hover 时提前启动目标路由编译，减少首次打开目标路由时的等待。
+
+:::
+
+示例：
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    prefetchLink: false,
   },
 });
 ```
