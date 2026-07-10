@@ -1,15 +1,10 @@
 import type { DocSearchProps } from '@docsearch/react';
 import { DocSearch } from '@docsearch/react';
-import {
-  removeBase,
-  useLang,
-  useNavigate,
-  useSite,
-} from '@rspress/core/runtime';
-import { Link } from '@rspress/core/theme';
+import { removeBase, useLang } from '@rspress/core/runtime';
+import { Link, useLinkNavigate } from '@rspress/core/theme';
 import '@docsearch/css';
 import './Search.css';
-import { startTransition, useEffect } from 'react';
+import { useEffect } from 'react';
 import * as ReactDOM from 'react-dom';
 import type { Locales } from './locales';
 
@@ -35,7 +30,7 @@ type SearchProps = {
 };
 
 function Search({ locales = {}, docSearchProps }: SearchProps) {
-  const navigate = useNavigate();
+  const navigate = useLinkNavigate();
 
   const lang = useLang();
   const { translations, placeholder } = locales?.[lang] ?? {};
@@ -65,9 +60,6 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
     };
   }, [appId]);
 
-  const { site } = useSite();
-  const useTransitions = site?.route?.useTransitions;
-
   return (
     <>
       <DocSearch
@@ -76,13 +68,7 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
         maxResultsPerGroup={20}
         navigator={{
           navigate({ itemUrl }: { itemUrl: string }) {
-            if (useTransitions) {
-              startTransition(() => {
-                return navigate(itemUrl);
-              });
-            } else {
-              navigate(itemUrl);
-            }
+            navigate(itemUrl);
           },
         }}
         transformItems={(items: any[]) => {
