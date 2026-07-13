@@ -85,7 +85,28 @@ export function LlmsOpenRow() {
     [t, q],
   );
 
-  if (!pathname) {
+  const renderableItems = useMemo(
+    () =>
+      options
+        .map(option => {
+          if (typeof option === 'string') {
+            return builtinItems[option] ?? null;
+          }
+          if (typeof option === 'object' && 'title' in option) {
+            return option;
+          }
+          return null;
+        })
+        .filter(Boolean) as Array<{
+        title: string;
+        href?: string;
+        icon?: React.ReactNode;
+        onClick?: () => void;
+      }>,
+    [options, builtinItems],
+  );
+
+  if (!pathname || renderableItems.length === 0) {
     return null;
   }
 
@@ -113,20 +134,7 @@ export function LlmsOpenRow() {
       </button>
       {isOpen && (
         <div className="rp-llms-view-options__menu">
-          {options.map(option => {
-            let item: {
-              title: string;
-              href?: string;
-              icon?: React.ReactNode;
-              onClick?: () => void;
-            };
-            if (typeof option === 'string' && builtinItems[option]) {
-              item = builtinItems[option];
-            } else if (typeof option === 'object' && 'title' in option) {
-              item = option;
-            } else {
-              return null;
-            }
+          {renderableItems.map(item => {
             if (item.href) {
               return (
                 <a
