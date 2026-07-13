@@ -1,6 +1,12 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runDevCommand,
+  runPreviewCommand,
+} from '../../utils/runCommands';
 
 interface NavSuiteConfig {
   title: string;
@@ -98,20 +104,6 @@ const createNavSuite = ({ title, configFile, paths }: NavSuiteConfig) => {
       await expect(itemsAndLinkDropdown).not.toHaveClass(
         /rp-hover-group--hidden/,
       );
-    });
-
-    test('items should be visible on hover before hydration', async ({
-      page,
-    }) => {
-      await init(page);
-
-      await itemsAndLinkItem.evaluate(element => {
-        element.replaceWith(element.cloneNode(true));
-      });
-      await itemsAndLinkItem.hover();
-
-      await expect(itemsAndLinkDropdown).toHaveClass(/rp-hover-group--hidden/);
-      await expect(itemsAndLinkDropdown).toBeVisible();
     });
 
     test('it should render correct number of nav', async ({ page }) => {
@@ -338,4 +330,47 @@ createNavSuite({
     level3Item2: '/nested-items/level3-item2',
     level1Item2: '/nested-items/level1-item2',
   },
+});
+
+test.describe('Nav SSG', () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runPreviewCommand>>;
+
+  test.beforeAll(async () => {
+    const appDir = import.meta.dirname;
+    appPort = await getPort();
+    await runBuildCommand(appDir);
+    app = await runPreviewCommand(appDir, appPort);
+  });
+
+  test.afterAll(async () => {
+    if (app) {
+      await killProcess(app);
+    }
+  });
+
+  test('items should be visible on hover when JavaScript is disabled', async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false });
+    const page = await context.newPage();
+
+    try {
+      await page.goto(`http://localhost:${appPort}`, {
+        waitUntil: 'domcontentloaded',
+      });
+
+      const navMenuItems = page
+        .locator('.rp-nav-menu')
+        .locator('.rp-nav-menu__item');
+      const itemsAndLinkItem = navMenuItems.nth(2);
+      const itemsAndLinkDropdown = itemsAndLinkItem.locator('.rp-hover-group');
+
+      await expect(itemsAndLinkDropdown).toHaveClass(/rp-hover-group--hidden/);
+      await itemsAndLinkItem.hover();
+      await expect(itemsAndLinkDropdown).toBeVisible();
+    } finally {
+      await context.close();
+    }
+  });
 });
