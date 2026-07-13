@@ -47,7 +47,8 @@
   }
 
   // Keep navigation dropdowns usable before React hydration.
-  .rp-nav-menu__item:hover > &--hidden {
+  .rp-nav-menu__item:hover > &--hidden,
+  .rp-nav-hamburger:hover > &--hidden {
     visibility: visible;
     opacity: 1;
     pointer-events: auto;

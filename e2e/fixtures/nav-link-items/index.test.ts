@@ -369,6 +369,15 @@ test.describe('Nav SSG', () => {
       await expect(itemsAndLinkDropdown).toHaveClass(/rp-hover-group--hidden/);
       await itemsAndLinkItem.hover();
       await expect(itemsAndLinkDropdown).toBeVisible();
+
+      await page.setViewportSize({ width: 1024, height: 768 });
+      const hamburger = page.locator('.rp-nav-hamburger__md');
+      const hamburgerDropdown = hamburger.locator('.rp-hover-group');
+
+      await expect(hamburger).toBeVisible();
+      await expect(hamburgerDropdown).toHaveClass(/rp-hover-group--hidden/);
+      await hamburger.hover();
+      await expect(hamburgerDropdown).toBeVisible();
     } finally {
       await context.close();
     }
