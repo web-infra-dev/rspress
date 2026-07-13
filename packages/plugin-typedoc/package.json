@@ -26,7 +26,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "typedoc": "0.28.19",
+    "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.12.0"
   },
   "devDependencies": {

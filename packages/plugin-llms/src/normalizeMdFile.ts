@@ -3,7 +3,7 @@ import {
   remarkFileCodeBlock,
   remarkLink,
 } from '@rspress/core';
-import type { Root } from 'hast';
+import type { Root } from 'mdast';
 import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
