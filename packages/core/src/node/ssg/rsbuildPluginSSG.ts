@@ -5,14 +5,17 @@ import { isDebugMode, type UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { NODE_SSG_BUNDLE_FOLDER, NODE_SSG_BUNDLE_NAME } from '../constants';
 import type { RouteService } from '../route/RouteService';
+import type { RouteChunkAssetsPlugin } from '../route/routeChunkAssets';
 import { renderPages } from './renderPages';
 
 export const rsbuildPluginSSG = ({
   routeService,
   config,
+  routeChunkAssets,
 }: {
   routeService: RouteService;
   config: UserConfig;
+  routeChunkAssets: RouteChunkAssetsPlugin;
 }): RsbuildPlugin => ({
   name: 'rspress-inner-rsbuild-plugin-ssg',
   async setup(api) {
@@ -125,6 +128,7 @@ export const rsbuildPluginSSG = ({
             htmlTemplate,
             emitAsset,
             distPath,
+            routeChunkAssets.getManifest(),
           );
 
           if (!isDebugMode()) {

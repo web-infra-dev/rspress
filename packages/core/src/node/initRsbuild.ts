@@ -42,6 +42,7 @@ import {
 import { isLlmsHintEnabled, isLlmsUIEnabled } from './llms';
 import type { PluginDriver } from './PluginDriver';
 import type { RouteService } from './route/RouteService';
+import { RouteChunkAssetsPlugin } from './route/routeChunkAssets';
 import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
@@ -115,6 +116,7 @@ async function createInternalBuildConfig(
   const assetPrefix = isProduction()
     ? addTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
     : '/';
+  const routeChunkAssets = new RouteChunkAssetsPlugin(routeService);
 
   const normalizeIcon = (icon: string | URL | undefined) => {
     if (!icon) {
@@ -204,10 +206,12 @@ async function createInternalBuildConfig(
         ? rsbuildPluginSSG({
             routeService,
             config,
+            routeChunkAssets,
           })
         : rsbuildPluginCSR({
             routeService,
             config,
+            routeChunkAssets,
           }),
       enableSSG && config.llms
         ? rsbuildPluginSSGMD({
@@ -460,6 +464,7 @@ async function createInternalBuildConfig(
         },
         tools: {
           rspack: {
+            plugins: [routeChunkAssets],
             node: {
               __dirname: 'mock',
               __filename: 'mock',

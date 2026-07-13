@@ -24,6 +24,7 @@ import {
   absolutePathToRoutePath,
   RoutePage,
 } from './RoutePage';
+import { getRouteChunkName } from './routeChunkAssets';
 
 interface InitOptions {
   scanDir: string;
@@ -298,7 +299,9 @@ import React from 'react';
 import { lazyWithPreload } from "react-lazy-with-preload";
 ${routeMeta
   .map((route, index) => {
-    return `const Route${index} = lazyWithPreload(() => import('${route.absolutePath}'))`;
+    const chunkName = getRouteChunkName(route);
+    return `const loadRoute${index} = () => import(/* webpackChunkName: "${chunkName}" */ '${route.absolutePath}')
+const Route${index} = lazyWithPreload(loadRoute${index})`;
   })
   .join('\n')}
 export const routes = [
@@ -306,7 +309,7 @@ ${routeMeta
   .map((route, index) => {
     const preload = `async () => {
         await Route${index}.preload();
-        return import("${route.absolutePath}");
+        return loadRoute${index}();
       }`;
     const component = `Route${index}`;
     /**

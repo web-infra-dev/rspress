@@ -26,6 +26,12 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/base/en/guide/quick-start`, {
       waitUntil: 'networkidle',
     });
+    await expect(
+      page.locator('link[rel="preload"][as="script"]'),
+    ).toHaveAttribute(
+      'href',
+      /^\/base\/static\/js\/async\/rspress-route-en_guide_quick-start-.+\.js$/,
+    );
     // take the sidebar
     const sidebar = page.locator('.rp-doc-layout__sidebar');
     await expect(sidebar).toHaveCount(1);
