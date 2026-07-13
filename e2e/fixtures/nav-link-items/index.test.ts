@@ -100,6 +100,20 @@ const createNavSuite = ({ title, configFile, paths }: NavSuiteConfig) => {
       );
     });
 
+    test('items should be visible on hover before hydration', async ({
+      page,
+    }) => {
+      await init(page);
+
+      await itemsAndLinkItem.evaluate(element => {
+        element.replaceWith(element.cloneNode(true));
+      });
+      await itemsAndLinkItem.hover();
+
+      await expect(itemsAndLinkDropdown).toHaveClass(/rp-hover-group--hidden/);
+      await expect(itemsAndLinkDropdown).toBeVisible();
+    });
+
     test('it should render correct number of nav', async ({ page }) => {
       await init(page);
 
