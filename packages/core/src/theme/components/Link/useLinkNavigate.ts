@@ -73,14 +73,15 @@ export function useLinkNavigate(
   }: { startTransition?: TransitionStartFunction } = {
     startTransition: reactStartTransition,
   },
-): (href: string) => Promise<void> {
+): (href: string, options?: { signal?: AbortSignal }) => Promise<void> {
   const { pathname: currPagePathname } = useLocation();
   const navigate = useNavigateInner();
   const { site } = useSite();
   const useTransitions = site?.route?.useTransitions;
 
   return useCallback(
-    async (href: string) => {
+    async (href: string, { signal }: { signal?: AbortSignal } = {}) => {
+      signal?.throwIfAborted();
       const { linkType, removeBaseHref, withBaseHref } = getHref(href);
       if (linkType === 'external' || linkType === 'hashOnly') {
         window.location.assign(href);
@@ -97,15 +98,21 @@ export function useLinkNavigate(
             const timer = setTimeout(() => {
               nprogress.start();
             }, 200);
-            const data = await initPageData(removeBaseHref);
-            warmPageData(removeBaseHref, data);
-            clearTimeout(timer);
-            nprogress.done();
+            try {
+              const data = await initPageData(removeBaseHref);
+              signal?.throwIfAborted();
+              warmPageData(removeBaseHref, data);
+            } finally {
+              clearTimeout(timer);
+              nprogress.done();
+            }
           } else {
+            signal?.throwIfAborted();
             window.location.assign(withBaseHref);
             return;
           }
         }
+        signal?.throwIfAborted();
         if (isTransitionable) {
           startTransition(() => {
             return navigate(removeBaseHref, { replace: false });
@@ -115,11 +122,7 @@ export function useLinkNavigate(
         }
       };
 
-      if (isTransitionable) {
-        startTransition(preloadChunkThenNavigate);
-      } else {
-        preloadChunkThenNavigate();
-      }
+      await preloadChunkThenNavigate();
     },
     [useTransitions, currPagePathname, navigate, startTransition],
   );

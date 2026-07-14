@@ -22,27 +22,44 @@ export const rsbuildPluginDocVM = async ({
     indexHashByGroup: null,
     filepaths: [],
   };
+  let webAlias: Record<string, string> | undefined;
+  let refreshPromise: Promise<void> | undefined;
+
+  const refreshPageData = async () => {
+    if (!webAlias) {
+      return;
+    }
+    refreshPromise ??= (async () => {
+      const now = performance.now();
+      const { pageData, indexHashByGroup, searchIndex, filepaths } =
+        await createPageData({
+          config,
+          alias: webAlias,
+          userDocRoot,
+          routeService,
+          pluginDriver,
+        });
+      logger.debug(`createPageData cost: ${performance.now() - now}ms`);
+
+      ref.pageData = pageData;
+      ref.searchIndex = searchIndex;
+      ref.indexHashByGroup = indexHashByGroup;
+      ref.filepaths = filepaths;
+    })();
+    try {
+      await refreshPromise;
+    } finally {
+      refreshPromise = undefined;
+    }
+  };
+
   const searchIndexRsbuildPlugin: RsbuildPlugin = {
     name: 'rsbuild-plugin-searchIndex',
     async setup(api) {
-      api.modifyBundlerChain(async (bundlerChain, { environment }) => {
+      api.modifyBundlerChain((bundlerChain, { environment }) => {
         const alias = bundlerChain.resolve.alias.entries();
         if (environment.name === 'web') {
-          const now = performance.now();
-          const { pageData, indexHashByGroup, searchIndex, filepaths } =
-            await createPageData({
-              config,
-              alias: alias as Record<string, string>,
-              userDocRoot,
-              routeService,
-              pluginDriver,
-            });
-          logger.debug(`createPageData cost: ${performance.now() - now}ms`);
-
-          ref.pageData = pageData;
-          ref.searchIndex = searchIndex;
-          ref.indexHashByGroup = indexHashByGroup;
-          ref.filepaths = filepaths;
+          webAlias = alias as Record<string, string>;
         }
 
         api.processAssets(
@@ -71,8 +88,7 @@ export const rsbuildPluginDocVM = async ({
       tempDir: '.rspress',
       virtualModules: {
         [RuntimeModuleID.PageData]: async ({ addDependency }) => {
-          // TODO: support hmr
-          // This place needs to obtain the specific file that has been modified and update the file information.
+          await refreshPageData();
           for (const file of ref.filepaths) {
             addDependency(file);
           }

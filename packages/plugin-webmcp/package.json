@@ -1,0 +1,58 @@
+{
+  "name": "@rspress/plugin-webmcp",
+  "version": "2.0.17",
+  "description": "Expose Rspress documentation tools through WebMCP.",
+  "bugs": "https://github.com/web-infra-dev/rspress/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web-infra-dev/rspress.git",
+    "directory": "packages/plugin-webmcp"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime/index.d.ts",
+      "default": "./dist/runtime/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build -w",
+    "reset": "rimraf ./**/node_modules"
+  },
+  "devDependencies": {
+    "@mcp-b/webmcp-types": "4.0.0",
+    "@microsoft/api-extractor": "^7.58.9",
+    "@rsbuild/plugin-react": "~2.1.0",
+    "@rslib/core": "0.23.2",
+    "@rspress/config": "workspace:*",
+    "@types/node": "^22.8.1",
+    "@types/react": "^19.2.17",
+    "react": "^19.2.7",
+    "rsbuild-plugin-publint": "^1.0.0",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "@rspress/core": "workspace:^2.0.10",
+    "react": ">=18.0.0"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

@@ -1,0 +1,114 @@
+---
+description: Expose Rspress documentation tools to browser agents with WebMCP.
+---
+
+# @rspress/plugin-webmcp <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-webmcp" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+Expose documentation content and site actions to browser agents through the [WebMCP API](https://webmachinelearning.github.io/webmcp/).
+
+## Installation
+
+<PackageManagerTabs command="add @rspress/plugin-webmcp -D" />
+
+## Usage
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginWebMcp } from '@rspress/plugin-webmcp';
+
+export default defineConfig({
+  plugins: [pluginWebMcp()],
+});
+```
+
+The plugin registers these tools by default:
+
+- `rspress_get_current_page`: Returns the current page metadata and generated SSG-MD Markdown.
+- `rspress_search_docs`: Searches the local Rspress search index. It is omitted when local search is disabled, including when Algolia is active.
+- `rspress_navigate`: Navigates only to known internal documentation routes. Query strings and hashes are supported.
+
+The current-page tool automatically enables [`llms: true`](/guide/basic/ssg-md). An existing `true` or object configuration is preserved. An explicit `llms: false` conflicts with the tool and causes a configuration error.
+
+SSG-MD emits `.md` files during `rspress build`. The current-page tool is omitted during `rspress dev`, where generated Markdown is unavailable. Local search results and custom tool registrations update through HMR.
+
+## Options
+
+Disable individual built-in tools with `tools`:
+
+```ts title="rspress.config.ts"
+pluginWebMcp({
+  tools: {
+    currentPage: true,
+    search: false,
+    navigate: true,
+  },
+});
+```
+
+All three options default to `true`.
+
+## Custom tools
+
+Use `registerWebMcpTool` for imperative code. Keep the returned `AbortSignal`-backed handle for the lifetime of the tool, then call `unregister` during cleanup.
+
+```ts
+import { registerWebMcpTool } from '@rspress/plugin-webmcp/runtime';
+
+export function mountCopyExampleTool() {
+  const registration = registerWebMcpTool(
+    {
+      name: 'copy_example',
+      description: 'Copy the current example.',
+      inputSchema: {
+        type: 'object',
+        properties: {},
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: false },
+      execute: () => navigator.clipboard.writeText('example'),
+    },
+    { exposedTo: ['https://agent.example'] },
+  );
+
+  void registration?.ready.catch(console.error);
+  return () => registration?.unregister();
+}
+```
+
+Use `useWebMcpTool` in React components. It registers on mount and unregisters on unmount.
+
+```tsx
+import { useWebMcpTool } from '@rspress/plugin-webmcp/runtime';
+
+export function Counter({ count, increment }) {
+  const { status, error } = useWebMcpTool({
+    name: 'increment_counter',
+    description: 'Increment the visible counter.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      additionalProperties: false,
+    },
+    annotations: { readOnlyHint: false },
+    execute: increment,
+  });
+
+  return (
+    <span title={error?.message}>
+      {status}: {count}
+    </span>
+  );
+}
+```
+
+`status` is `registering`, `registered`, `unsupported`, or `error`. `error` contains registration failures. Descriptor metadata changes automatically re-register the tool, while the latest `execute` callback is used without registration churn. Pass the optional third `deps` argument only when another value must force a complete unregister/register cycle.
+
+The runtime also exports local `WebMcpTool`, annotation, registration, client, and hook-state types. The optional `outputSchema`, extended MCP annotations, and execution client are compatibility extensions that are forwarded when a browser runtime supports them; the native draft currently standardizes `inputSchema`, `readOnlyHint`, and `untrustedContentHint`.
+
+## Browser support
+
+The production plugin uses only `document.modelContext`. Unsupported browsers safely skip registration, including during SSR. It does not ship a polyfill or an MCP-B runtime dependency.
+
+For tests or demos in browsers without native WebMCP, consumers can optionally install `@mcp-b/webmcp-polyfill` themselves. Load it before the Rspress client runtime so the support check sees it during the first render. The API is still a draft, so check the [current specification](https://webmachinelearning.github.io/webmcp/) when integrating browser-specific agent features.

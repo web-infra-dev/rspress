@@ -177,6 +177,7 @@ unshift
 upath
 watchpack
 webm
+webmcp
 webp
 wechat
 weibo

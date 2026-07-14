@@ -1,0 +1,114 @@
+---
+description: 使用 WebMCP 向浏览器智能体开放 Rspress 文档工具。
+---
+
+# @rspress/plugin-webmcp <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-webmcp" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+通过 [WebMCP API](https://webmachinelearning.github.io/webmcp/) 向浏览器智能体开放文档内容和站点操作。
+
+## 安装
+
+<PackageManagerTabs command="add @rspress/plugin-webmcp -D" />
+
+## 使用
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginWebMcp } from '@rspress/plugin-webmcp';
+
+export default defineConfig({
+  plugins: [pluginWebMcp()],
+});
+```
+
+插件默认注册以下工具：
+
+- `rspress_get_current_page`：返回当前页面的元数据和由 SSG-MD 生成的 Markdown。
+- `rspress_search_docs`：查询 Rspress 本地搜索索引。关闭本地搜索或启用 Algolia 时不会注册。
+- `rspress_navigate`：仅导航至已知的站内文档路由，支持查询参数和哈希。
+
+当前页面工具会自动启用 [`llms: true`](/guide/basic/ssg-md)。已有的 `true` 或对象配置会被保留。显式配置 `llms: false` 会产生冲突并抛出配置错误。
+
+SSG-MD 会在 `rspress build` 期间生成 `.md` 文件。在 `rspress dev` 中不会注册当前页面工具，因为此时尚无生成的 Markdown；本地搜索结果和自定义工具注册仍会通过 HMR 更新。
+
+## 选项
+
+通过 `tools` 关闭单个内置工具：
+
+```ts title="rspress.config.ts"
+pluginWebMcp({
+  tools: {
+    currentPage: true,
+    search: false,
+    navigate: true,
+  },
+});
+```
+
+三个选项的默认值均为 `true`。
+
+## 自定义工具
+
+在命令式代码中使用 `registerWebMcpTool`。请在工具的整个生命周期内保留返回的 `AbortSignal` 句柄，并在清理时调用 `unregister`。
+
+```ts
+import { registerWebMcpTool } from '@rspress/plugin-webmcp/runtime';
+
+export function mountCopyExampleTool() {
+  const registration = registerWebMcpTool(
+    {
+      name: 'copy_example',
+      description: 'Copy the current example.',
+      inputSchema: {
+        type: 'object',
+        properties: {},
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: false },
+      execute: () => navigator.clipboard.writeText('example'),
+    },
+    { exposedTo: ['https://agent.example'] },
+  );
+
+  void registration?.ready.catch(console.error);
+  return () => registration?.unregister();
+}
+```
+
+在 React 组件中使用 `useWebMcpTool`。它会在组件挂载时注册，并在卸载时注销。
+
+```tsx
+import { useWebMcpTool } from '@rspress/plugin-webmcp/runtime';
+
+export function Counter({ count, increment }) {
+  const { status, error } = useWebMcpTool({
+    name: 'increment_counter',
+    description: 'Increment the visible counter.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      additionalProperties: false,
+    },
+    annotations: { readOnlyHint: false },
+    execute: increment,
+  });
+
+  return (
+    <span title={error?.message}>
+      {status}: {count}
+    </span>
+  );
+}
+```
+
+`status` 的值为 `registering`、`registered`、`unsupported` 或 `error`，注册失败信息保存在 `error` 中。工具描述元数据变化时会自动重新注册；仅 `execute` 回调变化时会直接使用最新回调，不会反复注册。只有其他值必须触发完整注销和注册流程时，才需要传入可选的第三个 `deps` 参数。
+
+运行时还导出了本地的 `WebMcpTool`、注解、注册、客户端和 Hook 状态类型。可选的 `outputSchema`、扩展 MCP 注解和执行客户端属于兼容性扩展，仅在浏览器运行时支持时透传；原生草案目前标准化了 `inputSchema`、`readOnlyHint` 和 `untrustedContentHint`。
+
+## 浏览器支持
+
+生产插件仅使用 `document.modelContext`。不支持 WebMCP 的浏览器会安全地跳过注册，SSR 期间也不会报错。插件不会附带 polyfill 或 MCP-B 运行时依赖。
+
+如果测试或演示所用浏览器尚未原生支持 WebMCP，使用者可以自行选择安装 `@mcp-b/webmcp-polyfill`。请在 Rspress 客户端运行时之前加载它，确保首次渲染时支持检测即可发现它。该 API 仍处于草案阶段，集成浏览器专用智能体功能时请查阅[最新规范](https://webmachinelearning.github.io/webmcp/)。
