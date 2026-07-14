@@ -11,7 +11,7 @@
   --rp-home-hero-secondary-color: #ff5e00;
 }
 
-:where(html:not(.rp-dark)) {
+:where(html:not(.dark)) {
   --rp-home-background-bg:
     radial-gradient(
       42.12% 56.13% at 100% 0%,
@@ -31,7 +31,7 @@
     #fff;
 }
 
-:where(html.rp-dark) {
+:where(html.dark) {
   --rp-home-background-bg:
     radial-gradient(
       42.12% 56.13% at 100% 0%,
