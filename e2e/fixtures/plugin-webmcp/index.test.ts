@@ -12,6 +12,7 @@ import {
 import {
   executeTool,
   findTool,
+  listRegistrations,
   listToolNames,
   listTools,
 } from './webmcpTestUtils';
@@ -21,6 +22,7 @@ const outputDir = path.join(appDir, 'doc_build');
 const counterToolsFile = path.join(appDir, 'src/CounterTools.tsx');
 const pageScopedToolFile = path.join(appDir, 'src/PageScopedTool.tsx');
 const homePageFile = path.join(appDir, 'doc/v1/en/index.mdx');
+const searchFragmentFile = path.join(appDir, 'doc/v1/en/_search-fragment.mdx');
 const guidePageFile = path.join(appDir, 'doc/v1/en/guide.mdx');
 
 test('normalizes native WebMCP execution results', async ({ page }) => {
@@ -104,29 +106,6 @@ test.describe('plugin-webmcp preview', () => {
 
   test('lists descriptors and reads generated Markdown', async ({ page }) => {
     const tools = await listTools(page);
-    const registrationOptions = await page.evaluate(
-      () =>
-        (
-          globalThis as typeof globalThis & {
-            __webMcpRegistrationOptions?: Record<
-              string,
-              { exposedTo?: string[] }
-            >;
-          }
-        ).__webMcpRegistrationOptions,
-    );
-    for (const name of [
-      'rspress_get_site_info',
-      'rspress_list_pages',
-      'rspress_get_page',
-      'rspress_get_current_page',
-      'rspress_search_docs',
-      'rspress_navigate',
-    ]) {
-      expect(registrationOptions?.[name]).toEqual({
-        exposedTo: ['https://agent.example'],
-      });
-    }
     const currentPageTool = tools.find(
       tool => tool.name === 'rspress_get_current_page',
     );
@@ -163,6 +142,14 @@ test.describe('plugin-webmcp preview', () => {
     expect(JSON.parse(navigateTool!.inputSchema!)).toMatchObject({
       required: ['routePath'],
     });
+    expect(
+      (await listRegistrations(page))
+        .filter(registration => registration.name.startsWith('rspress_'))
+        .every(
+          registration =>
+            registration.exposedTo?.[0] === 'https://agent.example',
+        ),
+    ).toBe(true);
 
     const currentPage = await executeTool(page, 'rspress_get_current_page', {});
     expect(currentPage?.structuredContent).toMatchObject({
@@ -218,8 +205,23 @@ test.describe('plugin-webmcp preview', () => {
     });
     expect(JSON.stringify(search?.structuredContent)).toContain('WebMCP home');
 
+    const registrationsBeforeIncrement = (
+      await listRegistrations(page, 'fixture_increment_counter')
+    ).length;
     await executeTool(page, 'fixture_increment_counter', {});
     await expect(page.getByTestId('webmcp-counter')).toHaveText('Counter: 1');
+    await expect
+      .poll(async () => {
+        const registrations = await listRegistrations(
+          page,
+          'fixture_increment_counter',
+        );
+        return (
+          registrations.length > registrationsBeforeIncrement &&
+          registrations.at(-2)?.aborted === true
+        );
+      })
+      .toBe(true);
     await executeTool(page, 'fixture_reset_counter', {});
     await expect(page.getByTestId('webmcp-counter')).toHaveText('Counter: 0');
 
@@ -442,6 +444,7 @@ test.describe('plugin-webmcp development server', () => {
   let originalCounterTools: string;
   let originalPageScopedTool: string;
   let originalHomePage: string;
+  let originalSearchFragment: string;
   let originalGuidePage: string;
 
   test.beforeAll(async () => {
@@ -450,11 +453,13 @@ test.describe('plugin-webmcp development server', () => {
       originalCounterTools,
       originalPageScopedTool,
       originalHomePage,
+      originalSearchFragment,
       originalGuidePage,
     ] = await Promise.all([
       readFile(counterToolsFile, 'utf8'),
       readFile(pageScopedToolFile, 'utf8'),
       readFile(homePageFile, 'utf8'),
+      readFile(searchFragmentFile, 'utf8'),
       readFile(guidePageFile, 'utf8'),
     ]);
     app = await runDevCommand(appDir, appPort);
@@ -470,6 +475,7 @@ test.describe('plugin-webmcp development server', () => {
         writeFile(counterToolsFile, originalCounterTools),
         writeFile(pageScopedToolFile, originalPageScopedTool),
         writeFile(homePageFile, originalHomePage),
+        writeFile(searchFragmentFile, originalSearchFragment),
         writeFile(guidePageFile, originalGuidePage),
       ]);
     }
@@ -484,17 +490,15 @@ test.describe('plugin-webmcp development server', () => {
 
   test('omits Markdown tools and keeps discovery tools', async ({ page }) => {
     await expect
-      .poll(() => listToolNames(page))
-      .not.toContain('rspress_get_current_page');
-    await expect
-      .poll(() => listToolNames(page))
-      .not.toContain('rspress_get_page');
-    await expect
-      .poll(() => listToolNames(page))
-      .toContain('rspress_get_site_info');
-    await expect
-      .poll(() => listToolNames(page))
-      .toContain('rspress_list_pages');
+      .poll(async () => (await listToolNames(page)).sort())
+      .toEqual([
+        'fixture_increment_counter',
+        'fixture_reset_counter',
+        'rspress_get_site_info',
+        'rspress_list_pages',
+        'rspress_navigate',
+        'rspress_search_docs',
+      ]);
     await expect(
       page.getByRole('button', { name: 'Copy Markdown' }),
     ).toHaveCount(0);
@@ -638,5 +642,31 @@ test.describe('plugin-webmcp development server', () => {
       routePath: '/',
       page: { title: 'WebMCP home' },
     });
+  });
+
+  test('hot-updates imported Markdown in the local search tool', async ({
+    page,
+  }) => {
+    const updatedFragment = originalSearchFragment.replace(
+      'indigo wombat',
+      'violet echidna',
+    );
+
+    try {
+      await writeFile(searchFragmentFile, updatedFragment);
+      await expect(page.getByText(/violet echidna/)).toBeVisible();
+      await expect
+        .poll(async () => {
+          const search = await executeTool(page, 'rspress_search_docs', {
+            query: 'violet echidna',
+          });
+          return JSON.stringify(search?.structuredContent);
+        })
+        .toContain('WebMCP home');
+    } finally {
+      await writeFile(searchFragmentFile, originalSearchFragment);
+    }
+
+    await expect(page.getByText(/indigo wombat/)).toBeVisible();
   });
 });

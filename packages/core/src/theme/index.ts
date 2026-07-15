@@ -29,7 +29,10 @@ export { HoverGroup, type HoverGroupProps } from './components/HoverGroup';
 export { useHoverGroup } from './components/HoverGroup/useHoverGroup';
 export { LastUpdated } from './components/LastUpdated/index';
 export { Link, type LinkProps } from './components/Link/index';
-export { useLinkNavigate } from './components/Link/useLinkNavigate';
+export {
+  useAwaitedLinkNavigate,
+  useLinkNavigate,
+} from './components/Link/useLinkNavigate';
 export {
   LlmsContainer,
   type LlmsContainerProps,

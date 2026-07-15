@@ -11,41 +11,71 @@ export const rsbuildPluginDocVM = async ({
   routeService,
   pluginDriver,
 }: Omit<FactoryContext, 'alias'>): Promise<RsbuildPlugin[]> => {
-  let pageDataResult: Awaited<ReturnType<typeof createPageData>> | undefined;
-  let pageDataAlias: Record<string, string> | undefined;
-  let refreshPromise: Promise<void> | undefined;
+  type PageDataResult = Awaited<ReturnType<typeof createPageData>>;
+  type RefreshMode = 'compiler' | 'virtual-module';
+  const pageDataState: {
+    alias?: Record<string, string>;
+    generation?: { revision: number; promise: Promise<PageDataResult> };
+    result?: PageDataResult;
+    revision: number;
+  } = { revision: 0 };
 
-  const refreshPageData = async (releaseInDevelopment = false) => {
-    const alias = pageDataAlias;
+  const setPageDataAlias = (
+    alias: Record<string, string>,
+    source: 'fallback' | 'web',
+  ) => {
+    if (
+      (pageDataState.alias && source === 'fallback') ||
+      pageDataState.alias === alias
+    ) {
+      return;
+    }
+    pageDataState.alias = alias;
+    pageDataState.generation = undefined;
+    pageDataState.revision += 1;
+  };
+
+  const refreshPageData = async (mode: RefreshMode) => {
+    const alias = pageDataState.alias;
     if (!alias) {
       return;
     }
-    refreshPromise ??= (async () => {
+    const revision = pageDataState.revision;
+    if (pageDataState.generation?.revision !== revision) {
       const now = performance.now();
-      pageDataResult = await createPageData({
-        config,
-        alias,
-        userDocRoot,
-        routeService,
-        pluginDriver,
-      });
-      logger.debug(`createPageData cost: ${performance.now() - now}ms`);
-    })();
-    const currentPromise = refreshPromise;
+      pageDataState.generation = {
+        revision,
+        promise: createPageData({
+          config,
+          alias,
+          userDocRoot,
+          routeService,
+          pluginDriver,
+        }).then(result => {
+          logger.debug(`createPageData cost: ${performance.now() - now}ms`);
+          return result;
+        }),
+      };
+    }
+    const generation = pageDataState.generation;
     try {
-      await currentPromise;
+      const result = await generation.promise;
+      if (pageDataState.revision === revision) {
+        pageDataState.result = result;
+      }
     } catch (error) {
-      if (refreshPromise === currentPromise) {
-        refreshPromise = undefined;
+      if (pageDataState.generation === generation) {
+        pageDataState.generation = undefined;
       }
       throw error;
-    }
-    if (
-      releaseInDevelopment &&
-      !isProduction() &&
-      refreshPromise === currentPromise
-    ) {
-      refreshPromise = undefined;
+    } finally {
+      if (
+        mode === 'virtual-module' &&
+        !isProduction() &&
+        pageDataState.generation === generation
+      ) {
+        pageDataState.generation = undefined;
+      }
     }
   };
 
@@ -53,21 +83,26 @@ export const rsbuildPluginDocVM = async ({
     name: 'rsbuild-plugin-searchIndex',
     async setup(api) {
       api.modifyBundlerChain(async (bundlerChain, { environment }) => {
-        const alias = bundlerChain.resolve.alias.entries();
-        pageDataAlias ??= alias as Record<string, string>;
+        const alias = bundlerChain.resolve.alias.entries() as Record<
+          string,
+          string
+        >;
+        setPageDataAlias(
+          alias,
+          environment.name === 'web' ? 'web' : 'fallback',
+        );
         if (environment.name === 'web') {
-          pageDataAlias = alias as Record<string, string>;
-          await refreshPageData();
+          await refreshPageData('compiler');
         }
 
         api.processAssets(
           { stage: 'report', environments: ['web'] },
           ({ compilation, compiler }) => {
-            if (!pageDataResult) {
+            if (!pageDataState.result) {
               return;
             }
             for (const [filename, stringifiedIndex] of Object.entries(
-              pageDataResult.searchIndex,
+              pageDataState.result.searchIndex,
             )) {
               compilation.emitAsset(
                 `static/${filename}`,
@@ -86,13 +121,13 @@ export const rsbuildPluginDocVM = async ({
       tempDir: '.rspress',
       virtualModules: {
         [RuntimeModuleID.PageData]: async ({ addDependency }) => {
-          await refreshPageData(true);
-          for (const file of pageDataResult?.filepaths ?? []) {
+          await refreshPageData('virtual-module');
+          for (const file of pageDataState.result?.filepaths ?? []) {
             addDependency(file);
           }
 
-          return `export const pageData = ${JSON.stringify(pageDataResult?.pageData ?? null, null, 2)};
-          export const searchIndexHash = ${JSON.stringify(pageDataResult?.indexHashByGroup ?? null, null, 2)};`;
+          return `export const pageData = ${JSON.stringify(pageDataState.result?.pageData ?? null, null, 2)};
+          export const searchIndexHash = ${JSON.stringify(pageDataState.result?.indexHashByGroup ?? null, null, 2)};`;
         },
       },
     }),

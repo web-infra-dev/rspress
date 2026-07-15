@@ -16,9 +16,19 @@ import {
   startTransition as reactStartTransition,
   type TransitionStartFunction,
   useCallback,
+  useEffect,
+  useRef,
 } from 'react';
 
 nprogress.configure({ showSpinner: false });
+
+const NAVIGATION_TIMEOUT_MS = 10_000;
+
+interface PendingNavigation {
+  cancel(error: Error): void;
+  resolve(): void;
+  target: string;
+}
 
 function isAbsoluteUrl(url: string): boolean {
   return url.startsWith('/');
@@ -54,13 +64,21 @@ export function getHref(href: string): {
   }
 
   if (linkType === 'relative' && !import.meta.env.SSR) {
-    withBaseHref = new URL(href, window.location.href).pathname;
+    const url = new URL(href, window.location.href);
+    withBaseHref = `${url.pathname}${url.search}${url.hash}`;
   } else {
     withBaseHref = withBase(cleanUrlByConfig(href));
   }
   const removeBaseHref = removeBase(withBaseHref);
 
   return { withBaseHref, removeBaseHref, linkType };
+}
+
+export function getAwaitedTarget(href: string, currentTarget: string): string {
+  const { linkType, removeBaseHref } = getHref(href);
+  return linkType === 'hashOnly'
+    ? `${currentTarget.split('#')[0]}${href}`
+    : removeBaseHref;
 }
 
 /**
@@ -125,5 +143,112 @@ export function useLinkNavigate(
       await preloadChunkThenNavigate();
     },
     [useTransitions, currPagePathname, navigate, startTransition],
+  );
+}
+
+/**
+ * Navigate through the Rspress router and resolve after the target location
+ * commits. Calls are serialized and failed or timed-out attempts do not
+ * block later calls.
+ */
+export function useAwaitedLinkNavigate(
+  committedTarget?: string,
+): (href: string) => Promise<void> {
+  const navigate = useLinkNavigate();
+  const { pathname, search, hash } = useLocation();
+  const currentTarget =
+    committedTarget ?? `${removeBase(pathname)}${search}${hash}`;
+  const currentTargetRef = useRef(currentTarget);
+  const activeRef = useRef(true);
+  const pendingRef = useRef<PendingNavigation | null>(null);
+  const queueRef = useRef<Promise<void>>(Promise.resolve());
+
+  useEffect(() => {
+    currentTargetRef.current = currentTarget;
+    const pending = pendingRef.current;
+    if (pending?.target === currentTarget) {
+      pendingRef.current = null;
+      pending.resolve();
+    }
+  }, [currentTarget]);
+
+  useEffect(() => {
+    activeRef.current = true;
+    return () => {
+      activeRef.current = false;
+      pendingRef.current?.cancel(new Error('Navigation was interrupted'));
+      pendingRef.current = null;
+    };
+  }, []);
+
+  const navigateAndWait = useCallback(
+    async (href: string, target: string) => {
+      if (currentTargetRef.current === target) {
+        await navigate(href);
+        return;
+      }
+
+      let pending!: PendingNavigation;
+      const controller = new AbortController();
+      const completion = new Promise<void>((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          pending.cancel(
+            new Error(
+              `Navigation did not complete within ${NAVIGATION_TIMEOUT_MS}ms`,
+            ),
+          );
+        }, NAVIGATION_TIMEOUT_MS);
+        pending = {
+          cancel(error) {
+            clearTimeout(timeout);
+            controller.abort(error);
+            reject(error);
+          },
+          resolve() {
+            clearTimeout(timeout);
+            resolve();
+          },
+          target,
+        };
+        pendingRef.current = pending;
+      });
+
+      try {
+        await Promise.all([
+          navigate(href, { signal: controller.signal }),
+          completion,
+        ]);
+      } catch (error) {
+        pending.cancel(
+          error instanceof Error
+            ? error
+            : new Error('Navigation failed', { cause: error }),
+        );
+        if (pendingRef.current === pending) {
+          pendingRef.current = null;
+        }
+        throw error;
+      }
+    },
+    [navigate],
+  );
+
+  return useCallback(
+    (target: string) => {
+      const queued = queueRef.current
+        .catch(() => undefined)
+        .then(() => {
+          if (!activeRef.current) {
+            throw new Error('Navigation was interrupted');
+          }
+          return navigateAndWait(
+            target,
+            getAwaitedTarget(target, currentTargetRef.current),
+          );
+        });
+      queueRef.current = queued;
+      return queued;
+    },
+    [navigateAndWait],
   );
 }

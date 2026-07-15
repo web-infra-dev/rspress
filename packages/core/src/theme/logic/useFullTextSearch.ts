@@ -13,7 +13,7 @@ export function useFullTextSearch(): FullTextSearchState {
   const { siteData, page } = usePageData();
   const searchOptions = siteData.search;
   const versionedSearch =
-    typeof searchOptions !== 'boolean' && (searchOptions.versioned ?? true);
+    searchOptions !== false && (searchOptions.versioned ?? true);
   const currentVersion = versionedSearch ? page.version : '';
   const searcher = useMemo(
     () =>

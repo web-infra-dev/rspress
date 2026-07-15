@@ -1,49 +1,37 @@
 import type { NavItem, PageIndexInfo, SidebarData } from '@rspress/core';
-import type { WebMcpTool } from './types';
+import * as z from 'zod';
+import type { WebMcpInputSchema, WebMcpTool } from './types';
 
 export const READ_ONLY_UNTRUSTED_ANNOTATIONS = {
   readOnlyHint: true,
   untrustedContentHint: true,
 } as const;
 
-export const EMPTY_INPUT_SCHEMA = {
-  type: 'object',
-  properties: {},
-  additionalProperties: false,
-} as const;
+const EMPTY_INPUT = z.strictObject({});
+const NON_EMPTY_STRING = z.string().min(1).regex(/\S/);
+const LIST_PAGES_INPUT = z.strictObject({
+  query: NON_EMPTY_STRING.optional(),
+  lang: z.string().optional(),
+  version: z.string().optional(),
+  limit: z.int().min(1).max(100).optional(),
+  offset: z.int().min(0).optional(),
+});
+const SEARCH_INPUT = z.strictObject({
+  query: NON_EMPTY_STRING,
+  limit: z.int().min(1).max(20).optional(),
+});
+const NAVIGATE_INPUT = z.strictObject({ routePath: NON_EMPTY_STRING });
+
+const toInputSchema = (schema: z.ZodType): WebMcpInputSchema =>
+  z.toJSONSchema(schema) as WebMcpInputSchema;
+
+export const EMPTY_INPUT_SCHEMA = toInputSchema(EMPTY_INPUT);
 
 export const CURRENT_PAGE_INPUT_SCHEMA = EMPTY_INPUT_SCHEMA;
 
-export const LIST_PAGES_INPUT_SCHEMA = {
-  type: 'object',
-  properties: {
-    query: { type: 'string', minLength: 1 },
-    lang: { type: 'string' },
-    version: { type: 'string' },
-    limit: { type: 'integer', minimum: 1, maximum: 100 },
-    offset: { type: 'integer', minimum: 0 },
-  },
-  additionalProperties: false,
-} as const;
-
-export const SEARCH_INPUT_SCHEMA = {
-  type: 'object',
-  properties: {
-    query: { type: 'string', minLength: 1 },
-    limit: { type: 'integer', minimum: 1, maximum: 20 },
-  },
-  required: ['query'],
-  additionalProperties: false,
-} as const;
-
-export const NAVIGATE_INPUT_SCHEMA = {
-  type: 'object',
-  properties: {
-    routePath: { type: 'string', minLength: 1 },
-  },
-  required: ['routePath'],
-  additionalProperties: false,
-} as const;
+export const LIST_PAGES_INPUT_SCHEMA = toInputSchema(LIST_PAGES_INPUT);
+export const SEARCH_INPUT_SCHEMA = toInputSchema(SEARCH_INPUT);
+export const NAVIGATE_INPUT_SCHEMA = toInputSchema(NAVIGATE_INPUT);
 
 export type RuntimePageInfo = Pick<
   PageIndexInfo,
@@ -86,22 +74,20 @@ export interface NavigatePageContext {
   nextPage: { title: string; routePath: string } | null;
 }
 
-function validateToolInput<T extends Record<string, unknown>>(
+function validateToolInput<T extends z.ZodType>(
   input: unknown,
-  schema: { properties?: Readonly<Record<string, unknown>> },
-): T {
+  schema: T,
+): z.infer<T> {
   const value = input === undefined ? {} : input;
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
-    throw new TypeError('input must be an object');
+  const result = schema.safeParse(value);
+  if (!result.success) {
+    const issue = result.error.issues[0];
+    const location = issue.path.length ? ` at /${issue.path.join('/')}` : '';
+    throw new TypeError(
+      `Invalid WebMCP tool input${location}: ${issue.message}`,
+    );
   }
-  const allowedProperties = schema.properties ?? {};
-  const unknownProperty = Object.keys(value).find(
-    property => !Object.hasOwn(allowedProperties, property),
-  );
-  if (unknownProperty) {
-    throw new TypeError(`Unknown input property: ${unknownProperty}`);
-  }
-  return value as T;
+  return result.data;
 }
 
 function createMarkdownLoader(fetcher: typeof fetch) {
@@ -133,9 +119,7 @@ function createMarkdownLoader(fetcher: typeof fetch) {
         return markdown;
       })
       .catch(error => {
-        if (cache.get(markdownUrl) === request) {
-          cache.delete(markdownUrl);
-        }
+        cache.delete(markdownUrl);
         throw error;
       });
     cache.set(markdownUrl, request);
@@ -143,7 +127,7 @@ function createMarkdownLoader(fetcher: typeof fetch) {
   };
 }
 
-function withMarkdown(page: RuntimePageInfo, markdown: string) {
+function pageMetadata(page: RuntimePageInfo) {
   return {
     title: page.title,
     ...(page.description === undefined
@@ -152,6 +136,12 @@ function withMarkdown(page: RuntimePageInfo, markdown: string) {
     routePath: page.routePath,
     lang: page.lang,
     version: page.version,
+  };
+}
+
+function withMarkdown(page: RuntimePageInfo, markdown: string) {
+  return {
+    ...pageMetadata(page),
     frontmatter: page.frontmatter,
     toc: page.toc,
     markdown,
@@ -167,30 +157,20 @@ export function createSiteInfoTool(info: SiteInfo): WebMcpTool {
     inputSchema: EMPTY_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
     execute(input) {
-      validateToolInput(input, EMPTY_INPUT_SCHEMA);
+      validateToolInput(input, EMPTY_INPUT);
       return info;
     },
   };
 }
 
-type ListPagesInput = {
-  query?: string;
-  lang?: string;
-  version?: string;
-  limit?: number;
-  offset?: number;
-};
+type ListPagesInput = z.infer<typeof LIST_PAGES_INPUT>;
 
 function pageSearchText(page: RuntimePageInfo) {
   return [
     page.title,
     page.description,
     page.routePath,
-    ...page.toc.flatMap(item =>
-      typeof item === 'object' && item && 'text' in item
-        ? [String(item.text)]
-        : [],
-    ),
+    ...page.toc.map(item => item.text),
   ]
     .filter(Boolean)
     .join(' ')
@@ -199,13 +179,7 @@ function pageSearchText(page: RuntimePageInfo) {
 
 function pageSummary(page: RuntimePageInfo) {
   return {
-    title: page.title,
-    ...(page.description === undefined
-      ? {}
-      : { description: page.description }),
-    routePath: page.routePath,
-    lang: page.lang,
-    version: page.version,
+    ...pageMetadata(page),
     toc: page.toc,
   };
 }
@@ -222,26 +196,10 @@ export function createListPagesTool(
     inputSchema: LIST_PAGES_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
     execute(rawInput = {}) {
-      const input = validateToolInput<ListPagesInput>(
-        rawInput,
-        LIST_PAGES_INPUT_SCHEMA,
-      );
+      const input = validateToolInput(rawInput, LIST_PAGES_INPUT);
       const { query, lang = active.lang, version = active.version } = input;
       const limit = input.limit ?? 50;
       const offset = input.offset ?? 0;
-      if (query !== undefined && (typeof query !== 'string' || !query.trim())) {
-        throw new TypeError('query must be a non-empty string');
-      }
-      if (typeof lang !== 'string' || typeof version !== 'string') {
-        throw new TypeError('lang and version must be strings');
-      }
-      if (!Number.isInteger(limit) || limit < 1 || limit > 100) {
-        throw new TypeError('limit must be an integer between 1 and 100');
-      }
-      if (!Number.isInteger(offset) || offset < 0) {
-        throw new TypeError('offset must be a non-negative integer');
-      }
-
       const terms = query?.trim().toLowerCase().split(/\s+/) ?? [];
       const matches = pages.filter(page => {
         if (page.lang !== lang || page.version !== version) {
@@ -277,7 +235,7 @@ export function createCurrentPageTool(
     inputSchema: CURRENT_PAGE_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
     async execute(input) {
-      validateToolInput(input, CURRENT_PAGE_INPUT_SCHEMA);
+      validateToolInput(input, EMPTY_INPUT);
       return withMarkdown(page, await loadMarkdown(page, markdownUrl));
     },
   };
@@ -299,13 +257,7 @@ export function createPageTool(
     inputSchema: NAVIGATE_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
     async execute(rawInput) {
-      const input = validateToolInput<{ routePath: string }>(
-        rawInput,
-        NAVIGATE_INPUT_SCHEMA,
-      );
-      if (typeof input?.routePath !== 'string') {
-        throw new TypeError('routePath must be a string');
-      }
+      const input = validateToolInput(rawInput, NAVIGATE_INPUT);
       const resolvedRoute = resolveInternalRoute(
         input.routePath,
         resolvePath,
@@ -339,19 +291,7 @@ export function createSearchTool(
     inputSchema: SEARCH_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
     async execute(rawInput) {
-      const input = validateToolInput<{ query: string; limit?: number }>(
-        rawInput,
-        SEARCH_INPUT_SCHEMA,
-      );
-      if (typeof input?.query !== 'string' || input.query.trim() === '') {
-        throw new TypeError('query must be a non-empty string');
-      }
-      if (
-        input.limit !== undefined &&
-        (!Number.isInteger(input.limit) || input.limit < 1 || input.limit > 20)
-      ) {
-        throw new TypeError('limit must be an integer between 1 and 20');
-      }
+      const input = validateToolInput(rawInput, SEARCH_INPUT);
       return (await search(input.query, input.limit)).map(
         ({ group, result }) => ({ group, results: result }),
       );
@@ -393,15 +333,9 @@ export function createNavigateTool(
     description:
       'Navigate to a known internal Rspress documentation route and return the rendered page summary, section routes, and adjacent pages.',
     inputSchema: NAVIGATE_INPUT_SCHEMA,
-    annotations: { readOnlyHint: false },
+    annotations: { readOnlyHint: false, untrustedContentHint: true },
     async execute(rawInput) {
-      const input = validateToolInput<{ routePath: string }>(
-        rawInput,
-        NAVIGATE_INPUT_SCHEMA,
-      );
-      if (typeof input?.routePath !== 'string') {
-        throw new TypeError('routePath must be a string');
-      }
+      const input = validateToolInput(rawInput, NAVIGATE_INPUT);
       const target = resolveInternalRoute(input.routePath, resolvePath, origin);
       const page = await navigate(target);
       return { routePath: target, ...page };

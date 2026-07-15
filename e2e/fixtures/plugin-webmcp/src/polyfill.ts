@@ -1,27 +1,20 @@
 import '@mcp-b/webmcp-polyfill';
 
-interface TestModelContext {
-  registerTool(
-    tool: { name: string },
-    options?: { exposedTo?: string[]; signal?: AbortSignal },
-  ): Promise<void>;
-}
-
-const modelContext =
-  typeof document === 'undefined'
-    ? undefined
-    : (document as Document & { modelContext?: TestModelContext }).modelContext;
-
-if (modelContext) {
+const registrations: {
+  name: string;
+  exposedTo?: string[];
+  signal?: AbortSignal;
+}[] = [];
+if (typeof document !== 'undefined') {
+  const modelContext = document.modelContext;
   const registerTool = modelContext.registerTool.bind(modelContext);
   modelContext.registerTool = (tool, options) => {
-    const registrations = globalThis as typeof globalThis & {
-      __webMcpRegistrationOptions?: Record<string, { exposedTo?: string[] }>;
-    };
-    registrations.__webMcpRegistrationOptions ??= {};
-    registrations.__webMcpRegistrationOptions[tool.name] = {
+    registrations.push({
+      name: tool.name,
       exposedTo: options?.exposedTo,
-    };
+      signal: options?.signal,
+    });
     return registerTool(tool, options);
   };
+  Object.assign(globalThis, { __webMcpRegistrations: registrations });
 }

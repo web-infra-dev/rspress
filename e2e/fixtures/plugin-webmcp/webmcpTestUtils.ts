@@ -50,6 +50,27 @@ export async function findTool(page: Page, name: string) {
   return (await listTools(page)).find(tool => tool.name === name);
 }
 
+export function listRegistrations(page: Page, name?: string) {
+  return page.evaluate(name => {
+    const registrations = (
+      globalThis as typeof globalThis & {
+        __webMcpRegistrations: {
+          name: string;
+          exposedTo?: string[];
+          signal?: AbortSignal;
+        }[];
+      }
+    ).__webMcpRegistrations;
+    return registrations
+      .filter(registration => !name || registration.name === name)
+      .map(registration => ({
+        name: registration.name,
+        exposedTo: registration.exposedTo,
+        aborted: registration.signal?.aborted ?? false,
+      }));
+  }, name);
+}
+
 export async function executeTool(
   page: Page,
   name: string,

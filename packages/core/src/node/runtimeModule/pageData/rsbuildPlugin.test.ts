@@ -113,6 +113,20 @@ describe('page data rsbuild plugin', () => {
     expect(createPageData).toHaveBeenCalledTimes(1);
   });
 
+  test('rebuilds production data when the authoritative web alias arrives', async () => {
+    process.env.NODE_ENV = 'production';
+    const plugin = await setupPlugin();
+    await plugin.configureEnvironment('node', { fallback: '/fallback' });
+    await plugin.renderPageData();
+
+    await plugin.configureEnvironment('web', { web: '/web' });
+
+    expect(createPageData).toHaveBeenCalledTimes(2);
+    expect(createPageData).toHaveBeenLastCalledWith(
+      expect.objectContaining({ alias: { web: '/web' } }),
+    );
+  });
+
   test('regenerates in development and deduplicates concurrent requests', async () => {
     const plugin = await setupPlugin();
     await plugin.configureEnvironment('web', { web: '/web' });

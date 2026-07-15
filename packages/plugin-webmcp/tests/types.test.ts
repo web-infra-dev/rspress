@@ -43,13 +43,17 @@ describe('WebMCP public types', () => {
       description: 'Exercise the typed registration API.',
       inputSchema: {
         type: 'object',
-        properties: { query: { type: 'string' } },
+        properties: { query: { type: ['string', 'null'] } },
         required: ['query'],
       },
       outputSchema: {
-        type: 'object',
-        properties: { result: { type: 'string' } },
-        required: ['result'],
+        oneOf: [
+          {
+            type: 'object',
+            properties: { result: { type: ['string', 'null'] } },
+            required: ['result'],
+          },
+        ],
       },
       annotations: {
         readOnlyHint: true,

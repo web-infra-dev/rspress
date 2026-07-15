@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { type DependencyList, useEffect, useRef, useState } from 'react';
 import { registerWebMcpTool } from './register';
 import type {
   WebMcpTool,
@@ -10,12 +10,7 @@ function toError(error: unknown): Error {
   return error instanceof Error ? error : new Error(String(error));
 }
 
-interface DescriptorDependency {
-  key: string | undefined;
-  error: Error | null;
-}
-
-export function toDescriptorDependency(value: unknown): DescriptorDependency {
+export function toDescriptorDependency(value: unknown) {
   try {
     return { key: JSON.stringify(value), error: null };
   } catch (error) {
@@ -37,6 +32,7 @@ export function useWebMcpTool<
 >(
   tool: WebMcpTool<TInput, TResult, TName>,
   options: WebMcpToolRegistrationOptions = {},
+  deps: DependencyList = [],
 ): WebMcpToolHookState {
   const toolRef = useRef(tool);
   toolRef.current = tool;
@@ -85,7 +81,7 @@ export function useWebMcpTool<
       active = false;
       registration.unregister();
     };
-  }, [registrationDependency.key]);
+  }, [registrationDependency.key, ...deps]);
 
   return state;
 }

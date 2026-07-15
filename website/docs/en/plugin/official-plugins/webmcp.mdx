@@ -134,6 +134,8 @@ export function Counter({ count, increment }) {
 
 `status` is `registering`, `registered`, `unsupported`, or `error`. `error` contains registration failures. Descriptor metadata or registration-option changes automatically re-register the tool, while the latest `execute` callback is used without registration churn.
 
+Pass an optional dependency list as the third argument when an external value must force a fresh browser registration: `useWebMcpTool(tool, options, deps)`. Cleanup aborts the previous registration before the replacement is installed.
+
 The built-in tools validate inputs again during execution. Custom `execute` callbacks should also validate their arguments because draft browser runtimes may not enforce the published JSON Schema before invocation.
 
 The runtime also exports local `WebMcpTool`, annotation, registration, client, and hook-state types. The optional `outputSchema`, extended MCP annotations, and execution client are compatibility extensions that are forwarded when a browser runtime supports them; the native draft currently standardizes `inputSchema`, `readOnlyHint`, and `untrustedContentHint`.

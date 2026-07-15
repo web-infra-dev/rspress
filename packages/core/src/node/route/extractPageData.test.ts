@@ -162,6 +162,10 @@ describe('getPageIndexInfoByRoute', async () => {
     );
     expect(pageIndexInfo).toMatchInlineSnapshot(`
       {
+        "_deps": [
+          "<ROOT>/packages/core/src/node/route/fixtures/recursive/Comp-in-comp.mdx",
+          "<ROOT>/packages/core/src/node/route/fixtures/recursive/Comp.mdx",
+        ],
         "_filepath": "<ROOT>/packages/core/src/node/route/fixtures/recursive/index.mdx",
         "_flattenContent": "# Recursive comp test
 

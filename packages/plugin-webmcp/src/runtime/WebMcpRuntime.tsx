@@ -13,11 +13,11 @@ import {
   useVersion,
 } from '@rspress/core/runtime';
 import {
+  useAwaitedLinkNavigate,
   useFullTextSearch,
-  useLinkNavigate,
   usePrevNextPage,
 } from '@rspress/core/theme';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import type { WebMcpRuntimeOptions } from '../options';
 import {
   createCurrentPageTool,
@@ -31,14 +31,6 @@ import {
 } from './builtins';
 import { isWebMcpSupported } from './register';
 import { useWebMcpTool } from './useWebMcpTool';
-
-const NAVIGATION_TIMEOUT_MS = 10_000;
-
-interface PendingNavigation {
-  cancel(error: Error): void;
-  target: string;
-  resolve(context: NavigatePageContext): void;
-}
 
 function resolveRoutePath(pathname: string): string | undefined {
   return pathnameToRouteService(removeBase(pathname))?.path;
@@ -72,12 +64,10 @@ function createNavigatePageContext(
 }
 
 function useAwaitedNavigate() {
-  const navigate = useLinkNavigate();
   const { page } = usePage();
   const { prevPage, nextPage } = usePrevNextPage();
   const { search, hash } = useLocation();
-  const currentTarget = `${page.routePath}${search}${hash}`;
-  const currentTargetRef = useRef(currentTarget);
+  const navigate = useAwaitedLinkNavigate(`${page.routePath}${search}${hash}`);
   const pageContext = createNavigatePageContext(
     page,
     search,
@@ -86,90 +76,12 @@ function useAwaitedNavigate() {
   );
   const pageContextRef = useRef(pageContext);
   pageContextRef.current = pageContext;
-  const pendingRef = useRef<PendingNavigation | null>(null);
-  const queueRef = useRef<Promise<NavigatePageContext | void>>(
-    Promise.resolve(),
-  );
-
-  useEffect(() => {
-    currentTargetRef.current = currentTarget;
-    const pending = pendingRef.current;
-    if (pending?.target === currentTarget) {
-      pendingRef.current = null;
-      pending.resolve(pageContextRef.current);
-    }
-  }, [currentTarget]);
-
-  useEffect(
-    () => () => {
-      const error = new Error('Navigation was interrupted');
-      pendingRef.current?.cancel(error);
-      pendingRef.current = null;
-    },
-    [],
-  );
-
-  const navigateAndWait = useCallback(
+  return useCallback(
     async (target: string) => {
-      if (currentTargetRef.current === target) {
-        await navigate(target);
-        return pageContextRef.current;
-      }
-
-      let pending!: PendingNavigation;
-      const controller = new AbortController();
-      const completion = new Promise<NavigatePageContext>((resolve, reject) => {
-        const timeout = setTimeout(() => {
-          const error = new Error(
-            `Navigation did not complete within ${NAVIGATION_TIMEOUT_MS}ms`,
-          );
-          pending.cancel(error);
-        }, NAVIGATION_TIMEOUT_MS);
-        pending = {
-          cancel(error) {
-            clearTimeout(timeout);
-            controller.abort(error);
-            reject(error);
-          },
-          target,
-          resolve(context) {
-            clearTimeout(timeout);
-            resolve(context);
-          },
-        };
-        pendingRef.current = pending;
-      });
-
-      try {
-        const [, context] = await Promise.all([
-          navigate(target, { signal: controller.signal }),
-          completion,
-        ]);
-        return context;
-      } catch (error) {
-        pending.cancel(
-          error instanceof Error
-            ? error
-            : new Error('Navigation failed', { cause: error }),
-        );
-        if (pendingRef.current === pending) {
-          pendingRef.current = null;
-        }
-        throw error;
-      }
+      await navigate(target);
+      return pageContextRef.current;
     },
     [navigate],
-  );
-
-  return useCallback(
-    (target: string) => {
-      const queued = queueRef.current
-        .catch(() => undefined)
-        .then(() => navigateAndWait(target));
-      queueRef.current = queued;
-      return queued;
-    },
-    [navigateAndWait],
   );
 }
 
@@ -189,8 +101,7 @@ function CurrentPageTool({ exposedTo }: BuiltInToolProps) {
 
 function PageTool({ exposedTo }: BuiltInToolProps) {
   const { pages } = usePages();
-  const origin =
-    typeof window === 'undefined' ? 'http://localhost' : location.origin;
+  const origin = location.origin;
   const tool = useMemo(
     () => createPageTool(pages, resolveRoutePath, origin, routePathToMdPath),
     [pages, origin],
@@ -258,8 +169,7 @@ function SearchTool({ exposedTo }: BuiltInToolProps) {
 
 function NavigateTool({ exposedTo }: BuiltInToolProps) {
   const navigate = useAwaitedNavigate();
-  const origin =
-    typeof window === 'undefined' ? 'http://localhost' : location.origin;
+  const origin = location.origin;
   const tool = createNavigateTool(resolveRoutePath, origin, navigate);
   useWebMcpTool(tool, { exposedTo });
   return null;

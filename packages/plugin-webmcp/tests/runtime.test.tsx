@@ -16,8 +16,8 @@ rs.mock('@rspress/core/runtime', () => ({
 }));
 
 rs.mock('@rspress/core/theme', () => ({
+  useAwaitedLinkNavigate: rs.fn(),
   useFullTextSearch: rs.fn(),
-  useLinkNavigate: rs.fn(),
 }));
 
 describe('WebMcpRuntime', () => {
