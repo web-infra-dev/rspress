@@ -34,7 +34,6 @@
     "test:type": "tsc -p tests/tsconfig.json"
   },
   "devDependencies": {
-    "@mcp-b/webmcp-types": "4.0.0",
     "@microsoft/api-extractor": "^7.58.9",
     "@rsbuild/plugin-react": "~2.1.0",
     "@rslib/core": "0.23.2",
@@ -43,7 +42,8 @@
     "@types/react": "^19.2.17",
     "react": "^19.2.7",
     "rsbuild-plugin-publint": "^1.0.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "webmcp-types": "0.1.2"
   },
   "peerDependencies": {
     "@rspress/core": "workspace:^2.0.10",

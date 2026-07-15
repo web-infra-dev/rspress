@@ -8,7 +8,7 @@ export interface TestingTool {
 
 interface ProducerModelContext {
   getTools(): Promise<TestingTool[]>;
-  executeTool(tool: TestingTool, input: string): Promise<string | null>;
+  executeTool(tool: TestingTool, input: string): Promise<unknown | null>;
 }
 
 interface TestingModelContext {
@@ -76,7 +76,23 @@ export async function executeTool(
         if (!tool) {
           throw new Error(`Unknown WebMCP tool: ${name}`);
         }
-        return modelContext.executeTool(tool, inputJson);
+        const result = await modelContext.executeTool(tool, inputJson);
+        if (result === null) {
+          return null;
+        }
+        const text =
+          typeof result === 'string'
+            ? result
+            : (JSON.stringify(result) ?? String(result));
+        return JSON.stringify({
+          structuredContent: result ?? null,
+          content: [
+            {
+              type: 'text',
+              text,
+            },
+          ],
+        });
       }
       throw new Error('WebMCP tool execution is unavailable');
     },

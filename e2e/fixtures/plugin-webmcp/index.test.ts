@@ -23,6 +23,49 @@ const pageScopedToolFile = path.join(appDir, 'src/PageScopedTool.tsx');
 const homePageFile = path.join(appDir, 'doc/v1/en/index.mdx');
 const guidePageFile = path.join(appDir, 'doc/v1/en/guide.mdx');
 
+test('normalizes native WebMCP execution results', async ({ page }) => {
+  await page.goto('about:blank');
+  await page.evaluate(() => {
+    const tools = ['native_echo', 'native_void'].map(name => ({
+      name,
+      description: name,
+      inputSchema: '{"type":"object"}',
+    }));
+    Object.defineProperty(document, 'modelContext', {
+      configurable: true,
+      value: {
+        async getTools() {
+          return tools;
+        },
+        async executeTool(tool: { name: string }, input: string) {
+          return tool.name === 'native_void'
+            ? undefined
+            : { tool: tool.name, input: JSON.parse(input) };
+        },
+      },
+    });
+  });
+
+  await expect(
+    executeTool(page, 'native_echo', { value: 'ok' }),
+  ).resolves.toEqual({
+    structuredContent: {
+      tool: 'native_echo',
+      input: { value: 'ok' },
+    },
+    content: [
+      {
+        type: 'text',
+        text: '{"tool":"native_echo","input":{"value":"ok"}}',
+      },
+    ],
+  });
+  await expect(executeTool(page, 'native_void', {})).resolves.toEqual({
+    structuredContent: null,
+    content: [{ type: 'text', text: 'undefined' }],
+  });
+});
+
 test.describe('plugin-webmcp preview', () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runPreviewCommand>> | undefined;
@@ -61,6 +104,29 @@ test.describe('plugin-webmcp preview', () => {
 
   test('lists descriptors and reads generated Markdown', async ({ page }) => {
     const tools = await listTools(page);
+    const registrationOptions = await page.evaluate(
+      () =>
+        (
+          globalThis as typeof globalThis & {
+            __webMcpRegistrationOptions?: Record<
+              string,
+              { exposedTo?: string[] }
+            >;
+          }
+        ).__webMcpRegistrationOptions,
+    );
+    for (const name of [
+      'rspress_get_site_info',
+      'rspress_list_pages',
+      'rspress_get_page',
+      'rspress_get_current_page',
+      'rspress_search_docs',
+      'rspress_navigate',
+    ]) {
+      expect(registrationOptions?.[name]).toEqual({
+        exposedTo: ['https://agent.example'],
+      });
+    }
     const currentPageTool = tools.find(
       tool => tool.name === 'rspress_get_current_page',
     );

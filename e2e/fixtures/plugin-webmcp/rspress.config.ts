@@ -30,5 +30,5 @@ export default defineConfig({
       preEntry: path.join(import.meta.dirname, 'src/polyfill.ts'),
     },
   },
-  plugins: [pluginWebMcp()],
+  plugins: [pluginWebMcp({ exposedTo: ['https://agent.example'] })],
 });

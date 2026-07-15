@@ -173,17 +173,21 @@ function useAwaitedNavigate() {
   );
 }
 
-function CurrentPageTool() {
+interface BuiltInToolProps {
+  exposedTo?: string[];
+}
+
+function CurrentPageTool({ exposedTo }: BuiltInToolProps) {
   const { page } = usePage();
   const tool = useMemo(
     () => createCurrentPageTool(page, routePathToMdPath(page.routePath)),
     [page],
   );
-  useWebMcpTool(tool);
+  useWebMcpTool(tool, { exposedTo });
   return null;
 }
 
-function PageTool() {
+function PageTool({ exposedTo }: BuiltInToolProps) {
   const { pages } = usePages();
   const origin =
     typeof window === 'undefined' ? 'http://localhost' : location.origin;
@@ -191,11 +195,11 @@ function PageTool() {
     () => createPageTool(pages, resolveRoutePath, origin, routePathToMdPath),
     [pages, origin],
   );
-  useWebMcpTool(tool);
+  useWebMcpTool(tool, { exposedTo });
   return null;
 }
 
-function SiteInfoTool() {
+function SiteInfoTool({ exposedTo }: BuiltInToolProps) {
   const { site } = useSite();
   const lang = useLang();
   const version = useVersion();
@@ -218,11 +222,11 @@ function SiteInfoTool() {
       }),
     [site, lang, version, nav, sidebar],
   );
-  useWebMcpTool(tool);
+  useWebMcpTool(tool, { exposedTo });
   return null;
 }
 
-function ListPagesTool() {
+function ListPagesTool({ exposedTo }: BuiltInToolProps) {
   const { pages } = usePages();
   const lang = useLang();
   const version = useVersion();
@@ -230,45 +234,53 @@ function ListPagesTool() {
     () => createListPagesTool(pages, { lang, version }),
     [pages, lang, version],
   );
-  useWebMcpTool(tool);
+  useWebMcpTool(tool, { exposedTo });
   return null;
 }
 
 function RegisteredSearchTool({
+  exposedTo,
   search,
 }: {
+  exposedTo?: string[];
   search: (query: string, limit?: number) => Promise<SearchGroup[]>;
 }) {
-  useWebMcpTool(createSearchTool(search));
+  useWebMcpTool(createSearchTool(search), { exposedTo });
   return null;
 }
 
-function SearchTool() {
+function SearchTool({ exposedTo }: BuiltInToolProps) {
   const searchState = useFullTextSearch();
   return searchState.initialized ? (
-    <RegisteredSearchTool search={searchState.search} />
+    <RegisteredSearchTool exposedTo={exposedTo} search={searchState.search} />
   ) : null;
 }
 
-function NavigateTool() {
+function NavigateTool({ exposedTo }: BuiltInToolProps) {
   const navigate = useAwaitedNavigate();
   const origin =
     typeof window === 'undefined' ? 'http://localhost' : location.origin;
   const tool = createNavigateTool(resolveRoutePath, origin, navigate);
-  useWebMcpTool(tool);
+  useWebMcpTool(tool, { exposedTo });
   return null;
 }
 
-function SupportedWebMcpRuntime({ tools }: WebMcpRuntimeOptions) {
+function SupportedWebMcpRuntime({ exposedTo, tools }: WebMcpRuntimeOptions) {
   const { site } = useSite();
   return (
     <>
-      {tools.siteInfo ? <SiteInfoTool /> : null}
-      {tools.listPages ? <ListPagesTool /> : null}
-      {tools.getPage && isProduction() ? <PageTool /> : null}
-      {tools.currentPage && isProduction() ? <CurrentPageTool /> : null}
-      {tools.search && site.search !== false ? <SearchTool /> : null}
-      {tools.navigate ? <NavigateTool /> : null}
+      {tools.siteInfo ? <SiteInfoTool exposedTo={exposedTo} /> : null}
+      {tools.listPages ? <ListPagesTool exposedTo={exposedTo} /> : null}
+      {tools.getPage && isProduction() ? (
+        <PageTool exposedTo={exposedTo} />
+      ) : null}
+      {tools.currentPage && isProduction() ? (
+        <CurrentPageTool exposedTo={exposedTo} />
+      ) : null}
+      {tools.search && site.search !== false ? (
+        <SearchTool exposedTo={exposedTo} />
+      ) : null}
+      {tools.navigate ? <NavigateTool exposedTo={exposedTo} /> : null}
     </>
   );
 }

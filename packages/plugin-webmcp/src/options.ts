@@ -32,10 +32,16 @@ export interface PluginWebMcpToolsOptions {
 }
 
 export interface PluginWebMcpOptions {
+  /**
+   * Secure cross-origin agents allowed to discover and execute built-in tools.
+   * Same-origin and browser-integrated agents do not require this option.
+   */
+  exposedTo?: string[];
   tools?: PluginWebMcpToolsOptions;
 }
 
 export interface WebMcpRuntimeOptions {
+  exposedTo?: string[];
   tools: Required<PluginWebMcpToolsOptions>;
 }
 
@@ -43,6 +49,9 @@ export function normalizePluginWebMcpOptions(
   options: PluginWebMcpOptions = {},
 ): WebMcpRuntimeOptions {
   return {
+    ...(options.exposedTo === undefined
+      ? {}
+      : { exposedTo: [...options.exposedTo] }),
     tools: {
       siteInfo: options.tools?.siteInfo ?? true,
       listPages: options.tools?.listPages ?? true,

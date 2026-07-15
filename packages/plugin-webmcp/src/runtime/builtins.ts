@@ -86,6 +86,24 @@ export interface NavigatePageContext {
   nextPage: { title: string; routePath: string } | null;
 }
 
+function validateToolInput<T extends Record<string, unknown>>(
+  input: unknown,
+  schema: { properties?: Readonly<Record<string, unknown>> },
+): T {
+  const value = input === undefined ? {} : input;
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    throw new TypeError('input must be an object');
+  }
+  const allowedProperties = schema.properties ?? {};
+  const unknownProperty = Object.keys(value).find(
+    property => !Object.hasOwn(allowedProperties, property),
+  );
+  if (unknownProperty) {
+    throw new TypeError(`Unknown input property: ${unknownProperty}`);
+  }
+  return value as T;
+}
+
 function createMarkdownLoader(fetcher: typeof fetch) {
   const cache = new Map<string, Promise<string>>();
 
@@ -148,7 +166,8 @@ export function createSiteInfoTool(info: SiteInfo): WebMcpTool {
       'Return Rspress site metadata, locales, versions, navigation, and the active sidebar.',
     inputSchema: EMPTY_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
-    execute() {
+    execute(input) {
+      validateToolInput(input, EMPTY_INPUT_SCHEMA);
       return info;
     },
   };
@@ -202,7 +221,11 @@ export function createListPagesTool(
       'List and filter Rspress page metadata for documentation discovery.',
     inputSchema: LIST_PAGES_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
-    execute(input = {}) {
+    execute(rawInput = {}) {
+      const input = validateToolInput<ListPagesInput>(
+        rawInput,
+        LIST_PAGES_INPUT_SCHEMA,
+      );
       const { query, lang = active.lang, version = active.version } = input;
       const limit = input.limit ?? 50;
       const offset = input.offset ?? 0;
@@ -224,8 +247,10 @@ export function createListPagesTool(
         if (page.lang !== lang || page.version !== version) {
           return false;
         }
-        const searchText = pageSearchText(page);
-        return terms.every(term => searchText.includes(term));
+        return (
+          terms.length === 0 ||
+          terms.every(term => pageSearchText(page).includes(term))
+        );
       });
       return {
         pages: matches.slice(offset, offset + limit).map(pageSummary),
@@ -251,7 +276,8 @@ export function createCurrentPageTool(
       'Return metadata and generated Markdown for the current Rspress page.',
     inputSchema: CURRENT_PAGE_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
-    async execute() {
+    async execute(input) {
+      validateToolInput(input, CURRENT_PAGE_INPUT_SCHEMA);
       return withMarkdown(page, await loadMarkdown(page, markdownUrl));
     },
   };
@@ -272,7 +298,11 @@ export function createPageTool(
       'Return metadata and generated Markdown for a known Rspress route without navigating.',
     inputSchema: NAVIGATE_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
-    async execute(input) {
+    async execute(rawInput) {
+      const input = validateToolInput<{ routePath: string }>(
+        rawInput,
+        NAVIGATE_INPUT_SCHEMA,
+      );
       if (typeof input?.routePath !== 'string') {
         throw new TypeError('routePath must be a string');
       }
@@ -308,7 +338,11 @@ export function createSearchTool(
     description: 'Search the local Rspress documentation index.',
     inputSchema: SEARCH_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
-    async execute(input) {
+    async execute(rawInput) {
+      const input = validateToolInput<{ query: string; limit?: number }>(
+        rawInput,
+        SEARCH_INPUT_SCHEMA,
+      );
       if (typeof input?.query !== 'string' || input.query.trim() === '') {
         throw new TypeError('query must be a non-empty string');
       }
@@ -360,7 +394,11 @@ export function createNavigateTool(
       'Navigate to a known internal Rspress documentation route and return the rendered page summary, section routes, and adjacent pages.',
     inputSchema: NAVIGATE_INPUT_SCHEMA,
     annotations: { readOnlyHint: false },
-    async execute(input) {
+    async execute(rawInput) {
+      const input = validateToolInput<{ routePath: string }>(
+        rawInput,
+        NAVIGATE_INPUT_SCHEMA,
+      );
       if (typeof input?.routePath !== 'string') {
         throw new TypeError('routePath must be a string');
       }

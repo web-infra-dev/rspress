@@ -1771,9 +1771,6 @@ importers:
         specifier: workspace:^2.0.10
         version: link:../core
     devDependencies:
-      '@mcp-b/webmcp-types':
-        specifier: 4.0.0
-        version: 4.0.0
       '@microsoft/api-extractor':
         specifier: ^7.58.9
         version: 7.58.9(@types/node@22.19.15)
@@ -1801,6 +1798,9 @@ importers:
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
+      webmcp-types:
+        specifier: 0.1.2
+        version: 0.1.2
 
   packages/shared:
     dependencies:
@@ -7468,6 +7468,9 @@ packages:
 
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
+
+  webmcp-types@0.1.2:
+    resolution: {integrity: sha512-weWM+Iyj7rITLBoANf3GjxOD25MgriZnKUafJOXErmOnTbbHp5kr7hcPl+UlfeSlwtvE8+55HozF6jxtv0j17g==}
 
   webpack-sources@3.5.0:
     resolution: {integrity: sha512-HPuy+uuoTCaaoEoI1LQ3JN9+vrPBvEesnnX1jADHy728cHSMlq4wUc4afYqahq2B1mhQVZxCXOkNTnXltr+2vQ==}
@@ -14094,6 +14097,8 @@ snapshots:
       defaults: 1.0.4
 
   web-namespaces@2.0.1: {}
+
+  webmcp-types@0.1.2: {}
 
   webpack-sources@3.5.0:
     optional: true

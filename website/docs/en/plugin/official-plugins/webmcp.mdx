@@ -32,6 +32,26 @@ The plugin registers these tools by default:
 - `rspress_search_docs`: Searches the local Rspress search index. It is omitted when local search is disabled, including when Algolia is active.
 - `rspress_navigate`: Navigates only to known internal documentation routes. Query strings and hashes are supported. It returns lightweight metadata, section headings, and previous/next pages for the destination without fetching Markdown.
 
+`rspress_navigate` resolves after the SPA route renders. Its result confirms the destination and provides immediate navigation choices:
+
+```json
+{
+  "routePath": "/guide?source=agent#install",
+  "page": { "title": "Guide", "lang": "en", "version": "v2" },
+  "sections": [
+    {
+      "title": "Install",
+      "depth": 2,
+      "routePath": "/guide?source=agent#install"
+    }
+  ],
+  "previousPage": { "title": "Introduction", "routePath": "/intro" },
+  "nextPage": { "title": "Configuration", "routePath": "/config" }
+}
+```
+
+Call `rspress_get_page` with the returned `routePath` only when the agent needs the full Markdown.
+
 The two Markdown tools automatically enable [`llms: true`](/guide/basic/ssg-md). An existing `true` or object configuration is preserved. An explicit `llms: false` conflicts unless both `getPage` and `currentPage` are disabled.
 
 SSG-MD emits `.md` files during `rspress build`. `rspress_get_page` and `rspress_get_current_page` are omitted during `rspress dev`, where generated Markdown is unavailable. Site information, page listings, local search, navigation, and custom tools remain available and update through HMR.
@@ -42,6 +62,7 @@ Disable individual built-in tools with `tools`:
 
 ```ts title="rspress.config.ts"
 pluginWebMcp({
+  exposedTo: ['https://agent.example'],
   tools: {
     siteInfo: true,
     listPages: true,
@@ -54,6 +75,8 @@ pluginWebMcp({
 ```
 
 All six options default to `true`.
+
+Set `exposedTo` to forward secure origins to every built-in tool registration. Same-origin and browser-integrated agents do not need it. A cross-origin agent must also request the site origin with `getTools({ fromOrigins })`; cross-origin iframes additionally require the `tools` Permissions Policy.
 
 ## Custom tools
 
@@ -110,6 +133,8 @@ export function Counter({ count, increment }) {
 ```
 
 `status` is `registering`, `registered`, `unsupported`, or `error`. `error` contains registration failures. Descriptor metadata or registration-option changes automatically re-register the tool, while the latest `execute` callback is used without registration churn.
+
+The built-in tools validate inputs again during execution. Custom `execute` callbacks should also validate their arguments because draft browser runtimes may not enforce the published JSON Schema before invocation.
 
 The runtime also exports local `WebMcpTool`, annotation, registration, client, and hook-state types. The optional `outputSchema`, extended MCP annotations, and execution client are compatibility extensions that are forwarded when a browser runtime supports them; the native draft currently standardizes `inputSchema`, `readOnlyHint`, and `untrustedContentHint`.
 

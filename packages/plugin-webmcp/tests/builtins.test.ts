@@ -62,6 +62,15 @@ describe('WebMCP built-in tools', () => {
     };
     const tool = createSiteInfoTool(info);
     expect(tool.execute({})).toEqual(info);
+    expect(() => tool.execute(null as never)).toThrow(
+      'input must be an object',
+    );
+    expect(() => tool.execute({ unexpected: true })).toThrow(
+      'Unknown input property: unexpected',
+    );
+    expect(() => tool.execute({ toString: true })).toThrow(
+      'Unknown input property: toString',
+    );
     expect(tool.inputSchema).toBe(EMPTY_INPUT_SCHEMA);
     expect(tool.annotations).toBe(READ_ONLY_UNTRUSTED_ANNOTATIONS);
   });
@@ -95,6 +104,9 @@ describe('WebMCP built-in tools', () => {
     expect(() => tool.execute({ offset: -1 })).toThrow(
       'offset must be a non-negative integer',
     );
+    expect(() => tool.execute({ unexpected: true } as never)).toThrow(
+      'Unknown input property: unexpected',
+    );
     expect(tool.inputSchema).toBe(LIST_PAGES_INPUT_SCHEMA);
     expect(tool.annotations).toBe(READ_ONLY_UNTRUSTED_ANNOTATIONS);
   });
@@ -119,6 +131,11 @@ describe('WebMCP built-in tools', () => {
       '/guide.md',
       fetcher,
     );
+
+    await expect(tool.execute({ unexpected: true })).rejects.toThrow(
+      'Unknown input property: unexpected',
+    );
+    expect(fetchCount).toBe(0);
 
     const [first, second] = await Promise.all([
       tool.execute({}),
@@ -220,6 +237,9 @@ describe('WebMCP built-in tools', () => {
     await expect(tool.execute({ routePath: '/missing' })).rejects.toThrow(
       'Unknown internal route',
     );
+    await expect(
+      tool.execute({ routePath: '/guide', unexpected: true } as never),
+    ).rejects.toThrow('Unknown input property: unexpected');
   });
 
   test('retries a failed arbitrary-page Markdown request', async () => {
@@ -258,6 +278,9 @@ describe('WebMCP built-in tools', () => {
     await expect(tool.execute({ query: 'x', limit: 21 })).rejects.toThrow(
       'limit must be an integer between 1 and 20',
     );
+    await expect(
+      tool.execute({ query: 'x', unexpected: true } as never),
+    ).rejects.toThrow('Unknown input property: unexpected');
     expect(tool.inputSchema).toBe(SEARCH_INPUT_SCHEMA);
     expect(tool.annotations).toBe(READ_ONLY_UNTRUSTED_ANNOTATIONS);
   });
@@ -331,6 +354,9 @@ describe('WebMCP built-in tools', () => {
       routePath: '/api/#types',
       ...pageContext,
     });
+    await expect(
+      tool.execute({ routePath: '/api', unexpected: true } as never),
+    ).rejects.toThrow('Unknown input property: unexpected');
     expect(target).toBe('/api/#types');
     expect(tool.inputSchema).toBe(NAVIGATE_INPUT_SCHEMA);
     expect(tool.annotations).toEqual({ readOnlyHint: false });

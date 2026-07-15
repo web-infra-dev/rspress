@@ -24,6 +24,7 @@ function getRuntimeOptions(plugin: RspressPlugin) {
     throw new TypeError('Expected a global component with runtime options');
   }
   return component[1] as {
+    exposedTo?: string[];
     tools: {
       siteInfo: boolean;
       listPages: boolean;
@@ -49,9 +50,11 @@ describe('pluginWebMcp', () => {
     });
     expect(
       normalizePluginWebMcpOptions({
+        exposedTo: ['https://agent.example'],
         tools: { currentPage: false, navigate: false },
       }),
     ).toEqual({
+      exposedTo: ['https://agent.example'],
       tools: {
         siteInfo: true,
         listPages: true,
@@ -82,6 +85,7 @@ describe('pluginWebMcp', () => {
 
   test('keeps requested tools unchanged across the build lifecycle', async () => {
     const plugin = pluginWebMcp({
+      exposedTo: ['https://agent.example'],
       tools: { currentPage: true, search: false, navigate: false },
     });
     const runtimeOptions = getRuntimeOptions(plugin);
@@ -97,6 +101,7 @@ describe('pluginWebMcp', () => {
       search: false,
       navigate: false,
     });
+    expect(runtimeOptions.exposedTo).toEqual(['https://agent.example']);
   });
 
   test.each([true, { remarkSplitMdxOptions: {} }])(
