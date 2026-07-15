@@ -99,10 +99,6 @@ export interface SearchGroup {
   result: unknown;
 }
 
-export function normalizeSearchResults(results: SearchGroup[]) {
-  return results.map(({ group, result }) => ({ group, results: result }));
-}
-
 export function createSearchTool(
   search: (query: string, limit?: number) => Promise<SearchGroup[]>,
 ): WebMcpTool<{ query: string; limit?: number }> {
@@ -122,7 +118,9 @@ export function createSearchTool(
       ) {
         throw new TypeError('limit must be an integer between 1 and 20');
       }
-      return normalizeSearchResults(await search(input.query, input.limit));
+      return (await search(input.query, input.limit)).map(
+        ({ group, result }) => ({ group, results: result }),
+      );
     },
   };
 }

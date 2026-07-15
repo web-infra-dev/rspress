@@ -1,16 +1,14 @@
-import path from 'node:path';
+import { join } from 'node:path';
 import type { RspressPlugin, UserConfig } from '@rspress/core';
 import {
   normalizePluginWebMcpOptions,
   type PluginWebMcpOptions,
-  type WebMcpRuntimeOptions,
 } from './options';
 
 export type { PluginWebMcpOptions, PluginWebMcpToolsOptions } from './options';
 
 export function pluginWebMcp(options?: PluginWebMcpOptions): RspressPlugin {
-  const runtimeOptions: WebMcpRuntimeOptions =
-    normalizePluginWebMcpOptions(options);
+  const runtimeOptions = normalizePluginWebMcpOptions(options);
 
   const requireSsgMd = (config: UserConfig, isProd: boolean) => {
     if (!runtimeOptions.tools.currentPage || !isProd) {
@@ -36,7 +34,7 @@ export function pluginWebMcp(options?: PluginWebMcpOptions): RspressPlugin {
       requireSsgMd(config, isProd);
     },
     globalUIComponents: [
-      [path.join(__dirname, 'runtime/WebMcpRuntime.js'), runtimeOptions],
+      [join(__dirname, 'runtime/WebMcpRuntime.js'), runtimeOptions],
     ],
   };
 }

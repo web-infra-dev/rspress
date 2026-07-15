@@ -11,15 +11,13 @@ export interface PluginWebMcpOptions {
   tools?: PluginWebMcpToolsOptions;
 }
 
-export interface NormalizedPluginWebMcpOptions {
+export interface WebMcpRuntimeOptions {
   tools: Required<PluginWebMcpToolsOptions>;
 }
 
-export type WebMcpRuntimeOptions = NormalizedPluginWebMcpOptions;
-
 export function normalizePluginWebMcpOptions(
   options: PluginWebMcpOptions = {},
-): NormalizedPluginWebMcpOptions {
+): WebMcpRuntimeOptions {
   return {
     tools: {
       currentPage: options.tools?.currentPage ?? true,

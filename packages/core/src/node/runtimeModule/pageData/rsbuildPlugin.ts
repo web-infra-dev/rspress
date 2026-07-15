@@ -12,12 +12,11 @@ export const rsbuildPluginDocVM = async ({
   pluginDriver,
 }: Omit<FactoryContext, 'alias'>): Promise<RsbuildPlugin[]> => {
   let pageDataResult: Awaited<ReturnType<typeof createPageData>> | undefined;
-  let fallbackAlias: Record<string, string> | undefined;
-  let webAlias: Record<string, string> | undefined;
+  let pageDataAlias: Record<string, string> | undefined;
   let refreshPromise: Promise<void> | undefined;
 
   const refreshPageData = async (releaseInDevelopment = false) => {
-    const alias = webAlias ?? fallbackAlias;
+    const alias = pageDataAlias;
     if (!alias) {
       return;
     }
@@ -55,9 +54,9 @@ export const rsbuildPluginDocVM = async ({
     async setup(api) {
       api.modifyBundlerChain(async (bundlerChain, { environment }) => {
         const alias = bundlerChain.resolve.alias.entries();
-        fallbackAlias ??= alias as Record<string, string>;
+        pageDataAlias ??= alias as Record<string, string>;
         if (environment.name === 'web') {
-          webAlias = alias as Record<string, string>;
+          pageDataAlias = alias as Record<string, string>;
           await refreshPageData();
         }
 

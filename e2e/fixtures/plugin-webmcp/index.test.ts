@@ -25,7 +25,7 @@ const guidePageFile = path.join(appDir, 'doc/v1/en/guide.mdx');
 
 test.describe('plugin-webmcp preview', () => {
   let appPort: number;
-  let app: Awaited<ReturnType<typeof runPreviewCommand>>;
+  let app: Awaited<ReturnType<typeof runPreviewCommand>> | undefined;
 
   test.beforeAll(async () => {
     appPort = await getPort();
@@ -35,7 +35,9 @@ test.describe('plugin-webmcp preview', () => {
   });
 
   test.afterAll(async () => {
-    await killProcess(app);
+    if (app) {
+      await killProcess(app);
+    }
     rmSync(outputDir, { recursive: true, force: true });
   });
 
@@ -274,7 +276,7 @@ test.describe('plugin-webmcp preview', () => {
 
 test.describe('plugin-webmcp development server', () => {
   let appPort: number;
-  let app: Awaited<ReturnType<typeof runDevCommand>>;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | undefined;
   let originalCounterTools: string;
   let originalPageScopedTool: string;
   let originalHomePage: string;
@@ -297,13 +299,18 @@ test.describe('plugin-webmcp development server', () => {
   });
 
   test.afterAll(async () => {
-    await Promise.all([
-      writeFile(counterToolsFile, originalCounterTools),
-      writeFile(pageScopedToolFile, originalPageScopedTool),
-      writeFile(homePageFile, originalHomePage),
-      writeFile(guidePageFile, originalGuidePage),
-    ]);
-    await killProcess(app);
+    try {
+      if (app) {
+        await killProcess(app);
+      }
+    } finally {
+      await Promise.all([
+        writeFile(counterToolsFile, originalCounterTools),
+        writeFile(pageScopedToolFile, originalPageScopedTool),
+        writeFile(homePageFile, originalHomePage),
+        writeFile(guidePageFile, originalGuidePage),
+      ]);
+    }
   });
 
   test.beforeEach(async ({ page }) => {
