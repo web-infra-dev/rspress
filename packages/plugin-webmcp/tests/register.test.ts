@@ -56,31 +56,25 @@ describe('registerWebMcpTool', () => {
     expect(registeredOptions?.signal?.aborted).toBe(true);
   });
 
-  test('exposes synchronous and asynchronous registration failures', async () => {
-    const syncError = new Error('sync failure');
-    let syncSignal: AbortSignal | undefined;
-    setDocument({
-      modelContext: {
-        registerTool(_tool: WebMcpTool, options: { signal?: AbortSignal }) {
-          syncSignal = options.signal;
-          throw syncError;
+  test.each(['synchronous', 'asynchronous'] as const)(
+    'exposes %s registration failures',
+    async mode => {
+      const error = new Error(`${mode} failure`);
+      let signal: AbortSignal | undefined;
+      setDocument({
+        modelContext: {
+          registerTool(_tool: WebMcpTool, options: { signal?: AbortSignal }) {
+            signal = options.signal;
+            if (mode === 'synchronous') {
+              throw error;
+            }
+            return Promise.reject(error);
+          },
         },
-      },
-    });
-    await expect(registerWebMcpTool(tool)?.ready).rejects.toBe(syncError);
-    expect(syncSignal?.aborted).toBe(true);
+      });
 
-    const asyncError = new Error('async failure');
-    let asyncSignal: AbortSignal | undefined;
-    setDocument({
-      modelContext: {
-        registerTool(_tool: WebMcpTool, options: { signal?: AbortSignal }) {
-          asyncSignal = options.signal;
-          return Promise.reject(asyncError);
-        },
-      },
-    });
-    await expect(registerWebMcpTool(tool)?.ready).rejects.toBe(asyncError);
-    expect(asyncSignal?.aborted).toBe(true);
-  });
+      await expect(registerWebMcpTool(tool)?.ready).rejects.toBe(error);
+      expect(signal?.aborted).toBe(true);
+    },
+  );
 });

@@ -30,7 +30,8 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
-    "reset": "rimraf ./**/node_modules"
+    "reset": "rimraf ./**/node_modules",
+    "test:type": "tsc -p tests/tsconfig.json"
   },
   "devDependencies": {
     "@mcp-b/webmcp-types": "4.0.0",

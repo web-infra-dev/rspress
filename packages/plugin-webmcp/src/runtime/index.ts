@@ -1,5 +1,7 @@
 export { registerWebMcpTool } from './register';
 export type {
+  WebMcpInputSchema,
+  WebMcpInputSchemaProperty,
   WebMcpJsonSchema,
   WebMcpModelContext,
   WebMcpModelContextClient,

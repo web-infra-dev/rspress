@@ -346,10 +346,7 @@ test.describe('plugin-webmcp development server', () => {
 
     await expect
       .poll(async () => {
-        const tool = (await listTools(page)).find(
-          candidate => candidate.name === 'fixture_increment_counter',
-        );
-        return tool?.description;
+        return (await findTool(page, 'fixture_increment_counter'))?.description;
       })
       .toContain('by one');
     await executeTool(page, 'fixture_reset_counter', {});
@@ -382,10 +379,7 @@ test.describe('plugin-webmcp development server', () => {
 
     await expect
       .poll(async () => {
-        const tool = (await listTools(page)).find(
-          candidate => candidate.name === 'fixture_page_scoped',
-        );
-        return tool?.description;
+        return (await findTool(page, 'fixture_page_scoped'))?.description;
       })
       .toContain('guide page');
 

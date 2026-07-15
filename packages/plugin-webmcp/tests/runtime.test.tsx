@@ -19,8 +19,6 @@ describe('WebMcpRuntime', () => {
     expect(
       WebMcpRuntime({
         tools: { currentPage: true, search: true, navigate: true },
-        currentPageEnabled: false,
-        searchEnabled: true,
       }),
     ).toBeNull();
   });

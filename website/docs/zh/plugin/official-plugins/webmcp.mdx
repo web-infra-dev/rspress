@@ -103,7 +103,7 @@ export function Counter({ count, increment }) {
 }
 ```
 
-`status` 的值为 `registering`、`registered`、`unsupported` 或 `error`，注册失败信息保存在 `error` 中。工具描述元数据变化时会自动重新注册；仅 `execute` 回调变化时会直接使用最新回调，不会反复注册。只有其他值必须触发完整注销和注册流程时，才需要传入可选的第三个 `deps` 参数。
+`status` 的值为 `registering`、`registered`、`unsupported` 或 `error`，注册失败信息保存在 `error` 中。工具描述元数据或注册选项变化时会自动重新注册；仅 `execute` 回调变化时会直接使用最新回调，不会反复注册。
 
 运行时还导出了本地的 `WebMcpTool`、注解、注册、客户端和 Hook 状态类型。可选的 `outputSchema`、扩展 MCP 注解和执行客户端属于兼容性扩展，仅在浏览器运行时支持时透传；原生草案目前标准化了 `inputSchema`、`readOnlyHint` 和 `untrustedContentHint`。
 

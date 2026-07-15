@@ -15,10 +15,7 @@ export interface NormalizedPluginWebMcpOptions {
   tools: Required<PluginWebMcpToolsOptions>;
 }
 
-export interface WebMcpRuntimeOptions extends NormalizedPluginWebMcpOptions {
-  currentPageEnabled: boolean;
-  searchEnabled: boolean;
-}
+export type WebMcpRuntimeOptions = NormalizedPluginWebMcpOptions;
 
 export function normalizePluginWebMcpOptions(
   options: PluginWebMcpOptions = {},

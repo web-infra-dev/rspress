@@ -1,9 +1,11 @@
 import {
+  isProduction,
   pathnameToRouteService,
   removeBase,
   routePathToMdPath,
   useLocation,
   usePage,
+  useSite,
 } from '@rspress/core/runtime';
 import { useFullTextSearch, useLinkNavigate } from '@rspress/core/theme';
 import { useCallback, useEffect, useRef } from 'react';
@@ -122,7 +124,7 @@ function useAwaitedNavigate() {
 function CurrentPageTool() {
   const { page } = usePage();
   const tool = createCurrentPageTool(page, routePathToMdPath(page.routePath));
-  useWebMcpTool(tool, undefined, [page.routePath]);
+  useWebMcpTool(tool);
   return null;
 }
 
@@ -136,9 +138,9 @@ function RegisteredSearchTool({
 }
 
 function SearchTool() {
-  const { initialized, search } = useFullTextSearch();
-  return initialized && search ? (
-    <RegisteredSearchTool search={search} />
+  const searchState = useFullTextSearch();
+  return searchState.initialized ? (
+    <RegisteredSearchTool search={searchState.search} />
   ) : null;
 }
 
@@ -147,22 +149,16 @@ function NavigateTool() {
   const origin =
     typeof window === 'undefined' ? 'http://localhost' : location.origin;
   const tool = createNavigateTool(resolveRoutePath, origin, navigate);
-  useWebMcpTool(tool, undefined, [origin, navigate]);
+  useWebMcpTool(tool);
   return null;
 }
 
-function SupportedWebMcpRuntime({
-  tools,
-  currentPageEnabled,
-  searchEnabled,
-}: WebMcpRuntimeOptions) {
-  const { page } = usePage();
+function SupportedWebMcpRuntime({ tools }: WebMcpRuntimeOptions) {
+  const { site } = useSite();
   return (
     <>
-      {currentPageEnabled ? <CurrentPageTool /> : null}
-      {searchEnabled ? (
-        <SearchTool key={`${page.lang}\0${page.version}`} />
-      ) : null}
+      {tools.currentPage && isProduction() ? <CurrentPageTool /> : null}
+      {tools.search && site.search !== false ? <SearchTool /> : null}
       {tools.navigate ? <NavigateTool /> : null}
     </>
   );

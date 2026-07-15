@@ -6,11 +6,9 @@ export interface TestingTool {
   inputSchema?: string;
 }
 
-type ModelContextTool = TestingTool;
-
 interface ProducerModelContext {
-  getTools(): Promise<ModelContextTool[]>;
-  executeTool(tool: ModelContextTool, input: string): Promise<string | null>;
+  getTools(): Promise<TestingTool[]>;
+  executeTool(tool: TestingTool, input: string): Promise<string | null>;
 }
 
 interface TestingModelContext {

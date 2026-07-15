@@ -18,7 +18,7 @@ export function isWebMcpSupported(): boolean {
 }
 
 export function registerWebMcpTool<
-  TInput extends object = Record<string, unknown>,
+  TInput extends Record<string, unknown> = Record<string, unknown>,
   TResult = unknown,
   TName extends string = string,
 >(

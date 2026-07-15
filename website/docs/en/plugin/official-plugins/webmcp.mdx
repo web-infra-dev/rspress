@@ -103,7 +103,7 @@ export function Counter({ count, increment }) {
 }
 ```
 
-`status` is `registering`, `registered`, `unsupported`, or `error`. `error` contains registration failures. Descriptor metadata changes automatically re-register the tool, while the latest `execute` callback is used without registration churn. Pass the optional third `deps` argument only when another value must force a complete unregister/register cycle.
+`status` is `registering`, `registered`, `unsupported`, or `error`. `error` contains registration failures. Descriptor metadata or registration-option changes automatically re-register the tool, while the latest `execute` callback is used without registration churn.
 
 The runtime also exports local `WebMcpTool`, annotation, registration, client, and hook-state types. The optional `outputSchema`, extended MCP annotations, and execution client are compatibility extensions that are forwarded when a browser runtime supports them; the native draft currently standardizes `inputSchema`, `readOnlyHint`, and `untrustedContentHint`.
 

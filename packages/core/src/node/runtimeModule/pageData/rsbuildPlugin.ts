@@ -1,5 +1,4 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { PageData } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import { type FactoryContext, RuntimeModuleID } from '../types';
@@ -11,17 +10,7 @@ export const rsbuildPluginDocVM = async ({
   routeService,
   pluginDriver,
 }: Omit<FactoryContext, 'alias'>): Promise<RsbuildPlugin[]> => {
-  const ref: {
-    pageData: PageData | null;
-    searchIndex: Record<string, string> | null;
-    indexHashByGroup: Record<string, string> | null;
-    filepaths: string[];
-  } = {
-    pageData: null,
-    searchIndex: null,
-    indexHashByGroup: null,
-    filepaths: [],
-  };
+  let pageDataResult: Awaited<ReturnType<typeof createPageData>> | undefined;
   let webAlias: Record<string, string> | undefined;
   let refreshPromise: Promise<void> | undefined;
 
@@ -31,20 +20,14 @@ export const rsbuildPluginDocVM = async ({
     }
     refreshPromise ??= (async () => {
       const now = performance.now();
-      const { pageData, indexHashByGroup, searchIndex, filepaths } =
-        await createPageData({
-          config,
-          alias: webAlias,
-          userDocRoot,
-          routeService,
-          pluginDriver,
-        });
+      pageDataResult = await createPageData({
+        config,
+        alias: webAlias,
+        userDocRoot,
+        routeService,
+        pluginDriver,
+      });
       logger.debug(`createPageData cost: ${performance.now() - now}ms`);
-
-      ref.pageData = pageData;
-      ref.searchIndex = searchIndex;
-      ref.indexHashByGroup = indexHashByGroup;
-      ref.filepaths = filepaths;
     })();
     try {
       await refreshPromise;
@@ -65,11 +48,11 @@ export const rsbuildPluginDocVM = async ({
         api.processAssets(
           { stage: 'report', environments: ['web'] },
           ({ compilation, compiler }) => {
-            if (!ref.searchIndex) {
+            if (!pageDataResult) {
               return;
             }
             for (const [filename, stringifiedIndex] of Object.entries(
-              ref.searchIndex,
+              pageDataResult.searchIndex,
             )) {
               compilation.emitAsset(
                 `static/${filename}`,
@@ -89,12 +72,12 @@ export const rsbuildPluginDocVM = async ({
       virtualModules: {
         [RuntimeModuleID.PageData]: async ({ addDependency }) => {
           await refreshPageData();
-          for (const file of ref.filepaths) {
+          for (const file of pageDataResult?.filepaths ?? []) {
             addDependency(file);
           }
 
-          return `export const pageData = ${JSON.stringify(ref.pageData, null, 2)};
-          export const searchIndexHash = ${JSON.stringify(ref.indexHashByGroup, null, 2)};`;
+          return `export const pageData = ${JSON.stringify(pageDataResult?.pageData ?? null, null, 2)};
+          export const searchIndexHash = ${JSON.stringify(pageDataResult?.indexHashByGroup ?? null, null, 2)};`;
         },
       },
     }),

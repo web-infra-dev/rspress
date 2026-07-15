@@ -14,8 +14,9 @@
     "lint": "rslint --type-check && prettier . --check && pnpm run check-spell",
     "prepare": "skills-package-manager install && pnpm run build && simple-git-hooks",
     "preview:website": "cd website && npm run preview",
-    "test": "pnpm test:unit && pnpm test:e2e",
+    "test": "pnpm test:type && pnpm test:unit && pnpm test:e2e",
     "test:e2e": "playwright test",
+    "test:type": "pnpm --recursive --if-present run test:type",
     "test:unit": "rstest run",
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },

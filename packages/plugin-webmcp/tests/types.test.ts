@@ -1,4 +1,6 @@
 import type {
+  InputSchema,
+  JsonSchemaForInference,
   ModelContextClient,
   ToolAnnotations,
   ToolDescriptor,
@@ -6,6 +8,8 @@ import type {
 import { describe, expect, test } from '@rstest/core';
 import { registerWebMcpTool } from '../src/runtime/register';
 import type {
+  WebMcpInputSchema,
+  WebMcpJsonSchema,
   WebMcpModelContextClient,
   WebMcpTool,
   WebMcpToolAnnotations,
@@ -16,20 +20,24 @@ type IsAssignable<TSource, TTarget> = [TSource] extends [TTarget]
   ? true
   : false;
 
-type _AnnotationsMatch = Assert<
-  IsAssignable<WebMcpToolAnnotations, ToolAnnotations>
->;
-type _ClientMatches = Assert<
-  IsAssignable<WebMcpModelContextClient, ModelContextClient>
->;
-type _ToolMatches = Assert<
-  IsAssignable<
-    WebMcpTool<{ query: string }, { result: string }, 'typed_search'>,
-    ToolDescriptor<{ query: string }, { result: string }, 'typed_search'>
-  >
->;
+const compatibilityAssertions: [
+  Assert<IsAssignable<WebMcpInputSchema, InputSchema>>,
+  Assert<IsAssignable<WebMcpJsonSchema, JsonSchemaForInference>>,
+  Assert<IsAssignable<WebMcpToolAnnotations, ToolAnnotations>>,
+  Assert<IsAssignable<WebMcpModelContextClient, ModelContextClient>>,
+  Assert<
+    IsAssignable<
+      WebMcpTool<{ query: string }, { result: string }, 'typed_search'>,
+      ToolDescriptor<{ query: string }, { result: string }, 'typed_search'>
+    >
+  >,
+] = [true, true, true, true, true];
 
 describe('WebMCP public types', () => {
+  test('remains structurally compatible with MCP-B types', () => {
+    expect(compatibilityAssertions).toEqual([true, true, true, true, true]);
+  });
+
   test('preserves custom input, result, and name generics', () => {
     const registration = registerWebMcpTool<
       { query: string },
