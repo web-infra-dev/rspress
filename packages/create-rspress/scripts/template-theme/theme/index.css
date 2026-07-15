@@ -10,3 +10,54 @@
 
   --rp-home-hero-secondary-color: #ff5e00;
 }
+
+html:not(.dark) {
+  --rp-home-background-bg:
+    radial-gradient(
+      80% 60% at 100% 0%,
+      rgba(255, 117, 36, 0.28) 0%,
+      rgba(255, 255, 255, 0) 70%
+    ),
+    radial-gradient(
+      70% 70% at 50% 0%,
+      rgba(255, 94, 0, 0.18) 0%,
+      rgba(255, 255, 255, 0) 60%
+    ),
+    radial-gradient(
+      90% 70% at 0% 0%,
+      rgba(255, 180, 120, 0.35) 0%,
+      rgba(255, 255, 255, 0) 65%
+    ),
+    radial-gradient(
+      100% 50% at 50% 100%,
+      rgba(255, 117, 36, 0.08) 0%,
+      rgba(255, 255, 255, 0) 50%
+    ),
+    #fff;
+}
+
+html.dark {
+  --rp-home-background-bg:
+    radial-gradient(
+      80% 60% at 100% 0%,
+      rgba(255, 117, 36, 0.45) 0%,
+      rgba(255, 94, 0, 0.15) 40%,
+      rgba(18, 18, 18, 0) 75%
+    ),
+    radial-gradient(
+      70% 70% at 50% 0%,
+      rgba(255, 94, 0, 0.3) 0%,
+      rgba(18, 18, 18, 0) 60%
+    ),
+    radial-gradient(
+      90% 70% at 0% 0%,
+      rgba(255, 180, 100, 0.25) 0%,
+      rgba(18, 18, 18, 0) 65%
+    ),
+    radial-gradient(
+      100% 50% at 50% 100%,
+      rgba(255, 117, 36, 0.1) 0%,
+      rgba(18, 18, 18, 0) 50%
+    ),
+    #121212;
+}
