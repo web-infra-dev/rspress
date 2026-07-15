@@ -4,6 +4,7 @@ import { workerData } from 'node:worker_threads';
 import type { RouteMeta, UserConfig } from '@rspress/shared';
 import pMap from 'p-map';
 import { createError } from '../utils';
+import type { AlternateLinksByRoute } from './alternateLinks';
 import { resolveHtmlFilePath } from './htmlFile';
 import { renderPage } from './renderPage';
 
@@ -11,6 +12,7 @@ interface WorkerDataParams {
   htmlTemplate: string;
   head: UserConfig['head'];
   ssrBundlePath: string;
+  alternateLinks: AlternateLinksByRoute;
   distPath?: string;
 }
 
@@ -23,7 +25,7 @@ if (!params) {
   throw createError('SSG Worker Thread workerData params missing');
 }
 
-const { htmlTemplate, head, ssrBundlePath, distPath } = params;
+const { htmlTemplate, head, ssrBundlePath, alternateLinks, distPath } = params;
 
 async function writeHtmlFile(routePath: string, html: string) {
   if (!distPath) {
@@ -42,7 +44,13 @@ const exportWorkerGlueFn = async ({
     await pMap(
       routes,
       async route => {
-        const html = await renderPage(route, htmlTemplate, head, ssrBundlePath);
+        const html = await renderPage(
+          route,
+          htmlTemplate,
+          head,
+          ssrBundlePath,
+          alternateLinks[route.routePath],
+        );
         await writeHtmlFile(route.routePath, html);
       },
       { concurrency: 10 },
@@ -53,7 +61,13 @@ const exportWorkerGlueFn = async ({
   return pMap(
     routes,
     async route => {
-      const html = await renderPage(route, htmlTemplate, head, ssrBundlePath);
+      const html = await renderPage(
+        route,
+        htmlTemplate,
+        head,
+        ssrBundlePath,
+        alternateLinks[route.routePath],
+      );
       return html;
     },
     { concurrency: 10 },

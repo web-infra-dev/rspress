@@ -7,6 +7,7 @@ import {
   RSPRESS_VERSION,
 } from '../constants';
 import { createError } from '../utils';
+import type { AlternateLink } from './alternateLinks';
 
 async function renderConfigHead(
   head: UserConfig['head'],
@@ -34,7 +35,14 @@ export async function renderHtmlTemplate(
   head: UserConfig['head'],
   route: RouteMeta,
   appHtml: string = '',
+  alternateLinks: AlternateLink[] = [],
 ) {
+  const alternateLinkTags = alternateLinks
+    .map(
+      ({ href, hrefLang }) =>
+        `<link ${renderAttrs({ rel: 'alternate', hreflang: hrefLang, href })}>`,
+    )
+    .join('');
   const replacedHtmlTemplate = htmlTemplate
     // Don't use `string` as second param
     // To avoid some special characters transformed to the marker, such as `$&`, etc.
@@ -43,7 +51,10 @@ export async function renderHtmlTemplate(
       META_GENERATOR,
       () => `<meta name="generator" content="Rspress v${RSPRESS_VERSION}">`,
     )
-    .replace(HEAD_MARKER, [await renderConfigHead(head, route)].join(''));
+    .replace(
+      HEAD_MARKER,
+      [await renderConfigHead(head, route), alternateLinkTags].join(''),
+    );
   return replacedHtmlTemplate;
 }
 
@@ -57,7 +68,7 @@ function renderAttrs(attrs: Record<string, string>): string {
         `Invalid value for attribute ${key}:${JSON.stringify(value)}`,
       );
     })
-    .join('');
+    .join(' ');
 }
 
 function isRouteMeta(route: unknown): route is RouteMeta {
