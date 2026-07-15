@@ -1,4 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
+import { isProduction } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import { type FactoryContext, RuntimeModuleID } from '../types';
@@ -11,27 +12,40 @@ export const rsbuildPluginDocVM = async ({
   pluginDriver,
 }: Omit<FactoryContext, 'alias'>): Promise<RsbuildPlugin[]> => {
   let pageDataResult: Awaited<ReturnType<typeof createPageData>> | undefined;
+  let fallbackAlias: Record<string, string> | undefined;
   let webAlias: Record<string, string> | undefined;
   let refreshPromise: Promise<void> | undefined;
 
-  const refreshPageData = async () => {
-    if (!webAlias) {
+  const refreshPageData = async (releaseInDevelopment = false) => {
+    const alias = webAlias ?? fallbackAlias;
+    if (!alias) {
       return;
     }
     refreshPromise ??= (async () => {
       const now = performance.now();
       pageDataResult = await createPageData({
         config,
-        alias: webAlias,
+        alias,
         userDocRoot,
         routeService,
         pluginDriver,
       });
       logger.debug(`createPageData cost: ${performance.now() - now}ms`);
     })();
+    const currentPromise = refreshPromise;
     try {
-      await refreshPromise;
-    } finally {
+      await currentPromise;
+    } catch (error) {
+      if (refreshPromise === currentPromise) {
+        refreshPromise = undefined;
+      }
+      throw error;
+    }
+    if (
+      releaseInDevelopment &&
+      !isProduction() &&
+      refreshPromise === currentPromise
+    ) {
       refreshPromise = undefined;
     }
   };
@@ -39,10 +53,12 @@ export const rsbuildPluginDocVM = async ({
   const searchIndexRsbuildPlugin: RsbuildPlugin = {
     name: 'rsbuild-plugin-searchIndex',
     async setup(api) {
-      api.modifyBundlerChain((bundlerChain, { environment }) => {
+      api.modifyBundlerChain(async (bundlerChain, { environment }) => {
         const alias = bundlerChain.resolve.alias.entries();
+        fallbackAlias ??= alias as Record<string, string>;
         if (environment.name === 'web') {
           webAlias = alias as Record<string, string>;
+          await refreshPageData();
         }
 
         api.processAssets(
@@ -71,7 +87,7 @@ export const rsbuildPluginDocVM = async ({
       tempDir: '.rspress',
       virtualModules: {
         [RuntimeModuleID.PageData]: async ({ addDependency }) => {
-          await refreshPageData();
+          await refreshPageData(true);
           for (const file of pageDataResult?.filepaths ?? []) {
             addDependency(file);
           }
