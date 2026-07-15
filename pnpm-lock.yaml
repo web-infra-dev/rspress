@@ -1889,6 +1889,9 @@ importers:
       '@rspress/plugin-twoslash':
         specifier: workspace:*
         version: link:../packages/plugin-twoslash
+      '@rspress/plugin-webmcp':
+        specifier: workspace:*
+        version: link:../packages/plugin-webmcp
       '@rstack-dev/doc-ui':
         specifier: ^1.14.5
         version: 1.14.5(@rspress/core@packages+core)
