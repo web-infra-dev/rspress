@@ -45,6 +45,28 @@ export function createCurrentPageTool(
   markdownUrl: string,
   fetcher: typeof fetch = fetch,
 ): WebMcpTool {
+  let markdownPromise: Promise<string> | undefined;
+
+  const fetchMarkdown = async () => {
+    const response = await fetcher(markdownUrl);
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch Markdown for ${page.routePath}: ${response.status} ${response.statusText}`,
+      );
+    }
+    const markdown = await response.text();
+    const contentType = response.headers.get('content-type');
+    if (
+      contentType?.toLowerCase().includes('text/html') ||
+      /^\s*(?:<!doctype\s+html|<html[\s>])/i.test(markdown)
+    ) {
+      throw new Error(
+        `SSG-MD Markdown is unavailable for ${page.routePath}. Run \`rspress build\` and serve the generated output instead of the development server.`,
+      );
+    }
+    return markdown;
+  };
+
   return {
     name: 'rspress_get_current_page',
     title: 'Get current documentation page',
@@ -53,22 +75,11 @@ export function createCurrentPageTool(
     inputSchema: CURRENT_PAGE_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
     async execute() {
-      const response = await fetcher(markdownUrl);
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch Markdown for ${page.routePath}: ${response.status} ${response.statusText}`,
-        );
-      }
-      const markdown = await response.text();
-      const contentType = response.headers.get('content-type');
-      if (
-        contentType?.toLowerCase().includes('text/html') ||
-        /^\s*(?:<!doctype\s+html|<html[\s>])/i.test(markdown)
-      ) {
-        throw new Error(
-          `SSG-MD Markdown is unavailable for ${page.routePath}. Run \`rspress build\` and serve the generated output instead of the development server.`,
-        );
-      }
+      markdownPromise ??= fetchMarkdown().catch(error => {
+        markdownPromise = undefined;
+        throw error;
+      });
+      const markdown = await markdownPromise;
       return {
         title: page.title,
         description: page.description,

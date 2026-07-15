@@ -8,7 +8,7 @@ import {
   useSite,
 } from '@rspress/core/runtime';
 import { useFullTextSearch, useLinkNavigate } from '@rspress/core/theme';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { WebMcpRuntimeOptions } from '../options';
 import {
   createCurrentPageTool,
@@ -123,7 +123,10 @@ function useAwaitedNavigate() {
 
 function CurrentPageTool() {
   const { page } = usePage();
-  const tool = createCurrentPageTool(page, routePathToMdPath(page.routePath));
+  const tool = useMemo(
+    () => createCurrentPageTool(page, routePathToMdPath(page.routePath)),
+    [page],
+  );
   useWebMcpTool(tool);
   return null;
 }

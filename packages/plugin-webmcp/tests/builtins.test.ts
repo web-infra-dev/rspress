@@ -12,7 +12,9 @@ import {
 
 describe('WebMCP built-in tools', () => {
   test('fetches the current page Markdown and metadata', async () => {
+    let fetchCount = 0;
     const fetcher = async (url: string | URL | Request) => {
+      fetchCount += 1;
       expect(String(url)).toBe('/guide.md');
       return new Response('# Guide\n\nMarkdown body.');
     };
@@ -30,16 +32,25 @@ describe('WebMCP built-in tools', () => {
       fetcher,
     );
 
-    await expect(tool.execute({})).resolves.toMatchObject({
+    const [first, second] = await Promise.all([
+      tool.execute({}),
+      tool.execute({}),
+    ]);
+    expect(first).toMatchObject({
       title: 'Guide',
       routePath: '/guide.html',
       markdown: '# Guide\n\nMarkdown body.',
     });
+    expect(second).toMatchObject({
+      markdown: '# Guide\n\nMarkdown body.',
+    });
+    expect(fetchCount).toBe(1);
     expect(tool.inputSchema).toBe(CURRENT_PAGE_INPUT_SCHEMA);
     expect(tool.annotations).toBe(READ_ONLY_UNTRUSTED_ANNOTATIONS);
   });
 
   test('reports Markdown fetch failures', async () => {
+    let fetchCount = 0;
     const tool = createCurrentPageTool(
       {
         title: 'Missing',
@@ -50,11 +61,18 @@ describe('WebMCP built-in tools', () => {
         toc: [],
       },
       '/missing.md',
-      async () => new Response('', { status: 404, statusText: 'Not Found' }),
+      async () => {
+        fetchCount += 1;
+        return new Response('', { status: 404, statusText: 'Not Found' });
+      },
     );
     await expect(tool.execute({})).rejects.toThrow(
       'Failed to fetch Markdown for /missing: 404 Not Found',
     );
+    await expect(tool.execute({})).rejects.toThrow(
+      'Failed to fetch Markdown for /missing: 404 Not Found',
+    );
+    expect(fetchCount).toBe(2);
   });
 
   test('rejects the development server HTML fallback', async () => {
