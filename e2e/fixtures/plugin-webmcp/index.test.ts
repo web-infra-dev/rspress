@@ -165,8 +165,21 @@ test.describe('plugin-webmcp preview', () => {
   test('awaits navigation and cleans up page-scoped tools', async ({
     page,
   }) => {
-    await executeTool(page, 'rspress_navigate', {
+    const navigation = await executeTool(page, 'rspress_navigate', {
       routePath: '/guide.html?source=webmcp#webmcp-guide',
+    });
+    expect(navigation?.structuredContent).toMatchObject({
+      routePath: '/guide?source=webmcp#webmcp-guide',
+      page: { title: 'WebMCP guide', lang: 'en', version: 'v1' },
+      sections: [
+        {
+          title: 'Register tools',
+          depth: 2,
+          routePath: '/guide?source=webmcp#register-tools',
+        },
+      ],
+      previousPage: { title: 'Home', routePath: '/index.html' },
+      nextPage: null,
     });
 
     const currentPage = await executeTool(page, 'rspress_get_current_page', {});
@@ -257,11 +270,13 @@ test.describe('plugin-webmcp preview', () => {
       }),
     ]);
 
-    expect(first?.structuredContent).toEqual({
+    expect(first?.structuredContent).toMatchObject({
       routePath: '/guide?sequence=first',
+      page: { title: 'WebMCP guide' },
     });
-    expect(second?.structuredContent).toEqual({
+    expect(second?.structuredContent).toMatchObject({
       routePath: '/?sequence=second',
+      page: { title: 'WebMCP home' },
     });
     await expect(page).toHaveURL(new RegExp(`:${appPort}/\\?sequence=second$`));
     const currentPage = await executeTool(page, 'rspress_get_current_page', {});
@@ -522,6 +537,13 @@ test.describe('plugin-webmcp development server', () => {
           return JSON.stringify(search?.structuredContent);
         })
         .toContain('WebMCP HMR home');
+      const navigation = await executeTool(page, 'rspress_navigate', {
+        routePath: '/index.html',
+      });
+      expect(navigation?.structuredContent).toMatchObject({
+        routePath: '/',
+        page: { title: 'WebMCP HMR home' },
+      });
     } finally {
       await writeFile(homePageFile, originalHomePage);
     }
@@ -543,5 +565,12 @@ test.describe('plugin-webmcp development server', () => {
         return JSON.stringify(search?.structuredContent);
       })
       .toContain('WebMCP home');
+    const navigation = await executeTool(page, 'rspress_navigate', {
+      routePath: '/index.html',
+    });
+    expect(navigation?.structuredContent).toMatchObject({
+      routePath: '/',
+      page: { title: 'WebMCP home' },
+    });
   });
 });

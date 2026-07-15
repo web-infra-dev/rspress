@@ -70,6 +70,22 @@ export interface SiteInfo {
   sidebar: SidebarData;
 }
 
+export interface NavigatePageContext {
+  page: {
+    title: string;
+    description?: string;
+    lang: string;
+    version: string;
+  };
+  sections: {
+    title: string;
+    depth: number;
+    routePath: string;
+  }[];
+  previousPage: { title: string; routePath: string } | null;
+  nextPage: { title: string; routePath: string } | null;
+}
+
 function createMarkdownLoader(fetcher: typeof fetch) {
   const cache = new Map<string, Promise<string>>();
 
@@ -333,12 +349,15 @@ export function resolveInternalRoute(
 export function createNavigateTool(
   resolvePath: (pathname: string) => string | undefined,
   origin: string,
-  navigate: (routePath: string) => void | Promise<void>,
+  navigate: (
+    routePath: string,
+  ) => NavigatePageContext | Promise<NavigatePageContext>,
 ): WebMcpTool<{ routePath: string }> {
   return {
     name: 'rspress_navigate',
     title: 'Navigate documentation',
-    description: 'Navigate to a known internal Rspress documentation route.',
+    description:
+      'Navigate to a known internal Rspress documentation route and return the rendered page summary, section routes, and adjacent pages.',
     inputSchema: NAVIGATE_INPUT_SCHEMA,
     annotations: { readOnlyHint: false },
     async execute(input) {
@@ -346,8 +365,8 @@ export function createNavigateTool(
         throw new TypeError('routePath must be a string');
       }
       const target = resolveInternalRoute(input.routePath, resolvePath, origin);
-      await navigate(target);
-      return { routePath: target };
+      const page = await navigate(target);
+      return { routePath: target, ...page };
     },
   };
 }

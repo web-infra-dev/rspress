@@ -30,7 +30,7 @@ export default defineConfig({
 - `rspress_get_page`：无需导航，即可返回任意已知站内路由的元数据和由 SSG-MD 生成的 Markdown。
 - `rspress_get_current_page`：返回当前页面的元数据和由 SSG-MD 生成的 Markdown。
 - `rspress_search_docs`：查询 Rspress 本地搜索索引。关闭本地搜索或启用 Algolia 时不会注册。
-- `rspress_navigate`：仅导航至已知的站内文档路由，支持查询参数和哈希。
+- `rspress_navigate`：仅导航至已知的站内文档路由，支持查询参数和哈希。它会返回目标页面的轻量元数据、章节标题和上一篇/下一篇页面，但不会获取 Markdown。
 
 两个 Markdown 工具会自动启用 [`llms: true`](/guide/basic/ssg-md)。已有的 `true` 或对象配置会被保留。除非同时关闭 `getPage` 和 `currentPage`，否则显式配置 `llms: false` 会产生冲突。
 

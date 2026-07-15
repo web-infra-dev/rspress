@@ -12,7 +12,11 @@ import {
   useSite,
   useVersion,
 } from '@rspress/core/runtime';
-import { useFullTextSearch, useLinkNavigate } from '@rspress/core/theme';
+import {
+  useFullTextSearch,
+  useLinkNavigate,
+  usePrevNextPage,
+} from '@rspress/core/theme';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { WebMcpRuntimeOptions } from '../options';
 import {
@@ -22,6 +26,7 @@ import {
   createPageTool,
   createSearchTool,
   createSiteInfoTool,
+  type NavigatePageContext,
   type SearchGroup,
 } from './builtins';
 import { isWebMcpSupported } from './register';
@@ -32,28 +37,66 @@ const NAVIGATION_TIMEOUT_MS = 10_000;
 interface PendingNavigation {
   cancel(error: Error): void;
   target: string;
-  resolve(): void;
+  resolve(context: NavigatePageContext): void;
 }
 
 function resolveRoutePath(pathname: string): string | undefined {
   return pathnameToRouteService(removeBase(pathname))?.path;
 }
 
+function createNavigatePageContext(
+  page: ReturnType<typeof usePage>['page'],
+  search: string,
+  prevPage: ReturnType<typeof usePrevNextPage>['prevPage'],
+  nextPage: ReturnType<typeof usePrevNextPage>['nextPage'],
+): NavigatePageContext {
+  const toPageLink = (item: typeof prevPage) =>
+    item?.link ? { title: item.text, routePath: item.link } : null;
+  return {
+    page: {
+      title: page.title,
+      ...(page.description === undefined
+        ? {}
+        : { description: page.description }),
+      lang: page.lang,
+      version: page.version,
+    },
+    sections: page.toc.map(section => ({
+      title: section.text,
+      depth: section.depth,
+      routePath: `${page.routePath}${search}#${section.id}`,
+    })),
+    previousPage: toPageLink(prevPage),
+    nextPage: toPageLink(nextPage),
+  };
+}
+
 function useAwaitedNavigate() {
   const navigate = useLinkNavigate();
   const { page } = usePage();
+  const { prevPage, nextPage } = usePrevNextPage();
   const { search, hash } = useLocation();
   const currentTarget = `${page.routePath}${search}${hash}`;
   const currentTargetRef = useRef(currentTarget);
+  const pageContext = createNavigatePageContext(
+    page,
+    search,
+    prevPage,
+    nextPage,
+  );
+  const pageContextRef = useRef(pageContext);
+  pageContextRef.current = pageContext;
   const pendingRef = useRef<PendingNavigation | null>(null);
-  const queueRef = useRef(Promise.resolve());
+  const queueRef = useRef<Promise<NavigatePageContext | void>>(
+    Promise.resolve(),
+  );
 
   useEffect(() => {
     currentTargetRef.current = currentTarget;
     const pending = pendingRef.current;
     if (pending?.target === currentTarget) {
       pendingRef.current = null;
-      pending.resolve();
+      pending.resolve(pageContextRef.current);
     }
   }, [currentTarget]);
 
@@ -70,12 +113,12 @@ function useAwaitedNavigate() {
     async (target: string) => {
       if (currentTargetRef.current === target) {
         await navigate(target);
-        return;
+        return pageContextRef.current;
       }
 
       let pending!: PendingNavigation;
       const controller = new AbortController();
-      const completion = new Promise<void>((resolve, reject) => {
+      const completion = new Promise<NavigatePageContext>((resolve, reject) => {
         const timeout = setTimeout(() => {
           const error = new Error(
             `Navigation did not complete within ${NAVIGATION_TIMEOUT_MS}ms`,
@@ -89,19 +132,20 @@ function useAwaitedNavigate() {
             reject(error);
           },
           target,
-          resolve() {
+          resolve(context) {
             clearTimeout(timeout);
-            resolve();
+            resolve(context);
           },
         };
         pendingRef.current = pending;
       });
 
       try {
-        await Promise.all([
+        const [, context] = await Promise.all([
           navigate(target, { signal: controller.signal }),
           completion,
         ]);
+        return context;
       } catch (error) {
         pending.cancel(
           error instanceof Error

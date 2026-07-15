@@ -308,15 +308,28 @@ describe('WebMCP built-in tools', () => {
     ).toThrow('absolute internal path');
 
     let target = '';
+    const pageContext = {
+      page: {
+        title: 'API',
+        description: 'API reference',
+        lang: 'en',
+        version: 'v1',
+      },
+      sections: [],
+      previousPage: { title: 'Guide', routePath: '/guide' },
+      nextPage: null,
+    };
     const tool = createNavigateTool(
       resolvePath,
       'https://rspress.dev',
       routePath => {
         target = routePath;
+        return pageContext;
       },
     );
     await expect(tool.execute({ routePath: '/api#types' })).resolves.toEqual({
       routePath: '/api/#types',
+      ...pageContext,
     });
     expect(target).toBe('/api/#types');
     expect(tool.inputSchema).toBe(NAVIGATE_INPUT_SCHEMA);
