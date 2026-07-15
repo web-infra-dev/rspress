@@ -568,13 +568,15 @@ title: 文档标题
 type LlmsUI =
   | boolean
   | {
-      viewOptions?: Array<
-        | 'markdownLink'
-        | 'chatgpt'
-        | 'claude'
-        | { title: string; icon?: React.ReactNode; onClick?: () => void }
-        | { title: string; href: string; icon?: React.ReactNode }
-      >;
+      viewOptions?:
+        | false
+        | Array<
+            | 'markdownLink'
+            | 'chatgpt'
+            | 'claude'
+            | { title: string; icon?: React.ReactNode; onClick?: () => void }
+            | { title: string; href: string; icon?: React.ReactNode }
+          >;
       placement?: 'title' | 'outline';
     };
 ```
@@ -611,7 +613,7 @@ export default defineConfig({
 
 ### viewOptions
 
-- **类型**：`Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
+- **类型**：`false | Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
 - **默认值**：`['markdownLink', 'chatgpt', 'claude']`
 
 LlmsViewOptions 下拉菜单的选项。内置选项包括：
@@ -621,6 +623,8 @@ LlmsViewOptions 下拉菜单的选项。内置选项包括：
 - `'claude'`: 在 Claude 中打开
 
 你也可以提供自定义选项，包含 `title`、`href` 或 `onClick`，以及可选的 `icon`。
+
+将 `viewOptions` 设置为 `false` 或 `[]` 可以隐藏 view options UI。
 
 ### placement
 
