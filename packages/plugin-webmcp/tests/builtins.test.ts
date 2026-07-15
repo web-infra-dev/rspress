@@ -1,16 +1,104 @@
 import { describe, expect, test } from '@rstest/core';
 import {
   createCurrentPageTool,
+  createListPagesTool,
   createNavigateTool,
+  createPageTool,
   createSearchTool,
+  createSiteInfoTool,
   CURRENT_PAGE_INPUT_SCHEMA,
+  EMPTY_INPUT_SCHEMA,
+  LIST_PAGES_INPUT_SCHEMA,
   NAVIGATE_INPUT_SCHEMA,
   READ_ONLY_UNTRUSTED_ANNOTATIONS,
   resolveInternalRoute,
   SEARCH_INPUT_SCHEMA,
 } from '../src/runtime/builtins';
 
+const pages = [
+  {
+    title: 'WebMCP home',
+    description: 'Home description',
+    routePath: '/',
+    lang: 'en',
+    version: 'v1',
+    frontmatter: {},
+    toc: [{ id: 'introduction', text: 'Introduction', depth: 2, charIndex: 0 }],
+  },
+  {
+    title: 'Tool guide',
+    routePath: '/guide',
+    lang: 'en',
+    version: 'v1',
+    frontmatter: { sidebar: true },
+    toc: [
+      { id: 'register-tools', text: 'Register tools', depth: 2, charIndex: 0 },
+    ],
+  },
+  {
+    title: '中文主页',
+    routePath: '/zh/',
+    lang: 'zh',
+    version: 'v1',
+    frontmatter: {},
+    toc: [],
+  },
+];
+
 describe('WebMCP built-in tools', () => {
+  test('returns structured site information', async () => {
+    const info = {
+      title: 'Rspress',
+      description: 'Static site generator',
+      base: '/',
+      siteOrigin: 'https://rspress.dev',
+      lang: 'en',
+      version: 'v1',
+      locales: [{ lang: 'en', label: 'English' }],
+      versions: ['v1', 'v2'],
+      defaultVersion: 'v1',
+      nav: [{ text: 'Guide', link: '/guide' }],
+      sidebar: [{ text: 'Introduction', link: '/' }],
+    };
+    const tool = createSiteInfoTool(info);
+    expect(tool.execute({})).toEqual(info);
+    expect(tool.inputSchema).toBe(EMPTY_INPUT_SCHEMA);
+    expect(tool.annotations).toBe(READ_ONLY_UNTRUSTED_ANNOTATIONS);
+  });
+
+  test('filters and paginates page metadata', async () => {
+    const tool = createListPagesTool(pages, { lang: 'en', version: 'v1' });
+    expect(tool.execute({ query: 'register tools' })).toEqual({
+      pages: [
+        expect.objectContaining({ title: 'Tool guide', routePath: '/guide' }),
+      ],
+      total: 1,
+      offset: 0,
+      limit: 50,
+    });
+    expect(tool.execute({ limit: 1, offset: 1 })).toMatchObject({
+      pages: [expect.objectContaining({ title: 'Tool guide' })],
+      total: 2,
+      offset: 1,
+      limit: 1,
+    });
+    expect(tool.execute({ lang: 'zh' })).toMatchObject({
+      pages: [expect.objectContaining({ title: '中文主页' })],
+      total: 1,
+    });
+    expect(() => tool.execute({ query: '' })).toThrow(
+      'query must be a non-empty string',
+    );
+    expect(() => tool.execute({ limit: 101 })).toThrow(
+      'limit must be an integer between 1 and 100',
+    );
+    expect(() => tool.execute({ offset: -1 })).toThrow(
+      'offset must be a non-negative integer',
+    );
+    expect(tool.inputSchema).toBe(LIST_PAGES_INPUT_SCHEMA);
+    expect(tool.annotations).toBe(READ_ONLY_UNTRUSTED_ANNOTATIONS);
+  });
+
   test('fetches the current page Markdown and metadata', async () => {
     let fetchCount = 0;
     const fetcher = async (url: string | URL | Request) => {
@@ -95,6 +183,64 @@ describe('WebMCP built-in tools', () => {
     await expect(tool.execute({})).rejects.toThrow(
       'SSG-MD Markdown is unavailable for /',
     );
+  });
+
+  test('reads a known page without navigation and caches Markdown', async () => {
+    let fetchCount = 0;
+    const resolvePath = (pathname: string) =>
+      pathname.replace(/\.html$/, '') === '/guide' ? '/guide' : undefined;
+    const tool = createPageTool(
+      pages,
+      resolvePath,
+      'https://rspress.dev',
+      routePath => `${routePath}.md`,
+      async url => {
+        fetchCount += 1;
+        expect(String(url)).toBe('/guide.md');
+        return new Response('# Tool guide');
+      },
+    );
+    const [first, second] = await Promise.all([
+      tool.execute({ routePath: '/guide.html?source=mcp#tools' }),
+      tool.execute({ routePath: '/guide' }),
+    ]);
+    expect(first).toMatchObject({
+      title: 'Tool guide',
+      routePath: '/guide',
+      markdown: '# Tool guide',
+    });
+    expect(second).toEqual(first);
+    expect(first).not.toHaveProperty('description');
+    expect(fetchCount).toBe(1);
+    expect(tool.inputSchema).toBe(NAVIGATE_INPUT_SCHEMA);
+    expect(tool.annotations).toBe(READ_ONLY_UNTRUSTED_ANNOTATIONS);
+    await expect(
+      tool.execute({ routePath: 'https://example.com/guide' }),
+    ).rejects.toThrow('absolute internal path');
+    await expect(tool.execute({ routePath: '/missing' })).rejects.toThrow(
+      'Unknown internal route',
+    );
+  });
+
+  test('retries a failed arbitrary-page Markdown request', async () => {
+    let fetchCount = 0;
+    const tool = createPageTool(
+      pages,
+      () => '/guide',
+      'https://rspress.dev',
+      () => '/guide.md',
+      async () => {
+        fetchCount += 1;
+        return new Response('', { status: 503, statusText: 'Unavailable' });
+      },
+    );
+    await expect(tool.execute({ routePath: '/guide' })).rejects.toThrow(
+      '503 Unavailable',
+    );
+    await expect(tool.execute({ routePath: '/guide' })).rejects.toThrow(
+      '503 Unavailable',
+    );
+    expect(fetchCount).toBe(2);
   });
 
   test('normalizes local search results and validates inputs', async () => {

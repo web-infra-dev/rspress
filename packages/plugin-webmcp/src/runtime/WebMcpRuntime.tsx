@@ -3,17 +3,25 @@ import {
   pathnameToRouteService,
   removeBase,
   routePathToMdPath,
+  useLang,
   useLocation,
+  useNav,
   usePage,
+  usePages,
+  useSidebar,
   useSite,
+  useVersion,
 } from '@rspress/core/runtime';
 import { useFullTextSearch, useLinkNavigate } from '@rspress/core/theme';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { WebMcpRuntimeOptions } from '../options';
 import {
   createCurrentPageTool,
+  createListPagesTool,
   createNavigateTool,
+  createPageTool,
   createSearchTool,
+  createSiteInfoTool,
   type SearchGroup,
 } from './builtins';
 import { isWebMcpSupported } from './register';
@@ -131,6 +139,57 @@ function CurrentPageTool() {
   return null;
 }
 
+function PageTool() {
+  const { pages } = usePages();
+  const origin =
+    typeof window === 'undefined' ? 'http://localhost' : location.origin;
+  const tool = useMemo(
+    () => createPageTool(pages, resolveRoutePath, origin, routePathToMdPath),
+    [pages, origin],
+  );
+  useWebMcpTool(tool);
+  return null;
+}
+
+function SiteInfoTool() {
+  const { site } = useSite();
+  const lang = useLang();
+  const version = useVersion();
+  const nav = useNav();
+  const sidebar = useSidebar();
+  const tool = useMemo(
+    () =>
+      createSiteInfoTool({
+        title: site.title,
+        description: site.description,
+        base: site.base,
+        siteOrigin: site.siteOrigin,
+        lang,
+        version,
+        locales: site.locales,
+        versions: site.multiVersion.versions,
+        defaultVersion: site.multiVersion.default,
+        nav,
+        sidebar,
+      }),
+    [site, lang, version, nav, sidebar],
+  );
+  useWebMcpTool(tool);
+  return null;
+}
+
+function ListPagesTool() {
+  const { pages } = usePages();
+  const lang = useLang();
+  const version = useVersion();
+  const tool = useMemo(
+    () => createListPagesTool(pages, { lang, version }),
+    [pages, lang, version],
+  );
+  useWebMcpTool(tool);
+  return null;
+}
+
 function RegisteredSearchTool({
   search,
 }: {
@@ -160,6 +219,9 @@ function SupportedWebMcpRuntime({ tools }: WebMcpRuntimeOptions) {
   const { site } = useSite();
   return (
     <>
+      {tools.siteInfo ? <SiteInfoTool /> : null}
+      {tools.listPages ? <ListPagesTool /> : null}
+      {tools.getPage && isProduction() ? <PageTool /> : null}
       {tools.currentPage && isProduction() ? <CurrentPageTool /> : null}
       {tools.search && site.search !== false ? <SearchTool /> : null}
       {tools.navigate ? <NavigateTool /> : null}

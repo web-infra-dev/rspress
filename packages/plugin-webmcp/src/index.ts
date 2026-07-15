@@ -11,12 +11,15 @@ export function pluginWebMcp(options?: PluginWebMcpOptions): RspressPlugin {
   const runtimeOptions = normalizePluginWebMcpOptions(options);
 
   const requireSsgMd = (config: UserConfig, isProd: boolean) => {
-    if (!runtimeOptions.tools.currentPage || !isProd) {
+    if (
+      (!runtimeOptions.tools.currentPage && !runtimeOptions.tools.getPage) ||
+      !isProd
+    ) {
       return false;
     }
     if (config.llms === false) {
       throw new Error(
-        '[@rspress/plugin-webmcp] The rspress_get_current_page tool requires SSG-MD. Remove `llms: false`, enable `llms`, or disable the current-page WebMCP tool.',
+        '[@rspress/plugin-webmcp] Enabled Markdown page tools require SSG-MD. Remove `llms: false`, enable `llms`, or disable both `currentPage` and `getPage`.',
       );
     }
     return true;

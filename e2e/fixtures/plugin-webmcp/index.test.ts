@@ -51,6 +51,9 @@ test.describe('plugin-webmcp preview', () => {
         'fixture_increment_counter',
         'fixture_reset_counter',
         'rspress_get_current_page',
+        'rspress_get_page',
+        'rspress_get_site_info',
+        'rspress_list_pages',
         'rspress_navigate',
         'rspress_search_docs',
       ]);
@@ -61,11 +64,31 @@ test.describe('plugin-webmcp preview', () => {
     const currentPageTool = tools.find(
       tool => tool.name === 'rspress_get_current_page',
     );
+    const pageTool = tools.find(tool => tool.name === 'rspress_get_page');
+    const siteInfoTool = tools.find(
+      tool => tool.name === 'rspress_get_site_info',
+    );
+    const listPagesTool = tools.find(
+      tool => tool.name === 'rspress_list_pages',
+    );
     const searchTool = tools.find(tool => tool.name === 'rspress_search_docs');
     const navigateTool = tools.find(tool => tool.name === 'rspress_navigate');
     expect(JSON.parse(currentPageTool!.inputSchema!)).toMatchObject({
       type: 'object',
       additionalProperties: false,
+    });
+    expect(JSON.parse(pageTool!.inputSchema!)).toMatchObject({
+      required: ['routePath'],
+    });
+    expect(JSON.parse(siteInfoTool!.inputSchema!)).toMatchObject({
+      properties: {},
+      additionalProperties: false,
+    });
+    expect(JSON.parse(listPagesTool!.inputSchema!)).toMatchObject({
+      properties: {
+        limit: { maximum: 100 },
+        offset: { minimum: 0 },
+      },
     });
     expect(JSON.parse(searchTool!.inputSchema!)).toMatchObject({
       required: ['query'],
@@ -83,6 +106,41 @@ test.describe('plugin-webmcp preview', () => {
     expect(
       (currentPage?.structuredContent as { markdown: string }).markdown,
     ).toContain('# WebMCP home');
+
+    const siteInfo = await executeTool(page, 'rspress_get_site_info', {});
+    expect(siteInfo?.structuredContent).toMatchObject({
+      title: 'WebMCP fixture',
+      lang: 'en',
+      version: 'v1',
+      locales: [{ lang: 'en' }, { lang: 'zh' }],
+      versions: ['v1', 'v2'],
+      defaultVersion: 'v1',
+    });
+    expect(JSON.stringify(siteInfo?.structuredContent)).toContain('Guide');
+
+    const listedPages = await executeTool(page, 'rspress_list_pages', {
+      query: 'register tools',
+      limit: 10,
+    });
+    expect(listedPages?.structuredContent).toMatchObject({
+      pages: [expect.objectContaining({ routePath: '/guide' })],
+      total: 1,
+      offset: 0,
+      limit: 10,
+    });
+
+    const urlBeforeRead = page.url();
+    const guide = await executeTool(page, 'rspress_get_page', {
+      routePath: '/guide.html?source=read#webmcp-guide',
+    });
+    expect(guide?.structuredContent).toMatchObject({
+      title: 'WebMCP guide',
+      routePath: '/guide',
+    });
+    expect(
+      (guide?.structuredContent as { markdown: string }).markdown,
+    ).toContain('# WebMCP guide');
+    expect(page.url()).toBe(urlBeforeRead);
   });
 
   test('executes search and both custom registration APIs', async ({
@@ -132,6 +190,14 @@ test.describe('plugin-webmcp preview', () => {
     await expect(
       executeTool(page, 'rspress_navigate', { routePath: '/missing' }),
     ).rejects.toThrow(/Unknown internal route/);
+    await expect(
+      executeTool(page, 'rspress_get_page', {
+        routePath: 'https://example.com/',
+      }),
+    ).rejects.toThrow();
+    await expect(
+      executeTool(page, 'rspress_get_page', { routePath: '/missing' }),
+    ).rejects.toThrow(/Unknown internal route/);
 
     await executeTool(page, 'rspress_navigate', { routePath: '/index.html' });
     await expect(page).toHaveURL(new RegExp(`:${appPort}/$`));
@@ -153,6 +219,16 @@ test.describe('plugin-webmcp preview', () => {
     expect(JSON.stringify(zhSearch?.structuredContent)).toContain(
       'WebMCP 中文主页',
     );
+    const zhSiteInfo = await executeTool(page, 'rspress_get_site_info', {});
+    expect(zhSiteInfo?.structuredContent).toMatchObject({
+      lang: 'zh',
+      version: 'v1',
+    });
+    const zhPages = await executeTool(page, 'rspress_list_pages', {});
+    expect(zhPages?.structuredContent).toMatchObject({
+      pages: [expect.objectContaining({ title: 'WebMCP 中文主页' })],
+      total: 1,
+    });
 
     await executeTool(page, 'rspress_navigate', { routePath: '/v2/' });
     await expect
@@ -164,6 +240,11 @@ test.describe('plugin-webmcp preview', () => {
     expect(JSON.stringify(versionSearch?.structuredContent)).toContain(
       'WebMCP version two',
     );
+    const versionPages = await executeTool(page, 'rspress_list_pages', {});
+    expect(versionPages?.structuredContent).toMatchObject({
+      pages: [expect.objectContaining({ title: 'WebMCP version two' })],
+      total: 1,
+    });
   });
 
   test('serializes concurrent navigation calls', async ({ page }) => {
@@ -320,10 +401,19 @@ test.describe('plugin-webmcp development server', () => {
     await expect.poll(() => listToolNames(page)).toContain('rspress_navigate');
   });
 
-  test('omits the unavailable current-page tool', async ({ page }) => {
+  test('omits Markdown tools and keeps discovery tools', async ({ page }) => {
     await expect
       .poll(() => listToolNames(page))
       .not.toContain('rspress_get_current_page');
+    await expect
+      .poll(() => listToolNames(page))
+      .not.toContain('rspress_get_page');
+    await expect
+      .poll(() => listToolNames(page))
+      .toContain('rspress_get_site_info');
+    await expect
+      .poll(() => listToolNames(page))
+      .toContain('rspress_list_pages');
     await expect(
       page.getByRole('button', { name: 'Copy Markdown' }),
     ).toHaveCount(0);
@@ -409,14 +499,21 @@ test.describe('plugin-webmcp development server', () => {
   test('hot-updates page content and the local search tool', async ({
     page,
   }) => {
-    const updatedHomePage = originalHomePage.replace(
-      'cobalt platypus',
-      'silver capybara',
-    );
+    const updatedHomePage = originalHomePage
+      .replace('# WebMCP home', '# WebMCP HMR home')
+      .replace('cobalt platypus', 'silver capybara');
 
     try {
       await writeFile(homePageFile, updatedHomePage);
       await expect(page.getByText('silver capybara')).toBeVisible();
+      await expect
+        .poll(async () => {
+          const result = await executeTool(page, 'rspress_list_pages', {
+            query: 'HMR home',
+          });
+          return JSON.stringify(result?.structuredContent);
+        })
+        .toContain('WebMCP HMR home');
       await expect
         .poll(async () => {
           const search = await executeTool(page, 'rspress_search_docs', {
@@ -424,12 +521,20 @@ test.describe('plugin-webmcp development server', () => {
           });
           return JSON.stringify(search?.structuredContent);
         })
-        .toContain('WebMCP home');
+        .toContain('WebMCP HMR home');
     } finally {
       await writeFile(homePageFile, originalHomePage);
     }
 
     await expect(page.getByText('cobalt platypus')).toBeVisible();
+    await expect
+      .poll(async () => {
+        const result = await executeTool(page, 'rspress_list_pages', {
+          query: 'WebMCP home',
+        });
+        return JSON.stringify(result?.structuredContent);
+      })
+      .toContain('WebMCP home');
     await expect
       .poll(async () => {
         const search = await executeTool(page, 'rspress_search_docs', {

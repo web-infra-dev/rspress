@@ -15,6 +15,15 @@ export default defineConfig({
     versions: ['v1', 'v2'],
   },
   search: {},
+  themeConfig: {
+    nav: [{ text: 'Guide', link: '/guide' }],
+    sidebar: {
+      '/': [
+        { text: 'Home', link: '/' },
+        { text: 'Guide', link: '/guide' },
+      ],
+    },
+  },
   globalUIComponents: [path.join(import.meta.dirname, 'src/CounterTools.tsx')],
   builderConfig: {
     source: {

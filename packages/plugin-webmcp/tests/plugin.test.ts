@@ -24,21 +24,42 @@ function getRuntimeOptions(plugin: RspressPlugin) {
     throw new TypeError('Expected a global component with runtime options');
   }
   return component[1] as {
-    tools: { currentPage: boolean; search: boolean };
+    tools: {
+      siteInfo: boolean;
+      listPages: boolean;
+      getPage: boolean;
+      currentPage: boolean;
+      search: boolean;
+      navigate: boolean;
+    };
   };
 }
 
 describe('pluginWebMcp', () => {
   test('normalizes built-in tools', () => {
     expect(normalizePluginWebMcpOptions()).toEqual({
-      tools: { currentPage: true, search: true, navigate: true },
+      tools: {
+        siteInfo: true,
+        listPages: true,
+        getPage: true,
+        currentPage: true,
+        search: true,
+        navigate: true,
+      },
     });
     expect(
       normalizePluginWebMcpOptions({
         tools: { currentPage: false, navigate: false },
       }),
     ).toEqual({
-      tools: { currentPage: false, search: true, navigate: false },
+      tools: {
+        siteInfo: true,
+        listPages: true,
+        getPage: true,
+        currentPage: false,
+        search: true,
+        navigate: false,
+      },
     });
   });
 
@@ -69,6 +90,9 @@ describe('pluginWebMcp', () => {
     await plugin.beforeBuild?.({ llms: true, search: false }, true);
 
     expect(runtimeOptions.tools).toEqual({
+      siteInfo: true,
+      listPages: true,
+      getPage: true,
       currentPage: true,
       search: false,
       navigate: false,
@@ -88,14 +112,24 @@ describe('pluginWebMcp', () => {
   test('fails clearly when SSG-MD is explicitly disabled', () => {
     const plugin = pluginWebMcp();
     expect(() => plugin.config?.({ llms: false }, configUtils, true)).toThrow(
-      'rspress_get_current_page tool requires SSG-MD',
+      'Enabled Markdown page tools require SSG-MD',
     );
   });
 
-  test('allows llms false when the current-page tool is disabled', async () => {
+  test('requires SSG-MD when only get-page is enabled', () => {
     const plugin = pluginWebMcp({ tools: { currentPage: false } });
+    expect(() => plugin.config?.({ llms: false }, configUtils, true)).toThrow(
+      'Enabled Markdown page tools require SSG-MD',
+    );
+  });
+
+  test('allows llms false when both Markdown tools are disabled', async () => {
+    const plugin = pluginWebMcp({
+      tools: { currentPage: false, getPage: false },
+    });
     const config = { llms: false };
-    expect(await plugin.config?.(config, configUtils, false)).toBe(config);
+    expect(await plugin.config?.(config, configUtils, true)).toBe(config);
+    expect(plugin.beforeBuild?.(config, true)).toBeUndefined();
   });
 
   test('validates llms after every plugin config hook', async () => {
@@ -109,10 +143,10 @@ describe('pluginWebMcp', () => {
     };
 
     await expect(runPlugins([webMcp, disableLlms])).rejects.toThrow(
-      'rspress_get_current_page tool requires SSG-MD',
+      'Enabled Markdown page tools require SSG-MD',
     );
     await expect(runPlugins([disableLlms, webMcp])).rejects.toThrow(
-      'rspress_get_current_page tool requires SSG-MD',
+      'Enabled Markdown page tools require SSG-MD',
     );
   });
 });
