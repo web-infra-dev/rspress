@@ -89,23 +89,23 @@ create({
   extraSkills: [
     {
       value: 'rspress-docs-generator',
-      label: 'Rspress docs generator',
+      label: 'rspress-docs-generator',
       source: 'rstackjs/agent-skills',
     },
     {
       value: 'rspress-best-practices',
-      label: 'Rspress best practices',
+      label: 'rspress-best-practices',
       source: 'rstackjs/agent-skills',
     },
     {
       value: 'rspress-custom-theme',
-      label: 'Rspress custom theme',
+      label: 'rspress-custom-theme',
       source: 'rstackjs/agent-skills',
       when: ({ templateName }) => templateName.endsWith('-theme'),
     },
     {
       value: 'rspress-description-generator',
-      label: 'Rspress description generator',
+      label: 'rspress-description-generator',
       source: 'rstackjs/agent-skills',
     },
   ],
