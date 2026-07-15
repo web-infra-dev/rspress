@@ -63,9 +63,9 @@ function HomeFeatureItem({ feature }: { feature: Feature }): JSX.Element {
             className="rp-home-feature__detail"
             {...renderHtmlOrText(details)}
           />
+          {shineDom}
         </article>
       </div>
-      {shineDom}
     </div>
   );
 }
