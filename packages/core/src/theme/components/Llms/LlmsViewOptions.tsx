@@ -60,9 +60,10 @@ export function LlmsViewOptions({
 }: LlmsViewOptionsProps) {
   const { site } = useSite();
   const llmsUI = site?.themeConfig?.llmsUI;
+  const configuredOptions =
+    typeof llmsUI === 'object' ? llmsUI?.viewOptions : propsOptions;
   const options =
-    (typeof llmsUI === 'object' ? llmsUI?.viewOptions : propsOptions) ??
-    DEFAULT_OPTIONS;
+    configuredOptions === false ? [] : (configuredOptions ?? DEFAULT_OPTIONS);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLButtonElement>(null);
 
@@ -143,6 +144,10 @@ export function LlmsViewOptions({
       },
     };
   }, [pathname, t]);
+
+  if (options.length === 0) {
+    return null;
+  }
 
   return (
     <>
