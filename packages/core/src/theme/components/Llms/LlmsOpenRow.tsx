@@ -1,23 +1,9 @@
 import { useI18n, useSite } from '@rspress/core/runtime';
-import {
-  copyToClipboard,
-  IconExternalLink,
-  IconLink,
-  SvgWrapper,
-} from '@rspress/core/theme';
+import { IconExternalLink, SvgWrapper } from '@rspress/core/theme';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './LlmsOpenRow.scss';
 import './LlmsViewOptions.scss';
 import { useMdUrl } from './useMdUrl';
-
-type MenuItem = {
-  title: string;
-  href?: string;
-  icon?: React.ReactNode;
-  onClick?: () => void;
-};
-
-const DEFAULT_OPTIONS = ['markdownLink', 'chatgpt', 'claude'] as const;
 
 export function LlmsOpenRow() {
   const t = useI18n();
@@ -28,11 +14,9 @@ export function LlmsOpenRow() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const options =
-    typeof llmsUI === 'object'
-      ? llmsUI.viewOptions === false
-        ? []
-        : (llmsUI.viewOptions ?? DEFAULT_OPTIONS)
-      : DEFAULT_OPTIONS;
+    typeof llmsUI === 'object' && llmsUI?.viewOptions
+      ? llmsUI.viewOptions
+      : (['chatgpt', 'claude'] as const);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -60,15 +44,11 @@ export function LlmsOpenRow() {
 
   const q = `Read ${fullMarkdownUrl}, I want to ask questions about it.`;
 
-  const builtinItems: Record<string, MenuItem> = useMemo(
+  const builtinItems: Record<
+    string,
+    { title: string; href: string; icon: React.ReactNode }
+  > = useMemo(
     () => ({
-      markdownLink: {
-        title: t('copyMarkdownLinkText'),
-        icon: <SvgWrapper icon={IconLink} />,
-        onClick: () => {
-          void copyToClipboard(fullMarkdownUrl);
-        },
-      },
       chatgpt: {
         title: t('openInText', { name: 'ChatGPT' }),
         href: `https://chatgpt.com/?${new URLSearchParams({ hints: 'search', q })}`,
@@ -102,7 +82,7 @@ export function LlmsOpenRow() {
         ),
       },
     }),
-    [fullMarkdownUrl, t, q],
+    [t, q],
   );
 
   const renderableItems = useMemo(
@@ -117,7 +97,12 @@ export function LlmsOpenRow() {
           }
           return null;
         })
-        .filter((item): item is MenuItem => item !== null),
+        .filter(Boolean) as Array<{
+        title: string;
+        href?: string;
+        icon?: React.ReactNode;
+        onClick?: () => void;
+      }>,
     [options, builtinItems],
   );
 

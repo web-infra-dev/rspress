@@ -580,15 +580,13 @@ title: Document Title
 type LlmsUI =
   | boolean
   | {
-      viewOptions?:
-        | false
-        | Array<
-            | 'markdownLink'
-            | 'chatgpt'
-            | 'claude'
-            | { title: string; icon?: React.ReactNode; onClick?: () => void }
-            | { title: string; href: string; icon?: React.ReactNode }
-          >;
+      viewOptions?: Array<
+        | 'markdownLink'
+        | 'chatgpt'
+        | 'claude'
+        | { title: string; icon?: React.ReactNode; onClick?: () => void }
+        | { title: string; href: string; icon?: React.ReactNode }
+      >;
       placement?: 'title' | 'outline';
     };
 ```
@@ -625,7 +623,7 @@ export default defineConfig({
 
 ### viewOptions
 
-- **Type**: `false | Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
+- **Type**: `Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
 - **Default**: `['markdownLink', 'chatgpt', 'claude']`
 
 Options for the LlmsViewOptions dropdown menu. Built-in options include:
@@ -635,8 +633,6 @@ Options for the LlmsViewOptions dropdown menu. Built-in options include:
 - `'claude'`: Open in Claude
 
 You can also provide custom options with `title`, `href` or `onClick`, and optional `icon`.
-
-Set `viewOptions` to `false` or `[]` to hide the view options UI.
 
 ### placement
 
