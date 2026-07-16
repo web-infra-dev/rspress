@@ -22,7 +22,7 @@ export type LlmsUI =
        * llms.txt and llms-full.txt.
        * @default true
        */
-      injectLlmHint?: boolean;
+      injectLlmsHint?: boolean;
       /**
        * Options for LlmsViewOptions component dropdown menu.
        * Set to `false` or an empty array to hide the view options UI.

@@ -5,7 +5,7 @@ export default {
   themeConfig: {
     ...baseConfig.themeConfig,
     llmsUI: {
-      injectLlmHint: false,
+      injectLlmsHint: false,
     },
   },
 };

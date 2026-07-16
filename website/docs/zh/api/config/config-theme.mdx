@@ -568,7 +568,7 @@ title: 文档标题
 type LlmsUI =
   | boolean
   | {
-      injectLlmHint?: boolean;
+      injectLlmsHint?: boolean;
       viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
       placement?: 'title' | 'outline';
     };
@@ -593,7 +593,7 @@ export default defineConfig({
   llms: true,
   themeConfig: {
     llmsUI: {
-      injectLlmHint: true,
+      injectLlmsHint: true,
       viewOptions: ['markdownLink', 'chatgpt', 'claude'],
       placement: 'outline',
     },
@@ -601,7 +601,7 @@ export default defineConfig({
 });
 ```
 
-### injectLlmHint
+### injectLlmsHint
 
 - **类型**：`boolean`
 - **默认值**：`true`
@@ -618,7 +618,7 @@ export default defineConfig({
 
 其中的 URL 会自动包含配置的 `siteOrigin` 和 [`base`](/api/config/config-basic#base)。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
 
-将 `injectLlmHint` 设置为 `false`，可以仅移除隐藏提示，而不禁用可见的 LLMS UI 组件：
+将 `injectLlmsHint` 设置为 `false`，可以仅移除隐藏提示，而不禁用可见的 LLMS UI 组件：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -627,7 +627,7 @@ export default defineConfig({
   llms: true,
   themeConfig: {
     llmsUI: {
-      injectLlmHint: false,
+      injectLlmsHint: false,
     },
   },
 });

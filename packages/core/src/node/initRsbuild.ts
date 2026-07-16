@@ -111,7 +111,7 @@ async function createInternalBuildConfig(
   const enableLlmsUI = Boolean(llmsUI ?? config.llms);
   const enableLlmsHint =
     enableLlmsUI &&
-    (typeof llmsUI !== 'object' || llmsUI.injectLlmHint !== false);
+    (typeof llmsUI !== 'object' || llmsUI.injectLlmsHint !== false);
 
   // In production, we need to add assetPrefix in asset path
   const assetPrefix = isProduction()
