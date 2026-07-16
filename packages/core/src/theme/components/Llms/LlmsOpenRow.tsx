@@ -109,12 +109,21 @@ export function LlmsOpenRow() {
   const renderableItems = useMemo(
     () =>
       options
-        .map(option => {
+        .map((option): MenuItem | null => {
           if (typeof option === 'string') {
             return builtinItems[option] ?? null;
           }
-          if (typeof option === 'object' && 'title' in option) {
-            return option;
+          if (
+            typeof option === 'object' &&
+            'title' in option &&
+            typeof option.title === 'string' &&
+            'href' in option &&
+            typeof option.href === 'string'
+          ) {
+            return {
+              ...option,
+              icon: option.icon ? <SvgWrapper icon={option.icon} /> : undefined,
+            };
           }
           return null;
         })

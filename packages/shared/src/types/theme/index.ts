@@ -1,25 +1,30 @@
-import type { ReactNode } from 'react';
 import type { LocaleConfig } from './locale';
 import type { NavItem } from './nav';
 import type { NormalizedSidebar, Sidebar } from './sidebar';
 import type { SocialLink } from './socialLink';
 
 /**
- * Option item for LlmsViewOptions component.
+ * Serializable option item for LlmsViewOptions configured through
+ * `rspress.config.ts`.
  */
 export type LlmsViewOption =
   | 'markdownLink'
   | 'chatgpt'
   | 'claude'
   | {
+      /**
+       * Display text for the custom option.
+       */
       title: string;
-      icon?: ReactNode;
-      onClick?: () => void;
-    }
-  | {
-      title: string;
+      /**
+       * Link opened by the custom option.
+       */
       href: string;
-      icon?: ReactNode;
+      /**
+       * Icon rendered by SvgWrapper. Supports image paths and URLs, inline
+       * SVG markup, and text or emoji.
+       */
+      icon?: string;
     };
 
 /**

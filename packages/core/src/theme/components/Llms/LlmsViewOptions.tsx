@@ -17,7 +17,7 @@ import './index.scss';
 import './LlmsViewOptions.scss';
 import { useMdUrl } from './useMdUrl';
 
-type Option =
+export type LlmsViewOptionsItem =
   | {
       title: string;
       icon?: React.ReactNode;
@@ -45,8 +45,11 @@ export interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLBut
    * @default ['markdownLink', 'chatgpt', 'claude']
    * - 'chatgpt': Open in ChatGPT
    * - 'claude': Open in Claude
+   *
+   * Unlike `themeConfig.llmsUI.viewOptions`, component options can use
+   * ReactNode icons and onClick callbacks.
    */
-  options?: Option[];
+  options?: LlmsViewOptionsItem[];
   /**
    * Button text by language, used with `useLang`.
    * @default en: 'Open', zh: '\u6253\u5f00'
@@ -60,7 +63,11 @@ export interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLBut
   text?: string;
 }
 
-const DEFAULT_OPTIONS: Option[] = ['markdownLink', 'chatgpt', 'claude'];
+const DEFAULT_OPTIONS: LlmsViewOptionsItem[] = [
+  'markdownLink',
+  'chatgpt',
+  'claude',
+];
 
 export function LlmsViewOptions({
   options: propsOptions,
@@ -155,7 +162,7 @@ export function LlmsViewOptions({
   const renderableItems = useMemo(
     () =>
       options
-        .map(option => {
+        .map((option): MenuItem | null => {
           if (option === 'markdownLink') {
             return items.markdownLink;
           }
@@ -165,8 +172,21 @@ export function LlmsViewOptions({
           if (option === 'claude') {
             return items.claude;
           }
-          if (typeof option === 'object' && 'title' in option) {
-            return option;
+          if (
+            typeof option === 'object' &&
+            'title' in option &&
+            typeof option.title === 'string' &&
+            ('href' in option || 'onClick' in option)
+          ) {
+            return {
+              ...option,
+              icon:
+                typeof option.icon === 'string' ? (
+                  <SvgWrapper icon={option.icon} />
+                ) : (
+                  option.icon
+                ),
+            };
           }
           return null;
         })

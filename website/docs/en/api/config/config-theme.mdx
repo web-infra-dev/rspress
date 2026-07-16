@@ -586,8 +586,7 @@ type LlmsUI =
             | 'markdownLink'
             | 'chatgpt'
             | 'claude'
-            | { title: string; icon?: React.ReactNode; onClick?: () => void }
-            | { title: string; href: string; icon?: React.ReactNode }
+            | { title: string; href: string; icon?: string }
           >;
       placement?: 'title' | 'outline';
     };
@@ -609,16 +608,20 @@ For example:
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  llms: true, // This will automatically enable llmsUI
+  llms: true,
   themeConfig: {
-    // llmsUI is automatically set to true when llms: true
-    // You can also explicitly configure it:
-    llmsUI: true,
-    // Or with custom options:
-    // llmsUI: {
-    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
-    //   placement: 'outline',
-    // },
+    llmsUI: {
+      viewOptions: [
+        'markdownLink',
+        {
+          title: 'Home',
+          href: '/',
+          // Supports image paths, URLs, inline SVG, text, and emoji.
+          icon: '/home.svg',
+        },
+      ],
+      placement: 'outline',
+    },
   },
 });
 ```
@@ -633,8 +636,6 @@ Options for the LlmsViewOptions dropdown menu. Built-in options include:
 - `'markdownLink'`: Copy markdown file link
 - `'chatgpt'`: Open in ChatGPT
 - `'claude'`: Open in Claude
-
-You can also provide custom options with `title`, `href` or `onClick`, and optional `icon`.
 
 Set `viewOptions` to `false` or `[]` to hide the view options UI.
 
