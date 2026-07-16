@@ -32,6 +32,13 @@ type Option =
   | 'chatgpt'
   | 'claude';
 
+type MenuItem = {
+  title: string;
+  href?: string;
+  icon?: React.ReactNode;
+  onClick?: () => void;
+};
+
 export interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Default options for the dropdown.
@@ -145,7 +152,29 @@ export function LlmsViewOptions({
     };
   }, [pathname, t]);
 
-  if (options.length === 0) {
+  const renderableItems = useMemo(
+    () =>
+      options
+        .map(option => {
+          if (option === 'markdownLink') {
+            return items.markdownLink;
+          }
+          if (option === 'chatgpt') {
+            return items.chatgpt;
+          }
+          if (option === 'claude') {
+            return items.claude;
+          }
+          if (typeof option === 'object' && 'title' in option) {
+            return option;
+          }
+          return null;
+        })
+        .filter((item): item is MenuItem => item !== null),
+    [items, options],
+  );
+
+  if (renderableItems.length === 0) {
     return null;
   }
 
@@ -164,33 +193,20 @@ export function LlmsViewOptions({
         />
         {isOpen && (
           <div className="rp-llms-view-options__menu">
-            {options.map(item => {
-              let displayItem = item as {
-                title: string;
-                href?: string;
-                icon?: React.ReactNode;
-                onClick?: () => void;
-              };
-              if (item === 'markdownLink') {
-                displayItem = items.markdownLink;
-              } else if (item === 'chatgpt') {
-                displayItem = items.chatgpt;
-              } else if (item === 'claude') {
-                displayItem = items.claude;
-              }
-              if (displayItem.href) {
+            {renderableItems.map(item => {
+              if (item.href) {
                 return (
                   <a
-                    key={displayItem.title}
+                    key={item.title}
                     className="rp-llms-view-options__menu-item"
-                    href={displayItem.href}
+                    href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <span className="rp-llms-view-options__item-icon">
-                      {displayItem.icon}
+                      {item.icon}
                     </span>
-                    <span>{displayItem.title}</span>
+                    <span>{item.title}</span>
                     <span className="rp-llms-view-options__external-icon">
                       <SvgWrapper icon={IconExternalLink} />
                     </span>
@@ -199,14 +215,14 @@ export function LlmsViewOptions({
               }
               return (
                 <div
-                  key={displayItem.title}
+                  key={item.title}
                   className="rp-llms-view-options__menu-item"
-                  onClick={displayItem.onClick}
+                  onClick={item.onClick}
                 >
                   <span className="rp-llms-view-options__item-icon">
-                    {displayItem.icon}
+                    {item.icon}
                   </span>
-                  <span>{displayItem.title}</span>
+                  <span>{item.title}</span>
                 </div>
               );
             })}

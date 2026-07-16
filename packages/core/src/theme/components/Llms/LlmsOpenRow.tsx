@@ -5,6 +5,7 @@ import {
   IconLink,
   SvgWrapper,
 } from '@rspress/core/theme';
+import type { ReactNode } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './LlmsOpenRow.scss';
 import './LlmsViewOptions.scss';
@@ -13,7 +14,7 @@ import { useMdUrl } from './useMdUrl';
 type MenuItem = {
   title: string;
   href?: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   onClick?: () => void;
 };
 
@@ -171,7 +172,8 @@ export function LlmsOpenRow() {
               );
             }
             return (
-              <div
+              <button
+                type="button"
                 key={item.title}
                 className="rp-llms-view-options__menu-item"
                 onClick={() => {
@@ -183,7 +185,7 @@ export function LlmsOpenRow() {
                   {item.icon}
                 </span>
                 <span>{item.title}</span>
-              </div>
+              </button>
             );
           })}
         </div>
