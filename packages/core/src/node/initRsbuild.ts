@@ -39,6 +39,7 @@ import {
   hintBuilderPluginsBreakingChange,
   hintThemeBreakingChange,
 } from './logger/hint';
+import { isLlmsHintEnabled, isLlmsUIEnabled } from './llms';
 import type { PluginDriver } from './PluginDriver';
 import type { RouteService } from './route/RouteService';
 import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
@@ -107,11 +108,8 @@ async function createInternalBuildConfig(
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
   const base = config?.base ?? '/';
-  const llmsUI = config.themeConfig?.llmsUI;
-  const enableLlmsUI = Boolean(llmsUI ?? config.llms);
-  const enableLlmsHint =
-    enableLlmsUI &&
-    (typeof llmsUI !== 'object' || llmsUI.injectLlmsHint !== false);
+  const enableLlmsUI = isLlmsUIEnabled(config);
+  const enableLlmsHint = isLlmsHintEnabled(config);
 
   // In production, we need to add assetPrefix in asset path
   const assetPrefix = isProduction()

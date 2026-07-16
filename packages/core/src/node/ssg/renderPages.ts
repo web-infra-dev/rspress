@@ -4,6 +4,7 @@ import { logger } from '@rspress/shared/logger';
 import pMap from 'p-map';
 import picocolors from 'picocolors';
 
+import { renderLlmsHiddenHint } from '../llms';
 import { hintSSGFailed } from '../logger/hint';
 import type { RouteService } from '../route/RouteService';
 import {
@@ -66,7 +67,7 @@ export async function renderPages(
           csrRoutes.push(route);
           promiseList.push(
             renderCSRPage(
-              config.head,
+              config,
               route,
               htmlTemplate,
               alternateLinksByRoute,
@@ -178,7 +179,7 @@ export async function renderPages(
 }
 
 async function renderCSRPage(
-  head: UserConfig['head'],
+  config: UserConfig,
   route: RouteMeta,
   htmlTemplate: string,
   alternateLinksByRoute: AlternateLinksByRoute,
@@ -186,9 +187,9 @@ async function renderCSRPage(
 ) {
   const html = await renderHtmlTemplate(
     htmlTemplate,
-    head,
+    config.head,
     route,
-    '',
+    renderLlmsHiddenHint(config),
     alternateLinksByRoute[route.routePath] ?? [],
   );
   const fileName = routePath2HtmlFileName(route.routePath);
@@ -211,7 +212,7 @@ export async function renderCSRPages(
   await Promise.all(
     routes.map(route => {
       return renderCSRPage(
-        config.head,
+        config,
         route,
         htmlTemplate,
         alternateLinksByRoute,

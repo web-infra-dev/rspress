@@ -620,12 +620,9 @@ export default defineConfig({
 
 With [`siteOrigin`](/api/config/config-basic#siteorigin) set to `https://example.com`, this option controls whether to inject the following hidden hint into generated HTML pages:
 
+<!-- prettier-ignore -->
 ```html
-<div style="display: none" hidden aria-hidden="true">
-  Are you an LLM? View https://example.com/llms.txt for optimized Markdown
-  documentation, or https://example.com/llms-full.txt for full documentation
-  bundle
-</div>
+<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/llms.txt for optimized Markdown documentation, or https://example.com/llms-full.txt for full documentation bundle</div>
 ```
 
 The URLs automatically include the configured `siteOrigin` and [`base`](/api/config/config-basic#base). Without `siteOrigin`, they remain base-aware paths.

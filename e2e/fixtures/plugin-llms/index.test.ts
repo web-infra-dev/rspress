@@ -71,6 +71,14 @@ test.describe('plugin-llms', async () => {
     expect(llmsFullTxt).toContain(
       'url: https://example.com/docs/api/commands.md',
     );
+
+    const indexHtml = await readFile(
+      path.resolve(appDir, 'doc_build', 'index.html'),
+      'utf-8',
+    );
+    expect(indexHtml).toContain(
+      '<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/docs/llms.txt for optimized Markdown documentation, or https://example.com/docs/llms-full.txt for full documentation bundle</div>',
+    );
   });
 
   test('should order llms.txt entries according to _meta.json', async () => {
