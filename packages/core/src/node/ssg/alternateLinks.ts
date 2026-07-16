@@ -20,14 +20,14 @@ export function createAlternateLinksByRoute(
   const routeGroups = new Map<string, RouteMeta[]>();
 
   for (const route of routes) {
-    if (!route.lang) {
+    if (!route.lang || !route.pureRoutePath) {
       continue;
     }
 
-    const routePathWithoutLang = getRoutePathWithoutLang(route);
-    const routeGroup = routeGroups.get(routePathWithoutLang) ?? [];
+    const groupKey = JSON.stringify([route.version, route.pureRoutePath]);
+    const routeGroup = routeGroups.get(groupKey) ?? [];
     routeGroup.push(route);
-    routeGroups.set(routePathWithoutLang, routeGroup);
+    routeGroups.set(groupKey, routeGroup);
   }
 
   const locales = config.locales ?? config.themeConfig?.locales ?? [];
@@ -59,19 +59,6 @@ export function createAlternateLinksByRoute(
   }
 
   return alternateLinksByRoute;
-}
-
-function getRoutePathWithoutLang(route: RouteMeta): string {
-  const hasTrailingSlash = route.routePath.endsWith('/');
-  const parts = route.routePath.split('/').filter(Boolean);
-
-  const langIndex = route.version && parts[0] === route.version ? 1 : 0;
-  if (parts[langIndex] === route.lang) {
-    parts.splice(langIndex, 1);
-  }
-
-  const routePath = `/${parts.join('/')}`;
-  return hasTrailingSlash && routePath !== '/' ? `${routePath}/` : routePath;
 }
 
 function getRouteHref(routePath: string, config: UserConfig): string {

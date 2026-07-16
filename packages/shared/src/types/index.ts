@@ -98,6 +98,10 @@ interface RemarkSplitMdxOptions {
 
 export interface RouteMeta {
   routePath: string;
+  /**
+   * Route path without language and version prefixes.
+   */
+  pureRoutePath?: string;
   absolutePath: string;
   relativePath: string;
   pageName: string;
