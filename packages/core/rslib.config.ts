@@ -30,6 +30,7 @@ const COMMON_EXTERNALS = [
   '@types/react',
   '@rspress/core/runtime',
   '@rspress/core/theme',
+  '@rspress/core/theme-original',
   '@rspress/core/shiki-transformers',
   '@rspress/shared',
   // react

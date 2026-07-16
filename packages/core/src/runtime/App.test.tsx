@@ -31,6 +31,12 @@ rs.mock('@rspress/core/theme', () => ({
   Root: ({ children }: { children: ReactNode }) => children,
 }));
 
+rs.mock('@rspress/core/theme-original', () => ({
+  Layout: () => 'Layout content',
+  LlmsHiddenHint: () => 'LLMS hidden hint',
+  Root: ({ children }: { children: ReactNode }) => children,
+}));
+
 rs.mock('virtual-global-components', () => ({
   default: [() => 'Global component'],
 }));
