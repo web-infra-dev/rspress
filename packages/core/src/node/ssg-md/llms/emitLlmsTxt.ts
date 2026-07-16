@@ -114,6 +114,9 @@ export async function emitLlmsTxt(
       config.base!,
       config.siteOrigin,
       routeService,
+      lang,
+      version,
+      typeof config.llms === 'object' ? config.llms.llmsTxt : undefined,
     );
 
     const llmsFullTxtContent = generateLlmsFullTxt(

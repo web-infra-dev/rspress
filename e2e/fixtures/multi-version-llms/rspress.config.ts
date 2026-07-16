@@ -5,7 +5,20 @@ export default defineConfig({
   root: path.join(import.meta.dirname, 'docs'),
   lang: 'en',
   ssg: true,
-  llms: true,
+  llms: {
+    llmsTxt: ({ title, lang, version, sections }) => {
+      const links = sections
+        .flatMap(section => section.pages)
+        .map(page => `- [${page.title}](${page.link})`)
+        .join('\n');
+      return `# ${title}
+
+lang: ${lang}
+version: ${version}
+
+${links}`;
+    },
+  },
   title: 'Multi Version LLMS Test',
   description: 'Test multi-version with SSG-MD llms',
   locales: [

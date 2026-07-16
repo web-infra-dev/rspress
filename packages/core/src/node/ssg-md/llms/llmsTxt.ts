@@ -1,4 +1,7 @@
 import {
+  type LlmsTxtPage,
+  type LlmsTxtRenderer,
+  type LlmsTxtSection,
   type NavItemWithLink,
   normalizeHref,
   withBase,
@@ -28,35 +31,29 @@ async function generateLlmsTxt(
   base: string,
   siteOrigin: string | undefined,
   routeService: RouteService,
+  lang: string,
+  version: string,
+  renderLlmsTxt?: LlmsTxtRenderer,
 ): Promise<string> {
-  const lines: string[] = [];
-
-  if (!title) {
-    logger.warn(
-      'No `title` is configured in your Rspress setup. Please set `title` in rspress.config.ts so llms.txt can include an appropriate heading.',
-    );
-  }
-
-  const summary = title
-    ? `# ${title}${description ? `\n\n> ${description}` : ''}`
-    : '';
-
-  async function genH2Part(
-    nav: { text: string },
+  async function generateSection(
+    sectionTitle: string,
     routes: string[],
-  ): Promise<string[]> {
-    const lines: string[] = [];
-    const { text } = nav;
+  ): Promise<LlmsTxtSection | undefined> {
     if (routes.length === 0) {
-      return lines;
+      return;
     }
 
-    const routeLines: string[] = (
+    const pages: LlmsTxtPage[] = (
       await Promise.all(
-        routes.map(async route => {
+        routes.map(async (route): Promise<LlmsTxtPage | undefined> => {
           const routePage = routeService.getRoutePageByRoutePath(route)!;
-          const { lang, routePath, absolutePath } = routePage.routeMeta;
-          if (routePath === '/' || routePath === `/${lang}/`) {
+          const {
+            lang: pageLang,
+            routePath,
+            absolutePath,
+            version: pageVersion,
+          } = routePage.routeMeta;
+          if (routePath === '/' || routePath === `/${pageLang}/`) {
             return;
           }
 
@@ -78,36 +75,72 @@ async function generateLlmsTxt(
             description = info.description;
           }
 
-          return `- [${title}](${routePathToMdPath(routePath, base, siteOrigin)})${description ? `: ${description}` : ''}`;
+          return {
+            routePath,
+            link: routePathToMdPath(routePath, base, siteOrigin),
+            title,
+            description,
+            frontmatter: pageInfo?.frontmatter ?? {},
+            lang: pageLang,
+            version: pageVersion,
+          };
         }),
       )
-    ).filter((i): i is string => Boolean(i));
-    if (routeLines.length > 0) {
-      const title = text;
-      lines.push(`\n## ${title}\n`);
-      lines.push(...routeLines);
+    ).filter((page): page is LlmsTxtPage => Boolean(page));
+
+    if (pages.length === 0) {
+      return;
     }
 
-    return lines;
+    return {
+      title: sectionTitle,
+      pages,
+    };
   }
 
-  const h2Parts = await Promise.all(
+  const navSections = await Promise.all(
     navList.map(async (nav, i) => {
       const routes = routeGroups[i];
-      const h2Part = await genH2Part(nav, routes);
-      return h2Part;
+      return generateSection(nav.text, routes);
     }),
   );
-  lines.push(...h2Parts.flat());
-
-  // handle others
-  const otherLines = await genH2Part(
-    {
-      text: 'Others',
-    },
-    others,
+  const otherSection = await generateSection('Others', others);
+  const sections = [...navSections, otherSection].filter(
+    (section): section is LlmsTxtSection => Boolean(section),
   );
-  lines.push(...otherLines);
+
+  if (renderLlmsTxt) {
+    return renderLlmsTxt({
+      title,
+      description,
+      lang,
+      version,
+      base,
+      siteOrigin,
+      sections,
+    });
+  }
+
+  if (!title) {
+    logger.warn(
+      'No `title` is configured in your Rspress setup. Please set `title` in rspress.config.ts so llms.txt can include an appropriate heading.',
+    );
+  }
+
+  const summary = title
+    ? `# ${title}${description ? `\n\n> ${description}` : ''}`
+    : '';
+  const lines: string[] = [];
+  for (const section of sections) {
+    lines.push(`\n## ${section.title}\n`);
+    lines.push(
+      ...section.pages.map(
+        page =>
+          `- [${page.title}](${page.link})${page.description ? `: ${page.description}` : ''}`,
+      ),
+    );
+  }
+
   let llmsTxt: string;
   if (summary) {
     llmsTxt = lines.length > 0 ? `${summary}\n${lines.join('\n')}` : summary;

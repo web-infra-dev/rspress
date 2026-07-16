@@ -254,6 +254,44 @@ export default defineConfig({
 
 For more information, see [themeConfig.llmsUI](/api/config/config-theme#llmsui).
 
+### Customize llms.txt
+
+Use `llms.llmsTxt` to compose the complete contents of each generated `llms.txt` file:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: {
+    llmsTxt: ({ title, description, sections }) => {
+      const sectionContent = sections
+        .map(section => {
+          const pages = section.pages
+            .map(page => `- [${page.title}](${page.link})`)
+            .join('\n');
+          return `## ${section.title}\n\n${pages}`;
+        })
+        .join('\n\n');
+
+      return `# ${title}
+
+> ${description}
+
+${sectionContent}`;
+    },
+  },
+});
+```
+
+The callback can return a string or a Promise. It runs once for every generated language and version combination, and receives:
+
+- `title` and `description`: The site metadata from `rspress.config.ts`.
+- `lang` and `version`: The language and version of the current `llms.txt` file.
+- `base` and `siteOrigin`: The URL configuration used to generate Markdown links.
+- `sections`: Pages grouped by navigation and ordered by the sidebar. Each page contains `title`, `description`, `frontmatter`, `routePath`, `link`, `lang`, and `version`. The `link` field is the final URL of the generated Markdown file.
+
+Pages that do not match a navigation item are placed in an `Others` section. The locale home page is omitted because the site title and description represent it.
+
 ### Custom MDX splitting
 
 When documents contain custom components, use `remarkSplitMdxOptions` to control which components to keep or convert to plain text when converting to Markdown:
