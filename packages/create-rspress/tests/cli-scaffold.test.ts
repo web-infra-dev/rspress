@@ -37,6 +37,7 @@ describe('create-rspress CLI scaffold', () => {
       expect(packageJson.scripts.dev).toBe('rspress dev');
       expect(packageJson.scripts.lint).toBe('rslint');
       expect(packageJson.devDependencies['@rslint/core']).toBeTruthy();
+      expect(packageJson.devDependencies.typescript).toBeTruthy();
       expect(existsSync(path.join(projectDir, 'theme/index.tsx'))).toBe(false);
 
       const rslintConfig = readFileSync(
