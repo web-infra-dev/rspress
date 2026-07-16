@@ -1,5 +1,12 @@
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runDevCommand,
+} from '../../utils/runCommands';
 
 test.describe('i18n test', async () => {
   let appPort: number;
@@ -346,5 +353,28 @@ test.describe('i18n test', async () => {
     await expect(englishLink).toHaveAttribute('lang', 'en');
     await expect(englishLink).toHaveAttribute('hreflang', 'en');
     await expect(englishLink).toHaveAttribute('rel', 'alternate');
+  });
+});
+
+test.describe('i18n SEO', () => {
+  test.beforeAll(async () => {
+    await runBuildCommand(import.meta.dirname);
+  });
+
+  test('generates reciprocal alternate language links', async () => {
+    const outputDir = path.join(import.meta.dirname, 'doc_build');
+    const [chineseHtml, englishHtml] = await Promise.all([
+      readFile(path.join(outputDir, 'index.html'), 'utf8'),
+      readFile(path.join(outputDir, 'en/index.html'), 'utf8'),
+    ]);
+    const alternateLinks = [
+      '<link rel="alternate" hreflang="zh" href="https://example.com/index.html">',
+      '<link rel="alternate" hreflang="en" href="https://example.com/en/index.html">',
+    ];
+
+    for (const link of alternateLinks) {
+      expect(chineseHtml).toContain(link);
+      expect(englishHtml).toContain(link);
+    }
   });
 });
