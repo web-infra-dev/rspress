@@ -12,7 +12,7 @@ interface WorkerDataParams {
   htmlTemplate: string;
   head: UserConfig['head'];
   ssrBundlePath: string;
-  alternateLinks: AlternateLinksByRoute;
+  alternateLinksByRoute: AlternateLinksByRoute;
   distPath?: string;
 }
 
@@ -25,7 +25,8 @@ if (!params) {
   throw createError('SSG Worker Thread workerData params missing');
 }
 
-const { htmlTemplate, head, ssrBundlePath, alternateLinks, distPath } = params;
+const { htmlTemplate, head, ssrBundlePath, alternateLinksByRoute, distPath } =
+  params;
 
 async function writeHtmlFile(routePath: string, html: string) {
   if (!distPath) {
@@ -49,7 +50,7 @@ const exportWorkerGlueFn = async ({
           htmlTemplate,
           head,
           ssrBundlePath,
-          alternateLinks[route.routePath],
+          alternateLinksByRoute[route.routePath] ?? [],
         );
         await writeHtmlFile(route.routePath, html);
       },
@@ -66,7 +67,7 @@ const exportWorkerGlueFn = async ({
         htmlTemplate,
         head,
         ssrBundlePath,
-        alternateLinks[route.routePath],
+        alternateLinksByRoute[route.routePath] ?? [],
       );
       return html;
     },

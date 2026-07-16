@@ -1,7 +1,7 @@
 import type { RouteMeta, UserConfig } from '@rspress/shared';
 import { describe, expect, it } from '@rstest/core';
 import { HEAD_MARKER } from '../constants';
-import { createAlternateLinks } from './alternateLinks';
+import { createAlternateLinksByRoute } from './alternateLinks';
 import { renderHtmlTemplate } from './renderHtmlTemplate';
 
 function createRoute(routePath: string, lang: string, version = ''): RouteMeta {
@@ -26,11 +26,11 @@ const config: UserConfig = {
   siteOrigin: 'https://example.com',
 };
 
-describe('createAlternateLinks', () => {
+describe('createAlternateLinksByRoute', () => {
   it('creates reciprocal links only for existing translations', () => {
     const enRoute = createRoute('/guide/getting-started', 'en');
     const zhRoute = createRoute('/zh/guide/getting-started', 'zh');
-    const links = createAlternateLinks(
+    const links = createAlternateLinksByRoute(
       [enRoute, zhRoute, createRoute('/only-english', 'en')],
       config,
     );
@@ -51,7 +51,7 @@ describe('createAlternateLinks', () => {
   });
 
   it('supports index routes and clean URLs without a site origin', () => {
-    const links = createAlternateLinks(
+    const links = createAlternateLinksByRoute(
       [createRoute('/', 'en'), createRoute('/zh/', 'zh')],
       {
         ...config,
@@ -66,21 +66,38 @@ describe('createAlternateLinks', () => {
     ]);
   });
 
-  it('does not mix translations from different versions', () => {
-    const links = createAlternateLinks(
+  it('keeps alternate links within the same version', () => {
+    const links = createAlternateLinksByRoute(
       [
         createRoute('/guide/', 'en', 'v1'),
         createRoute('/zh/guide/', 'zh', 'v1'),
         createRoute('/v2/guide/', 'en', 'v2'),
-        createRoute('/v2/zh/other/', 'zh', 'v2'),
+        createRoute('/v2/zh/guide/', 'zh', 'v2'),
       ],
       config,
     );
 
-    expect(links['/guide/']).toHaveLength(2);
-    expect(links['/zh/guide/']).toHaveLength(2);
-    expect(links['/v2/guide/']).toBeUndefined();
-    expect(links['/v2/zh/other/']).toBeUndefined();
+    const v1Links = [
+      { href: 'https://example.com/docs/guide/index.html', hrefLang: 'en' },
+      {
+        href: 'https://example.com/docs/zh/guide/index.html',
+        hrefLang: 'zh',
+      },
+    ];
+    const v2Links = [
+      {
+        href: 'https://example.com/docs/v2/guide/index.html',
+        hrefLang: 'en',
+      },
+      {
+        href: 'https://example.com/docs/v2/zh/guide/index.html',
+        hrefLang: 'zh',
+      },
+    ];
+    expect(links['/guide/']).toEqual(v1Links);
+    expect(links['/zh/guide/']).toEqual(v1Links);
+    expect(links['/v2/guide/']).toEqual(v2Links);
+    expect(links['/v2/zh/guide/']).toEqual(v2Links);
   });
 
   it('injects alternate links into the document head', async () => {

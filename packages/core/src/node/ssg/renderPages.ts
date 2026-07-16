@@ -7,7 +7,7 @@ import picocolors from 'picocolors';
 import { hintSSGFailed } from '../logger/hint';
 import type { RouteService } from '../route/RouteService';
 import {
-  createAlternateLinks,
+  createAlternateLinksByRoute,
   type AlternateLinksByRoute,
 } from './alternateLinks';
 import { routePath2HtmlFileName } from './htmlFile';
@@ -33,7 +33,7 @@ export async function renderPages(
 
   try {
     const routes = routeService.getRoutes();
-    const alternateLinks = createAlternateLinks(routes, config);
+    const alternateLinksByRoute = createAlternateLinksByRoute(routes, config);
     if (!routeService.isExistRoute('/404')) {
       // @ts-expect-error 404 page has no absolutePath attribute, so it is special
       routes.push({ routePath: '/404' });
@@ -69,7 +69,7 @@ export async function renderPages(
               config.head,
               route,
               htmlTemplate,
-              alternateLinks,
+              alternateLinksByRoute,
               emitAsset,
             ),
           );
@@ -119,7 +119,7 @@ export async function renderPages(
             htmlTemplate,
             head: config.head,
             ssrBundlePath,
-            alternateLinks,
+            alternateLinksByRoute,
             distPath: workerOutputDistPath,
           },
         },
@@ -153,7 +153,7 @@ export async function renderPages(
             htmlTemplate,
             config.head,
             ssrBundlePath,
-            alternateLinks[route.routePath],
+            alternateLinksByRoute[route.routePath] ?? [],
           );
 
           const fileName = routePath2HtmlFileName(route.routePath);
@@ -181,7 +181,7 @@ async function renderCSRPage(
   head: UserConfig['head'],
   route: RouteMeta,
   htmlTemplate: string,
-  alternateLinks: AlternateLinksByRoute,
+  alternateLinksByRoute: AlternateLinksByRoute,
   emitAsset: (assetName: string, content: string | Buffer) => void,
 ) {
   const html = await renderHtmlTemplate(
@@ -189,7 +189,7 @@ async function renderCSRPage(
     head,
     route,
     '',
-    alternateLinks[route.routePath],
+    alternateLinksByRoute[route.routePath] ?? [],
   );
   const fileName = routePath2HtmlFileName(route.routePath);
   emitAsset(fileName, html);
@@ -202,7 +202,7 @@ export async function renderCSRPages(
   emitAsset: (assetName: string, content: string | Buffer) => void,
 ) {
   const routes = routeService.getRoutes();
-  const alternateLinks = createAlternateLinks(routes, config);
+  const alternateLinksByRoute = createAlternateLinksByRoute(routes, config);
   if (!routeService.isExistRoute('/404')) {
     // @ts-expect-error 404 page is special
     routes.push({ routePath: '/404' });
@@ -214,7 +214,7 @@ export async function renderCSRPages(
         config.head,
         route,
         htmlTemplate,
-        alternateLinks,
+        alternateLinksByRoute,
         emitAsset,
       );
     }),

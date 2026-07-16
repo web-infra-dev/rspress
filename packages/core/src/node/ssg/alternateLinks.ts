@@ -11,9 +11,9 @@ export interface AlternateLink {
   hrefLang: string;
 }
 
-export type AlternateLinksByRoute = Record<string, AlternateLink[]>;
+export type AlternateLinksByRoute = Partial<Record<string, AlternateLink[]>>;
 
-export function createAlternateLinks(
+export function createAlternateLinksByRoute(
   routes: RouteMeta[],
   config: UserConfig,
 ): AlternateLinksByRoute {
@@ -24,21 +24,20 @@ export function createAlternateLinks(
       continue;
     }
 
-    const pureRoutePath = removeRoutePrefixes(route);
-    const groupKey = `${route.version}\0${pureRoutePath}`;
-    const group = routeGroups.get(groupKey) ?? [];
-    group.push(route);
-    routeGroups.set(groupKey, group);
+    const routePathWithoutLang = getRoutePathWithoutLang(route);
+    const routeGroup = routeGroups.get(routePathWithoutLang) ?? [];
+    routeGroup.push(route);
+    routeGroups.set(routePathWithoutLang, routeGroup);
   }
 
   const locales = config.locales ?? config.themeConfig?.locales ?? [];
   const localeOrder = new Map(
     locales.map(({ lang }, index) => [lang, index] as const),
   );
-  const linksByRoute: AlternateLinksByRoute = {};
+  const alternateLinksByRoute: AlternateLinksByRoute = {};
 
-  for (const routes of routeGroups.values()) {
-    const routesByLang = new Map(routes.map(route => [route.lang, route]));
+  for (const routeGroup of routeGroups.values()) {
+    const routesByLang = new Map(routeGroup.map(route => [route.lang, route]));
     if (routesByLang.size < 2) {
       continue;
     }
@@ -49,34 +48,30 @@ export function createAlternateLinks(
           (localeOrder.get(b.lang) ?? Number.MAX_SAFE_INTEGER) ||
         a.lang.localeCompare(b.lang),
     );
-    const links = alternateRoutes.map(route => ({
+    const alternateLinks = alternateRoutes.map(route => ({
       href: getRouteHref(route.routePath, config),
       hrefLang: route.lang,
     }));
 
     for (const route of alternateRoutes) {
-      linksByRoute[route.routePath] = links;
+      alternateLinksByRoute[route.routePath] = alternateLinks;
     }
   }
 
-  return linksByRoute;
+  return alternateLinksByRoute;
 }
 
-function removeRoutePrefixes(route: RouteMeta): string {
+function getRoutePathWithoutLang(route: RouteMeta): string {
   const hasTrailingSlash = route.routePath.endsWith('/');
   const parts = route.routePath.split('/').filter(Boolean);
 
-  if (route.version && parts[0] === route.version) {
-    parts.shift();
-  }
-  if (route.lang && parts[0] === route.lang) {
-    parts.shift();
+  const langIndex = route.version && parts[0] === route.version ? 1 : 0;
+  if (parts[langIndex] === route.lang) {
+    parts.splice(langIndex, 1);
   }
 
-  const pureRoutePath = `/${parts.join('/')}`;
-  return hasTrailingSlash && pureRoutePath !== '/'
-    ? `${pureRoutePath}/`
-    : pureRoutePath;
+  const routePath = `/${parts.join('/')}`;
+  return hasTrailingSlash && routePath !== '/' ? `${routePath}/` : routePath;
 }
 
 function getRouteHref(routePath: string, config: UserConfig): string {
