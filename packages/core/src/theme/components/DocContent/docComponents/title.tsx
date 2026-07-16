@@ -25,7 +25,7 @@ export const H1 = (props: React.ComponentProps<'h1'>) => {
       <h1 className={clsx('rp-toc-include', className)} {...rest}>
         {children} <Tag tag={tag} />
       </h1>
-      {process.env.ENABLE_LLMS_UI && placement === 'title' && (
+      {import.meta.env.ENABLE_LLMS_UI && placement === 'title' && (
         <LlmsContainer>
           <LlmsCopyButton />
           <LlmsViewOptions />

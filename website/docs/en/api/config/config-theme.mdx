@@ -580,6 +580,7 @@ title: Document Title
 type LlmsUI =
   | boolean
   | {
+      injectLlmHint?: boolean;
       viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
       placement?: 'title' | 'outline';
     };
@@ -604,8 +605,41 @@ export default defineConfig({
   llms: true,
   themeConfig: {
     llmsUI: {
+      injectLlmHint: true,
       viewOptions: ['markdownLink', 'chatgpt', 'claude'],
       placement: 'outline',
+    },
+  },
+});
+```
+
+### injectLlmHint
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+With [`siteOrigin`](/api/config/config-basic#siteorigin) set to `https://example.com`, this option controls whether to inject the following hidden hint into generated HTML pages:
+
+```html
+<div style="display: none" hidden aria-hidden="true">
+  Are you an LLM? View https://example.com/llms.txt for optimized Markdown
+  documentation, or https://example.com/llms-full.txt for full documentation
+  bundle
+</div>
+```
+
+The URLs automatically include the configured `siteOrigin` and [`base`](/api/config/config-basic#base). Without `siteOrigin`, they remain base-aware paths.
+
+Set `injectLlmHint` to `false` to remove the hidden hint without disabling the visible LLMS UI components:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      injectLlmHint: false,
     },
   },
 });
