@@ -52,7 +52,7 @@ export function createAlternateLinksByRoute(
     );
     const alternateLinks = alternateRoutes.map(route => ({
       href: getRouteHref(route.routePath, config),
-      hrefLang: route.lang,
+      hrefLang: route.lang.replaceAll('_', '-'),
     }));
 
     for (const route of alternateRoutes) {

@@ -107,6 +107,33 @@ describe('createAlternateLinksByRoute', () => {
     ]);
   });
 
+  it('normalizes locale IDs in hreflang values', () => {
+    const links = createAlternateLinksByRoute(
+      [
+        createRoute('/guide', 'en'),
+        createRoute('/en_US/guide', 'en_US', '/guide'),
+      ],
+      {
+        ...config,
+        locales: [
+          { lang: 'en', label: 'English' },
+          { lang: 'en_US', label: 'English (US)' },
+        ],
+      },
+    );
+
+    expect(links['/guide']).toEqual([
+      {
+        href: 'https://example.com/docs/guide.html',
+        hrefLang: 'en',
+      },
+      {
+        href: 'https://example.com/docs/en_US/guide.html',
+        hrefLang: 'en-US',
+      },
+    ]);
+  });
+
   it('keeps alternate links within the same version', () => {
     const links = createAlternateLinksByRoute(
       [
