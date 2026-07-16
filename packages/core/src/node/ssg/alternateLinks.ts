@@ -1,8 +1,10 @@
 import {
+  addLeadingSlash,
   normalizeHref,
+  normalizePosixPath,
+  removeTrailingSlash,
   type RouteMeta,
   type UserConfig,
-  withBase,
   withSiteOrigin,
 } from '@rspress/shared';
 
@@ -66,8 +68,11 @@ function getRouteHref(routePath: string, config: UserConfig): string {
     routePath,
     config.route?.cleanUrls ?? false,
   );
+  const normalizedBase = removeTrailingSlash(
+    addLeadingSlash(normalizePosixPath(config.base ?? '/')),
+  );
   return withSiteOrigin(
-    withBase(normalizedHref, config.base ?? '/'),
+    `${normalizedBase}${normalizedHref}`,
     config.siteOrigin,
   );
 }

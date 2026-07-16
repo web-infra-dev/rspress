@@ -86,6 +86,27 @@ describe('createAlternateLinksByRoute', () => {
     ]);
   });
 
+  it('prepends the base to similarly prefixed routes', () => {
+    const links = createAlternateLinksByRoute(
+      [
+        createRoute('/docs-api', 'en'),
+        createRoute('/zh/docs-api', 'zh', '/docs-api'),
+      ],
+      config,
+    );
+
+    expect(links['/docs-api']).toEqual([
+      {
+        href: 'https://example.com/docs/docs-api.html',
+        hrefLang: 'en',
+      },
+      {
+        href: 'https://example.com/docs/zh/docs-api.html',
+        hrefLang: 'zh',
+      },
+    ]);
+  });
+
   it('keeps alternate links within the same version', () => {
     const links = createAlternateLinksByRoute(
       [
