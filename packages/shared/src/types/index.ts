@@ -101,7 +101,7 @@ export interface RouteMeta {
   /**
    * Route path without language and version prefixes.
    */
-  pureRoutePath?: string;
+  pureRoutePath: string;
   absolutePath: string;
   relativePath: string;
   pageName: string;

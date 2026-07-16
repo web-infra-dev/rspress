@@ -22,7 +22,7 @@ export function createAlternateLinksByRoute(
   const routeGroups = new Map<string, RouteMeta[]>();
 
   for (const route of routes) {
-    if (!route.lang || !route.pureRoutePath) {
+    if (!route.lang) {
       continue;
     }
 
