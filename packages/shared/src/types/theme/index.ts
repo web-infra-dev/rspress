@@ -4,28 +4,10 @@ import type { NormalizedSidebar, Sidebar } from './sidebar';
 import type { SocialLink } from './socialLink';
 
 /**
- * Serializable option item for LlmsViewOptions configured through
+ * Built-in option item for LlmsViewOptions configured through
  * `rspress.config.ts`.
  */
-export type LlmsViewOption =
-  | 'markdownLink'
-  | 'chatgpt'
-  | 'claude'
-  | {
-      /**
-       * Display text for the custom option.
-       */
-      title: string;
-      /**
-       * Link opened by the custom option.
-       */
-      href: string;
-      /**
-       * Icon rendered by SvgWrapper. Supports image paths and URLs, inline
-       * SVG markup, and text or emoji.
-       */
-      icon?: string;
-    };
+export type LlmsViewOption = 'markdownLink' | 'chatgpt' | 'claude';
 
 /**
  * Configuration for LLMS UI components displayed below H1 headers or in the

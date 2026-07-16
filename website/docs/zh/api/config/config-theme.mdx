@@ -568,14 +568,7 @@ title: 文档标题
 type LlmsUI =
   | boolean
   | {
-      viewOptions?:
-        | false
-        | Array<
-            | 'markdownLink'
-            | 'chatgpt'
-            | 'claude'
-            | { title: string; href: string; icon?: string }
-          >;
+      viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
       placement?: 'title' | 'outline';
     };
 ```
@@ -599,15 +592,7 @@ export default defineConfig({
   llms: true,
   themeConfig: {
     llmsUI: {
-      viewOptions: [
-        'markdownLink',
-        {
-          title: '首页',
-          href: '/',
-          // 支持图片路径、URL、内联 SVG、文本和 Emoji。
-          icon: '/home.svg',
-        },
-      ],
+      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
       placement: 'outline',
     },
   },
@@ -616,7 +601,7 @@ export default defineConfig({
 
 ### viewOptions
 
-- **类型**：`false | Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
+- **类型**：`false | Array<'markdownLink' | 'chatgpt' | 'claude'>`
 - **默认值**：`['markdownLink', 'chatgpt', 'claude']`
 
 LlmsViewOptions 下拉菜单的选项。内置选项包括：

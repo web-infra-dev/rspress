@@ -110,22 +110,7 @@ export function LlmsOpenRow() {
     () =>
       options
         .map((option): MenuItem | null => {
-          if (typeof option === 'string') {
-            return builtinItems[option] ?? null;
-          }
-          if (
-            typeof option === 'object' &&
-            'title' in option &&
-            typeof option.title === 'string' &&
-            'href' in option &&
-            typeof option.href === 'string'
-          ) {
-            return {
-              ...option,
-              icon: option.icon ? <SvgWrapper icon={option.icon} /> : undefined,
-            };
-          }
-          return null;
+          return builtinItems[option] ?? null;
         })
         .filter((item): item is MenuItem => item !== null),
     [options, builtinItems],

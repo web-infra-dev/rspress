@@ -580,14 +580,7 @@ title: Document Title
 type LlmsUI =
   | boolean
   | {
-      viewOptions?:
-        | false
-        | Array<
-            | 'markdownLink'
-            | 'chatgpt'
-            | 'claude'
-            | { title: string; href: string; icon?: string }
-          >;
+      viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
       placement?: 'title' | 'outline';
     };
 ```
@@ -611,15 +604,7 @@ export default defineConfig({
   llms: true,
   themeConfig: {
     llmsUI: {
-      viewOptions: [
-        'markdownLink',
-        {
-          title: 'Home',
-          href: '/',
-          // Supports image paths, URLs, inline SVG, text, and emoji.
-          icon: '/home.svg',
-        },
-      ],
+      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
       placement: 'outline',
     },
   },
@@ -628,7 +613,7 @@ export default defineConfig({
 
 ### viewOptions
 
-- **Type**: `false | Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
+- **Type**: `false | Array<'markdownLink' | 'chatgpt' | 'claude'>`
 - **Default**: `['markdownLink', 'chatgpt', 'claude']`
 
 Options for the LlmsViewOptions dropdown menu. Built-in options include:

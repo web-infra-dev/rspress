@@ -178,15 +178,7 @@ export function LlmsViewOptions({
             typeof option.title === 'string' &&
             ('href' in option || 'onClick' in option)
           ) {
-            return {
-              ...option,
-              icon:
-                typeof option.icon === 'string' ? (
-                  <SvgWrapper icon={option.icon} />
-                ) : (
-                  option.icon
-                ),
-            };
+            return option;
           }
           return null;
         })
