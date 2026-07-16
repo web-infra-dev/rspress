@@ -39,6 +39,7 @@ export {
   LlmsCopyButton,
   type LlmsCopyButtonProps,
   LlmsViewOptions,
+  type LlmsViewOptionsItem,
   type LlmsViewOptionsProps,
   useMdUrl,
 } from './components/Llms/index';

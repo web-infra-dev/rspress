@@ -1,4 +1,4 @@
-# Customizing head tags
+# Customizing head tags / SEO
 
 Adding head tags (such as meta tags) to web pages is crucial for SEO optimization and social media sharing. For example, [Open Graph](https://ogp.me/) is a web metadata protocol that controls how pages appear when shared on social media platforms.
 
@@ -11,6 +11,7 @@ Currently, Rspress automatically injects the following head tags:
 | `<meta property="og:type" content="website">`               | Open Graph type, fixed as `website`                                                         |
 | `<meta property="og:title" content="${title}">`             | Open Graph title, uses current page title (if available)                                    |
 | `<meta property="og:description" content="${description}">` | Open Graph description, same as above                                                       |
+| `<link rel="alternate" hreflang="${lang}" href="${url}">`   | Alternate language versions of the current page on multilingual sites                       |
 
 ## How description is determined
 
