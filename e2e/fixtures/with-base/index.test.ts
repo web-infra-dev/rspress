@@ -28,6 +28,7 @@ test.describe('plugin test', async () => {
     await page.goto(`http://localhost:${appPort}/base/en/guide/quick-start`, {
       waitUntil: 'networkidle',
     });
+    // Verify that the current route chunk preload respects the configured base.
     await expect(
       page.locator('link[rel="preload"][as="script"]'),
     ).toHaveAttribute(

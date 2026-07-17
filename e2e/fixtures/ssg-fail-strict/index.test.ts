@@ -22,6 +22,7 @@ test('csr should be successful', async () => {
     readFile(path.join(appDir, 'doc_build/404.html'), 'utf-8'),
   ]);
 
+  // Verify that each CSR page preloads its current route chunk.
   expect(indexHtml).toMatch(
     /<link rel="preload" href="\/static\/js\/async\/route-[a-f0-9]{12}\..+\.js" as="script">/,
   );
