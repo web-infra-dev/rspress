@@ -30,6 +30,7 @@ const COMMON_EXTERNALS = [
   '@types/react',
   '@rspress/core/runtime',
   '@rspress/core/theme',
+  '@rspress/core/theme-original',
   '@rspress/core/shiki-transformers',
   '@rspress/shared',
   // react
@@ -39,7 +40,7 @@ const COMMON_EXTERNALS = [
   'react-router-dom',
 ];
 
-// Keep import.meta.env.SSG_MD for the final Rspress app build to replace.
+// Keep internal import.meta.env flags for the final Rspress app build to replace.
 const PRESERVE_IMPORT_META_ENV = {
   'import.meta.env': 'import.meta.env',
 };

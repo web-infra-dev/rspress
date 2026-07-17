@@ -35,6 +35,7 @@ export {
   type LlmsContainerProps,
   LlmsCopyButton,
   type LlmsCopyButtonProps,
+  LlmsHiddenHint,
   LlmsViewOptions,
   type LlmsViewOptionsItem,
   type LlmsViewOptionsProps,

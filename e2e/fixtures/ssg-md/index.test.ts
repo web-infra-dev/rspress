@@ -42,6 +42,17 @@ test('llms should be successful', async () => {
   expect(llmsTxt).toContain(
     '- [tsx-page](https://example.com/docs/tsx-page.md)',
   );
+
+  const indexHtml = await fs.readFile(
+    path.join(docBuildDir, 'index.html'),
+    'utf-8',
+  );
+  expect(indexHtml).toContain('style="display:none"');
+  expect(indexHtml).toContain('hidden=""');
+  expect(indexHtml).toContain('aria-hidden="true"');
+  expect(indexHtml).toContain(
+    'Are you an LLM? View https://example.com/docs/llms.txt for optimized Markdown documentation, or https://example.com/docs/llms-full.txt for full documentation bundle. This page is also available as Markdown at https://example.com/docs/index.md',
+  );
 });
 
 test('custom llms.txt renderer should be successful', async () => {
@@ -70,4 +81,15 @@ test('custom llms.txt renderer should be successful', async () => {
 test('csr should be successful', async () => {
   const appDir = import.meta.dirname;
   await runBuildCommand(appDir, 'rspress-csr.config.ts');
+});
+
+test('llms hidden hint should be configurable', async () => {
+  const appDir = import.meta.dirname;
+  await runBuildCommand(appDir, 'rspress-no-llms-hint.config.ts');
+
+  const indexHtml = await fs.readFile(
+    path.join(appDir, 'doc_build', 'index.html'),
+    'utf-8',
+  );
+  expect(indexHtml).not.toContain('Are you an LLM?');
 });

@@ -1,12 +1,21 @@
 import { describe, expect, it, rs } from '@rstest/core';
-import { routePathToMdPath } from './utils';
+import { routePathToMdPath, withSiteOrigin } from './utils';
 
 rs.mock('virtual-site-data', () => {
   return {
     default: {
       base: '/',
+      siteOrigin: 'https://example.com',
     },
   };
+});
+
+describe('withSiteOrigin', () => {
+  it('should prepend the configured site origin', () => {
+    expect(withSiteOrigin('/docs/llms.txt')).toBe(
+      'https://example.com/docs/llms.txt',
+    );
+  });
 });
 
 describe('routePathToMdPath', () => {
