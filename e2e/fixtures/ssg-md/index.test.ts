@@ -8,7 +8,13 @@ test('llms should be successful', async () => {
   await runBuildCommand(appDir);
 
   const docBuildDir = path.join(appDir, 'doc_build');
-  const files = ['llms.txt', 'index.md', 'components.md', 'llms-full.txt'];
+  const files = [
+    'llms.txt',
+    'index.md',
+    'components.md',
+    'tsx-page.md',
+    'llms-full.txt',
+  ];
 
   for (const file of files) {
     const filePath = path.join(docBuildDir, file);
@@ -33,6 +39,9 @@ test('llms should be successful', async () => {
   expect(llmsTxt).toContain(
     '- [MDX and React components](https://example.com/docs/components.md)',
   );
+  expect(llmsTxt).toContain(
+    '- [tsx-page](https://example.com/docs/tsx-page.md)',
+  );
 });
 
 test('custom llms.txt renderer should be successful', async () => {
@@ -52,6 +61,9 @@ test('custom llms.txt renderer should be successful', async () => {
   expect(llmsTxt).toContain('## Docs');
   expect(llmsTxt).toContain(
     '- [MDX and React components](https://example.com/docs/components.md) (/components, en, default)',
+  );
+  expect(llmsTxt).toContain(
+    '- [tsx-page](https://example.com/docs/tsx-page.md) (/tsx-page, en, default)',
   );
 });
 

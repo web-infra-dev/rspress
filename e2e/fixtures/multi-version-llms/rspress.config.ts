@@ -6,7 +6,7 @@ export default defineConfig({
   lang: 'en',
   ssg: true,
   llms: {
-    llmsTxt: ({ title, lang, version, sections }) => {
+    llmsTxt: ({ title, lang, version, base, sections }) => {
       const links = sections
         .flatMap(section => section.pages)
         .map(page => `- [${page.title}](${page.link})`)
@@ -15,6 +15,7 @@ export default defineConfig({
 
 lang: ${lang}
 version: ${version}
+base: ${base}
 
 ${links}`;
     },

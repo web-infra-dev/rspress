@@ -30,10 +30,10 @@ const expectedFiles = [
 ];
 
 const expectedLlmsTxtContexts = [
-  ['llms.txt', 'en', 'v1'],
-  ['zh/llms.txt', 'zh', 'v1'],
-  ['v2/llms.txt', 'en', 'v2'],
-  ['v2/zh/llms.txt', 'zh', 'v2'],
+  ['llms.txt', 'en', 'v1', 'v1'],
+  ['zh/llms.txt', 'zh', 'v1', 'v1 中文'],
+  ['v2/llms.txt', 'en', 'v2', 'v2'],
+  ['v2/zh/llms.txt', 'zh', 'v2', 'v2 中文'],
 ] as const;
 
 test.describe('multi-version + multi-lang llms (SSG-MD)', () => {
@@ -44,10 +44,12 @@ test.describe('multi-version + multi-lang llms (SSG-MD)', () => {
       await expectFileExists(path.join(docBuildDir, file));
     }
 
-    for (const [file, lang, version] of expectedLlmsTxtContexts) {
+    for (const [file, lang, version, homeTitle] of expectedLlmsTxtContexts) {
       const content = await fs.readFile(path.join(docBuildDir, file), 'utf-8');
       expect(content).toContain(`lang: ${lang}`);
       expect(content).toContain(`version: ${version}`);
+      expect(content).toContain('base: /');
+      expect(content).not.toContain(`- [${homeTitle}](`);
     }
   });
 });

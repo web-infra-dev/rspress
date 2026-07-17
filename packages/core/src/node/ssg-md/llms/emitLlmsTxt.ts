@@ -111,7 +111,7 @@ export async function emitLlmsTxt(
       navList,
       config.title,
       config.description,
-      config.base!,
+      base,
       config.siteOrigin,
       routeService,
       lang,

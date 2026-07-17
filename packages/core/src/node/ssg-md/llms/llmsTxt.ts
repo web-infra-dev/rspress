@@ -50,29 +50,27 @@ async function generateLlmsTxt(
           const {
             lang: pageLang,
             routePath,
+            pureRoutePath,
             absolutePath,
             version: pageVersion,
           } = routePage.routeMeta;
-          if (routePath === '/' || routePath === `/${pageLang}/`) {
+          if (pureRoutePath === '/') {
             return;
           }
 
-          // Prefer pageIndexInfo from RoutePage (set by extractPageData)
+          // Prefer pageIndexInfo from RoutePage (set by extractPageData), but
+          // non-MDX pages have an empty indexed title and need file fallback.
           const pageInfo = routePage.pageIndexInfo;
-          let title: string;
-          let description: string | undefined;
+          let title = pageInfo?.title;
+          let description = pageInfo?.description;
 
-          if (pageInfo) {
-            title = pageInfo.title;
-            description = pageInfo.description;
-          } else {
-            // Fallback to frontmatter extraction
+          if (!title) {
             const info = await extractInfoFromFrontmatterWithAbsolutePath(
               absolutePath,
               routeService.getDocsDir(),
             );
             title = info.title;
-            description = info.description;
+            description ??= info.description;
           }
 
           return {
