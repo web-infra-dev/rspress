@@ -6,6 +6,7 @@ import picocolors from 'picocolors';
 
 import { hintSSGFailed } from '../logger/hint';
 import type { RouteService } from '../route/RouteService';
+import type { RouteChunkAssetsManifest } from '../route/routeChunkAssets';
 import {
   createAlternateLinksByRoute,
   type AlternateLinksByRoute,
@@ -27,6 +28,7 @@ export async function renderPages(
   htmlTemplate: string,
   emitAsset: (assetName: string, content: string | Buffer) => void,
   workerOutputDistPath?: string,
+  routeChunkAssets?: RouteChunkAssetsManifest,
 ) {
   const startTime = Date.now();
   const ssg = config.ssg ?? true;
@@ -71,6 +73,7 @@ export async function renderPages(
               htmlTemplate,
               alternateLinksByRoute,
               emitAsset,
+              routeChunkAssets,
             ),
           );
         } else {
@@ -121,6 +124,7 @@ export async function renderPages(
             ssrBundlePath,
             alternateLinksByRoute,
             distPath: workerOutputDistPath,
+            routeChunkAssets,
           },
         },
       });
@@ -154,6 +158,7 @@ export async function renderPages(
             config.head,
             ssrBundlePath,
             alternateLinksByRoute[route.routePath] ?? [],
+            routeChunkAssets,
           );
 
           const fileName = routePath2HtmlFileName(route.routePath);
@@ -183,6 +188,7 @@ async function renderCSRPage(
   htmlTemplate: string,
   alternateLinksByRoute: AlternateLinksByRoute,
   emitAsset: (assetName: string, content: string | Buffer) => void,
+  routeChunkAssets?: RouteChunkAssetsManifest,
 ) {
   const html = await renderHtmlTemplate(
     htmlTemplate,
@@ -190,6 +196,7 @@ async function renderCSRPage(
     route,
     '',
     alternateLinksByRoute[route.routePath] ?? [],
+    routeChunkAssets,
   );
   const fileName = routePath2HtmlFileName(route.routePath);
   emitAsset(fileName, html);
@@ -200,6 +207,7 @@ export async function renderCSRPages(
   config: UserConfig,
   htmlTemplate: string,
   emitAsset: (assetName: string, content: string | Buffer) => void,
+  routeChunkAssets?: RouteChunkAssetsManifest,
 ) {
   const routes = routeService.getRoutes();
   const alternateLinksByRoute = createAlternateLinksByRoute(routes, config);
@@ -216,6 +224,7 @@ export async function renderCSRPages(
         htmlTemplate,
         alternateLinksByRoute,
         emitAsset,
+        routeChunkAssets,
       );
     }),
   );
