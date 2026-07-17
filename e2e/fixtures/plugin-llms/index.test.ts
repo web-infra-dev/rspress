@@ -76,9 +76,7 @@ test.describe('plugin-llms', async () => {
       path.resolve(appDir, 'doc_build', 'index.html'),
       'utf-8',
     );
-    expect(indexHtml).toContain(
-      '<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/docs/llms.txt for optimized Markdown documentation, or https://example.com/docs/llms-full.txt for full documentation bundle. This page is also available as Markdown at https://example.com/docs/index.md</div>',
-    );
+    expect(indexHtml).not.toContain('Are you an LLM?');
   });
 
   test('should order llms.txt entries according to _meta.json', async () => {

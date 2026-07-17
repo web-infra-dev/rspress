@@ -618,7 +618,7 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `true`
 
-With [`siteOrigin`](/api/config/config-basic#siteorigin) set to `https://example.com`, this option controls whether to inject the following hidden hint into the generated HTML page for `/guide/`:
+With [`siteOrigin`](/api/config/config-basic#siteorigin) set to `https://example.com`, this option controls whether to inject the following hidden hint into the SSG-generated HTML page for `/guide/`:
 
 {/* prettier-ignore */}
 ```html
@@ -626,6 +626,8 @@ With [`siteOrigin`](/api/config/config-basic#siteorigin) set to `https://example
 ```
 
 The URLs automatically include the configured `siteOrigin` and [`base`](/api/config/config-basic#base). The page-specific Markdown URL is derived from the current route. Without `siteOrigin`, the URLs remain base-aware paths.
+
+The hint is only rendered during SSG. CSR output generated with `ssg: false` does not include it.
 
 Set `injectLlmsHint` to `false` to remove the hidden hint without disabling the visible LLMS UI components:
 

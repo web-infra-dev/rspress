@@ -62,7 +62,7 @@ export default defineConfig({
 });
 ```
 
-隐藏提示会指向默认的 `/llms.txt` 和 `/llms-full.txt` 文件。如果自定义或禁用了任一插件产物，请将 `injectLlmsHint` 设置为 `false`。
+启用 SSG 时，隐藏提示会指向默认的 `/llms.txt` 和 `/llms-full.txt` 文件。如果自定义或禁用了任一插件产物，请将 `injectLlmsHint` 设置为 `false`。CSR 产物不会渲染此提示。
 
 #### 使用自定义主题
 

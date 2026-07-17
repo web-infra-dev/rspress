@@ -109,7 +109,7 @@ async function createInternalBuildConfig(
 
   const base = config?.base ?? '/';
   const enableLlmsUI = isLlmsUIEnabled(config);
-  const enableLlmsHint = isLlmsHintEnabled(config);
+  const enableLlmsHint = isLlmsHintEnabled(config, enableSSG);
 
   // In production, we need to add assetPrefix in asset path
   const assetPrefix = isProduction()
