@@ -287,7 +287,7 @@ export function createSearchTool(
   return {
     name: 'rspress_search_docs',
     title: 'Search documentation',
-    description: 'Search the local Rspress documentation index.',
+    description: 'Search the active Rspress documentation index.',
     inputSchema: SEARCH_INPUT_SCHEMA,
     annotations: READ_ONLY_UNTRUSTED_ANNOTATIONS,
     async execute(rawInput) {

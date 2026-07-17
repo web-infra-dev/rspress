@@ -24,7 +24,10 @@ export default defineConfig({
       ],
     },
   },
-  globalUIComponents: [path.join(import.meta.dirname, 'src/CounterTools.tsx')],
+  globalUIComponents: [
+    path.join(import.meta.dirname, 'src/CounterTools.tsx'),
+    path.join(import.meta.dirname, 'src/SearchProvider.tsx'),
+  ],
   builderConfig: {
     source: {
       preEntry: path.join(import.meta.dirname, 'src/polyfill.ts'),

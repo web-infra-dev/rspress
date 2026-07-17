@@ -29,7 +29,7 @@ export default defineConfig({
 - `rspress_list_pages`：筛选当前语言和版本的页面元数据并进行分页，不依赖站点使用的搜索服务。
 - `rspress_get_page`：无需导航，即可返回任意已知站内路由的元数据和由 SSG-MD 生成的 Markdown。
 - `rspress_get_current_page`：返回当前页面的元数据和由 SSG-MD 生成的 Markdown。
-- `rspress_search_docs`：查询 Rspress 本地搜索索引。关闭本地搜索或启用 Algolia 时不会注册。
+- `rspress_search_docs`：通过当前启用的 Rspress 搜索服务查询文档。支持本地搜索和 [`@rspress/plugin-algolia`](/zh/plugin/official-plugins/algolia)；仅在没有可用搜索服务时不注册。
 - `rspress_navigate`：仅导航至已知的站内文档路由，支持查询参数和哈希。它会返回目标页面的轻量元数据、章节标题和上一篇/下一篇页面，但不会获取 Markdown。
 
 `rspress_navigate` 会在 SPA 路由渲染完成后返回。结果既确认了目标页面，也提供了后续导航选项：
@@ -54,7 +54,9 @@ export default defineConfig({
 
 两个 Markdown 工具会自动启用 [`llms: true`](/guide/basic/ssg-md)。已有的 `true` 或对象配置会被保留。除非同时关闭 `getPage` 和 `currentPage`，否则显式配置 `llms: false` 会产生冲突。
 
-SSG-MD 会在 `rspress build` 期间生成 `.md` 文件。在 `rspress dev` 中不会注册 `rspress_get_page` 与 `rspress_get_current_page`，因为此时尚无生成的 Markdown；站点信息、页面列表、本地搜索、导航和自定义工具仍可用并通过 HMR 更新。
+SSG-MD 会在 `rspress build` 期间生成 `.md` 文件。在 `rspress dev` 中不会注册 `rspress_get_page` 与 `rspress_get_current_page`，因为此时尚无生成的 Markdown；站点信息、页面列表、搜索、导航和自定义工具仍可用并通过 HMR 更新。
+
+搜索集成可从 `@rspress/core/theme` 调用 `registerSearchProvider`。最后挂载的搜索服务会生效，并在卸载时恢复上一个服务。主题和搜索插件因此可接入稳定的 `rspress_search_docs` 工具，而无需依赖 WebMCP 内部实现。
 
 ## 选项
 

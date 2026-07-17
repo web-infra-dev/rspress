@@ -1289,6 +1289,9 @@ importers:
       '@rspress/core':
         specifier: workspace:^2.0.10
         version: link:../core
+      algoliasearch:
+        specifier: ^5.50.0
+        version: 5.50.0
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.58.9

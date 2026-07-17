@@ -14,7 +14,7 @@ import {
 } from '@rspress/core/runtime';
 import {
   useAwaitedLinkNavigate,
-  useFullTextSearch,
+  useDocsSearch,
   usePrevNextPage,
 } from '@rspress/core/theme';
 import { useCallback, useMemo, useRef } from 'react';
@@ -161,7 +161,7 @@ function RegisteredSearchTool({
 }
 
 function SearchTool({ exposedTo }: BuiltInToolProps) {
-  const searchState = useFullTextSearch();
+  const searchState = useDocsSearch();
   return searchState.initialized ? (
     <RegisteredSearchTool exposedTo={exposedTo} search={searchState.search} />
   ) : null;
@@ -176,7 +176,6 @@ function NavigateTool({ exposedTo }: BuiltInToolProps) {
 }
 
 function SupportedWebMcpRuntime({ exposedTo, tools }: WebMcpRuntimeOptions) {
-  const { site } = useSite();
   return (
     <>
       {tools.siteInfo ? <SiteInfoTool exposedTo={exposedTo} /> : null}
@@ -187,9 +186,7 @@ function SupportedWebMcpRuntime({ exposedTo, tools }: WebMcpRuntimeOptions) {
       {tools.currentPage && isProduction() ? (
         <CurrentPageTool exposedTo={exposedTo} />
       ) : null}
-      {tools.search && site.search !== false ? (
-        <SearchTool exposedTo={exposedTo} />
-      ) : null}
+      {tools.search ? <SearchTool exposedTo={exposedTo} /> : null}
       {tools.navigate ? <NavigateTool exposedTo={exposedTo} /> : null}
     </>
   );

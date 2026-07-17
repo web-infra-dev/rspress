@@ -127,6 +127,13 @@ export { copyToClipboard } from './logic/copyToClipboard';
 export { getCopyableText } from './logic/getCopyableText';
 // logic
 export { mergeRefs } from './logic/mergeRefs';
+export {
+  registerSearchProvider,
+  type SearchProvider,
+  type SearchResultGroup,
+  useSearchProvider,
+} from './logic/searchProvider';
+export { useDocsSearch } from './logic/useDocsSearch';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';

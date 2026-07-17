@@ -40,7 +40,8 @@
   },
   "dependencies": {
     "@docsearch/css": "^4.6.3",
-    "@docsearch/react": "^4.6.3"
+    "@docsearch/react": "^4.6.3",
+    "algoliasearch": "^5.50.0"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.58.9",

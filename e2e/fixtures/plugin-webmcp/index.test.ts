@@ -230,6 +230,43 @@ test.describe('plugin-webmcp preview', () => {
     ).rejects.toThrow(/Input validation error/);
   });
 
+  test('uses an external search provider and restores local search', async ({
+    page,
+  }) => {
+    await executeTool(page, 'rspress_navigate', {
+      routePath: '/provider',
+    });
+    await expect
+      .poll(async () => {
+        const result = await executeTool(page, 'rspress_search_docs', {
+          query: 'provider query',
+        });
+        return result?.structuredContent;
+      })
+      .toEqual([
+        {
+          group: 'fixture-provider',
+          results: [
+            {
+              title: 'External provider result',
+              link: '/provider',
+              query: 'provider query',
+            },
+          ],
+        },
+      ]);
+
+    await executeTool(page, 'rspress_navigate', { routePath: '/' });
+    await expect
+      .poll(async () => {
+        const result = await executeTool(page, 'rspress_search_docs', {
+          query: 'cobalt platypus',
+        });
+        return JSON.stringify(result?.structuredContent);
+      })
+      .toContain('WebMCP home');
+  });
+
   test('awaits navigation and cleans up page-scoped tools', async ({
     page,
   }) => {
