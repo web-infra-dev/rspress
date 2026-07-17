@@ -5,6 +5,7 @@ import type { RouteService } from './RouteService';
 
 const PLUGIN_NAME = 'RspressRouteChunkAssetsPlugin';
 const JAVASCRIPT_ASSET_REGEXP = /\.[cm]?js$/;
+const ROUTE_CHUNK_HASH_LENGTH = 12;
 
 export interface RouteChunkAssetsManifest {
   assetPrefix: string;
@@ -12,13 +13,7 @@ export interface RouteChunkAssetsManifest {
 }
 
 export function getRouteChunkName(route: RouteMeta): string {
-  const pageName =
-    route.pageName
-      .replace(/[^a-zA-Z0-9_-]+/g, '-')
-      .replace(/^-+|-+$/g, '')
-      .slice(0, 48) || 'page';
-
-  return `rspress-route-${pageName}-${createHash(route.relativePath)}`;
+  return `route-${createHash(route.relativePath, ROUTE_CHUNK_HASH_LENGTH)}`;
 }
 
 export class RouteChunkAssetsPlugin implements Rspack.RspackPluginInstance {

@@ -23,16 +23,16 @@ describe('renderHtmlTemplate', () => {
       {
         assetPrefix: 'https://cdn.example.com/assets/?v=1&',
         assets: {
-          '/guide/': ['static/js/rspress-route-guide.123.js'],
-          '/other': ['static/js/rspress-route-other.456.js'],
+          '/guide/': ['static/js/route-a1b2c3d4e5f6.123.js'],
+          '/other': ['static/js/route-abcdef123456.456.js'],
         },
       },
     );
 
     expect(html).toContain(
-      '<link rel="preload" href="https://cdn.example.com/assets/?v=1&amp;static/js/rspress-route-guide.123.js" as="script">',
+      '<link rel="preload" href="https://cdn.example.com/assets/?v=1&amp;static/js/route-a1b2c3d4e5f6.123.js" as="script">',
     );
-    expect(html).not.toContain('rspress-route-other.456.js');
+    expect(html).not.toContain('route-abcdef123456.456.js');
     expect(html).toContain('<main>Guide</main>');
   });
 

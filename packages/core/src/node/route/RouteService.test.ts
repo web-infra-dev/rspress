@@ -109,17 +109,17 @@ describe('RouteService', async () => {
       "
       import React from 'react';
       import { lazyWithPreload } from "react-lazy-with-preload";
-      const loadRoute0 = () => import(/* webpackChunkName: "rspress-route-a-ba710f8e" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx')
+      const loadRoute0 = () => import(/* webpackChunkName: "route-ba710f8e4eb0" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx')
       const Route0 = lazyWithPreload(loadRoute0)
-      const loadRoute1 = () => import(/* webpackChunkName: "rspress-route-guide___e-fe0b57ce" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx')
+      const loadRoute1 = () => import(/* webpackChunkName: "route-fe0b57ce1b4b" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx')
       const Route1 = lazyWithPreload(loadRoute1)
-      const loadRoute2 = () => import(/* webpackChunkName: "rspress-route-guide_b-8d52f920" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx')
+      const loadRoute2 = () => import(/* webpackChunkName: "route-8d52f920922f" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx')
       const Route2 = lazyWithPreload(loadRoute2)
-      const loadRoute3 = () => import(/* webpackChunkName: "rspress-route-guide_c-c8c47885" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx')
+      const loadRoute3 = () => import(/* webpackChunkName: "route-c8c47885cd1b" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx')
       const Route3 = lazyWithPreload(loadRoute3)
-      const loadRoute4 = () => import(/* webpackChunkName: "rspress-route-guide_index-f507d3f4" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md')
+      const loadRoute4 = () => import(/* webpackChunkName: "route-f507d3f43b22" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md')
       const Route4 = lazyWithPreload(loadRoute4)
-      const loadRoute5 = () => import(/* webpackChunkName: "rspress-route-index-2308615e" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx')
+      const loadRoute5 = () => import(/* webpackChunkName: "route-2308615ee227" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx')
       const Route5 = lazyWithPreload(loadRoute5)
       export const routes = [
       { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
@@ -250,15 +250,15 @@ describe('RouteService', async () => {
       "
       import React from 'react';
       import { lazyWithPreload } from "react-lazy-with-preload";
-      const loadRoute0 = () => import(/* webpackChunkName: "rspress-route-a-ba710f8e" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx')
+      const loadRoute0 = () => import(/* webpackChunkName: "route-ba710f8e4eb0" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx')
       const Route0 = lazyWithPreload(loadRoute0)
-      const loadRoute1 = () => import(/* webpackChunkName: "rspress-route-guide___e-fe0b57ce" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx')
+      const loadRoute1 = () => import(/* webpackChunkName: "route-fe0b57ce1b4b" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx')
       const Route1 = lazyWithPreload(loadRoute1)
-      const loadRoute2 = () => import(/* webpackChunkName: "rspress-route-guide_c-c8c47885" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx')
+      const loadRoute2 = () => import(/* webpackChunkName: "route-c8c47885cd1b" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx')
       const Route2 = lazyWithPreload(loadRoute2)
-      const loadRoute3 = () => import(/* webpackChunkName: "rspress-route-guide_index-f507d3f4" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md')
+      const loadRoute3 = () => import(/* webpackChunkName: "route-f507d3f43b22" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md')
       const Route3 = lazyWithPreload(loadRoute3)
-      const loadRoute4 = () => import(/* webpackChunkName: "rspress-route-index-2308615e" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx')
+      const loadRoute4 = () => import(/* webpackChunkName: "route-2308615ee227" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx')
       const Route4 = lazyWithPreload(loadRoute4)
       export const routes = [
       { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
@@ -360,15 +360,15 @@ describe('RouteService', async () => {
       "
       import React from 'react';
       import { lazyWithPreload } from "react-lazy-with-preload";
-      const loadRoute0 = () => import(/* webpackChunkName: "rspress-route-a-ba710f8e" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx')
+      const loadRoute0 = () => import(/* webpackChunkName: "route-ba710f8e4eb0" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx')
       const Route0 = lazyWithPreload(loadRoute0)
-      const loadRoute1 = () => import(/* webpackChunkName: "rspress-route-guide___e-fe0b57ce" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx')
+      const loadRoute1 = () => import(/* webpackChunkName: "route-fe0b57ce1b4b" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx')
       const Route1 = lazyWithPreload(loadRoute1)
-      const loadRoute2 = () => import(/* webpackChunkName: "rspress-route-guide_b-8d52f920" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx')
+      const loadRoute2 = () => import(/* webpackChunkName: "route-8d52f920922f" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx')
       const Route2 = lazyWithPreload(loadRoute2)
-      const loadRoute3 = () => import(/* webpackChunkName: "rspress-route-guide_index-f507d3f4" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md')
+      const loadRoute3 = () => import(/* webpackChunkName: "route-f507d3f43b22" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md')
       const Route3 = lazyWithPreload(loadRoute3)
-      const loadRoute4 = () => import(/* webpackChunkName: "rspress-route-index-2308615e" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx')
+      const loadRoute4 = () => import(/* webpackChunkName: "route-2308615ee227" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx')
       const Route4 = lazyWithPreload(loadRoute4)
       export const routes = [
       { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {

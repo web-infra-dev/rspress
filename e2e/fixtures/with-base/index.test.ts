@@ -30,7 +30,7 @@ test.describe('plugin test', async () => {
       page.locator('link[rel="preload"][as="script"]'),
     ).toHaveAttribute(
       'href',
-      /^\/base\/static\/js\/async\/rspress-route-en_guide_quick-start-.+\.js$/,
+      /^\/base\/static\/js\/async\/route-[a-f0-9]{12}\..+\.js$/,
     );
     // take the sidebar
     const sidebar = page.locator('.rp-doc-layout__sidebar');

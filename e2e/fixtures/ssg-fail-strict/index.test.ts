@@ -23,10 +23,10 @@ test('csr should be successful', async () => {
   ]);
 
   expect(indexHtml).toMatch(
-    /<link rel="preload" href="\/static\/js\/async\/rspress-route-index-.+\.js" as="script">/,
+    /<link rel="preload" href="\/static\/js\/async\/route-[a-f0-9]{12}\..+\.js" as="script">/,
   );
   expect(componentHtml).toMatch(
-    /<link rel="preload" href="\/static\/js\/async\/rspress-route-Component-.+\.js" as="script">/,
+    /<link rel="preload" href="\/static\/js\/async\/route-[a-f0-9]{12}\..+\.js" as="script">/,
   );
   expect(notFoundHtml).not.toContain('<link rel="preload"');
 });
