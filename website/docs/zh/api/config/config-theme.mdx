@@ -606,14 +606,14 @@ export default defineConfig({
 - **类型**：`boolean`
 - **默认值**：`true`
 
-当 [`siteOrigin`](/api/config/config-basic#siteorigin) 设置为 `https://example.com` 时，此选项控制是否在生成的 HTML 页面中注入以下隐藏提示：
+当 [`siteOrigin`](/api/config/config-basic#siteorigin) 设置为 `https://example.com` 时，此选项控制是否在为 `/guide/` 生成的 HTML 页面中注入以下隐藏提示：
 
 {/* prettier-ignore */}
 ```html
-<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/llms.txt for optimized Markdown documentation, or https://example.com/llms-full.txt for full documentation bundle</div>
+<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/llms.txt for optimized Markdown documentation, or https://example.com/llms-full.txt for full documentation bundle. This page is also available as Markdown at https://example.com/guide/index.md</div>
 ```
 
-其中的 URL 会自动包含配置的 `siteOrigin` 和 [`base`](/api/config/config-basic#base)。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
+其中的 URL 会自动包含配置的 `siteOrigin` 和 [`base`](/api/config/config-basic#base)，当前页面的 Markdown URL 会根据当前路由生成。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
 
 将 `injectLlmsHint` 设置为 `false`，可以仅移除隐藏提示，而不禁用可见的 LLMS UI 组件：
 

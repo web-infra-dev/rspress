@@ -1,6 +1,7 @@
 import { withBase, withSiteOrigin, type UserConfig } from '@rspress/shared';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { routePathToMdPath } from './ssg-md/llms/llmsTxt';
 
 export function isLlmsUIEnabled(config: UserConfig): boolean {
   return Boolean(config.themeConfig?.llmsUI ?? config.llms);
@@ -14,7 +15,10 @@ export function isLlmsHintEnabled(config: UserConfig): boolean {
   );
 }
 
-export function renderLlmsHiddenHint(config: UserConfig): string {
+export function renderLlmsHiddenHint(
+  config: UserConfig,
+  routePath: string,
+): string {
   if (!isLlmsHintEnabled(config)) {
     return '';
   }
@@ -28,12 +32,13 @@ export function renderLlmsHiddenHint(config: UserConfig): string {
     withBase('/llms-full.txt', base),
     config.siteOrigin,
   );
+  const pageMdUrl = routePathToMdPath(routePath, base, config.siteOrigin);
 
   return renderToStaticMarkup(
     createElement(
       'div',
       { style: { display: 'none' }, hidden: true, 'aria-hidden': 'true' },
-      `Are you an LLM? View ${llmsTxtUrl} for optimized Markdown documentation, or ${llmsFullTxtUrl} for full documentation bundle`,
+      `Are you an LLM? View ${llmsTxtUrl} for optimized Markdown documentation, or ${llmsFullTxtUrl} for full documentation bundle. This page is also available as Markdown at ${pageMdUrl}`,
     ),
   );
 }

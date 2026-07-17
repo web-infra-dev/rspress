@@ -51,7 +51,7 @@ test('llms should be successful', async () => {
   expect(indexHtml).toContain('hidden=""');
   expect(indexHtml).toContain('aria-hidden="true"');
   expect(indexHtml).toContain(
-    'Are you an LLM? View https://example.com/docs/llms.txt for optimized Markdown documentation, or https://example.com/docs/llms-full.txt for full documentation bundle',
+    'Are you an LLM? View https://example.com/docs/llms.txt for optimized Markdown documentation, or https://example.com/docs/llms-full.txt for full documentation bundle. This page is also available as Markdown at https://example.com/docs/index.md',
   );
 });
 

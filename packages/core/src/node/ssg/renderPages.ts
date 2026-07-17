@@ -189,7 +189,7 @@ async function renderCSRPage(
     htmlTemplate,
     config.head,
     route,
-    renderLlmsHiddenHint(config),
+    renderLlmsHiddenHint(config, route.routePath),
     alternateLinksByRoute[route.routePath] ?? [],
   );
   const fileName = routePath2HtmlFileName(route.routePath);

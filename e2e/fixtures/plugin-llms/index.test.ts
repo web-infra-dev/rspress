@@ -77,7 +77,7 @@ test.describe('plugin-llms', async () => {
       'utf-8',
     );
     expect(indexHtml).toContain(
-      '<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/docs/llms.txt for optimized Markdown documentation, or https://example.com/docs/llms-full.txt for full documentation bundle</div>',
+      '<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/docs/llms.txt for optimized Markdown documentation, or https://example.com/docs/llms-full.txt for full documentation bundle. This page is also available as Markdown at https://example.com/docs/index.md</div>',
     );
   });
 
