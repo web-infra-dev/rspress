@@ -1,3 +1,5 @@
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import {
   getPort,
@@ -95,4 +97,24 @@ test.describe('plugin test', async () => {
       'Async updated',
     );
   });
+});
+
+test('Should resolve an auto asset prefix for route preload', async () => {
+  const appDir = import.meta.dirname;
+  await runBuildCommand(appDir, 'rspress-auto-asset-prefix.config.ts');
+
+  const [rootHtml, nestedHtml] = await Promise.all([
+    readFile(path.join(appDir, 'doc_build_auto/index.html'), 'utf-8'),
+    readFile(
+      path.join(appDir, 'doc_build_auto/en/guide/quick-start.html'),
+      'utf-8',
+    ),
+  ]);
+
+  expect(rootHtml).toMatch(
+    /<link rel="preload" href="static\/js\/async\/route-[a-f0-9]{12}\..+\.js" as="script">/,
+  );
+  expect(nestedHtml).toMatch(
+    /<link rel="preload" href="\.\.\/\.\.\/static\/js\/async\/route-[a-f0-9]{12}\..+\.js" as="script">/,
+  );
 });

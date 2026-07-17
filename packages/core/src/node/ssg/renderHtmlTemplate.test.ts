@@ -51,4 +51,37 @@ describe('renderHtmlTemplate', () => {
 
     expect(html).toBe('<head></head>');
   });
+
+  it('resolves an auto asset prefix relative to the route HTML file', async () => {
+    const manifest = {
+      assetPrefix: 'auto',
+      assets: {
+        '/': ['static/js/route-123456789abc.123.js'],
+        '/guide/': ['static/js/route-a1b2c3d4e5f6.456.js'],
+      },
+    };
+    const [rootHtml, nestedHtml] = await Promise.all([
+      renderHtmlTemplate(
+        `<head>${HEAD_MARKER}</head>`,
+        [],
+        { ...route, routePath: '/' },
+        '',
+        [],
+        manifest,
+      ),
+      renderHtmlTemplate(
+        `<head>${HEAD_MARKER}</head>`,
+        [],
+        route,
+        '',
+        [],
+        manifest,
+      ),
+    ]);
+
+    expect(rootHtml).toContain('href="static/js/route-123456789abc.123.js"');
+    expect(nestedHtml).toContain(
+      'href="../static/js/route-a1b2c3d4e5f6.456.js"',
+    );
+  });
 });

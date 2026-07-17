@@ -1,3 +1,4 @@
+import { posix } from 'node:path';
 import type { RouteMeta, UserConfig } from '@rspress/shared';
 
 import {
@@ -9,6 +10,7 @@ import {
 import type { RouteChunkAssetsManifest } from '../route/routeChunkAssets';
 import { createError } from '../utils';
 import type { AlternateLink } from './alternateLinks';
+import { routePath2HtmlFileName } from './htmlFile';
 
 async function renderConfigHead(
   head: UserConfig['head'],
@@ -76,7 +78,13 @@ function renderRoutePreloadLinks(
 
   return assets
     .map(asset => {
-      const href = `${manifest.assetPrefix}${asset}`;
+      const href =
+        manifest.assetPrefix === 'auto'
+          ? posix.relative(
+              posix.dirname(routePath2HtmlFileName(route.routePath)),
+              asset,
+            )
+          : `${manifest.assetPrefix}${asset}`;
       return `<link rel="preload" href="${escapeHtmlAttribute(href)}" as="script">`;
     })
     .join('');
