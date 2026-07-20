@@ -56,8 +56,6 @@ export default defineConfig({
 
 SSG-MD 会在 `rspress build` 期间生成 `.md` 文件。在 `rspress dev` 中不会注册 `rspress_get_page` 与 `rspress_get_current_page`，因为此时尚无生成的 Markdown；站点信息、页面列表、搜索、导航和自定义工具仍可用并通过 HMR 更新。
 
-搜索集成可从 `@rspress/core/theme` 调用 `registerSearchProvider`。最后挂载的搜索服务会生效，并在卸载时恢复上一个服务。主题和搜索插件因此可接入稳定的 `rspress_search_docs` 工具，而无需依赖 WebMCP 内部实现。
-
 ## 选项
 
 通过 `tools` 关闭单个内置工具：
@@ -79,6 +77,33 @@ pluginWebMcp({
 六个选项的默认值均为 `true`。
 
 通过 `exposedTo` 可将安全来源透传给所有内置工具的注册选项。同源智能体和浏览器集成智能体无需配置它。跨源智能体还必须使用 `getTools({ fromOrigins })` 请求站点来源；跨源 iframe 还需要启用 `tools` 权限策略。
+
+## 搜索服务
+
+默认使用本地搜索。挂载 [`@rspress/plugin-algolia`](/zh/plugin/official-plugins/algolia) 的 `Search` 组件后，`rspress_search_docs` 会自动切换到 Algolia。
+
+其他搜索集成可在主题或全局 UI 组件中注册搜索服务：
+
+```ts
+import { registerSearchProvider } from '@rspress/core/theme';
+
+export function registerMySearchProvider(
+  searchDocs: (query: string, limit: number) => Promise<unknown[]>,
+) {
+  return registerSearchProvider({
+    async search(query, limit = 20) {
+      return [
+        {
+          group: 'Documentation',
+          result: await searchDocs(query, limit),
+        },
+      ];
+    },
+  });
+}
+```
+
+返回的函数用于注销搜索服务。最后挂载的服务生效；注销后会恢复上一个服务。WebMCP 工具会返回每个 `group`，并将对应的 `result` 值作为 `results` 输出。
 
 ## 自定义工具
 

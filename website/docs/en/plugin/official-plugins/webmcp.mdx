@@ -56,8 +56,6 @@ The two Markdown tools automatically enable [`llms: true`](/guide/basic/ssg-md).
 
 SSG-MD emits `.md` files during `rspress build`. `rspress_get_page` and `rspress_get_current_page` are omitted during `rspress dev`, where generated Markdown is unavailable. Site information, page listings, search, navigation, and custom tools remain available and update through HMR.
 
-Search integrations can call `registerSearchProvider` from `@rspress/core/theme`. The most recently mounted provider is used, and unmounting it restores the previous provider. This lets theme and search plugins integrate with the stable `rspress_search_docs` tool without depending on WebMCP internals.
-
 ## Options
 
 Disable individual built-in tools with `tools`:
@@ -79,6 +77,33 @@ pluginWebMcp({
 All six options default to `true`.
 
 Set `exposedTo` to forward secure origins to every built-in tool registration. Same-origin and browser-integrated agents do not need it. A cross-origin agent must also request the site origin with `getTools({ fromOrigins })`; cross-origin iframes additionally require the `tools` Permissions Policy.
+
+## Search providers
+
+Local search is used by default. Mounting the `Search` component from [`@rspress/plugin-algolia`](/plugin/official-plugins/algolia) automatically switches `rspress_search_docs` to Algolia.
+
+Other search integrations can register a provider from a theme or global UI component:
+
+```ts
+import { registerSearchProvider } from '@rspress/core/theme';
+
+export function registerMySearchProvider(
+  searchDocs: (query: string, limit: number) => Promise<unknown[]>,
+) {
+  return registerSearchProvider({
+    async search(query, limit = 20) {
+      return [
+        {
+          group: 'Documentation',
+          result: await searchDocs(query, limit),
+        },
+      ];
+    },
+  });
+}
+```
+
+The returned function unregisters the provider. The most recently mounted provider is active; unregistering it restores the previous provider. Each `group` is returned by the WebMCP tool with its `result` value exposed as `results`.
 
 ## Custom tools
 

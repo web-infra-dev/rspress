@@ -20,7 +20,7 @@ export interface PluginWebMcpToolsOptions {
    */
   currentPage?: boolean;
   /**
-   * Expose local full-text search when enabled by the site.
+   * Expose documentation search when a search provider is available.
    * @default true
    */
   search?: boolean;
