@@ -35,6 +35,19 @@ const commonRsdoctorConfig = {
   },
 };
 
+const getRsdoctorReportType = (environmentName?: string) => {
+  switch (environmentName) {
+    case 'node':
+      return 'html';
+    case 'node_md':
+      return 'md';
+    case 'web':
+      return 'js';
+    default:
+      return environmentName ?? 'unknown';
+  }
+};
+
 export default defineConfig({
   title: 'Rspress',
   description: 'Rsbuild based static site generator',
@@ -158,7 +171,7 @@ export default defineConfig({
               ...commonRsdoctorConfig,
               output: {
                 ...commonRsdoctorConfig.output,
-                reportDir: `./doc_build/diff-rsdoctor/${config.name}`,
+                reportDir: `./doc_build/diff-rsdoctor/website_${getRsdoctorReportType(config.name)}`,
               },
             }),
           );

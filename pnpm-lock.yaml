@@ -101,6 +101,9 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
     devDependencies:
+      '@rsdoctor/rspack-plugin':
+        specifier: 1.6.0
+        version: 1.6.0(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@rsbuild/core@2.1.6)(@rspack/core@2.1.4(@swc/helpers@0.5.23))(webpack@5.107.1)
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
