@@ -4,14 +4,15 @@ Adding head tags (such as meta tags) to web pages is crucial for SEO optimizatio
 
 Currently, Rspress automatically injects the following head tags:
 
-| Tag                                                         | Description                                                                                 |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `<meta name="generator" content="Rspress v${version}">`     | Identifies the site generator and version                                                   |
-| `<meta name="description" content="${description}">`        | Page description, see [How description is determined](#how-description-is-determined) below |
-| `<meta property="og:type" content="website">`               | Open Graph type, fixed as `website`                                                         |
-| `<meta property="og:title" content="${title}">`             | Open Graph title, uses current page title (if available)                                    |
-| `<meta property="og:description" content="${description}">` | Open Graph description, same as above                                                       |
-| `<link rel="alternate" hreflang="${lang}" href="${url}">`   | Alternate language versions of the current page on multilingual sites                       |
+| Tag                                                            | Description                                                                                 |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `<meta name="generator" content="Rspress v${version}">`        | Identifies the site generator and version                                                   |
+| `<meta name="description" content="${description}">`           | Page description, see [How description is determined](#how-description-is-determined) below |
+| `<meta property="og:type" content="website">`                  | Open Graph type, fixed as `website`                                                         |
+| `<meta property="og:title" content="${title}">`                | Open Graph title, uses current page title (if available)                                    |
+| `<meta property="og:description" content="${description}">`    | Open Graph description, same as above                                                       |
+| `<link rel="alternate" hreflang="${lang}" href="${url}">`      | Alternate language versions of the current page on multilingual sites                       |
+| `<link rel="preload" href="${currentRouteChunk}" as="script">` | Performance optimization that preloads the current page's async route chunk                 |
 
 ## How description is determined
 

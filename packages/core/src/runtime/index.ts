@@ -42,4 +42,5 @@ export {
   removeTrailingSlash,
   routePathToMdPath,
   withBase,
+  withSiteOrigin,
 } from './utils';

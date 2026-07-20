@@ -9,6 +9,7 @@ import {
 import picocolors from 'picocolors';
 
 import { hintSSGFailed } from '../logger/hint';
+import type { RouteChunkAssetsManifest } from '../route/routeChunkAssets';
 import type { AlternateLink } from './alternateLinks';
 import { renderHtmlTemplate } from './renderHtmlTemplate';
 
@@ -23,6 +24,7 @@ export async function renderPage(
   configHead: UserConfig['head'],
   ssrBundlePath: string,
   alternateLinks: AlternateLink[] = [],
+  routeChunkAssets?: RouteChunkAssetsManifest,
 ) {
   let render: SSRBundleExports['render'];
   try {
@@ -68,6 +70,7 @@ ${absolutePath ? picocolors.gray(`    File: ${absolutePath}\n`) : ''}    ${picoc
     route,
     appHtml,
     alternateLinks,
+    routeChunkAssets,
   );
 
   const html = await transformHtmlTemplate(head, replacedHtmlTemplate);

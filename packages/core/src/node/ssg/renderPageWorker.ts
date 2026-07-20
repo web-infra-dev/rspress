@@ -3,6 +3,7 @@ import { dirname } from 'node:path';
 import { workerData } from 'node:worker_threads';
 import type { RouteMeta, UserConfig } from '@rspress/shared';
 import pMap from 'p-map';
+import type { RouteChunkAssetsManifest } from '../route/routeChunkAssets';
 import { createError } from '../utils';
 import type { AlternateLinksByRoute } from './alternateLinks';
 import { resolveHtmlFilePath } from './htmlFile';
@@ -14,6 +15,7 @@ interface WorkerDataParams {
   ssrBundlePath: string;
   alternateLinksByRoute: AlternateLinksByRoute;
   distPath?: string;
+  routeChunkAssets?: RouteChunkAssetsManifest;
 }
 
 interface WorkerTask {
@@ -25,8 +27,14 @@ if (!params) {
   throw createError('SSG Worker Thread workerData params missing');
 }
 
-const { htmlTemplate, head, ssrBundlePath, alternateLinksByRoute, distPath } =
-  params;
+const {
+  htmlTemplate,
+  head,
+  ssrBundlePath,
+  alternateLinksByRoute,
+  distPath,
+  routeChunkAssets,
+} = params;
 
 async function writeHtmlFile(routePath: string, html: string) {
   if (!distPath) {
@@ -51,6 +59,7 @@ const exportWorkerGlueFn = async ({
           head,
           ssrBundlePath,
           alternateLinksByRoute[route.routePath] ?? [],
+          routeChunkAssets,
         );
         await writeHtmlFile(route.routePath, html);
       },
@@ -68,6 +77,7 @@ const exportWorkerGlueFn = async ({
         head,
         ssrBundlePath,
         alternateLinksByRoute[route.routePath] ?? [],
+        routeChunkAssets,
       );
       return html;
     },

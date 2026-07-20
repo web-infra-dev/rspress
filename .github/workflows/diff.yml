@@ -45,9 +45,12 @@ jobs:
           pnpm install
           RSDOCTOR=1 pnpm run build
 
+      - name: Build auto-nav-sidebar Project
+        run: RSDOCTOR=1 pnpm --filter @rspress-fixture/auto-nav-sidebar run build
+
       - name: Report Compressed Size
-        uses: web-infra-dev/rsdoctor-action@96c3d1f7e1d2abf41c1203c3486364c9c4561b60 # main
+        uses: web-infra-dev/rsdoctor-action@bce0934b887cddb56986d16c34a445bcce9a7d65 # main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          file_path: 'website/doc_build/diff-rsdoctor/**/rsdoctor-data.json'
+          file_path: '{website,e2e/fixtures/auto-nav-sidebar}/doc_build/diff-rsdoctor/**/rsdoctor-data.json'
           target_branch: 'main'

@@ -18,6 +18,12 @@ export type LlmsViewOption = 'markdownLink' | 'chatgpt' | 'claude';
 export type LlmsUI =
   | {
       /**
+       * Whether to inject a hidden hint into SSG HTML pages that points LLMs
+       * to llms.txt and llms-full.txt.
+       * @default true
+       */
+      injectLlmsHint?: boolean;
+      /**
        * Options for LlmsViewOptions component dropdown menu.
        * Set to `false` or an empty array to hide the view options UI.
        * @default ['markdownLink', 'chatgpt', 'claude']
@@ -153,8 +159,8 @@ export type ThemeConfig = {
   fallbackHeadingTitle?: boolean;
   /**
    * LLMS UI components configuration.
-   * When llmsUI.enableOnH1 is true, LlmsCopyButton and LlmsViewOptions
-   * will be automatically added below H1 headers.
+   * When enabled, LlmsCopyButton and LlmsViewOptions will be automatically
+   * added below H1 headers or to the outline sidebar.
    */
   llmsUI?: LlmsUI;
 };

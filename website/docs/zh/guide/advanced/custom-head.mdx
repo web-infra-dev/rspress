@@ -4,14 +4,15 @@
 
 目前 Rspress 会自动注入以下 Head 标签：
 
-| 标签                                                        | 描述                                                                 |
-| ----------------------------------------------------------- | -------------------------------------------------------------------- |
-| `<meta name="generator" content="Rspress v${version}">`     | 标识站点生成器及版本号                                               |
-| `<meta name="description" content="${description}">`        | 页面描述，参见下方 [description 的获取方式](#description-的获取方式) |
-| `<meta property="og:type" content="website">`               | Open Graph 类型，固定为 `website`                                    |
-| `<meta property="og:title" content="${title}">`             | Open Graph 标题，使用当前页面标题（如果存在）                        |
-| `<meta property="og:description" content="${description}">` | Open Graph 描述，同上                                                |
-| `<link rel="alternate" hreflang="${lang}" href="${url}">`   | 多语言站点中当前页面的其它语言版本                                   |
+| 标签                                                           | 描述                                                                 |
+| -------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `<meta name="generator" content="Rspress v${version}">`        | 标识站点生成器及版本号                                               |
+| `<meta name="description" content="${description}">`           | 页面描述，参见下方 [description 的获取方式](#description-的获取方式) |
+| `<meta property="og:type" content="website">`                  | Open Graph 类型，固定为 `website`                                    |
+| `<meta property="og:title" content="${title}">`                | Open Graph 标题，使用当前页面标题（如果存在）                        |
+| `<meta property="og:description" content="${description}">`    | Open Graph 描述，同上                                                |
+| `<link rel="alternate" hreflang="${lang}" href="${url}">`      | 多语言站点中当前页面的其它语言版本                                   |
+| `<link rel="preload" href="${currentRouteChunk}" as="script">` | 性能优化：预加载当前页面对应的异步路由 chunk                         |
 
 ## description 的获取方式
 

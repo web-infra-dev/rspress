@@ -245,6 +245,7 @@ export default defineConfig({
     llmsUI: false,
     // 或自定义选项：
     // llmsUI: {
+    //   injectLlmsHint: false, // 禁用面向大语言模型的隐藏提示
     //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
     //   placement: 'outline', // 在大纲面板中显示而非 H1 下方
     // },
@@ -253,6 +254,44 @@ export default defineConfig({
 ```
 
 更多信息请参阅 [themeConfig.llmsUI](/api/config/config-theme#llmsui)。
+
+### 自定义 llms.txt
+
+可通过 `llms.llmsTxt` 编排每个 `llms.txt` 文件的完整内容：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: {
+    llmsTxt: ({ title, description, sections }) => {
+      const sectionContent = sections
+        .map(section => {
+          const pages = section.pages
+            .map(page => `- [${page.title}](${page.link})`)
+            .join('\n');
+          return `## ${section.title}\n\n${pages}`;
+        })
+        .join('\n\n');
+
+      return `# ${title}
+
+> ${description}
+
+${sectionContent}`;
+    },
+  },
+});
+```
+
+回调可返回字符串或 Promise。每个语言和版本组合在生成对应的 `llms.txt` 时都会执行一次回调，并传入：
+
+- `title` 和 `description`：`rspress.config.ts` 中的站点信息。
+- `lang` 和 `version`：当前 `llms.txt` 文件对应的语言和版本。
+- `base` 和 `siteOrigin`：生成 Markdown 链接时使用的 URL 配置。
+- `sections`：按照导航分组、侧边栏排序的页面。每个页面包含 `title`、`description`、`frontmatter`、`routePath`、`link`、`lang` 和 `version`，其中 `link` 是生成的 Markdown 文件最终 URL。
+
+未匹配导航项的页面会归入 `Others` 分组。各语言的首页不会出现在分组中，因为它已由站点标题和描述表示。
 
 ### 自定义 MDX 拆分
 

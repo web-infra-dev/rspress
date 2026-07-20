@@ -405,10 +405,20 @@ export default defineConfig({
 
 ## llms
 
-- **类型**：`boolean | { remarkSplitMdxOptions?: RemarkSplitMdxOptions }`
+- **类型**：
+
+```ts
+boolean | {
+  llmsTxt?: (context: LlmsTxtContext) => string | Promise<string>;
+  remarkSplitMdxOptions?: RemarkSplitMdxOptions;
+}
+```
+
 - **默认值**：`false`
 
 是否开启 [SSG-MD](/guide/basic/ssg-md) 来生成 `llms.txt`、`llms-full.txt` 以及每个页面对应的 Markdown 文件，使你的文档更容易被大语言模型理解。
+
+可通过 `llmsTxt` 基于站点信息和页面分组编排完整的 `llms.txt` 内容。详见[自定义 llms.txt](/guide/basic/ssg-md#自定义-llmstxt)。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

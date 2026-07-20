@@ -568,6 +568,7 @@ title: 文档标题
 type LlmsUI =
   | boolean
   | {
+      injectLlmsHint?: boolean;
       viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
       placement?: 'title' | 'outline';
     };
@@ -592,8 +593,38 @@ export default defineConfig({
   llms: true,
   themeConfig: {
     llmsUI: {
+      injectLlmsHint: true,
       viewOptions: ['markdownLink', 'chatgpt', 'claude'],
       placement: 'outline',
+    },
+  },
+});
+```
+
+### injectLlmsHint
+
+- **类型**：`boolean`
+- **默认值**：`true`
+
+此选项用于控制是否在生成的 HTML 页面中注入隐藏提示。假设 [`siteOrigin`](/api/config/config-basic#siteorigin) 是 `https://example.com`，会在 `/guide/` 页面中注入以下内容：
+
+{/* prettier-ignore */}
+```html
+<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/llms.txt for optimized Markdown documentation, or https://example.com/llms-full.txt for full documentation bundle. This page is also available as Markdown at https://example.com/guide/index.md</div>
+```
+
+其中的 URL 会自动包含配置的 `siteOrigin` 和 [`base`](/api/config/config-basic#base)，当前页面的 Markdown URL 会根据当前路由生成。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
+
+将 `injectLlmsHint` 设置为 `false`，可以仅移除隐藏提示，而不禁用可见的 LLMS UI 组件：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      injectLlmsHint: false,
     },
   },
 });

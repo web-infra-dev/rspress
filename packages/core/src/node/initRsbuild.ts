@@ -39,8 +39,10 @@ import {
   hintBuilderPluginsBreakingChange,
   hintThemeBreakingChange,
 } from './logger/hint';
+import { isLlmsHintEnabled, isLlmsUIEnabled } from './llms';
 import type { PluginDriver } from './PluginDriver';
 import type { RouteService } from './route/RouteService';
+import { RouteChunkAssetsPlugin } from './route/routeChunkAssets';
 import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
 import { i18nVMPlugin } from './runtimeModule/i18n';
@@ -107,11 +109,14 @@ async function createInternalBuildConfig(
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
   const base = config?.base ?? '/';
+  const enableLlmsUI = isLlmsUIEnabled(config);
+  const enableLlmsHint = isLlmsHintEnabled(config, enableSSG);
 
   // In production, we need to add assetPrefix in asset path
   const assetPrefix = isProduction()
     ? addTrailingSlash(config?.builderConfig?.output?.assetPrefix ?? base)
     : '/';
+  const routeChunkAssets = new RouteChunkAssetsPlugin(routeService);
 
   const normalizeIcon = (icon: string | URL | undefined) => {
     if (!icon) {
@@ -201,10 +206,12 @@ async function createInternalBuildConfig(
         ? rsbuildPluginSSG({
             routeService,
             config,
+            routeChunkAssets,
           })
         : rsbuildPluginCSR({
             routeService,
             config,
+            routeChunkAssets,
           }),
       enableSSG && config.llms
         ? rsbuildPluginSSGMD({
@@ -282,9 +289,8 @@ async function createInternalBuildConfig(
       include: [PACKAGE_ROOT],
       define: {
         'process.env.TEST': JSON.stringify(process.env.TEST),
-        'process.env.ENABLE_LLMS_UI': JSON.stringify(
-          Boolean(config.themeConfig?.llmsUI ?? config.llms),
-        ),
+        'import.meta.env.ENABLE_LLMS_UI': JSON.stringify(enableLlmsUI),
+        'import.meta.env.ENABLE_LLMS_HINT': JSON.stringify(enableLlmsHint),
       },
     },
     performance: {
@@ -458,6 +464,7 @@ async function createInternalBuildConfig(
         },
         tools: {
           rspack: {
+            plugins: [routeChunkAssets],
             node: {
               __dirname: 'mock',
               __filename: 'mock',

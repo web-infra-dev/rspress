@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-llms",
-  "version": "2.0.17",
+  "version": "2.0.18",
   "description": "A plugin for rspress to generate llms.txt, llms-full.txt, md files to let llm understand your website.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.58.9",
-    "@rsbuild/core": "^2.1.5",
+    "@rsbuild/core": "^2.1.6",
     "@rsbuild/plugin-react": "~2.1.0",
     "@rslib/core": "0.23.2",
     "@rspress/config": "workspace:*",

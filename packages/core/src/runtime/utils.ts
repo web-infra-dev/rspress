@@ -7,6 +7,7 @@ import {
   normalizeHref,
   removeBase as rawRemoveBase,
   withBase as rawWithBase,
+  withSiteOrigin as rawWithSiteOrigin,
   removeHash,
   removeTrailingSlash,
 } from '@rspress/shared';
@@ -14,6 +15,10 @@ import siteData from 'virtual-site-data';
 
 function withBase(url = '/'): string {
   return rawWithBase(url, siteData.base);
+}
+
+function withSiteOrigin(url: string): string {
+  return rawWithSiteOrigin(url, siteData.siteOrigin);
 }
 
 function removeBase(url: string): string {
@@ -77,4 +82,5 @@ export {
   removeTrailingSlash,
   routePathToMdPath,
   withBase,
+  withSiteOrigin,
 };
