@@ -28,7 +28,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "^2.1.5",
+    "@rsbuild/core": "^2.1.6",
     "@rsbuild/plugin-react": "~2.1.0",
     "picocolors": "^1.1.1",
     "qrcode.react": "^4.2.0"
