@@ -38,7 +38,7 @@
     "twoslash": "^0.3.9"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.58.9",
+    "@microsoft/api-extractor": "^7.58.11",
     "@rslib/core": "0.23.2",
     "@rspress/config": "workspace:*",
     "@shikijs/types": "^4.2.0",
