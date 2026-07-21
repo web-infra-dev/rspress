@@ -166,6 +166,15 @@ iframe 预览模式中的代码有单独的编译环境和运行环境。
 ```
 ````
 
+当源文件需要参与固定预览构建、但不应在文档正文中显示为代码块时，可以添加
+`preview-only`。这适合声明页面级 Demo 应用：
+
+````mdx title="example.mdx"
+```tsx file="./_demo.tsx" preview="iframe-fixed" preview-only
+
+```
+````
+
 渲染结果：
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
@@ -292,9 +301,11 @@ export default defineConfig({
 
 配置自定义入口以支持其他框架（如 Vue）。
 
-:::warning 注意
-仅在 `preview="iframe-follow"` 模式下可用。
-:::
+`customEntry` 在两种 iframe 模式下都可用。回调会收到 `previewMode`、路由元数据和
+`demos` 数组。固定模式可以包含同一文档中的多个 Demo。
+
+对于外部 `file` 代码块，每个 Demo 还包含绝对路径 `sourcePath`。当源模块使用相对导入时
+应优先使用它；`demoPath` 指向经过转换的虚拟模块。
 
 以下是 Vue 框架的配置示例：
 
@@ -307,14 +318,25 @@ export default defineConfig({
   // ...
   plugins: [
     pluginPreview({
-      previewMode: 'iframe',
       previewLanguages: ['vue'],
       iframeOptions: {
-        position: 'follow',
-        customEntry: ({ demoPath }) => {
+        customEntry: meta => {
+          const imports = meta.demos
+            .map(
+              (demo, index) =>
+                `import Demo_${index} from ${JSON.stringify(
+                  demo.sourcePath ?? demo.demoPath,
+                )};`,
+            )
+            .join('\n');
+          const children = meta.demos
+            .map((_demo, index) => `h(Demo_${index})`)
+            .join(', ');
+
           return `
-          import { createApp } from 'vue';
-          import App from ${JSON.stringify(demoPath)};
+          import { createApp, h } from 'vue';
+          ${imports}
+          const App = { render: () => h('div', null, [${children}]) };
           createApp(App).mount('#root');
           `;
         },
