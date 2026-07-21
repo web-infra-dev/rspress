@@ -18,10 +18,13 @@ test.describe('plugin test', async () => {
   });
 
   test.afterAll(async () => {
-    if (app) {
-      await killProcess(app);
+    try {
+      if (app) {
+        await killProcess(app);
+      }
+    } finally {
+      await fs.writeFile(DOC_FILE, originalContent);
     }
-    await fs.writeFile(DOC_FILE, originalContent);
   });
 
   test('Should render the element', async ({ page }) => {
