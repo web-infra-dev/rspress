@@ -1,5 +1,8 @@
 import { describe, expect, test } from '@rstest/core';
-import { getInlineThemeScript } from './constants';
+import {
+  getInlineLocaleRedirectScript,
+  getInlineThemeScript,
+} from './constants';
 
 const runThemeScript = (
   darkMode: Parameters<typeof getInlineThemeScript>[0],
@@ -86,5 +89,140 @@ describe('getInlineThemeScript', () => {
       isDark: false,
       colorScheme: 'light',
     });
+  });
+});
+
+const runLocaleRedirectScript = (
+  config: Parameters<typeof getInlineLocaleRedirectScript>[0],
+  options: {
+    language: string;
+    pathname: string;
+    search?: string;
+    userAgent?: string;
+    visited?: boolean;
+  },
+) => {
+  let redirectedTo: string | undefined;
+  let visited = options.visited ?? false;
+  const script = getInlineLocaleRedirectScript(config);
+
+  Function(
+    'window',
+    'localStorage',
+    script,
+  )(
+    {
+      navigator: {
+        language: options.language,
+        userAgent: options.userAgent ?? 'browser',
+      },
+      location: {
+        pathname: options.pathname,
+        search: options.search ?? '',
+        replace: (url: string) => {
+          redirectedTo = url;
+        },
+      },
+    },
+    {
+      getItem: () => (visited ? '1' : null),
+      setItem: () => {
+        visited = true;
+      },
+    },
+  );
+
+  return { redirectedTo, visited, script };
+};
+
+describe('getInlineLocaleRedirectScript', () => {
+  const config = {
+    lang: 'zh',
+    locales: [
+      { lang: 'zh', label: '中文' },
+      { lang: 'en', label: 'English' },
+      { lang: 'fr', label: 'Français' },
+    ],
+  };
+
+  test('redirects from the default locale before rendering', () => {
+    expect(
+      runLocaleRedirectScript(config, {
+        language: 'en-US',
+        pathname: '/guide/',
+        search: '?from=home',
+      }),
+    ).toMatchObject({
+      redirectedTo: '/en/guide/?from=home',
+      visited: true,
+    });
+  });
+
+  test('redirects from a locale-prefixed route to the default locale', () => {
+    expect(
+      runLocaleRedirectScript(config, {
+        language: 'zh-CN',
+        pathname: '/en/guide/',
+      }).redirectedTo,
+    ).toBe('/guide/');
+  });
+
+  test('supports base and version prefixes', () => {
+    expect(
+      runLocaleRedirectScript(
+        {
+          ...config,
+          base: '/docs/',
+          multiVersion: { default: 'v2', versions: ['v1', 'v2'] },
+        },
+        {
+          language: 'zh-CN',
+          pathname: '/docs/v1/en/guide/',
+        },
+      ).redirectedTo,
+    ).toBe('/docs/v1/guide/');
+  });
+
+  test('does not redirect bots or returning visitors', () => {
+    expect(
+      runLocaleRedirectScript(config, {
+        language: 'en-US',
+        pathname: '/',
+        userAgent: 'Googlebot',
+      }),
+    ).toMatchObject({ redirectedTo: undefined, visited: false });
+
+    expect(
+      runLocaleRedirectScript(config, {
+        language: 'en-US',
+        pathname: '/',
+        visited: true,
+      }),
+    ).toMatchObject({ redirectedTo: undefined, visited: true });
+  });
+
+  test('preserves only-default-lang behavior', () => {
+    expect(
+      runLocaleRedirectScript(
+        {
+          ...config,
+          themeConfig: { localeRedirect: 'only-default-lang' },
+        },
+        {
+          language: 'en-US',
+          pathname: '/fr/guide/',
+        },
+      ).redirectedTo,
+    ).toBeUndefined();
+  });
+
+  test('does not inject redirect code when disabled or not configured', () => {
+    expect(
+      getInlineLocaleRedirectScript({
+        ...config,
+        themeConfig: { localeRedirect: 'never' },
+      }),
+    ).toBe('');
+    expect(getInlineLocaleRedirectScript({ locales: config.locales })).toBe('');
   });
 });

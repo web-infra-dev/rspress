@@ -2,6 +2,7 @@ import {
   getDefaultDarkModeValue,
   isDarkModeSwitchEnabled,
   type DarkMode,
+  type UserConfig,
 } from '@rspress/shared';
 import { createRequire } from 'node:module';
 import path from 'node:path';
@@ -36,6 +37,61 @@ export const getInlineThemeScript = (darkMode: DarkMode | undefined) => {
   document.documentElement.classList.toggle('dark', isDark)
   document.documentElement.classList.toggle('rp-dark', isDark)
   document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
+}`
+    .replace(/\n/g, ';')
+    .replace(/\s{2,}/g, '');
+};
+
+const serializeInlineScriptData = (value: unknown) =>
+  JSON.stringify(value).replace(/</g, '\\u003c');
+
+// Resolve the locale before the first render to avoid showing content in the
+// wrong language while waiting for React to hydrate.
+export const getInlineLocaleRedirectScript = (config: UserConfig) => {
+  const localeRedirect = config.themeConfig?.localeRedirect ?? 'auto';
+  const defaultLang = config.lang || '';
+  const locales = config.locales ?? config.themeConfig?.locales ?? [];
+
+  if (localeRedirect === 'never' || !defaultLang || locales.length === 0) {
+    return '';
+  }
+
+  const langs = locales.map(locale => locale.lang);
+  const versions = config.multiVersion?.versions ?? [];
+
+  return `{
+  const localeRedirect = ${serializeInlineScriptData(localeRedirect)}
+  const defaultLang = ${serializeInlineScriptData(defaultLang)}
+  const langs = ${serializeInlineScriptData(langs)}
+  const versions = ${serializeInlineScriptData(versions)}
+  const botRegex = /bot|spider|crawl|lighthouse/i
+  if (!botRegex.test(window.navigator.userAgent)) {
+    const firstVisitKey = 'rspress-visited'
+    const visited = localStorage.getItem(firstVisitKey)
+    if (!visited) {
+      localStorage.setItem(firstVisitKey, '1')
+      const targetLang = window.navigator.language.split('-')[0]
+      const { pathname, search } = window.location
+      const base = ${serializeInlineScriptData(config.base ?? '/')}.replace(/\\/$/, '')
+      const cleanPathname = base && pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname
+      const pathSegments = cleanPathname.split('/').filter(Boolean)
+      const langIndex = versions.includes(pathSegments[0]) ? 1 : 0
+      const currentLang = langs.includes(pathSegments[langIndex]) ? pathSegments[langIndex] : defaultLang
+      if (langs.includes(targetLang) && targetLang !== currentLang) {
+        let newPath
+        if (targetLang === defaultLang) {
+          newPath = pathname.replace('/' + currentLang, '')
+        } else if (currentLang === defaultLang) {
+          newPath = base + '/' + targetLang + cleanPathname
+        } else if (localeRedirect === 'auto') {
+          newPath = pathname.replace('/' + currentLang, '/' + targetLang)
+        }
+        if (newPath) {
+          window.location.replace(newPath + search)
+        }
+      }
+    }
+  }
 }`
     .replace(/\n/g, ';')
     .replace(/\s{2,}/g, '');
