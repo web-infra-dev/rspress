@@ -83,16 +83,22 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
       const langIndex = versions.includes(pathSegments[0]) ? 1 : 0
       const currentLang = langs.includes(pathSegments[langIndex]) ? pathSegments[langIndex] : defaultLang
       if (langs.includes(targetLang) && targetLang !== currentLang) {
-        let newPath
+        const newPathSegments = pathSegments.slice()
+        let shouldRedirect = false
         if (targetLang === defaultLang) {
-          newPath = pathname.replace('/' + currentLang, '')
+          newPathSegments.splice(langIndex, 1)
+          shouldRedirect = true
         } else if (currentLang === defaultLang) {
-          newPath = base + '/' + targetLang + cleanPathname
+          newPathSegments.splice(langIndex, 0, targetLang)
+          shouldRedirect = true
         } else if (localeRedirect === 'auto') {
-          newPath = pathname.replace('/' + currentLang, '/' + targetLang)
+          newPathSegments[langIndex] = targetLang
+          shouldRedirect = true
         }
-        if (newPath) {
-          window.location.replace(newPath + search)
+        if (shouldRedirect) {
+          const newPathname = '/' + newPathSegments.join('/')
+          const trailingSlash = newPathname !== '/' && cleanPathname.endsWith('/') ? '/' : ''
+          window.location.replace(base + newPathname + trailingSlash + search)
         }
       }
     }

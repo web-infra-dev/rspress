@@ -169,19 +169,32 @@ describe('getInlineLocaleRedirectScript', () => {
   });
 
   test('supports base and version prefixes', () => {
+    const versionedConfig = {
+      ...config,
+      base: '/docs/',
+      multiVersion: { default: 'v2', versions: ['v1', 'v2'] },
+    };
+
     expect(
-      runLocaleRedirectScript(
-        {
-          ...config,
-          base: '/docs/',
-          multiVersion: { default: 'v2', versions: ['v1', 'v2'] },
-        },
-        {
-          language: 'zh-CN',
-          pathname: '/docs/v1/en/guide/',
-        },
-      ).redirectedTo,
+      runLocaleRedirectScript(versionedConfig, {
+        language: 'zh-CN',
+        pathname: '/docs/v1/en/guide/',
+      }).redirectedTo,
     ).toBe('/docs/v1/guide/');
+
+    expect(
+      runLocaleRedirectScript(versionedConfig, {
+        language: 'en-US',
+        pathname: '/docs/v1/guide/',
+      }).redirectedTo,
+    ).toBe('/docs/v1/en/guide/');
+
+    expect(
+      runLocaleRedirectScript(versionedConfig, {
+        language: 'fr-FR',
+        pathname: '/docs/v1/en/guide/',
+      }).redirectedTo,
+    ).toBe('/docs/v1/fr/guide/');
   });
 
   test('does not redirect bots or returning visitors', () => {
