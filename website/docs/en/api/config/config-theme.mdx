@@ -530,6 +530,29 @@ export default defineConfig({
 });
 ```
 
+## localeRedirect (deprecated)
+
+- **Type**: `'auto' | 'never' | 'only-default-lang'`
+- **Default**: `'auto'`
+
+Controls how first-time visitors are redirected to the closest configured locale based on `window.navigator.language`.
+
+:::warning Configuration moved
+
+This option has moved to [`route.localeRedirect`](./config-basic#routelocaleredirect). `themeConfig.localeRedirect` remains supported for backward compatibility, but is deprecated. Migrate the option to `route`; when both options are set, `route.localeRedirect` takes precedence.
+
+:::
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    localeRedirect: 'never',
+  },
+});
+```
+
 ## fallbackHeadingTitle
 
 - **Type**: `boolean`

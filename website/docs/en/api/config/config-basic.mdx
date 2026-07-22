@@ -712,9 +712,9 @@ This option performs the redirect in the browser. For production sites, prefer h
 
 :::
 
-:::warning Breaking change
+:::warning Configuration migration
 
-`localeRedirect` has moved from `themeConfig` to `route`. Existing `themeConfig.localeRedirect` values are no longer read; move them to `route.localeRedirect` when upgrading.
+`localeRedirect` has moved from `themeConfig` to `route`. The former `themeConfig.localeRedirect` option remains supported for backward compatibility, but is deprecated. Migrate to `route.localeRedirect`; when both options are set, `route.localeRedirect` takes precedence.
 
 Automatic locale redirects also now run before hydration, so first-time visitors may be redirected before any theme or client code runs. Set `route.localeRedirect` to `'never'` if your server or CDN already handles locale negotiation, or if the site must preserve the originally requested locale.
 
