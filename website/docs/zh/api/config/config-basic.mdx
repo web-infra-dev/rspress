@@ -702,6 +702,12 @@ export default defineConfig({
 
 是否根据 `window.navigator.language` 将首次访问的用户重定向到最匹配的已配置语言。设置为 `false` 可以禁用自动语言重定向，并且优先级高于 [`themeConfig.localeRedirect`](./config-theme#localeredirect)。
 
+:::warning Breaking change
+
+自动语言重定向现在会在 hydration 前执行。升级后，首次访问的用户可能会在任何主题或客户端代码运行前被重定向。如果服务器或 CDN 已经处理了语言协商，或者站点必须保留用户最初请求的语言，请将 `route.localeRedirect` 设置为 `false`。
+
+:::
+
 ```js title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
