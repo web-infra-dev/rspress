@@ -244,7 +244,7 @@ async function createInternalBuildConfig(
       favicon: normalizeIcon(config?.icon),
       template: TEMPLATE_PATH,
       tags: [
-        process.env.TEST !== '1' && localeRedirectScript
+        localeRedirectScript
           ? {
               tag: 'script',
               children: localeRedirectScript,
@@ -297,7 +297,6 @@ async function createInternalBuildConfig(
       ],
       include: [PACKAGE_ROOT],
       define: {
-        'process.env.TEST': JSON.stringify(process.env.TEST),
         'import.meta.env.ENABLE_LLMS_UI': JSON.stringify(enableLlmsUI),
         'import.meta.env.ENABLE_LLMS_HINT': JSON.stringify(enableLlmsHint),
       },
