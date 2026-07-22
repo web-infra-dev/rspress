@@ -58,9 +58,30 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
 
   const langs = locales.map(locale => locale.lang);
   const versions = config.multiVersion?.versions ?? [];
+  const replaceLocationScript = `
+  const newPathname = '/' + newPathSegments.join('/')
+  const trailingSlash = newPathname !== '/' && cleanPathname.endsWith('/') ? '/' : ''
+  window.location.replace(base + newPathname + trailingSlash + search)`;
+  const redirectScript =
+    localeRedirect === 'only-default-lang'
+      ? `if (currentLang === defaultLang && langs.includes(targetLang) && targetLang !== defaultLang) {
+        const newPathSegments = pathSegments.slice()
+        newPathSegments.splice(langIndex, 0, targetLang)
+        ${replaceLocationScript}
+      }`
+      : `if (langs.includes(targetLang) && targetLang !== currentLang) {
+        const newPathSegments = pathSegments.slice()
+        if (targetLang === defaultLang) {
+          newPathSegments.splice(langIndex, 1)
+        } else if (currentLang === defaultLang) {
+          newPathSegments.splice(langIndex, 0, targetLang)
+        } else {
+          newPathSegments[langIndex] = targetLang
+        }
+        ${replaceLocationScript}
+      }`;
 
   return `{
-  const localeRedirect = ${serializeInlineScriptData(localeRedirect)}
   const defaultLang = ${serializeInlineScriptData(defaultLang)}
   const langs = ${serializeInlineScriptData(langs)}
   const versions = ${serializeInlineScriptData(versions)}
@@ -77,25 +98,7 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
       const pathSegments = cleanPathname.split('/').filter(Boolean)
       const langIndex = versions.includes(pathSegments[0]) ? 1 : 0
       const currentLang = langs.includes(pathSegments[langIndex]) ? pathSegments[langIndex] : defaultLang
-      if (langs.includes(targetLang) && targetLang !== currentLang) {
-        const newPathSegments = pathSegments.slice()
-        let shouldRedirect = false
-        if (targetLang === defaultLang) {
-          newPathSegments.splice(langIndex, 1)
-          shouldRedirect = true
-        } else if (currentLang === defaultLang) {
-          newPathSegments.splice(langIndex, 0, targetLang)
-          shouldRedirect = true
-        } else if (localeRedirect === 'auto') {
-          newPathSegments[langIndex] = targetLang
-          shouldRedirect = true
-        }
-        if (shouldRedirect) {
-          const newPathname = '/' + newPathSegments.join('/')
-          const trailingSlash = newPathname !== '/' && cleanPathname.endsWith('/') ? '/' : ''
-          window.location.replace(base + newPathname + trailingSlash + search)
-        }
-      }
+      ${redirectScript}
     }
   }
 }`

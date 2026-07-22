@@ -216,18 +216,39 @@ describe('getInlineLocaleRedirectScript', () => {
   });
 
   test('preserves only-default-lang behavior', () => {
+    const onlyDefaultLangConfig = {
+      ...config,
+      route: { localeRedirect: 'only-default-lang' as const },
+    };
+
     expect(
-      runLocaleRedirectScript(
-        {
-          ...config,
-          route: { localeRedirect: 'only-default-lang' },
-        },
-        {
-          language: 'en-US',
-          pathname: '/fr/guide/',
-        },
-      ).redirectedTo,
+      runLocaleRedirectScript(onlyDefaultLangConfig, {
+        language: 'en-US',
+        pathname: '/guide/',
+      }).redirectedTo,
+    ).toBe('/en/guide/');
+
+    expect(
+      runLocaleRedirectScript(onlyDefaultLangConfig, {
+        language: 'en-US',
+        pathname: '/fr/guide/',
+      }).redirectedTo,
     ).toBeUndefined();
+  });
+
+  test('generates mode-specific runtime code', () => {
+    const autoScript = getInlineLocaleRedirectScript(config);
+    const onlyDefaultLangScript = getInlineLocaleRedirectScript({
+      ...config,
+      route: { localeRedirect: 'only-default-lang' },
+    });
+
+    expect(autoScript).not.toContain('localeRedirect');
+    expect(onlyDefaultLangScript).not.toContain('localeRedirect');
+    expect(onlyDefaultLangScript).not.toContain(
+      'newPathSegments[langIndex]=targetLang',
+    );
+    expect(onlyDefaultLangScript.length).toBeLessThan(autoScript.length);
   });
 
   test('does not inject redirect code when disabled or not configured', () => {
