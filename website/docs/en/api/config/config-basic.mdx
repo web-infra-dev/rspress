@@ -706,6 +706,12 @@ Controls how first-time visitors are redirected to the closest configured locale
 - `never`: Disable automatic locale redirects.
 - `only-default-lang`: Redirect only when the visitor opens the default locale.
 
+:::tip Prefer server-side redirects
+
+This option performs the redirect in the browser. For production sites, prefer handling locale negotiation and redirects on the server or at the CDN edge when possible. This redirects visitors before HTML is delivered and does not depend on client-side JavaScript.
+
+:::
+
 :::warning Breaking change
 
 `localeRedirect` has moved from `themeConfig` to `route`. Existing `themeConfig.localeRedirect` values are no longer read; move them to `route.localeRedirect` when upgrading.

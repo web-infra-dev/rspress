@@ -706,6 +706,12 @@ export default defineConfig({
 - `never`：禁用自动语言重定向。
 - `only-default-lang`：仅在访问默认语言时重定向。
 
+:::tip 建议使用服务端重定向
+
+该选项在浏览器端执行重定向。生产环境中，如果条件允许，更推荐在服务器或 CDN 边缘完成语言协商与重定向。这样可以在 HTML 下发前完成跳转，并且不依赖客户端 JavaScript。
+
+:::
+
 :::warning Breaking change
 
 `localeRedirect` 已从 `themeConfig` 移至 `route`。升级时需要将现有的 `themeConfig.localeRedirect` 迁移至 `route.localeRedirect`，原配置位置将不再生效。
