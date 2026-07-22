@@ -148,6 +148,12 @@ export type ThemeConfig = {
    */
   enableScrollToTop?: boolean;
   /**
+   * Whether to redirect to the closest locale when the user visits the site.
+   * @deprecated Use `route.localeRedirect` instead.
+   * @default 'auto'
+   */
+  localeRedirect?: 'auto' | 'never' | 'only-default-lang';
+  /**
    * Whether to show the fallback heading title when the heading title is not presented but `frontmatter.title` exists
    * @default true
    */

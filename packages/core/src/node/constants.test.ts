@@ -236,6 +236,23 @@ describe('getInlineLocaleRedirectScript', () => {
     ).toBeUndefined();
   });
 
+  test('supports the legacy theme config with route config taking precedence', () => {
+    expect(
+      getInlineLocaleRedirectScript({
+        ...config,
+        themeConfig: { localeRedirect: 'never' },
+      }),
+    ).toBe('');
+
+    expect(
+      getInlineLocaleRedirectScript({
+        ...config,
+        route: { localeRedirect: 'auto' },
+        themeConfig: { localeRedirect: 'never' },
+      }),
+    ).not.toBe('');
+  });
+
   test('generates mode-specific runtime code', () => {
     const autoScript = getInlineLocaleRedirectScript(config);
     const onlyDefaultLangScript = getInlineLocaleRedirectScript({
