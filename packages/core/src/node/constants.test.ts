@@ -242,14 +242,30 @@ describe('getInlineLocaleRedirectScript', () => {
       ...config,
       route: { localeRedirect: 'only-default-lang' },
     });
+    const versionedBaseScript = getInlineLocaleRedirectScript({
+      ...config,
+      base: '/docs/',
+      multiVersion: { default: 'v2', versions: ['v1', 'v2'] },
+    });
 
     expect(autoScript).not.toContain('localeRedirect');
     expect(autoScript).not.toContain('const ');
+    expect(autoScript).not.toContain('versions');
+    expect(autoScript).not.toContain('langIndex');
+    expect(autoScript).not.toContain('base =');
+    expect(autoScript).not.toContain('cleanPathname');
+    expect(autoScript.match(/\bvar /g)).toHaveLength(5);
+    expect(autoScript).toContain('newPathSegments[0] = targetLang');
     expect(onlyDefaultLangScript).not.toContain('localeRedirect');
     expect(onlyDefaultLangScript).not.toContain(
-      'newPathSegments[langIndex]=targetLang',
+      'newPathSegments[0] = targetLang',
     );
     expect(onlyDefaultLangScript.length).toBeLessThan(autoScript.length);
+    expect(versionedBaseScript).toContain('base = "/docs"');
+    expect(versionedBaseScript).toContain('versions = ["v1","v2"]');
+    expect(versionedBaseScript).toContain(
+      'langIndex = versions.includes(pathSegments[0]) ? 1 : 0',
+    );
   });
 
   test('does not inject redirect code when disabled or not configured', () => {
