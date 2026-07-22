@@ -21,6 +21,7 @@ import {
   CSR_CLIENT_ENTRY,
   DEFAULT_THEME,
   DEFAULT_TITLE,
+  getInlineLocaleRedirectScript,
   getInlineThemeScript,
   isProduction,
   NODE_SSG_BUNDLE_FOLDER,
@@ -111,6 +112,7 @@ async function createInternalBuildConfig(
   const base = config?.base ?? '/';
   const enableLlmsUI = isLlmsUIEnabled(config);
   const enableLlmsHint = isLlmsHintEnabled(config, enableSSG);
+  const localeRedirectScript = getInlineLocaleRedirectScript(config);
 
   // In production, we need to add assetPrefix in asset path
   const assetPrefix = isProduction()
@@ -242,6 +244,13 @@ async function createInternalBuildConfig(
       favicon: normalizeIcon(config?.icon),
       template: TEMPLATE_PATH,
       tags: [
+        process.env.TEST !== '1' && localeRedirectScript
+          ? {
+              tag: 'script',
+              children: localeRedirectScript,
+              append: false,
+            }
+          : null!,
         normalizeDarkMode(config.themeConfig?.darkMode) !== 'force-light'
           ? {
               tag: 'script',

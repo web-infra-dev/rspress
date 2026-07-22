@@ -14,7 +14,6 @@ import {
   type DocLayoutProps,
   Nav,
   type NavProps,
-  useRedirect4FirstVisit,
   useScrollReset,
   useSetup,
 } from '@rspress/core/theme';
@@ -225,7 +224,6 @@ export function Layout(props: LayoutProps) {
 
   useSetup();
   useScrollReset();
-  useRedirect4FirstVisit();
 
   const {
     frontmatter: { navbar: showNavbar = true },

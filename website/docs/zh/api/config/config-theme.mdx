@@ -518,18 +518,24 @@ export default defineConfig({
 });
 ```
 
-## localeRedirect
+## localeRedirect（已废弃）
 
 - **类型**：`'auto' | 'never' | 'only-default-lang'`
 - **默认值**： `'auto'`
 
-是否在访问网站时重定向到最接近 `window.navigator.language` 的语言，默认为 `auto` 表示首次访问时将重定向，`never` 表示不重定向，`only-default-lang` 表示仅在访问默认语言时重定向。比如:
+控制如何根据 `window.navigator.language` 将首次访问的用户重定向到最匹配的已配置语言。
+
+:::warning 配置已迁移
+
+该选项已迁移至 [`route.localeRedirect`](./config-basic#routelocaleredirect)。`themeConfig.localeRedirect` 仍会继续生效以保持向后兼容，但已废弃。请将该选项迁移至 `route`；同时配置两者时，`route.localeRedirect` 优先生效。
+
+:::
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  themeConfig: {
+  route: {
     localeRedirect: 'never',
   },
 });
