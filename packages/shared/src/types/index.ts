@@ -595,6 +595,12 @@ export interface RouteOptions {
    */
   cleanUrls?: boolean;
   /**
+   * Whether to redirect first-time visitors to the closest configured locale
+   * based on their browser language.
+   * @default true
+   */
+  localeRedirect?: boolean;
+  /**
    * Enable concurrent, optimized routing for internal links rendered by
    * Rspress' default Link component.
    * @default true

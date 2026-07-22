@@ -695,6 +695,23 @@ export default defineConfig({
 });
 ```
 
+### route.localeRedirect
+
+- **类型**：`boolean`
+- **默认值**：`true`
+
+是否根据 `window.navigator.language` 将首次访问的用户重定向到最匹配的已配置语言。设置为 `false` 可以禁用自动语言重定向，并且优先级高于 [`themeConfig.localeRedirect`](./config-theme#localeredirect)。
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    localeRedirect: false,
+  },
+});
+```
+
 ### route.useTransitions
 
 - **类型**： `boolean`

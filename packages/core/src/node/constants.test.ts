@@ -221,6 +221,12 @@ describe('getInlineLocaleRedirectScript', () => {
     expect(
       getInlineLocaleRedirectScript({
         ...config,
+        route: { localeRedirect: false },
+      }),
+    ).toBe('');
+    expect(
+      getInlineLocaleRedirectScript({
+        ...config,
         themeConfig: { localeRedirect: 'never' },
       }),
     ).toBe('');

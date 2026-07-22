@@ -52,7 +52,12 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
   const defaultLang = config.lang || '';
   const locales = config.locales ?? config.themeConfig?.locales ?? [];
 
-  if (localeRedirect === 'never' || !defaultLang || locales.length === 0) {
+  if (
+    config.route?.localeRedirect === false ||
+    localeRedirect === 'never' ||
+    !defaultLang ||
+    locales.length === 0
+  ) {
     return '';
   }
 

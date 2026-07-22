@@ -148,7 +148,7 @@ export type ThemeConfig = {
    */
   enableScrollToTop?: boolean;
   /**
-   * Whether to redirect to the closest locale when the user visits the site
+   * How to redirect to the closest locale when route locale redirects are enabled
    * @default 'auto'
    */
   localeRedirect?: 'auto' | 'never' | 'only-default-lang';

@@ -695,6 +695,23 @@ export default defineConfig({
 });
 ```
 
+### route.localeRedirect
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+Redirects first-time visitors to the closest configured locale based on `window.navigator.language`. Set this option to `false` to disable automatic locale redirects. This takes precedence over [`themeConfig.localeRedirect`](./config-theme#localeredirect).
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    localeRedirect: false,
+  },
+});
+```
+
 ### route.useTransitions
 
 - **Type**: `Boolean`
