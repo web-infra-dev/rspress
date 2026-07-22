@@ -244,6 +244,7 @@ describe('getInlineLocaleRedirectScript', () => {
     });
 
     expect(autoScript).not.toContain('localeRedirect');
+    expect(autoScript).not.toContain('const ');
     expect(onlyDefaultLangScript).not.toContain('localeRedirect');
     expect(onlyDefaultLangScript).not.toContain(
       'newPathSegments[langIndex]=targetLang',

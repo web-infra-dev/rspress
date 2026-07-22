@@ -59,18 +59,18 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
   const langs = locales.map(locale => locale.lang);
   const versions = config.multiVersion?.versions ?? [];
   const replaceLocationScript = `
-  const newPathname = '/' + newPathSegments.join('/')
-  const trailingSlash = newPathname !== '/' && cleanPathname.endsWith('/') ? '/' : ''
+  var newPathname = '/' + newPathSegments.join('/')
+  var trailingSlash = newPathname !== '/' && cleanPathname.endsWith('/') ? '/' : ''
   window.location.replace(base + newPathname + trailingSlash + search)`;
   const redirectScript =
     localeRedirect === 'only-default-lang'
       ? `if (currentLang === defaultLang && langs.includes(targetLang) && targetLang !== defaultLang) {
-        const newPathSegments = pathSegments.slice()
+        var newPathSegments = pathSegments.slice()
         newPathSegments.splice(langIndex, 0, targetLang)
         ${replaceLocationScript}
       }`
       : `if (langs.includes(targetLang) && targetLang !== currentLang) {
-        const newPathSegments = pathSegments.slice()
+        var newPathSegments = pathSegments.slice()
         if (targetLang === defaultLang) {
           newPathSegments.splice(langIndex, 1)
         } else if (currentLang === defaultLang) {
@@ -82,22 +82,22 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
       }`;
 
   return `{
-  const defaultLang = ${serializeInlineScriptData(defaultLang)}
-  const langs = ${serializeInlineScriptData(langs)}
-  const versions = ${serializeInlineScriptData(versions)}
-  const botRegex = /bot|spider|crawl|lighthouse/i
+  var defaultLang = ${serializeInlineScriptData(defaultLang)}
+  var langs = ${serializeInlineScriptData(langs)}
+  var versions = ${serializeInlineScriptData(versions)}
+  var botRegex = /bot|spider|crawl|lighthouse/i
   if (!botRegex.test(window.navigator.userAgent)) {
-    const firstVisitKey = 'rspress-visited'
-    const visited = localStorage.getItem(firstVisitKey)
+    var firstVisitKey = 'rspress-visited'
+    var visited = localStorage.getItem(firstVisitKey)
     if (!visited) {
       localStorage.setItem(firstVisitKey, '1')
-      const targetLang = window.navigator.language.split('-')[0]
-      const { pathname, search } = window.location
-      const base = ${serializeInlineScriptData(config.base ?? '/')}.replace(/\\/$/, '')
-      const cleanPathname = base && pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname
-      const pathSegments = cleanPathname.split('/').filter(Boolean)
-      const langIndex = versions.includes(pathSegments[0]) ? 1 : 0
-      const currentLang = langs.includes(pathSegments[langIndex]) ? pathSegments[langIndex] : defaultLang
+      var targetLang = window.navigator.language.split('-')[0]
+      var { pathname, search } = window.location
+      var base = ${serializeInlineScriptData(config.base ?? '/')}.replace(/\\/$/, '')
+      var cleanPathname = base && pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname
+      var pathSegments = cleanPathname.split('/').filter(Boolean)
+      var langIndex = versions.includes(pathSegments[0]) ? 1 : 0
+      var currentLang = langs.includes(pathSegments[langIndex]) ? pathSegments[langIndex] : defaultLang
       ${redirectScript}
     }
   }
