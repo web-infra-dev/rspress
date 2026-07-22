@@ -1,3 +1,4 @@
+// cspell:ignore Googlebot
 import { describe, expect, test } from '@rstest/core';
 import {
   getInlineLocaleRedirectScript,
