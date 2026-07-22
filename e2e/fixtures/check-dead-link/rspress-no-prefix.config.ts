@@ -10,9 +10,11 @@ export default defineConfig({
       autoPrefix: false,
     },
   },
+  route: {
+    localeRedirect: 'never',
+  },
   themeConfig: {
     darkMode: false,
-    localeRedirect: 'never',
     locales: [
       {
         lang: 'zh',

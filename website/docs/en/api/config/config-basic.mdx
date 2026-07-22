@@ -695,6 +695,41 @@ export default defineConfig({
 });
 ```
 
+### route.localeRedirect
+
+- **Type**: `'auto' | 'never' | 'only-default-lang'`
+- **Default**: `'auto'`
+
+Controls how first-time visitors are redirected to the closest configured locale based on `window.navigator.language`:
+
+- `auto`: Redirect from any locale to the closest configured locale.
+- `never`: Disable automatic locale redirects.
+- `only-default-lang`: Redirect only when the visitor opens the default locale.
+
+:::tip Prefer server-side redirects
+
+This option performs the redirect in the browser. For production sites, prefer handling locale negotiation and redirects on the server or at the CDN edge when possible. This redirects visitors before HTML is delivered and does not depend on client-side JavaScript.
+
+:::
+
+:::warning Configuration migration
+
+`localeRedirect` has moved from `themeConfig` to `route`. The former `themeConfig.localeRedirect` option remains supported for backward compatibility, but is deprecated. Migrate to `route.localeRedirect`; when both options are set, `route.localeRedirect` takes precedence.
+
+Automatic locale redirects also now run before hydration, so first-time visitors may be redirected before any theme or client code runs. Set `route.localeRedirect` to `'never'` if your server or CDN already handles locale negotiation, or if the site must preserve the originally requested locale.
+
+:::
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    localeRedirect: 'never',
+  },
+});
+```
+
 ### route.useTransitions
 
 - **Type**: `Boolean`

@@ -38,7 +38,7 @@
     ]
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "^2.31.1",
     "@playwright/test": "1.61.1",
     "@rsbuild/plugin-react": "~2.1.0",
     "@rslint/core": "^0.6.5",

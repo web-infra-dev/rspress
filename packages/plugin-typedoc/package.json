@@ -30,7 +30,7 @@
     "typedoc-plugin-markdown": "4.12.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.58.9",
+    "@microsoft/api-extractor": "^7.58.11",
     "@rslib/core": "0.23.2",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
