@@ -1,16 +1,11 @@
-import path, { join } from 'node:path';
+import type { RestartFn } from '@rsbuild/core';
 // Rslib(Rspack) will optimize the json module, the only one point that we need to concern is to bump the package.json version first then run build command
 import { version } from '@rspress/core/package.json';
 import { logger } from '@rspress/shared/logger';
 import { cac } from 'cac';
-import chokidar from 'chokidar';
-import picocolors from 'picocolors';
 import { loadConfigFile, resolveDocRoot } from '../config/loadConfigFile';
-import { PUBLIC_DIR } from '../node/constants';
 import { ejectComponent, listComponents } from '../node/eject';
 import { build, dev, serve } from '../node/index';
-
-const META_FILES = ['_meta.json', '_nav.json'];
 
 export type RunCLIOptions = {
   /**
@@ -52,9 +47,7 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
         },
       ) => {
         setNodeEnv('development');
-        let isRestarting = false;
         const cwd = process.cwd();
-        let cliWatcher: chokidar.FSWatcher;
         let devServer: Awaited<ReturnType<typeof dev>>;
         const startDevServer = async () => {
           const { port, host } = options || {};
@@ -76,45 +69,18 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
             config,
             configFilePath,
             extraBuilderConfig: { server: { port, host } },
+            restart,
           });
+        };
 
-          cliWatcher = chokidar.watch([configFilePath, docDirectory], {
-            ignoreInitial: true,
-            ignored: [
-              '**/node_modules/**',
-              '**/.git/**',
-              '**/.DS_Store/**',
-              // ignore public folder in dev, these files are handled by server middleware
-              join(docDirectory, PUBLIC_DIR),
-            ],
-          });
-          cliWatcher.on('all', async (eventName, filepath) => {
-            const basename = path.basename(filepath);
-            if (eventName === 'change' && META_FILES.includes(basename)) {
-              return;
-            }
-
-            if (
-              eventName === 'add' ||
-              eventName === 'unlink' ||
-              (eventName === 'change' && filepath === configFilePath)
-            ) {
-              if (isRestarting) {
-                return;
-              }
-
-              isRestarting = true;
-              console.log(
-                `\n✨ ${eventName} ${picocolors.green(
-                  path.relative(cwd, filepath),
-                )}, dev server will restart...\n`,
-              );
-              await devServer.close();
-              await cliWatcher.close();
-              await startDevServer();
-              isRestarting = false;
-            }
-          });
+        const restart: RestartFn = async () => {
+          try {
+            await startDevServer();
+            return true;
+          } catch (error) {
+            logger.error(error);
+            return false;
+          }
         };
 
         await startDevServer();
@@ -122,7 +88,6 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
         const exitProcess = async () => {
           try {
             await devServer.close();
-            await cliWatcher.close();
           } finally {
             process.exit(0);
           }
