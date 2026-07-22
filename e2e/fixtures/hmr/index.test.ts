@@ -97,7 +97,9 @@ test.describe('hmr test', async () => {
     ).toBeVisible();
   });
 
-  test('restart when routes or custom watch files change', async ({ page }) => {
+  test('restart when routes or config dependencies change', async ({
+    page,
+  }) => {
     await fs.writeFile(TEST_ADDED_FILE, '# Added route');
 
     await expect
