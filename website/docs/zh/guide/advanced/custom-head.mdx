@@ -61,6 +61,17 @@ head:
 ---
 ```
 
+你也可以使用相同的配置添加 `<meta name="keywords">` 标签：
+
+```md title="example.mdx"
+---
+head:
+  - - meta
+    - name: keywords
+      content: Rspress, React, static site generator
+---
+```
+
 ## Head 组件
 
 如果你需要更复杂的 Head 定制，可以使用 Rspress 提供的 [Head 组件](/ui/runtime-components/head) 在页面或布局组件中动态设置 Head 标签。
