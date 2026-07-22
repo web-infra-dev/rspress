@@ -518,23 +518,6 @@ export default defineConfig({
 });
 ```
 
-## localeRedirect
-
-- **类型**：`'auto' | 'never' | 'only-default-lang'`
-- **默认值**： `'auto'`
-
-当 [`route.localeRedirect`](./config-basic#routelocaleredirect) 启用时，控制如何将用户重定向到最接近 `window.navigator.language` 的语言。默认为 `auto`，表示首次访问时将重定向；`never` 表示不重定向；`only-default-lang` 表示仅在访问默认语言时重定向。如需完全退出自动语言重定向，请将 `route.localeRedirect` 设置为 `false`。例如：
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    localeRedirect: 'only-default-lang',
-  },
-});
-```
-
 ## fallbackHeadingTitle
 
 - **类型**：`boolean`

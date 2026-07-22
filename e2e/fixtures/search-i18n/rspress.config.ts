@@ -4,6 +4,9 @@ import { defineConfig } from '@rspress/core';
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
   lang: 'en',
+  route: {
+    localeRedirect: 'never',
+  },
   themeConfig: {
     locales: [
       {
@@ -19,6 +22,5 @@ export default defineConfig({
         label: '日本語',
       },
     ],
-    localeRedirect: 'never',
   },
 });

@@ -48,16 +48,11 @@ const serializeInlineScriptData = (value: unknown) =>
 // Resolve the locale before the first render to avoid showing content in the
 // wrong language while waiting for React to hydrate.
 export const getInlineLocaleRedirectScript = (config: UserConfig) => {
-  const localeRedirect = config.themeConfig?.localeRedirect ?? 'auto';
+  const localeRedirect = config.route?.localeRedirect ?? 'auto';
   const defaultLang = config.lang || '';
   const locales = config.locales ?? config.themeConfig?.locales ?? [];
 
-  if (
-    config.route?.localeRedirect === false ||
-    localeRedirect === 'never' ||
-    !defaultLang ||
-    locales.length === 0
-  ) {
+  if (localeRedirect === 'never' || !defaultLang || locales.length === 0) {
     return '';
   }
 

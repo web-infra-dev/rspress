@@ -220,7 +220,7 @@ describe('getInlineLocaleRedirectScript', () => {
       runLocaleRedirectScript(
         {
           ...config,
-          themeConfig: { localeRedirect: 'only-default-lang' },
+          route: { localeRedirect: 'only-default-lang' },
         },
         {
           language: 'en-US',
@@ -234,13 +234,7 @@ describe('getInlineLocaleRedirectScript', () => {
     expect(
       getInlineLocaleRedirectScript({
         ...config,
-        route: { localeRedirect: false },
-      }),
-    ).toBe('');
-    expect(
-      getInlineLocaleRedirectScript({
-        ...config,
-        themeConfig: { localeRedirect: 'never' },
+        route: { localeRedirect: 'never' },
       }),
     ).toBe('');
     expect(getInlineLocaleRedirectScript({ locales: config.locales })).toBe('');
