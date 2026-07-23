@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useState } from 'react';
+import { useStorageValue } from '../../logic/useStorageValue';
 
 const TTL_MS = 60 * 60 * 1000;
 
@@ -21,10 +22,8 @@ function parseRepo(content: string): string | null {
   }
 }
 
-function readCache(repo: string): Cached | null {
-  if (typeof localStorage === 'undefined') return null;
+function parseCache(raw: string | null): Cached | null {
   try {
-    const raw = localStorage.getItem(storageKey(repo));
     if (!raw) return null;
     const parsed = JSON.parse(raw) as Cached;
     if (
@@ -39,16 +38,8 @@ function readCache(repo: string): Cached | null {
   }
 }
 
-function writeCache(repo: string, count: number) {
-  if (typeof localStorage === 'undefined') return;
-  try {
-    localStorage.setItem(
-      storageKey(repo),
-      JSON.stringify({ count, fetchedAt: Date.now() }),
-    );
-  } catch {
-    // Storage may be full or disabled (private mode); ignore.
-  }
+function createCacheValue(count: number): string {
+  return JSON.stringify({ count, fetchedAt: Date.now() });
 }
 
 function formatCount(count: number): string {
@@ -70,14 +61,34 @@ export const GithubStars = (props: GithubStarsProps) => {
   const { content, icon } = props;
   const repo = parseRepo(content);
 
-  const [count, setCount] = useState<number | null>(() =>
-    repo ? (readCache(repo)?.count ?? null) : null,
+  const [rawCache, setRawCache] = useStorageValue<string | null>(
+    repo ? storageKey(repo) : '',
+    null,
   );
+  const [isMounted, setIsMounted] = useState(false);
+  const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!repo) return;
-    const cached = readCache(repo);
-    if (cached && Date.now() - cached.fetchedAt < TTL_MS) return;
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!repo) {
+      setCount(null);
+      return;
+    }
+
+    if (!isMounted) return;
+
+    const cached = parseCache(rawCache);
+    if (cached) {
+      setCount(cached.count);
+      if (Date.now() - cached.fetchedAt < TTL_MS) {
+        return;
+      }
+    } else {
+      setCount(null);
+    }
 
     let cancelled = false;
     fetch(`https://api.github.com/repos/${repo}`)
@@ -86,7 +97,11 @@ export const GithubStars = (props: GithubStarsProps) => {
         if (cancelled) return;
         if (typeof data?.stargazers_count === 'number') {
           setCount(data.stargazers_count);
-          writeCache(repo, data.stargazers_count);
+          try {
+            setRawCache(createCacheValue(data.stargazers_count));
+          } catch {
+            // Storage may be full or disabled (private mode); ignore.
+          }
         }
       })
       .catch(() => {
@@ -95,7 +110,7 @@ export const GithubStars = (props: GithubStarsProps) => {
     return () => {
       cancelled = true;
     };
-  }, [repo]);
+  }, [isMounted, rawCache, repo, setRawCache]);
 
   return (
     <a

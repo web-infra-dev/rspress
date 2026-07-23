@@ -4,6 +4,9 @@ import { pluginApiDocgen } from '@rspress/plugin-api-docgen';
 
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
+  route: {
+    localeRedirect: 'never',
+  },
   lang: 'en',
   plugins: [
     pluginApiDocgen({

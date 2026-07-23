@@ -111,8 +111,12 @@ export async function emitLlmsTxt(
       navList,
       config.title,
       config.description,
-      config.base!,
+      base,
+      config.siteOrigin,
       routeService,
+      lang,
+      version,
+      typeof config.llms === 'object' ? config.llms.llmsTxt : undefined,
     );
 
     const llmsFullTxtContent = generateLlmsFullTxt(
@@ -120,6 +124,7 @@ export async function emitLlmsTxt(
       navList,
       others,
       base,
+      config.siteOrigin,
       mdContents,
     );
 

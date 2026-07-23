@@ -1,40 +1,34 @@
-import type { ReactNode } from 'react';
 import type { LocaleConfig } from './locale';
 import type { NavItem } from './nav';
 import type { NormalizedSidebar, Sidebar } from './sidebar';
 import type { SocialLink } from './socialLink';
 
 /**
- * Option item for LlmsViewOptions component.
+ * Built-in option item for LlmsViewOptions configured through
+ * `rspress.config.ts`.
  */
-export type LlmsViewOption =
-  | 'markdownLink'
-  | 'chatgpt'
-  | 'claude'
-  | {
-      title: string;
-      icon?: ReactNode;
-      onClick?: () => void;
-    }
-  | {
-      title: string;
-      href: string;
-      icon?: ReactNode;
-    };
+export type LlmsViewOption = 'markdownLink' | 'chatgpt' | 'claude';
 
 /**
- * Configuration for LLMS UI components displayed on H1 headers.
- * When enabled, LlmsCopyButton and LlmsViewOptions will be automatically
- * added below H1 headers without requiring custom getCustomMDXComponent.
+ * Configuration for LLMS UI components displayed below H1 headers or in the
+ * outline sidebar. When enabled, the copy and view options UI will be added
+ * automatically without requiring custom getCustomMDXComponent.
  * @default false
  */
 export type LlmsUI =
   | {
       /**
+       * Whether to inject a hidden hint into SSG HTML pages that points LLMs
+       * to llms.txt and llms-full.txt.
+       * @default true
+       */
+      injectLlmsHint?: boolean;
+      /**
        * Options for LlmsViewOptions component dropdown menu.
+       * Set to `false` or an empty array to hide the view options UI.
        * @default ['markdownLink', 'chatgpt', 'claude']
        */
-      viewOptions?: LlmsViewOption[];
+      viewOptions?: false | LlmsViewOption[];
       /**
        * Where to display the LLM UI components.
        * - 'title': Show as buttons below the H1 title (default)
@@ -154,7 +148,8 @@ export type ThemeConfig = {
    */
   enableScrollToTop?: boolean;
   /**
-   * Whether to redirect to the closest locale when the user visits the site
+   * Whether to redirect to the closest locale when the user visits the site.
+   * @deprecated Use `route.localeRedirect` instead.
    * @default 'auto'
    */
   localeRedirect?: 'auto' | 'never' | 'only-default-lang';
@@ -165,8 +160,8 @@ export type ThemeConfig = {
   fallbackHeadingTitle?: boolean;
   /**
    * LLMS UI components configuration.
-   * When llmsUI.enableOnH1 is true, LlmsCopyButton and LlmsViewOptions
-   * will be automatically added below H1 headers.
+   * When enabled, LlmsCopyButton and LlmsViewOptions will be automatically
+   * added below H1 headers or to the outline sidebar.
    */
   llmsUI?: LlmsUI;
 };

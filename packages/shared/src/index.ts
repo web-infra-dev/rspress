@@ -34,6 +34,7 @@ export {
   SEARCH_INDEX_NAME,
   slash,
   withBase,
+  withSiteOrigin,
   withoutLang,
 } from './runtime-utils/utils';
 export * from './types';

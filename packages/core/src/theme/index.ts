@@ -35,7 +35,9 @@ export {
   type LlmsContainerProps,
   LlmsCopyButton,
   type LlmsCopyButtonProps,
+  LlmsHiddenHint,
   LlmsViewOptions,
+  type LlmsViewOptionsItem,
   type LlmsViewOptionsProps,
   useMdUrl,
 } from './components/Llms/index';
@@ -125,7 +127,6 @@ export { getCopyableText } from './logic/getCopyableText';
 export { mergeRefs } from './logic/mergeRefs';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { usePrevNextPage } from './logic/usePrevNextPage';
-export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
 export { useScrollAfterNav } from './logic/useScrollAfterNav';
 export { useScrollReset } from './logic/useScrollReset';
 export { useSetup } from './logic/useSetup';

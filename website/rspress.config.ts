@@ -23,7 +23,7 @@ import pluginOg from 'rspress-plugin-og';
 
 // import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 
-const siteUrl = 'https://rspress.rs';
+const siteOrigin = 'https://rspress.rs';
 
 const commonRsdoctorConfig = {
   disableClientServer: true,
@@ -35,9 +35,23 @@ const commonRsdoctorConfig = {
   },
 };
 
+const getRsdoctorReportType = (environmentName?: string) => {
+  switch (environmentName) {
+    case 'node':
+      return 'html';
+    case 'node_md':
+      return 'md';
+    case 'web':
+      return 'js';
+    default:
+      return environmentName ?? 'unknown';
+  }
+};
+
 export default defineConfig({
   title: 'Rspress',
   description: 'Rsbuild based static site generator',
+  siteOrigin,
   lang: 'en',
   logo: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
   logoText: 'Rspress',
@@ -95,14 +109,14 @@ export default defineConfig({
     pluginTwoslash(),
     // pluginFontOpenSans(), // removed this line for Rspress preview
     pluginSitemap({
-      siteUrl,
+      siteUrl: siteOrigin,
     }),
     pluginAlgolia({
       verificationContent: '8F5BFE50E65777F1',
     }),
     pluginFileTree(),
     pluginOg({
-      domain: 'https://rspress.rs',
+      domain: siteOrigin,
       maxTitleSizePerLine: 28,
       async resvgOptions() {
         // fetch font files to og-fonts
@@ -141,7 +155,7 @@ export default defineConfig({
       pluginSass(),
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
       pluginOpenGraph({
-        url: siteUrl,
+        url: siteOrigin,
         description: 'Rsbuild based static site generator',
         twitter: {
           site: '@rspack_dev',
@@ -157,7 +171,7 @@ export default defineConfig({
               ...commonRsdoctorConfig,
               output: {
                 ...commonRsdoctorConfig.output,
-                reportDir: `./doc_build/diff-rsdoctor/${config.name}`,
+                reportDir: `./doc_build/diff-rsdoctor/website_${getRsdoctorReportType(config.name)}`,
               },
             }),
           );

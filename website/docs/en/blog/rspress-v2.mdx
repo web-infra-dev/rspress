@@ -28,7 +28,7 @@ Rspress 1.x already solved the compilation performance problem for documentation
 
 - **AI-native**: Documentation serves not only human readers but also needs to be better understood and used by Agents. Rspress now has built-in [llms.txt](https://llmstxt.org/) generation and the [**SSG-MD**](/guide/basic/ssg-md) capability derived from SSG, generating high-quality Markdown content for Agents to read.
 
-- **lazyCompilation, Instant Startup**: [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation) is enabled by default, combined with resource preloading on link hover, building only the required files when visiting specific routes, achieving **instant startup** regardless of project size.
+- **lazyCompilation, Instant Startup**: [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation) is enabled by default, combined with resource prefetching on link hover, building only the required files when visiting specific routes, achieving **instant startup** regardless of project size.
 
 - **Shiki Code Highlighting**: Shiki is integrated by default, completing **syntax highlighting at build time**, with support for theme switching and transformer extensions like [@rspress/plugin-twoslash](/plugin/official-plugins/twoslash), delivering richer code block display effects.
 
@@ -231,7 +231,7 @@ Rspress 2.0 is powered by Rsbuild and Rspack 2.0 prerelease, with [lazyCompilati
 
 #### lazyCompilation
 
-[dev.lazyCompilation](https://rsbuild.rs/config/dev/lazy-compilation) is enabled by default — pages are only compiled when you visit them, dramatically improving development startup speed and even achieving millisecond-level cold starts. Rspress also implements a route preload strategy that preloads target route pages when hovering over links, working together with lazyCompilation to provide a lossless development experience.
+[dev.lazyCompilation](https://rsbuild.rs/config/dev/lazy-compilation) is enabled by default — pages are only compiled when you visit them, dramatically improving development startup speed and even achieving millisecond-level cold starts. Rspress also implements a route prefetch strategy that prefetches target route pages when hovering over links, working together with lazyCompilation to provide a lossless development experience.
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img

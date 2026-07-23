@@ -54,6 +54,7 @@ export default defineConfig({
     llmsUI: true,
     // Or with custom options:
     // llmsUI: {
+    //   injectLlmsHint: false, // Disable the hidden hint for LLMs
     //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
     //   placement: 'outline', // Display in outline panel instead of below H1
     // },
@@ -367,7 +368,7 @@ interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 - **Type**: `LlmsViewOptionsProps`
 
 ```ts
-type Option =
+type LlmsViewOptionsItem =
   | {
       title: string;
       icon?: React.ReactNode;
@@ -383,16 +384,16 @@ type Option =
   | 'claude';
 
 interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  options?: Option[];
+  options?: LlmsViewOptionsItem[];
 }
 ```
 
 #### options
 
-- **Type**: `Option[]`
+- **Type**: `LlmsViewOptionsItem[]`
 
 ```ts
-type Option =
+type LlmsViewOptionsItem =
   | {
       title: string;
       icon?: React.ReactNode;

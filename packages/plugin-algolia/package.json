@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-algolia",
-  "version": "2.0.16",
+  "version": "2.0.18",
   "description": "A plugin for rspress to search with algolia in docs.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -43,9 +43,9 @@
     "@docsearch/react": "^4.6.3"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.58.9",
-    "@rsbuild/plugin-react": "~2.0.1",
-    "@rslib/core": "0.23.0",
+    "@microsoft/api-extractor": "^7.58.11",
+    "@rsbuild/plugin-react": "~2.1.0",
+    "@rslib/core": "1.0.0-beta.1",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.17",

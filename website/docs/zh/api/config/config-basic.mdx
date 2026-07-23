@@ -39,6 +39,28 @@ export default defineConfig({
 });
 ```
 
+## siteOrigin
+
+- **类型**： `string`
+- **默认值**： `""`
+
+站点的可选部署 origin，例如 `https://foo.github.io`。
+
+Rspress 在生成需要绝对 URL 的文件时会结合该值和 [`base`](#base)，例如 `llms.txt` 链接或插件输出。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。
+
+如果没有配置 `siteOrigin`，Rspress 会回退使用 `base + routePath`。
+
+如果你的站点部署到 `https://foo.github.io/bar/`，请将 `siteOrigin` 设置为 `"https://foo.github.io"`，并将 `base` 设置为 `"/bar/"`：
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://foo.github.io',
+  base: '/bar/',
+});
+```
+
 ## title
 
 - **类型**： `string`
@@ -383,10 +405,20 @@ export default defineConfig({
 
 ## llms
 
-- **类型**：`boolean | { remarkSplitMdxOptions?: RemarkSplitMdxOptions }`
+- **类型**：
+
+```ts
+boolean | {
+  llmsTxt?: (context: LlmsTxtContext) => string | Promise<string>;
+  remarkSplitMdxOptions?: RemarkSplitMdxOptions;
+}
+```
+
 - **默认值**：`false`
 
 是否开启 [SSG-MD](/guide/basic/ssg-md) 来生成 `llms.txt`、`llms-full.txt` 以及每个页面对应的 Markdown 文件，使你的文档更容易被大语言模型理解。
+
+可通过 `llmsTxt` 基于站点信息和页面分组编排完整的 `llms.txt` 内容。详见[自定义 llms.txt](/guide/basic/ssg-md#自定义-llmstxt)。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -663,6 +695,41 @@ export default defineConfig({
 });
 ```
 
+### route.localeRedirect
+
+- **类型**：`'auto' | 'never' | 'only-default-lang'`
+- **默认值**：`'auto'`
+
+控制如何根据 `window.navigator.language` 将首次访问的用户重定向到最匹配的已配置语言：
+
+- `auto`：从任意语言重定向到最匹配的已配置语言。
+- `never`：禁用自动语言重定向。
+- `only-default-lang`：仅在访问默认语言时重定向。
+
+:::tip 建议使用服务端重定向
+
+该选项在浏览器端执行重定向。生产环境中，如果条件允许，更推荐在服务器或 CDN 边缘完成语言协商与重定向。这样可以在 HTML 下发前完成跳转，并且不依赖客户端 JavaScript。
+
+:::
+
+:::warning 配置迁移
+
+`localeRedirect` 已从 `themeConfig` 移至 `route`。原有的 `themeConfig.localeRedirect` 仍会继续生效以保持向后兼容，但已废弃。请迁移至 `route.localeRedirect`；同时配置两者时，`route.localeRedirect` 优先生效。
+
+自动语言重定向现在也会在 hydration 前执行，因此首次访问的用户可能会在任何主题或客户端代码运行前被重定向。如果服务器或 CDN 已经处理了语言协商，或者站点必须保留用户最初请求的语言，请将 `route.localeRedirect` 设置为 `'never'`。
+
+:::
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    localeRedirect: 'never',
+  },
+});
+```
+
 ### route.useTransitions
 
 - **类型**： `boolean`
@@ -678,6 +745,31 @@ import { defineConfig } from '@rspress/core';
 export default defineConfig({
   route: {
     useTransitions: false,
+  },
+});
+```
+
+### route.prefetchLink
+
+- **类型**： `boolean`
+- **默认值**： `true`
+
+默认情况下，Rspress 的 `Link` 组件会在用户 hover 链接时，预请求对应内部路由的资源；在 touch 设备上也会触发同样的行为。这是一个性能优化手段。将该配置设置为 `false` 可禁用这一行为。
+
+:::tip
+
+在开发环境下，链接预取会和 Rspress 默认开启的 [`dev.lazyCompilation`](https://rsbuild.rs/zh/config/dev/lazy-compilation) 配合使用。按需编译让页面只在被访问时才编译，从而提升启动速度；链接预取则会在 hover 时提前启动目标路由编译，减少首次打开目标路由时的等待。
+
+:::
+
+示例：
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    prefetchLink: false,
   },
 });
 ```

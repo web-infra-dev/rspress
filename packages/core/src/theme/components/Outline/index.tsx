@@ -33,7 +33,7 @@ export function Outline() {
       <div className="rp-outline__divider" />
       <div className="rp-outline__bottom">
         <EditLink isOutline />
-        {process.env.ENABLE_LLMS_UI && placement === 'outline' && (
+        {import.meta.env.ENABLE_LLMS_UI && placement === 'outline' && (
           <>
             <LlmsCopyRow />
             <LlmsOpenRow />

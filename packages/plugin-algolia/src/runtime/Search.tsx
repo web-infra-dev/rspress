@@ -1,7 +1,7 @@
 import type { DocSearchProps } from '@docsearch/react';
 import { DocSearch } from '@docsearch/react';
-import { removeBase, useLang, useNavigate } from '@rspress/core/runtime';
-import { Link } from '@rspress/core/theme';
+import { removeBase, useLang } from '@rspress/core/runtime';
+import { Link, useLinkNavigate } from '@rspress/core/theme';
 import '@docsearch/css';
 import './Search.css';
 import { useEffect } from 'react';
@@ -30,17 +30,15 @@ type SearchProps = {
 };
 
 function Search({ locales = {}, docSearchProps }: SearchProps) {
-  const navigate = useNavigate();
+  const navigate = useLinkNavigate();
 
   const lang = useLang();
   const { translations, placeholder } = locales?.[lang] ?? {};
 
   const appId = docSearchProps.appId;
   if (appId) {
-    const algoliaUrl = `https://${appId}-dsn.algolia.net`;
-
     if (typeof safePreconnect === 'function') {
-      safePreconnect(algoliaUrl, { crossOrigin: '' });
+      safePreconnect(`https://${appId}-dsn.algolia.net`, { crossOrigin: '' });
     }
   }
 
@@ -51,11 +49,10 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
       return;
     }
 
-    const algoliaUrl = `https://${appId}-dsn.algolia.net`;
     const preconnect = document.createElement('link');
     preconnect.id = appId;
     preconnect.rel = 'preconnect';
-    preconnect.href = algoliaUrl;
+    preconnect.href = `https://${appId}-dsn.algolia.net`;
     preconnect.crossOrigin = '';
     document.head.appendChild(preconnect);
     return () => {

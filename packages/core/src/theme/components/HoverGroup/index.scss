@@ -46,6 +46,15 @@
       visibility 0s linear 0.3s;
   }
 
+  // Keep navigation dropdowns usable before React hydration.
+  .rp-nav-menu__item:hover > &--hidden,
+  .rp-nav-hamburger:hover > &--hidden {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease-in-out;
+  }
+
   &__item {
     height: 32px;
     flex: 1;

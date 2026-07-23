@@ -96,8 +96,89 @@ interface RemarkSplitMdxOptions {
 }
 // #endregion
 
+export interface LlmsTxtPage {
+  /**
+   * The route path of the page.
+   */
+  routePath: string;
+  /**
+   * The URL of the generated Markdown file.
+   */
+  link: string;
+  /**
+   * The title of the page.
+   */
+  title: string;
+  /**
+   * The description of the page.
+   */
+  description?: string;
+  /**
+   * The frontmatter of the page.
+   */
+  frontmatter: FrontMatterMeta;
+  /**
+   * The language of the page.
+   */
+  lang: string;
+  /**
+   * The version of the page.
+   */
+  version: string;
+}
+
+export interface LlmsTxtSection {
+  /**
+   * The title of the section, derived from navigation.
+   */
+  title: string;
+  /**
+   * Pages in navigation and sidebar order.
+   */
+  pages: LlmsTxtPage[];
+}
+
+export interface LlmsTxtContext {
+  /**
+   * The site title.
+   */
+  title: string | undefined;
+  /**
+   * The site description.
+   */
+  description: string | undefined;
+  /**
+   * The language of the generated llms.txt.
+   */
+  lang: string;
+  /**
+   * The version of the generated llms.txt.
+   */
+  version: string;
+  /**
+   * The configured base path.
+   */
+  base: string;
+  /**
+   * The configured site origin.
+   */
+  siteOrigin: string | undefined;
+  /**
+   * Page sections in navigation order.
+   */
+  sections: LlmsTxtSection[];
+}
+
+export type LlmsTxtRenderer = (
+  context: LlmsTxtContext,
+) => string | Promise<string>;
+
 export interface RouteMeta {
   routePath: string;
+  /**
+   * Route path without language and version prefixes.
+   */
+  pureRoutePath: string;
   absolutePath: string;
   relativePath: string;
   pageName: string;
@@ -151,6 +232,10 @@ export interface UserConfig {
    * @default '/'
    */
   base?: string;
+  /**
+   * Origin of the site, such as `https://example.com`.
+   */
+  siteOrigin?: string;
   /**
    * Path to html icon file.
    * @default ''
@@ -277,6 +362,11 @@ export interface UserConfig {
     | boolean
     | {
         /**
+         * Customize the content of generated llms.txt files.
+         * @experimental
+         */
+        llmsTxt?: LlmsTxtRenderer;
+        /**
          * @experimental
          */
         remarkSplitMdxOptions?: RemarkSplitMdxOptions;
@@ -354,6 +444,7 @@ export interface PageDataLegacy {
 
 export interface SiteData {
   base: string;
+  siteOrigin: string;
   lang: string;
   route: RouteOptions;
   locales: { lang: string; label: string }[];
@@ -504,11 +595,23 @@ export interface RouteOptions {
    */
   cleanUrls?: boolean;
   /**
+   * How to redirect first-time visitors to the closest configured locale
+   * based on their browser language.
+   * @default 'auto'
+   */
+  localeRedirect?: 'auto' | 'never' | 'only-default-lang';
+  /**
    * Enable concurrent, optimized routing for internal links rendered by
    * Rspress' default Link component.
    * @default true
    */
   useTransitions?: boolean;
+  /**
+   * Whether to enable prefetching for matching internal routes from Rspress'
+   * default Link component.
+   * @default true
+   */
+  prefetchLink?: boolean;
 }
 
 export interface SearchHooks {

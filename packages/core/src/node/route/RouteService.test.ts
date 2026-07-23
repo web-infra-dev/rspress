@@ -36,6 +36,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
             "lang": "",
             "pageName": "a",
+            "pureRoutePath": "/a",
             "relativePath": "a.mdx",
             "routePath": "/a",
             "version": "",
@@ -47,6 +48,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx",
             "lang": "",
             "pageName": "guide___e",
+            "pureRoutePath": "/guide/__e",
             "relativePath": "guide/__e.mdx",
             "routePath": "/guide/__e",
             "version": "",
@@ -58,6 +60,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
             "lang": "",
             "pageName": "guide_b",
+            "pureRoutePath": "/guide/b",
             "relativePath": "guide/b.mdx",
             "routePath": "/guide/b",
             "version": "",
@@ -69,6 +72,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
             "lang": "",
             "pageName": "guide_c",
+            "pureRoutePath": "/guide/c",
             "relativePath": "guide/c.tsx",
             "routePath": "/guide/c",
             "version": "",
@@ -80,6 +84,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md",
             "lang": "",
             "pageName": "guide_index",
+            "pureRoutePath": "/guide/",
             "relativePath": "guide/index.md",
             "routePath": "/guide/",
             "version": "",
@@ -91,6 +96,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
             "lang": "",
             "pageName": "index",
+            "pureRoutePath": "/",
             "relativePath": "index.mdx",
             "routePath": "/",
             "version": "",
@@ -103,36 +109,42 @@ describe('RouteService', async () => {
       "
       import React from 'react';
       import { lazyWithPreload } from "react-lazy-with-preload";
-      const Route0 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx'))
-      const Route1 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx'))
-      const Route2 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx'))
-      const Route3 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx'))
-      const Route4 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md'))
-      const Route5 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx'))
+      const loadRoute0 = () => import(/* webpackChunkName: "route-ba710f8e4eb0" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx')
+      const Route0 = lazyWithPreload(loadRoute0)
+      const loadRoute1 = () => import(/* webpackChunkName: "route-fe0b57ce1b4b" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx')
+      const Route1 = lazyWithPreload(loadRoute1)
+      const loadRoute2 = () => import(/* webpackChunkName: "route-8d52f920922f" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx')
+      const Route2 = lazyWithPreload(loadRoute2)
+      const loadRoute3 = () => import(/* webpackChunkName: "route-c8c47885cd1b" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx')
+      const Route3 = lazyWithPreload(loadRoute3)
+      const loadRoute4 = () => import(/* webpackChunkName: "route-f507d3f43b22" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md')
+      const Route4 = lazyWithPreload(loadRoute4)
+      const loadRoute5 = () => import(/* webpackChunkName: "route-2308615ee227" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx')
+      const Route5 = lazyWithPreload(loadRoute5)
       export const routes = [
       { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
               await Route0.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx");
+              return loadRoute0();
             }, lang: '', version: '' },
       { path: '/guide/__e', element: React.createElement(Route1), filePath: 'guide/__e.mdx', preload: async () => {
               await Route1.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx");
+              return loadRoute1();
             }, lang: '', version: '' },
       { path: '/guide/b', element: React.createElement(Route2), filePath: 'guide/b.mdx', preload: async () => {
               await Route2.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx");
+              return loadRoute2();
             }, lang: '', version: '' },
       { path: '/guide/c', element: React.createElement(Route3), filePath: 'guide/c.tsx', preload: async () => {
               await Route3.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx");
+              return loadRoute3();
             }, lang: '', version: '' },
       { path: '/guide/', element: React.createElement(Route4), filePath: 'guide/index.md', preload: async () => {
               await Route4.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md");
+              return loadRoute4();
             }, lang: '', version: '' },
       { path: '/', element: React.createElement(Route5), filePath: 'index.mdx', preload: async () => {
               await Route5.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
+              return loadRoute5();
             }, lang: '', version: '' }
       ];
       "
@@ -178,6 +190,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
             "lang": "",
             "pageName": "a",
+            "pureRoutePath": "/a",
             "relativePath": "a.mdx",
             "routePath": "/a",
             "version": "",
@@ -189,6 +202,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx",
             "lang": "",
             "pageName": "guide___e",
+            "pureRoutePath": "/guide/__e",
             "relativePath": "guide/__e.mdx",
             "routePath": "/guide/__e",
             "version": "",
@@ -200,6 +214,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx",
             "lang": "",
             "pageName": "guide_c",
+            "pureRoutePath": "/guide/c",
             "relativePath": "guide/c.tsx",
             "routePath": "/guide/c",
             "version": "",
@@ -211,6 +226,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md",
             "lang": "",
             "pageName": "guide_index",
+            "pureRoutePath": "/guide/",
             "relativePath": "guide/index.md",
             "routePath": "/guide/",
             "version": "",
@@ -222,6 +238,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
             "lang": "",
             "pageName": "index",
+            "pureRoutePath": "/",
             "relativePath": "index.mdx",
             "routePath": "/",
             "version": "",
@@ -233,31 +250,36 @@ describe('RouteService', async () => {
       "
       import React from 'react';
       import { lazyWithPreload } from "react-lazy-with-preload";
-      const Route0 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx'))
-      const Route1 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx'))
-      const Route2 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx'))
-      const Route3 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md'))
-      const Route4 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx'))
+      const loadRoute0 = () => import(/* webpackChunkName: "route-ba710f8e4eb0" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx')
+      const Route0 = lazyWithPreload(loadRoute0)
+      const loadRoute1 = () => import(/* webpackChunkName: "route-fe0b57ce1b4b" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx')
+      const Route1 = lazyWithPreload(loadRoute1)
+      const loadRoute2 = () => import(/* webpackChunkName: "route-c8c47885cd1b" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx')
+      const Route2 = lazyWithPreload(loadRoute2)
+      const loadRoute3 = () => import(/* webpackChunkName: "route-f507d3f43b22" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md')
+      const Route3 = lazyWithPreload(loadRoute3)
+      const loadRoute4 = () => import(/* webpackChunkName: "route-2308615ee227" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx')
+      const Route4 = lazyWithPreload(loadRoute4)
       export const routes = [
       { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
               await Route0.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx");
+              return loadRoute0();
             }, lang: '', version: '' },
       { path: '/guide/__e', element: React.createElement(Route1), filePath: 'guide/__e.mdx', preload: async () => {
               await Route1.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx");
+              return loadRoute1();
             }, lang: '', version: '' },
       { path: '/guide/c', element: React.createElement(Route2), filePath: 'guide/c.tsx', preload: async () => {
               await Route2.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/c.tsx");
+              return loadRoute2();
             }, lang: '', version: '' },
       { path: '/guide/', element: React.createElement(Route3), filePath: 'guide/index.md', preload: async () => {
               await Route3.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md");
+              return loadRoute3();
             }, lang: '', version: '' },
       { path: '/', element: React.createElement(Route4), filePath: 'index.mdx', preload: async () => {
               await Route4.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
+              return loadRoute4();
             }, lang: '', version: '' }
       ];
       "
@@ -278,6 +300,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx",
             "lang": "",
             "pageName": "a",
+            "pureRoutePath": "/a",
             "relativePath": "a.mdx",
             "routePath": "/a",
             "version": "",
@@ -289,6 +312,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx",
             "lang": "",
             "pageName": "guide___e",
+            "pureRoutePath": "/guide/__e",
             "relativePath": "guide/__e.mdx",
             "routePath": "/guide/__e",
             "version": "",
@@ -300,6 +324,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx",
             "lang": "",
             "pageName": "guide_b",
+            "pureRoutePath": "/guide/b",
             "relativePath": "guide/b.mdx",
             "routePath": "/guide/b",
             "version": "",
@@ -311,6 +336,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md",
             "lang": "",
             "pageName": "guide_index",
+            "pureRoutePath": "/guide/",
             "relativePath": "guide/index.md",
             "routePath": "/guide/",
             "version": "",
@@ -322,6 +348,7 @@ describe('RouteService', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx",
             "lang": "",
             "pageName": "index",
+            "pureRoutePath": "/",
             "relativePath": "index.mdx",
             "routePath": "/",
             "version": "",
@@ -333,31 +360,36 @@ describe('RouteService', async () => {
       "
       import React from 'react';
       import { lazyWithPreload } from "react-lazy-with-preload";
-      const Route0 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx'))
-      const Route1 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx'))
-      const Route2 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx'))
-      const Route3 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md'))
-      const Route4 = lazyWithPreload(() => import('<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx'))
+      const loadRoute0 = () => import(/* webpackChunkName: "route-ba710f8e4eb0" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx')
+      const Route0 = lazyWithPreload(loadRoute0)
+      const loadRoute1 = () => import(/* webpackChunkName: "route-fe0b57ce1b4b" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx')
+      const Route1 = lazyWithPreload(loadRoute1)
+      const loadRoute2 = () => import(/* webpackChunkName: "route-8d52f920922f" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx')
+      const Route2 = lazyWithPreload(loadRoute2)
+      const loadRoute3 = () => import(/* webpackChunkName: "route-f507d3f43b22" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md')
+      const Route3 = lazyWithPreload(loadRoute3)
+      const loadRoute4 = () => import(/* webpackChunkName: "route-2308615ee227" */ '<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx')
+      const Route4 = lazyWithPreload(loadRoute4)
       export const routes = [
       { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
               await Route0.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/a.mdx");
+              return loadRoute0();
             }, lang: '', version: '' },
       { path: '/guide/__e', element: React.createElement(Route1), filePath: 'guide/__e.mdx', preload: async () => {
               await Route1.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/__e.mdx");
+              return loadRoute1();
             }, lang: '', version: '' },
       { path: '/guide/b', element: React.createElement(Route2), filePath: 'guide/b.mdx', preload: async () => {
               await Route2.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/b.mdx");
+              return loadRoute2();
             }, lang: '', version: '' },
       { path: '/guide/', element: React.createElement(Route3), filePath: 'guide/index.md', preload: async () => {
               await Route3.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/guide/index.md");
+              return loadRoute3();
             }, lang: '', version: '' },
       { path: '/', element: React.createElement(Route4), filePath: 'index.mdx', preload: async () => {
               await Route4.preload();
-              return import("<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx");
+              return loadRoute4();
             }, lang: '', version: '' }
       ];
       "
@@ -395,6 +427,7 @@ describe('RouteService with i18n', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/en/guide/basic/install.mdx",
             "lang": "en",
             "pageName": "en_guide_basic_install",
+            "pureRoutePath": "/guide/basic/install",
             "relativePath": "en/guide/basic/install.mdx",
             "routePath": "/guide/basic/install",
             "version": "",
@@ -406,6 +439,7 @@ describe('RouteService with i18n', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/en/guide/basic/quick-start.mdx",
             "lang": "en",
             "pageName": "en_guide_basic_quick-start",
+            "pureRoutePath": "/guide/basic/quick-start",
             "relativePath": "en/guide/basic/quick-start.mdx",
             "routePath": "/guide/basic/quick-start",
             "version": "",
@@ -417,6 +451,7 @@ describe('RouteService with i18n', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/en/guide/index.mdx",
             "lang": "en",
             "pageName": "en_guide_index",
+            "pureRoutePath": "/guide/",
             "relativePath": "en/guide/index.mdx",
             "routePath": "/guide/",
             "version": "",
@@ -428,6 +463,7 @@ describe('RouteService with i18n', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/en/index.mdx",
             "lang": "en",
             "pageName": "en_index",
+            "pureRoutePath": "/",
             "relativePath": "en/index.mdx",
             "routePath": "/",
             "version": "",
@@ -439,6 +475,7 @@ describe('RouteService with i18n', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/zh/guide/basic/install.mdx",
             "lang": "zh",
             "pageName": "zh_guide_basic_install",
+            "pureRoutePath": "/guide/basic/install",
             "relativePath": "zh/guide/basic/install.mdx",
             "routePath": "/zh/guide/basic/install",
             "version": "",
@@ -450,6 +487,7 @@ describe('RouteService with i18n', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/zh/guide/basic/quick-start.mdx",
             "lang": "zh",
             "pageName": "zh_guide_basic_quick-start",
+            "pureRoutePath": "/guide/basic/quick-start",
             "relativePath": "zh/guide/basic/quick-start.mdx",
             "routePath": "/zh/guide/basic/quick-start",
             "version": "",
@@ -461,6 +499,7 @@ describe('RouteService with i18n', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/zh/guide/index.mdx",
             "lang": "zh",
             "pageName": "zh_guide_index",
+            "pureRoutePath": "/guide/",
             "relativePath": "zh/guide/index.mdx",
             "routePath": "/zh/guide/",
             "version": "",
@@ -472,6 +511,7 @@ describe('RouteService with i18n', async () => {
             "absolutePath": "<ROOT>/packages/core/src/node/route/fixtures/locales/zh/index.mdx",
             "lang": "zh",
             "pageName": "zh_index",
+            "pureRoutePath": "/",
             "relativePath": "zh/index.mdx",
             "routePath": "/zh/",
             "version": "",

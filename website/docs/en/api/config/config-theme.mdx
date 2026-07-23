@@ -530,18 +530,24 @@ export default defineConfig({
 });
 ```
 
-## localeRedirect
+## localeRedirect (deprecated)
 
 - **Type**: `'auto' | 'never' | 'only-default-lang'`
 - **Default**: `'auto'`
 
-Controls whether users are redirected to the locale closest to `window.navigator.language`. The default is `auto`, which redirects on the first visit. Set it to `never` to disable redirects, or `only-default-lang` to redirect only when the user visits the default locale. For example:
+Controls how first-time visitors are redirected to the closest configured locale based on `window.navigator.language`.
+
+:::warning Configuration moved
+
+This option has moved to [`route.localeRedirect`](./config-basic#routelocaleredirect). `themeConfig.localeRedirect` remains supported for backward compatibility, but is deprecated. Migrate the option to `route`; when both options are set, `route.localeRedirect` takes precedence.
+
+:::
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  themeConfig: {
+  route: {
     localeRedirect: 'never',
   },
 });
@@ -580,13 +586,8 @@ title: Document Title
 type LlmsUI =
   | boolean
   | {
-      viewOptions?: Array<
-        | 'markdownLink'
-        | 'chatgpt'
-        | 'claude'
-        | { title: string; icon?: React.ReactNode; onClick?: () => void }
-        | { title: string; href: string; icon?: React.ReactNode }
-      >;
+      injectLlmsHint?: boolean;
+      viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
       placement?: 'title' | 'outline';
     };
 ```
@@ -607,23 +608,49 @@ For example:
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  llms: true, // This will automatically enable llmsUI
+  llms: true,
   themeConfig: {
-    // llmsUI is automatically set to true when llms: true
-    // You can also explicitly configure it:
-    llmsUI: true,
-    // Or with custom options:
-    // llmsUI: {
-    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
-    //   placement: 'outline',
-    // },
+    llmsUI: {
+      injectLlmsHint: true,
+      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+      placement: 'outline',
+    },
+  },
+});
+```
+
+### injectLlmsHint
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+This option controls whether a hidden hint is injected into generated HTML pages. Assuming [`siteOrigin`](/api/config/config-basic#siteorigin) is `https://example.com`, the following content is injected into the `/guide/` page:
+
+{/* prettier-ignore */}
+```html
+<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/llms.txt for optimized Markdown documentation, or https://example.com/llms-full.txt for full documentation bundle. This page is also available as Markdown at https://example.com/guide/index.md</div>
+```
+
+The URLs automatically include the configured `siteOrigin` and [`base`](/api/config/config-basic#base). The page-specific Markdown URL is derived from the current route. Without `siteOrigin`, the URLs remain base-aware paths.
+
+Set `injectLlmsHint` to `false` to remove the hidden hint without disabling the visible LLMS UI components:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      injectLlmsHint: false,
+    },
   },
 });
 ```
 
 ### viewOptions
 
-- **Type**: `Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
+- **Type**: `false | Array<'markdownLink' | 'chatgpt' | 'claude'>`
 - **Default**: `['markdownLink', 'chatgpt', 'claude']`
 
 Options for the LlmsViewOptions dropdown menu. Built-in options include:
@@ -632,7 +659,7 @@ Options for the LlmsViewOptions dropdown menu. Built-in options include:
 - `'chatgpt'`: Open in ChatGPT
 - `'claude'`: Open in Claude
 
-You can also provide custom options with `title`, `href` or `onClick`, and optional `icon`.
+Set `viewOptions` to `false` or `[]` to hide the view options UI.
 
 ### placement
 

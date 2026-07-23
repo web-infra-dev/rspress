@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-sitemap",
-  "version": "2.0.16",
+  "version": "2.0.18",
   "description": "A plugin for rspress to generate sitemap.xml",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -29,8 +29,8 @@
     "reset": "rimraf ./**/node_modules"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.58.9",
-    "@rslib/core": "0.23.0",
+    "@microsoft/api-extractor": "^7.58.11",
+    "@rslib/core": "1.0.0-beta.1",
     "@rspress/config": "workspace:*",
     "rsbuild-plugin-publint": "^1.0.0"
   },

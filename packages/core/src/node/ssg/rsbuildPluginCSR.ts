@@ -1,14 +1,17 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import type { RouteService } from '../route/RouteService';
+import type { RouteChunkAssetsPlugin } from '../route/routeChunkAssets';
 import { renderCSRPages } from './renderPages';
 
 export const rsbuildPluginCSR = ({
   routeService,
   config,
+  routeChunkAssets,
 }: {
   routeService: RouteService;
   config: UserConfig;
+  routeChunkAssets: RouteChunkAssetsPlugin;
 }): RsbuildPlugin => ({
   name: 'rspress-inner-rsbuild-plugin-csr',
   async setup(api) {
@@ -42,7 +45,13 @@ export const rsbuildPluginCSR = ({
             }
           }
 
-          await renderCSRPages(routeService, config, htmlTemplate, emitAsset);
+          await renderCSRPages(
+            routeService,
+            config,
+            htmlTemplate,
+            emitAsset,
+            routeChunkAssets.getManifest(),
+          );
         },
       );
     });

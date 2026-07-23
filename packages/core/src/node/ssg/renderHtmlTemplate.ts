@@ -1,3 +1,4 @@
+import { posix } from 'node:path';
 import type { RouteMeta, UserConfig } from '@rspress/shared';
 
 import {
@@ -6,7 +7,10 @@ import {
   META_GENERATOR,
   RSPRESS_VERSION,
 } from '../constants';
+import type { RouteChunkAssetsManifest } from '../route/routeChunkAssets';
 import { createError } from '../utils';
+import type { AlternateLink } from './alternateLinks';
+import { routePath2HtmlFileName } from './htmlFile';
 
 async function renderConfigHead(
   head: UserConfig['head'],
@@ -34,7 +38,16 @@ export async function renderHtmlTemplate(
   head: UserConfig['head'],
   route: RouteMeta,
   appHtml: string = '',
+  alternateLinks: AlternateLink[] = [],
+  routeChunkAssets?: RouteChunkAssetsManifest,
 ) {
+  const alternateLinkTags = alternateLinks
+    .map(
+      ({ href, hrefLang }) =>
+        `<link ${renderAttrs({ rel: 'alternate', hreflang: hrefLang, href })}>`,
+    )
+    .join('');
+  const routePreloadLinks = renderRoutePreloadLinks(route, routeChunkAssets);
   const replacedHtmlTemplate = htmlTemplate
     // Don't use `string` as second param
     // To avoid some special characters transformed to the marker, such as `$&`, etc.
@@ -43,8 +56,46 @@ export async function renderHtmlTemplate(
       META_GENERATOR,
       () => `<meta name="generator" content="Rspress v${RSPRESS_VERSION}">`,
     )
-    .replace(HEAD_MARKER, [await renderConfigHead(head, route)].join(''));
+    .replace(
+      HEAD_MARKER,
+      [
+        routePreloadLinks,
+        await renderConfigHead(head, route),
+        alternateLinkTags,
+      ].join(''),
+    );
   return replacedHtmlTemplate;
+}
+
+function renderRoutePreloadLinks(
+  route: RouteMeta,
+  manifest?: RouteChunkAssetsManifest,
+): string {
+  if (!manifest) return '';
+
+  const assets = manifest.assets[route.routePath];
+  if (!assets) return '';
+
+  return assets
+    .map(asset => {
+      const href =
+        manifest.assetPrefix === 'auto'
+          ? posix.relative(
+              posix.dirname(routePath2HtmlFileName(route.routePath)),
+              asset,
+            )
+          : `${manifest.assetPrefix}${asset}`;
+      return `<link rel="preload" href="${escapeHtmlAttribute(href)}" as="script">`;
+    })
+    .join('');
+}
+
+function escapeHtmlAttribute(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 function renderAttrs(attrs: Record<string, string>): string {
@@ -57,7 +108,7 @@ function renderAttrs(attrs: Record<string, string>): string {
         `Invalid value for attribute ${key}:${JSON.stringify(value)}`,
       );
     })
-    .join('');
+    .join(' ');
 }
 
 function isRouteMeta(route: unknown): route is RouteMeta {

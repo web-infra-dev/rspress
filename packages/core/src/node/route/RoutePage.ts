@@ -47,10 +47,12 @@ export class RoutePage {
     const {
       routePath: normalizedPath,
       lang,
+      pureRoutePath,
       version,
     } = routeService.normalizeRoutePath(routePath);
     return {
       routePath: normalizedPath,
+      pureRoutePath,
       absolutePath: normalizePath(filepath),
       relativePath: absolutePathToRelativePath(filepath, docDir),
       pageName: getPageKey(routePath),
@@ -74,12 +76,13 @@ function absolutePathToRouteMeta(
 ): RouteMeta {
   const relativePath = absolutePathToRelativePath(absolutePath, docsDir);
 
-  const { lang, routePath, version } =
+  const { lang, pureRoutePath, routePath, version } =
     routeService.normalizeRoutePath(relativePath);
   return {
     pageName: getPageKey(relativePath),
     absolutePath,
     lang,
+    pureRoutePath,
     version,
     routePath,
     relativePath,

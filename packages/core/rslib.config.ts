@@ -9,6 +9,7 @@ import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const require = createRequire(import.meta.url);
+const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
 const tinypoolDistPath = path.join(
   path.dirname(require.resolve('tinypool/package.json')),
   'dist',
@@ -30,6 +31,7 @@ const COMMON_EXTERNALS = [
   '@types/react',
   '@rspress/core/runtime',
   '@rspress/core/theme',
+  '@rspress/core/theme-original',
   '@rspress/core/shiki-transformers',
   '@rspress/shared',
   // react
@@ -39,7 +41,7 @@ const COMMON_EXTERNALS = [
   'react-router-dom',
 ];
 
-// Keep import.meta.env.SSG_MD for the final Rspress app build to replace.
+// Keep internal import.meta.env flags for the final Rspress app build to replace.
 const PRESERVE_IMPORT_META_ENV = {
   'import.meta.env': 'import.meta.env',
 };
@@ -117,12 +119,7 @@ export default defineConfig({
     {
       bundle: false,
       dts: {
-        tsgo: true,
-      },
-      redirect: {
-        dts: {
-          extension: true,
-        },
+        typescriptPath,
       },
       plugins: [
         pluginReact(),

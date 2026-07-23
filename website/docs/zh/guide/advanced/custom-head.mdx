@@ -1,16 +1,18 @@
-# 自定义 Head 标签
+# 自定义 Head 标签 / SEO
 
 为网页增加 Head 标签（如 meta 标签）对于 SEO 优化和社交媒体分享非常重要。比如 [Open Graph](https://ogp.me/) 是一种网页元数据协议，用于控制页面在社交媒体平台上分享时的显示效果。
 
 目前 Rspress 会自动注入以下 Head 标签：
 
-| 标签                                                        | 描述                                                                 |
-| ----------------------------------------------------------- | -------------------------------------------------------------------- |
-| `<meta name="generator" content="Rspress v${version}">`     | 标识站点生成器及版本号                                               |
-| `<meta name="description" content="${description}">`        | 页面描述，参见下方 [description 的获取方式](#description-的获取方式) |
-| `<meta property="og:type" content="website">`               | Open Graph 类型，固定为 `website`                                    |
-| `<meta property="og:title" content="${title}">`             | Open Graph 标题，使用当前页面标题（如果存在）                        |
-| `<meta property="og:description" content="${description}">` | Open Graph 描述，同上                                                |
+| 标签                                                           | 描述                                                                 |
+| -------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `<meta name="generator" content="Rspress v${version}">`        | 标识站点生成器及版本号                                               |
+| `<meta name="description" content="${description}">`           | 页面描述，参见下方 [description 的获取方式](#description-的获取方式) |
+| `<meta property="og:type" content="website">`                  | Open Graph 类型，固定为 `website`                                    |
+| `<meta property="og:title" content="${title}">`                | Open Graph 标题，使用当前页面标题（如果存在）                        |
+| `<meta property="og:description" content="${description}">`    | Open Graph 描述，同上                                                |
+| `<link rel="alternate" hreflang="${lang}" href="${url}">`      | 多语言站点中当前页面的其它语言版本                                   |
+| `<link rel="preload" href="${currentRouteChunk}" as="script">` | 性能优化：预加载当前页面对应的异步路由 chunk                         |
 
 ## description 的获取方式
 
@@ -56,6 +58,17 @@ head:
   - - meta
     - property: og:description
       content: This is description
+---
+```
+
+你也可以使用相同的配置添加 `<meta name="keywords">` 标签：
+
+```md title="example.mdx"
+---
+head:
+  - - meta
+    - name: keywords
+      content: Rspress, React, static site generator
 ---
 ```
 

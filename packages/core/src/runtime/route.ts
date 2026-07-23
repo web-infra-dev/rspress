@@ -1,6 +1,7 @@
 import type { Route } from '@rspress/shared';
 import { cleanUrl } from '@rspress/shared';
 import { routes } from 'virtual-routes';
+import siteData from 'virtual-site-data';
 
 /**
  * Normalize route path by:
@@ -132,7 +133,17 @@ export function isActive(itemLink: string, currentPathname: string): boolean {
   return linkMatched !== null;
 }
 
+// The public config uses "prefetch" to match Link API naming in frameworks
+// like Next.js and Nuxt:
+// https://github.com/vercel/next.js/blob/b4b909bc9b6faa05cb4982e7fe516a89fd0e10d0/packages/next/src/client/components/app-router-instance.ts#L392-L438
+// https://github.com/nuxt/nuxt/blob/252d77ed4f3255c5a818d3ff38f2234777716246/packages/nuxt/src/app/components/nuxt-link.ts#L410-L426
+// Internally this helper keeps "preload" because it triggers Route.preload(),
+// which dynamically loads the target page chunk.
 export const preloadLink = (link: string) => {
+  if (siteData?.route?.prefetchLink === false) {
+    return;
+  }
+
   const route = pathnameToRouteService(link);
   if (route) {
     route.preload();

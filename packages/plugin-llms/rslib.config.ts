@@ -1,13 +1,16 @@
+import { fileURLToPath } from 'node:url';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
+
+const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
 
 export default defineConfig({
   plugins: [pluginPublint()],
   lib: [
     {
       dts: {
-        tsgo: true,
+        typescriptPath,
         bundle: true,
       },
       source: {
@@ -30,7 +33,7 @@ export default defineConfig({
     },
     {
       dts: {
-        tsgo: true,
+        typescriptPath,
         bundle: true,
       },
       source: {
