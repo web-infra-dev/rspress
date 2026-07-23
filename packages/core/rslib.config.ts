@@ -9,6 +9,7 @@ import { defineConfig } from '@rslib/core';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const require = createRequire(import.meta.url);
+const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
 const tinypoolDistPath = path.join(
   path.dirname(require.resolve('tinypool/package.json')),
   'dist',
@@ -118,12 +119,7 @@ export default defineConfig({
     {
       bundle: false,
       dts: {
-        tsgo: true,
-      },
-      redirect: {
-        dts: {
-          extension: true,
-        },
+        typescriptPath,
       },
       plugins: [
         pluginReact(),

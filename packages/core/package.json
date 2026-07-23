@@ -106,7 +106,7 @@
     "@microsoft/api-extractor": "^7.58.11",
     "@rsbuild/plugin-sass": "~1.5.3",
     "@rsbuild/plugin-svgr": "^2.0.5",
-    "@rslib/core": "0.23.2",
+    "@rslib/core": "1.0.0-beta.1",
     "@rspress/config": "workspace:*",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "^3.0.5",
