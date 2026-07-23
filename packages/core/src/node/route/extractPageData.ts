@@ -10,6 +10,7 @@ import {
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import type { Node, Nodes, Root } from 'mdast';
 import remarkGFM from 'remark-gfm';
+import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import type { Plugin } from 'unified';
 import { unified } from 'unified';
@@ -77,12 +78,15 @@ const remarkRemoveImages: Plugin<[], Root> = () => {
 const createProcessor = (searchCodeBlocks: boolean) =>
   unified()
     .use(remarkParse)
+    .use(remarkMdx)
     .use(remarkGFM)
     .use(remarkRemoveImages)
     .use(searchCodeBlocks ? [] : [remarkRemoveCodeBlocks]);
 
 const processorWithCode = createProcessor(true);
 const processorWithoutCode = createProcessor(false);
+
+const MDX_TEXT_EXPRESSION_PLACEHOLDER = '\0';
 
 /**
  * Extract text content from a node recursively
@@ -108,10 +112,7 @@ const SEARCH_SKIP_TYPES = new Set([
   'footnoteReference',
   'html',
   'thematicBreak',
-  'mdxJsxFlowElement',
-  'mdxJsxTextElement',
   'mdxFlowExpression',
-  'mdxTextExpression',
   'mdxjsEsm',
 ]);
 
@@ -130,6 +131,11 @@ const SEARCH_BLOCK_TYPES = new Set([
  */
 function extractSearchText(node: Nodes, codeblocks: boolean): Array<string> {
   const { type } = node;
+
+  // Keep a placeholder so only whitespace around removed inline expressions is normalized later.
+  if (type === 'mdxTextExpression') {
+    return [MDX_TEXT_EXPRESSION_PLACEHOLDER];
+  }
 
   // Return an empty string for any kind of "non-content" node
   if (SEARCH_SKIP_TYPES.has(type)) {
@@ -202,6 +208,8 @@ function buildSearchContent(
       .join('')
       // \t\n replace so we don't have trailing whitespace on table rows that aren't at the end of the text
       .replaceAll('\t\n', '\n')
+      // Replace only removed inline MDX expressions and their surrounding spaces.
+      .replaceAll(/(?: *\0 *)+/g, ' ')
       .trim();
     if (!text) {
       continue;
