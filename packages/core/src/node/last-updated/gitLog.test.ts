@@ -14,14 +14,16 @@ import { pluginLastUpdated } from './index';
 describe('pluginLastUpdated against a real repository', () => {
   let repo: string;
 
-  const commit = (message: string, date: string) =>
+  const git = (args: string[]) => execa('git', args, { cwd: repo });
+
+  const commit = (message: string, date: string, author = 'Alice') =>
     execa(
       'git',
       [
         '-c',
-        'user.name=Alice',
+        `user.name=${author}`,
         '-c',
-        'user.email=alice@test',
+        `user.email=${author.toLowerCase()}@test`,
         'commit',
         '-m',
         message,
@@ -33,12 +35,12 @@ describe('pluginLastUpdated against a real repository', () => {
     const filePath = path.join(repo, relativePath);
     await fs.mkdir(path.dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, content);
-    await execa('git', ['add', relativePath], { cwd: repo });
+    await git(['add', relativePath]);
   };
 
   beforeAll(async () => {
     repo = await fs.mkdtemp(path.join(os.tmpdir(), 'rspress-last-updated-'));
-    await execa('git', ['init', '-q', '--initial-branch=main'], { cwd: repo });
+    await git(['init', '-q', '--initial-branch=main']);
 
     await write('docs/index.mdx', 'first');
     await write('docs/guide/legacy.mdx', 'first');
@@ -46,6 +48,21 @@ describe('pluginLastUpdated against a real repository', () => {
 
     await write('docs/index.mdx', 'second');
     await commit('second', '2021-06-07T08:09:10Z');
+
+    // A branch conflicting with main on `index.mdx` and cleanly adding
+    // `clean.mdx`, so the merge commit resolves the conflict by hand.
+    await git(['checkout', '-qb', 'side']);
+    await write('docs/index.mdx', 'side');
+    await write('docs/clean.mdx', 'clean');
+    await commit('side', '2022-01-02T03:04:05Z', 'Bob');
+    await git(['checkout', '-q', 'main']);
+    await write('docs/index.mdx', 'trunk');
+    await commit('trunk', '2022-03-04T05:06:07Z');
+    await git(['merge', 'side']).catch(() => {
+      // The conflict on `index.mdx` is expected.
+    });
+    await write('docs/index.mdx', 'merged');
+    await commit('merge side', '2023-05-06T07:08:09Z', 'Merle');
   });
 
   afterAll(async () => {
@@ -56,6 +73,7 @@ describe('pluginLastUpdated against a real repository', () => {
     const pages = [
       'docs/index.mdx',
       'docs/guide/legacy.mdx',
+      'docs/clean.mdx',
       'docs/new.mdx',
     ].map(
       relativePath =>
@@ -71,19 +89,27 @@ describe('pluginLastUpdated against a real repository', () => {
     );
     await Promise.all(pages.map(page => plugin.extendPageData?.(page, true)));
 
-    const [index, legacy, uncommitted] = pages as (PageIndexInfo & {
+    const [index, legacy, clean, uncommitted] = pages as (PageIndexInfo & {
       lastUpdatedTime?: string;
       lastUpdatedAuthor?: string;
     })[];
 
-    // The newest commit touching the file wins, not the newest commit overall.
+    // The conflict resolution touched `index.mdx`, so the merge commit is its
+    // last update, exactly as `git log -1 -- <file>` reports it.
     expect(index.lastUpdatedTime).toBe(
-      new Date('2021-06-07T08:09:10Z').toLocaleString('en'),
+      new Date('2023-05-06T07:08:09Z').toLocaleString('en'),
     );
+    expect(index.lastUpdatedAuthor).toBe('Merle');
+    // A file merged without conflict keeps its own branch commit.
+    expect(clean.lastUpdatedTime).toBe(
+      new Date('2022-01-02T03:04:05Z').toLocaleString('en'),
+    );
+    expect(clean.lastUpdatedAuthor).toBe('Bob');
+    // The newest commit touching the file wins, not the newest commit overall.
     expect(legacy.lastUpdatedTime).toBe(
       new Date('2020-01-02T03:04:05Z').toLocaleString('en'),
     );
-    expect(index.lastUpdatedAuthor).toBe('Alice');
+    expect(legacy.lastUpdatedAuthor).toBe('Alice');
     // A page that was never committed keeps no last updated information.
     expect(uncommitted.lastUpdatedTime).toBeUndefined();
   });

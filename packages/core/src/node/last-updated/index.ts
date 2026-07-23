@@ -69,11 +69,65 @@ function getCommonDir(filePaths: string[]): string {
     }
     common = common.slice(0, i);
   }
-  return common.join(path.sep) || path.sep;
+  // A collapsed prefix is the filesystem root, spelled `C:\` and not `C:` on
+  // Windows so it stays usable as a `cwd`.
+  return common.length > 1
+    ? common.join(path.sep)
+    : path.parse(filePaths[0]).root;
+}
+
+/**
+ * The directory holding the largest number of files, which is inside the git
+ * repository even when stray pages have pushed the common directory out of it.
+ */
+function getMostCommonParent(filePaths: string[]): string {
+  const counts = new Map<string, number>();
+  let best = '';
+  let bestCount = 0;
+  for (const filePath of filePaths) {
+    const dir = path.dirname(filePath);
+    const count = (counts.get(dir) ?? 0) + 1;
+    counts.set(dir, count);
+    if (count > bestCount) {
+      best = dir;
+      bestCount = count;
+    }
+  }
+  return best;
+}
+
+/**
+ * Where `dir` sits inside its repository, as `docs/guide/` — or `undefined`
+ * outside of any repository. Unlike `--show-toplevel` the prefix contains no
+ * absolute path, so it cannot disagree with the caller about symlinks.
+ */
+async function getRepoPrefix(dir: string): Promise<string | undefined> {
+  try {
+    const { stdout } = await execa('git', ['rev-parse', '--show-prefix'], {
+      cwd: dir,
+    });
+    return stdout.trim();
+  } catch (_e) {
+    return undefined;
+  }
+}
+
+/**
+ * `dir` with the final `prefix` segments removed: the repository root spelled
+ * the way the caller spells `dir`.
+ */
+function stripPrefix(dir: string, prefix: string): string {
+  let root = dir;
+  for (let i = prefix.split('/').filter(Boolean).length; i > 0; i--) {
+    root = path.dirname(root);
+  }
+  return root;
 }
 
 /**
  * Read the last commit of every file below `dir` with a single `git` process.
+ * The returned map is keyed by path relative to the repository root — the form
+ * git prints throughout, `--relative` being ignored by `--cc` output.
  */
 async function collectGitInfo(dir: string): Promise<Map<string, GitInfo>> {
   const infoByPath = new Map<string, GitInfo>();
@@ -88,10 +142,12 @@ async function collectGitInfo(dir: string): Promise<Map<string, GitInfo>> {
         'log',
         COMMIT_FORMAT,
         '--name-only',
+        // A merge commit only lists the files its conflict resolution touched,
+        // which are the ones `git log -1 -- <file>` attributes to the merge.
+        '--cc',
         // Only the touched paths matter, similarity detection is wasted work.
         '--no-renames',
-        // Print paths relative to `dir` and skip everything outside of it.
-        '--relative',
+        // Skip commits not touching anything below `dir`.
         '--',
         '.',
       ],
@@ -129,9 +185,25 @@ async function createLookup(filePaths: string[]): Promise<GitInfoLookup> {
   if (!filePaths.length) {
     return () => undefined;
   }
-  const dir = getCommonDir(filePaths);
+  let dir = getCommonDir(filePaths);
+  let prefix = await getRepoPrefix(dir);
+  if (prefix === undefined) {
+    // `addPages` may contribute pages living outside of the repository, moving
+    // the common directory above it. Retry from the repository holding the
+    // bulk of the pages, walking it from its root.
+    const candidate = getMostCommonParent(filePaths);
+    const candidatePrefix = await getRepoPrefix(candidate);
+    if (candidatePrefix === undefined) {
+      return () => undefined;
+    }
+    dir = stripPrefix(candidate, candidatePrefix);
+    prefix = '';
+  }
+  const repoPrefix = prefix;
+  const scope = dir;
   const infoByPath = await collectGitInfo(dir);
-  return filePath => infoByPath.get(slash(path.relative(dir, filePath)));
+  return filePath =>
+    infoByPath.get(repoPrefix + slash(path.relative(scope, filePath)));
 }
 
 /**
