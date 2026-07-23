@@ -6,7 +6,8 @@ import { pluginLastUpdated } from './index';
 
 rs.mock('execa', () => {
   // A commit as printed by `--pretty=format:%x00%at%x00%an%x00%ae --name-only`,
-  // commits being separated by an empty line.
+  // commits being separated by an empty line and paths being relative to the
+  // repository root.
   const commit = (at: number, name: string, email: string, files: string[]) => [
     `\u0000${at}\u0000${name}\u0000${email}`,
     ...files,
@@ -14,13 +15,20 @@ rs.mock('execa', () => {
   ];
   const stdout = [
     ...commit(100, 'Alice', 'alice@example.com', [
-      'index.mdx',
-      'guide/nested.mdx',
+      'docs/index.mdx',
+      'docs/guide/nested.mdx',
     ]),
-    ...commit(50, 'Bob', 'bob@example.com', ['index.mdx', 'guide/legacy.mdx']),
+    ...commit(50, 'Bob', 'bob@example.com', [
+      'docs/index.mdx',
+      'docs/guide/legacy.mdx',
+    ]),
   ].join('\n');
 
-  return { execa: rs.fn(async () => ({ stdout })) };
+  return {
+    execa: rs.fn(async (_file: string, args: string[]) =>
+      args[0] === 'rev-parse' ? { stdout: 'docs/\n' } : { stdout },
+    ),
+  };
 });
 
 const DOC_ROOT = path.join(process.cwd(), 'docs');
@@ -89,7 +97,14 @@ describe('pluginLastUpdated', () => {
   it('should read the git log of the doc directory in one pass', async () => {
     await extendPages(pluginLastUpdated(), [pageData()]);
 
-    expect(execa).toHaveBeenCalledWith(
+    expect(execa).toHaveBeenNthCalledWith(
+      1,
+      'git',
+      ['rev-parse', '--show-prefix'],
+      { cwd: DOC_ROOT },
+    );
+    expect(execa).toHaveBeenNthCalledWith(
+      2,
       'git',
       [
         '-c',
@@ -97,8 +112,8 @@ describe('pluginLastUpdated', () => {
         'log',
         '--pretty=format:%x00%at%x00%an%x00%ae',
         '--name-only',
+        '--cc',
         '--no-renames',
-        '--relative',
         '--',
         '.',
       ],
@@ -106,7 +121,7 @@ describe('pluginLastUpdated', () => {
     );
   });
 
-  it('should spawn a single git process whatever the page count is', async () => {
+  it('should spawn a fixed number of git processes whatever the page count is', async () => {
     const pages = [
       pageData('guide/nested.mdx'),
       ...Array.from({ length: 100 }, (_, i) => pageData(`page-${i}.mdx`)),
@@ -114,7 +129,8 @@ describe('pluginLastUpdated', () => {
 
     await extendPages(pluginLastUpdated(true), pages);
 
-    expect(execa).toHaveBeenCalledTimes(1);
+    // One `rev-parse` for the repository root and one `log` for the site.
+    expect(execa).toHaveBeenCalledTimes(2);
     // The pages are still resolved from that single git log.
     expect(pages[0].lastUpdatedAuthor).toBe('Alice');
   });
@@ -134,6 +150,39 @@ describe('pluginLastUpdated', () => {
       new Date(50000).toLocaleString('en'),
     );
     expect(updatedOnce.lastUpdatedAuthor).toBe('Bob');
+  });
+
+  it('should fall back to the repository root when the common directory is outside of it', async () => {
+    const mocked = execa as unknown as ReturnType<typeof rs.fn>;
+    // The common directory of the pages is `/`, outside of any repository.
+    mocked.mockRejectedValueOnce(new Error('fatal: not a git repository'));
+    const inRepo = pageData();
+    const outsideRepo = {
+      _filepath: path.parse(DOC_ROOT).root + 'external.mdx',
+      lang: 'en',
+    } as TestPageIndexInfo;
+
+    await extendPages(pluginLastUpdated(true), [inRepo, outsideRepo]);
+
+    expect(execa).toHaveBeenCalledTimes(3);
+    // The retried `rev-parse` runs from the directory holding the most pages,
+    // and the log walks the repository it found.
+    expect(execa).toHaveBeenNthCalledWith(
+      2,
+      'git',
+      ['rev-parse', '--show-prefix'],
+      { cwd: DOC_ROOT },
+    );
+    expect(execa).toHaveBeenNthCalledWith(
+      3,
+      'git',
+      expect.arrayContaining(['log']),
+      {
+        cwd: process.cwd(),
+      },
+    );
+    expect(inRepo.lastUpdatedAuthor).toBe('Alice');
+    expect(outsideRepo.lastUpdatedTime).toBeUndefined();
   });
 
   it('should leave pages without any commit untouched', async () => {
