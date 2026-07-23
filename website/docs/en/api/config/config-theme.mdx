@@ -624,16 +624,27 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `true`
 
-This option controls whether a hidden hint is injected into generated HTML pages. Assuming [`siteOrigin`](/api/config/config-basic#siteorigin) is `https://example.com`, the following content is injected into the `/guide/` page:
+This option controls whether an LLM directive hint is injected into generated pages. The same `LlmsHint` component has two output forms:
+
+- In SSG HTML output, it renders a visually hidden plain-text DOM element near the top of the page. It does not use `display: none`, the `hidden` attribute, `aria-hidden`, or nested links, so agent-side HTML-to-Markdown conversion can preserve the directive as text.
+- In SSG-MD Markdown output, it renders a blockquote string near the top of the Markdown page.
+
+Assuming [`siteOrigin`](/api/config/config-basic#siteorigin) is `https://example.com`, the following HTML directive is injected into the `/guide/` page:
 
 {/* prettier-ignore */}
 ```html
-<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/llms.txt for optimized Markdown documentation, or https://example.com/llms-full.txt for full documentation bundle. This page is also available as Markdown at https://example.com/guide/index.md</div>
+<div class="rp-llms-hint" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0">For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.</div>
 ```
 
-The URLs automatically include the configured `siteOrigin` and [`base`](/api/config/config-basic#base). The page-specific Markdown URL is derived from the current route. Without `siteOrigin`, the URLs remain base-aware paths.
+The SSG-MD Markdown output for the same page starts with:
 
-Set `injectLlmsHint` to `false` to remove the hidden hint without disabling the visible LLMS UI components:
+```md
+> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.
+```
+
+The URLs automatically include the configured `siteOrigin`, [`base`](/api/config/config-basic#base), locale, and version prefixes. The page-specific Markdown URL is derived from the current route. Without `siteOrigin`, the URLs remain base-aware paths.
+
+Set `injectLlmsHint` to `false` to disable this behavior:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
