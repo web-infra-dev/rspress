@@ -63,11 +63,7 @@ export function LlmsHint() {
   }
 
   return (
-    <div
-      data-rspress-llms-hint="true"
-      className="rp-llms-hint"
-      style={visuallyHiddenStyle}
-    >
+    <div className="rp-llms-hint" style={visuallyHiddenStyle}>
       {hintText}
     </div>
   );

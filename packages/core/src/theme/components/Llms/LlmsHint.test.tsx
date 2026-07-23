@@ -49,7 +49,7 @@ describe('LlmsHint', () => {
   it('renders a visually hidden plain-text directive in HTML', () => {
     const html = renderToStaticMarkup(<LlmsHint />);
 
-    expect(html).toContain('data-rspress-llms-hint="true"');
+    expect(html).toContain('class="rp-llms-hint"');
     expect(html).toMatch(/clip:rect\(0, ?0, ?0, ?0\)/);
     expect(html).not.toContain('display:none');
     expect(html).not.toContain('hidden=""');

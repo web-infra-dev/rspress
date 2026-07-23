@@ -60,7 +60,7 @@ test('llms should be successful', async () => {
     'utf-8',
   );
   const hintHtml = indexHtml.match(
-    /<div data-rspress-llms-hint="true"[\s\S]*?<\/div>/,
+    /<div[^>]*class="rp-llms-hint"[\s\S]*?<\/div>/,
   )?.[0];
   if (!hintHtml) {
     throw new Error('Expected llms directive hint in index.html');
