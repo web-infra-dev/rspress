@@ -18,8 +18,10 @@ export type LlmsViewOption = 'markdownLink' | 'chatgpt' | 'claude';
 export type LlmsUI =
   | {
       /**
-       * Whether to inject a hidden hint into SSG HTML pages that points LLMs
-       * to llms.txt and llms-full.txt.
+       * Whether to inject an LLM directive hint into generated pages. In HTML
+       * output, it is rendered as a visually hidden plain-text DOM element with
+       * llms.txt, llms-full.txt, and the current page's Markdown version. In
+       * SSG-MD output, it is rendered as a leading blockquote string.
        * @default true
        */
       injectLlmsHint?: boolean;

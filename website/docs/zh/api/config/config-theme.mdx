@@ -612,16 +612,27 @@ export default defineConfig({
 - **类型**：`boolean`
 - **默认值**：`true`
 
-此选项用于控制是否在生成的 HTML 页面中注入隐藏提示。假设 [`siteOrigin`](/api/config/config-basic#siteorigin) 是 `https://example.com`，会在 `/guide/` 页面中注入以下内容：
+此选项用于控制是否在生成的页面中注入面向 LLM 的 directive hint。同一个 `LlmsHint` 组件有两种输出形态：
+
+- 在 HTML 输出中，它会在页面顶部附近渲染一个 visually hidden 的纯文本 DOM 元素。它不会使用 `display: none`、`hidden` 属性、`aria-hidden` 或嵌套链接，这样 agent 在进行 HTML 到 Markdown 转换时可以将该 directive 保留为文本。
+- 在 SSG-MD 输出中，它会在 Markdown 页面顶部附近渲染为 blockquote 字符串。
+
+假设 [`siteOrigin`](/api/config/config-basic#siteorigin) 是 `https://example.com`，会在 `/guide/` 页面中注入以下 HTML directive：
 
 {/* prettier-ignore */}
 ```html
-<div style="display:none" hidden="" aria-hidden="true">Are you an LLM? View https://example.com/llms.txt for optimized Markdown documentation, or https://example.com/llms-full.txt for full documentation bundle. This page is also available as Markdown at https://example.com/guide/index.md</div>
+<div data-rspress-llms-hint="true" class="rp-llms-hint" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0">For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.</div>
 ```
 
-其中的 URL 会自动包含配置的 `siteOrigin` 和 [`base`](/api/config/config-basic#base)，当前页面的 Markdown URL 会根据当前路由生成。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
+同一页面的 SSG-MD 输出会以以下内容开头：
 
-将 `injectLlmsHint` 设置为 `false`，可以仅移除隐藏提示，而不禁用可见的 LLMS UI 组件：
+```md
+> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.
+```
+
+其中的 URL 会自动包含配置的 `siteOrigin`、[`base`](/api/config/config-basic#base)、语言和版本前缀，当前页面的 Markdown URL 会根据当前路由生成。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
+
+将 `injectLlmsHint` 设置为 `false`，可以仅移除 directive hint，而不禁用可见的 LLMS UI 组件：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

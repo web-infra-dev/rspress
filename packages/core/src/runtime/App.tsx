@@ -1,6 +1,6 @@
 import { PageContext, useLocation } from '@rspress/core/runtime';
 import { Layout, Root } from '@rspress/core/theme';
-import { LlmsHiddenHint } from '@rspress/core/theme-original';
+import { LlmsHint } from '@rspress/core/theme-original';
 import React, { useContext, useLayoutEffect } from 'react';
 import globalComponents from 'virtual-global-components';
 import {
@@ -52,6 +52,7 @@ export function App() {
   if (import.meta.env.SSG_MD) {
     return (
       <Root>
+        {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
         <Layout />
       </Root>
     );
@@ -59,7 +60,7 @@ export function App() {
 
   return (
     <Root>
-      {import.meta.env.ENABLE_LLMS_HINT && <LlmsHiddenHint />}
+      {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
       <Layout />
       {
         // Global UI

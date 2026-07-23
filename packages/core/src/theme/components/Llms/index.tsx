@@ -1,6 +1,6 @@
 export { LlmsContainer, type LlmsContainerProps } from './LlmsContainer';
 export { LlmsCopyButton, type LlmsCopyButtonProps } from './LlmsCopyButton';
-export { LlmsHiddenHint } from './LlmsHiddenHint';
+export { LlmsHint } from './LlmsHint';
 export {
   LlmsViewOptions,
   type LlmsViewOptionsItem,
