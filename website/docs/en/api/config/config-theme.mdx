@@ -132,7 +132,9 @@ interface SidebarGroup {
   collapsible?: boolean;
   // Whether to be collapsed by default
   collapsed?: boolean;
-  // svg tag string or image URL(optional)
+  // Icon displayed before the sidebar text
+  icon?: string;
+  // Tag displayed after the sidebar text
   tag?: string;
 }
 
@@ -141,7 +143,9 @@ type SidebarItem = {
   text: string;
   // sidebar link
   link: string;
-  // svg tag string or image URL(optional)
+  // Icon displayed before the sidebar text
+  icon?: string;
+  // Tag displayed after the sidebar text
   tag?: string;
 };
 ```
@@ -157,10 +161,13 @@ export default defineConfig({
       '/guide/': [
         {
           text: 'Getting Started',
+          icon: '🚀',
           items: [
             {
               text: 'Introduction',
               link: '/guide/getting-started/introduction',
+              icon: '<svg>...</svg>',
+              tag: 'new',
             },
             {
               text: 'Installation',

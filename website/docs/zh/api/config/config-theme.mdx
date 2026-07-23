@@ -119,7 +119,9 @@ interface SidebarGroup {
   collapsible?: boolean;
   // 是否默认折叠
   collapsed?: boolean;
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在侧边栏文本之前的图标
+  icon?: string;
+  // 显示在侧边栏文本之后的标签
   tag?: string;
 }
 
@@ -128,7 +130,9 @@ type SidebarItem = {
   text: string;
   // 侧边栏链接
   link: string;
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在侧边栏文本之前的图标
+  icon?: string;
+  // 显示在侧边栏文本之后的标签
   tag?: string;
 };
 ```
@@ -144,10 +148,13 @@ export default defineConfig({
       '/guide/': [
         {
           text: 'Getting Started',
+          icon: '🚀',
           items: [
             {
               text: 'Introduction',
               link: '/guide/getting-started/introduction',
+              icon: '<svg>...</svg>',
+              tag: 'new',
             },
             {
               text: 'Installation',

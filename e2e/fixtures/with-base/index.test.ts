@@ -38,7 +38,39 @@ test.describe('plugin test', async () => {
     // take the sidebar
     const sidebar = page.locator('.rp-doc-layout__sidebar');
     await expect(sidebar).toHaveCount(1);
-    // get the section
+
+    const group = sidebar.locator('.rp-sidebar-group').first();
+    await expect(group.locator('.rp-sidebar-item__icon')).toHaveText('📚');
+
+    const quickStartItem = sidebar.locator(
+      'a[href="/base/en/guide/quick-start.html"]',
+    );
+    const icon = quickStartItem.locator('.rp-sidebar-item__icon');
+    const tag = quickStartItem.locator('.rp-sidebar-item__right .rp-badge');
+    await expect(icon.locator('svg')).toHaveCount(1);
+    await expect(tag).toHaveText('new');
+    await expect(
+      quickStartItem.evaluate(item => {
+        const iconElement = item.querySelector('.rp-sidebar-item__icon');
+        const textElement = item.querySelector(
+          '.rp-sidebar-item__left > .rp-doc',
+        );
+        return Boolean(
+          iconElement &&
+          textElement &&
+          (iconElement.compareDocumentPosition(textElement) &
+            Node.DOCUMENT_POSITION_FOLLOWING) !==
+            0,
+        );
+      }),
+    ).resolves.toBe(true);
+
+    const groupItems = group.locator('xpath=following-sibling::div[1]');
+    await expect(groupItems).toHaveCSS('grid-template-rows', /\d+px/);
+    await group.click();
+    await expect(groupItems).toHaveCSS('grid-template-rows', '0px');
+    await group.click();
+    await expect(groupItems).toHaveCSS('grid-template-rows', /\d+px/);
   });
 
   test('Should goto correct link', async ({ page }) => {

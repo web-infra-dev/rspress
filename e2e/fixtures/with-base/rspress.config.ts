@@ -44,10 +44,13 @@ export default defineConfig({
           '/en/guide/': [
             {
               text: 'Guide',
+              icon: '📚',
               items: [
                 {
                   text: 'Quick Start',
                   link: '/en/guide/quick-start',
+                  icon: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/></svg>',
+                  tag: 'new',
                 },
                 {
                   text: 'Install',

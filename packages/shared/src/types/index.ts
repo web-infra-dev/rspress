@@ -550,6 +550,7 @@ export interface FrontMatterMeta {
   pageType?: PageType;
   features?: Feature[];
   hero?: Hero;
+  icon?: string;
   tag?: string;
 
   // ui

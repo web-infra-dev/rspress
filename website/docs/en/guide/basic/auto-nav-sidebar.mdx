@@ -145,6 +145,7 @@ export type FileSideMeta = {
   type: 'file';
   name: string;
   label?: string;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -156,6 +157,7 @@ export type DirSideMeta = {
   label?: string;
   collapsible?: boolean;
   collapsed?: boolean;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -172,6 +174,7 @@ export type DividerSideMeta = {
 export type SectionHeaderMeta = {
   type: 'section-header';
   label: string;
+  icon?: string;
   tag?: string;
 };
 
@@ -180,6 +183,7 @@ export type CustomLinkMeta =
       // file link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -189,6 +193,7 @@ export type CustomLinkMeta =
       // dir link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -227,6 +232,7 @@ export type FileSideMeta = {
   type: 'file';
   name: string;
   label?: string;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -254,6 +260,7 @@ export type DirSideMeta = {
   label?: string;
   collapsible?: boolean;
   collapsed?: boolean;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -342,6 +349,7 @@ To describe a **section header**, use the following type:
 export type SectionHeaderMeta = {
   type: 'section-header';
   label: string;
+  icon?: string;
   tag?: string;
 };
 ```
@@ -385,6 +393,7 @@ export type CustomLinkMeta =
       // file link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -394,6 +403,7 @@ export type CustomLinkMeta =
       // dir link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -510,17 +520,20 @@ basic
   └── 3-plugin-development.md
 ```
 
-## Tag icons for sidebar and navbar
+## Sidebar icons and tags
 
-You can add icons after titles in the sidebar or navbar through the `tag` config. The value of `tag` supports SVG tag strings or image URLs.
+Use `icon` to add an icon before a sidebar title. It supports emoji, HTML or SVG strings, image paths, external URLs, and data URLs. The existing `tag` config remains after the title.
 
 ```json title="_meta.json"
 {
   "type": "file",
   "name": "introduction",
   "label": "Introduction",
-  "tag": "<svg width=\"1em\" height=\"1em\" viewBox=\"0 0 32 32\"><path fill=\"currentColor\" d=\"M4 6h24v2H4zm0 18h24v2H4zm0-12h24v2H4zm0 6h24v2H4z\"/></svg>"
+  "icon": "<svg width=\"1em\" height=\"1em\" viewBox=\"0 0 32 32\"><path fill=\"currentColor\" d=\"M4 6h24v2H4zm0 18h24v2H4zm0-12h24v2H4zm0 6h24v2H4z\"/></svg>",
+  "tag": "new"
 }
 ```
 
-For detailed usage, see [Tag Component](/ui/layout-components/tag).
+For automatically generated file items, you can also set `icon` in the page frontmatter. The frontmatter value takes precedence over `_meta.json`.
+
+For details about `tag`, see [Tag Component](/ui/layout-components/tag).
