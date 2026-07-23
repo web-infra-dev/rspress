@@ -30,7 +30,6 @@ export async function runNpmScript(
     const instance = spawn('npm', commandArgs, {
       cwd: options.appDir,
       env: {
-        TEST: '1',
         ...process.env,
         ...options.env,
       },
