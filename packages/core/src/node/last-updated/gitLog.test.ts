@@ -16,20 +16,18 @@ describe('pluginLastUpdated against a real repository', () => {
 
   const git = (args: string[]) => execa('git', args, { cwd: repo });
 
+  const identity = (author: string) => [
+    '-c',
+    `user.name=${author}`,
+    '-c',
+    `user.email=${author.toLowerCase()}@test`,
+  ];
+
   const commit = (message: string, date: string, author = 'Alice') =>
-    execa(
-      'git',
-      [
-        '-c',
-        `user.name=${author}`,
-        '-c',
-        `user.email=${author.toLowerCase()}@test`,
-        'commit',
-        '-m',
-        message,
-      ],
-      { cwd: repo, env: { GIT_AUTHOR_DATE: date, GIT_COMMITTER_DATE: date } },
-    );
+    execa('git', [...identity(author), 'commit', '-m', message], {
+      cwd: repo,
+      env: { GIT_AUTHOR_DATE: date, GIT_COMMITTER_DATE: date },
+    });
 
   const write = async (relativePath: string, content: string) => {
     const filePath = path.join(repo, relativePath);
@@ -58,7 +56,14 @@ describe('pluginLastUpdated against a real repository', () => {
     await git(['checkout', '-q', 'main']);
     await write('docs/index.mdx', 'trunk');
     await commit('trunk', '2022-03-04T05:06:07Z');
-    await git(['merge', 'side']).catch(() => {
+    // `git merge` demands a committer identity before even looking at the
+    // trees — without one it dies with no conflict left behind to resolve.
+    await execa('git', [...identity('Merle'), 'merge', 'side'], {
+      cwd: repo,
+    }).catch((error: { stdout?: string }) => {
+      if (!error.stdout?.includes('CONFLICT')) {
+        throw error;
+      }
       // The conflict on `index.mdx` is expected.
     });
     await write('docs/index.mdx', 'merged');
