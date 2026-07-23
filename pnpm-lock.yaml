@@ -695,6 +695,31 @@ importers:
         specifier: ^22.8.1
         version: 22.19.15
 
+  e2e/fixtures/plugin-webmcp:
+    dependencies:
+      '@mcp-b/webmcp-polyfill':
+        specifier: 4.0.0
+        version: 4.0.0
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@rspress/plugin-webmcp':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-webmcp
+      react:
+        specifier: ^19.2.7
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.7
+        version: 19.2.7(react@19.2.7)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+
   e2e/fixtures/production:
     dependencies:
       '@rspress/core':
@@ -1267,6 +1292,9 @@ importers:
       '@rspress/core':
         specifier: workspace:^2.0.10
         version: link:../core
+      algoliasearch:
+        specifier: ^5.50.0
+        version: 5.50.0
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.58.11
@@ -1743,6 +1771,46 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
 
+  packages/plugin-webmcp:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:^
+        version: link:../core
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+    devDependencies:
+      '@microsoft/api-extractor':
+        specifier: ^7.58.11
+        version: 7.58.11(@types/node@22.19.15)
+      '@rsbuild/plugin-react':
+        specifier: ~2.1.0
+        version: 2.1.0(@rsbuild/core@2.1.7)(@rspack/core@2.1.5(@swc/helpers@0.5.23))
+      '@rslib/core':
+        specifier: 1.0.0-beta.1
+        version: 1.0.0-beta.1(@microsoft/api-extractor@7.58.11(@types/node@22.19.15))(typescript@6.0.3)
+      '@rspress/config':
+        specifier: workspace:*
+        version: link:../../scripts/config
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      react:
+        specifier: ^19.2.7
+        version: 19.2.7
+      rsbuild-plugin-publint:
+        specifier: ^1.0.0
+        version: 1.0.0(@rsbuild/core@2.1.7)
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+      webmcp-types:
+        specifier: 0.1.2
+        version: 0.1.2
+
   packages/shared:
     dependencies:
       '@rsbuild/core':
@@ -1830,6 +1898,9 @@ importers:
       '@rspress/plugin-twoslash':
         specifier: workspace:*
         version: link:../packages/plugin-twoslash
+      '@rspress/plugin-webmcp':
+        specifier: workspace:*
+        version: link:../packages/plugin-webmcp
       '@rstack-dev/doc-ui':
         specifier: ^1.14.5
         version: 1.14.5(@rspress/core@packages+core)
@@ -2114,6 +2185,9 @@ packages:
 
   '@bufbuild/protobuf@2.11.0':
     resolution: {integrity: sha512-sBXGT13cpmPR5BMgHE6UEEfEaShh5Ror6rfN3yEK5si7QVrtZg8LEPQb0VVhiLRUslD2yLnXtnRzG035J/mZXQ==}
+
+  '@cfworker/json-schema@4.1.1':
+    resolution: {integrity: sha512-gAmrUZSGtKc3AiBL71iNWxDsyUC5uMaKKGdvzYsBoTW/xi42JQHl7eKV2OYzCUqvc+D2RCcf7EXY2iCyFIk6og==}
 
   '@changesets/apply-release-plan@7.1.1':
     resolution: {integrity: sha512-9qPCm/rLx/xoOFXIHGB229+4GOL76S4MC+7tyOuTsR6+1jYlfFDQORdvwR5hDA6y4FL2BPt3qpbcQIS+dW85LA==}
@@ -2792,6 +2866,13 @@ packages:
 
   '@manypkg/get-packages@1.1.3':
     resolution: {integrity: sha512-fo+QhuU3qE/2TQMQmbVMqaQ6EWbMhi4ABWP+O4AM1NqPBuy0OrApV5LO6BrrgnhtAHS2NH6RrVk9OL181tTi8A==}
+
+  '@mcp-b/webmcp-polyfill@4.0.0':
+    resolution: {integrity: sha512-7M6WS3IcxaIEhidbS9N7wrrGjtJf474Vi4Fn1hGkFkmYFT5EoFw/kS/4CSdUR/KmlInO1kyluHRY6t3avMQfFw==}
+    engines: {node: '>=18'}
+
+  '@mcp-b/webmcp-types@4.0.0':
+    resolution: {integrity: sha512-CUBBmiut1UBsiD3FAF6xrLKeKAuJkzd6/BlL1C/uo8sVpwY42NW4mls9rLcTxmLF/8Cj5/ZOwJiLzXl/T3GIQg==}
 
   '@mdx-js/mdx@3.1.1':
     resolution: {integrity: sha512-f6ZO2ifpwAQIpzGWaBQT2TXxPv6z3RBzQKpVftEWN78Vl/YweF1uwussDx8ECAXVtr3Rs89fKyG9YlzUs9DyGQ==}
@@ -3664,6 +3745,9 @@ packages:
     engines: {node: '>=20'}
     peerDependencies:
       '@rspress/core': ^2.0.0-rc.1 || ^2.0.0
+
+  '@standard-schema/spec@1.1.0':
+    resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0':
     resolution: {integrity: sha512-b9MIk7yhdS1pMCZM8VeNfUlSKVRhsHZNMl5O9SfaX0l0t5wjdgu4IDzGB8bpnGBBOjGST3rRFVsaaEtI4W6f7g==}
@@ -7560,6 +7644,9 @@ packages:
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
 
+  webmcp-types@0.1.2:
+    resolution: {integrity: sha512-weWM+Iyj7rITLBoANf3GjxOD25MgriZnKUafJOXErmOnTbbHp5kr7hcPl+UlfeSlwtvE8+55HozF6jxtv0j17g==}
+
   webpack-sources@3.5.0:
     resolution: {integrity: sha512-HPuy+uuoTCaaoEoI1LQ3JN9+vrPBvEesnnX1jADHy728cHSMlq4wUc4afYqahq2B1mhQVZxCXOkNTnXltr+2vQ==}
     engines: {node: '>=10.13.0'}
@@ -7642,6 +7729,9 @@ packages:
   yocto-queue@1.2.2:
     resolution: {integrity: sha512-4LCcse/U2MHZ63HAJVE+v71o7yOdIe4cZ70Wpf8D/IyjDKYQLV5GD46B+hSTjJsvV5PztjvHoU580EftxjDZFQ==}
     engines: {node: '>=12.20'}
+
+  zod@4.4.3:
+    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -7952,6 +8042,8 @@ snapshots:
       '@babel/helper-validator-identifier': 7.29.7
 
   '@bufbuild/protobuf@2.11.0': {}
+
+  '@cfworker/json-schema@4.1.1': {}
 
   '@changesets/apply-release-plan@7.1.1':
     dependencies:
@@ -8673,6 +8765,14 @@ snapshots:
       fs-extra: 8.1.0
       globby: 11.1.0
       read-yaml-file: 1.1.0
+
+  '@mcp-b/webmcp-polyfill@4.0.0':
+    dependencies:
+      '@cfworker/json-schema': 4.1.1
+      '@mcp-b/webmcp-types': 4.0.0
+      '@standard-schema/spec': 1.1.0
+
+  '@mcp-b/webmcp-types@4.0.0': {}
 
   '@mdx-js/mdx@3.1.1':
     dependencies:
@@ -9702,6 +9802,8 @@ snapshots:
       '@rspress/core': link:packages/core
       sharp: 0.34.5
       ufo: 1.6.3
+
+  '@standard-schema/spec@1.1.0': {}
 
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0(@babel/core@7.29.0)':
     dependencies:
@@ -14416,6 +14518,8 @@ snapshots:
 
   web-namespaces@2.0.1: {}
 
+  webmcp-types@0.1.2: {}
+
   webpack-sources@3.5.0:
     optional: true
 
@@ -14504,6 +14608,8 @@ snapshots:
       yargs-parser: 21.1.1
 
   yocto-queue@1.2.2: {}
+
+  zod@4.4.3: {}
 
   zwitch@2.0.4: {}
 

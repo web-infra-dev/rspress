@@ -29,7 +29,10 @@ export { HoverGroup, type HoverGroupProps } from './components/HoverGroup';
 export { useHoverGroup } from './components/HoverGroup/useHoverGroup';
 export { LastUpdated } from './components/LastUpdated/index';
 export { Link, type LinkProps } from './components/Link/index';
-export { useLinkNavigate } from './components/Link/useLinkNavigate';
+export {
+  useAwaitedLinkNavigate,
+  useLinkNavigate,
+} from './components/Link/useLinkNavigate';
 export {
   LlmsContainer,
   type LlmsContainerProps,
@@ -125,6 +128,13 @@ export { copyToClipboard } from './logic/copyToClipboard';
 export { getCopyableText } from './logic/getCopyableText';
 // logic
 export { mergeRefs } from './logic/mergeRefs';
+export {
+  registerSearchProvider,
+  type SearchProvider,
+  type SearchResultGroup,
+  useSearchProvider,
+} from './logic/searchProvider';
+export { useDocsSearch } from './logic/useDocsSearch';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { usePrevNextPage } from './logic/usePrevNextPage';
 export { useScrollAfterNav } from './logic/useScrollAfterNav';

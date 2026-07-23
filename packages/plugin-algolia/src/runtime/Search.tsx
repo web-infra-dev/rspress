@@ -1,12 +1,24 @@
-import type { DocSearchProps } from '@docsearch/react';
+import type {
+  DocSearchProps,
+  DocSearchTransformClient,
+} from '@docsearch/react';
 import { DocSearch } from '@docsearch/react';
-import { removeBase, useLang } from '@rspress/core/runtime';
-import { Link, useLinkNavigate } from '@rspress/core/theme';
+import { useLang } from '@rspress/core/runtime';
+import {
+  Link,
+  registerSearchProvider,
+  useLinkNavigate,
+} from '@rspress/core/theme';
+import { liteClient } from 'algoliasearch/lite';
 import '@docsearch/css';
 import './Search.css';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import * as ReactDOM from 'react-dom';
 import type { Locales } from './locales';
+import {
+  createAlgoliaSearchProvider,
+  normalizeDocSearchItems,
+} from './searchProvider';
 
 const Hit: DocSearchProps['hitComponent'] = ({ hit, children }) => {
   return <Link href={hit.url}>{children}</Link>;
@@ -36,6 +48,25 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
   const { translations, placeholder } = locales?.[lang] ?? {};
 
   const appId = docSearchProps.appId;
+  const searchClient = useMemo(() => {
+    const client = liteClient(docSearchProps.appId, docSearchProps.apiKey);
+    return (docSearchProps.transformSearchClient?.(client) ??
+      client) as DocSearchTransformClient;
+  }, [
+    docSearchProps.appId,
+    docSearchProps.apiKey,
+    docSearchProps.transformSearchClient,
+  ]);
+  const searchProvider = useMemo(
+    () => createAlgoliaSearchProvider(docSearchProps, searchClient),
+    [docSearchProps, searchClient],
+  );
+
+  useEffect(
+    () => (searchProvider ? registerSearchProvider(searchProvider) : undefined),
+    [searchProvider],
+  );
+
   if (appId) {
     if (typeof safePreconnect === 'function') {
       safePreconnect(`https://${appId}-dsn.algolia.net`, { crossOrigin: '' });
@@ -71,18 +102,12 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
             navigate(itemUrl);
           },
         }}
-        transformItems={(items: any[]) => {
-          return items.map(item => {
-            const url = new URL(item.url);
-            return {
-              ...item,
-              // we already have basename, so pass the url without base to Link and navigate
-              url: removeBase(item.url.replace(url.origin, '')),
-            };
-          });
-        }}
         hitComponent={Hit}
         {...docSearchProps}
+        transformItems={
+          docSearchProps.transformItems ?? normalizeDocSearchItems
+        }
+        transformSearchClient={() => searchClient}
       />
     </>
   );
