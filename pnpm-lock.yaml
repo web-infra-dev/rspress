@@ -1043,6 +1043,12 @@ importers:
       '@shikijs/rehype':
         specifier: ^4.2.0
         version: 4.2.0
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
       '@types/unist':
         specifier: ^3.0.3
         version: 3.0.3
@@ -1139,6 +1145,9 @@ importers:
       unist-util-visit-children:
         specifier: ^3.0.0
         version: 3.0.0
+      vfile:
+        specifier: ^6.0.3
+        version: 6.0.3
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.58.11
@@ -1161,18 +1170,12 @@ importers:
       '@types/hast':
         specifier: ^3.0.5
         version: 3.0.5
-      '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
       '@types/nprogress':
         specifier: ^0.2.3
         version: 0.2.3
-      '@types/react':
-        specifier: ^19.2.17
-        version: 19.2.17
       '@types/react-dom':
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.17)
@@ -1228,9 +1231,6 @@ importers:
         specifier: ^2.9.0
         version: 2.9.0
       typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-      vfile:
         specifier: ^6.0.3
         version: 6.0.3
 
@@ -1751,6 +1751,12 @@ importers:
       '@shikijs/rehype':
         specifier: ^4.2.0
         version: 4.2.0
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      mdast-util-mdx-jsx:
+        specifier: ^3.2.0
+        version: 3.2.0
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -1764,9 +1770,6 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
-      '@types/react':
-        specifier: ^19.2.17
-        version: 19.2.17
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
@@ -1776,9 +1779,6 @@ importers:
       lodash-es:
         specifier: ^4.18.1
         version: 4.18.1
-      mdast-util-mdx-jsx:
-        specifier: ^3.2.0
-        version: 3.2.0
       medium-zoom:
         specifier: 1.1.0
         version: 1.1.0
