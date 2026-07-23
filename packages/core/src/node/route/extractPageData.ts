@@ -10,6 +10,7 @@ import {
 import { loadFrontMatter } from '@rspress/shared/node-utils';
 import type { Node, Nodes, Root } from 'mdast';
 import remarkGFM from 'remark-gfm';
+import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import type { Plugin } from 'unified';
 import { unified } from 'unified';
@@ -77,6 +78,7 @@ const remarkRemoveImages: Plugin<[], Root> = () => {
 const createProcessor = (searchCodeBlocks: boolean) =>
   unified()
     .use(remarkParse)
+    .use(remarkMdx)
     .use(remarkGFM)
     .use(remarkRemoveImages)
     .use(searchCodeBlocks ? [] : [remarkRemoveCodeBlocks]);
@@ -108,8 +110,6 @@ const SEARCH_SKIP_TYPES = new Set([
   'footnoteReference',
   'html',
   'thematicBreak',
-  'mdxJsxFlowElement',
-  'mdxJsxTextElement',
   'mdxFlowExpression',
   'mdxTextExpression',
   'mdxjsEsm',
@@ -202,6 +202,8 @@ function buildSearchContent(
       .join('')
       // \t\n replace so we don't have trailing whitespace on table rows that aren't at the end of the text
       .replaceAll('\t\n', '\n')
+      // Removing an inline MDX expression can leave duplicate spaces between visible text.
+      .replaceAll(/ {2,}/g, ' ')
       .trim();
     if (!text) {
       continue;
