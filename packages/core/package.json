@@ -69,6 +69,8 @@
     "@rsbuild/plugin-react": "~2.1.0",
     "@rspress/shared": "workspace:*",
     "@shikijs/rehype": "^4.2.0",
+    "@types/mdast": "^4.0.4",
+    "@types/react": "^19.2.17",
     "@types/unist": "^3.0.3",
     "@unhead/react": "^2.1.16",
     "body-scroll-lock": "4.0.0-beta.0",
@@ -100,20 +102,19 @@
     "unified": "^11.0.5",
     "unist-util-remove": "^4.0.0",
     "unist-util-visit": "^5.1.0",
-    "unist-util-visit-children": "^3.0.0"
+    "unist-util-visit-children": "^3.0.0",
+    "vfile": "^6.0.3"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.58.11",
     "@rsbuild/plugin-sass": "~1.5.3",
     "@rsbuild/plugin-svgr": "^2.0.5",
-    "@rslib/core": "0.23.2",
+    "@rslib/core": "1.0.0-beta.1",
     "@rspress/config": "workspace:*",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "^3.0.5",
-    "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
     "@types/nprogress": "^0.2.3",
-    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/react-reconciler": "^0.33.0",
     "@types/web": "^0.0.353",
@@ -132,8 +133,7 @@
     "tinyglobby": "^0.2.17",
     "tinypool": "^1.1.1",
     "ts-json-schema-generator": "^2.9.0",
-    "typescript": "^6.0.3",
-    "vfile": "^6.0.3"
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

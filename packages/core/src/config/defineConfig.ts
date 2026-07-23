@@ -8,20 +8,6 @@ import type { UserConfig } from '@rspress/shared';
 export type UserConfigAsyncFn = () => Promise<UserConfig>;
 
 /**
- * Define a static Rspress configuration object.
- * @param config - The Rspress configuration object.
- * @returns The same configuration object (enables type checking and IDE autocompletion).
- * @example
- * ```ts
- * import { defineConfig } from '@rspress/core';
- *
- * export default defineConfig({
- *   title: 'My Site',
- * });
- * ```
- */
-export function defineConfig(config: UserConfig): UserConfig;
-/**
  * Define an async Rspress configuration function.
  * Use this overload when you need to perform async operations during configuration,
  * such as fetching remote data, reading files, or dynamically generating config.
@@ -39,7 +25,23 @@ export function defineConfig(config: UserConfig): UserConfig;
  * });
  * ```
  */
-export function defineConfig(config: UserConfigAsyncFn): UserConfigAsyncFn;
+export function defineConfig<const Config extends UserConfig>(
+  config: () => Promise<Config>,
+): UserConfigAsyncFn;
+/**
+ * Define a static Rspress configuration object.
+ * @param config - The Rspress configuration object.
+ * @returns The same configuration object (enables type checking and IDE autocompletion).
+ * @example
+ * ```ts
+ * import { defineConfig } from '@rspress/core';
+ *
+ * export default defineConfig({
+ *   title: 'My Site',
+ * });
+ * ```
+ */
+export function defineConfig(config: UserConfig): UserConfig;
 export function defineConfig(
   config: UserConfig | UserConfigAsyncFn,
 ): UserConfig | UserConfigAsyncFn {

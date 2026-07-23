@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.58.11",
-    "@rslib/core": "0.23.2",
+    "@rslib/core": "1.0.0-beta.1",
     "@types/node": "^22.8.1",
     "rsbuild-plugin-publint": "^1.0.0",
     "typescript": "^6.0.3"

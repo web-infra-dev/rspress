@@ -14,7 +14,7 @@ describe('LLMS UI build config', () => {
     expect(isLlmsHintEnabled(config, true)).toBe(false);
   });
 
-  it('allows the hidden hint to be disabled independently', () => {
+  it('allows the LLM directive hint to be disabled independently', () => {
     expect(
       isLlmsHintEnabled(
         {
@@ -30,7 +30,7 @@ describe('LLMS UI build config', () => {
     ).toBe(false);
   });
 
-  it('only enables the hidden hint for SSG builds', () => {
+  it('only enables the LLM directive hint for SSG builds', () => {
     const config = {
       llms: true,
       themeConfig: {
