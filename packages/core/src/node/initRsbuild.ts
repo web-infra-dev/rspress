@@ -3,6 +3,7 @@ import path from 'node:path';
 import { cwd } from 'node:process';
 import { fileURLToPath } from 'node:url';
 import type {
+  RestartFn,
   RsbuildConfig,
   RsbuildInstance,
   RsbuildPlugin,
@@ -103,6 +104,7 @@ async function createInternalBuildConfig(
   enableSSG: boolean,
   routeService: RouteService,
   pluginDriver: PluginDriver,
+  restart?: RestartFn,
 ): Promise<RsbuildConfig> {
   const CUSTOM_THEME_DIR = path.isAbsolute(config.themeDir!)
     ? config.themeDir!
@@ -234,10 +236,24 @@ async function createInternalBuildConfig(
     },
     dev: {
       lazyCompilation: process.env.RSPRESS_LAZY_COMPILATION !== 'false', // This is an escape hatch for playwright test, playwright does not support lazyCompilation
-      cliShortcuts: {
-        // does not support restart server yet
-        custom: shortcuts => shortcuts.filter(({ key }) => key !== 'r'),
-      },
+      cliShortcuts: true,
+      ...(restart
+        ? {
+            watchFiles: {
+              paths: userDocRoot,
+              type: 'restart' as const,
+              options: {
+                ignored: [
+                  '**/node_modules/**',
+                  '**/.git/**',
+                  '**/.DS_Store/**',
+                  // These files are handled by the dev server middleware.
+                  path.join(userDocRoot, PUBLIC_DIR),
+                ],
+              },
+            },
+          }
+        : {}),
     },
     html: {
       title: config?.title ?? DEFAULT_TITLE,
@@ -557,7 +573,11 @@ export async function initRsbuild(
   pluginDriver: PluginDriver,
   routeService: RouteService,
   enableSSG: boolean,
-  extraRsbuildConfig?: RsbuildConfig,
+  options: {
+    configFileMeta?: RsbuildConfig['_privateMeta'];
+    extraRsbuildConfig?: RsbuildConfig;
+    restart?: RestartFn;
+  } = {},
 ): Promise<RsbuildInstance> {
   const userDocRoot = path.resolve(rootDir || config.root!);
 
@@ -571,18 +591,24 @@ export async function initRsbuild(
     enableSSG,
     routeService,
     pluginDriver,
+    options.restart,
   );
+
+  const rsbuildConfig = mergeRsbuildConfig(
+    internalRsbuildConfig,
+    ...(pluginDriver.getPlugins()?.map(plugin => plugin.builderConfig ?? {}) ||
+      []),
+    config.builderConfig || {},
+    options.extraRsbuildConfig || {},
+  );
+  if (options.configFileMeta) {
+    rsbuildConfig._privateMeta = options.configFileMeta;
+  }
 
   const rsbuild = await createRsbuild({
     callerName: 'rspress',
-    rsbuildConfig: mergeRsbuildConfig(
-      internalRsbuildConfig,
-      ...(pluginDriver
-        .getPlugins()
-        ?.map(plugin => plugin.builderConfig ?? {}) || []),
-      config.builderConfig || {},
-      extraRsbuildConfig || {},
-    ),
+    restart: options.restart,
+    rsbuildConfig,
   });
 
   return rsbuild;
