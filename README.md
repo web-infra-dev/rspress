@@ -29,7 +29,7 @@ Go to the [Quick start](https://rspress.rs/guide/start/getting-started.html) to 
 
 ## 🦀 Rstack
 
-Rstack is a unified JavaScript toolchain centered on Rspack, with high performance and consistent architecture.
+Rspress is part of Rstack, the fast, unified JavaScript toolchain for developers and agents.
 
 | Name                                                  | Description              | Version                                                                                                                                                                          |
 | ----------------------------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
