@@ -166,6 +166,16 @@ Syntax:
 ```
 ````
 
+Add `preview-only` when the source should be built into the fixed preview but
+should not render as a code block in the document. This is useful for page-level
+demo applications:
+
+````mdx title="example.mdx"
+```tsx file="./_demo.tsx" preview="iframe-fixed" preview-only
+
+```
+````
+
 Rendering result:
 
 ![](https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rspress/demo-preview-mobile-fixed.png)
@@ -292,9 +302,13 @@ export default defineConfig({
 
 Configures a custom entry to support other frameworks like Vue.
 
-:::warning Note
-Only available in `preview="iframe-follow"` mode.
-:::
+`customEntry` is available in both iframe modes. The callback receives
+`previewMode`, route metadata, and a `demos` array. Fixed mode can contain
+multiple demos from the same document.
+
+For external `file` code blocks, each demo also includes an absolute
+`sourcePath`. Prefer it when the source module has relative imports; `demoPath`
+points to the transformed virtual module.
 
 Here is an example for the Vue framework:
 
@@ -307,14 +321,25 @@ export default defineConfig({
   // ...
   plugins: [
     pluginPreview({
-      previewMode: 'iframe',
       previewLanguages: ['vue'],
       iframeOptions: {
-        position: 'follow',
-        customEntry: ({ demoPath }) => {
+        customEntry: meta => {
+          const imports = meta.demos
+            .map(
+              (demo, index) =>
+                `import Demo_${index} from ${JSON.stringify(
+                  demo.sourcePath ?? demo.demoPath,
+                )};`,
+            )
+            .join('\n');
+          const children = meta.demos
+            .map((_demo, index) => `h(Demo_${index})`)
+            .join(', ');
+
           return `
-          import { createApp } from 'vue';
-          import App from ${JSON.stringify(demoPath)};
+          import { createApp, h } from 'vue';
+          ${imports}
+          const App = { render: () => h('div', null, [${children}]) };
           createApp(App).mount('#root');
           `;
         },
