@@ -330,6 +330,30 @@ describe('getPageIndexInfoByRoute', async () => {
     `);
   });
 
+  it('should strip MDX syntax while keeping visible content', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-mdx-syntax.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: true,
+      },
+    );
+
+    expect(pageIndexInfo.content).toBe(
+      [
+        'Visible component content.',
+        'Text before text after.',
+        '{ "name": "create_shopping_plan" }',
+      ].join('\n\n'),
+    );
+    expect(pageIndexInfo.content).not.toContain('```json');
+    expect(pageIndexInfo.content).not.toContain('should not be indexed');
+    expect(pageIndexInfo.content).not.toContain('hiddenExpression');
+    expect(pageIndexInfo.content).not.toContain('anotherHiddenExpression');
+  });
+
   it('should remove images from content', async () => {
     const pageIndexInfo = await getPageIndexInfoByRoute(
       createRoute('with-images.mdx', fixtureContentProcessingDir),
