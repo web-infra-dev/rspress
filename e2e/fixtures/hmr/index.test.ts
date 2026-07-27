@@ -28,11 +28,18 @@ test.describe('hmr test', async () => {
   let originalNavContent: string;
   let originalMetaContent: string;
   let originalRestartFileContent: string;
+  let devOutput = '';
+
+  const getRestartCount = () =>
+    devOutput.match(/restarting server as .* changed/g)?.length ?? 0;
 
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
+    (app as { stdout?: NodeJS.ReadableStream }).stdout?.on('data', chunk => {
+      devOutput += chunk.toString();
+    });
     originalContent = await fs.readFile(TEST_FILE, 'utf-8');
     originalFragmentContent = await fs.readFile(TEST_FRAGMENT_FILE, 'utf-8');
     originalNavContent = await fs.readFile(TEST_NAV_FILE, 'utf-8');
@@ -95,12 +102,14 @@ test.describe('hmr test', async () => {
     await expect(
       page.locator('.rp-sidebar-item span', { hasText: 'Foo' }),
     ).toBeVisible();
+    expect(getRestartCount()).toBe(0);
   });
 
   test('restart when routes or config dependencies change', async ({
     page,
   }) => {
     await fs.writeFile(TEST_ADDED_FILE, '# Added route');
+    await expect.poll(getRestartCount).toBe(1);
 
     await expect
       .poll(async () => {
@@ -115,10 +124,14 @@ test.describe('hmr test', async () => {
       })
       .toContain('Added route');
 
+    await fs.rm(TEST_ADDED_FILE);
+    await expect.poll(getRestartCount).toBe(2);
+
     await fs.writeFile(
       TEST_RESTART_FILE,
       originalRestartFileContent.replace('HMR fixture', 'Restarted fixture'),
     );
+    await expect.poll(getRestartCount).toBe(3);
 
     await expect
       .poll(async () => {

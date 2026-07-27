@@ -242,6 +242,7 @@ async function createInternalBuildConfig(
             watchFiles: {
               paths: userDocRoot,
               type: 'restart' as const,
+              events: ['add', 'unlink'],
               options: {
                 ignored: [
                   '**/node_modules/**',
