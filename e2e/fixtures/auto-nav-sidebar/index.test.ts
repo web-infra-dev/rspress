@@ -40,20 +40,20 @@ test.describe('Auto nav and sidebar test', async () => {
   });
 
   test('Should render sidebar icons and tags correctly', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/api/index.html`, {
+    await page.goto(`http://localhost:${appPort}/sidebar-icon/`, {
       waitUntil: 'networkidle',
     });
 
     const sidebar = page.locator('.rp-doc-layout__sidebar');
     const overviewItem = sidebar.locator(
-      '.rp-sidebar-item[data-context="api-overview"]',
+      '.rp-sidebar-item[data-context="sidebar-icon-overview"]',
     );
     const overviewIcon = overviewItem.locator('.rp-sidebar-item__icon');
     const overviewTag = overviewItem.locator(
       '.rp-sidebar-item__right .rp-badge',
     );
 
-    await expect(overviewIcon.locator('svg')).toHaveCount(1);
+    await expect(overviewIcon).toHaveText('👋');
     await expect(overviewTag).toHaveText('new');
     await expect(
       overviewItem.evaluate(item => {
@@ -72,15 +72,22 @@ test.describe('Auto nav and sidebar test', async () => {
     ).resolves.toBe(true);
 
     const groupImage = sidebar.locator(
-      '.rp-sidebar-item[data-context="config"] .rp-sidebar-item__icon > img',
+      '.rp-sidebar-item[data-context="sidebar-icon-guide"] .rp-sidebar-item__icon > img',
     );
+    await expect(groupImage).toHaveAttribute('src', '/sidebar-book.svg');
+    await expect(groupImage).toHaveJSProperty('naturalWidth', 32);
     await expect(groupImage).toHaveCSS('width', '20px');
     await expect(groupImage).toHaveCSS('height', '20px');
 
     const sectionHeaderImage = sidebar
       .locator('.rp-sidebar-section-header')
-      .filter({ hasText: /^Section Header$/ })
+      .filter({ hasText: /^Resources$/ })
       .locator('.rp-sidebar-section-header__icon > img');
+    await expect(sectionHeaderImage).toHaveAttribute(
+      'src',
+      '/sidebar-resources.svg',
+    );
+    await expect(sectionHeaderImage).toHaveJSProperty('naturalWidth', 32);
     await expect(sectionHeaderImage).toHaveCSS('width', '20px');
     await expect(sectionHeaderImage).toHaveCSS('height', '20px');
   });

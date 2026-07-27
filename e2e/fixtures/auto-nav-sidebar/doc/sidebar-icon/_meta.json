@@ -1,0 +1,50 @@
+[
+  {
+    "type": "section-header",
+    "label": "Start Here"
+  },
+  {
+    "type": "file",
+    "name": "index",
+    "label": "Introduction",
+    "icon": "👋",
+    "tag": "new",
+    "context": "sidebar-icon-overview"
+  },
+  {
+    "type": "file",
+    "name": "getting-started",
+    "label": "Quick Start",
+    "icon": "🚀"
+  },
+  {
+    "type": "dir",
+    "name": "guide",
+    "label": "Guides",
+    "icon": "<img src=\"/sidebar-book.svg\" alt=\"\" />",
+    "context": "sidebar-icon-guide"
+  },
+  {
+    "type": "dir",
+    "name": "reference",
+    "label": "Reference",
+    "icon": "🧩"
+  },
+  {
+    "type": "section-header",
+    "label": "Resources",
+    "icon": "<img src=\"/sidebar-resources.svg\" alt=\"\" />"
+  },
+  {
+    "type": "file",
+    "name": "examples",
+    "label": "Examples",
+    "icon": "🧪"
+  },
+  {
+    "type": "custom-link",
+    "label": "Rspress Documentation",
+    "link": "https://rspress.dev/",
+    "icon": "🌐"
+  }
+]

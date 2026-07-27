@@ -1,0 +1,12 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="book-cover" x1="5" y1="3" x2="27" y2="29" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6D5DFB" />
+      <stop offset="1" stop-color="#3B82F6" />
+    </linearGradient>
+  </defs>
+  <path d="M7 3H24C25.657 3 27 4.343 27 6V26C27 27.657 25.657 29 24 29H7C5.343 29 4 27.657 4 26V6C4 4.343 5.343 3 7 3Z" fill="url(#book-cover)" />
+  <path d="M9 3V29" stroke="white" stroke-opacity=".7" stroke-width="2" />
+  <path d="M13 10H22M13 15H20" stroke="white" stroke-width="2" stroke-linecap="round" />
+  <path d="M20 22L22 24L25 20" stroke="#D1FAE5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

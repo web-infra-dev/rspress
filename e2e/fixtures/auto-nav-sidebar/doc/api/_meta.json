@@ -3,15 +3,12 @@
     "type": "file",
     "name": "index",
     "label": "API Overview",
-    "icon": "<svg viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z\"/></svg>",
-    "tag": "new",
     "context": "api-overview"
   },
   {
     "type": "dir",
     "name": "config",
     "label": "Config",
-    "icon": "<img src=\"data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=\" width=\"48\" height=\"32\" />",
     "context": "config"
   },
   {
@@ -35,8 +32,7 @@
   "single-page",
   {
     "type": "section-header",
-    "label": "Section Header",
-    "icon": "<img src=\"data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=\" width=\"48\" height=\"32\" />"
+    "label": "Section Header"
   },
   {
     "type": "dir-section-header",
