@@ -54,6 +54,8 @@ test.describe('Auto nav and sidebar test', async () => {
     );
 
     await expect(overviewIcon).toHaveText('👋');
+    await expect(overviewIcon).toHaveCSS('font-size', '16px');
+    await expect(overviewIcon).toHaveCSS('line-height', '20px');
     await expect(overviewTag).toHaveText('new');
     await expect(
       overviewItem.evaluate(item => {
@@ -71,13 +73,22 @@ test.describe('Auto nav and sidebar test', async () => {
       }),
     ).resolves.toBe(true);
 
+    const relativeImage = sidebar.locator(
+      '.rp-sidebar-item[data-context="sidebar-icon-quick-start"] img.rp-sidebar-item__icon',
+    );
+    await expect(relativeImage).toHaveAttribute(
+      'src',
+      '/sidebar-icon/sidebar-rocket.svg',
+    );
+
     const groupImage = sidebar.locator(
-      '.rp-sidebar-item[data-context="sidebar-icon-guide"] .rp-sidebar-item__icon > img',
+      '.rp-sidebar-item[data-context="sidebar-icon-guide"] img.rp-sidebar-item__icon',
     );
     await expect(groupImage).toHaveAttribute('src', '/sidebar-book.svg');
     await expect(groupImage).toHaveJSProperty('naturalWidth', 32);
     await expect(groupImage).toHaveCSS('width', '20px');
     await expect(groupImage).toHaveCSS('height', '20px');
+    await expect(groupImage).toHaveCSS('object-fit', 'contain');
 
     const sectionHeaderImage = sidebar
       .locator('.rp-sidebar-section-header')

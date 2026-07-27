@@ -80,6 +80,9 @@
     width: 20px;
     height: 20px;
     flex: 0 0 20px;
+    font-size: 16px;
+    line-height: 20px;
+    object-fit: contain;
 
     > svg,
     > img {

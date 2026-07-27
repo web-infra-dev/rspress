@@ -21,7 +21,7 @@
     "type": "dir",
     "name": "guide",
     "label": "Guides",
-    "icon": "<img src=\"/sidebar-book.svg\" alt=\"\" />",
+    "icon": "/sidebar-book.svg",
     "context": "sidebar-icon-guide"
   },
   {
