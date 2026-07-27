@@ -39,6 +39,52 @@ test.describe('Auto nav and sidebar test', async () => {
     );
   });
 
+  test('Should render sidebar icons and tags correctly', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/api/index.html`, {
+      waitUntil: 'networkidle',
+    });
+
+    const sidebar = page.locator('.rp-doc-layout__sidebar');
+    const overviewItem = sidebar.locator(
+      '.rp-sidebar-item[data-context="api-overview"]',
+    );
+    const overviewIcon = overviewItem.locator('.rp-sidebar-item__icon');
+    const overviewTag = overviewItem.locator(
+      '.rp-sidebar-item__right .rp-badge',
+    );
+
+    await expect(overviewIcon.locator('svg')).toHaveCount(1);
+    await expect(overviewTag).toHaveText('new');
+    await expect(
+      overviewItem.evaluate(item => {
+        const iconElement = item.querySelector('.rp-sidebar-item__icon');
+        const textElement = item.querySelector(
+          '.rp-sidebar-item__left > .rp-doc',
+        );
+        return Boolean(
+          iconElement &&
+          textElement &&
+          (iconElement.compareDocumentPosition(textElement) &
+            Node.DOCUMENT_POSITION_FOLLOWING) !==
+            0,
+        );
+      }),
+    ).resolves.toBe(true);
+
+    const groupImage = sidebar.locator(
+      '.rp-sidebar-item[data-context="config"] .rp-sidebar-item__icon > img',
+    );
+    await expect(groupImage).toHaveCSS('width', '20px');
+    await expect(groupImage).toHaveCSS('height', '20px');
+
+    const sectionHeaderImage = sidebar
+      .locator('.rp-sidebar-section-header')
+      .filter({ hasText: /^Section Header$/ })
+      .locator('.rp-sidebar-section-header__icon > img');
+    await expect(sectionHeaderImage).toHaveCSS('width', '20px');
+    await expect(sectionHeaderImage).toHaveCSS('height', '20px');
+  });
+
   test('Should load total API Overview correctly', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/api/index.html`, {
       waitUntil: 'networkidle',

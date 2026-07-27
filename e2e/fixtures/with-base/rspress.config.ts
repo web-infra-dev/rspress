@@ -1,9 +1,6 @@
 import * as path from 'node:path';
 import { defineConfig } from '@rspress/core';
 
-const htmlImageIcon =
-  '<img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" width="48" height="32" />';
-
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
   lang: 'zh',
@@ -46,18 +43,11 @@ export default defineConfig({
         sidebar: {
           '/en/guide/': [
             {
-              sectionHeaderText: 'Resources',
-              icon: htmlImageIcon,
-            },
-            {
               text: 'Guide',
-              icon: htmlImageIcon,
               items: [
                 {
                   text: 'Quick Start',
                   link: '/en/guide/quick-start',
-                  icon: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/></svg>',
-                  tag: 'new',
                 },
                 {
                   text: 'Install',
