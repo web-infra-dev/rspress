@@ -1,4 +1,4 @@
-import type { RsbuildConfig } from '@rsbuild/core';
+import type { RestartFn, RsbuildConfig } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import { initRsbuild } from './initRsbuild';
 import { PluginDriver } from './PluginDriver';
@@ -15,10 +15,13 @@ interface DevOptions {
   config: UserConfig;
   configFilePath: string;
   extraBuilderConfig?: RsbuildConfig;
+  restart?: RestartFn;
 }
 
 export async function dev(options: DevOptions): Promise<ServerInstance> {
-  const { docDirectory, config, extraBuilderConfig, configFilePath } = options;
+  const { docDirectory, config, extraBuilderConfig, configFilePath, restart } =
+    options;
+  const configFileMeta = (config as UserConfig & RsbuildConfig)._privateMeta;
   const isProd = false;
   // 1. create PluginDriver
   const pluginDriver = await PluginDriver.create(
@@ -47,7 +50,11 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
       pluginDriver,
       routeService,
       false,
-      extraBuilderConfig,
+      {
+        configFileMeta,
+        extraRsbuildConfig: extraBuilderConfig,
+        restart,
+      },
     );
     rsbuild.onAfterDevCompile(async () => {
       await pluginDriver.afterBuild();
