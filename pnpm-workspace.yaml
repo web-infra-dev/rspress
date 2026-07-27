@@ -22,10 +22,12 @@ minimumReleaseAgeExclude:
   - '@rspack/*'
   - '@rsbuild/*'
   - '@rslib/*'
+  - rsbuild-plugin-dts
   - '@rspress/*'
   - '@rstest/*'
   - '@rsdoctor/*'
   - '@rslint/*'
+  - '@rstack-dev/*'
 
 # Prevent un-reviewed build scripts
 strictDepBuilds: true

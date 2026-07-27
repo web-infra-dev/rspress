@@ -5,9 +5,11 @@ export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
   lang: 'zh',
   base: '/base',
+  route: {
+    localeRedirect: 'never',
+  },
   themeConfig: {
     darkMode: false,
-    localeRedirect: 'never',
     locales: [
       {
         lang: 'zh',

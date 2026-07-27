@@ -18,8 +18,11 @@ export type LlmsViewOption = 'markdownLink' | 'chatgpt' | 'claude';
 export type LlmsUI =
   | {
       /**
-       * Whether to inject a hidden hint into SSG HTML pages that points LLMs
-       * to llms.txt and llms-full.txt.
+       * Whether to inject an LLM directive hint into generated pages. In SSG
+       * HTML output, it is rendered as a visually hidden plain-text DOM element
+       * with llms.txt, llms-full.txt, and the current page's Markdown version.
+       * In SSG-MD Markdown output, it is rendered as a leading blockquote
+       * string.
        * @default true
        */
       injectLlmsHint?: boolean;
@@ -148,7 +151,8 @@ export type ThemeConfig = {
    */
   enableScrollToTop?: boolean;
   /**
-   * Whether to redirect to the closest locale when the user visits the site
+   * Whether to redirect to the closest locale when the user visits the site.
+   * @deprecated Use `route.localeRedirect` instead.
    * @default 'auto'
    */
   localeRedirect?: 'auto' | 'never' | 'only-default-lang';

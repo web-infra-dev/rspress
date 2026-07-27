@@ -7,10 +7,10 @@ export default defineConfig({
   base: '/base',
   route: {
     cleanUrls: true,
+    localeRedirect: 'never',
   },
   themeConfig: {
     darkMode: false,
-    localeRedirect: 'never',
     locales: [
       {
         lang: 'zh',

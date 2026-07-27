@@ -2,6 +2,7 @@ import {
   getDefaultDarkModeValue,
   isDarkModeSwitchEnabled,
   type DarkMode,
+  type UserConfig,
 } from '@rspress/shared';
 import { createRequire } from 'node:module';
 import path from 'node:path';
@@ -36,6 +37,78 @@ export const getInlineThemeScript = (darkMode: DarkMode | undefined) => {
   document.documentElement.classList.toggle('dark', isDark)
   document.documentElement.classList.toggle('rp-dark', isDark)
   document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
+}`
+    .replace(/\n/g, ';')
+    .replace(/\s{2,}/g, '');
+};
+
+const serializeInlineScriptData = (value: unknown) =>
+  JSON.stringify(value).replace(/</g, '\\u003c');
+
+// Resolve the locale before the first render to avoid showing content in the
+// wrong language while waiting for React to hydrate.
+export const getInlineLocaleRedirectScript = (config: UserConfig) => {
+  const localeRedirect =
+    config.route?.localeRedirect ??
+    config.themeConfig?.localeRedirect ??
+    'auto';
+  const defaultLang = config.lang || '';
+  const locales = config.locales ?? config.themeConfig?.locales ?? [];
+
+  if (localeRedirect === 'never' || !defaultLang || locales.length === 0) {
+    return '';
+  }
+
+  const langs = locales.map(locale => locale.lang);
+  const versions = config.multiVersion?.versions ?? [];
+  const base = (config.base ?? '/').replace(/\/$/, '');
+  const routePathname = base ? 'cleanPathname' : 'pathname';
+  const pathDeclarations = base
+    ? `base = ${serializeInlineScriptData(base)}, cleanPathname = pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname, pathSegments = cleanPathname.split('/').filter(Boolean)`
+    : `pathSegments = pathname.split('/').filter(Boolean)`;
+  const langIndex = versions.length ? 'langIndex' : '0';
+  const versionDeclarations = versions.length
+    ? `versions = ${serializeInlineScriptData(versions)}, langIndex = versions.includes(pathSegments[0]) ? 1 : 0`
+    : '';
+  const routeDeclarations = [
+    pathDeclarations,
+    versionDeclarations,
+    `currentLang = langs.includes(pathSegments[${langIndex}]) ? pathSegments[${langIndex}] : defaultLang`,
+  ]
+    .filter(Boolean)
+    .join(', ');
+  const replaceLocationScript = `
+  var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && ${routePathname}.endsWith('/') ? '/' : ''
+  window.location.replace(${base ? 'base + ' : ''}newPathname + trailingSlash + search)`;
+  const redirectScript =
+    localeRedirect === 'only-default-lang'
+      ? `if (currentLang === defaultLang && langs.includes(targetLang) && targetLang !== defaultLang) {
+        var newPathSegments = pathSegments.slice()
+        newPathSegments.splice(${langIndex}, 0, targetLang)
+        ${replaceLocationScript}
+      }`
+      : `if (langs.includes(targetLang) && targetLang !== currentLang) {
+        var newPathSegments = pathSegments.slice()
+        if (targetLang === defaultLang) {
+          newPathSegments.splice(${langIndex}, 1)
+        } else if (currentLang === defaultLang) {
+          newPathSegments.splice(${langIndex}, 0, targetLang)
+        } else {
+          newPathSegments[${langIndex}] = targetLang
+        }
+        ${replaceLocationScript}
+      }`;
+
+  return `{
+  var defaultLang = ${serializeInlineScriptData(defaultLang)}, langs = ${serializeInlineScriptData(langs)}
+  if (!/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {
+    var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey)
+    if (!visited) {
+      localStorage.setItem(firstVisitKey, '1')
+      var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, ${routeDeclarations}
+      ${redirectScript}
+    }
+  }
 }`
     .replace(/\n/g, ';')
     .replace(/\s{2,}/g, '');

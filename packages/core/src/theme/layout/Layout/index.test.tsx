@@ -32,9 +32,6 @@ rs.mock('@rspress/core/theme', () => ({
   HomeLayout: () => 'Home layout',
   Nav: () => 'Nav',
   NotFoundLayout: () => 'Not found',
-  useRedirect4FirstVisit: () => {
-    throw new Error('client-only layout hook should not run in SSG_MD mode');
-  },
   useScrollReset: () => {
     throw new Error('client-only layout hook should not run in SSG_MD mode');
   },

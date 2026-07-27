@@ -27,13 +27,13 @@ rs.mock('@rspress/core/runtime', () => ({
 
 rs.mock('@rspress/core/theme', () => ({
   Layout: () => 'Layout content',
-  LlmsHiddenHint: () => 'LLMS hidden hint',
+  LlmsHint: () => 'LLMS hint',
   Root: ({ children }: { children: ReactNode }) => children,
 }));
 
 rs.mock('@rspress/core/theme-original', () => ({
   Layout: () => 'Layout content',
-  LlmsHiddenHint: () => 'LLMS hidden hint',
+  LlmsHint: () => 'LLMS hint',
   Root: ({ children }: { children: ReactNode }) => children,
 }));
 
@@ -68,13 +68,13 @@ afterEach(() => {
 });
 
 describe('App', () => {
-  it('renders a hidden LLM hint when ENABLE_LLMS_HINT is enabled', () => {
+  it('renders an LLM directive hint when ENABLE_LLMS_HINT is enabled', () => {
     setImportMetaEnv('ENABLE_LLMS_HINT', true);
 
     const html = renderToStaticMarkup(<App />);
 
-    expect(html).toContain('LLMS hidden hint');
-    expect(html.indexOf('LLMS hidden hint')).toBeLessThan(
+    expect(html).toContain('LLMS hint');
+    expect(html.indexOf('LLMS hint')).toBeLessThan(
       html.indexOf('Layout content'),
     );
   });
@@ -82,7 +82,7 @@ describe('App', () => {
   it('does not render the LLM hint when it is disabled', () => {
     setImportMetaEnv('ENABLE_LLMS_HINT', undefined);
 
-    expect(renderToStaticMarkup(<App />)).not.toContain('LLMS hidden hint');
+    expect(renderToStaticMarkup(<App />)).not.toContain('LLMS hint');
   });
 
   it('omits global UI components when SSG_MD is enabled', async () => {
@@ -109,5 +109,14 @@ describe('App', () => {
         </PageContext.Provider>,
       ),
     ).toMatchInlineSnapshot('"Layout content"');
+  });
+
+  it('renders the LLM hint when SSG_MD and ENABLE_LLMS_HINT are enabled', async () => {
+    setImportMetaEnv('SSG_MD', true);
+    setImportMetaEnv('ENABLE_LLMS_HINT', true);
+
+    expect(await renderToMarkdownString(<App />)).toMatchInlineSnapshot(
+      '"LLMS hintLayout content"',
+    );
   });
 });

@@ -3,6 +3,9 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   root: path.join(import.meta.dirname, 'docs'),
+  route: {
+    localeRedirect: 'never',
+  },
   lang: 'en',
   base: '/base/',
   locales: [
