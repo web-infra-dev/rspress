@@ -1049,9 +1049,6 @@ importers:
       '@types/react':
         specifier: ^19.2.17
         version: 19.2.17
-      '@types/unist':
-        specifier: ^3.0.3
-        version: 3.0.3
       '@unhead/react':
         specifier: ^2.1.16
         version: 2.1.16(react@19.2.7)
@@ -1094,9 +1091,6 @@ importers:
       react-lazy-with-preload:
         specifier: ^2.2.1
         version: 2.2.1
-      react-reconciler:
-        specifier: 0.33.0
-        version: 0.33.0(react@19.2.7)
       react-render-to-markdown:
         specifier: 19.1.0
         version: 19.1.0(react@19.2.7)
@@ -1179,9 +1173,6 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.17)
-      '@types/react-reconciler':
-        specifier: ^0.33.0
-        version: 0.33.0(@types/react@19.2.17)
       '@types/web':
         specifier: ^0.0.353
         version: 0.0.353
@@ -3957,11 +3948,6 @@ packages:
     resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
     peerDependencies:
       '@types/react': ^19.2.0
-
-  '@types/react-reconciler@0.33.0':
-    resolution: {integrity: sha512-HZOXsKT0tGI9LlUw2LuedXsVeB88wFa536vVL0M6vE8zN63nI+sSr1ByxmPToP5K5bukaVscyeCJcF9guVNJ1g==}
-    peerDependencies:
-      '@types/react': '*'
 
   '@types/react@19.2.17':
     resolution: {integrity: sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==}
@@ -9990,10 +9976,6 @@ snapshots:
   '@types/parse5@6.0.3': {}
 
   '@types/react-dom@19.2.3(@types/react@19.2.17)':
-    dependencies:
-      '@types/react': 19.2.17
-
-  '@types/react-reconciler@0.33.0(@types/react@19.2.17)':
     dependencies:
       '@types/react': 19.2.17
 
