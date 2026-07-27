@@ -12,8 +12,8 @@ importers:
         specifier: ^2.31.1
         version: 2.31.1(@types/node@22.19.15)
       '@playwright/test':
-        specifier: 1.61.1
-        version: 1.61.1
+        specifier: 1.62.0
+        version: 1.62.0
       '@rsbuild/plugin-react':
         specifier: ~2.1.0
         version: 2.1.0(@rsbuild/core@2.1.7)(@rspack/core@2.1.5(@swc/helpers@0.5.23))
@@ -72,8 +72,8 @@ importers:
         specifier: 0.6.0
         version: 0.6.0
       playwright:
-        specifier: 1.61.1
-        version: 1.61.1
+        specifier: 1.62.0
+        version: 1.62.0
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -3021,9 +3021,9 @@ packages:
     resolution: {integrity: sha512-tmmZ3lQxAe/k/+rNnXQRawJ4NjxO2hqiOLTHvWchtGZULp4RyFeh6aU4XdOYBFe2KE1oShQTv4AblOs2iOrNnQ==}
     engines: {node: '>= 10.0.0'}
 
-  '@playwright/test@1.61.1':
-    resolution: {integrity: sha512-8nKv6+0RJSL9FE4jYOEGXnPeM/Hg12qZpmqzZjRh3qM0Y7c3z1mrOTfFLids72RDQYVh9WpLEfR5WdpNX4fkig==}
-    engines: {node: '>=18'}
+  '@playwright/test@1.62.0':
+    resolution: {integrity: sha512-9zOJ6ZQRAena31MpOH9VSzIz8Ou3YJ/wtY/eQm5T2uhfhG7/U3COrMS8xOtUrZrp9OgdmzEnIYODye3nY1VqzA==}
+    engines: {node: '>=20'}
     hasBin: true
 
   '@publint/pack@0.1.4':
@@ -6292,14 +6292,14 @@ packages:
     resolution: {integrity: sha512-KocF8ve28eFjjuBKKGvzOBGzG8ew2OqOOSxTTZhirkzH7h3BI1vyzqlR0qbfcDBve1Yzo3FVlWUAtCRrbVN8Fw==}
     engines: {node: '>=14.16'}
 
-  playwright-core@1.61.1:
-    resolution: {integrity: sha512-h7Qlt6m4REp25qvIdvbDtVmD4LqVXfpRxhORv9L0jzETM05p4fuPJ3dKyuSXQxDSbXnmS79HAgi9589lGSpLkg==}
-    engines: {node: '>=18'}
+  playwright-core@1.62.0:
+    resolution: {integrity: sha512-nsNRyq0r2zsG8AcRHWknc9QRA5XCueC7gWMrs+Gx2tlZn9hcl8zudfh00lhJPY1DE7NmZ6bDsT9g2yey8mXljA==}
+    engines: {node: '>=20'}
     hasBin: true
 
-  playwright@1.61.1:
-    resolution: {integrity: sha512-DWnY5o3YbLWK4GovuAVwpqL+1VwGNdUGrRr++8j8PtQQzvAVZUIMjKQ90fY689sEJZJBbZVw1rXaOKSTitkzPQ==}
-    engines: {node: '>=18'}
+  playwright@1.62.0:
+    resolution: {integrity: sha512-Z14dG305dgaLu6foB1TXQagFiW8JfSUIUaUuPaKQ6NtBPKF1P/qXcqfh6c6K/icPqdy37JmjbiBXf6JNg6Sylw==}
+    engines: {node: '>=20'}
     hasBin: true
 
   postcss@8.5.23:
@@ -8845,9 +8845,9 @@ snapshots:
       '@parcel/watcher-win32-x64': 2.5.6
     optional: true
 
-  '@playwright/test@1.61.1':
+  '@playwright/test@1.62.0':
     dependencies:
-      playwright: 1.61.1
+      playwright: 1.62.0
 
   '@publint/pack@0.1.4': {}
 
@@ -9108,8 +9108,8 @@ snapshots:
 
   '@rslib/core@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(typescript@6.0.3)':
     dependencies:
-      '@rsbuild/core': 2.1.7
-      rsbuild-plugin-dts: 1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(@rsbuild/core@2.1.7)(typescript@6.0.3)
+      '@rsbuild/core': 2.1.8
+      rsbuild-plugin-dts: 1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(@rsbuild/core@2.1.8)(typescript@6.0.3)
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.12(@types/node@22.19.15)
       typescript: 6.0.3
@@ -9119,8 +9119,8 @@ snapshots:
 
   '@rslib/core@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(typescript@7.0.2)':
     dependencies:
-      '@rsbuild/core': 2.1.7
-      rsbuild-plugin-dts: 1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(@rsbuild/core@2.1.7)(typescript@7.0.2)
+      '@rsbuild/core': 2.1.8
+      rsbuild-plugin-dts: 1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(@rsbuild/core@2.1.8)(typescript@7.0.2)
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.12(@types/node@22.19.15)
       typescript: 7.0.2
@@ -9130,8 +9130,8 @@ snapshots:
 
   '@rslib/core@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@25.6.0))(typescript@6.0.3)':
     dependencies:
-      '@rsbuild/core': 2.1.7
-      rsbuild-plugin-dts: 1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@25.6.0))(@rsbuild/core@2.1.7)(typescript@6.0.3)
+      '@rsbuild/core': 2.1.8
+      rsbuild-plugin-dts: 1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@25.6.0))(@rsbuild/core@2.1.8)(typescript@6.0.3)
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.12(@types/node@25.6.0)
       typescript: 6.0.3
@@ -9141,8 +9141,8 @@ snapshots:
 
   '@rslib/core@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@25.6.0))(typescript@7.0.2)':
     dependencies:
-      '@rsbuild/core': 2.1.7
-      rsbuild-plugin-dts: 1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@25.6.0))(@rsbuild/core@2.1.7)(typescript@7.0.2)
+      '@rsbuild/core': 2.1.8
+      rsbuild-plugin-dts: 1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@25.6.0))(@rsbuild/core@2.1.8)(typescript@7.0.2)
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.12(@types/node@25.6.0)
       typescript: 7.0.2
@@ -12821,11 +12821,11 @@ snapshots:
 
   pify@6.1.0: {}
 
-  playwright-core@1.61.1: {}
+  playwright-core@1.62.0: {}
 
-  playwright@1.61.1:
+  playwright@1.62.0:
     dependencies:
-      playwright-core: 1.61.1
+      playwright-core: 1.62.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -13270,34 +13270,34 @@ snapshots:
       glob: 13.0.6
       package-json-from-dist: 1.0.1
 
-  rsbuild-plugin-dts@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(@rsbuild/core@2.1.7)(typescript@6.0.3):
+  rsbuild-plugin-dts@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(@rsbuild/core@2.1.8)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.1.7
+      '@rsbuild/core': 2.1.8
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.12(@types/node@22.19.15)
       typescript: 6.0.3
 
-  rsbuild-plugin-dts@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(@rsbuild/core@2.1.7)(typescript@7.0.2):
+  rsbuild-plugin-dts@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(@rsbuild/core@2.1.8)(typescript@7.0.2):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.1.7
+      '@rsbuild/core': 2.1.8
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.12(@types/node@22.19.15)
       typescript: 7.0.2
 
-  rsbuild-plugin-dts@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@25.6.0))(@rsbuild/core@2.1.7)(typescript@6.0.3):
+  rsbuild-plugin-dts@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@25.6.0))(@rsbuild/core@2.1.8)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.1.7
+      '@rsbuild/core': 2.1.8
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.12(@types/node@25.6.0)
       typescript: 6.0.3
 
-  rsbuild-plugin-dts@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@25.6.0))(@rsbuild/core@2.1.7)(typescript@7.0.2):
+  rsbuild-plugin-dts@1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@25.6.0))(@rsbuild/core@2.1.8)(typescript@7.0.2):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.1.7
+      '@rsbuild/core': 2.1.8
     optionalDependencies:
       '@microsoft/api-extractor': 7.58.12(@types/node@25.6.0)
       typescript: 7.0.2
