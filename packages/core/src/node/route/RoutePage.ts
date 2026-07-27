@@ -6,8 +6,6 @@ import { RouteService } from './RouteService';
 
 export class RoutePage {
   routeMeta: RouteMeta;
-  // @ts-expect-error use this field in the future
-  #docDir: string;
 
   pageIndexInfo?: PageIndexInfo;
 
@@ -21,7 +19,7 @@ export class RoutePage {
       docsDir,
       RouteService.getInstance(),
     );
-    return new RoutePage(routeMeta, docsDir);
+    return new RoutePage(routeMeta);
   }
 
   static createFromExternal(
@@ -30,12 +28,11 @@ export class RoutePage {
     docDir: string,
   ): RoutePage {
     const routeMeta = RoutePage.generateRouteMeta(routePath, filepath, docDir);
-    return new RoutePage(routeMeta, path.dirname(filepath));
+    return new RoutePage(routeMeta);
   }
 
-  private constructor(routeMeta: RouteMeta, docDir: string) {
+  private constructor(routeMeta: RouteMeta) {
     this.routeMeta = routeMeta;
-    this.#docDir = docDir;
   }
 
   static generateRouteMeta(
