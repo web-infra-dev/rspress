@@ -22,11 +22,12 @@
     width: 20px;
     height: 20px;
     flex: 0 0 20px;
-    object-fit: contain;
 
-    > svg {
+    > svg,
+    > img {
       width: 100%;
       height: 100%;
+      object-fit: contain;
     }
   }
 

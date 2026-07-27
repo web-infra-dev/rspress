@@ -39,8 +39,17 @@ test.describe('plugin test', async () => {
     const sidebar = page.locator('.rp-doc-layout__sidebar');
     await expect(sidebar).toHaveCount(1);
 
+    const sectionHeaderIcon = sidebar.locator(
+      '.rp-sidebar-section-header__icon',
+    );
+    const sectionHeaderImage = sectionHeaderIcon.locator('img');
+    await expect(sectionHeaderImage).toHaveCSS('width', '20px');
+    await expect(sectionHeaderImage).toHaveCSS('height', '20px');
+
     const group = sidebar.locator('.rp-sidebar-group').first();
-    await expect(group.locator('.rp-sidebar-item__icon')).toHaveText('📚');
+    const groupIconImage = group.locator('.rp-sidebar-item__icon > img');
+    await expect(groupIconImage).toHaveCSS('width', '20px');
+    await expect(groupIconImage).toHaveCSS('height', '20px');
 
     const quickStartItem = sidebar.locator(
       'a[href="/base/en/guide/quick-start.html"]',
