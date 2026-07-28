@@ -1,25 +1,15 @@
 import type { DocSearchProps } from '@docsearch/react';
 import { DocSearch } from '@docsearch/react';
-import { removeBase, useLang } from '@rspress/core/runtime';
+import { removeBase, safePreconnect, useLang } from '@rspress/core/runtime';
 import { Link, useLinkNavigate } from '@rspress/core/theme';
 import '@docsearch/css';
 import './Search.css';
 import { useEffect } from 'react';
-import * as ReactDOM from 'react-dom';
 import type { Locales } from './locales';
 
 const Hit: DocSearchProps['hitComponent'] = ({ hit, children }) => {
   return <Link href={hit.url}>{children}</Link>;
 };
-
-type ReactDOMWithPreconnect = typeof ReactDOM & {
-  preconnect?: (
-    href: string,
-    options?: { crossOrigin?: '' | 'anonymous' | 'use-credentials' },
-  ) => void;
-};
-
-const safePreconnect = (ReactDOM as ReactDOMWithPreconnect).preconnect;
 
 type SearchProps = {
   /**

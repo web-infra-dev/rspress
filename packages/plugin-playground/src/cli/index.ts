@@ -7,7 +7,7 @@ import type {
 import type { RouteMeta, RspressPlugin } from '@rspress/core';
 import { getNodeAttribute } from '@rspress/core';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
-import { DEFAULT_BABEL_URL, DEFAULT_MONACO_URL } from '../web/constant';
+import { DEFAULT_BABEL_URL } from '../web/constant';
 import { remarkPlugin } from './remarkPlugin';
 import { parseImports } from './utils';
 
@@ -60,14 +60,6 @@ export function pluginPlayground(
       '[Playground]: render should ends with Playground.(jsx?|tsx?)',
     );
   }
-
-  const preloads: string[] = [];
-  const monacoPrefix = (monacoLoader.paths?.vs || DEFAULT_MONACO_URL).replace(
-    /\/+$/,
-    '',
-  );
-  preloads.push(`${monacoPrefix}/loader.js`);
-  preloads.push(`${monacoPrefix}/editor/editor.main.js`);
 
   return {
     name: '@rspress/plugin-playground',
@@ -214,17 +206,6 @@ export function pluginPlayground(
         },
         include: [pkgRootPath],
       },
-      html: {
-        tags: preloads.map(url => ({
-          tag: 'link',
-          head: true,
-          attrs: {
-            rel: 'preload',
-            href: url,
-            as: 'script',
-          },
-        })),
-      },
       tools: {
         rspack: {
           plugins: [playgroundVirtualModule],
@@ -233,7 +214,14 @@ export function pluginPlayground(
     },
     markdown: {
       remarkPlugins: [
-        [remarkPlugin, { getRouteMeta, editorPosition, defaultRenderMode }],
+        [
+          remarkPlugin,
+          {
+            getRouteMeta,
+            editorPosition,
+            defaultRenderMode,
+          },
+        ],
       ],
       globalComponents: [
         render
