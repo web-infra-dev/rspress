@@ -700,27 +700,22 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `true`
 
-Enables a client-side fallback that redirects the configured base path without a trailing slash to its canonical trailing-slash URL. For example, when `base` is `/docs/`, a request to `/docs` is redirected to `/docs/`. Query parameters and hashes are preserved.
+Suppose your site is deployed at `https://example.com/docs/`:
 
-This fallback only works when the deployment server returns the Rspress homepage HTML and client assets for the URL without the trailing slash. It cannot recover from a server-side `404`.
-
-:::tip Prefer server-side redirects
-
-For production sites, prefer a permanent redirect on the server or at the CDN edge. It canonicalizes the URL before HTML is delivered and does not depend on client-side JavaScript. Keep `route.baseRedirect` enabled as a fallback when the hosting server may serve the homepage HTML without performing that redirect.
-
-:::
-
-Set this option to `false` when your server or CDN already canonicalizes the base URL, or when both URL forms must remain accessible:
-
-```js title="rspress.config.ts"
+```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
+  base: '/docs/',
   route: {
-    baseRedirect: false,
+    baseRedirect: true,
   },
 });
 ```
+
+If a user opens `https://example.com/docs` without the final `/` and the server still returns the Rspress homepage, Rspress redirects the browser to `https://example.com/docs/`. Query parameters and hashes are preserved.
+
+This option is enabled by default as a fallback. It cannot take effect if the server returns a `404`. If your server already redirects `/docs` to `/docs/`, you can set `baseRedirect` to `false`.
 
 ### route.localeRedirect
 
