@@ -11,9 +11,7 @@ import { redirectToBaseWithTrailingSlash } from './utils';
 // 3. add onRecoverableError
 
 async function renderInBrowser() {
-  if (redirectToBaseWithTrailingSlash(window.location)) {
-    return;
-  }
+  redirectToBaseWithTrailingSlash(window.location, window.history);
 
   const container = document.getElementById('__rspress_root')!;
   const pathname = removeBase(window.location.pathname);

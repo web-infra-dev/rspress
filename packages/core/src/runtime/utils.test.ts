@@ -24,63 +24,76 @@ describe('redirectToBaseWithTrailingSlash', () => {
 
   it('redirects the base path to its trailing-slash URL by default', () => {
     siteData.base = '/docs/';
-    const replace = rs.fn();
+    const replaceState = rs.fn();
+    const state = { key: 'value' };
 
     expect(
-      redirectToBaseWithTrailingSlash({
-        pathname: '/docs',
-        search: '?from=home',
-        hash: '#overview',
-        replace,
-      }),
+      redirectToBaseWithTrailingSlash(
+        {
+          pathname: '/docs',
+          search: '?from=home',
+          hash: '#overview',
+        },
+        { replaceState, state },
+      ),
     ).toBe(true);
-    expect(replace).toHaveBeenCalledWith('/docs/?from=home#overview');
+    expect(replaceState).toHaveBeenCalledWith(
+      state,
+      '',
+      '/docs/?from=home#overview',
+    );
   });
 
   it('does not redirect when route.baseRedirect is false', () => {
     siteData.base = '/docs/';
     siteData.route.baseRedirect = false;
-    const replace = rs.fn();
+    const replaceState = rs.fn();
 
     expect(
-      redirectToBaseWithTrailingSlash({
-        pathname: '/docs',
-        search: '',
-        hash: '',
-        replace,
-      }),
+      redirectToBaseWithTrailingSlash(
+        {
+          pathname: '/docs',
+          search: '',
+          hash: '',
+        },
+        { replaceState, state: null },
+      ),
     ).toBe(false);
-    expect(replace).not.toHaveBeenCalled();
+    expect(replaceState).not.toHaveBeenCalled();
   });
 
   it('does not redirect other paths', () => {
     siteData.base = '/docs/';
-    const replace = rs.fn();
+    const replaceState = rs.fn();
 
     expect(
-      redirectToBaseWithTrailingSlash({
-        pathname: '/docs/guide',
-        search: '',
-        hash: '',
-        replace,
-      }),
+      redirectToBaseWithTrailingSlash(
+        {
+          pathname: '/docs/guide',
+          search: '',
+          hash: '',
+        },
+        { replaceState, state: null },
+      ),
     ).toBe(false);
-    expect(replace).not.toHaveBeenCalled();
+    expect(replaceState).not.toHaveBeenCalled();
   });
 
   it('does not redirect the root base', () => {
     siteData.base = '/';
-    const replace = rs.fn();
+    const replaceState = rs.fn();
 
     expect(
-      redirectToBaseWithTrailingSlash({
-        pathname: '/',
-        search: '',
-        hash: '',
-        replace,
-      }),
+      redirectToBaseWithTrailingSlash(
+        {
+          pathname: '/',
+          search: '',
+          hash: '',
+        },
+        { replaceState, state: null },
+      ),
     ).toBe(false);
-    expect(replace).not.toHaveBeenCalled();
+    expect(replaceState).not.toHaveBeenCalled();
   });
 });
 

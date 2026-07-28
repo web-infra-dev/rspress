@@ -712,7 +712,7 @@ export default defineConfig({
 });
 ```
 
-如果用户访问缺少末尾 `/` 的 `https://example.com/docs`，并且托管平台仍然返回了 Rspress 首页，Rspress 会在浏览器中自动跳转到 `https://example.com/docs/`。查询参数和 hash 会被保留。
+如果用户访问缺少末尾 `/` 的 `https://example.com/docs`，并且托管平台仍然返回了 Rspress 首页，Rspress 会将浏览器 URL 更新为 `https://example.com/docs/`，不会重新加载页面。查询参数和 hash 会被保留。
 
 该选项默认开启，专门作为兜底。如果托管平台直接返回 `404`，该选项无法生效。如果托管平台已经会将 `/docs` 重定向到 `/docs/`，可以将 `baseRedirect` 设置为 `false`。
 

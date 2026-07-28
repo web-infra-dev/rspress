@@ -595,8 +595,8 @@ export interface RouteOptions {
    */
   cleanUrls?: boolean;
   /**
-   * Whether to redirect the configured base path without a trailing slash to
-   * its canonical trailing-slash URL in the browser.
+   * Whether to update the configured base path without a trailing slash to its
+   * trailing-slash URL in the browser without reloading the page.
    * @default true
    */
   baseRedirect?: boolean;

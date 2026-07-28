@@ -28,16 +28,18 @@ function removeBase(url: string): string {
 /**
  * Redirects a base pathname without a trailing slash to its canonical URL.
  *
- * Some deployment servers may serve the homepage HTML when a site configured
+ * Some hosting providers may serve the homepage HTML when a site configured
  * with `base: '/docs/'` is accessed at `/docs`, leaving the browser on the
- * non-canonical pathname. This client-side fallback redirects to `/docs/`
- * before rendering or hydration while preserving the query string and hash.
- * Set `route.baseRedirect` to `false` to disable this fallback.
+ * pathname without a trailing slash. This client-side fallback updates the URL
+ * to `/docs/` with the History API, without reloading the page, while preserving
+ * the query string, hash, and history state. Set `route.baseRedirect` to
+ * `false` to disable this fallback.
  *
- * @returns Whether a redirect was triggered.
+ * @returns Whether the URL was updated.
  */
 function redirectToBaseWithTrailingSlash(
-  location: Pick<Location, 'hash' | 'pathname' | 'replace' | 'search'>,
+  location: Pick<Location, 'hash' | 'pathname' | 'search'>,
+  history: Pick<History, 'replaceState' | 'state'>,
 ): boolean {
   const { base } = siteData;
   if (
@@ -48,7 +50,11 @@ function redirectToBaseWithTrailingSlash(
     return false;
   }
 
-  location.replace(`${base}${location.search}${location.hash}`);
+  history.replaceState(
+    history.state,
+    '',
+    `${base}${location.search}${location.hash}`,
+  );
   return true;
 }
 
