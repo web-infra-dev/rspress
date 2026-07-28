@@ -1,5 +1,14 @@
 import { createRoot } from 'react-dom/client';
 import { ClientApp } from './ClientApp';
+import { redirectToBaseWithTrailingSlash } from './utils';
 
-const container = document.getElementById('__rspress_root')!;
-createRoot(container).render(<ClientApp />);
+function renderInBrowser() {
+  if (redirectToBaseWithTrailingSlash(window.location)) {
+    return;
+  }
+
+  const container = document.getElementById('__rspress_root')!;
+  createRoot(container).render(<ClientApp />);
+}
+
+renderInBrowser();

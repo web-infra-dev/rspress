@@ -1,5 +1,10 @@
-import { describe, expect, it, rs } from '@rstest/core';
-import { routePathToMdPath, withSiteOrigin } from './utils';
+import { afterEach, describe, expect, it, rs } from '@rstest/core';
+import siteData from 'virtual-site-data';
+import {
+  redirectToBaseWithTrailingSlash,
+  routePathToMdPath,
+  withSiteOrigin,
+} from './utils';
 
 rs.mock('virtual-site-data', () => {
   return {
@@ -8,6 +13,57 @@ rs.mock('virtual-site-data', () => {
       siteOrigin: 'https://example.com',
     },
   };
+});
+
+describe('redirectToBaseWithTrailingSlash', () => {
+  afterEach(() => {
+    siteData.base = '/';
+  });
+
+  it('redirects the base path to its trailing-slash URL', () => {
+    siteData.base = '/4.0/';
+    const replace = rs.fn();
+
+    expect(
+      redirectToBaseWithTrailingSlash({
+        pathname: '/4.0',
+        search: '?from=home',
+        hash: '#overview',
+        replace,
+      }),
+    ).toBe(true);
+    expect(replace).toHaveBeenCalledWith('/4.0/?from=home#overview');
+  });
+
+  it('does not redirect other paths', () => {
+    siteData.base = '/4.0/';
+    const replace = rs.fn();
+
+    expect(
+      redirectToBaseWithTrailingSlash({
+        pathname: '/4.0/guide',
+        search: '',
+        hash: '',
+        replace,
+      }),
+    ).toBe(false);
+    expect(replace).not.toHaveBeenCalled();
+  });
+
+  it('does not redirect the root base', () => {
+    siteData.base = '/';
+    const replace = rs.fn();
+
+    expect(
+      redirectToBaseWithTrailingSlash({
+        pathname: '/',
+        search: '',
+        hash: '',
+        replace,
+      }),
+    ).toBe(false);
+    expect(replace).not.toHaveBeenCalled();
+  });
 });
 
 describe('withSiteOrigin', () => {

@@ -25,6 +25,18 @@ function removeBase(url: string): string {
   return rawRemoveBase(url, siteData.base);
 }
 
+function redirectToBaseWithTrailingSlash(
+  location: Pick<Location, 'hash' | 'pathname' | 'replace' | 'search'>,
+): boolean {
+  const { base } = siteData;
+  if (base === '/' || location.pathname !== removeTrailingSlash(base)) {
+    return false;
+  }
+
+  location.replace(`${base}${location.search}${location.hash}`);
+  return true;
+}
+
 function isEqualPath(a: string, b: string) {
   return (
     removeBase(normalizeHref(removeHash(a), true)) ===
@@ -80,6 +92,7 @@ export {
   normalizeImagePath,
   removeBase,
   removeTrailingSlash,
+  redirectToBaseWithTrailingSlash,
   routePathToMdPath,
   withBase,
   withSiteOrigin,
