@@ -216,6 +216,36 @@ End of content.`;
     `);
   });
 
+  it('should preserve referenced exports', async () => {
+    const input = `export const a = 1;
+export function Thing() {
+  return <>World</>
+}
+
+# Hello <Thing /> {a}
+
+{a}`;
+
+    const result = await processMdx(input);
+
+    expect(result).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      export const a = 1;
+      export function Thing() {
+        return <>World</>;
+      }
+      function _createMdxContent(props) {
+        return <><>{"# Hello "}<Thing />{" "}{a}</>{"\\n"}{a}</>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
+
   it('should preserve inline mdxTextExpression in headings', async () => {
     const input = `# hello {window.foo}`;
 
