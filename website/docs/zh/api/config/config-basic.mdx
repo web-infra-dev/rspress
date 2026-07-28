@@ -700,6 +700,8 @@ export default defineConfig({
 - **类型**： `boolean`
 - **默认值**： `true`
 
+该配置主要用于托管平台没有自动处理末尾斜杠（trailing slash）的场景。
+
 假设站点部署在 `https://example.com/docs/`：
 
 ```ts title="rspress.config.ts"
@@ -713,9 +715,9 @@ export default defineConfig({
 });
 ```
 
-如果用户访问缺少末尾 `/` 的 `https://example.com/docs`，并且服务器仍然返回了 Rspress 首页，Rspress 会在浏览器中自动跳转到 `https://example.com/docs/`。查询参数和 hash 会被保留。
+如果用户访问缺少末尾 `/` 的 `https://example.com/docs`，并且托管平台仍然返回了 Rspress 首页，Rspress 会在浏览器中自动跳转到 `https://example.com/docs/`。查询参数和 hash 会被保留。
 
-该选项默认开启，专门作为兜底。如果服务器直接返回 `404`，该选项无法生效。如果服务器已经会将 `/docs` 重定向到 `/docs/`，可以将 `baseRedirect` 设置为 `false`。
+该选项默认开启，专门作为兜底。如果托管平台直接返回 `404`，该选项无法生效。如果托管平台已经会将 `/docs` 重定向到 `/docs/`，可以将 `baseRedirect` 设置为 `false`。
 
 ### route.localeRedirect
 

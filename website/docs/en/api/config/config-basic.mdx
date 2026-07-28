@@ -700,6 +700,8 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `true`
 
+This option is mainly for hosting providers that do not handle trailing slashes.
+
 Suppose your site is deployed at `https://example.com/docs/`:
 
 ```ts title="rspress.config.ts"
@@ -713,9 +715,9 @@ export default defineConfig({
 });
 ```
 
-If a user opens `https://example.com/docs` without the final `/` and the server still returns the Rspress homepage, Rspress redirects the browser to `https://example.com/docs/`. Query parameters and hashes are preserved.
+If a user opens `https://example.com/docs` without the final `/` and the hosting provider still returns the Rspress homepage, Rspress redirects the browser to `https://example.com/docs/`. Query parameters and hashes are preserved.
 
-This option is enabled by default as a fallback. It cannot take effect if the server returns a `404`. If your server already redirects `/docs` to `/docs/`, you can set `baseRedirect` to `false`.
+This option is enabled by default as a fallback. It cannot take effect if the hosting provider returns a `404`. If your hosting provider already redirects `/docs` to `/docs/`, you can set `baseRedirect` to `false`.
 
 ### route.localeRedirect
 
