@@ -25,6 +25,16 @@ function removeBase(url: string): string {
   return rawRemoveBase(url, siteData.base);
 }
 
+/**
+ * Redirects a base pathname without a trailing slash to its canonical URL.
+ *
+ * Some deployment servers may serve the homepage HTML when a site configured
+ * with `base: '/docs/'` is accessed at `/docs`, leaving the browser on the
+ * non-canonical pathname. This client-side fallback redirects to `/docs/`
+ * before rendering or hydration while preserving the query string and hash.
+ *
+ * @returns Whether a redirect was triggered.
+ */
 function redirectToBaseWithTrailingSlash(
   location: Pick<Location, 'hash' | 'pathname' | 'replace' | 'search'>,
 ): boolean {
