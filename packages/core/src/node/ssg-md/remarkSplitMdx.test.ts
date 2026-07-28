@@ -246,6 +246,38 @@ export function Thing() {
     `);
   });
 
+  it('should preserve imports and referenced exports together', async () => {
+    const input = `import Badge from '@components/Badge'
+export const a = 1;
+export function Thing() {
+  return <>World</>
+}
+
+# Hello <Badge /> <Thing /> {a}
+
+{a}`;
+
+    const result = await processMdx(input);
+
+    expect(result).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      import Badge from '@components/Badge';
+      export const a = 1;
+      export function Thing() {
+        return <>World</>;
+      }
+      function _createMdxContent(props) {
+        return <><>{"# Hello "}<Badge />{" "}<Thing />{" "}{a}</>{"\\n"}{a}</>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
+
   it('should preserve inline mdxTextExpression in headings', async () => {
     const input = `# hello {window.foo}`;
 
