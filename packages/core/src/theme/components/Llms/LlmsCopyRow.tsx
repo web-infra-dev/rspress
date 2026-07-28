@@ -6,9 +6,8 @@ import {
   SvgWrapper,
 } from '@rspress/core/theme';
 import { useCallback, useRef, useState } from 'react';
+import { getLlmsCopyContent } from './getLlmsCopyContent';
 import { useMdUrl } from './useMdUrl';
-
-const cache = new Map<string, string>();
 
 export function LlmsCopyRow() {
   const t = useI18n();
@@ -21,9 +20,7 @@ export function LlmsCopyRow() {
     if (!pathname) return;
     setLoading(true);
     try {
-      const content: string =
-        cache.get(pathname) ?? (await fetch(pathname).then(res => res.text()));
-      cache.set(pathname, content);
+      const content = await getLlmsCopyContent(pathname);
       const isCopied = await copyToClipboard(content);
       if (!isCopied) {
         return;
