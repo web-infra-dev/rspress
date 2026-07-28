@@ -715,7 +715,7 @@ export default defineConfig({
 });
 ```
 
-If a user opens `https://example.com/docs` without the final `/` and the hosting provider still returns the Rspress homepage, Rspress redirects the browser to `https://example.com/docs/`. Query parameters and hashes are preserved.
+If a user opens `https://example.com/docs` without the trailing slash and the hosting provider still returns the Rspress homepage, Rspress redirects the browser to `https://example.com/docs/`. Query parameters and hashes are preserved.
 
 This option is enabled by default as a fallback. It cannot take effect if the hosting provider returns a `404`. If your hosting provider already redirects `/docs` to `/docs/`, you can set `baseRedirect` to `false`.
 
