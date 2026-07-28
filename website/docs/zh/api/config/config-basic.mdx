@@ -695,6 +695,33 @@ export default defineConfig({
 });
 ```
 
+### route.baseRedirect
+
+- **类型**： `boolean`
+- **默认值**： `true`
+
+开启后，Rspress 会在客户端将缺少末尾斜杠的 `base` 路径重定向到规范 URL。例如，当 `base` 为 `/docs/` 时，访问 `/docs` 会重定向到 `/docs/`，并保留查询参数和 hash。
+
+该选项专门作为客户端兜底，仅在部署服务器能够为缺少末尾斜杠的 URL 返回 Rspress 首页 HTML 和客户端资源时生效，无法处理服务器直接返回 `404` 的情况。
+
+:::tip 优先使用服务端重定向
+
+生产环境中，建议优先在服务器或 CDN 边缘配置永久重定向。这样可以在 HTML 下发前规范 URL，并且不依赖客户端 JavaScript。如果托管服务器可能直接返回首页 HTML 而不执行重定向，请保持 `route.baseRedirect` 开启，作为客户端兜底。
+
+:::
+
+如果服务器或 CDN 已经能够规范化 `base` URL，或者需要同时保留两种 URL 形式，可以将该选项设置为 `false`：
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    baseRedirect: false,
+  },
+});
+```
+
 ### route.localeRedirect
 
 - **类型**：`'auto' | 'never' | 'only-default-lang'`
@@ -709,14 +736,6 @@ export default defineConfig({
 :::tip 建议使用服务端重定向
 
 该选项在浏览器端执行重定向。生产环境中，如果条件允许，更推荐在服务器或 CDN 边缘完成语言协商与重定向。这样可以在 HTML 下发前完成跳转，并且不依赖客户端 JavaScript。
-
-:::
-
-:::warning 配置迁移
-
-`localeRedirect` 已从 `themeConfig` 移至 `route`。原有的 `themeConfig.localeRedirect` 仍会继续生效以保持向后兼容，但已废弃。请迁移至 `route.localeRedirect`；同时配置两者时，`route.localeRedirect` 优先生效。
-
-自动语言重定向现在也会在 hydration 前执行，因此首次访问的用户可能会在任何主题或客户端代码运行前被重定向。如果服务器或 CDN 已经处理了语言协商，或者站点必须保留用户最初请求的语言，请将 `route.localeRedirect` 设置为 `'never'`。
 
 :::
 

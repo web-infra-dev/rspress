@@ -32,6 +32,7 @@ function removeBase(url: string): string {
  * with `base: '/docs/'` is accessed at `/docs`, leaving the browser on the
  * non-canonical pathname. This client-side fallback redirects to `/docs/`
  * before rendering or hydration while preserving the query string and hash.
+ * Set `route.baseRedirect` to `false` to disable this fallback.
  *
  * @returns Whether a redirect was triggered.
  */
@@ -39,7 +40,11 @@ function redirectToBaseWithTrailingSlash(
   location: Pick<Location, 'hash' | 'pathname' | 'replace' | 'search'>,
 ): boolean {
   const { base } = siteData;
-  if (base === '/' || location.pathname !== removeTrailingSlash(base)) {
+  if (
+    siteData.route?.baseRedirect === false ||
+    base === '/' ||
+    location.pathname !== removeTrailingSlash(base)
+  ) {
     return false;
   }
 
