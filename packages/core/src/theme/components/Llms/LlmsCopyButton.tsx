@@ -49,7 +49,7 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
 
     const url = pathname;
     try {
-      const content = await getLlmsCopyContent(url, import.meta.env.DEV);
+      const content = await getLlmsCopyContent(url);
       const isCopied = await copyToClipboard(content);
       if (!isCopied) {
         return;
