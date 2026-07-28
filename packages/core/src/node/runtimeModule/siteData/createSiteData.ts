@@ -20,7 +20,6 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
     description: userConfig?.description || '',
     icon: getIconUrlPath(userConfig?.icon) || '',
     route: {
-      baseRedirect: true,
       useTransitions: true,
       ...userConfig?.route,
     },

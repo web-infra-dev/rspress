@@ -10,7 +10,6 @@ rs.mock('virtual-site-data', () => {
   return {
     default: {
       base: '/',
-      route: {},
       siteOrigin: 'https://example.com',
     },
   };
@@ -19,10 +18,9 @@ rs.mock('virtual-site-data', () => {
 describe('redirectToBaseWithTrailingSlash', () => {
   afterEach(() => {
     siteData.base = '/';
-    siteData.route.baseRedirect = undefined;
   });
 
-  it('redirects the base path to its trailing-slash URL by default', () => {
+  it('redirects the base path to its trailing-slash URL', () => {
     siteData.base = '/docs/';
     const replaceState = rs.fn();
     const state = { key: 'value' };
@@ -42,24 +40,6 @@ describe('redirectToBaseWithTrailingSlash', () => {
       '',
       '/docs/?from=home#overview',
     );
-  });
-
-  it('does not redirect when route.baseRedirect is false', () => {
-    siteData.base = '/docs/';
-    siteData.route.baseRedirect = false;
-    const replaceState = rs.fn();
-
-    expect(
-      redirectToBaseWithTrailingSlash(
-        {
-          pathname: '/docs',
-          search: '',
-          hash: '',
-        },
-        { replaceState, state: null },
-      ),
-    ).toBe(false);
-    expect(replaceState).not.toHaveBeenCalled();
   });
 
   it('does not redirect other paths', () => {

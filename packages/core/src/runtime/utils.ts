@@ -32,8 +32,7 @@ function removeBase(url: string): string {
  * with `base: '/docs/'` is accessed at `/docs`, leaving the browser on the
  * pathname without a trailing slash. This client-side fallback updates the URL
  * to `/docs/` with the History API, without reloading the page, while preserving
- * the query string, hash, and history state. Set `route.baseRedirect` to
- * `false` to disable this fallback.
+ * the query string, hash, and history state.
  *
  * @returns Whether the URL was updated.
  */
@@ -42,11 +41,7 @@ function redirectToBaseWithTrailingSlash(
   history: Pick<History, 'replaceState' | 'state'>,
 ): boolean {
   const { base } = siteData;
-  if (
-    siteData.route?.baseRedirect === false ||
-    base === '/' ||
-    location.pathname !== removeTrailingSlash(base)
-  ) {
+  if (base === '/' || location.pathname !== removeTrailingSlash(base)) {
     return false;
   }
 

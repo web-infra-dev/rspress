@@ -695,27 +695,6 @@ export default defineConfig({
 });
 ```
 
-### route.baseRedirect
-
-- **Type**: `boolean`
-- **Default**: `true`
-
-This option is mainly for hosting providers that do not handle trailing slashes.
-
-Suppose your site is deployed at `https://example.com/docs/`:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  base: '/docs/',
-});
-```
-
-If a user opens `https://example.com/docs` without the trailing slash and the hosting provider still returns the Rspress homepage, Rspress updates the browser URL to `https://example.com/docs/` without reloading the page. Query parameters and hashes are preserved.
-
-This option is enabled by default as a fallback. It cannot take effect if the hosting provider returns a `404`. If your hosting provider already redirects `/docs` to `/docs/`, you can set `baseRedirect` to `false`.
-
 ### route.localeRedirect
 
 - **Type**: `'auto' | 'never' | 'only-default-lang'`

@@ -595,12 +595,6 @@ export interface RouteOptions {
    */
   cleanUrls?: boolean;
   /**
-   * Whether to update the configured base path without a trailing slash to its
-   * trailing-slash URL in the browser without reloading the page.
-   * @default true
-   */
-  baseRedirect?: boolean;
-  /**
    * How to redirect first-time visitors to the closest configured locale
    * based on their browser language.
    * @default 'auto'
