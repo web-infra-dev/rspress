@@ -42,6 +42,27 @@ describe('redirectToBaseWithTrailingSlash', () => {
     );
   });
 
+  it('normalizes a configured base without a trailing slash', () => {
+    siteData.base = '/docs';
+    const replaceState = rs.fn();
+
+    expect(
+      redirectToBaseWithTrailingSlash(
+        {
+          pathname: '/docs',
+          search: '?from=home',
+          hash: '#overview',
+        },
+        { replaceState, state: null },
+      ),
+    ).toBe(true);
+    expect(replaceState).toHaveBeenCalledWith(
+      null,
+      '',
+      '/docs/?from=home#overview',
+    );
+  });
+
   it('does not redirect other paths', () => {
     siteData.base = '/docs/';
     const replaceState = rs.fn();

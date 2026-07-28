@@ -41,14 +41,18 @@ function redirectToBaseWithTrailingSlash(
   history: Pick<History, 'replaceState' | 'state'>,
 ): boolean {
   const { base } = siteData;
-  if (base === '/' || location.pathname !== removeTrailingSlash(base)) {
+  const canonicalBase = addTrailingSlash(base);
+  if (
+    canonicalBase === '/' ||
+    location.pathname !== removeTrailingSlash(canonicalBase)
+  ) {
     return false;
   }
 
   history.replaceState(
     history.state,
     '',
-    `${base}${location.search}${location.hash}`,
+    `${canonicalBase}${location.search}${location.hash}`,
   );
   return true;
 }
