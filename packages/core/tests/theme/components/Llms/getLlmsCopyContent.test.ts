@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, rs } from '@rstest/core';
-import { getLlmsCopyContent } from './getLlmsCopyContent';
+import { getLlmsCopyContent } from '../../../../src/theme/components/Llms/getLlmsCopyContent';
 
 afterEach(() => {
   rs.restoreAllMocks();
