@@ -7,7 +7,7 @@
     "type": "file",
     "name": "index",
     "label": "Introduction",
-    "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M6 3h8l4 4v14H6V3Z\" fill=\"currentColor\" opacity=\".16\"/><path d=\"M14 3v5h5M9 12h6M9 16h6M6 3h8l5 5v13H6V3Z\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+    "icon": "<svg viewBox=\"0 0 32 32\" fill=\"currentColor\"><path d=\"m25.7 9.3-7-7A1 1 0 0 0 18 2H8a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V10a1 1 0 0 0-.3-.7ZM18 4.4l5.6 5.6H18V4.4ZM24 28H8V4h8v6a2 2 0 0 0 2 2h6v16Z\"/><path d=\"M10 22h12v2H10zm0-6h12v2H10z\"/></svg>",
     "tag": "new",
     "context": "sidebar-icon-overview"
   },
@@ -15,7 +15,7 @@
     "type": "file",
     "name": "getting-started",
     "label": "Quick Start",
-    "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M6 3h8l4 4v14H6V3Z\" fill=\"currentColor\" opacity=\".16\"/><path d=\"M14 3v5h5M9 12h6M9 16h6M6 3h8l5 5v13H6V3Z\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>"
+    "icon": "<svg viewBox=\"0 0 32 32\" fill=\"currentColor\"><path d=\"m25.7 9.3-7-7A1 1 0 0 0 18 2H8a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V10a1 1 0 0 0-.3-.7ZM18 4.4l5.6 5.6H18V4.4ZM24 28H8V4h8v6a2 2 0 0 0 2 2h6v16Z\"/><path d=\"M10 22h12v2H10zm0-6h12v2H10z\"/></svg>"
   },
   {
     "type": "dir",
