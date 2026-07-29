@@ -1,8 +1,35 @@
 import fs from 'node:fs/promises';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runDevCommand,
+} from '../../utils/runCommands';
 
 const DOC_FILE = new URL('./doc/index.mdx', import.meta.url);
+const MONACO_PREFIX =
+  'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs';
+const MONACO_PRELOAD_URLS = [
+  `${MONACO_PREFIX}/loader.js`,
+  `${MONACO_PREFIX}/editor/editor.main.js`,
+];
+
+test('Should only preload Monaco on pages containing playgrounds', async () => {
+  const appDir = import.meta.dirname;
+  await runBuildCommand(appDir);
+
+  const [playgroundHtml, pureHtml] = await Promise.all([
+    fs.readFile(path.join(appDir, 'doc_build/index.html'), 'utf-8'),
+    fs.readFile(path.join(appDir, 'doc_build/pure.html'), 'utf-8'),
+  ]);
+
+  for (const url of MONACO_PRELOAD_URLS) {
+    expect(playgroundHtml.split(url)).toHaveLength(2);
+    expect(pureHtml).not.toContain(url);
+  }
+});
 
 test.describe('plugin test', async () => {
   test.describe.configure({ mode: 'serial' });
@@ -12,9 +39,9 @@ test.describe('plugin test', async () => {
   let originalContent: string;
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
+    originalContent = await fs.readFile(DOC_FILE, 'utf-8');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
-    originalContent = await fs.readFile(DOC_FILE, 'utf-8');
   });
 
   test.afterAll(async () => {

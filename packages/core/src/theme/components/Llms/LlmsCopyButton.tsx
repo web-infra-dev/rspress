@@ -13,6 +13,7 @@ import {
 import { useCallback, useRef, useState } from 'react';
 import './index.scss';
 import './LlmsCopyButton.scss';
+import { getLlmsCopyContent } from './getLlmsCopyContent';
 import { useMdUrl } from './useMdUrl';
 
 export interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -33,8 +34,6 @@ export interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButt
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const cache = new Map<string, string>();
-
 export function LlmsCopyButton(props: LlmsCopyButtonProps) {
   const { onClick, ...otherProps } = props;
   const t = useI18n();
@@ -50,10 +49,7 @@ export function LlmsCopyButton(props: LlmsCopyButtonProps) {
 
     const url = pathname;
     try {
-      const content: string =
-        cache.get(url) ?? (await fetch(url).then(res => res.text()));
-
-      cache.set(url, content);
+      const content = await getLlmsCopyContent(url);
       const isCopied = await copyToClipboard(content);
       if (!isCopied) {
         return;

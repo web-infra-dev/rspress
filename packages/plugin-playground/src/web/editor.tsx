@@ -2,7 +2,7 @@ import MonacoEditor, {
   loader,
   type EditorProps as MonacoEditorProps,
 } from '@monaco-editor/react';
-import { useDark } from '@rspress/core/runtime';
+import { safePreload, useDark } from '@rspress/core/runtime';
 import { useMemo } from 'react';
 import { DEFAULT_MONACO_URL } from './constant';
 
@@ -13,7 +13,7 @@ declare global {
   const __PLAYGROUND_MONACO_OPTIONS__: MonacoEditorProps['options'];
 }
 
-function initLoader() {
+function getLoaderConfig() {
   let loaderConfig: Parameters<typeof loader.config>[0] = {
     paths: {
       vs: DEFAULT_MONACO_URL,
@@ -30,9 +30,15 @@ function initLoader() {
     // ignore
   }
 
-  loader.config(loaderConfig);
+  return loaderConfig;
 }
-initLoader();
+
+const loaderConfig = getLoaderConfig();
+const monacoPrefix = (loaderConfig.paths?.vs || DEFAULT_MONACO_URL).replace(
+  /\/+$/,
+  '',
+);
+loader.config(loaderConfig);
 
 function getMonacoOptions() {
   try {
@@ -46,6 +52,9 @@ function getMonacoOptions() {
 export type EditorProps = Partial<MonacoEditorProps>;
 
 export function Editor(props: EditorProps) {
+  safePreload?.(`${monacoPrefix}/loader.js`, { as: 'script' });
+  safePreload?.(`${monacoPrefix}/editor/editor.main.js`, { as: 'script' });
+
   const { options, className = '', theme: themeProp, ...rest } = props || {};
 
   const dark = useDark();

@@ -57,9 +57,11 @@ export function remarkSplitMdx(
 ): (tree: Root) => void {
   return (tree: Root) => {
     const newChildren: RootContent[] = [];
-    const { importMap, importNodes } = buildImportMap(tree);
+    const { importMap, esmNodes } = collectEsmMetadata(tree);
 
-    newChildren.push(...importNodes);
+    // Keep ESM declarations available to the MDX compiler. They are omitted
+    // only when content is stringified to Markdown.
+    newChildren.push(...esmNodes);
 
     for (const node of tree.children) {
       if (node.type === 'mdxjsEsm') {
@@ -535,14 +537,16 @@ function serializeNodeToMarkdown(node: RootContent): string {
  * Build a map of component names to their import sources
  * Example: { Table: '@lynx', Button: 'react' }
  */
-function buildImportMap(tree: Root): {
+function collectEsmMetadata(tree: Root): {
   importMap: Map<string, string>;
-  importNodes: Set<MdxjsEsm>;
+  esmNodes: Set<MdxjsEsm>;
 } {
   const importMap = new Map<string, string>();
-  const importNodes: Set<MdxjsEsm> = new Set();
+  const esmNodes = new Set<MdxjsEsm>();
 
   visit(tree, 'mdxjsEsm', node => {
+    esmNodes.add(node);
+
     const estree = node.data?.estree;
     if (!estree) {
       return;
@@ -556,13 +560,12 @@ function buildImportMap(tree: Root): {
         const localName = specifier.local?.name;
         if (localName) {
           importMap.set(localName, source as string);
-          importNodes.add(node);
         }
       }
     }
   });
 
-  return { importMap, importNodes };
+  return { importMap, esmNodes };
 }
 
 /**

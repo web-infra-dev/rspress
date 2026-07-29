@@ -12,8 +12,8 @@
     "@mcp-b/webmcp-polyfill": "4.0.0",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-webmcp": "workspace:*",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@types/node": "^22.8.1",

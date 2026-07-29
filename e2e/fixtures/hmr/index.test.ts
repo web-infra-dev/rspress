@@ -14,6 +14,11 @@ const TEST_META_FILE = path.resolve(
   import.meta.dirname,
   'doc/guide/_meta.json',
 );
+const TEST_ADDED_FILE = path.resolve(
+  import.meta.dirname,
+  'doc/guide/test-temp-added.mdx',
+);
+const TEST_RESTART_FILE = path.resolve(import.meta.dirname, 'siteConfig.ts');
 
 test.describe('hmr test', async () => {
   let appPort: number;
@@ -22,15 +27,24 @@ test.describe('hmr test', async () => {
   let originalFragmentContent: string;
   let originalNavContent: string;
   let originalMetaContent: string;
+  let originalRestartFileContent: string;
+  let devOutput = '';
+
+  const getRestartCount = () =>
+    devOutput.match(/restarting server as .* changed/g)?.length ?? 0;
 
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
+    (app as { stdout?: NodeJS.ReadableStream }).stdout?.on('data', chunk => {
+      devOutput += chunk.toString();
+    });
     originalContent = await fs.readFile(TEST_FILE, 'utf-8');
     originalFragmentContent = await fs.readFile(TEST_FRAGMENT_FILE, 'utf-8');
     originalNavContent = await fs.readFile(TEST_NAV_FILE, 'utf-8');
     originalMetaContent = await fs.readFile(TEST_META_FILE, 'utf-8');
+    originalRestartFileContent = await fs.readFile(TEST_RESTART_FILE, 'utf-8');
   });
 
   test.afterAll(async () => {
@@ -41,6 +55,8 @@ test.describe('hmr test', async () => {
     await fs.writeFile(TEST_FRAGMENT_FILE, originalFragmentContent);
     await fs.writeFile(TEST_NAV_FILE, originalNavContent);
     await fs.writeFile(TEST_META_FILE, originalMetaContent);
+    await fs.writeFile(TEST_RESTART_FILE, originalRestartFileContent);
+    await fs.rm(TEST_ADDED_FILE, { force: true });
   });
 
   test('Test page', async ({ page }) => {
@@ -86,5 +102,46 @@ test.describe('hmr test', async () => {
     await expect(
       page.locator('.rp-sidebar-item span', { hasText: 'Foo' }),
     ).toBeVisible();
+    expect(getRestartCount()).toBe(0);
+  });
+
+  test('restart when routes or config dependencies change', async ({
+    page,
+  }) => {
+    await fs.writeFile(TEST_ADDED_FILE, '# Added route');
+    await expect.poll(getRestartCount).toBe(1);
+
+    await expect
+      .poll(async () => {
+        try {
+          await page.goto(
+            `http://localhost:${appPort}/guide/test-temp-added.html`,
+          );
+          return page.locator('h1').textContent();
+        } catch {
+          return null;
+        }
+      })
+      .toContain('Added route');
+
+    await fs.rm(TEST_ADDED_FILE);
+    await expect.poll(getRestartCount).toBe(2);
+
+    await fs.writeFile(
+      TEST_RESTART_FILE,
+      originalRestartFileContent.replace('HMR fixture', 'Restarted fixture'),
+    );
+    await expect.poll(getRestartCount).toBe(3);
+
+    await expect
+      .poll(async () => {
+        try {
+          await page.reload();
+          return page.title();
+        } catch {
+          return '';
+        }
+      })
+      .toContain('Restarted fixture');
   });
 });

@@ -37,7 +37,6 @@ const COMMON_EXTERNALS = [
   // react
   'react',
   'react-dom',
-  'react-reconciler',
   'react-router-dom',
 ];
 

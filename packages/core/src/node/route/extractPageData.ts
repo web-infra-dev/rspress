@@ -11,9 +11,7 @@ import { loadFrontMatter } from '@rspress/shared/node-utils';
 import type { Node, Nodes, Root } from 'mdast';
 import remarkGFM from 'remark-gfm';
 import remarkParse from 'remark-parse';
-import type { Plugin } from 'unified';
 import { unified } from 'unified';
-import { remove } from 'unist-util-remove';
 import { importStatementRegex } from '../constants';
 import { parseToc } from '../mdx/remarkPlugins/toc';
 import { flattenMdxContent } from '../utils';
@@ -51,38 +49,10 @@ interface ExtractPageDataOptions {
 }
 
 /**
- * Remark plugin to remove code blocks from the AST
- * Used when searchCodeBlocks is false to exclude code from search index
+ * Cached processor instance for performance optimization
+ * Reusing the processor avoids the overhead of creating a new instance for each file
  */
-const remarkRemoveCodeBlocks: Plugin<[], Root> = () => {
-  return tree => {
-    remove(tree, 'code');
-  };
-};
-
-/**
- * Remark plugin to remove images from the AST
- * Images should not appear in search content
- */
-const remarkRemoveImages: Plugin<[], Root> = () => {
-  return tree => {
-    remove(tree, 'image');
-  };
-};
-
-/**
- * Cached processor instances for performance optimization
- * Reusing processors avoids the overhead of creating new instances for each file
- */
-const createProcessor = (searchCodeBlocks: boolean) =>
-  unified()
-    .use(remarkParse)
-    .use(remarkGFM)
-    .use(remarkRemoveImages)
-    .use(searchCodeBlocks ? [] : [remarkRemoveCodeBlocks]);
-
-const processorWithCode = createProcessor(true);
-const processorWithoutCode = createProcessor(false);
+const processor = unified().use(remarkParse).use(remarkGFM);
 
 /**
  * Extract text content from a node recursively
@@ -390,9 +360,6 @@ async function getPageIndexInfoByRoute(
   // Normalize line endings to LF for cross-platform consistency
   content = content.replace(/\r\n/g, '\n');
 
-  // Use cached processor based on searchCodeBlocks config
-  const processor = searchCodeBlocks ? processorWithCode : processorWithoutCode;
-
   // Parse markdown to AST
   const tree = processor.parse(content);
 
@@ -422,12 +389,9 @@ async function getPageIndexInfoByRoute(
     } satisfies PageIndexInfo;
   }
 
-  // Run plugins and stringify to markdown for search content
-  const processedTree = await processor.run(tree);
-
   // Walk the AST to extract plain text content and compute heading positions
   const { content: processedContent, toc } = buildSearchContent(
-    processedTree as Root,
+    tree,
     rawToc,
     searchCodeBlocks,
   );

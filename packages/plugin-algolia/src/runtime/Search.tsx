@@ -3,7 +3,7 @@ import type {
   DocSearchTransformClient,
 } from '@docsearch/react';
 import { DocSearch } from '@docsearch/react';
-import { useLang } from '@rspress/core/runtime';
+import { safePreconnect, useLang } from '@rspress/core/runtime';
 import {
   Link,
   registerSearchProvider,
@@ -13,7 +13,6 @@ import { liteClient } from 'algoliasearch/lite';
 import '@docsearch/css';
 import './Search.css';
 import { useEffect, useMemo } from 'react';
-import * as ReactDOM from 'react-dom';
 import type { Locales } from './locales';
 import {
   createAlgoliaSearchProvider,
@@ -23,15 +22,6 @@ import {
 const Hit: DocSearchProps['hitComponent'] = ({ hit, children }) => {
   return <Link href={hit.url}>{children}</Link>;
 };
-
-type ReactDOMWithPreconnect = typeof ReactDOM & {
-  preconnect?: (
-    href: string,
-    options?: { crossOrigin?: '' | 'anonymous' | 'use-credentials' },
-  ) => void;
-};
-
-const safePreconnect = (ReactDOM as ReactDOMWithPreconnect).preconnect;
 
 type SearchProps = {
   /**

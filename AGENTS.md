@@ -4,7 +4,7 @@
 
 - Monorepo via `pnpm` + `Nx`.
 - Packages: `packages/core` (CLI + `@rspress/core`), `packages/theme-default` (Default theme), `packages/plugin-*` (Official plugins), `packages/create-rspress` (scaffolder).
-- Tests: `packages/*/tests` (unit) and `e2e/` (end-to-end tests); website examples in `website/`.
+- Tests: unit tests are generally colocated with their source files; `packages/core/tests` contains CLI integration tests, and `e2e/` contains end-to-end tests. Website examples are in `website/`.
 - Key config: `nx.json`, `rslint.config.ts`, `.prettierrc`, `playwright.config.ts`, `pnpm-workspace.yaml`.
 
 ## Build, test, and development commands
@@ -25,7 +25,7 @@
 
 - Unit: `rstest`; E2E: `@playwright/test`.
 - Naming: `*.test.ts`/`*.test.tsx`; snapshots in `__snapshots__/`.
-- Placement: unit under `packages/*/tests`; e2e under `e2e/`.
+- Placement: colocate unit tests with their source files. Use `packages/core/tests` for CLI integration tests and `e2e/` for end-to-end tests.
 
 ## Commit & pull request guidelines
 
