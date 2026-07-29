@@ -3,7 +3,12 @@
     "type": "section-header",
     "label": "Theme"
   },
-  "vars",
+  {
+    "type": "file",
+    "label": "CSS variables",
+    "name": "vars",
+    "icon": "/css-variables.svg"
+  },
   "custom-page",
   {
     "type": "section-header",

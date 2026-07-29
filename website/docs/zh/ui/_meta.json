@@ -3,7 +3,12 @@
     "type": "section-header",
     "label": "主题"
   },
-  "vars",
+  {
+    "type": "file",
+    "label": "CSS 变量",
+    "name": "vars",
+    "icon": "/css-variables.svg"
+  },
   "custom-page",
   {
     "type": "section-header",
