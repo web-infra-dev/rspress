@@ -53,9 +53,9 @@ test.describe('Auto nav and sidebar test', async () => {
       '.rp-sidebar-item__right .rp-badge',
     );
 
-    await expect(overviewIcon).toHaveText('👋');
-    await expect(overviewIcon).toHaveCSS('font-size', '16px');
-    await expect(overviewIcon).toHaveCSS('line-height', '20px');
+    await expect(overviewIcon.locator('svg')).toHaveCount(1);
+    await expect(overviewIcon).toHaveCSS('width', '20px');
+    await expect(overviewIcon).toHaveCSS('height', '20px');
     await expect(overviewTag).toHaveText('new');
     await expect(
       overviewItem.evaluate(item => {
@@ -101,6 +101,33 @@ test.describe('Auto nav and sidebar test', async () => {
     await expect(sectionHeaderImage).toHaveJSProperty('naturalWidth', 32);
     await expect(sectionHeaderImage).toHaveCSS('width', '20px');
     await expect(sectionHeaderImage).toHaveCSS('height', '20px');
+
+    const navbar = page.locator('.rp-nav-menu');
+    const guideNavIcon = navbar
+      .locator('.rp-nav-menu__item')
+      .filter({ hasText: 'Guide' })
+      .locator('.rp-nav-menu__item__leading-icon');
+    await expect(guideNavIcon.locator('svg')).toHaveCount(1);
+
+    const sidebarIconNavItem = navbar
+      .locator('.rp-nav-menu__item')
+      .filter({ hasText: /^Sidebar Icon$/ });
+    const navbarImage = sidebarIconNavItem.locator(
+      'img.rp-nav-menu__item__leading-icon',
+    );
+    await expect(navbarImage).toHaveAttribute('src', '/sidebar-book.svg');
+    await expect(navbarImage).toHaveCSS('width', '16px');
+    await expect(navbarImage).toHaveCSS('height', '16px');
+
+    await page.setViewportSize({ width: 500, height: 800 });
+    await page.locator('.rp-nav-hamburger.rp-nav-hamburger__sm').click();
+    const navScreen = page.locator('.rp-nav-screen');
+    await expect(navScreen).toHaveClass(/rp-nav-screen--open/);
+    const mobileNavbarImage = navScreen
+      .locator('.rp-nav-screen-menu-item')
+      .filter({ hasText: /^Sidebar Icon$/ })
+      .locator('img.rp-nav-screen-menu-item__leading-icon');
+    await expect(mobileNavbarImage).toHaveAttribute('src', '/sidebar-book.svg');
   });
 
   test('Should load total API Overview correctly', async ({ page }) => {

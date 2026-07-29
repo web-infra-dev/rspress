@@ -1,5 +1,5 @@
 ---
-icon: 📄
+icon: /page.svg
 ---
 
 # Page a

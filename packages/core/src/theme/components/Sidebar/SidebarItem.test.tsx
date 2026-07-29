@@ -33,14 +33,14 @@ describe('SidebarItemRaw', () => {
       <SidebarItemRaw
         active={false}
         depth={0}
-        icon="🚀"
+        icon="/icon.svg"
         link="/guide"
         tag="experimental"
         text="Guide"
       />,
     );
 
-    const iconIndex = markup.indexOf('data-icon="🚀"');
+    const iconIndex = markup.indexOf('data-icon="/icon.svg"');
     const textIndex = markup.indexOf('>Guide</span>');
     const tagIndex = markup.indexOf('data-tag="experimental"');
 

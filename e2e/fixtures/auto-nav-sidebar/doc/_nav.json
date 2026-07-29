@@ -1,7 +1,8 @@
 [
   {
     "text": "Guide",
-    "link": "/guide/"
+    "link": "/guide/",
+    "icon": "<svg viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M4 4h6a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H4V4zm16 0h-6a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h6V4z\"/></svg>"
   },
   {
     "text": "Api",
@@ -9,6 +10,7 @@
   },
   {
     "text": "Sidebar Icon",
-    "link": "/sidebar-icon/"
+    "link": "/sidebar-icon/",
+    "icon": "/sidebar-book.svg"
   }
 ]

@@ -29,12 +29,16 @@ interface NavItem {
   download?: boolean;
   // Activation rules for navbar links
   activeMatch: '^/$|^/';
-  // svg tag string or image URL(optional)
+  // Icon displayed before the navbar text
+  icon?: string;
+  // Tag displayed after the navbar text
   tag?: string;
 }
 ```
 
 `activeMatch` matches the current route. When the route matches the `activeMatch` rule, the nav item is highlighted. By default, `activeMatch` uses the nav item's `link`.
+
+For local icons, place the image in the `public` directory and reference it with an absolute path such as `/icon.png`. Inline SVG strings, emoji, external URLs, and data URLs are also supported.
 
 For example:
 
@@ -47,6 +51,7 @@ export default defineConfig({
       {
         text: 'Home',
         link: '/',
+        icon: '/icon.png',
       },
       {
         text: 'Guide',
@@ -64,7 +69,9 @@ interface NavGroup {
   text: string;
   // submenu
   items: NavItem[];
-  // svg tag string or image URL(optional)
+  // Icon displayed before the navbar text
+  icon?: string;
+  // Tag displayed after the navbar text
   tag?: string;
 }
 ```
@@ -161,7 +168,7 @@ export default defineConfig({
       '/guide/': [
         {
           text: 'Getting Started',
-          icon: '🚀',
+          icon: '/icon.png',
           items: [
             {
               text: 'Introduction',

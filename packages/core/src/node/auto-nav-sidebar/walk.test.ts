@@ -417,9 +417,9 @@ describe('walk', () => {
       text: string;
     };
     expect(taggedDir.text).toBe('Tagged Dir');
-    expect(taggedDir.icon).toBe('📚');
+    expect(taggedDir.icon).toBe('/dir.svg');
     expect(taggedDir.tag).toBe('experimental');
-    expect(taggedDir.items?.[0].icon).toBe('📄');
+    expect(taggedDir.items?.[0].icon).toBe('/page.svg');
   });
 
   it('custom link group', async () => {

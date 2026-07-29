@@ -7,7 +7,7 @@
     "type": "file",
     "name": "index",
     "label": "Introduction",
-    "icon": "👋",
+    "icon": "<svg viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M4 4h16v16H4z\"/></svg>",
     "tag": "new",
     "context": "sidebar-icon-overview"
   },
@@ -15,7 +15,7 @@
     "type": "file",
     "name": "getting-started",
     "label": "Quick Start",
-    "icon": "🚀"
+    "icon": "/sidebar-book.svg"
   },
   {
     "type": "dir",
@@ -28,7 +28,7 @@
     "type": "dir",
     "name": "reference",
     "label": "Reference",
-    "icon": "🧩"
+    "icon": "/sidebar-book.svg"
   },
   {
     "type": "section-header",
@@ -39,12 +39,12 @@
     "type": "file",
     "name": "examples",
     "label": "Examples",
-    "icon": "🧪"
+    "icon": "/sidebar-resources.svg"
   },
   {
     "type": "custom-link",
     "label": "Rspress Documentation",
     "link": "https://rspress.dev/",
-    "icon": "🌐"
+    "icon": "/sidebar-book.svg"
   }
 ]

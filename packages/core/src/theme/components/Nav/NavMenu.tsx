@@ -41,12 +41,24 @@ export function NavMenuItemInner({
           lang={menuItem.lang}
           rel={menuItem.rel}
         >
+          {menuItem.icon && (
+            <SvgWrapper
+              icon={menuItem.icon}
+              className="rp-nav-menu__item__leading-icon"
+            />
+          )}
           {menuItem.text}
           {menuItem.tag && <Tag tag={menuItem.tag} />}
           {children}
         </Link>
       ) : (
         <div className="rp-nav-menu__item__container">
+          {menuItem.icon && (
+            <SvgWrapper
+              icon={menuItem.icon}
+              className="rp-nav-menu__item__leading-icon"
+            />
+          )}
           {menuItem.text}
           {menuItem.tag && <Tag tag={menuItem.tag} />}
           {children}
