@@ -54,8 +54,8 @@ test.describe('Auto nav and sidebar test', async () => {
     );
 
     await expect(overviewIcon.locator('svg')).toHaveCount(1);
-    await expect(overviewIcon).toHaveCSS('width', '20px');
-    await expect(overviewIcon).toHaveCSS('height', '20px');
+    await expect(overviewIcon).toHaveCSS('width', '16px');
+    await expect(overviewIcon).toHaveCSS('height', '16px');
     await expect(overviewTag).toHaveText('new');
     await expect(
       overviewItem.evaluate(item => {
@@ -86,8 +86,8 @@ test.describe('Auto nav and sidebar test', async () => {
     );
     await expect(groupImage).toHaveAttribute('src', '/sidebar-book.svg');
     await expect(groupImage).toHaveJSProperty('naturalWidth', 32);
-    await expect(groupImage).toHaveCSS('width', '20px');
-    await expect(groupImage).toHaveCSS('height', '20px');
+    await expect(groupImage).toHaveCSS('width', '16px');
+    await expect(groupImage).toHaveCSS('height', '16px');
     await expect(groupImage).toHaveCSS('object-fit', 'contain');
 
     const sectionHeaderImage = sidebar
@@ -99,8 +99,8 @@ test.describe('Auto nav and sidebar test', async () => {
       '/sidebar-resources.svg',
     );
     await expect(sectionHeaderImage).toHaveJSProperty('naturalWidth', 32);
-    await expect(sectionHeaderImage).toHaveCSS('width', '20px');
-    await expect(sectionHeaderImage).toHaveCSS('height', '20px');
+    await expect(sectionHeaderImage).toHaveCSS('width', '16px');
+    await expect(sectionHeaderImage).toHaveCSS('height', '16px');
 
     const navbar = page.locator('.rp-nav-menu');
     const guideNavIcon = navbar
