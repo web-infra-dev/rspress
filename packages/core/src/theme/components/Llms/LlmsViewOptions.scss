@@ -9,7 +9,10 @@
 }
 
 .rp-llms-view-options__arrow {
+  width: 14px;
+  height: 14px;
   transition: transform 0.2s ease;
+
   &--rotated {
     transform: rotate(180deg);
   }
