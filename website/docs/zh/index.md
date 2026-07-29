@@ -8,7 +8,7 @@ hero:
   text: |
     快如闪电的
     静态站点生成器
-  tagline: 面向人，也面向 AI。
+  tagline: 面向人，也面向 AI
   image:
     src: https://assets.rspack.rs/rspress/rspress-logo.svg
     alt: Rspress Logo
