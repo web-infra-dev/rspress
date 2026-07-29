@@ -522,7 +522,7 @@ basic
 
 ## 侧边栏图标和标签
 
-你可以通过 `icon` 配置在侧边栏标题前添加图标。它支持 emoji、HTML 或 SVG 字符串、图片路径、外链和 data URL。已有的 `tag` 配置仍显示在标题之后。
+你可以通过 `icon` 配置在侧边栏标题前添加图标。它支持 emoji、HTML 或 SVG 字符串、`public` 目录资源的绝对路径、外链和 data URL。已有的 `tag` 配置仍显示在标题之后。
 
 ```json title="_meta.json"
 {
@@ -535,6 +535,6 @@ basic
 ```
 
 对于自动生成的文件项，也可以在页面 frontmatter 中设置 `icon`，frontmatter 的值优先于 `_meta.json`。
-相对图片路径会基于页面或 `_meta.json` 所在目录解析。
+本地图片资源应放在 `public` 目录中，并通过 `/icon.png` 这样的绝对路径引用。
 
 关于 `tag` 的详细用法请参考 [Tag 组件](/ui/layout-components/tag)。

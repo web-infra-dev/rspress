@@ -522,7 +522,7 @@ basic
 
 ## Sidebar icons and tags
 
-Use `icon` to add an icon before a sidebar title. It supports emoji, HTML or SVG strings, image paths, external URLs, and data URLs. The existing `tag` config remains after the title.
+Use `icon` to add an icon before a sidebar title. It supports emoji, HTML or SVG strings, absolute paths to assets in the `public` directory, external URLs, and data URLs. The existing `tag` config remains after the title.
 
 ```json title="_meta.json"
 {
@@ -535,6 +535,6 @@ Use `icon` to add an icon before a sidebar title. It supports emoji, HTML or SVG
 ```
 
 For automatically generated file items, you can also set `icon` in the page frontmatter. The frontmatter value takes precedence over `_meta.json`.
-Relative image paths are resolved from the directory containing the page or `_meta.json`.
+Place local image assets in the `public` directory and reference them with an absolute path such as `/icon.png`.
 
 For details about `tag`, see [Tag Component](/ui/layout-components/tag).
