@@ -36,12 +36,12 @@
     line-height: 22px;
   }
 
-  &__icon {
+  &__arrow {
     transform: rotate(-90deg);
     transition: transform 0.25s ease-in;
   }
 
-  &__leading-icon {
+  &__icon {
     width: 16px;
     height: 16px;
     flex: 0 0 16px;
@@ -58,7 +58,7 @@
   }
 
   &--open {
-    .rp-nav-screen-menu-item__icon {
+    .rp-nav-screen-menu-item__arrow {
       transform: rotate(0deg);
     }
   }

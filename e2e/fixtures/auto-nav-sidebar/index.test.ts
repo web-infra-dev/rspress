@@ -126,7 +126,7 @@ test.describe('Auto nav and sidebar test', async () => {
     const mobileNavbarImage = navScreen
       .locator('.rp-nav-screen-menu-item')
       .filter({ hasText: /^Sidebar Icon$/ })
-      .locator('img.rp-nav-screen-menu-item__leading-icon');
+      .locator('img.rp-nav-screen-menu-item__icon');
     await expect(mobileNavbarImage).toHaveAttribute(
       'src',
       '/sidebar-panel.svg',

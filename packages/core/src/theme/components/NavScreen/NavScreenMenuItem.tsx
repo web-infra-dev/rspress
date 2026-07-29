@@ -33,7 +33,7 @@ function NavScreenMenuItemContent({
       {menuItem.icon && (
         <SvgWrapper
           icon={menuItem.icon}
-          className="rp-nav-screen-menu-item__leading-icon"
+          className="rp-nav-screen-menu-item__icon"
         />
       )}
       {menuItem.text}
@@ -124,7 +124,7 @@ export function NavScreenMenuItemWithChildren({
     <>
       <NavScreenMenuItemRaw
         left={<NavScreenMenuItemContent menuItem={menuItem} />}
-        right={<SvgDown className="rp-nav-screen-menu-item__icon" />}
+        right={<SvgDown className="rp-nav-screen-menu-item__arrow" />}
         isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
         href={'link' in menuItem ? menuItem.link : undefined}
