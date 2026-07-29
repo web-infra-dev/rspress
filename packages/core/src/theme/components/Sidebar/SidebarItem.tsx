@@ -3,7 +3,12 @@ import type {
   SidebarItem as SidebarItemType,
 } from '@rspress/core';
 import { useActiveMatcher } from '@rspress/core/runtime';
-import { Link, renderInlineMarkdown, Tag } from '@rspress/core/theme';
+import {
+  Link,
+  renderInlineMarkdown,
+  SvgWrapper,
+  Tag,
+} from '@rspress/core/theme';
 import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useRef, useTransition } from 'react';
@@ -13,6 +18,7 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 export function SidebarItemRaw({
   active,
   text,
+  icon,
   tag,
   link,
   context,
@@ -25,6 +31,7 @@ export function SidebarItemRaw({
   className?: string;
   active: boolean;
   text: string;
+  icon: SidebarItemType['icon'];
   tag: SidebarItemType['tag'];
   link: string | undefined;
   depth: number;
@@ -56,6 +63,7 @@ export function SidebarItemRaw({
   const innerContent = (
     <>
       <div className="rp-sidebar-item__left" ref={ref}>
+        {icon && <SvgWrapper icon={icon} className="rp-sidebar-item__icon" />}
         <span className="rp-doc" {...renderInlineMarkdown(text)}></span>
         {left}
       </div>
@@ -132,6 +140,7 @@ export function SidebarItem(props: SidebarItemProps) {
       className={className}
       active={active}
       link={item.link}
+      icon={item.icon}
       tag={item.tag}
       text={item.text}
       context={item.context}

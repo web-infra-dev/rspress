@@ -157,6 +157,22 @@ navbar: false
 ---
 ```
 
+## icon
+
+- **Type**: `string`
+
+Sets the icon displayed before the page title in an automatically generated sidebar. For local images, place the asset in the `public` directory and reference it with an absolute path:
+
+```yaml
+---
+icon: /icon.png
+---
+```
+
+Inline SVG strings, emoji, external URLs, and data URLs are also supported. If the same file item defines `icon` in both frontmatter and `_meta.json`, the frontmatter value takes precedence.
+
+See [Sidebar icons and tags](/guide/basic/auto-nav-sidebar#sidebar-icons-and-tags) for more examples.
+
 ## context
 
 - **Type**: `string`

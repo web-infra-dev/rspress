@@ -145,6 +145,7 @@ export type FileSideMeta = {
   type: 'file';
   name: string;
   label?: string;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -156,6 +157,7 @@ export type DirSideMeta = {
   label?: string;
   collapsible?: boolean;
   collapsed?: boolean;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -172,6 +174,7 @@ export type DividerSideMeta = {
 export type SectionHeaderMeta = {
   type: 'section-header';
   label: string;
+  icon?: string;
   tag?: string;
 };
 
@@ -180,6 +183,7 @@ export type CustomLinkMeta =
       // file link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -189,6 +193,7 @@ export type CustomLinkMeta =
       // dir link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -227,6 +232,7 @@ export type FileSideMeta = {
   type: 'file';
   name: string;
   label?: string;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -254,6 +260,7 @@ export type DirSideMeta = {
   label?: string;
   collapsible?: boolean;
   collapsed?: boolean;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -342,6 +349,7 @@ export type DividerSideMeta = {
 export type SectionHeaderMeta = {
   type: 'section-header';
   label: string;
+  icon?: string;
   tag?: string;
 };
 ```
@@ -385,6 +393,7 @@ export type CustomLinkMeta =
       // file link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -394,6 +403,7 @@ export type CustomLinkMeta =
       // dir link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -510,17 +520,64 @@ basic
   └── 3-plugin-development.md
 ```
 
-## 侧边栏和导航栏的 tag 图标
+## 使用 frontmatter 配置文件项
 
-你可以通过 `tag` 配置在侧边栏或导航栏的标题后添加图标。`tag` 的值支持 SVG 标签字符串或图片 URL。
+自动生成的文件项中，大部分展示字段都可以在页面 frontmatter 中配置，包括 `title`、`icon`、`tag`、`overviewHeaders` 和 `context`。
 
-```json title="_meta.json"
-{
-  "type": "file",
-  "name": "introduction",
-  "label": "Introduction",
-  "tag": "<svg width=\"1em\" height=\"1em\" viewBox=\"0 0 32 32\"><path fill=\"currentColor\" d=\"M4 6h24v2H4zm0 18h24v2H4zm0-12h24v2H4zm0 6h24v2H4z\"/></svg>"
-}
+项目顺序、`type`、`name`、目录分组、分组标题、自定义链接、`collapsible` 和 `collapsed` 等结构性配置应保留在 `_meta.json` 中。对于页面自身的展示信息，推荐使用 frontmatter，让内容与对应的侧边栏配置保持在一起。
+
+例如，可以在 `_meta.json` 中声明需要展示的文件及其顺序：
+
+```json title="docs/guide/_meta.json"
+["introduction"]
 ```
 
-详细用法请参考 [Tag 组件](/ui/layout-components/tag)。
+然后在页面 frontmatter 中配置文件项的展示信息：
+
+```md title="docs/guide/introduction.mdx"
+---
+title: Introduction
+icon: /icon.png
+tag: new
+overviewHeaders: [2, 3]
+context: guide-introduction
+---
+
+# Introduction
+```
+
+当文件项在两处配置了同一个字段时，`icon`、`tag`、`overviewHeaders` 和 `context` 以 frontmatter 为准，而 `_meta.json` 中的 `label` 优先于页面标题。对于目录分组，`_meta.json` 的配置优先于目录首页的元数据。
+
+## 侧边栏图标和标签
+
+你可以通过 `icon` 配置在侧边栏标题前添加图标。最常用且推荐的方式是将图片放在 `public` 目录中，并通过绝对路径引用。
+
+例如，将本地图片放在 `docs/public/icon.png`，然后在 `_meta.json` 中引用：
+
+```json title="docs/_meta.json"
+[
+  {
+    "type": "file",
+    "name": "introduction",
+    "label": "Introduction",
+    "icon": "/icon.png",
+    "tag": "new"
+  }
+]
+```
+
+如果希望将图标直接嵌入配置中，也可以传入一个内联 SVG 字符串：
+
+```json title="docs/_meta.json"
+[
+  {
+    "type": "file",
+    "name": "introduction",
+    "icon": "<svg width=\"1em\" height=\"1em\" viewBox=\"0 0 32 32\"><path fill=\"currentColor\" d=\"M4 6h24v2H4zm0 18h24v2H4zm0-12h24v2H4zm0 6h24v2H4z\"/></svg>"
+  }
+]
+```
+
+此外还支持 emoji、外链和 data URL。已有的 `tag` 配置仍显示在标题之后。
+
+关于 `tag` 的详细用法请参考 [Tag 组件](/ui/layout-components/tag)。

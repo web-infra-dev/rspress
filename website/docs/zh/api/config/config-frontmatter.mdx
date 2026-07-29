@@ -157,6 +157,22 @@ navbar: false
 ---
 ```
 
+## icon
+
+- **类型**： `string`
+
+设置自动生成的侧边栏中显示在页面标题之前的图标。使用本地图片时，应将资源放在 `public` 目录中，并通过绝对路径引用：
+
+```yaml
+---
+icon: /icon.png
+---
+```
+
+此外还支持内联 SVG 字符串、emoji、外链和 data URL。如果同一个文件项同时在 frontmatter 和 `_meta.json` 中配置了 `icon`，则以 frontmatter 的值为准。
+
+更多示例请参考[侧边栏图标和标签](/zh/guide/basic/auto-nav-sidebar#侧边栏图标和标签)。
+
 ## context
 
 - **类型**： `string`

@@ -1,6 +1,6 @@
 import type { NavItemWithChildren } from '@rspress/core';
 import { matchNavbar, useLocation } from '@rspress/core/runtime';
-import { Link, Tag } from '@rspress/core/theme';
+import { Link, SvgWrapper, Tag } from '@rspress/core/theme';
 import cls from 'clsx';
 
 import './index.scss';
@@ -51,6 +51,12 @@ function HoverGroupItem({
               hrefLang={item.lang}
               rel={item.rel}
             >
+              {item.icon && (
+                <SvgWrapper
+                  icon={item.icon}
+                  className="rp-hover-group__item__icon"
+                />
+              )}
               {item.text}
               {'tag' in item && item.tag && <Tag tag={item.tag} />}
             </Link>
@@ -94,11 +100,23 @@ function HoverGroupItem({
             hrefLang={lang}
             rel={rel}
           >
+            {item.icon && (
+              <SvgWrapper
+                icon={item.icon}
+                className="rp-hover-group__item__icon"
+              />
+            )}
             {text}
             {'tag' in item && item.tag && <Tag tag={item.tag} />}
           </Link>
         ) : (
           <div className="rp-hover-group__item__link" lang={lang}>
+            {item.icon && (
+              <SvgWrapper
+                icon={item.icon}
+                className="rp-hover-group__item__icon"
+              />
+            )}
             {text}
             {'tag' in item && item.tag && <Tag tag={item.tag} />}
           </div>
@@ -115,6 +133,9 @@ function HoverGroupItem({
       data-depth={depth}
     >
       <div className="rp-hover-group__item__link">
+        {item.icon && (
+          <SvgWrapper icon={item.icon} className="rp-hover-group__item__icon" />
+        )}
         {item.text}
         {'tag' in item && item.tag && <Tag tag={item.tag} />}
       </div>

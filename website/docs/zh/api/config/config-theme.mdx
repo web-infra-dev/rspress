@@ -29,12 +29,16 @@ interface NavItem {
   download?: boolean;
   // 导航栏链接的激活规则
   activeMatch: '^/$|^/';
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在导航栏文本之前的图标
+  icon?: string;
+  // 显示在导航栏文本之后的标签
   tag?: string;
 }
 ```
 
 `activeMatch` 用于匹配当前路由，当路由匹配 `activeMatch` 规则时，nav 项会高亮显示。默认情况下，`activeMatch` 是 nav 项的 `link`。
+
+使用本地图标时，应将图片放在 `public` 目录中，并通过 `/icon.png` 这样的绝对路径引用。此外还支持内联 SVG 字符串、emoji、外链和 data URL。
 
 比如:
 
@@ -47,6 +51,7 @@ export default defineConfig({
       {
         text: 'Home',
         link: '/',
+        icon: '/icon.png',
       },
       {
         text: 'Guide',
@@ -65,7 +70,9 @@ interface NavGroup {
   text: string;
   // 子菜单
   items: NavItem[];
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在导航栏文本之前的图标
+  icon?: string;
+  // 显示在导航栏文本之后的标签
   tag?: string;
 }
 ```
@@ -119,7 +126,9 @@ interface SidebarGroup {
   collapsible?: boolean;
   // 是否默认折叠
   collapsed?: boolean;
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在侧边栏文本之前的图标
+  icon?: string;
+  // 显示在侧边栏文本之后的标签
   tag?: string;
 }
 
@@ -128,7 +137,9 @@ type SidebarItem = {
   text: string;
   // 侧边栏链接
   link: string;
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在侧边栏文本之前的图标
+  icon?: string;
+  // 显示在侧边栏文本之后的标签
   tag?: string;
 };
 ```
@@ -144,10 +155,13 @@ export default defineConfig({
       '/guide/': [
         {
           text: 'Getting Started',
+          icon: '/icon.png',
           items: [
             {
               text: 'Introduction',
               link: '/guide/getting-started/introduction',
+              icon: '<svg>...</svg>',
+              tag: 'new',
             },
             {
               text: 'Installation',
