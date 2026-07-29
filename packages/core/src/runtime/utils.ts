@@ -25,38 +25,6 @@ function removeBase(url: string): string {
   return rawRemoveBase(url, siteData.base);
 }
 
-/**
- * Redirects a base pathname without a trailing slash to its canonical URL.
- *
- * Some hosting providers may serve the homepage HTML when a site configured
- * with `base: '/docs/'` is accessed at `/docs`, leaving the browser on the
- * pathname without a trailing slash. This client-side fallback updates the URL
- * to `/docs/` with the History API, without reloading the page, while preserving
- * the query string, hash, and history state.
- *
- * @returns Whether the URL was updated.
- */
-function redirectToBaseWithTrailingSlash(
-  location: Pick<Location, 'hash' | 'pathname' | 'search'>,
-  history: Pick<History, 'replaceState' | 'state'>,
-): boolean {
-  const { base } = siteData;
-  const canonicalBase = addTrailingSlash(base);
-  if (
-    canonicalBase === '/' ||
-    location.pathname !== removeTrailingSlash(canonicalBase)
-  ) {
-    return false;
-  }
-
-  history.replaceState(
-    history.state,
-    '',
-    `${canonicalBase}${location.search}${location.hash}`,
-  );
-  return true;
-}
-
 function isEqualPath(a: string, b: string) {
   return (
     removeBase(normalizeHref(removeHash(a), true)) ===
@@ -112,7 +80,6 @@ export {
   normalizeImagePath,
   removeBase,
   removeTrailingSlash,
-  redirectToBaseWithTrailingSlash,
   routePathToMdPath,
   withBase,
   withSiteOrigin,

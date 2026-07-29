@@ -1,10 +1,5 @@
-import { afterEach, describe, expect, it, rs } from '@rstest/core';
-import siteData from 'virtual-site-data';
-import {
-  redirectToBaseWithTrailingSlash,
-  routePathToMdPath,
-  withSiteOrigin,
-} from './utils';
+import { describe, expect, it, rs } from '@rstest/core';
+import { routePathToMdPath, withSiteOrigin } from './utils';
 
 rs.mock('virtual-site-data', () => {
   return {
@@ -13,89 +8,6 @@ rs.mock('virtual-site-data', () => {
       siteOrigin: 'https://example.com',
     },
   };
-});
-
-describe('redirectToBaseWithTrailingSlash', () => {
-  afterEach(() => {
-    siteData.base = '/';
-  });
-
-  it('redirects the base path to its trailing-slash URL', () => {
-    siteData.base = '/docs/';
-    const replaceState = rs.fn();
-    const state = { key: 'value' };
-
-    expect(
-      redirectToBaseWithTrailingSlash(
-        {
-          pathname: '/docs',
-          search: '?from=home',
-          hash: '#overview',
-        },
-        { replaceState, state },
-      ),
-    ).toBe(true);
-    expect(replaceState).toHaveBeenCalledWith(
-      state,
-      '',
-      '/docs/?from=home#overview',
-    );
-  });
-
-  it('normalizes a configured base without a trailing slash', () => {
-    siteData.base = '/docs';
-    const replaceState = rs.fn();
-
-    expect(
-      redirectToBaseWithTrailingSlash(
-        {
-          pathname: '/docs',
-          search: '?from=home',
-          hash: '#overview',
-        },
-        { replaceState, state: null },
-      ),
-    ).toBe(true);
-    expect(replaceState).toHaveBeenCalledWith(
-      null,
-      '',
-      '/docs/?from=home#overview',
-    );
-  });
-
-  it('does not redirect other paths', () => {
-    siteData.base = '/docs/';
-    const replaceState = rs.fn();
-
-    expect(
-      redirectToBaseWithTrailingSlash(
-        {
-          pathname: '/docs/guide',
-          search: '',
-          hash: '',
-        },
-        { replaceState, state: null },
-      ),
-    ).toBe(false);
-    expect(replaceState).not.toHaveBeenCalled();
-  });
-
-  it('does not redirect the root base', () => {
-    siteData.base = '/';
-    const replaceState = rs.fn();
-
-    expect(
-      redirectToBaseWithTrailingSlash(
-        {
-          pathname: '/',
-          search: '',
-          hash: '',
-        },
-        { replaceState, state: null },
-      ),
-    ).toBe(false);
-    expect(replaceState).not.toHaveBeenCalled();
-  });
 });
 
 describe('withSiteOrigin', () => {
