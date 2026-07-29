@@ -115,7 +115,7 @@ test.describe('Auto nav and sidebar test', async () => {
     const navbarImage = sidebarIconNavItem.locator(
       'img.rp-nav-menu__item__leading-icon',
     );
-    await expect(navbarImage).toHaveAttribute('src', '/sidebar-book.svg');
+    await expect(navbarImage).toHaveAttribute('src', '/sidebar-panel.svg');
     await expect(navbarImage).toHaveCSS('width', '16px');
     await expect(navbarImage).toHaveCSS('height', '16px');
 
@@ -127,7 +127,10 @@ test.describe('Auto nav and sidebar test', async () => {
       .locator('.rp-nav-screen-menu-item')
       .filter({ hasText: /^Sidebar Icon$/ })
       .locator('img.rp-nav-screen-menu-item__leading-icon');
-    await expect(mobileNavbarImage).toHaveAttribute('src', '/sidebar-book.svg');
+    await expect(mobileNavbarImage).toHaveAttribute(
+      'src',
+      '/sidebar-panel.svg',
+    );
   });
 
   test('Should load total API Overview correctly', async ({ page }) => {

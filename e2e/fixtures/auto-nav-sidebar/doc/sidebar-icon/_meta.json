@@ -7,7 +7,7 @@
     "type": "file",
     "name": "index",
     "label": "Introduction",
-    "icon": "<svg viewBox=\"0 0 24 24\"><path fill=\"currentColor\" d=\"M4 4h16v16H4z\"/></svg>",
+    "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M6 3h8l4 4v14H6V3Z\" fill=\"currentColor\" opacity=\".16\"/><path d=\"M14 3v5h5M9 12h6M9 16h6M6 3h8l5 5v13H6V3Z\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
     "tag": "new",
     "context": "sidebar-icon-overview"
   },
@@ -15,7 +15,7 @@
     "type": "file",
     "name": "getting-started",
     "label": "Quick Start",
-    "icon": "/sidebar-book.svg"
+    "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M6 3h8l4 4v14H6V3Z\" fill=\"currentColor\" opacity=\".16\"/><path d=\"M14 3v5h5M9 12h6M9 16h6M6 3h8l5 5v13H6V3Z\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>"
   },
   {
     "type": "dir",
@@ -39,12 +39,12 @@
     "type": "file",
     "name": "examples",
     "label": "Examples",
-    "icon": "/sidebar-resources.svg"
+    "icon": "/sidebar-flask.svg"
   },
   {
     "type": "custom-link",
     "label": "Rspress Documentation",
     "link": "https://rspress.dev/",
-    "icon": "/sidebar-book.svg"
+    "icon": "/sidebar-globe.svg"
   }
 ]
