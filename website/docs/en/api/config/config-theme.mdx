@@ -653,10 +653,10 @@ Assuming [`siteOrigin`](/api/config/config-basic#siteorigin) is `https://example
 The SSG-MD Markdown output for the same page starts with:
 
 ```md
-> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.
+> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt.
 ```
 
-The URLs automatically include the configured `siteOrigin`, [`base`](/api/config/config-basic#base), locale, and version prefixes. The page-specific Markdown URL is derived from the current route. Without `siteOrigin`, the URLs remain base-aware paths.
+The URLs automatically include the configured `siteOrigin`, [`base`](/api/config/config-basic#base), locale, and version prefixes. Without `siteOrigin`, the URLs remain base-aware paths.
 
 Set `injectLlmsHint` to `false` to disable this behavior:
 

@@ -641,10 +641,10 @@ export default defineConfig({
 同一页面的 SSG-MD Markdown 输出会以以下内容开头：
 
 ```md
-> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.
+> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt.
 ```
 
-其中的 URL 会自动包含配置的 `siteOrigin`、[`base`](/api/config/config-basic#base)、语言和版本前缀，当前页面的 Markdown URL 会根据当前路由生成。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
+其中的 URL 会自动包含配置的 `siteOrigin`、[`base`](/api/config/config-basic#base)、语言和版本前缀。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
 
 将 `injectLlmsHint` 设置为 `false`，可以禁用这一行为：
 

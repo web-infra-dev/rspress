@@ -64,7 +64,7 @@ describe('LlmsHint', () => {
     setSsgMd(true);
 
     expect(await renderToMarkdownString(<LlmsHint />)).toBe(
-      '> For AI agents: the complete documentation index is available at https://example.com/docs/llms.txt, the full documentation bundle is available at https://example.com/docs/llms-full.txt, and this page is available as Markdown at https://example.com/docs/guide/index.md.\n\n',
+      '> For AI agents: the complete documentation index is available at https://example.com/docs/llms.txt, the full documentation bundle is available at https://example.com/docs/llms-full.txt.\n\n',
     );
   });
 
