@@ -1,5 +1,5 @@
 {
-  "extends": "../../scripts/config/tsconfig.json",
+  "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
     "composite": true,
     "strict": true,

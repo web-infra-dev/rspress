@@ -1764,6 +1764,9 @@ importers:
       '@rslib/core':
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(typescript@6.0.3)
+      '@rspress/config':
+        specifier: workspace:*
+        version: link:../../scripts/config
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
