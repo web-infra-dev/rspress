@@ -1,11 +1,14 @@
 {
   "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "@e2e/*": ["./e2e/*"]
+    }
   },
   "include": [
     "rstest.config.ts",
-    "playwright.config.ts",
+    "rstest.e2e.config.mts",
     "./scripts/update-modern.ts"
   ]
 }

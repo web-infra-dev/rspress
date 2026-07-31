@@ -1,4 +1,4 @@
-import { expect, type Page, test } from '@playwright/test';
+import { expect, type Page, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -50,9 +50,13 @@ test.describe('basic test', async () => {
     const appearanceToggle = page.locator('.rp-switch-appearance').first();
     const defaultIsDark = await getIsDark(page);
     await appearanceToggle.click();
-    await expect.poll(() => getIsDark(page)).toBe(!defaultIsDark);
+    await expect
+      .poll(() => getIsDark(page), { timeout: 5000 })
+      .toBe(!defaultIsDark);
     await appearanceToggle.click();
-    await expect.poll(() => getIsDark(page)).toBe(defaultIsDark);
+    await expect
+      .poll(() => getIsDark(page), { timeout: 5000 })
+      .toBe(defaultIsDark);
   });
 
   test('Hover over social links', async ({ page }) => {
@@ -115,11 +119,11 @@ test.describe('themeConfig.darkMode', async () => {
       waitUntil: 'networkidle',
     });
 
-    await expect.poll(() => getIsDark(page)).toBe(true);
+    await expect.poll(() => getIsDark(page), { timeout: 5000 }).toBe(true);
     await expect(page.locator('.rp-switch-appearance').first()).toBeVisible();
 
     await page.emulateMedia({ colorScheme: 'light' });
-    await expect.poll(() => getIsDark(page)).toBe(false);
+    await expect.poll(() => getIsDark(page), { timeout: 5000 }).toBe(false);
   });
 
   test('dark defaults to dark mode when there is no saved preference', async ({
@@ -131,7 +135,7 @@ test.describe('themeConfig.darkMode', async () => {
       waitUntil: 'networkidle',
     });
 
-    await expect.poll(() => getIsDark(page)).toBe(true);
+    await expect.poll(() => getIsDark(page), { timeout: 5000 }).toBe(true);
     await expect(page.locator('.rp-switch-appearance').first()).toBeVisible();
   });
 
@@ -147,7 +151,7 @@ test.describe('themeConfig.darkMode', async () => {
       waitUntil: 'networkidle',
     });
 
-    await expect.poll(() => getIsDark(page)).toBe(true);
+    await expect.poll(() => getIsDark(page), { timeout: 5000 }).toBe(true);
     await expect(page.locator('.rp-switch-appearance')).toHaveCount(0);
   });
 });

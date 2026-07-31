@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('theme-css-order', async () => {

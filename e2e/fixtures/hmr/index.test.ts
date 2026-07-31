@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 const TEST_FILE = path.resolve(import.meta.dirname, 'doc/guide/test.mdx');
@@ -32,6 +32,17 @@ test.describe('hmr test', async () => {
 
   const getRestartCount = () =>
     devOutput.match(/restarting server as .* changed/g)?.length ?? 0;
+  const getBuildCount = () => devOutput.match(/built in/g)?.length ?? 0;
+
+  const waitForRestart = async (
+    restartCount: number,
+    previousBuildCount: number,
+  ) => {
+    await expect.poll(getRestartCount, { timeout: 5000 }).toBe(restartCount);
+    await expect
+      .poll(getBuildCount, { timeout: 5000 })
+      .toBeGreaterThan(previousBuildCount);
+  };
 
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
@@ -108,40 +119,64 @@ test.describe('hmr test', async () => {
   test('restart when routes or config dependencies change', async ({
     page,
   }) => {
-    await fs.writeFile(TEST_ADDED_FILE, '# Added route');
-    await expect.poll(getRestartCount).toBe(1);
+    const initialRestartCount = getRestartCount();
 
-    await expect
-      .poll(async () => {
-        try {
-          await page.goto(
-            `http://localhost:${appPort}/guide/test-temp-added.html`,
-          );
-          return page.locator('h1').textContent();
-        } catch {
-          return null;
-        }
-      })
-      .toContain('Added route');
+    try {
+      let previousBuildCount = getBuildCount();
+      await fs.writeFile(TEST_ADDED_FILE, '# Added route');
+      await waitForRestart(initialRestartCount + 1, previousBuildCount);
 
-    await fs.rm(TEST_ADDED_FILE);
-    await expect.poll(getRestartCount).toBe(2);
+      await expect
+        .poll(
+          async () => {
+            try {
+              await page.goto(
+                `http://localhost:${appPort}/guide/test-temp-added.html`,
+              );
+              return page.locator('h1').textContent();
+            } catch {
+              return null;
+            }
+          },
+          { timeout: 5000 },
+        )
+        .toContain('Added route');
 
-    await fs.writeFile(
-      TEST_RESTART_FILE,
-      originalRestartFileContent.replace('HMR fixture', 'Restarted fixture'),
-    );
-    await expect.poll(getRestartCount).toBe(3);
+      previousBuildCount = getBuildCount();
+      await fs.rm(TEST_ADDED_FILE);
+      await waitForRestart(initialRestartCount + 2, previousBuildCount);
 
-    await expect
-      .poll(async () => {
-        try {
-          await page.reload();
-          return page.title();
-        } catch {
-          return '';
-        }
-      })
-      .toContain('Restarted fixture');
+      previousBuildCount = getBuildCount();
+      await fs.writeFile(
+        TEST_RESTART_FILE,
+        originalRestartFileContent.replace('HMR fixture', 'Restarted fixture'),
+      );
+      await waitForRestart(initialRestartCount + 3, previousBuildCount);
+
+      await expect
+        .poll(
+          async () => {
+            try {
+              await page.reload();
+              return page.title();
+            } catch {
+              return '';
+            }
+          },
+          { timeout: 5000 },
+        )
+        .toContain('Restarted fixture');
+    } finally {
+      const cleanupRestartCount = getRestartCount();
+      const cleanupBuildCount = getBuildCount();
+      await fs.rm(TEST_ADDED_FILE, { force: true });
+      await fs.writeFile(TEST_RESTART_FILE, originalRestartFileContent);
+      await expect
+        .poll(getRestartCount, { timeout: 5000 })
+        .toBeGreaterThan(cleanupRestartCount);
+      await expect
+        .poll(getBuildCount, { timeout: 5000 })
+        .toBeGreaterThan(cleanupBuildCount);
+    }
   });
 });
