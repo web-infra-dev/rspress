@@ -271,6 +271,7 @@ describe('redirectToCleanUrl', () => {
     ['/folder/index', '/folder/'],
     ['/folder/index.html', '/folder/'],
     ['/zh/guide/start/introduction.html', '/zh/guide/start/introduction'],
+    ['/zh/guide/start/introduction/', '/zh/guide/start/introduction'],
     ['/zh/guide/start/introduction/index.html', '/zh/guide/start/introduction'],
   ] as const;
 
