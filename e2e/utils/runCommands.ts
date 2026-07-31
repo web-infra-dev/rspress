@@ -3,8 +3,6 @@ import getRandomPort from 'get-port';
 import treeKill from 'tree-kill';
 
 const portMap = new Map();
-const supportsNodeRun = Number.parseInt(process.versions.node, 10) >= 22;
-const scriptRunner = supportsNodeRun ? process.execPath : 'npm';
 
 export interface CommandOptions {
   appDir: string;
@@ -23,13 +21,13 @@ export async function runNpmScript(
   extraArgs: string[] = [],
 ) {
   return new Promise((resolve, reject) => {
-    const commandArgs = [supportsNodeRun ? '--run' : 'run', commandName];
+    const commandArgs = ['--run', commandName];
 
     if (extraArgs.length) {
       commandArgs.push('--', ...extraArgs);
     }
 
-    const instance = spawn(scriptRunner, commandArgs, {
+    const instance = spawn(process.execPath, commandArgs, {
       cwd: options.appDir,
       env: {
         ...process.env,
