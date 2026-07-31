@@ -708,35 +708,35 @@ base、语言前缀、query、hash 和 history state。
 
 普通页面路由不保留 trailing slash，目录首页路由则会保留。
 
-| 传入 URL             | 匹配路由   | 客户端行为                   | 最终 URL   |
-| -------------------- | ---------- | ---------------------------- | ---------- |
-| `/file`              | `/file`    | 不重定向                     | `/file`    |
-| `/file.html`         | `/file`    | `replaceState` 到 `/file`    | `/file`    |
-| `/file/`             | `/file`    | `replaceState` 到 `/file`    | `/file`    |
-| `/file/index`        | `/file`    | `replaceState` 到 `/file`    | `/file`    |
-| `/file/index.html`   | `/file`    | `replaceState` 到 `/file`    | `/file`    |
-| `/folder`            | `/folder/` | `replaceState` 到 `/folder/` | `/folder/` |
-| `/folder.html`       | `/folder/` | `replaceState` 到 `/folder/` | `/folder/` |
-| `/folder/`           | `/folder/` | 不重定向                     | `/folder/` |
-| `/folder/index`      | `/folder/` | `replaceState` 到 `/folder/` | `/folder/` |
-| `/folder/index.html` | `/folder/` | `replaceState` 到 `/folder/` | `/folder/` |
+| 传入 URL             | 匹配路由   | 客户端行为                   |
+| -------------------- | ---------- | ---------------------------- |
+| `/file`              | `/file`    | 不重定向                     |
+| `/file.html`         | `/file`    | `replaceState` 到 `/file`    |
+| `/file/`             | `/file`    | `replaceState` 到 `/file`    |
+| `/file/index`        | `/file`    | `replaceState` 到 `/file`    |
+| `/file/index.html`   | `/file`    | `replaceState` 到 `/file`    |
+| `/folder`            | `/folder/` | `replaceState` 到 `/folder/` |
+| `/folder.html`       | `/folder/` | `replaceState` 到 `/folder/` |
+| `/folder/`           | `/folder/` | 不重定向                     |
+| `/folder/index`      | `/folder/` | `replaceState` 到 `/folder/` |
+| `/folder/index.html` | `/folder/` | `replaceState` 到 `/folder/` |
 
 #### `cleanUrls: false`
 
 普通页面路由使用 `.html`，目录首页路由使用 `/index.html`。
 
-| 传入 URL             | 匹配路由   | 客户端行为                             | 最终 URL             |
-| -------------------- | ---------- | -------------------------------------- | -------------------- |
-| `/file`              | `/file`    | `replaceState` 到 `/file.html`         | `/file.html`         |
-| `/file.html`         | `/file`    | 不重定向                               | `/file.html`         |
-| `/file/`             | `/file`    | `replaceState` 到 `/file.html`         | `/file.html`         |
-| `/file/index`        | `/file`    | `replaceState` 到 `/file.html`         | `/file.html`         |
-| `/file/index.html`   | `/file`    | `replaceState` 到 `/file.html`         | `/file.html`         |
-| `/folder`            | `/folder/` | `replaceState` 到 `/folder/index.html` | `/folder/index.html` |
-| `/folder.html`       | `/folder/` | `replaceState` 到 `/folder/index.html` | `/folder/index.html` |
-| `/folder/`           | `/folder/` | `replaceState` 到 `/folder/index.html` | `/folder/index.html` |
-| `/folder/index`      | `/folder/` | `replaceState` 到 `/folder/index.html` | `/folder/index.html` |
-| `/folder/index.html` | `/folder/` | 不重定向                               | `/folder/index.html` |
+| 传入 URL             | 匹配路由   | 客户端行为                             |
+| -------------------- | ---------- | -------------------------------------- |
+| `/file`              | `/file`    | `replaceState` 到 `/file.html`         |
+| `/file.html`         | `/file`    | 不重定向                               |
+| `/file/`             | `/file`    | `replaceState` 到 `/file.html`         |
+| `/file/index`        | `/file`    | `replaceState` 到 `/file.html`         |
+| `/file/index.html`   | `/file`    | `replaceState` 到 `/file.html`         |
+| `/folder`            | `/folder/` | `replaceState` 到 `/folder/index.html` |
+| `/folder.html`       | `/folder/` | `replaceState` 到 `/folder/index.html` |
+| `/folder/`           | `/folder/` | `replaceState` 到 `/folder/index.html` |
+| `/folder/index`      | `/folder/` | `replaceState` 到 `/folder/index.html` |
+| `/folder/index.html` | `/folder/` | 不重定向                               |
 
 例如，`/zh/guide/start/introduction.html` 和
 `/zh/guide/start/introduction/index.html` 都会匹配

@@ -710,36 +710,36 @@ query string, hash, and history state are preserved.
 Regular page routes omit the trailing slash, while directory index routes
 retain it.
 
-| Incoming URL         | Matched route | Client behavior              | Final URL  |
-| -------------------- | ------------- | ---------------------------- | ---------- |
-| `/file`              | `/file`       | No redirect                  | `/file`    |
-| `/file.html`         | `/file`       | `replaceState` to `/file`    | `/file`    |
-| `/file/`             | `/file`       | `replaceState` to `/file`    | `/file`    |
-| `/file/index`        | `/file`       | `replaceState` to `/file`    | `/file`    |
-| `/file/index.html`   | `/file`       | `replaceState` to `/file`    | `/file`    |
-| `/folder`            | `/folder/`    | `replaceState` to `/folder/` | `/folder/` |
-| `/folder.html`       | `/folder/`    | `replaceState` to `/folder/` | `/folder/` |
-| `/folder/`           | `/folder/`    | No redirect                  | `/folder/` |
-| `/folder/index`      | `/folder/`    | `replaceState` to `/folder/` | `/folder/` |
-| `/folder/index.html` | `/folder/`    | `replaceState` to `/folder/` | `/folder/` |
+| Incoming URL         | Matched route | Client behavior              |
+| -------------------- | ------------- | ---------------------------- |
+| `/file`              | `/file`       | No redirect                  |
+| `/file.html`         | `/file`       | `replaceState` to `/file`    |
+| `/file/`             | `/file`       | `replaceState` to `/file`    |
+| `/file/index`        | `/file`       | `replaceState` to `/file`    |
+| `/file/index.html`   | `/file`       | `replaceState` to `/file`    |
+| `/folder`            | `/folder/`    | `replaceState` to `/folder/` |
+| `/folder.html`       | `/folder/`    | `replaceState` to `/folder/` |
+| `/folder/`           | `/folder/`    | No redirect                  |
+| `/folder/index`      | `/folder/`    | `replaceState` to `/folder/` |
+| `/folder/index.html` | `/folder/`    | `replaceState` to `/folder/` |
 
 #### With `cleanUrls: false`
 
 Regular page routes use `.html`, while directory index routes use
 `/index.html`.
 
-| Incoming URL         | Matched route | Client behavior                        | Final URL            |
-| -------------------- | ------------- | -------------------------------------- | -------------------- |
-| `/file`              | `/file`       | `replaceState` to `/file.html`         | `/file.html`         |
-| `/file.html`         | `/file`       | No redirect                            | `/file.html`         |
-| `/file/`             | `/file`       | `replaceState` to `/file.html`         | `/file.html`         |
-| `/file/index`        | `/file`       | `replaceState` to `/file.html`         | `/file.html`         |
-| `/file/index.html`   | `/file`       | `replaceState` to `/file.html`         | `/file.html`         |
-| `/folder`            | `/folder/`    | `replaceState` to `/folder/index.html` | `/folder/index.html` |
-| `/folder.html`       | `/folder/`    | `replaceState` to `/folder/index.html` | `/folder/index.html` |
-| `/folder/`           | `/folder/`    | `replaceState` to `/folder/index.html` | `/folder/index.html` |
-| `/folder/index`      | `/folder/`    | `replaceState` to `/folder/index.html` | `/folder/index.html` |
-| `/folder/index.html` | `/folder/`    | No redirect                            | `/folder/index.html` |
+| Incoming URL         | Matched route | Client behavior                        |
+| -------------------- | ------------- | -------------------------------------- |
+| `/file`              | `/file`       | `replaceState` to `/file.html`         |
+| `/file.html`         | `/file`       | No redirect                            |
+| `/file/`             | `/file`       | `replaceState` to `/file.html`         |
+| `/file/index`        | `/file`       | `replaceState` to `/file.html`         |
+| `/file/index.html`   | `/file`       | `replaceState` to `/file.html`         |
+| `/folder`            | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder.html`       | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder/`           | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder/index`      | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder/index.html` | `/folder/`    | No redirect                            |
 
 For example, both `/zh/guide/start/introduction.html` and
 `/zh/guide/start/introduction/index.html` match
