@@ -9,7 +9,7 @@ export default defineConfig({
   globalTimeout: 30 * 60 * 1000,
   // 1 min for each test
   timeout: 60 * 1000,
-  // Avoid Playwright falling back to one worker on macOS CI
+  // Pin CI to two workers (Playwright defaults to 1 worker on CI)
   workers: isCI ? 2 : undefined,
   quiet: true,
   reporter: 'list',
