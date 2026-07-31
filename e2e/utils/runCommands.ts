@@ -121,8 +121,8 @@ export async function runBuildCommand(
     {
       appDir,
       env: {
-        // Multiple Playwright workers can build the same fixture concurrently.
-        // Keep them from sharing the same persistent cache directory.
+        // Fully parallel builds use isolated outDirs but still share the fixture cache.
+        // Disable it to avoid stale route output across workers.
         RSPRESS_PERSISTENT_CACHE: 'false',
       },
     },
