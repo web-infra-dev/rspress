@@ -100,6 +100,12 @@ importers:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@rsdoctor/rspack-plugin':
         specifier: 1.6.1
@@ -107,36 +113,78 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/auto-nav-sidebar-dir-convention:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/auto-nav-sidebar-issue-1682:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/auto-nav-sidebar-no-meta:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/banner:
     dependencies:
@@ -146,6 +194,9 @@ importers:
       react:
         specifier: ^19.2.8
         version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -153,26 +204,53 @@ importers:
       '@types/react':
         specifier: ^19.2.17
         version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/basic:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/check-dead-link:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/client-redirects:
     dependencies:
@@ -182,10 +260,22 @@ importers:
       '@rspress/plugin-client-redirects':
         specifier: workspace:*
         version: link:../../../packages/plugin-client-redirects
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/code-block:
     dependencies:
@@ -195,59 +285,12 @@ importers:
       '@shikijs/transformers':
         specifier: ^4.2.0
         version: 4.2.0
-    devDependencies:
-      '@types/node':
-        specifier: ^22.8.1
-        version: 22.19.15
-
-  e2e/fixtures/code-block-runtime:
-    dependencies:
-      '@rspress/core':
-        specifier: workspace:*
-        version: link:../../../packages/core
-    devDependencies:
-      '@shikijs/transformers':
-        specifier: ^4.2.0
-        version: 4.2.0
-      '@types/node':
-        specifier: ^22.8.1
-        version: 22.19.15
-
-  e2e/fixtures/custom-headers:
-    dependencies:
-      '@rspress/core':
-        specifier: workspace:*
-        version: link:../../../packages/core
-    devDependencies:
-      '@types/node':
-        specifier: ^22.8.1
-        version: 22.19.15
-
-  e2e/fixtures/custom-home-footer:
-    dependencies:
-      '@rspress/core':
-        specifier: workspace:*
-        version: link:../../../packages/core
-    devDependencies:
-      '@types/node':
-        specifier: ^22.8.1
-        version: 22.19.15
-
-  e2e/fixtures/custom-icon:
-    dependencies:
-      '@rspress/core':
-        specifier: workspace:*
-        version: link:../../../packages/core
-    devDependencies:
-      '@types/node':
-        specifier: ^22.8.1
-        version: 22.19.15
-
-  e2e/fixtures/custom-layout:
-    dependencies:
-      '@rspress/core':
-        specifier: workspace:*
-        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -255,6 +298,122 @@ importers:
       '@types/react':
         specifier: ^19.2.17
         version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+
+  e2e/fixtures/code-block-runtime:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@shikijs/transformers':
+        specifier: ^4.2.0
+        version: 4.2.0
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+
+  e2e/fixtures/custom-headers:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+
+  e2e/fixtures/custom-home-footer:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+
+  e2e/fixtures/custom-icon:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+
+  e2e/fixtures/custom-layout:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/custom-plugin:
     dependencies:
@@ -271,6 +430,12 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/dynamic-toc:
     dependencies:
@@ -280,6 +445,9 @@ importers:
       react:
         specifier: ^19.2.8
         version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -287,46 +455,97 @@ importers:
       '@types/react':
         specifier: ^19.2.17
         version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/github-alert-mdxjs:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/heading-title:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/hmr:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/i18n:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/i18n-source-text:
     dependencies:
@@ -336,6 +555,9 @@ importers:
       react:
         specifier: ^19.2.8
         version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -343,76 +565,163 @@ importers:
       '@types/react':
         specifier: ^19.2.17
         version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/icon-file-url:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/inline-markdown:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/issue-1309:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/markdown-link:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/markdown-link-asset:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/multi-version:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/multi-version-global-sidebar:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/multi-version-llms:
     dependencies:
@@ -422,90 +731,198 @@ importers:
       '@rspress/plugin-llms':
         specifier: workspace:*
         version: link:../../../packages/plugin-llms
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/nav-link:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/nav-link-item-with-hash:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/nav-link-items:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/nested-overview:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/no-config-root:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/package-manager-tabs:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/page-head-tags:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/page-type-home:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-api-docgen/locales:
     dependencies:
@@ -515,10 +932,22 @@ importers:
       '@rspress/plugin-api-docgen':
         specifier: workspace:*
         version: link:../../../../packages/plugin-api-docgen
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-api-docgen/single:
     dependencies:
@@ -528,10 +957,22 @@ importers:
       '@rspress/plugin-api-docgen':
         specifier: workspace:*
         version: link:../../../../packages/plugin-api-docgen
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-llms:
     dependencies:
@@ -541,10 +982,22 @@ importers:
       '@rspress/plugin-llms':
         specifier: workspace:*
         version: link:../../../packages/plugin-llms
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-playground:
     dependencies:
@@ -567,6 +1020,12 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-playground-preview:
     dependencies:
@@ -589,6 +1048,12 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-preview:
     dependencies:
@@ -614,6 +1079,12 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-preview-custom-entry:
     dependencies:
@@ -642,6 +1113,12 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-rss:
     dependencies:
@@ -651,10 +1128,22 @@ importers:
       '@rspress/plugin-rss':
         specifier: workspace:*
         version: link:../../../packages/plugin-rss
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-twoslash:
     dependencies:
@@ -664,10 +1153,22 @@ importers:
       '@rspress/plugin-twoslash':
         specifier: workspace:*
         version: link:../../../packages/plugin-twoslash
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-typedoc/multi:
     dependencies:
@@ -677,10 +1178,22 @@ importers:
       '@rspress/plugin-typedoc':
         specifier: workspace:*
         version: link:../../../../packages/plugin-typedoc
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/plugin-typedoc/single:
     dependencies:
@@ -690,30 +1203,66 @@ importers:
       '@rspress/plugin-typedoc':
         specifier: workspace:*
         version: link:../../../../packages/plugin-typedoc
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/production:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/public-dir:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/react-18:
     dependencies:
@@ -736,6 +1285,12 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^18.3.31
+        version: 18.3.31
+      '@types/react-dom':
+        specifier: ^18.3.7
+        version: 18.3.7(@types/react@18.3.31)
 
   e2e/fixtures/react-19:
     dependencies:
@@ -755,6 +1310,12 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/react-router-dom-6:
     dependencies:
@@ -774,13 +1335,34 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/remark-image:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -799,7 +1381,22 @@ importers:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -815,10 +1412,22 @@ importers:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/search:
     dependencies:
@@ -841,6 +1450,9 @@ importers:
       '@types/react':
         specifier: ^19.2.17
         version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/search-algolia:
     dependencies:
@@ -863,16 +1475,31 @@ importers:
       '@types/react':
         specifier: ^19.2.17
         version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/search-code-blocks:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/search-hooks:
     dependencies:
@@ -895,68 +1522,153 @@ importers:
       '@types/react':
         specifier: ^19.2.17
         version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/search-i18n:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/ssg-fail-strict:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/ssg-md:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/ssg-missing-public:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/ssg-worker:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/tabs-component:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/tailwind-v4:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@rsbuild/plugin-tailwindcss':
         specifier: ^2.0.3
@@ -964,6 +1676,12 @@ importers:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -982,36 +1700,75 @@ importers:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/title-number:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/title-suffix:
     dependencies:
       '@rspress/core':
         specifier: workspace:*
         version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   e2e/fixtures/with-base:
     dependencies:
       react:
         specifier: ^19.2.8
         version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
     devDependencies:
       '@rspress/core':
         specifier: workspace:*
@@ -1022,6 +1779,9 @@ importers:
       '@types/react':
         specifier: ^19.2.17
         version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
 
   packages/core:
     dependencies:
@@ -3861,10 +4621,21 @@ packages:
   '@types/parse5@6.0.3':
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
 
+  '@types/prop-types@15.7.15':
+    resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
+
+  '@types/react-dom@18.3.7':
+    resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
+    peerDependencies:
+      '@types/react': ^18.0.0
+
   '@types/react-dom@19.2.3':
     resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
     peerDependencies:
       '@types/react': ^19.2.0
+
+  '@types/react@18.3.31':
+    resolution: {integrity: sha512-vfEqpXTvwT91yhmwdfouStN2hSKwTvyRs8qpLfADyrq/kxDw0hZM7Wk9Ug1FELj8hIby+S/+kQCSRFF32nv2Qw==}
 
   '@types/react@19.2.17':
     resolution: {integrity: sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==}
@@ -9767,9 +10538,20 @@ snapshots:
 
   '@types/parse5@6.0.3': {}
 
+  '@types/prop-types@15.7.15': {}
+
+  '@types/react-dom@18.3.7(@types/react@18.3.31)':
+    dependencies:
+      '@types/react': 18.3.31
+
   '@types/react-dom@19.2.3(@types/react@19.2.17)':
     dependencies:
       '@types/react': 19.2.17
+
+  '@types/react@18.3.31':
+    dependencies:
+      '@types/prop-types': 15.7.15
+      csstype: 3.2.3
 
   '@types/react@19.2.17':
     dependencies:

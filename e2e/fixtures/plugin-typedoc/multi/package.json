@@ -10,9 +10,13 @@
   },
   "dependencies": {
     "@rspress/core": "workspace:*",
-    "@rspress/plugin-typedoc": "workspace:*"
+    "@rspress/plugin-typedoc": "workspace:*",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@types/node": "^22.8.1"
+    "@types/node": "^22.8.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3"
   }
 }
