@@ -17,6 +17,8 @@ async function pathExists(path: string): Promise<boolean> {
   }
 }
 
+test.describe.configure({ mode: 'serial' });
+
 test.describe('basic test', async () => {
   test('should not generate the routes for html/js/mdx files in publicDir', async () => {
     const appDir = import.meta.dirname;

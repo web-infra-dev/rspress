@@ -20,6 +20,16 @@ const TEST_ADDED_FILE = path.resolve(
 );
 const TEST_RESTART_FILE = path.resolve(import.meta.dirname, 'siteConfig.ts');
 
+test.describe.configure({ mode: 'serial' });
+
+function createRestartCounter(app: Awaited<ReturnType<typeof runDevCommand>>) {
+  let devOutput = '';
+  (app as { stdout?: NodeJS.ReadableStream }).stdout?.on('data', chunk => {
+    devOutput += chunk.toString();
+  });
+  return () => devOutput.match(/restarting server as .* changed/g)?.length ?? 0;
+}
+
 test.describe('hmr test', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
@@ -27,36 +37,30 @@ test.describe('hmr test', async () => {
   let originalFragmentContent: string;
   let originalNavContent: string;
   let originalMetaContent: string;
-  let originalRestartFileContent: string;
-  let devOutput = '';
-
-  const getRestartCount = () =>
-    devOutput.match(/restarting server as .* changed/g)?.length ?? 0;
+  let getRestartCount: () => number;
 
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
-    (app as { stdout?: NodeJS.ReadableStream }).stdout?.on('data', chunk => {
-      devOutput += chunk.toString();
-    });
+    getRestartCount = createRestartCounter(app);
     originalContent = await fs.readFile(TEST_FILE, 'utf-8');
     originalFragmentContent = await fs.readFile(TEST_FRAGMENT_FILE, 'utf-8');
     originalNavContent = await fs.readFile(TEST_NAV_FILE, 'utf-8');
     originalMetaContent = await fs.readFile(TEST_META_FILE, 'utf-8');
-    originalRestartFileContent = await fs.readFile(TEST_RESTART_FILE, 'utf-8');
   });
 
   test.afterAll(async () => {
-    if (app) {
-      await killProcess(app);
+    try {
+      if (app) {
+        await killProcess(app);
+      }
+    } finally {
+      await fs.writeFile(TEST_FILE, originalContent);
+      await fs.writeFile(TEST_FRAGMENT_FILE, originalFragmentContent);
+      await fs.writeFile(TEST_NAV_FILE, originalNavContent);
+      await fs.writeFile(TEST_META_FILE, originalMetaContent);
     }
-    await fs.writeFile(TEST_FILE, originalContent);
-    await fs.writeFile(TEST_FRAGMENT_FILE, originalFragmentContent);
-    await fs.writeFile(TEST_NAV_FILE, originalNavContent);
-    await fs.writeFile(TEST_META_FILE, originalMetaContent);
-    await fs.writeFile(TEST_RESTART_FILE, originalRestartFileContent);
-    await fs.rm(TEST_ADDED_FILE, { force: true });
   });
 
   test('Test page', async ({ page }) => {
@@ -104,10 +108,36 @@ test.describe('hmr test', async () => {
     ).toBeVisible();
     expect(getRestartCount()).toBe(0);
   });
+});
 
-  test('restart when routes or config dependencies change', async ({
-    page,
-  }) => {
+test.describe('route restart test', async () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
+  let getRestartCount: () => number;
+
+  test.beforeAll(async () => {
+    const appDir = import.meta.dirname;
+    appPort = await getPort();
+    app = await runDevCommand(appDir, appPort);
+    getRestartCount = createRestartCounter(app);
+  });
+
+  test.afterAll(async () => {
+    try {
+      if (app) {
+        await killProcess(app);
+      }
+    } finally {
+      await fs.rm(TEST_ADDED_FILE, { force: true });
+    }
+  });
+
+  test('restart when routes are added or removed', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/guide/test.html`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page).toHaveTitle(/HMR fixture/);
+
     await fs.writeFile(TEST_ADDED_FILE, '# Added route');
     await expect.poll(getRestartCount).toBe(1);
 
@@ -127,16 +157,60 @@ test.describe('hmr test', async () => {
     await fs.rm(TEST_ADDED_FILE);
     await expect.poll(getRestartCount).toBe(2);
 
+    await expect
+      .poll(async () => {
+        try {
+          await page.goto(
+            `http://localhost:${appPort}/guide/test-temp-added.html`,
+          );
+          return page.locator('body').textContent();
+        } catch {
+          return null;
+        }
+      })
+      .toContain('404');
+  });
+});
+
+test.describe('config dependency restart test', async () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
+  let originalRestartFileContent: string;
+  let getRestartCount: () => number;
+
+  test.beforeAll(async () => {
+    const appDir = import.meta.dirname;
+    originalRestartFileContent = await fs.readFile(TEST_RESTART_FILE, 'utf-8');
+    appPort = await getPort();
+    app = await runDevCommand(appDir, appPort);
+    getRestartCount = createRestartCounter(app);
+  });
+
+  test.afterAll(async () => {
+    try {
+      if (app) {
+        await killProcess(app);
+      }
+    } finally {
+      await fs.writeFile(TEST_RESTART_FILE, originalRestartFileContent);
+    }
+  });
+
+  test('restart when config dependencies change', async ({ page }) => {
+    const pageUrl = `http://localhost:${appPort}/guide/test.html`;
+    await page.goto(pageUrl, { waitUntil: 'networkidle' });
+    await expect(page).toHaveTitle(/HMR fixture/);
+
     await fs.writeFile(
       TEST_RESTART_FILE,
       originalRestartFileContent.replace('HMR fixture', 'Restarted fixture'),
     );
-    await expect.poll(getRestartCount).toBe(3);
+    await expect.poll(getRestartCount).toBe(1);
 
     await expect
       .poll(async () => {
         try {
-          await page.reload();
+          await page.goto(pageUrl);
           return page.title();
         } catch {
           return '';

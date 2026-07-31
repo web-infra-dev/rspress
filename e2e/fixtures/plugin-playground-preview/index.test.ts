@@ -1,13 +1,18 @@
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
+test.describe.configure({ mode: 'serial' });
+
 test.describe('plugin-playground-preview combined test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
+    const iframeDevPort = await getPort();
+    app = await runDevCommand(appDir, appPort, undefined, [], {
+      RSPRESS_IFRAME_DEV_PORT: iframeDevPort.toString(),
+    });
   });
 
   test.afterAll(async () => {

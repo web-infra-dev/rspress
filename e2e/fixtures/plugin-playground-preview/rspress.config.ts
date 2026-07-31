@@ -5,5 +5,14 @@ import { pluginPreview } from '@rspress/plugin-preview';
 
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
-  plugins: [pluginPreview(), pluginPlayground()],
+  plugins: [
+    pluginPreview({
+      iframeOptions: {
+        devPort: process.env.RSPRESS_IFRAME_DEV_PORT
+          ? Number(process.env.RSPRESS_IFRAME_DEV_PORT)
+          : undefined,
+      },
+    }),
+    pluginPlayground(),
+  ],
 });

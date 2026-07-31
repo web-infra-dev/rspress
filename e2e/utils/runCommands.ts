@@ -91,6 +91,7 @@ export async function runDevCommand(
   port: number,
   configFile?: string,
   extraArgs: string[] = [],
+  extraEnv: Record<string, string> = {},
 ) {
   return runNpmScript(
     'dev',
@@ -103,6 +104,7 @@ export async function runDevCommand(
 
         // FIXME: disable lazy compilation to avoid windows flaky test in rspack prerelease
         RSPRESS_LAZY_COMPILATION: 'false',
+        ...extraEnv,
       },
     },
     [...(configFile ? ['-c', configFile] : []), ...extraArgs],
