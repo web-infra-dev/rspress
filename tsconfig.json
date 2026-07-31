@@ -8,7 +8,7 @@
   },
   "include": [
     "rstest.config.ts",
-    "rstest.e2e.config.ts",
+    "rstest.e2e.config.mts",
     "./scripts/update-modern.ts"
   ]
 }

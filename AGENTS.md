@@ -5,7 +5,7 @@
 - Monorepo via `pnpm` + `Nx`.
 - Packages: `packages/core` (CLI + `@rspress/core`), `packages/theme-default` (Default theme), `packages/plugin-*` (Official plugins), `packages/create-rspress` (scaffolder).
 - Tests: unit tests are generally colocated with their source files; `packages/core/tests` contains CLI integration tests, and `e2e/` contains end-to-end tests. Website examples are in `website/`.
-- Key config: `nx.json`, `rslint.config.ts`, `.prettierrc`, `rstest.e2e.config.ts`, `pnpm-workspace.yaml`.
+- Key config: `nx.json`, `rslint.config.ts`, `.prettierrc`, `rstest.e2e.config.mts`, `pnpm-workspace.yaml`.
 
 ## Build, test, and development commands
 

@@ -15,7 +15,7 @@
     "prepare": "skills-package-manager install && pnpm run build && simple-git-hooks",
     "preview:website": "cd website && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
-    "test:e2e": "rstest run --config rstest.e2e.config.ts",
+    "test:e2e": "rstest run --config rstest.e2e.config.mts",
     "test:unit": "rstest run",
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },
@@ -27,7 +27,7 @@
       "prettier --write",
       "heading-case --write"
     ],
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+    "*.{js,jsx,ts,tsx,mts,mjs,cjs}": [
       "rslint --fix",
       "prettier --write"
     ],
