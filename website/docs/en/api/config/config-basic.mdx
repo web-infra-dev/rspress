@@ -700,26 +700,38 @@ export default defineConfig({
 - **Type**: `Boolean`
 - **Default**: `true`
 
-When enabled, this option redirects non-canonical URLs to the URL format
-selected by [`route.cleanUrls`](#routecleanurls), using the actual matched route
-as the source of truth. The page is not reloaded, and the base, locale prefix,
-query string, hash, and history state are preserved.
+When enabled, Rspress normalizes non-canonical browser URLs during client
+startup, using the actual matched route as the source of truth. The target
+format follows [`route.cleanUrls`](#routecleanurls).
+
+`route.cleanUrls` controls the preferred URL format used by generated links,
+while `route.cleanUrlsRedirect` only normalizes the browser address bar.
+
+:::warning Client-side fallback
+
+This option runs after the requested page HTML and client runtime have loaded.
+It uses `history.replaceState` and does not return an HTTP 301/308 response, so
+it cannot fully replace a server-side or CDN canonical redirect, especially for
+SEO. The hosting platform must still serve the correct Rspress page for the
+requested URL variant. Prefer a server-side redirect when available.
+
+:::
 
 #### With `cleanUrls: true`
 
 Regular page routes omit the trailing slash, while directory index routes
 retain it.
 
-| Incoming URL         | Matched route | Client behavior              |
+| Incoming URL         | Matched route | Browser URL update           |
 | -------------------- | ------------- | ---------------------------- |
-| `/file`              | `/file`       | No redirect                  |
+| `/file`              | `/file`       | No update                    |
 | `/file.html`         | `/file`       | `replaceState` to `/file`    |
 | `/file/`             | `/file`       | `replaceState` to `/file`    |
 | `/file/index`        | `/file`       | `replaceState` to `/file`    |
 | `/file/index.html`   | `/file`       | `replaceState` to `/file`    |
 | `/folder`            | `/folder/`    | `replaceState` to `/folder/` |
 | `/folder.html`       | `/folder/`    | `replaceState` to `/folder/` |
-| `/folder/`           | `/folder/`    | No redirect                  |
+| `/folder/`           | `/folder/`    | No update                    |
 | `/folder/index`      | `/folder/`    | `replaceState` to `/folder/` |
 | `/folder/index.html` | `/folder/`    | `replaceState` to `/folder/` |
 
@@ -728,10 +740,10 @@ retain it.
 Regular page routes use `.html`, while directory index routes use
 `/index.html`.
 
-| Incoming URL         | Matched route | Client behavior                        |
+| Incoming URL         | Matched route | Browser URL update                     |
 | -------------------- | ------------- | -------------------------------------- |
 | `/file`              | `/file`       | `replaceState` to `/file.html`         |
-| `/file.html`         | `/file`       | No redirect                            |
+| `/file.html`         | `/file`       | No update                              |
 | `/file/`             | `/file`       | `replaceState` to `/file.html`         |
 | `/file/index`        | `/file`       | `replaceState` to `/file.html`         |
 | `/file/index.html`   | `/file`       | `replaceState` to `/file.html`         |
@@ -739,16 +751,17 @@ Regular page routes use `.html`, while directory index routes use
 | `/folder.html`       | `/folder/`    | `replaceState` to `/folder/index.html` |
 | `/folder/`           | `/folder/`    | `replaceState` to `/folder/index.html` |
 | `/folder/index`      | `/folder/`    | `replaceState` to `/folder/index.html` |
-| `/folder/index.html` | `/folder/`    | No redirect                            |
+| `/folder/index.html` | `/folder/`    | No update                              |
 
 For example, both `/zh/guide/start/introduction.html` and
 `/zh/guide/start/introduction/index.html` match
 `/zh/guide/start/introduction`; the final URL follows the configured
 `cleanUrls` format without losing the locale prefix.
 
-The server must still serve the requested page variant before this client-side
-redirect can run. This behavior follows the canonical URL pattern of
-Cloudflare's [HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/).
+The canonical URL formats align with Cloudflare's
+[HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/).
+However, Cloudflare performs server-side HTTP redirects, while this option only
+updates the URL in the browser.
 
 Set `cleanUrlsRedirect` to `false` to disable browser URL normalization:
 

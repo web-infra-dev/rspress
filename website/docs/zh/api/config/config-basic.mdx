@@ -700,24 +700,35 @@ export default defineConfig({
 - **类型**： `boolean`
 - **默认值**： `true`
 
-开启后，该选项会以实际匹配到的路由为准，通过 History API 将非规范 URL 重定向到
-[`route.cleanUrls`](#routecleanurls) 选择的 URL 格式。页面不会重新加载，并且会保留
-base、语言前缀、query、hash 和 history state。
+开启后，Rspress 会在客户端启动阶段以实际匹配到的路由为准，规范化浏览器地址栏中的
+非规范 URL。目标格式遵循 [`route.cleanUrls`](#routecleanurls)。
+
+`route.cleanUrls` 控制生成链接所使用的首选 URL 格式，
+`route.cleanUrlsRedirect` 仅负责规范化浏览器地址栏。
+
+:::warning 客户端路由兜底
+
+该配置会在请求页面的 HTML 和客户端运行时代码加载后执行。它使用
+`history.replaceState`，不会返回 HTTP 301/308 响应，因此无法完全替代服务端或
+CDN 的 canonical 重定向，尤其不能提供相同的 SEO 效果。托管平台仍需为当前 URL
+变体返回正确的 Rspress 页面；如果条件允许，建议优先配置服务端重定向。
+
+:::
 
 #### `cleanUrls: true`
 
 普通页面路由不保留 trailing slash，目录首页路由则会保留。
 
-| 传入 URL             | 匹配路由   | 客户端行为                   |
+| 传入 URL             | 匹配路由   | 浏览器 URL 更新              |
 | -------------------- | ---------- | ---------------------------- |
-| `/file`              | `/file`    | 不重定向                     |
+| `/file`              | `/file`    | 不更新                       |
 | `/file.html`         | `/file`    | `replaceState` 到 `/file`    |
 | `/file/`             | `/file`    | `replaceState` 到 `/file`    |
 | `/file/index`        | `/file`    | `replaceState` 到 `/file`    |
 | `/file/index.html`   | `/file`    | `replaceState` 到 `/file`    |
 | `/folder`            | `/folder/` | `replaceState` 到 `/folder/` |
 | `/folder.html`       | `/folder/` | `replaceState` 到 `/folder/` |
-| `/folder/`           | `/folder/` | 不重定向                     |
+| `/folder/`           | `/folder/` | 不更新                       |
 | `/folder/index`      | `/folder/` | `replaceState` 到 `/folder/` |
 | `/folder/index.html` | `/folder/` | `replaceState` 到 `/folder/` |
 
@@ -725,10 +736,10 @@ base、语言前缀、query、hash 和 history state。
 
 普通页面路由使用 `.html`，目录首页路由使用 `/index.html`。
 
-| 传入 URL             | 匹配路由   | 客户端行为                             |
+| 传入 URL             | 匹配路由   | 浏览器 URL 更新                        |
 | -------------------- | ---------- | -------------------------------------- |
 | `/file`              | `/file`    | `replaceState` 到 `/file.html`         |
-| `/file.html`         | `/file`    | 不重定向                               |
+| `/file.html`         | `/file`    | 不更新                                 |
 | `/file/`             | `/file`    | `replaceState` 到 `/file.html`         |
 | `/file/index`        | `/file`    | `replaceState` 到 `/file.html`         |
 | `/file/index.html`   | `/file`    | `replaceState` 到 `/file.html`         |
@@ -736,15 +747,15 @@ base、语言前缀、query、hash 和 history state。
 | `/folder.html`       | `/folder/` | `replaceState` 到 `/folder/index.html` |
 | `/folder/`           | `/folder/` | `replaceState` 到 `/folder/index.html` |
 | `/folder/index`      | `/folder/` | `replaceState` 到 `/folder/index.html` |
-| `/folder/index.html` | `/folder/` | 不重定向                               |
+| `/folder/index.html` | `/folder/` | 不更新                                 |
 
 例如，`/zh/guide/start/introduction.html` 和
 `/zh/guide/start/introduction/index.html` 都会匹配
 `/zh/guide/start/introduction`，最终 URL 会遵循 `cleanUrls` 配置，并保留语言前缀。
 
-客户端重定向执行前，服务器仍需能够返回所请求的页面变体。该行为遵循 Cloudflare
+Canonical URL 格式与 Cloudflare 的
 [HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/)
-的 canonical URL 模式。
+保持一致，但 Cloudflare 执行的是服务端 HTTP 重定向，本配置只会在浏览器中更新 URL。
 
 将 `cleanUrlsRedirect` 设置为 `false` 可以关闭浏览器 URL 规范化：
 

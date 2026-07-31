@@ -596,12 +596,13 @@ export interface RouteOptions {
    */
   cleanUrls?: boolean;
   /**
-   * Redirect non-canonical URLs to the URL format selected by `cleanUrls` with
-   * the History API.
+   * Normalize non-canonical browser URLs to the format selected by `cleanUrls`
+   * with the History API.
    *
    * When `cleanUrls` is enabled, regular page routes omit the trailing slash
    * while directory index routes retain it. Otherwise, routes use `.html`
-   * URLs.
+   * URLs. This client-side fallback does not replace server-side 301/308
+   * redirects.
    * @default true
    */
   cleanUrlsRedirect?: boolean;
