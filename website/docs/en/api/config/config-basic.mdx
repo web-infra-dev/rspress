@@ -708,6 +708,10 @@ routes retain it:
 - `/file.html`, `/file/`, and `/file/index.html` become `/file`.
 - `/folder`, `/folder.html`, and `/folder/index.html` become `/folder/` when the
   matching route is generated from `folder/index.md`.
+- `/zh/guide/start/introduction.html` and
+  `/zh/guide/start/introduction/index.html` become
+  `/zh/guide/start/introduction`, preserving the locale prefix from the matched
+  route.
 
 The page is not reloaded, and the query string and hash are preserved.
 

@@ -136,12 +136,12 @@ export function redirectToCleanUrl(
     return false;
   }
 
-  const route = pathnameToRouteService(removeBase(location.pathname));
-  if (!route) {
+  const matchedRoute = pathnameToRouteService(removeBase(location.pathname));
+  if (!matchedRoute) {
     return false;
   }
 
-  const canonicalPathname = withBase(route.path);
+  const canonicalPathname = withBase(matchedRoute.path);
   if (location.pathname === canonicalPathname) {
     return false;
   }

@@ -60,6 +60,14 @@ rs.mock('virtual-routes', () => {
       lang: '',
       version: '',
     },
+    {
+      path: '/zh/guide/start/introduction',
+      element,
+      filePath: 'zh/guide/start/introduction.mdx',
+      preload: rs.fn(),
+      lang: 'zh',
+      version: '',
+    },
   ];
   return { routes };
 });
@@ -262,6 +270,8 @@ describe('redirectToCleanUrl', () => {
     ['/folder/', '/folder/'],
     ['/folder/index', '/folder/'],
     ['/folder/index.html', '/folder/'],
+    ['/zh/guide/start/introduction.html', '/zh/guide/start/introduction'],
+    ['/zh/guide/start/introduction/index.html', '/zh/guide/start/introduction'],
   ] as const;
 
   it.each(cases)('normalizes %s to %s', (pathname, canonicalPathname) => {

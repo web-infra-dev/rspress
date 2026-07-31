@@ -707,6 +707,9 @@ API 将非规范 URL 重定向到匹配路由的简洁 URL。普通页面路由�
 - `/file.html`、`/file/` 和 `/file/index.html` 会变为 `/file`。
 - 如果匹配的路由由 `folder/index.md` 生成，`/folder`、`/folder.html` 和
   `/folder/index.html` 会变为 `/folder/`。
+- `/zh/guide/start/introduction.html` 和
+  `/zh/guide/start/introduction/index.html` 会变为
+  `/zh/guide/start/introduction`，并保留实际匹配路由中的语言前缀。
 
 页面不会重新加载，并且会保留 query 和 hash。客户端重定向执行前，服务器仍需能够返回
 所请求的页面变体。该行为遵循 Cloudflare
