@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../test';
 import { runBuildCommand } from '../../utils/runCommands';
 
 test('should reject when template public assets are missing', async () => {

@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../test';
 import { getNavbarItems, getSidebarTexts } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 

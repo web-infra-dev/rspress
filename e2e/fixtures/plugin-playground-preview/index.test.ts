@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('plugin-playground-preview combined test', async () => {

@@ -1,5 +1,5 @@
-import type { Locator, Page } from '@playwright/test';
-import { expect, test } from '@playwright/test';
+import type { Locator, Page } from '../../test';
+import { expect, test } from '../../test';
 import {
   getPort,
   killProcess,

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../test';
 import {
   getPort,
   killProcess,
@@ -33,6 +33,6 @@ test.describe('basic test', async () => {
       );
     const defaultIsDark = await getIsDark();
     await appearanceToggle.click();
-    await expect.poll(getIsDark).toBe(!defaultIsDark);
+    await expect.poll(getIsDark, { timeout: 5000 }).toBe(!defaultIsDark);
   });
 });

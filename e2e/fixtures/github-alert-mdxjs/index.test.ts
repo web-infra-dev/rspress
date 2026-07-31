@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('github alert syntax in mdx-js', async () => {

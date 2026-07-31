@@ -1,6 +1,11 @@
 import os from 'node:os';
-import type { Locator, Page } from '@playwright/test';
-import { expect, test } from '@playwright/test';
+import {
+  expect,
+  type Locator,
+  type Page,
+  type PlaywrightFixture,
+  test,
+} from '../../test';
 import { getShouldOpenNewPage } from '../../utils/newPage';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
@@ -13,13 +18,10 @@ test.describe('Navigation with <Link>', async () => {
       waitUntil: 'networkidle',
     });
     const shouldOpenNewPage = getShouldOpenNewPage(page, p => p.url());
-    const dispose = () => page.close();
-
     return {
       page,
       anchor: page.locator('.rp-nav-menu__item a').first(),
       shouldOpenNewPage,
-      dispose,
     };
   };
 
@@ -53,15 +55,8 @@ test.describe('Navigation with <Link>', async () => {
   test.describe('it should open new window/tab with modifier keys hold', () => {
     let scope: TestContext;
 
-    test.beforeAll(async ({ browser }) => {
-      scope = await getContext(await browser.newPage());
-    });
-
-    test.afterAll(async () => {
-      await scope.dispose();
-    });
-
-    test.beforeEach(async () => {
+    test.beforeEach<PlaywrightFixture>(async ({ page }) => {
+      scope = await getContext(page);
       await scope.anchor.evaluate(e => e.removeAttribute('target'));
     });
 
@@ -76,14 +71,14 @@ test.describe('Navigation with <Link>', async () => {
     ] satisfies Parameters<Locator['click']>[0][];
 
     for (const clickOption of clickOptionCases) {
-      test(JSON.stringify(clickOption), async ({ page: _ }) => {
+      test(JSON.stringify(clickOption), async () => {
         await expect(
           scope.shouldOpenNewPage(() => scope.anchor.click(clickOption)),
         ).resolves.toBe(gotoPage('/doc-1/index.html'));
       });
     }
 
-    test('target=_blank', async ({ page: _ }) => {
+    test('target=_blank', async () => {
       await scope.anchor.evaluate(e => e.setAttribute('target', '_blank'));
       await expect(
         scope.shouldOpenNewPage(() => scope.anchor.click()),

@@ -1,4 +1,4 @@
-import { expect, type Page, test } from '@playwright/test';
+import { expect, type Page, test } from '../../test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 import { searchInPage } from '../../utils/search';
 

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../test';
 import { getSidebarTexts } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
