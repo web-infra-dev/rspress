@@ -2,6 +2,7 @@ import type { Route } from '@rspress/shared';
 import { cleanUrl } from '@rspress/shared';
 import { routes } from 'virtual-routes';
 import siteData from 'virtual-site-data';
+import { removeBase, withBase } from './utils';
 
 /**
  * Normalize route path by:
@@ -113,6 +114,41 @@ export function pathnameToRouteService(pathname: string): Route | undefined {
     cache.set(normalizedPathname, route);
   }
   return route;
+}
+
+/**
+ * Redirects a pathname to the matching route's canonical clean URL with the
+ * History API.
+ *
+ * Regular page routes omit the trailing slash, while directory index routes
+ * retain it. Query strings, hashes, and history state are preserved.
+ *
+ * @returns Whether the URL was updated.
+ */
+export function redirectToCleanUrl(
+  location: Pick<Location, 'hash' | 'pathname' | 'search'>,
+  history: Pick<History, 'pushState' | 'state'>,
+): boolean {
+  if (!siteData.route?.cleanUrls || !siteData.route?.cleanUrlsRedirect) {
+    return false;
+  }
+
+  const route = pathnameToRouteService(removeBase(location.pathname));
+  if (!route) {
+    return false;
+  }
+
+  const canonicalPathname = withBase(route.path);
+  if (location.pathname === canonicalPathname) {
+    return false;
+  }
+
+  history.pushState(
+    history.state,
+    '',
+    `${canonicalPathname}${location.search}${location.hash}`,
+  );
+  return true;
 }
 
 /**

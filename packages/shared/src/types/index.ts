@@ -596,6 +596,14 @@ export interface RouteOptions {
    */
   cleanUrls?: boolean;
   /**
+   * Redirect non-canonical URLs to clean URLs with the History API.
+   *
+   * Regular page routes omit the trailing slash, while directory index routes
+   * retain it. This option only takes effect when `cleanUrls` is enabled.
+   * @default false
+   */
+  cleanUrlsRedirect?: boolean;
+  /**
    * How to redirect first-time visitors to the closest configured locale
    * based on their browser language.
    * @default 'auto'

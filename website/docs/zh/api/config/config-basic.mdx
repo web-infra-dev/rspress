@@ -695,6 +695,35 @@ export default defineConfig({
 });
 ```
 
+### route.cleanUrlsRedirect
+
+- **类型**： `boolean`
+- **默认值**： `false`
+
+开启 [`route.cleanUrls`](#routecleanurls) 后，该选项会在客户端通过 History
+API 将非规范 URL 重定向到匹配路由的简洁 URL。普通页面路由不保留 trailing slash，
+目录首页路由则会保留：
+
+- `/file.html`、`/file/` 和 `/file/index.html` 会变为 `/file`。
+- 如果匹配的路由由 `folder/index.md` 生成，`/folder`、`/folder.html` 和
+  `/folder/index.html` 会变为 `/folder/`。
+
+页面不会重新加载，并且会保留 query 和 hash。客户端重定向执行前，服务器仍需能够返回
+所请求的页面变体。该行为遵循 Cloudflare
+[`auto-trailing-slash`](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/#automatic-trailing-slashes-default)
+HTML handling 的 canonical URL 模式。
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    cleanUrls: true,
+    cleanUrlsRedirect: true,
+  },
+});
+```
+
 ### route.localeRedirect
 
 - **类型**：`'auto' | 'never' | 'only-default-lang'`

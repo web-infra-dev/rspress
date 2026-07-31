@@ -695,6 +695,38 @@ export default defineConfig({
 });
 ```
 
+### route.cleanUrlsRedirect
+
+- **Type**: `Boolean`
+- **Default**: `false`
+
+When [`route.cleanUrls`](#routecleanurls) is enabled, this option redirects
+non-canonical URLs to the matching route's clean URL on the client using the
+History API. Regular page routes omit the trailing slash, while directory index
+routes retain it:
+
+- `/file.html`, `/file/`, and `/file/index.html` become `/file`.
+- `/folder`, `/folder.html`, and `/folder/index.html` become `/folder/` when the
+  matching route is generated from `folder/index.md`.
+
+The page is not reloaded, and the query string and hash are preserved.
+
+The server must still serve the requested page variant before this client-side
+redirect can run. This behavior follows the canonical URL pattern of
+Cloudflare's [`auto-trailing-slash`](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/#automatic-trailing-slashes-default)
+HTML handling.
+
+```js
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    cleanUrls: true,
+    cleanUrlsRedirect: true,
+  },
+});
+```
+
 ### route.localeRedirect
 
 - **Type**: `'auto' | 'never' | 'only-default-lang'`
