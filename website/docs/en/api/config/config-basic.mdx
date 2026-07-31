@@ -700,42 +700,63 @@ export default defineConfig({
 - **Type**: `Boolean`
 - **Default**: `true`
 
-When [`route.cleanUrls`](#routecleanurls) is enabled, this option redirects
-non-canonical URLs to the matching route's clean URL on the client using the
-History API. Regular page routes omit the trailing slash, while directory index
-routes retain it:
+When enabled, this option redirects non-canonical URLs to the URL format
+selected by [`route.cleanUrls`](#routecleanurls), using the actual matched route
+as the source of truth. The page is not reloaded, and the base, locale prefix,
+query string, hash, and history state are preserved.
 
-- `/file.html`, `/file/`, and `/file/index.html` become `/file`.
-- `/folder`, `/folder.html`, and `/folder/index.html` become `/folder/` when the
-  matching route is generated from `folder/index.md`.
-- `/zh/guide/start/introduction.html` and
-  `/zh/guide/start/introduction/index.html` become
-  `/zh/guide/start/introduction`, preserving the locale prefix from the matched
-  route.
+#### With `cleanUrls: true`
 
-The page is not reloaded, and the query string and hash are preserved.
+Regular page routes omit the trailing slash, while directory index routes
+retain it.
+
+| Incoming URL         | Matched route | Client behavior           | Final URL  |
+| -------------------- | ------------- | ------------------------- | ---------- |
+| `/file`              | `/file`       | No redirect               | `/file`    |
+| `/file.html`         | `/file`       | `pushState` to `/file`    | `/file`    |
+| `/file/`             | `/file`       | `pushState` to `/file`    | `/file`    |
+| `/file/index`        | `/file`       | `pushState` to `/file`    | `/file`    |
+| `/file/index.html`   | `/file`       | `pushState` to `/file`    | `/file`    |
+| `/folder`            | `/folder/`    | `pushState` to `/folder/` | `/folder/` |
+| `/folder.html`       | `/folder/`    | `pushState` to `/folder/` | `/folder/` |
+| `/folder/`           | `/folder/`    | No redirect               | `/folder/` |
+| `/folder/index`      | `/folder/`    | `pushState` to `/folder/` | `/folder/` |
+| `/folder/index.html` | `/folder/`    | `pushState` to `/folder/` | `/folder/` |
+
+#### With `cleanUrls: false`
+
+Regular page routes use `.html`, while directory index routes use
+`/index.html`.
+
+| Incoming URL         | Matched route | Client behavior                     | Final URL            |
+| -------------------- | ------------- | ----------------------------------- | -------------------- |
+| `/file`              | `/file`       | `pushState` to `/file.html`         | `/file.html`         |
+| `/file.html`         | `/file`       | No redirect                         | `/file.html`         |
+| `/file/`             | `/file`       | `pushState` to `/file.html`         | `/file.html`         |
+| `/file/index`        | `/file`       | `pushState` to `/file.html`         | `/file.html`         |
+| `/file/index.html`   | `/file`       | `pushState` to `/file.html`         | `/file.html`         |
+| `/folder`            | `/folder/`    | `pushState` to `/folder/index.html` | `/folder/index.html` |
+| `/folder.html`       | `/folder/`    | `pushState` to `/folder/index.html` | `/folder/index.html` |
+| `/folder/`           | `/folder/`    | `pushState` to `/folder/index.html` | `/folder/index.html` |
+| `/folder/index`      | `/folder/`    | `pushState` to `/folder/index.html` | `/folder/index.html` |
+| `/folder/index.html` | `/folder/`    | No redirect                         | `/folder/index.html` |
+
+For example, both `/zh/guide/start/introduction.html` and
+`/zh/guide/start/introduction/index.html` match
+`/zh/guide/start/introduction`; the final URL follows the configured
+`cleanUrls` format without losing the locale prefix.
 
 The server must still serve the requested page variant before this client-side
 redirect can run. This behavior follows the canonical URL pattern of
-Cloudflare's [`auto-trailing-slash`](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/#automatic-trailing-slashes-default)
-HTML handling.
+Cloudflare's [HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/).
 
-| `cleanUrls`       | `cleanUrlsRedirect` | Generated links   | Client URL normalization               |
-| ----------------- | ------------------- | ----------------- | -------------------------------------- |
-| `false` (default) | `true` (default)    | URLs with `.html` | Disabled                               |
-| `false`           | `false`             | URLs with `.html` | Disabled                               |
-| `true`            | `true` (default)    | Clean URLs        | Enabled using the canonical route path |
-| `true`            | `false`             | Clean URLs        | Disabled                               |
-
-Set `cleanUrlsRedirect` to `false` to generate clean links without normalizing
-the browser URL:
+Set `cleanUrlsRedirect` to `false` to disable browser URL normalization:
 
 ```js
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    cleanUrls: true,
     cleanUrlsRedirect: false,
   },
 });

@@ -1,5 +1,5 @@
 import type { Route } from '@rspress/shared';
-import { cleanUrl } from '@rspress/shared';
+import { cleanUrl, normalizeHref } from '@rspress/shared';
 import { routes } from 'virtual-routes';
 import siteData from 'virtual-site-data';
 import { removeBase, withBase } from './utils';
@@ -117,11 +117,11 @@ export function pathnameToRouteService(pathname: string): Route | undefined {
 }
 
 /**
- * Redirects a pathname to the matching route's canonical clean URL with the
- * History API.
+ * Redirects a pathname to the matching route's canonical URL with the History
+ * API.
  *
- * Regular page routes omit the trailing slash, while directory index routes
- * retain it. Query strings, hashes, and history state are preserved.
+ * The URL format follows the `cleanUrls` setting. Query strings, hashes, and
+ * history state are preserved.
  *
  * @returns Whether the URL was updated.
  */
@@ -129,10 +129,7 @@ export function redirectToCleanUrl(
   location: Pick<Location, 'hash' | 'pathname' | 'search'>,
   history: Pick<History, 'pushState' | 'state'>,
 ): boolean {
-  if (
-    !siteData.route?.cleanUrls ||
-    siteData.route?.cleanUrlsRedirect === false
-  ) {
+  if (siteData.route?.cleanUrlsRedirect === false) {
     return false;
   }
 
@@ -141,7 +138,9 @@ export function redirectToCleanUrl(
     return false;
   }
 
-  const canonicalPathname = withBase(matchedRoute.path);
+  const canonicalPathname = withBase(
+    normalizeHref(matchedRoute.path, Boolean(siteData.route?.cleanUrls)),
+  );
   if (location.pathname === canonicalPathname) {
     return false;
   }

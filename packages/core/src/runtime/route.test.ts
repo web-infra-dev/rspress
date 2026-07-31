@@ -259,7 +259,7 @@ describe('pathnameToRouteService', () => {
 });
 
 describe('redirectToCleanUrl', () => {
-  const cases = [
+  const cleanUrlCases = [
     ['/file', '/file'],
     ['/file.html', '/file'],
     ['/file/', '/file'],
@@ -275,23 +275,65 @@ describe('redirectToCleanUrl', () => {
     ['/zh/guide/start/introduction/index.html', '/zh/guide/start/introduction'],
   ] as const;
 
-  it.each(cases)('normalizes %s to %s', (pathname, canonicalPathname) => {
-    siteData.route.cleanUrls = true;
-    const pushState = rs.fn();
+  it.each(cleanUrlCases)(
+    'normalizes %s to %s when cleanUrls is true',
+    (pathname, canonicalPathname) => {
+      siteData.route.cleanUrls = true;
+      const pushState = rs.fn();
 
-    expect(
-      redirectToCleanUrl(
-        { pathname, search: '', hash: '' },
-        { pushState, state: null },
-      ),
-    ).toBe(pathname !== canonicalPathname);
+      expect(
+        redirectToCleanUrl(
+          { pathname, search: '', hash: '' },
+          { pushState, state: null },
+        ),
+      ).toBe(pathname !== canonicalPathname);
 
-    if (pathname !== canonicalPathname) {
-      expect(pushState).toHaveBeenCalledWith(null, '', canonicalPathname);
-    } else {
-      expect(pushState).not.toHaveBeenCalled();
-    }
-  });
+      if (pathname !== canonicalPathname) {
+        expect(pushState).toHaveBeenCalledWith(null, '', canonicalPathname);
+      } else {
+        expect(pushState).not.toHaveBeenCalled();
+      }
+    },
+  );
+
+  const htmlUrlCases = [
+    ['/file', '/file.html'],
+    ['/file.html', '/file.html'],
+    ['/file/', '/file.html'],
+    ['/file/index', '/file.html'],
+    ['/file/index.html', '/file.html'],
+    ['/folder', '/folder/index.html'],
+    ['/folder.html', '/folder/index.html'],
+    ['/folder/', '/folder/index.html'],
+    ['/folder/index', '/folder/index.html'],
+    ['/folder/index.html', '/folder/index.html'],
+    ['/zh/guide/start/introduction', '/zh/guide/start/introduction.html'],
+    ['/zh/guide/start/introduction.html', '/zh/guide/start/introduction.html'],
+    [
+      '/zh/guide/start/introduction/index.html',
+      '/zh/guide/start/introduction.html',
+    ],
+  ] as const;
+
+  it.each(htmlUrlCases)(
+    'normalizes %s to %s when cleanUrls is false',
+    (pathname, canonicalPathname) => {
+      const pushState = rs.fn();
+
+      expect(
+        redirectToCleanUrl(
+          { pathname, search: '', hash: '' },
+          { pushState, state: null },
+        ),
+      ).toBe(pathname !== canonicalPathname);
+
+      if (pathname !== canonicalPathname) {
+        expect(pushState).toHaveBeenCalledWith(null, '', canonicalPathname);
+      } else {
+        expect(pushState).not.toHaveBeenCalled();
+      }
+    },
+  );
 
   it('preserves the base, query, hash, and history state', () => {
     siteData.base = '/docs/';
@@ -314,22 +356,6 @@ describe('redirectToCleanUrl', () => {
       '',
       '/docs/folder/?from=home#overview',
     );
-  });
-
-  it('does not redirect when cleanUrls is disabled', () => {
-    const pushState = rs.fn();
-
-    expect(
-      redirectToCleanUrl(
-        {
-          pathname: '/folder/index.html',
-          search: '',
-          hash: '',
-        },
-        { pushState, state: null },
-      ),
-    ).toBe(false);
-    expect(pushState).not.toHaveBeenCalled();
   });
 
   it('does not redirect when cleanUrlsRedirect is disabled', () => {

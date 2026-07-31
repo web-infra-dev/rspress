@@ -596,10 +596,12 @@ export interface RouteOptions {
    */
   cleanUrls?: boolean;
   /**
-   * Redirect non-canonical URLs to clean URLs with the History API.
+   * Redirect non-canonical URLs to the URL format selected by `cleanUrls` with
+   * the History API.
    *
-   * Regular page routes omit the trailing slash, while directory index routes
-   * retain it. This option only takes effect when `cleanUrls` is enabled.
+   * When `cleanUrls` is enabled, regular page routes omit the trailing slash
+   * while directory index routes retain it. Otherwise, routes use `.html`
+   * URLs.
    * @default true
    */
   cleanUrlsRedirect?: boolean;
