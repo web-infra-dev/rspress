@@ -1,7 +1,10 @@
 {
   "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "@e2e/*": ["./e2e/*"]
+    }
   },
   "include": [
     "rstest.config.ts",

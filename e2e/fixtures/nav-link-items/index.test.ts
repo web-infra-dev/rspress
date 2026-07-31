@@ -1,5 +1,5 @@
-import type { Locator, Page } from '../../test';
-import { expect, test } from '../../test';
+import type { Locator, Page } from '@e2e/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,

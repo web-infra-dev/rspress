@@ -1,4 +1,4 @@
-import { expect, test } from '../../test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('tailwind-v4', async () => {

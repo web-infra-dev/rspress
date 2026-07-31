@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '../../test';
+import { expect, test } from '@e2e/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
 test('llms should be successful', async () => {

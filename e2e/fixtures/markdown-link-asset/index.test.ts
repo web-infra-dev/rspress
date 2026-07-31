@@ -1,4 +1,4 @@
-import { expect, type Page, test } from '../../test';
+import { expect, type Page, test } from '@e2e/test';
 import {
   getPort,
   killProcess,

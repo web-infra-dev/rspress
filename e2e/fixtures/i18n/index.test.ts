@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '../../test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,

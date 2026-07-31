@@ -1,6 +1,6 @@
 import { access } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '../../test';
+import { expect, test } from '@e2e/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
 async function pathExists(path: string): Promise<boolean> {

@@ -5,7 +5,7 @@ import {
   type Page,
   type PlaywrightFixture,
   test,
-} from '../../test';
+} from '@e2e/test';
 import { getShouldOpenNewPage } from '../../utils/newPage';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
