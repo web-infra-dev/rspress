@@ -299,7 +299,7 @@ test.describe('Auto nav and sidebar test', async () => {
       waitUntil: 'networkidle',
     });
     await page.click('.rp-doc-layout__sidebar .rp-sidebar-group');
-    expect(page.url()).toBe(`http://localhost:${appPort}/guide/`);
+    expect(page.url()).toBe(`http://localhost:${appPort}/guide/index.html`);
   });
 
   test('Should load nested subpage API Overview correctly', async ({

@@ -2,7 +2,7 @@ import type { Route } from '@rspress/shared';
 import { cleanUrl, normalizeHref } from '@rspress/shared';
 import { routes } from 'virtual-routes';
 import siteData from 'virtual-site-data';
-import { removeBase, withBase } from './utils';
+import { removeBase, removeTrailingSlash } from './utils';
 
 /**
  * Normalize route path by:
@@ -127,7 +127,7 @@ export function pathnameToRouteService(pathname: string): Route | undefined {
  */
 export function redirectToCleanUrl(
   location: Pick<Location, 'hash' | 'pathname' | 'search'>,
-  history: Pick<History, 'pushState' | 'state'>,
+  history: Pick<History, 'replaceState' | 'state'>,
 ): boolean {
   if (siteData.route?.cleanUrlsRedirect === false) {
     return false;
@@ -138,14 +138,18 @@ export function redirectToCleanUrl(
     return false;
   }
 
-  const canonicalPathname = withBase(
-    normalizeHref(matchedRoute.path, Boolean(siteData.route?.cleanUrls)),
+  const canonicalRoutePath = normalizeHref(
+    matchedRoute.path,
+    Boolean(siteData.route?.cleanUrls),
   );
+  const canonicalPathname = `${removeTrailingSlash(
+    siteData.base,
+  )}${canonicalRoutePath}`;
   if (location.pathname === canonicalPathname) {
     return false;
   }
 
-  history.pushState(
+  history.replaceState(
     history.state,
     '',
     `${canonicalPathname}${location.search}${location.hash}`,

@@ -68,6 +68,14 @@ rs.mock('virtual-routes', () => {
       lang: 'zh',
       version: '',
     },
+    {
+      path: '/docs/intro',
+      element,
+      filePath: 'docs/intro.mdx',
+      preload: rs.fn(),
+      lang: '',
+      version: '',
+    },
   ];
   return { routes };
 });
@@ -279,19 +287,19 @@ describe('redirectToCleanUrl', () => {
     'normalizes %s to %s when cleanUrls is true',
     (pathname, canonicalPathname) => {
       siteData.route.cleanUrls = true;
-      const pushState = rs.fn();
+      const replaceState = rs.fn();
 
       expect(
         redirectToCleanUrl(
           { pathname, search: '', hash: '' },
-          { pushState, state: null },
+          { replaceState, state: null },
         ),
       ).toBe(pathname !== canonicalPathname);
 
       if (pathname !== canonicalPathname) {
-        expect(pushState).toHaveBeenCalledWith(null, '', canonicalPathname);
+        expect(replaceState).toHaveBeenCalledWith(null, '', canonicalPathname);
       } else {
-        expect(pushState).not.toHaveBeenCalled();
+        expect(replaceState).not.toHaveBeenCalled();
       }
     },
   );
@@ -318,19 +326,19 @@ describe('redirectToCleanUrl', () => {
   it.each(htmlUrlCases)(
     'normalizes %s to %s when cleanUrls is false',
     (pathname, canonicalPathname) => {
-      const pushState = rs.fn();
+      const replaceState = rs.fn();
 
       expect(
         redirectToCleanUrl(
           { pathname, search: '', hash: '' },
-          { pushState, state: null },
+          { replaceState, state: null },
         ),
       ).toBe(pathname !== canonicalPathname);
 
       if (pathname !== canonicalPathname) {
-        expect(pushState).toHaveBeenCalledWith(null, '', canonicalPathname);
+        expect(replaceState).toHaveBeenCalledWith(null, '', canonicalPathname);
       } else {
-        expect(pushState).not.toHaveBeenCalled();
+        expect(replaceState).not.toHaveBeenCalled();
       }
     },
   );
@@ -338,7 +346,7 @@ describe('redirectToCleanUrl', () => {
   it('preserves the base, query, hash, and history state', () => {
     siteData.base = '/docs/';
     siteData.route.cleanUrls = true;
-    const pushState = rs.fn();
+    const replaceState = rs.fn();
     const state = { key: 'value' };
 
     expect(
@@ -348,20 +356,38 @@ describe('redirectToCleanUrl', () => {
           search: '?from=home',
           hash: '#overview',
         },
-        { pushState, state },
+        { replaceState, state },
       ),
     ).toBe(true);
-    expect(pushState).toHaveBeenCalledWith(
+    expect(replaceState).toHaveBeenCalledWith(
       state,
       '',
       '/docs/folder/?from=home#overview',
     );
   });
 
+  it('always prepends the base to a base-relative matched route', () => {
+    siteData.base = '/docs/';
+    siteData.route.cleanUrls = true;
+    const replaceState = rs.fn();
+
+    expect(
+      redirectToCleanUrl(
+        {
+          pathname: '/docs/docs/intro.html',
+          search: '',
+          hash: '',
+        },
+        { replaceState, state: null },
+      ),
+    ).toBe(true);
+    expect(replaceState).toHaveBeenCalledWith(null, '', '/docs/docs/intro');
+  });
+
   it('does not redirect when cleanUrlsRedirect is disabled', () => {
     siteData.route.cleanUrls = true;
     siteData.route.cleanUrlsRedirect = false;
-    const pushState = rs.fn();
+    const replaceState = rs.fn();
 
     expect(
       redirectToCleanUrl(
@@ -370,15 +396,15 @@ describe('redirectToCleanUrl', () => {
           search: '',
           hash: '',
         },
-        { pushState, state: null },
+        { replaceState, state: null },
       ),
     ).toBe(false);
-    expect(pushState).not.toHaveBeenCalled();
+    expect(replaceState).not.toHaveBeenCalled();
   });
 
   it('does not redirect an unmatched path', () => {
     siteData.route.cleanUrls = true;
-    const pushState = rs.fn();
+    const replaceState = rs.fn();
 
     expect(
       redirectToCleanUrl(
@@ -387,10 +413,10 @@ describe('redirectToCleanUrl', () => {
           search: '',
           hash: '',
         },
-        { pushState, state: null },
+        { replaceState, state: null },
       ),
     ).toBe(false);
-    expect(pushState).not.toHaveBeenCalled();
+    expect(replaceState).not.toHaveBeenCalled();
   });
 });
 
