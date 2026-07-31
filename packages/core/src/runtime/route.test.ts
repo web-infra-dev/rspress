@@ -266,7 +266,6 @@ describe('redirectToCleanUrl', () => {
 
   it.each(cases)('normalizes %s to %s', (pathname, canonicalPathname) => {
     siteData.route.cleanUrls = true;
-    siteData.route.cleanUrlsRedirect = true;
     const pushState = rs.fn();
 
     expect(
@@ -286,7 +285,6 @@ describe('redirectToCleanUrl', () => {
   it('preserves the base, query, hash, and history state', () => {
     siteData.base = '/docs/';
     siteData.route.cleanUrls = true;
-    siteData.route.cleanUrlsRedirect = true;
     const pushState = rs.fn();
     const state = { key: 'value' };
 
@@ -308,7 +306,6 @@ describe('redirectToCleanUrl', () => {
   });
 
   it('does not redirect when cleanUrls is disabled', () => {
-    siteData.route.cleanUrlsRedirect = true;
     const pushState = rs.fn();
 
     expect(
@@ -326,6 +323,7 @@ describe('redirectToCleanUrl', () => {
 
   it('does not redirect when cleanUrlsRedirect is disabled', () => {
     siteData.route.cleanUrls = true;
+    siteData.route.cleanUrlsRedirect = false;
     const pushState = rs.fn();
 
     expect(
@@ -343,7 +341,6 @@ describe('redirectToCleanUrl', () => {
 
   it('does not redirect an unmatched path', () => {
     siteData.route.cleanUrls = true;
-    siteData.route.cleanUrlsRedirect = true;
     const pushState = rs.fn();
 
     expect(

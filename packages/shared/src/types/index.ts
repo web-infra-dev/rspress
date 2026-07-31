@@ -600,7 +600,7 @@ export interface RouteOptions {
    *
    * Regular page routes omit the trailing slash, while directory index routes
    * retain it. This option only takes effect when `cleanUrls` is enabled.
-   * @default false
+   * @default true
    */
   cleanUrlsRedirect?: boolean;
   /**

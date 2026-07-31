@@ -698,7 +698,7 @@ export default defineConfig({
 ### route.cleanUrlsRedirect
 
 - **类型**： `boolean`
-- **默认值**： `false`
+- **默认值**： `true`
 
 开启 [`route.cleanUrls`](#routecleanurls) 后，该选项会在客户端通过 History
 API 将非规范 URL 重定向到匹配路由的简洁 URL。普通页面路由不保留 trailing slash，
@@ -713,13 +713,23 @@ API 将非规范 URL 重定向到匹配路由的简洁 URL。普通页面路由�
 [`auto-trailing-slash`](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/#automatic-trailing-slashes-default)
 HTML handling 的 canonical URL 模式。
 
+| `cleanUrls`       | `cleanUrlsRedirect` | 生成的链接        | 客户端 URL 规范化                |
+| ----------------- | ------------------- | ----------------- | -------------------------------- |
+| `false`（默认值） | `true`（默认值）    | 带 `.html` 的 URL | 不启用                           |
+| `false`           | `false`             | 带 `.html` 的 URL | 不启用                           |
+| `true`            | `true`（默认值）    | 简洁 URL          | 根据路由的 canonical path 规范化 |
+| `true`            | `false`             | 简洁 URL          | 不启用                           |
+
+如果只需要生成简洁链接，不希望规范化浏览器 URL，可以将 `cleanUrlsRedirect` 设置为
+`false`：
+
 ```js title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
     cleanUrls: true,
-    cleanUrlsRedirect: true,
+    cleanUrlsRedirect: false,
   },
 });
 ```

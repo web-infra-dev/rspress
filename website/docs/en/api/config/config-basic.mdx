@@ -698,7 +698,7 @@ export default defineConfig({
 ### route.cleanUrlsRedirect
 
 - **Type**: `Boolean`
-- **Default**: `false`
+- **Default**: `true`
 
 When [`route.cleanUrls`](#routecleanurls) is enabled, this option redirects
 non-canonical URLs to the matching route's clean URL on the client using the
@@ -716,13 +716,23 @@ redirect can run. This behavior follows the canonical URL pattern of
 Cloudflare's [`auto-trailing-slash`](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/#automatic-trailing-slashes-default)
 HTML handling.
 
+| `cleanUrls`       | `cleanUrlsRedirect` | Generated links   | Client URL normalization               |
+| ----------------- | ------------------- | ----------------- | -------------------------------------- |
+| `false` (default) | `true` (default)    | URLs with `.html` | Disabled                               |
+| `false`           | `false`             | URLs with `.html` | Disabled                               |
+| `true`            | `true` (default)    | Clean URLs        | Enabled using the canonical route path |
+| `true`            | `false`             | Clean URLs        | Disabled                               |
+
+Set `cleanUrlsRedirect` to `false` to generate clean links without normalizing
+the browser URL:
+
 ```js
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
     cleanUrls: true,
-    cleanUrlsRedirect: true,
+    cleanUrlsRedirect: false,
   },
 });
 ```

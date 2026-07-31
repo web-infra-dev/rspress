@@ -129,7 +129,10 @@ export function redirectToCleanUrl(
   location: Pick<Location, 'hash' | 'pathname' | 'search'>,
   history: Pick<History, 'pushState' | 'state'>,
 ): boolean {
-  if (!siteData.route?.cleanUrls || !siteData.route?.cleanUrlsRedirect) {
+  if (
+    !siteData.route?.cleanUrls ||
+    siteData.route?.cleanUrlsRedirect === false
+  ) {
     return false;
   }
 
