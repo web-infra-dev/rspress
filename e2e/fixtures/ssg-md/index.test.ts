@@ -51,7 +51,7 @@ test('llms should be successful', async () => {
     indexMd
       .trimStart()
       .startsWith(
-        '> For AI agents: the complete documentation index is available at https://example.com/docs/llms.txt, the full documentation bundle is available at https://example.com/docs/llms-full.txt, and this page is available as Markdown at https://example.com/docs/index.md.',
+        '> For AI agents: the complete documentation index is available at https://example.com/docs/llms.txt, the full documentation bundle is available at https://example.com/docs/llms-full.txt.',
       ),
   ).toBeTruthy();
 
