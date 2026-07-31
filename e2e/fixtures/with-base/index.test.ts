@@ -7,6 +7,7 @@ import {
   runBuildCommand,
   runPreviewCommand,
 } from '../../utils/runCommands';
+import { getTestOutDir } from '../../utils/getTestOutDir';
 
 test.describe('plugin test', async () => {
   let appPort;
@@ -102,14 +103,15 @@ test.describe('plugin test', async () => {
 
 test('Should resolve an auto asset prefix for route preload', async () => {
   const appDir = import.meta.dirname;
+  const outDir = getTestOutDir(
+    'rspress-auto-asset-prefix.config.ts',
+    'doc_build_auto',
+  );
   await runBuildCommand(appDir, 'rspress-auto-asset-prefix.config.ts');
 
   const [rootHtml, nestedHtml] = await Promise.all([
-    readFile(path.join(appDir, 'doc_build_auto/index.html'), 'utf-8'),
-    readFile(
-      path.join(appDir, 'doc_build_auto/en/guide/quick-start.html'),
-      'utf-8',
-    ),
+    readFile(path.join(appDir, outDir, 'index.html'), 'utf-8'),
+    readFile(path.join(appDir, outDir, 'en/guide/quick-start.html'), 'utf-8'),
   ]);
 
   expect(rootHtml).toMatch(

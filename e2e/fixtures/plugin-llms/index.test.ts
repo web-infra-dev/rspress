@@ -1,6 +1,7 @@
 import { access, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
+import { getTestOutDir } from '../../utils/getTestOutDir';
 import { runBuildCommand } from '../../utils/runCommands';
 
 /**
@@ -29,23 +30,18 @@ async function pathExists(path: string): Promise<boolean> {
 test.describe('plugin-llms', async () => {
   test('should generate llms.txt llms-full.txt mdFiles', async () => {
     const appDir = import.meta.dirname;
+    const docBuildDir = path.resolve(appDir, getTestOutDir());
     await runBuildCommand(appDir);
 
-    expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms.txt')),
-    ).toBeTruthy();
+    expect(pathExists(path.resolve(docBuildDir, 'llms.txt'))).toBeTruthy();
 
-    expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms-full.txt')),
-    ).toBeTruthy();
+    expect(pathExists(path.resolve(docBuildDir, 'llms-full.txt'))).toBeTruthy();
 
-    expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'index.md')),
-    ).toBeTruthy();
+    expect(pathExists(path.resolve(docBuildDir, 'index.md'))).toBeTruthy();
 
     // Verify llms.txt content: nav sections should group routes correctly
     const llmsTxt = await readFile(
-      path.resolve(appDir, 'doc_build', 'llms.txt'),
+      path.resolve(docBuildDir, 'llms.txt'),
       'utf-8',
     );
     // Should have nav-based sections, not everything in "Other"
@@ -62,7 +58,7 @@ test.describe('plugin-llms', async () => {
 
     // Verify llms-full.txt has markdown content with url frontmatter
     const llmsFullTxt = await readFile(
-      path.resolve(appDir, 'doc_build', 'llms-full.txt'),
+      path.resolve(docBuildDir, 'llms-full.txt'),
       'utf-8',
     );
     expect(llmsFullTxt).toContain(
@@ -75,10 +71,11 @@ test.describe('plugin-llms', async () => {
 
   test('should order llms.txt entries according to _meta.json', async () => {
     const appDir = import.meta.dirname;
+    const docBuildDir = path.resolve(appDir, getTestOutDir());
     await runBuildCommand(appDir);
 
     const llmsTxt = await readFile(
-      path.resolve(appDir, 'doc_build', 'llms.txt'),
+      path.resolve(docBuildDir, 'llms.txt'),
       'utf-8',
     );
 
@@ -119,31 +116,29 @@ test.describe('plugin-llms', async () => {
 
   test('multiple configuration - should generate llms.txt llms-full.txt mdFiles', async () => {
     const appDir = import.meta.dirname;
+    const docBuildDir = path.resolve(
+      appDir,
+      getTestOutDir('rspress-i18n.config.ts'),
+    );
     await runBuildCommand(appDir, 'rspress-i18n.config.ts');
 
+    expect(pathExists(path.resolve(docBuildDir, 'llms.txt'))).toBeTruthy();
+
+    expect(pathExists(path.resolve(docBuildDir, 'llms-full.txt'))).toBeTruthy();
+
+    expect(pathExists(path.resolve(docBuildDir, 'index.md'))).toBeTruthy();
+
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms.txt')),
+      pathExists(path.resolve(docBuildDir, 'zh', 'llms.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms-full.txt')),
-    ).toBeTruthy();
-
-    expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'index.md')),
-    ).toBeTruthy();
-
-    expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'zh', 'llms.txt')),
-    ).toBeTruthy();
-
-    expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'zh', 'llms-full.txt')),
+      pathExists(path.resolve(docBuildDir, 'zh', 'llms-full.txt')),
     ).toBeTruthy();
 
     // Verify zh/llms.txt has Chinese content grouped by nav
     const zhLlmsTxt = await readFile(
-      path.resolve(appDir, 'doc_build', 'zh', 'llms.txt'),
+      path.resolve(docBuildDir, 'zh', 'llms.txt'),
       'utf-8',
     );
     expect(zhLlmsTxt).toContain('## Guide');
@@ -152,7 +147,7 @@ test.describe('plugin-llms', async () => {
 
     // FIXME: should work
     // expect(
-    //   pathExists(path.resolve(appDir, 'doc_build', 'zh', 'index.md')),
+    //   pathExists(path.resolve(docBuildDir, 'zh', 'index.md')),
     // ).toBeTruthy();
   });
 });

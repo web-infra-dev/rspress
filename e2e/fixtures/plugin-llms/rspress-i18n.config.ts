@@ -1,9 +1,11 @@
 import * as path from 'node:path';
 import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
+import { getTestOutDir } from '../../utils/getTestOutDir';
 
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc-i18n'),
+  outDir: getTestOutDir('rspress-i18n.config.ts'),
   lang: 'en',
   themeConfig: {
     darkMode: false,

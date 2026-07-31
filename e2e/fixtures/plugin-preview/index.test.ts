@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
+import { getTestOutDir } from '../../utils/getTestOutDir';
 import {
   getPort,
   killProcess,
@@ -196,7 +197,10 @@ test.describe('plugin preview build', async () => {
   }) => {
     const appDir = import.meta.dirname;
     const noIframePort = await getPort();
-    const distDir = path.join(appDir, 'doc_build');
+    const distDir = path.join(
+      appDir,
+      getTestOutDir('rspress.no-iframe.config.ts'),
+    );
 
     await fs.rm(distDir, { recursive: true, force: true });
     await runBuildCommand(appDir, 'rspress.no-iframe.config.ts');

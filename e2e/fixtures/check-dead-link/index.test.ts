@@ -8,10 +8,11 @@ import {
 
 test.describe('check dead links', async () => {
   let appPort: number;
-  let app: Awaited<ReturnType<typeof runPreviewCommand>>;
-  test.afterAll(async () => {
+  let app: Awaited<ReturnType<typeof runPreviewCommand>> | undefined;
+  test.afterEach(async () => {
     if (app) {
       await killProcess(app);
+      app = undefined;
     }
   });
 
@@ -91,7 +92,10 @@ test.describe('check dead links', async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir, 'rspress-no-prefix.config.ts');
-    app = await runPreviewCommand(appDir, appPort);
+    app = await runPreviewCommand(appDir, appPort, [
+      '-c',
+      'rspress-no-prefix.config.ts',
+    ]);
 
     const getLinks = async (url: string) => {
       await page.goto(url, {
@@ -163,7 +167,10 @@ test.describe('check dead links', async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir, 'rspress-clean.config.ts');
-    app = await runPreviewCommand(appDir, appPort);
+    app = await runPreviewCommand(appDir, appPort, [
+      '-c',
+      'rspress-clean.config.ts',
+    ]);
 
     const getLinks = async (url: string) => {
       await page.goto(url, {

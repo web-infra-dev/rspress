@@ -1,8 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe.configure({ mode: 'serial' });
-
 test.describe('plugin-playground-preview combined test', async () => {
   let appPort;
   let app;

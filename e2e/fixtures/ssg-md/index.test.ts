@@ -1,13 +1,14 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
+import { getTestOutDir } from '../../utils/getTestOutDir';
 import { runBuildCommand } from '../../utils/runCommands';
 
 test('llms should be successful', async () => {
   const appDir = import.meta.dirname;
   await runBuildCommand(appDir);
 
-  const docBuildDir = path.join(appDir, 'doc_build');
+  const docBuildDir = path.join(appDir, getTestOutDir());
   const files = [
     'llms.txt',
     'index.md',
@@ -77,10 +78,14 @@ test('llms should be successful', async () => {
 
 test('custom llms.txt renderer should be successful', async () => {
   const appDir = import.meta.dirname;
+  const docBuildDir = path.join(
+    appDir,
+    getTestOutDir('rspress-custom-llms-txt.config.ts'),
+  );
   await runBuildCommand(appDir, 'rspress-custom-llms-txt.config.ts');
 
   const llmsTxt = await fs.readFile(
-    path.join(appDir, 'doc_build', 'llms.txt'),
+    path.join(docBuildDir, 'llms.txt'),
     'utf-8',
   );
   expect(llmsTxt).toContain('# Custom Rspress SSG MDX Test');
@@ -105,10 +110,14 @@ test('csr should be successful', async () => {
 
 test('llms directive hint should be configurable', async () => {
   const appDir = import.meta.dirname;
+  const docBuildDir = path.join(
+    appDir,
+    getTestOutDir('rspress-no-llms-hint.config.ts'),
+  );
   await runBuildCommand(appDir, 'rspress-no-llms-hint.config.ts');
 
   const indexHtml = await fs.readFile(
-    path.join(appDir, 'doc_build', 'index.html'),
+    path.join(docBuildDir, 'index.html'),
     'utf-8',
   );
   expect(indexHtml).not.toContain('For AI agents:');

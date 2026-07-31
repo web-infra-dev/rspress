@@ -8,10 +8,11 @@ import {
 
 test.describe('basic test', async () => {
   let appPort: number;
-  let app: Awaited<ReturnType<typeof runPreviewCommand>> | null;
-  test.afterAll(async () => {
+  let app: Awaited<ReturnType<typeof runPreviewCommand>> | undefined;
+  test.afterEach(async () => {
     if (app) {
       await killProcess(app);
+      app = undefined;
     }
   });
 
@@ -89,7 +90,10 @@ test.describe('basic test', async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir, 'rspress-clean.config.ts');
-    app = await runPreviewCommand(appDir, appPort);
+    app = await runPreviewCommand(appDir, appPort, [
+      '-c',
+      'rspress-clean.config.ts',
+    ]);
     await testAssetLink(page, false, true);
   });
 
@@ -99,7 +103,10 @@ test.describe('basic test', async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
     await runBuildCommand(appDir, 'rspress-clean.config.ts');
-    app = await runPreviewCommand(appDir, appPort);
+    app = await runPreviewCommand(appDir, appPort, [
+      '-c',
+      'rspress-clean.config.ts',
+    ]);
     await testAssetLink(page, true, true);
   });
 });

@@ -48,10 +48,9 @@ export async function runNpmScript(
       const markers = {
         dev: /built in/i,
         preview: /Local:/i,
-        build: /File (web)/,
       };
 
-      if (markers[commandName].test(message)) {
+      if (commandName !== 'build' && markers[commandName].test(message)) {
         if (!didResolve) {
           didResolve = true;
           resolve(instance);
@@ -72,6 +71,7 @@ export async function runNpmScript(
 
       if (!didResolve) {
         if (code !== 0) {
+          process.stderr.write(stderrOutput);
           reject(
             new Error(
               `process unexpected exit with code: ${code} signal: ${signal}`,
@@ -120,7 +120,11 @@ export async function runBuildCommand(
     'build',
     {
       appDir,
-      env: {},
+      env: {
+        // Multiple Playwright workers can build the same fixture concurrently.
+        // Keep them from sharing the same persistent cache directory.
+        RSPRESS_PERSISTENT_CACHE: 'false',
+      },
     },
     [...(configFile ? ['-c', configFile] : []), ...extraArgs],
   );
@@ -144,8 +148,17 @@ export async function runPreviewCommand(
 }
 
 export async function getPort() {
+  const parallelIndex = process.env.TEST_PARALLEL_INDEX;
+  const preferredPorts =
+    parallelIndex === undefined
+      ? undefined
+      : getRandomPort.makeRange(
+          20_000 + Number(parallelIndex) * 1_000,
+          20_999 + Number(parallelIndex) * 1_000,
+        );
+
   while (true) {
-    const port = await getRandomPort();
+    const port = await getRandomPort({ port: preferredPorts });
     if (!portMap.get(port)) {
       portMap.set(port, 1);
       return port;

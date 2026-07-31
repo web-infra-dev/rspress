@@ -6,9 +6,11 @@ import {
   transformerNotationFocus,
   transformerNotationHighlight,
 } from '@shikijs/transformers';
+import { getTestOutDir } from '../../utils/getTestOutDir';
 
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
+  outDir: getTestOutDir(),
   markdown: {
     shiki: {
       langAlias: {
