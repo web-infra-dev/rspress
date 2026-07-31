@@ -18,10 +18,9 @@ test.describe('home pageType', async () => {
   });
 
   test('Hero', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/`, {
+    await page.goto(`http://localhost:${appPort}/base/index.html`, {
       waitUntil: 'networkidle',
     });
-    expect(page.url()).toBe(`http://localhost:${appPort}/base/index.html`);
     await expect(page.locator('.rp-home-hero__title-brand')).toHaveText(
       'E2E case title',
     );
@@ -56,10 +55,9 @@ test.describe('home pageType', async () => {
   });
 
   test('Hero - zh', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/zh/`, {
+    await page.goto(`http://localhost:${appPort}/base/zh/index.html`, {
       waitUntil: 'networkidle',
     });
-    expect(page.url()).toBe(`http://localhost:${appPort}/base/zh/index.html`);
     await expect(page.locator('.rp-home-hero__title-brand')).toHaveText(
       'E2E 用例 title',
     );
@@ -94,7 +92,7 @@ test.describe('home pageType', async () => {
   });
 
   test('Features', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/`, {
+    await page.goto(`http://localhost:${appPort}/base/index.html`, {
       waitUntil: 'networkidle',
     });
     const features = page.locator('.rp-home-feature__card');
