@@ -5,6 +5,7 @@ import {
   matchPath,
   pathnameToRouteService,
   preloadLink,
+  redirectToCleanUrl,
 } from './route';
 
 rs.mock('virtual-site-data', () => {
@@ -43,12 +44,47 @@ rs.mock('virtual-routes', () => {
       lang: '',
       version: '',
     },
+    {
+      path: '/file',
+      element,
+      filePath: 'file.mdx',
+      preload: rs.fn(),
+      lang: '',
+      version: '',
+    },
+    {
+      path: '/folder/',
+      element,
+      filePath: 'folder/index.mdx',
+      preload: rs.fn(),
+      lang: '',
+      version: '',
+    },
+    {
+      path: '/zh/guide/start/introduction',
+      element,
+      filePath: 'zh/guide/start/introduction.mdx',
+      preload: rs.fn(),
+      lang: 'zh',
+      version: '',
+    },
+    {
+      path: '/docs/intro',
+      element,
+      filePath: 'docs/intro.mdx',
+      preload: rs.fn(),
+      lang: '',
+      version: '',
+    },
   ];
   return { routes };
 });
 
 afterEach(() => {
-  (siteData.route as { prefetchLink?: boolean }).prefetchLink = undefined;
+  siteData.base = '/';
+  siteData.route.cleanUrls = undefined;
+  siteData.route.cleanUrlsRedirect = undefined;
+  siteData.route.prefetchLink = undefined;
   rs.clearAllMocks();
 });
 
@@ -227,6 +263,160 @@ describe('pathnameToRouteService', () => {
     expect(
       pathnameToRouteService('/api/CONFIG#hash')?.path,
     ).toMatchInlineSnapshot(`"/api/config/"`);
+  });
+});
+
+describe('redirectToCleanUrl', () => {
+  const cleanUrlCases = [
+    ['/file', '/file'],
+    ['/file.html', '/file'],
+    ['/file/', '/file'],
+    ['/file/index', '/file'],
+    ['/file/index.html', '/file'],
+    ['/folder', '/folder/'],
+    ['/folder.html', '/folder/'],
+    ['/folder/', '/folder/'],
+    ['/folder/index', '/folder/'],
+    ['/folder/index.html', '/folder/'],
+    ['/zh/guide/start/introduction.html', '/zh/guide/start/introduction'],
+    ['/zh/guide/start/introduction/', '/zh/guide/start/introduction'],
+    ['/zh/guide/start/introduction/index.html', '/zh/guide/start/introduction'],
+  ] as const;
+
+  it.each(cleanUrlCases)(
+    'normalizes %s to %s when cleanUrls is true',
+    (pathname, canonicalPathname) => {
+      siteData.route.cleanUrls = true;
+      const replaceState = rs.fn();
+
+      expect(
+        redirectToCleanUrl(
+          { pathname, search: '', hash: '' },
+          { replaceState, state: null },
+        ),
+      ).toBe(pathname !== canonicalPathname);
+
+      if (pathname !== canonicalPathname) {
+        expect(replaceState).toHaveBeenCalledWith(null, '', canonicalPathname);
+      } else {
+        expect(replaceState).not.toHaveBeenCalled();
+      }
+    },
+  );
+
+  const htmlUrlCases = [
+    ['/file', '/file.html'],
+    ['/file.html', '/file.html'],
+    ['/file/', '/file.html'],
+    ['/file/index', '/file.html'],
+    ['/file/index.html', '/file.html'],
+    ['/folder', '/folder/index.html'],
+    ['/folder.html', '/folder/index.html'],
+    ['/folder/', '/folder/index.html'],
+    ['/folder/index', '/folder/index.html'],
+    ['/folder/index.html', '/folder/index.html'],
+    ['/zh/guide/start/introduction', '/zh/guide/start/introduction.html'],
+    ['/zh/guide/start/introduction.html', '/zh/guide/start/introduction.html'],
+    [
+      '/zh/guide/start/introduction/index.html',
+      '/zh/guide/start/introduction.html',
+    ],
+  ] as const;
+
+  it.each(htmlUrlCases)(
+    'normalizes %s to %s when cleanUrls is false',
+    (pathname, canonicalPathname) => {
+      const replaceState = rs.fn();
+
+      expect(
+        redirectToCleanUrl(
+          { pathname, search: '', hash: '' },
+          { replaceState, state: null },
+        ),
+      ).toBe(pathname !== canonicalPathname);
+
+      if (pathname !== canonicalPathname) {
+        expect(replaceState).toHaveBeenCalledWith(null, '', canonicalPathname);
+      } else {
+        expect(replaceState).not.toHaveBeenCalled();
+      }
+    },
+  );
+
+  it('preserves the base, query, hash, and history state', () => {
+    siteData.base = '/docs/';
+    siteData.route.cleanUrls = true;
+    const replaceState = rs.fn();
+    const state = { key: 'value' };
+
+    expect(
+      redirectToCleanUrl(
+        {
+          pathname: '/docs/folder/index.html',
+          search: '?from=home',
+          hash: '#overview',
+        },
+        { replaceState, state },
+      ),
+    ).toBe(true);
+    expect(replaceState).toHaveBeenCalledWith(
+      state,
+      '',
+      '/docs/folder/?from=home#overview',
+    );
+  });
+
+  it('always prepends the base to a base-relative matched route', () => {
+    siteData.base = '/docs/';
+    siteData.route.cleanUrls = true;
+    const replaceState = rs.fn();
+
+    expect(
+      redirectToCleanUrl(
+        {
+          pathname: '/docs/docs/intro.html',
+          search: '',
+          hash: '',
+        },
+        { replaceState, state: null },
+      ),
+    ).toBe(true);
+    expect(replaceState).toHaveBeenCalledWith(null, '', '/docs/docs/intro');
+  });
+
+  it('does not redirect when cleanUrlsRedirect is disabled', () => {
+    siteData.route.cleanUrls = true;
+    siteData.route.cleanUrlsRedirect = false;
+    const replaceState = rs.fn();
+
+    expect(
+      redirectToCleanUrl(
+        {
+          pathname: '/folder/index.html',
+          search: '',
+          hash: '',
+        },
+        { replaceState, state: null },
+      ),
+    ).toBe(false);
+    expect(replaceState).not.toHaveBeenCalled();
+  });
+
+  it('does not redirect an unmatched path', () => {
+    siteData.route.cleanUrls = true;
+    const replaceState = rs.fn();
+
+    expect(
+      redirectToCleanUrl(
+        {
+          pathname: '/missing/index.html',
+          search: '',
+          hash: '',
+        },
+        { replaceState, state: null },
+      ),
+    ).toBe(false);
+    expect(replaceState).not.toHaveBeenCalled();
   });
 });
 

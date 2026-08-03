@@ -16,8 +16,8 @@
   "devDependencies": {
     "@rsbuild/plugin-tailwindcss": "^2.0.3",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "tailwind-merge": "^2.6.1",
