@@ -16,6 +16,6 @@
   "devDependencies": {
     "@rspress/plugin-algolia": "workspace:*",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.17"
+    "@types/react": "^19.2.18"
   }
 }
