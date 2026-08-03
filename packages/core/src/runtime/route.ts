@@ -28,7 +28,7 @@ function normalizeRoutePath(routePath: string) {
 
 /**
  * Simple implementation of matchPath to check if a pattern matches a pathname
- * Better performance alternative of `import { matchPath } from 'react-router-dom'`
+ * Better performance alternative of `import { matchPath } from 'react-router'`
  * @param pattern - The route pattern to match against
  * @param pathname - The pathname to check
  * @returns Match object if matched, null otherwise
@@ -71,7 +71,7 @@ const sortedRoutes = [...routes].sort((a, b) => {
 
 /**
  * Simple implementation of matchRoutes to find matching routes
- * Better performance alternative of `import { matchRoutes } from 'react-router-dom'`
+ * Better performance alternative of `import { matchRoutes } from 'react-router'`
  * @param _routes - Array of routes (unused, uses pre-sorted sortedRoutes)
  * @param pathname - The pathname to match
  * @returns Array of matched routes with route object, or null if no match

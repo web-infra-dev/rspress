@@ -24,11 +24,12 @@ async function detectPackageMajorVersion(
   return undefined;
 }
 
-export async function resolveReactRouterDomAlias(): Promise<
+export async function resolveReactRouterAlias(): Promise<
   Record<string, string>
 > {
-  const hasInstalled = await detectPackageMajorVersion('react-router-dom');
-  const basedir = hasInstalled ? process.cwd() : PACKAGE_ROOT;
+  const reactRouterDomMajor =
+    await detectPackageMajorVersion('react-router-dom');
+  const useReactRouterDomV7 = reactRouterDomMajor === 7;
   const alias: Record<string, string> = {};
   const resolver = new Resolver({
     mainFields: ['browser', 'module', 'main'],
@@ -38,22 +39,45 @@ export async function resolveReactRouterDomAlias(): Promise<
   });
 
   try {
-    const resolved = await resolver.async(
-      basedir,
-      'react-router-dom/package.json',
-    );
-    if (resolved.error) {
-      throw Error(resolved.error);
+    let basedir = PACKAGE_ROOT;
+    if (useReactRouterDomV7) {
+      const resolvedReactRouterDomPackageJson = await resolver.async(
+        process.cwd(),
+        'react-router-dom/package.json',
+      );
+      if (
+        resolvedReactRouterDomPackageJson.error ||
+        !resolvedReactRouterDomPackageJson.path
+      ) {
+        throw Error(resolvedReactRouterDomPackageJson.error);
+      }
+      basedir = path.dirname(resolvedReactRouterDomPackageJson.path);
     }
 
-    if (!resolved.path) {
-      throw Error(`'react-router-dom' resolved to empty path`);
+    const [resolvedEntry, resolvedPackageJson] = await Promise.all([
+      resolver.async(basedir, 'react-router'),
+      resolver.async(basedir, 'react-router/package.json'),
+    ]);
+    if (resolvedEntry.error || resolvedPackageJson.error) {
+      throw Error(resolvedEntry.error || resolvedPackageJson.error);
+    }
+
+    if (!resolvedEntry.path || !resolvedPackageJson.path) {
+      throw Error(`'react-router' resolved to an empty path`);
+    }
+    if (useReactRouterDomV7) {
+      return {
+        'react-router': path.dirname(resolvedPackageJson.path),
+      };
     }
     return {
-      'react-router-dom': path.dirname(resolved.path),
+      // React Router v8 is ESM-only, so alias its exact package requests to
+      // the resolved export entries instead of aliasing the package directory.
+      'react-router$': resolvedEntry.path,
+      'react-router/package.json': resolvedPackageJson.path,
     };
   } catch (e) {
-    logger.warn('react-router-dom not found: \n', e);
+    logger.warn('react-router not found: \n', e);
   }
   return {};
 }

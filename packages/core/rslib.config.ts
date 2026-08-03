@@ -37,7 +37,7 @@ const COMMON_EXTERNALS = [
   // react
   'react',
   'react-dom',
-  'react-router-dom',
+  'react-router',
 ];
 
 // Keep internal import.meta.env flags for the final Rspress app build to replace.

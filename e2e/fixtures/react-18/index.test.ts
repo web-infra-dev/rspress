@@ -40,8 +40,9 @@ test.describe('React 18 dev test', async () => {
     const h1 = page.locator('h1');
     await expect(h1).toContainText('Hello world');
     const body = page.locator('body');
+    expect(getPackageVersion('react-router-dom')).toMatch(/^7\./);
     await expect(body).toContainText(
-      `react-router-dom ${getPackageVersion('react-router-dom')}`,
+      `react-router ${getPackageVersion('react-router-dom')}`,
     );
     await expect(body).toContainText(`react ${getPackageVersion('react')}`);
   });
@@ -64,10 +65,11 @@ test('React 18 build should be successful', async () => {
 
   const reactVersion = getPackageVersion('react');
   const routerVersion = getPackageVersion('react-router-dom');
+  expect(routerVersion).toMatch(/^7\./);
 
   // Verify SSG-MD rendered correctly with React 18 (versions should be resolved, not raw {version})
   expect(indexHtml).toContain(`react ${reactVersion}`);
-  expect(indexHtml).toContain(`react-router-dom ${routerVersion}`);
+  expect(indexHtml).toContain(`react-router ${routerVersion}`);
 
   expect(indexHtml).not.toContain('{reactVersion}');
   expect(indexHtml).not.toContain('{version}');
