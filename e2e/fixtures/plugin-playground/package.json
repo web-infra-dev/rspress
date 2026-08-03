@@ -16,6 +16,8 @@
     "solid-js": "^1.9.14"
   },
   "devDependencies": {
-    "@types/node": "^22.8.1"
+    "@types/node": "^22.8.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4"
   }
 }
