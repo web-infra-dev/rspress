@@ -551,6 +551,7 @@ export interface FrontMatterMeta {
   pageType?: PageType;
   features?: Feature[];
   hero?: Hero;
+  icon?: string;
   tag?: string;
 
   // ui
@@ -595,6 +596,17 @@ export interface RouteOptions {
    * @default false
    */
   cleanUrls?: boolean;
+  /**
+   * Normalize non-canonical browser URLs to the format selected by `cleanUrls`
+   * with the History API.
+   *
+   * When `cleanUrls` is enabled, regular page routes omit the trailing slash
+   * while directory index routes retain it. Otherwise, routes use `.html`
+   * URLs. This client-side fallback does not replace server-side 301/308
+   * redirects.
+   * @default true
+   */
+  cleanUrlsRedirect?: boolean;
   /**
    * How to redirect first-time visitors to the closest configured locale
    * based on their browser language.

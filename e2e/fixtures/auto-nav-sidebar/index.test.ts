@@ -18,7 +18,7 @@ test.describe('Auto nav and sidebar test', async () => {
   });
 
   test('Should render nav and sidebar correctly', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide/`, {
+    await page.goto(`http://localhost:${appPort}/guide/index.html`, {
       waitUntil: 'networkidle',
     });
 
@@ -36,6 +36,100 @@ test.describe('Auto nav and sidebar test', async () => {
       .filter((text): text is string => text.length > 0);
     expect(trimmedTopLevelTexts).toEqual(
       expect.arrayContaining(['Guide', 'Advanced']),
+    );
+  });
+
+  test('Should render sidebar icons and tags correctly', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/sidebar-icon/`, {
+      waitUntil: 'networkidle',
+    });
+
+    const sidebar = page.locator('.rp-doc-layout__sidebar');
+    const overviewItem = sidebar.locator(
+      '.rp-sidebar-item[data-context="sidebar-icon-overview"]',
+    );
+    const overviewIcon = overviewItem.locator('.rp-sidebar-item__icon');
+    const overviewTag = overviewItem.locator(
+      '.rp-sidebar-item__right .rp-badge',
+    );
+
+    await expect(overviewIcon.locator('svg')).toHaveCount(1);
+    await expect(overviewIcon).toHaveCSS('width', '16px');
+    await expect(overviewIcon).toHaveCSS('height', '16px');
+    await expect(overviewTag).toHaveText('new');
+    await expect(
+      overviewItem.evaluate(item => {
+        const iconElement = item.querySelector('.rp-sidebar-item__icon');
+        const textElement = item.querySelector(
+          '.rp-sidebar-item__left > .rp-doc',
+        );
+        return Boolean(
+          iconElement &&
+          textElement &&
+          (iconElement.compareDocumentPosition(textElement) &
+            Node.DOCUMENT_POSITION_FOLLOWING) !==
+            0,
+        );
+      }),
+    ).resolves.toBe(true);
+
+    const relativeImage = sidebar.locator(
+      '.rp-sidebar-item[data-context="sidebar-icon-quick-start"] img.rp-sidebar-item__icon',
+    );
+    await expect(relativeImage).toHaveAttribute(
+      'src',
+      '/sidebar-icon/sidebar-rocket.svg',
+    );
+
+    const groupImage = sidebar.locator(
+      '.rp-sidebar-item[data-context="sidebar-icon-guide"] img.rp-sidebar-item__icon',
+    );
+    await expect(groupImage).toHaveAttribute('src', '/sidebar-book.svg');
+    await expect(groupImage).toHaveJSProperty('naturalWidth', 32);
+    await expect(groupImage).toHaveCSS('width', '16px');
+    await expect(groupImage).toHaveCSS('height', '16px');
+    await expect(groupImage).toHaveCSS('object-fit', 'contain');
+
+    const sectionHeaderImage = sidebar
+      .locator('.rp-sidebar-section-header')
+      .filter({ hasText: /^Resources$/ })
+      .locator('.rp-sidebar-section-header__icon > img');
+    await expect(sectionHeaderImage).toHaveAttribute(
+      'src',
+      '/sidebar-resources.svg',
+    );
+    await expect(sectionHeaderImage).toHaveJSProperty('naturalWidth', 32);
+    await expect(sectionHeaderImage).toHaveCSS('width', '16px');
+    await expect(sectionHeaderImage).toHaveCSS('height', '16px');
+
+    const navbar = page.locator('.rp-nav-menu');
+    const guideNavIcon = navbar
+      .locator('.rp-nav-menu__item')
+      .filter({ hasText: 'Guide' })
+      .locator('.rp-nav-menu__item__leading-icon');
+    await expect(guideNavIcon.locator('svg')).toHaveCount(1);
+
+    const sidebarIconNavItem = navbar
+      .locator('.rp-nav-menu__item')
+      .filter({ hasText: /^Sidebar Icon$/ });
+    const navbarImage = sidebarIconNavItem.locator(
+      'img.rp-nav-menu__item__leading-icon',
+    );
+    await expect(navbarImage).toHaveAttribute('src', '/sidebar-panel.svg');
+    await expect(navbarImage).toHaveCSS('width', '16px');
+    await expect(navbarImage).toHaveCSS('height', '16px');
+
+    await page.setViewportSize({ width: 500, height: 800 });
+    await page.locator('.rp-nav-hamburger.rp-nav-hamburger__sm').click();
+    const navScreen = page.locator('.rp-nav-screen');
+    await expect(navScreen).toHaveClass(/rp-nav-screen--open/);
+    const mobileNavbarImage = navScreen
+      .locator('.rp-nav-screen-menu-item')
+      .filter({ hasText: /^Sidebar Icon$/ })
+      .locator('img.rp-nav-screen-menu-item__icon');
+    await expect(mobileNavbarImage).toHaveAttribute(
+      'src',
+      '/sidebar-panel.svg',
     );
   });
 
@@ -201,11 +295,11 @@ test.describe('Auto nav and sidebar test', async () => {
   test('Sidebar not have same name md/mdx will not navigate', async ({
     page,
   }) => {
-    await page.goto(`http://localhost:${appPort}/guide/`, {
+    await page.goto(`http://localhost:${appPort}/guide/index.html`, {
       waitUntil: 'networkidle',
     });
     await page.click('.rp-doc-layout__sidebar .rp-sidebar-group');
-    expect(page.url()).toBe(`http://localhost:${appPort}/guide/`);
+    expect(page.url()).toBe(`http://localhost:${appPort}/guide/index.html`);
   });
 
   test('Should load nested subpage API Overview correctly', async ({

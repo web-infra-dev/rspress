@@ -27,9 +27,12 @@ function createLlmsHintText({
 }: {
   llmsTxtUrl: string;
   llmsFullTxtUrl: string;
-  pageMdUrl: string;
+  pageMdUrl?: string;
 }) {
-  return `For AI agents: the complete documentation index is available at ${llmsTxtUrl}, the full documentation bundle is available at ${llmsFullTxtUrl}, and this page is available as Markdown at ${pageMdUrl}.`;
+  const text = `For AI agents: the complete documentation index is available at ${llmsTxtUrl}, the full documentation bundle is available at ${llmsFullTxtUrl}`;
+  return pageMdUrl
+    ? `${text}, and this page is available as Markdown at ${pageMdUrl}.`
+    : `${text}.`;
 }
 
 export function LlmsHint() {
@@ -51,16 +54,17 @@ export function LlmsHint() {
   const llmsFullTxtUrl = withSiteOrigin(
     withBase(`/${versionPrefix}${langPrefix}llms-full.txt`),
   );
+
+  if (import.meta.env.SSG_MD) {
+    return `> ${createLlmsHintText({ llmsTxtUrl, llmsFullTxtUrl })}\n\n`;
+  }
+
   const pageMdUrl = withSiteOrigin(routePathToMdPath(page.routePath));
   const hintText = createLlmsHintText({
     llmsTxtUrl,
     llmsFullTxtUrl,
     pageMdUrl,
   });
-
-  if (import.meta.env.SSG_MD) {
-    return `> ${hintText}\n\n`;
-  }
 
   return (
     <div className="rp-llms-hint" style={visuallyHiddenStyle}>

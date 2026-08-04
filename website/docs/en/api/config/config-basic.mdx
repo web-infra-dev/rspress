@@ -1,3 +1,5 @@
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # Basic config
 
 ## root
@@ -40,6 +42,8 @@ export default defineConfig({
 ```
 
 ## siteOrigin
+
+<VersionBadge version="2.0.17" />
 
 - **Type**: `string`
 - **Default**: `""`
@@ -695,7 +699,89 @@ export default defineConfig({
 });
 ```
 
+### route.cleanUrlsRedirect
+
+- **Type**: `Boolean`
+- **Default**: `true`
+
+When enabled, Rspress normalizes non-canonical browser URLs during client
+startup, using the actual matched route as the source of truth. The target
+format follows [`route.cleanUrls`](#routecleanurls).
+
+`route.cleanUrls` controls the preferred URL format used by generated links,
+while `route.cleanUrlsRedirect` only normalizes the browser address bar.
+
+:::warning Client-side fallback
+
+This option runs after the requested page HTML and client runtime have loaded.
+It uses `history.replaceState` and does not return an HTTP 301/308 response, so
+it cannot fully replace a server-side or CDN canonical redirect, especially for
+SEO. The hosting platform must still serve the correct Rspress page for the
+requested URL variant. Prefer a server-side redirect when available.
+
+:::
+
+#### With `cleanUrls: true`
+
+Regular page routes omit the trailing slash, while directory index routes
+retain it.
+
+| Incoming URL         | Matched route | Browser URL update           |
+| -------------------- | ------------- | ---------------------------- |
+| `/file`              | `/file`       | No update                    |
+| `/file.html`         | `/file`       | `replaceState` to `/file`    |
+| `/file/`             | `/file`       | `replaceState` to `/file`    |
+| `/file/index`        | `/file`       | `replaceState` to `/file`    |
+| `/file/index.html`   | `/file`       | `replaceState` to `/file`    |
+| `/folder`            | `/folder/`    | `replaceState` to `/folder/` |
+| `/folder.html`       | `/folder/`    | `replaceState` to `/folder/` |
+| `/folder/`           | `/folder/`    | No update                    |
+| `/folder/index`      | `/folder/`    | `replaceState` to `/folder/` |
+| `/folder/index.html` | `/folder/`    | `replaceState` to `/folder/` |
+
+#### With `cleanUrls: false`
+
+Regular page routes use `.html`, while directory index routes use
+`/index.html`.
+
+| Incoming URL         | Matched route | Browser URL update                     |
+| -------------------- | ------------- | -------------------------------------- |
+| `/file`              | `/file`       | `replaceState` to `/file.html`         |
+| `/file.html`         | `/file`       | No update                              |
+| `/file/`             | `/file`       | `replaceState` to `/file.html`         |
+| `/file/index`        | `/file`       | `replaceState` to `/file.html`         |
+| `/file/index.html`   | `/file`       | `replaceState` to `/file.html`         |
+| `/folder`            | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder.html`       | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder/`           | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder/index`      | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder/index.html` | `/folder/`    | No update                              |
+
+For example, both `/zh/guide/start/introduction.html` and
+`/zh/guide/start/introduction/index.html` match
+`/zh/guide/start/introduction`; the final URL follows the configured
+`cleanUrls` format without losing the locale prefix.
+
+The canonical URL formats align with Cloudflare's
+[HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/).
+However, Cloudflare performs server-side HTTP redirects, while this option only
+updates the URL in the browser.
+
+Set `cleanUrlsRedirect` to `false` to disable browser URL normalization:
+
+```js
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    cleanUrlsRedirect: false,
+  },
+});
+```
+
 ### route.localeRedirect
+
+<VersionBadge version="2.0.19" />
 
 - **Type**: `'auto' | 'never' | 'only-default-lang'`
 - **Default**: `'auto'`
@@ -712,14 +798,6 @@ This option performs the redirect in the browser. For production sites, prefer h
 
 :::
 
-:::warning Configuration migration
-
-`localeRedirect` has moved from `themeConfig` to `route`. The former `themeConfig.localeRedirect` option remains supported for backward compatibility, but is deprecated. Migrate to `route.localeRedirect`; when both options are set, `route.localeRedirect` takes precedence.
-
-Automatic locale redirects also now run before hydration, so first-time visitors may be redirected before any theme or client code runs. Set `route.localeRedirect` to `'never'` if your server or CDN already handles locale negotiation, or if the site must preserve the originally requested locale.
-
-:::
-
 ```js title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
@@ -731,6 +809,8 @@ export default defineConfig({
 ```
 
 ### route.useTransitions
+
+<VersionBadge version="2.0.17" />
 
 - **Type**: `Boolean`
 - **Default**: `true`
@@ -750,6 +830,8 @@ export default defineConfig({
 ```
 
 ### route.prefetchLink
+
+<VersionBadge version="2.0.17" />
 
 - **Type**: `Boolean`
 - **Default**: `true`

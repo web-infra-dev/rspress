@@ -1,3 +1,5 @@
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # 主题配置
 
 主题配置位于 `doc` 配置中的 `themeConfig` 下。例如：
@@ -29,12 +31,16 @@ interface NavItem {
   download?: boolean;
   // 导航栏链接的激活规则
   activeMatch: '^/$|^/';
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在导航栏文本之前的图标
+  icon?: string;
+  // 显示在导航栏文本之后的标签
   tag?: string;
 }
 ```
 
 `activeMatch` 用于匹配当前路由，当路由匹配 `activeMatch` 规则时，nav 项会高亮显示。默认情况下，`activeMatch` 是 nav 项的 `link`。
+
+使用本地图标时，应将图片放在 `public` 目录中，并通过 `/icon.png` 这样的绝对路径引用。此外还支持内联 SVG 字符串、emoji、外链和 data URL。
 
 比如:
 
@@ -47,6 +53,7 @@ export default defineConfig({
       {
         text: 'Home',
         link: '/',
+        icon: '/icon.png',
       },
       {
         text: 'Guide',
@@ -65,7 +72,9 @@ interface NavGroup {
   text: string;
   // 子菜单
   items: NavItem[];
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在导航栏文本之前的图标
+  icon?: string;
+  // 显示在导航栏文本之后的标签
   tag?: string;
 }
 ```
@@ -119,7 +128,9 @@ interface SidebarGroup {
   collapsible?: boolean;
   // 是否默认折叠
   collapsed?: boolean;
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在侧边栏文本之前的图标
+  icon?: string;
+  // 显示在侧边栏文本之后的标签
   tag?: string;
 }
 
@@ -128,7 +139,9 @@ type SidebarItem = {
   text: string;
   // 侧边栏链接
   link: string;
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在侧边栏文本之前的图标
+  icon?: string;
+  // 显示在侧边栏文本之后的标签
   tag?: string;
 };
 ```
@@ -144,10 +157,13 @@ export default defineConfig({
       '/guide/': [
         {
           text: 'Getting Started',
+          icon: '/icon.png',
           items: [
             {
               text: 'Introduction',
               link: '/guide/getting-started/introduction',
+              icon: '<svg>...</svg>',
+              tag: 'new',
             },
             {
               text: 'Installation',
@@ -518,7 +534,7 @@ export default defineConfig({
 });
 ```
 
-## localeRedirect（已废弃）
+## ~~localeRedirect~~
 
 - **类型**：`'auto' | 'never' | 'only-default-lang'`
 - **默认值**： `'auto'`
@@ -609,6 +625,8 @@ export default defineConfig({
 
 ### injectLlmsHint
 
+<VersionBadge version="2.0.18" />
+
 - **类型**：`boolean`
 - **默认值**：`true`
 
@@ -627,10 +645,10 @@ export default defineConfig({
 同一页面的 SSG-MD Markdown 输出会以以下内容开头：
 
 ```md
-> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.
+> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt.
 ```
 
-其中的 URL 会自动包含配置的 `siteOrigin`、[`base`](/api/config/config-basic#base)、语言和版本前缀，当前页面的 Markdown URL 会根据当前路由生成。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
+其中的 URL 会自动包含配置的 `siteOrigin`、[`base`](/api/config/config-basic#base)、语言和版本前缀。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
 
 将 `injectLlmsHint` 设置为 `false`，可以禁用这一行为：
 

@@ -6,7 +6,7 @@ titleSuffix: 'Rsbuild-based Static Site Generator'
 hero:
   name: Rspress
   text: Lightning Fast Static Site Generator
-  tagline: Simple, efficient and easy to extend
+  tagline: Made for humans. Understood by AI
   actions:
     - theme: brand
       text: Introduction

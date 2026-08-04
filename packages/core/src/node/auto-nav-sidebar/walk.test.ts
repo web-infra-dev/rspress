@@ -398,7 +398,7 @@ describe('walk', () => {
     );
   });
 
-  it('dir tag should be preserved when no index file exists', async () => {
+  it('dir icon and tag should be preserved when no index file exists', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-dir-tag');
     const metaFileSet = new Set<string>();
     const mdFileSet = new Set<string>();
@@ -410,9 +410,16 @@ describe('walk', () => {
       mdFileSet,
     );
     const guideSidebar = sidebar.sidebar['/guide'];
-    const taggedDir = guideSidebar[0] as { tag?: string; text: string };
+    const taggedDir = guideSidebar[0] as {
+      icon?: string;
+      items?: { icon?: string; text: string }[];
+      tag?: string;
+      text: string;
+    };
     expect(taggedDir.text).toBe('Tagged Dir');
+    expect(taggedDir.icon).toBe('/dir.svg');
     expect(taggedDir.tag).toBe('experimental');
+    expect(taggedDir.items?.[0].icon).toBe('/page.svg');
   });
 
   it('custom link group', async () => {

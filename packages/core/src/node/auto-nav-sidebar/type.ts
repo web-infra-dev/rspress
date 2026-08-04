@@ -4,6 +4,7 @@ export type FileSideMeta = {
   type: 'file';
   name: string;
   label?: string;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -13,6 +14,7 @@ export type DirSideMeta = {
   type: 'dir';
   name: string;
   label?: string;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -32,6 +34,7 @@ export type DividerSideMeta = {
 export type SectionHeaderMeta = {
   type: 'section-header';
   label: string;
+  icon?: string;
   tag?: string;
 };
 
@@ -40,6 +43,7 @@ type _CustomLinkMetaWithoutTypeField =
   | {
       type?: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -49,6 +53,7 @@ type _CustomLinkMetaWithoutTypeField =
   | {
       type?: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -63,6 +68,7 @@ export type CustomLinkMeta =
       // file link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -73,6 +79,7 @@ export type CustomLinkMeta =
       // dir link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;

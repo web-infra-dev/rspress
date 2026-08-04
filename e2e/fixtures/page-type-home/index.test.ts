@@ -18,7 +18,7 @@ test.describe('home pageType', async () => {
   });
 
   test('Hero', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/`, {
+    await page.goto(`http://localhost:${appPort}/base/index.html`, {
       waitUntil: 'networkidle',
     });
     await expect(page.locator('.rp-home-hero__title-brand')).toHaveText(
@@ -47,14 +47,15 @@ test.describe('home pageType', async () => {
     await expect(actions.nth(1)).toHaveText('Action 2');
     await expect(actions.nth(2)).toHaveText('External');
     // click the first action
-    const url1 = page.url();
     await actions.nth(0).click();
     await page.waitForSelector('.rspress-doc');
-    expect(page.url()).toBe(`${url1}guide/action-1.html`);
+    expect(page.url()).toBe(
+      `http://localhost:${appPort}/base/guide/action-1.html`,
+    );
   });
 
   test('Hero - zh', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/zh/`, {
+    await page.goto(`http://localhost:${appPort}/base/zh/index.html`, {
       waitUntil: 'networkidle',
     });
     await expect(page.locator('.rp-home-hero__title-brand')).toHaveText(
@@ -83,14 +84,15 @@ test.describe('home pageType', async () => {
     await expect(actions.nth(1)).toHaveText('操作 2');
     await expect(actions.nth(2)).toHaveText('External');
     // click the first action
-    const url1 = page.url();
     await actions.nth(0).click();
     await page.waitForSelector('.rspress-doc');
-    expect(page.url()).toBe(`${url1}guide/action-1.html`);
+    expect(page.url()).toBe(
+      `http://localhost:${appPort}/base/zh/guide/action-1.html`,
+    );
   });
 
   test('Features', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/`, {
+    await page.goto(`http://localhost:${appPort}/base/index.html`, {
       waitUntil: 'networkidle',
     });
     const features = page.locator('.rp-home-feature__card');

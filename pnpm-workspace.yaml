@@ -28,6 +28,8 @@ minimumReleaseAgeExclude:
   - '@rsdoctor/*'
   - '@rslint/*'
   - '@rstack-dev/*'
+  # Renovate security update: nx@22.7.2
+  - nx@22.7.2
 
 # Prevent un-reviewed build scripts
 strictDepBuilds: true
