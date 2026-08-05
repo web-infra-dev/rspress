@@ -8,6 +8,9 @@ export default defineConfig({
   plugins: [
     pluginPreview({
       iframeOptions: {
+        devPort: process.env.RSPRESS_IFRAME_DEV_PORT
+          ? Number(process.env.RSPRESS_IFRAME_DEV_PORT)
+          : undefined,
         customEntry: ({ demoPath }) => {
           if (demoPath.endsWith('.vue')) {
             return `

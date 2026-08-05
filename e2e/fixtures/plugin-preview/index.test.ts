@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
+import { getTestOutDir } from '../../utils/getTestOutDir';
 import {
   getPort,
   killProcess,
@@ -11,13 +12,18 @@ import {
 
 const HMR_TEST_FILE = path.resolve(import.meta.dirname, 'doc/hmr.mdx');
 
+test.describe.configure({ mode: 'serial' });
+
 test.describe('plugin test', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
+    const iframeDevPort = await getPort();
+    app = await runDevCommand(appDir, appPort, undefined, [], {
+      RSPRESS_IFRAME_DEV_PORT: iframeDevPort.toString(),
+    });
   });
 
   test.afterAll(async () => {
@@ -191,7 +197,10 @@ test.describe('plugin preview build', async () => {
   }) => {
     const appDir = import.meta.dirname;
     const noIframePort = await getPort();
-    const distDir = path.join(appDir, 'doc_build');
+    const distDir = path.join(
+      appDir,
+      getTestOutDir('rspress.no-iframe.config.ts'),
+    );
 
     await fs.rm(distDir, { recursive: true, force: true });
     await runBuildCommand(appDir, 'rspress.no-iframe.config.ts');
@@ -222,7 +231,10 @@ test.describe('plugin preview HMR', async () => {
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
+    const iframeDevPort = await getPort();
+    app = await runDevCommand(appDir, appPort, undefined, [], {
+      RSPRESS_IFRAME_DEV_PORT: iframeDevPort.toString(),
+    });
     originalContent = await fs.readFile(HMR_TEST_FILE, 'utf-8');
   });
 

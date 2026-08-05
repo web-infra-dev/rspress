@@ -7,7 +7,10 @@ test.describe('plugin test', async () => {
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
+    const iframeDevPort = await getPort();
+    app = await runDevCommand(appDir, appPort, undefined, [], {
+      RSPRESS_IFRAME_DEV_PORT: iframeDevPort.toString(),
+    });
   });
 
   test.afterAll(async () => {
