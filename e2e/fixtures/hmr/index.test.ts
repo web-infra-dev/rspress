@@ -108,15 +108,15 @@ test.describe('hmr test', async () => {
   test('restart when routes or config dependencies change', async ({
     page,
   }) => {
+    const addedPageUrl = `http://localhost:${appPort}/guide/test-temp-added.html`;
+
     await fs.writeFile(TEST_ADDED_FILE, '# Added route');
     await expect.poll(getRestartCount).toBe(1);
 
     await expect
       .poll(async () => {
         try {
-          await page.goto(
-            `http://localhost:${appPort}/guide/test-temp-added.html`,
-          );
+          await page.goto(addedPageUrl, { timeout: 1000 });
           return page.locator('h1').textContent();
         } catch {
           return null;
@@ -126,6 +126,16 @@ test.describe('hmr test', async () => {
 
     await fs.rm(TEST_ADDED_FILE);
     await expect.poll(getRestartCount).toBe(2);
+    await expect
+      .poll(async () => {
+        try {
+          await page.goto(addedPageUrl, { timeout: 1000 });
+          return page.locator('body').textContent();
+        } catch {
+          return null;
+        }
+      })
+      .toContain('404');
 
     await fs.writeFile(
       TEST_RESTART_FILE,
@@ -136,7 +146,9 @@ test.describe('hmr test', async () => {
     await expect
       .poll(async () => {
         try {
-          await page.reload();
+          await page.goto(`http://localhost:${appPort}/guide/test.html`, {
+            timeout: 1000,
+          });
           return page.title();
         } catch {
           return '';
