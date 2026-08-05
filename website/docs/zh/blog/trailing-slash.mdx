@@ -34,9 +34,11 @@ _2026 年 8 月 3 日_
 
 页面明明能够正常打开，为什么相对链接少了一层 `/next`？
 
+这个问题让我开始思考：带不带 trailing slash 的区别到底是什么？
+
 ### 根地址是一个特例
 
-对于 HTTP(S) URL，空 path 与 `/` 等价。因此 `https://example.com` 发出的请求仍然是 `GET /`。这个规则只适用于根地址，不能由此推断 `/next` 与 `/next/` 也等价。
+[RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.3) 规定，对于 HTTP(S) URL，空 path 与 `/` 等价。因此 `https://example.com` 发出的请求仍然是 `GET /`。
 
 ### Trailing slash 会改变相对链接的解析结果
 
