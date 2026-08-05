@@ -118,6 +118,12 @@ const HeadTags = memo(
   },
 );
 
+const ClientEffects = () => {
+  useSetup();
+  useScrollReset();
+  return null;
+};
+
 export function Layout(props: LayoutProps) {
   const {
     top,
@@ -177,9 +183,6 @@ export function Layout(props: LayoutProps) {
   } = page;
   const localesData = useLocaleSiteData();
 
-  useSetup();
-  useScrollReset();
-
   const {
     frontmatter: { navbar: showNavbar = true },
   } = useFrontmatter();
@@ -228,9 +231,9 @@ export function Layout(props: LayoutProps) {
   if (import.meta.env.SSG_MD) {
     return <>{getContentLayout()}</>;
   }
-
   return (
     <>
+      <ClientEffects />
       <HeadTags
         lang={currentLang}
         title={title}
