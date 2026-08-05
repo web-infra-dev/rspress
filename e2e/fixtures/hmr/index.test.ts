@@ -110,10 +110,13 @@ test.describe('hmr test', async () => {
     expect(getRestartCount()).toBe(0);
   });
 
-  test('restart when a route is added', async ({ page }) => {
+  test('restart when routes or config dependencies change', async ({
+    page,
+  }) => {
     await startApp();
     const addedPageUrl = `http://localhost:${appPort}/guide/test-temp-added.html`;
-    await page.goto(`http://localhost:${appPort}/guide/test.html`, {
+    const stablePageUrl = `http://localhost:${appPort}/guide/test.html`;
+    await page.goto(stablePageUrl, {
       waitUntil: 'networkidle',
     });
 
@@ -133,17 +136,9 @@ test.describe('hmr test', async () => {
         { timeout: 30_000 },
       )
       .toContain('Added route');
-  });
-
-  test('restart when a route is removed', async ({ page }) => {
-    await fs.writeFile(TEST_ADDED_FILE, '# Added route');
-    await startApp();
-    const addedPageUrl = `http://localhost:${appPort}/guide/test-temp-added.html`;
-    await page.goto(addedPageUrl, { waitUntil: 'networkidle' });
-    await expect(page.locator('h1')).toContainText('Added route');
 
     await fs.rm(TEST_ADDED_FILE);
-    await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(1);
+    await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(2);
 
     await expect
       .poll(
@@ -158,25 +153,18 @@ test.describe('hmr test', async () => {
         { timeout: 30_000 },
       )
       .toContain('404');
-  });
-
-  test('restart when config dependencies change', async ({ page }) => {
-    await startApp();
-    await page.goto(`http://localhost:${appPort}/guide/test.html`, {
-      waitUntil: 'networkidle',
-    });
 
     await fs.writeFile(
       TEST_RESTART_FILE,
       originalRestartFileContent.replace('HMR fixture', 'Restarted fixture'),
     );
-    await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(1);
+    await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(3);
 
     await expect
       .poll(
         async () => {
           try {
-            await page.goto(`http://localhost:${appPort}/guide/test.html`, {
+            await page.goto(stablePageUrl, {
               timeout: 10_000,
             });
             return page.title();
