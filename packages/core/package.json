@@ -104,7 +104,7 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.58.12",
-    "@rsbuild/plugin-sass": "~1.5.3",
+    "@rsbuild/plugin-sass": "~2.0.1",
     "@rsbuild/plugin-svgr": "^2.0.5",
     "@rslib/core": "1.0.0-beta.1",
     "@rspress/config": "workspace:*",
