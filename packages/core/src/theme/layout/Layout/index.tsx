@@ -177,6 +177,13 @@ export function Layout(props: LayoutProps) {
   } = page;
   const localesData = useLocaleSiteData();
 
+  useSetup();
+  useScrollReset();
+
+  const {
+    frontmatter: { navbar: showNavbar = true },
+  } = useFrontmatter();
+
   // Always show sidebar by default
   // Priority: front matter title > h1 title
   let title = (frontmatter.title as string) ?? articleTitle;
@@ -221,13 +228,6 @@ export function Layout(props: LayoutProps) {
   if (import.meta.env.SSG_MD) {
     return <>{getContentLayout()}</>;
   }
-
-  useSetup();
-  useScrollReset();
-
-  const {
-    frontmatter: { navbar: showNavbar = true },
-  } = useFrontmatter();
 
   return (
     <>
