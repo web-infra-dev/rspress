@@ -52,12 +52,12 @@ new URL('./guide/start', 'https://example.com/next/').pathname;
 // => /next/guide/start
 ```
 
-客户端路由通常采用比较宽松的匹配策略。例如，[React Router 默认会忽略 path 末尾的 `/`](https://github.com/remix-run/react-router/blob/react-router%407.18.2/packages/react-router/lib/router/utils.ts#L1672-L1674)，因此 `/guide` 与 `/guide/` 都能匹配到同一个路由。Rspress 还会在路由匹配前移除 `.html` 后缀，并将 `/index` 规范化，因此下面四种 URL 都能匹配到同一个页面：
+客户端路由通常采用比较宽松的匹配策略。例如，[React Router 默认会忽略 path 末尾的 `/`](https://github.com/remix-run/react-router/blob/react-router%407.18.2/packages/react-router/lib/router/utils.ts#L1576-L1578)，因此下面两个 URL 都能匹配 path 为 `/guide` 的同一个路由：
 
 - `/guide`
-- `/guide.html`
 - `/guide/`
-- `/guide/index.html`
+
+React Router 不会自动移除 `.html`，也不会将 `/index.html` 视为目录首页。`/guide.html` 和 `/guide/index.html` 是否可以访问，取决于框架或 Web server 的额外处理。
 
 这也解释了为什么“页面能打开”和“页面中的相对链接正确”是两个问题。宽松匹配只能保证客户端找到路由，不会修改地址栏中的 URL；只要地址栏仍是 `/next`，浏览器就会按照第一种方式解析相对路径。
 
@@ -120,6 +120,6 @@ export default defineConfig({
 - [URL Standard](https://url.spec.whatwg.org/)
 - [Apache HTTP Server：DirectorySlash](https://httpd.apache.org/docs/current/mod/mod_dir.html#directoryslash)
 - [Cloudflare Workers：HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/)
-- [React Router：Path matching](https://github.com/remix-run/react-router/blob/react-router%407.18.2/packages/react-router/lib/router/utils.ts#L1672-L1674)
+- [React Router：Path matching](https://github.com/remix-run/react-router/blob/react-router%407.18.2/packages/react-router/lib/router/utils.ts#L1576-L1578)
 - [Google Search Central：To slash or not to slash](https://developers.google.com/search/blog/2010/04/to-slash-or-not-to-slash)
 - [Why does the trailing-slash matter? A (very) short history](https://kentgigger.com/posts/why-does-the-trailing-slash-matter-a-short-history)
