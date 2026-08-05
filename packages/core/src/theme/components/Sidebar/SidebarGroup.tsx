@@ -82,6 +82,7 @@ export function SidebarGroup(props: SidebarGroupProps) {
       <SidebarItemRaw
         active={Boolean(active)}
         link={item.link}
+        icon={item.icon}
         tag={item.tag}
         text={item.text}
         context={item.context}
@@ -132,7 +133,9 @@ export function SidebarGroup(props: SidebarGroupProps) {
               />
             ) : isSidebarSectionHeader(item) ? (
               <SidebarSectionHeader
+                icon={item.icon}
                 sectionHeaderText={item.sectionHeaderText}
+                tag={item.tag}
                 key={index}
               />
             ) : (

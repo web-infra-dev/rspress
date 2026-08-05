@@ -1,3 +1,5 @@
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # Theme config
 
 Theme configuration is defined under `themeConfig`. For example:
@@ -29,12 +31,16 @@ interface NavItem {
   download?: boolean;
   // Activation rules for navbar links
   activeMatch: '^/$|^/';
-  // svg tag string or image URL(optional)
+  // Icon displayed before the navbar text
+  icon?: string;
+  // Tag displayed after the navbar text
   tag?: string;
 }
 ```
 
 `activeMatch` matches the current route. When the route matches the `activeMatch` rule, the nav item is highlighted. By default, `activeMatch` uses the nav item's `link`.
+
+For local icons, place the image in the `public` directory and reference it with an absolute path such as `/icon.png`. Inline SVG strings, emoji, external URLs, and data URLs are also supported.
 
 For example:
 
@@ -47,6 +53,7 @@ export default defineConfig({
       {
         text: 'Home',
         link: '/',
+        icon: '/icon.png',
       },
       {
         text: 'Guide',
@@ -64,7 +71,9 @@ interface NavGroup {
   text: string;
   // submenu
   items: NavItem[];
-  // svg tag string or image URL(optional)
+  // Icon displayed before the navbar text
+  icon?: string;
+  // Tag displayed after the navbar text
   tag?: string;
 }
 ```
@@ -132,7 +141,9 @@ interface SidebarGroup {
   collapsible?: boolean;
   // Whether to be collapsed by default
   collapsed?: boolean;
-  // svg tag string or image URL(optional)
+  // Icon displayed before the sidebar text
+  icon?: string;
+  // Tag displayed after the sidebar text
   tag?: string;
 }
 
@@ -141,7 +152,9 @@ type SidebarItem = {
   text: string;
   // sidebar link
   link: string;
-  // svg tag string or image URL(optional)
+  // Icon displayed before the sidebar text
+  icon?: string;
+  // Tag displayed after the sidebar text
   tag?: string;
 };
 ```
@@ -157,10 +170,13 @@ export default defineConfig({
       '/guide/': [
         {
           text: 'Getting Started',
+          icon: '/icon.png',
           items: [
             {
               text: 'Introduction',
               link: '/guide/getting-started/introduction',
+              icon: '<svg>...</svg>',
+              tag: 'new',
             },
             {
               text: 'Installation',
@@ -530,7 +546,7 @@ export default defineConfig({
 });
 ```
 
-## localeRedirect (deprecated)
+## ~~localeRedirect~~
 
 - **Type**: `'auto' | 'never' | 'only-default-lang'`
 - **Default**: `'auto'`
@@ -621,6 +637,8 @@ export default defineConfig({
 
 ### injectLlmsHint
 
+<VersionBadge version="2.0.18" />
+
 - **Type**: `boolean`
 - **Default**: `true`
 
@@ -639,10 +657,10 @@ Assuming [`siteOrigin`](/api/config/config-basic#siteorigin) is `https://example
 The SSG-MD Markdown output for the same page starts with:
 
 ```md
-> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.
+> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt.
 ```
 
-The URLs automatically include the configured `siteOrigin`, [`base`](/api/config/config-basic#base), locale, and version prefixes. The page-specific Markdown URL is derived from the current route. Without `siteOrigin`, the URLs remain base-aware paths.
+The URLs automatically include the configured `siteOrigin`, [`base`](/api/config/config-basic#base), locale, and version prefixes. Without `siteOrigin`, the URLs remain base-aware paths.
 
 Set `injectLlmsHint` to `false` to disable this behavior:
 

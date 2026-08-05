@@ -1,3 +1,5 @@
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # 基础配置
 
 ## root
@@ -40,6 +42,8 @@ export default defineConfig({
 ```
 
 ## siteOrigin
+
+<VersionBadge version="2.0.17" />
 
 - **类型**： `string`
 - **默认值**： `""`
@@ -695,7 +699,83 @@ export default defineConfig({
 });
 ```
 
+### route.cleanUrlsRedirect
+
+- **类型**： `boolean`
+- **默认值**： `true`
+
+开启后，Rspress 会在客户端启动阶段以实际匹配到的路由为准，规范化浏览器地址栏中的
+非规范 URL。目标格式遵循 [`route.cleanUrls`](#routecleanurls)。
+
+`route.cleanUrls` 控制生成链接所使用的首选 URL 格式，
+`route.cleanUrlsRedirect` 仅负责规范化浏览器地址栏。
+
+:::warning 客户端路由兜底
+
+该配置会在请求页面的 HTML 和客户端运行时代码加载后执行。它使用
+`history.replaceState`，不会返回 HTTP 301/308 响应，因此无法完全替代服务端或
+CDN 的 canonical 重定向，尤其不能提供相同的 SEO 效果。托管平台仍需为当前 URL
+变体返回正确的 Rspress 页面；如果条件允许，建议优先配置服务端重定向。
+
+:::
+
+#### `cleanUrls: true`
+
+普通页面路由不保留 trailing slash，目录首页路由则会保留。
+
+| 传入 URL             | 匹配路由   | 浏览器 URL 更新              |
+| -------------------- | ---------- | ---------------------------- |
+| `/file`              | `/file`    | 不更新                       |
+| `/file.html`         | `/file`    | `replaceState` 到 `/file`    |
+| `/file/`             | `/file`    | `replaceState` 到 `/file`    |
+| `/file/index`        | `/file`    | `replaceState` 到 `/file`    |
+| `/file/index.html`   | `/file`    | `replaceState` 到 `/file`    |
+| `/folder`            | `/folder/` | `replaceState` 到 `/folder/` |
+| `/folder.html`       | `/folder/` | `replaceState` 到 `/folder/` |
+| `/folder/`           | `/folder/` | 不更新                       |
+| `/folder/index`      | `/folder/` | `replaceState` 到 `/folder/` |
+| `/folder/index.html` | `/folder/` | `replaceState` 到 `/folder/` |
+
+#### `cleanUrls: false`
+
+普通页面路由使用 `.html`，目录首页路由使用 `/index.html`。
+
+| 传入 URL             | 匹配路由   | 浏览器 URL 更新                        |
+| -------------------- | ---------- | -------------------------------------- |
+| `/file`              | `/file`    | `replaceState` 到 `/file.html`         |
+| `/file.html`         | `/file`    | 不更新                                 |
+| `/file/`             | `/file`    | `replaceState` 到 `/file.html`         |
+| `/file/index`        | `/file`    | `replaceState` 到 `/file.html`         |
+| `/file/index.html`   | `/file`    | `replaceState` 到 `/file.html`         |
+| `/folder`            | `/folder/` | `replaceState` 到 `/folder/index.html` |
+| `/folder.html`       | `/folder/` | `replaceState` 到 `/folder/index.html` |
+| `/folder/`           | `/folder/` | `replaceState` 到 `/folder/index.html` |
+| `/folder/index`      | `/folder/` | `replaceState` 到 `/folder/index.html` |
+| `/folder/index.html` | `/folder/` | 不更新                                 |
+
+例如，`/zh/guide/start/introduction.html` 和
+`/zh/guide/start/introduction/index.html` 都会匹配
+`/zh/guide/start/introduction`，最终 URL 会遵循 `cleanUrls` 配置，并保留语言前缀。
+
+Canonical URL 格式与 Cloudflare 的
+[HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/)
+保持一致，但 Cloudflare 执行的是服务端 HTTP 重定向，本配置只会在浏览器中更新 URL。
+
+将 `cleanUrlsRedirect` 设置为 `false` 可以关闭浏览器 URL 规范化：
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    cleanUrlsRedirect: false,
+  },
+});
+```
+
 ### route.localeRedirect
+
+<VersionBadge version="2.0.19" />
 
 - **类型**：`'auto' | 'never' | 'only-default-lang'`
 - **默认值**：`'auto'`
@@ -712,14 +792,6 @@ export default defineConfig({
 
 :::
 
-:::warning 配置迁移
-
-`localeRedirect` 已从 `themeConfig` 移至 `route`。原有的 `themeConfig.localeRedirect` 仍会继续生效以保持向后兼容，但已废弃。请迁移至 `route.localeRedirect`；同时配置两者时，`route.localeRedirect` 优先生效。
-
-自动语言重定向现在也会在 hydration 前执行，因此首次访问的用户可能会在任何主题或客户端代码运行前被重定向。如果服务器或 CDN 已经处理了语言协商，或者站点必须保留用户最初请求的语言，请将 `route.localeRedirect` 设置为 `'never'`。
-
-:::
-
 ```js title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
@@ -731,6 +803,8 @@ export default defineConfig({
 ```
 
 ### route.useTransitions
+
+<VersionBadge version="2.0.17" />
 
 - **类型**： `boolean`
 - **默认值**： `true`
@@ -750,6 +824,8 @@ export default defineConfig({
 ```
 
 ### route.prefetchLink
+
+<VersionBadge version="2.0.17" />
 
 - **类型**： `boolean`
 - **默认值**： `true`

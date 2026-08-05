@@ -145,6 +145,7 @@ export type FileSideMeta = {
   type: 'file';
   name: string;
   label?: string;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -156,6 +157,7 @@ export type DirSideMeta = {
   label?: string;
   collapsible?: boolean;
   collapsed?: boolean;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -172,6 +174,7 @@ export type DividerSideMeta = {
 export type SectionHeaderMeta = {
   type: 'section-header';
   label: string;
+  icon?: string;
   tag?: string;
 };
 
@@ -180,6 +183,7 @@ export type CustomLinkMeta =
       // file link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -189,6 +193,7 @@ export type CustomLinkMeta =
       // dir link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -227,6 +232,7 @@ export type FileSideMeta = {
   type: 'file';
   name: string;
   label?: string;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -254,6 +260,7 @@ export type DirSideMeta = {
   label?: string;
   collapsible?: boolean;
   collapsed?: boolean;
+  icon?: string;
   tag?: string;
   overviewHeaders?: number[];
   context?: string;
@@ -342,6 +349,7 @@ To describe a **section header**, use the following type:
 export type SectionHeaderMeta = {
   type: 'section-header';
   label: string;
+  icon?: string;
   tag?: string;
 };
 ```
@@ -385,6 +393,7 @@ export type CustomLinkMeta =
       // file link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -394,6 +403,7 @@ export type CustomLinkMeta =
       // dir link
       type: 'custom-link';
       label: string;
+      icon?: string;
       tag?: string;
       overviewHeaders?: number[];
       context?: string;
@@ -510,17 +520,64 @@ basic
   └── 3-plugin-development.md
 ```
 
-## Tag icons for sidebar and navbar
+## Configure file items with frontmatter
 
-You can add icons after titles in the sidebar or navbar through the `tag` config. The value of `tag` supports SVG tag strings or image URLs.
+Most display fields for automatically generated file items can be declared in the page frontmatter: `title`, `icon`, `tag`, `overviewHeaders`, and `context`.
 
-```json title="_meta.json"
-{
-  "type": "file",
-  "name": "introduction",
-  "label": "Introduction",
-  "tag": "<svg width=\"1em\" height=\"1em\" viewBox=\"0 0 32 32\"><path fill=\"currentColor\" d=\"M4 6h24v2H4zm0 18h24v2H4zm0-12h24v2H4zm0 6h24v2H4z\"/></svg>"
-}
+Keep structural settings in `_meta.json`, including item order, `type`, `name`, directory groups, section headers, custom links, `collapsible`, and `collapsed`. For page-specific metadata, prefer frontmatter so the content and its sidebar presentation stay together.
+
+For example, `_meta.json` can define which files appear and in what order:
+
+```json title="docs/guide/_meta.json"
+["introduction"]
 ```
 
-For detailed usage, see [Tag Component](/ui/layout-components/tag).
+Then configure the file item's display metadata in the page frontmatter:
+
+```md title="docs/guide/introduction.mdx"
+---
+title: Introduction
+icon: /icon.png
+tag: new
+overviewHeaders: [2, 3]
+context: guide-introduction
+---
+
+# Introduction
+```
+
+When a file item defines the same field in both places, frontmatter takes precedence for `icon`, `tag`, `overviewHeaders`, and `context`, while `label` in `_meta.json` takes precedence over the page title. For a directory group, `_meta.json` takes precedence over metadata from its index page.
+
+## Sidebar icons and tags
+
+Use `icon` to add an icon before a sidebar title. The recommended and most common approach is to place the image in the `public` directory and reference it with an absolute path.
+
+For example, place a local image at `docs/public/icon.png`, then reference it in `_meta.json`:
+
+```json title="docs/_meta.json"
+[
+  {
+    "type": "file",
+    "name": "introduction",
+    "label": "Introduction",
+    "icon": "/icon.png",
+    "tag": "new"
+  }
+]
+```
+
+You can also provide an inline SVG string when you want to embed the icon directly in the configuration:
+
+```json title="docs/_meta.json"
+[
+  {
+    "type": "file",
+    "name": "introduction",
+    "icon": "<svg width=\"1em\" height=\"1em\" viewBox=\"0 0 32 32\"><path fill=\"currentColor\" d=\"M4 6h24v2H4zm0 18h24v2H4zm0-12h24v2H4zm0 6h24v2H4z\"/></svg>"
+  }
+]
+```
+
+Emoji, external URLs, and data URLs are also supported. The existing `tag` config remains after the title.
+
+For details about `tag`, see [Tag Component](/ui/layout-components/tag).

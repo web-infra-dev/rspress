@@ -7,6 +7,7 @@ export interface Sidebar {
 export interface SidebarGroup {
   text: string;
   link?: string;
+  icon?: string;
   tag?: string;
   items: (SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader)[];
   collapsible?: boolean;
@@ -22,6 +23,7 @@ export interface SidebarGroup {
 export type SidebarItem = {
   text: string;
   link: string;
+  icon?: string;
   tag?: string;
   /**
    * For hmr usage in development
@@ -35,6 +37,7 @@ export type SidebarDivider = { dividerType: 'dashed' | 'solid' };
 
 export type SidebarSectionHeader = {
   sectionHeaderText: string;
+  icon?: string;
   tag?: string;
 };
 

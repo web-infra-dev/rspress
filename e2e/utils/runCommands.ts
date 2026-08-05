@@ -21,13 +21,13 @@ export async function runNpmScript(
   extraArgs: string[] = [],
 ) {
   return new Promise((resolve, reject) => {
-    const commandArgs = ['run', commandName];
+    const commandArgs = ['--run', commandName];
 
     if (extraArgs.length) {
       commandArgs.push('--', ...extraArgs);
     }
 
-    const instance = spawn('npm', commandArgs, {
+    const instance = spawn(process.execPath, commandArgs, {
       cwd: options.appDir,
       env: {
         ...process.env,
