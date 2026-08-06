@@ -33,27 +33,23 @@ test.describe('hmr test', async () => {
   const getRestartCount = () =>
     devOutput.match(/restarting server as .* changed/g)?.length ?? 0;
 
-  const startApp = async () => {
-    appPort = await getPort();
-    app = await runDevCommand(import.meta.dirname, appPort);
-    devOutput = '';
-    (app as { stdout?: NodeJS.ReadableStream }).stdout?.on('data', chunk => {
-      devOutput += chunk.toString();
-    });
-  };
-
   test.beforeAll(async () => {
     originalContent = await fs.readFile(TEST_FILE, 'utf-8');
     originalFragmentContent = await fs.readFile(TEST_FRAGMENT_FILE, 'utf-8');
     originalNavContent = await fs.readFile(TEST_NAV_FILE, 'utf-8');
     originalMetaContent = await fs.readFile(TEST_META_FILE, 'utf-8');
     originalRestartFileContent = await fs.readFile(TEST_RESTART_FILE, 'utf-8');
+
+    appPort = await getPort();
+    app = await runDevCommand(import.meta.dirname, appPort);
+    (app as { stdout?: NodeJS.ReadableStream }).stdout?.on('data', chunk => {
+      devOutput += chunk.toString();
+    });
   });
 
-  test.afterEach(async () => {
+  test.afterAll(async () => {
     if (app) {
       await killProcess(app);
-      app = null;
     }
     await fs.writeFile(TEST_FILE, originalContent);
     await fs.writeFile(TEST_FRAGMENT_FILE, originalFragmentContent);
@@ -63,8 +59,7 @@ test.describe('hmr test', async () => {
     await fs.rm(TEST_ADDED_FILE, { force: true });
   });
 
-  test('Test page', async ({ page }) => {
-    await startApp();
+  test('update page content without restarting', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/guide/test.html`, {
       waitUntil: 'networkidle',
     });
@@ -113,9 +108,9 @@ test.describe('hmr test', async () => {
   test('restart when routes or config dependencies change', async ({
     page,
   }) => {
-    await startApp();
     const addedPageUrl = `http://localhost:${appPort}/guide/test-temp-added.html`;
     const stablePageUrl = `http://localhost:${appPort}/guide/test.html`;
+    // Ensure the initial file watchers are ready before the first mutation.
     await page.goto(stablePageUrl, {
       waitUntil: 'networkidle',
     });
@@ -140,6 +135,7 @@ test.describe('hmr test', async () => {
     await fs.rm(TEST_ADDED_FILE);
     await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(2);
 
+    // The 404 confirms that the unlink restart finished before the next change.
     await expect
       .poll(
         async () => {
