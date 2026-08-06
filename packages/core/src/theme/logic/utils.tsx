@@ -46,6 +46,39 @@ const CODE_TEXT_PATTERN = /`(.*?)`/g;
 const STRONG_TEXT_PATTERN = /\*{2}(?!\*)(.*?)\*{2}(?!\*)/g;
 const EMPHASIS_TEXT_PATTERN = /\*(?!\*)(.*?)\*(?!\*)/g;
 const DELETE_TEXT_PATTERN = /~{2}(.*?)~{2}/g;
+const INLINE_CODE_PATTERN = /`[^`]+`/g;
+// <\/?[a-z]: Matches an opening or a closing tag, a tag name always starts with a letter.
+// [^>]*: Matches the rest of the tag, including its attributes.
+const HTML_TAG_PATTERN = /<\/?[a-z][^>]*>/gi;
+// Matches named entities like `&amp;` as well as numeric ones like `&#39;` and `&#x27;`.
+const HTML_ENTITY_PATTERN = /&(#\d+|#x[0-9a-f]+|[a-z][0-9a-z]*);/gi;
+
+// The entities which can be produced by `Element.innerHTML`, plus the most common ones.
+const NAMED_HTML_ENTITIES: Record<string, string> = {
+  amp: '&',
+  apos: "'",
+  gt: '>',
+  lt: '<',
+  nbsp: '\u00A0',
+  quot: '"',
+};
+
+// The entities are decoded in a single pass, so an already escaped entity like `&amp;lt;` is decoded to `&lt;` instead
+// of `<`.
+function decodeHtmlEntities(text: string) {
+  return text.replace(HTML_ENTITY_PATTERN, (match, entity: string) => {
+    if (!entity.startsWith('#')) {
+      return NAMED_HTML_ENTITIES[entity.toLowerCase()] ?? match;
+    }
+    const isHex = entity[1] === 'x' || entity[1] === 'X';
+    const codePoint = Number.parseInt(
+      isHex ? entity.slice(2) : entity.slice(1),
+      isHex ? 16 : 10,
+    );
+    // `String.fromCodePoint` throws for code points outside of the Unicode range.
+    return codePoint > 0x10ffff ? match : String.fromCodePoint(codePoint);
+  });
+}
 
 /**
  * In this method, we will render the markdown text to inline html and support basic markdown syntax, including the following:
@@ -60,7 +93,7 @@ const DELETE_TEXT_PATTERN = /~{2}(.*?)~{2}/g;
 export function renderInlineMarkdown(text: string) {
   const htmlText = text
     // replace `<list>` to prevent disappearing in dom, but not replace \<number\>
-    .replace(/`[^`]+`/g, match => match.replace(/</g, '&lt;'))
+    .replace(INLINE_CODE_PATTERN, match => match.replace(/</g, '&lt;'))
     .replace(STRONG_TEXT_PATTERN, '<strong>$1</strong>')
     .replace(EMPHASIS_TEXT_PATTERN, '<em>$1</em>')
     .replace(DELETE_TEXT_PATTERN, '<del>$1</del>')
@@ -70,13 +103,22 @@ export function renderInlineMarkdown(text: string) {
 }
 
 /**
+ * Parse a header text to plain text, which can be used in attributes like `title`. Both the inline markdown syntax and
+ * the HTML are stripped, because a header is markdown when it comes from the remark toc plugin, and HTML when it is
+ * collected from the DOM by `useDynamicToc`, carrying the markup of the components rendered in the heading.
+ * @param mdx The header text to parse, either markdown or HTML.
  * @internal
  * @private
  */
 export function parseInlineMarkdownText(mdx: string) {
-  return mdx
+  const plainText = mdx
+    // escape `<list>` in inline code, so that it is not stripped as an HTML tag
+    .replace(INLINE_CODE_PATTERN, match => match.replace(/</g, '&lt;'))
     .replace(STRONG_TEXT_PATTERN, '$1')
     .replace(EMPHASIS_TEXT_PATTERN, '$1')
     .replace(DELETE_TEXT_PATTERN, '$1')
-    .replace(CODE_TEXT_PATTERN, '$1');
+    .replace(CODE_TEXT_PATTERN, '$1')
+    .replace(HTML_TAG_PATTERN, '');
+
+  return decodeHtmlEntities(plainText).trim();
 }

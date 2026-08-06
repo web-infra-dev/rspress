@@ -235,6 +235,14 @@ test.describe('Inline markdown test', async () => {
         '<code>This is a long string to test regex performance</code>',
       ].join(','),
     );
+
+    // The tooltip of an aside item should be its plain text, without any markup
+    const asideTitles = await Promise.all(
+      Array.from({ length: asideCount }, (_, index) =>
+        page.locator('.rp-toc-item').nth(index).getAttribute('title'),
+      ),
+    );
+    expect(asideTitles.join(',')).toEqual(asideTexts.join(','));
   });
 
   test('Should generate header anchor and id with inline markdown syntax correctly', async ({
