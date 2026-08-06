@@ -61,4 +61,25 @@ describe('parseInlineMarkdownText', () => {
   it('does not decode an escaped HTML entity twice', () => {
     expect(parseInlineMarkdownText('&amp;lt;')).toBe('&lt;');
   });
+
+  it('keeps a numeric entity which is not a Unicode scalar value', () => {
+    // Out of the Unicode range, `String.fromCodePoint` would throw
+    expect(parseInlineMarkdownText('out of range &#x110000;')).toBe(
+      'out of range &#x110000;',
+    );
+    expect(parseInlineMarkdownText('out of range &#1114112;')).toBe(
+      'out of range &#1114112;',
+    );
+    // Lone surrogates, `String.fromCodePoint` would return an ill-formed string
+    expect(parseInlineMarkdownText('lone surrogate &#xD800;')).toBe(
+      'lone surrogate &#xD800;',
+    );
+    expect(parseInlineMarkdownText('lone surrogate &#57343;')).toBe(
+      'lone surrogate &#57343;',
+    );
+    // Astral characters are still decoded
+    expect(parseInlineMarkdownText('astral &#x1F600;')).toBe(
+      'astral \u{1F600}',
+    );
+  });
 });

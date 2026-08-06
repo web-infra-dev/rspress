@@ -75,8 +75,12 @@ function decodeHtmlEntities(text: string) {
       isHex ? entity.slice(2) : entity.slice(1),
       isHex ? 16 : 10,
     );
-    // `String.fromCodePoint` throws for code points outside of the Unicode range.
-    return codePoint > 0x10ffff ? match : String.fromCodePoint(codePoint);
+    // Keep the entity as written when it does not denote a standalone character: outside of the Unicode range, which
+    // makes `String.fromCodePoint` throw, or a lone surrogate, which would leave the result ill-formed and break
+    // consumers like `encodeURIComponent`. A `NaN` code point fails both comparisons and is kept as well.
+    const isScalarValue =
+      codePoint <= 0x10ffff && !(codePoint >= 0xd800 && codePoint <= 0xdfff);
+    return isScalarValue ? String.fromCodePoint(codePoint) : match;
   });
 }
 

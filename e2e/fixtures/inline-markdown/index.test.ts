@@ -237,12 +237,14 @@ test.describe('Inline markdown test', async () => {
     );
 
     // The tooltip of an aside item should be its plain text, without any markup
+    const tocItems = page.locator('.rp-toc-item');
+    await expect(tocItems).toHaveCount(asideCount);
     const asideTitles = await Promise.all(
       Array.from({ length: asideCount }, (_, index) =>
-        page.locator('.rp-toc-item').nth(index).getAttribute('title'),
+        tocItems.nth(index).getAttribute('title'),
       ),
     );
-    expect(asideTitles.join(',')).toEqual(asideTexts.join(','));
+    expect(asideTitles).toEqual(asideTexts);
   });
 
   test('Should generate header anchor and id with inline markdown syntax correctly', async ({
