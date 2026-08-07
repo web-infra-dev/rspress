@@ -27,3 +27,34 @@ export default function LocationDebugger() {
   );
 }
 ```
+
+## 等待导航完成
+
+`@rspress/core/theme` 导出的 `useAwaitedLinkNavigate` 会预加载站内页面，并在目标路由位置提交后兑现返回的 Promise。同一 Hook 实例的调用按顺序执行，支持相对链接、查询参数和 hash。
+
+```tsx
+import { useAwaitedLinkNavigate } from '@rspress/core/theme';
+
+export function NavigationButton() {
+  const navigate = useAwaitedLinkNavigate();
+
+  return (
+    <button
+      onClick={async () => {
+        try {
+          await navigate('/guide/?tab=api#usage');
+          console.log('目标路由位置已提交');
+        } catch (error) {
+          console.error('导航失败', error);
+        }
+      }}
+    >
+      打开指南
+    </button>
+  );
+}
+```
+
+使用此 Hook 的组件需要在导航期间保持挂载，例如放在自定义 `Root` 或全局 UI 组件中。卸载组件会拒绝正在执行和排队的调用。预加载失败或超过 10 秒仍未完成时，Promise 也会被拒绝；后续调用仍可执行。外部 URL 和没有匹配路由的路径会直接被拒绝，不会触发跳转。
+
+集成方可以通过 `useAwaitedLinkNavigate(committedTarget)` 自行报告提交时机。参数由不含站点 base 的 pathname、查询参数和 hash 组成，例如 `/guide/?tab=api#usage`。不传参数时，Hook 监听 `useLocation()`，不会等待页面内所有图片或异步组件加载完成。

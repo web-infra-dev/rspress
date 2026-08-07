@@ -27,3 +27,34 @@ export default function LocationDebugger() {
   );
 }
 ```
+
+## Awaiting navigation
+
+`useAwaitedLinkNavigate` from `@rspress/core/theme` preloads an internal page and returns a promise that resolves once its router location commits. Calls made through the same hook instance run in order, including relative links, queries and hashes.
+
+```tsx
+import { useAwaitedLinkNavigate } from '@rspress/core/theme';
+
+export function NavigationButton() {
+  const navigate = useAwaitedLinkNavigate();
+
+  return (
+    <button
+      onClick={async () => {
+        try {
+          await navigate('/guide/?tab=api#usage');
+          console.log('The router location has committed');
+        } catch (error) {
+          console.error('Navigation failed', error);
+        }
+      }}
+    >
+      Open guide
+    </button>
+  );
+}
+```
+
+Keep the component using this hook mounted across navigation, for example inside a custom `Root` or a global UI component. Unmounting rejects active and queued calls. Preload failures and a 10-second timeout also reject the promise; later calls can still run. External URLs and paths without a matching route reject without navigating.
+
+Integrations can pass `useAwaitedLinkNavigate(committedTarget)` to report their own commit boundary. Supply the pathname without the site's base, followed by the query and hash, such as `/guide/?tab=api#usage`. Without this argument, the hook observes `useLocation()`; it does not wait for every image or asynchronous component on the page to finish loading.
