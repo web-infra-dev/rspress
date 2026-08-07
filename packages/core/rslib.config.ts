@@ -113,7 +113,13 @@ export default defineConfig({
           root: './dist/runtime',
         },
       },
-      plugins: [pluginReact()],
+      plugins: [
+        pluginReact({
+          reactCompiler: {
+            target: '18',
+          },
+        }),
+      ],
     },
     {
       bundle: false,
@@ -121,7 +127,11 @@ export default defineConfig({
         typescriptPath,
       },
       plugins: [
-        pluginReact(),
+        pluginReact({
+          reactCompiler: {
+            target: '18',
+          },
+        }),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
         pluginSass(),
       ],

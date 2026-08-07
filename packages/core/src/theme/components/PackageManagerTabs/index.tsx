@@ -155,7 +155,7 @@ export function PackageManagerTabs({
 
   const Pre = useMemo(() => {
     return getCustomMDXComponent().pre;
-  }, [getCustomMDXComponent]);
+  }, []);
 
   // Init Command
   if (typeof command === 'string') {

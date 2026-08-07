@@ -116,6 +116,20 @@ export const Tabs = forwardRef(
       return getTabValuesFromChildren(children, values);
     }, [children, values]);
 
+    const defaultValueIndex =
+      defaultValue !== undefined
+        ? tabValues.findIndex(item => item.value === defaultValue)
+        : -1;
+    const initialActiveIndex =
+      defaultValueIndex === -1 ? (defaultIndex ?? 0) : defaultValueIndex;
+
+    const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
+
+    const [storageIndex, setStorageIndex] = useStorageValue<string>(
+      `${groupIdPrefix}${groupId}`,
+      initialActiveIndex.toString(),
+    );
+
     if (import.meta.env.SSG_MD) {
       return (
         <>
@@ -131,20 +145,6 @@ export const Tabs = forwardRef(
         </>
       );
     }
-
-    const defaultValueIndex =
-      defaultValue !== undefined
-        ? tabValues.findIndex(item => item.value === defaultValue)
-        : -1;
-    const initialActiveIndex =
-      defaultValueIndex === -1 ? (defaultIndex ?? 0) : defaultValueIndex;
-
-    const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
-
-    const [storageIndex, setStorageIndex] = useStorageValue<string>(
-      `${groupIdPrefix}${groupId}`,
-      initialActiveIndex.toString(),
-    );
 
     const currentIndex: number = groupId ? Number(storageIndex) : activeIndex;
 
