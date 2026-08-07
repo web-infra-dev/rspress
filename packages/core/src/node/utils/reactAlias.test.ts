@@ -1,8 +1,9 @@
+import path from 'node:path';
 import { describe, expect, it, rs } from '@rstest/core';
 import {
   resolveReactAlias,
   resolveReactRenderToMarkdownAlias,
-  resolveReactRouterDomAlias,
+  resolveReactRouterAlias,
 } from './reactAlias';
 
 rs.mock('@rspress/shared/logger', () => ({
@@ -54,15 +55,34 @@ describe('resolveReactAlias', () => {
   });
 });
 
-describe('resolveReactRouterDomAlias', () => {
-  it('should resolve react-router-dom', async () => {
-    const alias = await resolveReactRouterDomAlias();
+describe('resolveReactRouterAlias', () => {
+  it('should resolve the built-in React Router v8', async () => {
+    const alias = await resolveReactRouterAlias();
 
     expect(alias).toMatchInlineSnapshot(`
       {
-        "react-router-dom": "<PNPM_INNER>/react-router-dom",
+        "react-router$": "<PNPM_INNER>/react-router/dist/production/index.js",
+        "react-router/package.json": "<PNPM_INNER>/react-router/package.json",
       }
     `);
+  });
+
+  it('should resolve React Router v7 from react-router-dom', async () => {
+    const originalCwd = process.cwd();
+    process.chdir(
+      path.resolve(import.meta.dirname, '../../../../../e2e/fixtures/react-18'),
+    );
+
+    try {
+      const alias = await resolveReactRouterAlias();
+      expect(alias).toMatchInlineSnapshot(`
+        {
+          "react-router": "<PNPM_INNER>/react-router",
+        }
+      `);
+    } finally {
+      process.chdir(originalCwd);
+    }
   });
 });
 
