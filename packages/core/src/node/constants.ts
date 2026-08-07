@@ -79,6 +79,7 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
     .join(', ');
   const replaceLocationScript = `
   var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && ${routePathname}.endsWith('/') ? '/' : ''
+  window[Symbol.for('rspress.redirecting')] = true
   window.location.replace(${base ? 'base + ' : ''}newPathname + trailingSlash + search)`;
   const redirectScript =
     localeRedirect === 'only-default-lang'
@@ -101,7 +102,7 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
 
   return `{
   var defaultLang = ${serializeInlineScriptData(defaultLang)}, langs = ${serializeInlineScriptData(langs)}
-  if (!/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {
+  if (!window[Symbol.for('rspress.redirecting')] && !/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {
     var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey)
     if (!visited) {
       localStorage.setItem(firstVisitKey, '1')

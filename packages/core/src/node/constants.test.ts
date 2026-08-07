@@ -101,39 +101,47 @@ const runLocaleRedirectScript = (
     search?: string;
     userAgent?: string;
     visited?: boolean;
+    redirecting?: boolean;
   },
 ) => {
   let redirectedTo: string | undefined;
   let visited = options.visited ?? false;
   const script = getInlineLocaleRedirectScript(config);
 
+  const windowMock = {
+    navigator: {
+      language: options.language,
+      userAgent: options.userAgent ?? 'browser',
+    },
+    location: {
+      pathname: options.pathname,
+      search: options.search ?? '',
+      replace: (url: string) => {
+        redirectedTo = url;
+      },
+    },
+  };
+  if (options.redirecting) {
+    Reflect.set(windowMock, Symbol.for('rspress.redirecting'), true);
+  }
+
   Function(
     'window',
     'localStorage',
     script,
-  )(
-    {
-      navigator: {
-        language: options.language,
-        userAgent: options.userAgent ?? 'browser',
-      },
-      location: {
-        pathname: options.pathname,
-        search: options.search ?? '',
-        replace: (url: string) => {
-          redirectedTo = url;
-        },
-      },
+  )(windowMock, {
+    getItem: () => (visited ? '1' : null),
+    setItem: () => {
+      visited = true;
     },
-    {
-      getItem: () => (visited ? '1' : null),
-      setItem: () => {
-        visited = true;
-      },
-    },
-  );
+  });
 
-  return { redirectedTo, visited, script };
+  return {
+    redirectedTo,
+    redirecting: Reflect.get(windowMock, Symbol.for('rspress.redirecting')),
+    visited,
+    script,
+  };
 };
 
 describe('getInlineLocaleRedirectScript', () => {
@@ -155,7 +163,22 @@ describe('getInlineLocaleRedirectScript', () => {
       }),
     ).toMatchObject({
       redirectedTo: '/en/guide/?from=home',
+      redirecting: true,
       visited: true,
+    });
+  });
+
+  test('does not race another Rspress redirect', () => {
+    expect(
+      runLocaleRedirectScript(config, {
+        language: 'en-US',
+        pathname: '/guide/',
+        redirecting: true,
+      }),
+    ).toMatchObject({
+      redirectedTo: undefined,
+      redirecting: true,
+      visited: false,
     });
   });
 
@@ -266,13 +289,13 @@ describe('getInlineLocaleRedirectScript', () => {
     });
 
     expect(autoScript).toMatchInlineSnapshot(
-      `"{;var defaultLang = "zh", langs = ["zh","en","fr"];if (!/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, pathSegments = pathname.split('/').filter(Boolean), currentLang = langs.includes(pathSegments[0]) ? pathSegments[0] : defaultLang;if (langs.includes(targetLang) && targetLang !== currentLang) {;var newPathSegments = pathSegments.slice();if (targetLang === defaultLang) {;newPathSegments.splice(0, 1);} else if (currentLang === defaultLang) {;newPathSegments.splice(0, 0, targetLang);} else {;newPathSegments[0] = targetLang;};;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && pathname.endsWith('/') ? '/' : '';window.location.replace(newPathname + trailingSlash + search);};};};}"`,
+      `"{;var defaultLang = "zh", langs = ["zh","en","fr"];if (!window[Symbol.for('rspress.redirecting')] && !/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, pathSegments = pathname.split('/').filter(Boolean), currentLang = langs.includes(pathSegments[0]) ? pathSegments[0] : defaultLang;if (langs.includes(targetLang) && targetLang !== currentLang) {;var newPathSegments = pathSegments.slice();if (targetLang === defaultLang) {;newPathSegments.splice(0, 1);} else if (currentLang === defaultLang) {;newPathSegments.splice(0, 0, targetLang);} else {;newPathSegments[0] = targetLang;};;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && pathname.endsWith('/') ? '/' : '';window[Symbol.for('rspress.redirecting')] = true;window.location.replace(newPathname + trailingSlash + search);};};};}"`,
     );
     expect(onlyDefaultLangScript).toMatchInlineSnapshot(
-      `"{;var defaultLang = "zh", langs = ["zh","en","fr"];if (!/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, pathSegments = pathname.split('/').filter(Boolean), currentLang = langs.includes(pathSegments[0]) ? pathSegments[0] : defaultLang;if (currentLang === defaultLang && langs.includes(targetLang) && targetLang !== defaultLang) {;var newPathSegments = pathSegments.slice();newPathSegments.splice(0, 0, targetLang);;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && pathname.endsWith('/') ? '/' : '';window.location.replace(newPathname + trailingSlash + search);};};};}"`,
+      `"{;var defaultLang = "zh", langs = ["zh","en","fr"];if (!window[Symbol.for('rspress.redirecting')] && !/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, pathSegments = pathname.split('/').filter(Boolean), currentLang = langs.includes(pathSegments[0]) ? pathSegments[0] : defaultLang;if (currentLang === defaultLang && langs.includes(targetLang) && targetLang !== defaultLang) {;var newPathSegments = pathSegments.slice();newPathSegments.splice(0, 0, targetLang);;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && pathname.endsWith('/') ? '/' : '';window[Symbol.for('rspress.redirecting')] = true;window.location.replace(newPathname + trailingSlash + search);};};};}"`,
     );
     expect(versionedBaseScript).toMatchInlineSnapshot(
-      `"{;var defaultLang = "zh", langs = ["zh","en","fr"];if (!/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, base = "/docs", cleanPathname = pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname, pathSegments = cleanPathname.split('/').filter(Boolean), versions = ["v1","v2"], langIndex = versions.includes(pathSegments[0]) ? 1 : 0, currentLang = langs.includes(pathSegments[langIndex]) ? pathSegments[langIndex] : defaultLang;if (langs.includes(targetLang) && targetLang !== currentLang) {;var newPathSegments = pathSegments.slice();if (targetLang === defaultLang) {;newPathSegments.splice(langIndex, 1);} else if (currentLang === defaultLang) {;newPathSegments.splice(langIndex, 0, targetLang);} else {;newPathSegments[langIndex] = targetLang;};;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && cleanPathname.endsWith('/') ? '/' : '';window.location.replace(base + newPathname + trailingSlash + search);};};};}"`,
+      `"{;var defaultLang = "zh", langs = ["zh","en","fr"];if (!window[Symbol.for('rspress.redirecting')] && !/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, base = "/docs", cleanPathname = pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname, pathSegments = cleanPathname.split('/').filter(Boolean), versions = ["v1","v2"], langIndex = versions.includes(pathSegments[0]) ? 1 : 0, currentLang = langs.includes(pathSegments[langIndex]) ? pathSegments[langIndex] : defaultLang;if (langs.includes(targetLang) && targetLang !== currentLang) {;var newPathSegments = pathSegments.slice();if (targetLang === defaultLang) {;newPathSegments.splice(langIndex, 1);} else if (currentLang === defaultLang) {;newPathSegments.splice(langIndex, 0, targetLang);} else {;newPathSegments[langIndex] = targetLang;};;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && cleanPathname.endsWith('/') ? '/' : '';window[Symbol.for('rspress.redirecting')] = true;window.location.replace(base + newPathname + trailingSlash + search);};};};}"`,
     );
   });
 
