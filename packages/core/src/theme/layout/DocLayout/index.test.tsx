@@ -1,9 +1,11 @@
 import { afterEach, describe, expect, it, rs } from '@rstest/core';
 import type { ReactNode } from 'react';
+import { renderToString } from 'react-dom/server';
 import { renderToMarkdownString } from 'react-render-to-markdown';
 import { DocLayout } from './index';
 
 let overview = false;
+const sidebarMenuCalls: unknown[][] = [];
 
 rs.mock('@rspress/core/runtime', () => ({
   useFrontmatter: () => ({
@@ -29,13 +31,16 @@ rs.mock('@rspress/core/theme', () => ({
 }));
 
 rs.mock('../../components/SidebarMenu/useSidebarMenu', () => ({
-  useSidebarMenu: () => ({
-    asideLayoutRef: { current: null },
-    isOutlineOpen: false,
-    isSidebarOpen: false,
-    sidebarLayoutRef: { current: null },
-    sidebarMenu: null,
-  }),
+  useSidebarMenu: (...args: unknown[]) => {
+    sidebarMenuCalls.push(args);
+    return {
+      asideLayoutRef: { current: null },
+      isOutlineOpen: false,
+      isSidebarOpen: false,
+      sidebarLayoutRef: { current: null },
+      sidebarMenu: null,
+    };
+  },
 }));
 
 const originalSsgMd = import.meta.env.SSG_MD;
@@ -51,8 +56,12 @@ const setSsgMd = (value: boolean | undefined) => {
 
 afterEach(() => {
   overview = false;
+  sidebarMenuCalls.length = 0;
   setSsgMd(originalSsgMd);
 });
+
+const getLastShowOutlineArg = () =>
+  sidebarMenuCalls[sidebarMenuCalls.length - 1]?.[2];
 
 describe('DocLayout', () => {
   it('renders only doc content when SSG_MD is enabled', async () => {
@@ -72,5 +81,22 @@ describe('DocLayout', () => {
 
       Overview doc content"
     `);
+  });
+
+  it('shows mobile outline menu on normal doc pages', async () => {
+    setSsgMd(undefined);
+
+    renderToString(<DocLayout />);
+
+    expect(getLastShowOutlineArg()).toBe(true);
+  });
+
+  it('hides mobile outline menu on overview pages', async () => {
+    overview = true;
+    setSsgMd(undefined);
+
+    renderToString(<DocLayout />);
+
+    expect(getLastShowOutlineArg()).toBe(false);
   });
 });
