@@ -1,0 +1,125 @@
+---
+date: 2026-08-03
+authors: ['sooniter']
+description: '从一个真实问题出发，解释 trailing slash 为什么会导致相对链接错误，以及 Rspress 如何解决。'
+sidebar: false
+pageType: doc
+---
+
+_2026 年 8 月 3 日_
+
+# 静态站点中的 Trailing slash 问题
+
+## 发现问题
+
+故事从一个真实的 Rspress 用户的问题开始。
+
+这个用户将站点部署在 `/next/` 路径下，并在首页中使用了相对链接：
+
+```html
+<a href="./guide/start/quick-start">快速开始</a>
+```
+
+访问站点根地址时，无论 URL 是否以 `/` 结尾，链接都能正常跳转。访问 `/next/` 时，链接也会正确跳转到：
+
+```text
+/next/guide/start/quick-start
+```
+
+但访问 `/next` 时，链接却跳转到了：
+
+```text
+/guide/start/quick-start
+```
+
+页面明明能够正常打开，为什么相对链接少了一层 `/next`？
+
+这个问题让我开始思考：带不带 trailing slash 的区别到底是什么？
+
+### 根地址是一个特例
+
+[RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.3) 规定，对于 HTTP(S) URL，空 path 与 `/` 等价。因此 `https://example.com` 发出的请求仍然是 `GET /`。
+
+### Trailing slash 会改变相对链接的解析结果
+
+浏览器会根据当前 URL 解析相对链接。对它来说，`/next` 的最后一段是当前资源名，而 `/next/` 表示当前资源位于一个目录下：
+
+```js
+new URL('./guide/start', 'https://example.com/next').pathname;
+// => /guide/start
+
+new URL('./guide/start', 'https://example.com/next/').pathname;
+// => /next/guide/start
+```
+
+客户端路由通常采用比较宽松的匹配策略。例如，[React Router 默认会忽略 path 末尾的 `/`](https://github.com/remix-run/react-router/blob/react-router%407.18.2/packages/react-router/lib/router/utils.ts#L1576-L1578)，因此下面两个 URL 都能匹配 path 为 `/guide` 的同一个路由：
+
+- `/guide`
+- `/guide/`
+
+React Router 不会自动移除 `.html`，也不会将 `/index.html` 视为目录首页。`/guide.html` 和 `/guide/index.html` 是否可以访问，取决于框架或 Web server 的额外处理。
+
+这也解释了为什么“页面能打开”和“页面中的相对链接正确”是两个问题。宽松匹配只能保证客户端找到路由，不会修改地址栏中的 URL；只要地址栏仍是 `/next`，浏览器就会按照第一种方式解析相对路径。
+
+这种差异来自 Web 早期将 URL path 映射到文件系统的习惯。下面两个地址可能对应两份不同的静态产物：
+
+```text
+/guide.html       -> dist/guide.html
+/guide/           -> dist/guide/index.html
+```
+
+当 URL 命中目录时，Web server 通常会先补上 trailing slash，再查找 `index.html`。现代托管平台可以通过 rewrite 让多个 URL 返回同一个页面，但这不会改变浏览器解析相对链接的规则。
+
+## 解决问题
+
+解决这个问题的关键，是让地址栏中的 URL 与站点生成的 URL 保持一致。
+
+Rspress 的 [`route.cleanUrls`](/zh/api/config/config-basic#routecleanurls) 用于控制生成的 URL 是否带有 `.html` 后缀。但它只能控制 Rspress 生成的链接，无法阻止用户从书签、搜索结果或外部网站访问 `/guide.html`、`/guide/` 等其他写法。
+
+因此，Rspress 增加了 `route.cleanUrlsRedirect`。客户端启动时，它会先匹配真实路由，再按照 `cleanUrls` 选择的格式，通过 `history.replaceState` 修正地址栏。例如在 `cleanUrls: true` 时：
+
+- `/guide.html`、`/guide/`、`/guide/index.html` → `/guide`
+- `/reference/index.html` → `/reference/`
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    cleanUrls: true,
+    cleanUrlsRedirect: true,
+  },
+});
+```
+
+这次规范化发生在页面渲染前，不会刷新页面，并会保留站点 `base`、query、hash 和已有的 history state。对于开头的例子，Rspress 会先将 `/next` 修正为 `/next/`，再渲染页面，相对链接也就不会跳出 `/next/`。
+
+从 Rspress 2.1.0 开始，`cleanUrls` 会默认开启，`cleanUrlsRedirect` 也会作为默认开启的客户端兜底。虽然它不能 100% 替代服务端的 301/308，也不能单独解决重复 URL 的 SEO 问题，但仍是一道强有力的兜底，至少能够避免 URL 格式不一致引发的代码逻辑错误。
+
+具体设计与测试可以查看 [PR #3571](https://github.com/web-infra-dev/rspress/pull/3571)。
+
+### 最佳实践
+
+今天，URL 不再需要对应磁盘文件；选择带不带 trailing slash 是站点策略，而不是对错。但浏览器和搜索引擎仍将 `/about` 与 `/about/` 视为两个 URL。
+
+为了避免代码逻辑错误或同一页面被多个 URL 收录，需要做到：
+
+1. **服务端**：使用 301/308 将 `/about` 和 `/about/` 合并到同一个首选 URL；`/about.html` 和 `/about/index.html` 等变体也可以一并处理。例如，Cloudflare Workers Static Assets 默认支持 [`auto-trailing-slash`](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/)：普通 HTML 文件使用 `/file`，目录首页使用 `/folder/`，其他写法会以 307 跳转到对应的规范 URL。
+2. **客户端**：开启 `cleanUrls`，并有客户端重定向兜底。托管平台无法配置重定向时，它可以在页面最早入口写回首选 URL；但必须等 HTML 和 JavaScript 加载后才能执行，不能 100% 替代服务端重定向。
+
+**所有 URL 保持一致：**站内链接、canonical、sitemap 和分享地址都输出首选 URL，其他写法通过 301/308 跳转过去。
+
+**最后检查：**
+
+- `/file` 与 `/file/` 不应同时以两个独立 URL 返回同一内容；
+- 公开 URL、静态产物、Rspress 配置与 CDN 规则使用同一种 trailing slash 策略。
+
+## 参考资料
+
+- [RFC 3986：URI Generic Syntax](https://www.rfc-editor.org/rfc/rfc3986)
+- [URL Standard](https://url.spec.whatwg.org/)
+- [Apache HTTP Server：DirectorySlash](https://httpd.apache.org/docs/current/mod/mod_dir.html#directoryslash)
+- [Cloudflare Workers：HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/)
+- [React Router：Path matching](https://github.com/remix-run/react-router/blob/react-router%407.18.2/packages/react-router/lib/router/utils.ts#L1576-L1578)
+- [Google Search Central：To slash or not to slash](https://developers.google.com/search/blog/2010/04/to-slash-or-not-to-slash)
+- [Why does the trailing-slash matter? A (very) short history](https://kentgigger.com/posts/why-does-the-trailing-slash-matter-a-short-history)
