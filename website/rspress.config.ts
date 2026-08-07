@@ -151,6 +151,17 @@ export default defineConfig({
     }),
   ],
   builderConfig: {
+    splitChunks: {
+      cacheGroups: {
+        // Avoid duplicating the global FileTree component in route chunks.
+        fileTree: {
+          chunks: 'async',
+          enforce: true,
+          name: 'file-tree',
+          test: /rspress-plugin-file-tree/,
+        },
+      },
+    },
     plugins: [
       pluginSass(),
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
