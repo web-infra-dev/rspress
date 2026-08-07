@@ -31,6 +31,12 @@ test.describe('dynamic toc', async () => {
     await expect(heading).toContainText('Term dynamic & content');
 
     await expect(tocItem).toHaveText('Term dynamic & content');
+
+    // The header text collected from the DOM is HTML, its entities should not be shown in the tooltip
+    await expect(page.locator('.rp-toc-item').first()).toHaveAttribute(
+      'title',
+      'Term dynamic & content',
+    );
   });
 
   test('Data depth attribute', async ({ page }) => {
