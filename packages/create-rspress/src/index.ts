@@ -7,7 +7,7 @@ import {
   type ESLintTemplateName,
   type RslintTemplateName,
   select,
-} from 'create-rstack';
+} from '@rstackjs/create-toolkit';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const templates = ['basic', 'basic-theme', 'i18n', 'i18n-theme'] as const;

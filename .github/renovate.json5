@@ -60,7 +60,7 @@
         'rspack',
         'rstest',
         'rspress',
-        'create-rstack',
+        '@rstackjs/create-toolkit',
       ],
       groupSlug: 'rstack',
     },
