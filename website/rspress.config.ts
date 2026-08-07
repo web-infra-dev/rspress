@@ -9,6 +9,7 @@ import { pluginPlayground } from '@rspress/plugin-playground';
 import { pluginPreview } from '@rspress/plugin-preview';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
+import { pluginWebMcp } from '@rspress/plugin-webmcp';
 import {
   transformerNotationDiff,
   transformerNotationErrorLevel,
@@ -107,6 +108,7 @@ export default defineConfig({
     }),
     pluginPlayground(),
     pluginTwoslash(),
+    pluginWebMcp(),
     // pluginFontOpenSans(), // removed this line for Rspress preview
     pluginSitemap({
       siteUrl: siteOrigin,
