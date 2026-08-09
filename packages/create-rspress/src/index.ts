@@ -83,6 +83,7 @@ create({
   root: path.resolve(__dirname, '..'),
   name: 'rspress',
   templates: [...templates],
+  git: !process.argv.includes('--no-git'),
   getTemplateName,
   mapESLintTemplate,
   mapRslintTemplate,
