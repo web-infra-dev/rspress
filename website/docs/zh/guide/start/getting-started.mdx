@@ -1,5 +1,5 @@
 ---
-description: 通过脚手架或手动方式快速创建 Rspress 项目，了解开发服务启动、生产构建和本地预览的基本流程。
+description: 通过脚手架或手动方式快速创建 Rspress 项目，配置 Git 初始化，并了解开发服务、生产构建和本地预览的基本流程。
 ---
 
 # 快速开始
@@ -48,9 +48,10 @@ Rspress 需要 Node.js 版本 20.19+, 22.12+。
 
 按照提示一步步操作即可。在创建过程中，你可以输入项目名称或路径、选择是否启用 i18n、是否创建用于自定义主题的 `theme` 目录，以及是否添加可选工具或 Skills。
 
+脚手架默认会在生成的项目中初始化 Git 仓库。如需跳过 Git 初始化，请在创建命令中添加 `--no-git`。
+
 项目创建完成后，你可以执行以下步骤：
 
-- 执行 `git init` 来初始化 Git 仓库。
 - 执行 `npm install`（或其他包管理器的 install 命令）安装 npm 依赖。
 - 执行 `npm run dev` 启动开发服务器。
 
@@ -131,6 +132,12 @@ npx -y create-rspress@latest -d my-docs -t basic-theme
 npx -y create-rspress@latest -d my-docs -t basic-theme --tools rslint,prettier
 ```
 
+跳过 Git 初始化：
+
+```bash
+npx -y create-rspress@latest -d my-docs -t basic-theme --no-git
+```
+
 创建多语言模板：
 
 ```bash
@@ -159,6 +166,7 @@ Options:
   -h, --help                display help for command
   -d, --dir <dir>           create project in specified directory
   -t, --template <tpl>      specify the template to use
+  --no-git                  skip Git repository initialization
   --tools <tool>            add additional tools, comma separated
   --skill <skill>           add optional skills, comma separated
   --override                override files in target directory
