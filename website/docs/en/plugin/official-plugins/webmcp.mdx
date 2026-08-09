@@ -1,0 +1,174 @@
+---
+description: Expose Rspress documentation tools to browser agents with WebMCP.
+---
+
+# @rspress/plugin-webmcp <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-webmcp" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+Expose documentation content and site actions to browser agents through the [WebMCP API](https://webmachinelearning.github.io/webmcp/).
+
+## Installation
+
+<PackageManagerTabs command="add @rspress/plugin-webmcp -D" />
+
+## Usage
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginWebMcp } from '@rspress/plugin-webmcp';
+
+export default defineConfig({
+  plugins: [pluginWebMcp()],
+});
+```
+
+The plugin registers these tools by default:
+
+- `rspress_get_site_info`: Returns site metadata, locales, versions, navigation, and the active sidebar.
+- `rspress_list_pages`: Filters and paginates page metadata for the active locale and version. It works independently of the configured search provider.
+- `rspress_get_page`: Returns metadata and generated SSG-MD Markdown for any known internal route without navigating.
+- `rspress_get_current_page`: Returns the current page metadata and generated SSG-MD Markdown.
+- `rspress_search_docs`: Searches through the active Rspress search provider. Local search and [`@rspress/plugin-algolia`](/plugin/official-plugins/algolia) are supported. It is omitted only when no search provider is available.
+- `rspress_navigate`: Navigates only to known internal documentation routes. Query strings and hashes are supported. It returns lightweight metadata, section headings, and previous/next pages for the destination without fetching Markdown.
+
+`rspress_navigate` resolves after the SPA route renders. Its result confirms the destination and provides immediate navigation choices:
+
+```json
+{
+  "routePath": "/guide?source=agent#install",
+  "page": { "title": "Guide", "lang": "en", "version": "v2" },
+  "sections": [
+    {
+      "title": "Install",
+      "depth": 2,
+      "routePath": "/guide?source=agent#install"
+    }
+  ],
+  "previousPage": { "title": "Introduction", "routePath": "/intro" },
+  "nextPage": { "title": "Configuration", "routePath": "/config" }
+}
+```
+
+Call `rspress_get_page` with the returned `routePath` only when the agent needs the full Markdown.
+
+The two Markdown tools automatically enable [`llms: true`](/guide/basic/ssg-md). An existing `true` or object configuration is preserved. An explicit `llms: false` conflicts unless both `getPage` and `currentPage` are disabled.
+
+SSG-MD emits `.md` files during `rspress build`. `rspress_get_page` and `rspress_get_current_page` are omitted during `rspress dev`, where generated Markdown is unavailable. Site information, page listings, search, navigation, and custom tools remain available and update through HMR.
+
+## Options
+
+Disable individual built-in tools with `tools`:
+
+```ts title="rspress.config.ts"
+pluginWebMcp({
+  exposedTo: ['https://agent.example'],
+  tools: {
+    siteInfo: true,
+    listPages: true,
+    getPage: true,
+    currentPage: true,
+    search: false,
+    navigate: true,
+  },
+});
+```
+
+All six options default to `true`.
+
+Set `exposedTo` to forward secure origins to every built-in tool registration. Same-origin and browser-integrated agents do not need it. A cross-origin agent must also request the site origin with `getTools({ fromOrigins })`; cross-origin iframes additionally require the `tools` Permissions Policy.
+
+## Search providers
+
+Local search is used by default. Mounting the `Search` component from [`@rspress/plugin-algolia`](/plugin/official-plugins/algolia) automatically switches `rspress_search_docs` to Algolia.
+
+Other search integrations can register a provider from a theme or global UI component:
+
+```ts
+import { registerSearchProvider } from '@rspress/core/theme';
+
+export function registerMySearchProvider(
+  searchDocs: (query: string, limit: number) => Promise<unknown[]>,
+) {
+  return registerSearchProvider({
+    async search(query, limit = 20) {
+      return [
+        {
+          group: 'Documentation',
+          result: await searchDocs(query, limit),
+        },
+      ];
+    },
+  });
+}
+```
+
+The returned function unregisters the provider. The most recently mounted provider is active; unregistering it restores the previous provider. Each `group` is returned by the WebMCP tool with its `result` value exposed as `results`.
+
+## Custom tools
+
+Use `registerWebMcpTool` for imperative code. Keep the returned `AbortSignal`-backed handle for the lifetime of the tool, then call `unregister` during cleanup.
+
+```ts
+import { registerWebMcpTool } from '@rspress/plugin-webmcp/runtime';
+
+export function mountCopyExampleTool() {
+  const registration = registerWebMcpTool(
+    {
+      name: 'copy_example',
+      description: 'Copy the current example.',
+      inputSchema: {
+        type: 'object',
+        properties: {},
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: false },
+      execute: () => navigator.clipboard.writeText('example'),
+    },
+    { exposedTo: ['https://agent.example'] },
+  );
+
+  void registration?.ready.catch(console.error);
+  return () => registration?.unregister();
+}
+```
+
+Use `useWebMcpTool` in React components. It registers on mount and unregisters on unmount.
+
+```tsx
+import { useWebMcpTool } from '@rspress/plugin-webmcp/runtime';
+
+export function Counter({ count, increment }) {
+  const { status, error } = useWebMcpTool({
+    name: 'increment_counter',
+    description: 'Increment the visible counter.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      additionalProperties: false,
+    },
+    annotations: { readOnlyHint: false },
+    execute: increment,
+  });
+
+  return (
+    <span title={error?.message}>
+      {status}: {count}
+    </span>
+  );
+}
+```
+
+`status` is `registering`, `registered`, `unsupported`, or `error`. `error` contains registration failures. Descriptor metadata or registration-option changes automatically re-register the tool, while the latest `execute` callback is used without registration churn.
+
+Pass an optional dependency list as the third argument when an external value must force a fresh browser registration: `useWebMcpTool(tool, options, deps)`. Cleanup aborts the previous registration before the replacement is installed.
+
+The built-in tools validate inputs again during execution. Custom `execute` callbacks should also validate their arguments because draft browser runtimes may not enforce the published JSON Schema before invocation.
+
+The runtime also exports local `WebMcpTool`, annotation, registration, client, and hook-state types. The optional `outputSchema`, extended MCP annotations, and execution client are compatibility extensions that are forwarded when a browser runtime supports them; the native draft currently standardizes `inputSchema`, `readOnlyHint`, and `untrustedContentHint`.
+
+## Browser support
+
+The production plugin uses only `document.modelContext`. Unsupported browsers safely skip registration, including during SSR. It does not ship a polyfill or an MCP-B runtime dependency.
+
+For tests or demos in browsers without native WebMCP, consumers can optionally install `@mcp-b/webmcp-polyfill` themselves. Load it before the Rspress client runtime so the support check sees it during the first render. The API is still a draft, so check the [current specification](https://webmachinelearning.github.io/webmcp/) when integrating browser-specific agent features.
