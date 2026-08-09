@@ -46,11 +46,12 @@ The recommended way to start a new Rspress project is to use the `create-rspress
 
 The scaffold will ask for the project name or path, whether to set up i18n, whether to create a `theme` folder for customization, and which optional tools or skills to add.
 
+By default, the scaffold initializes a Git repository in the generated project. Pass `--no-git` to skip Git initialization.
+
 After the project is created, follow the next steps printed in the terminal:
 
 ```bash
 cd rspress-project
-git init # optional
 npm install
 npm run dev
 ```
@@ -146,6 +147,7 @@ Options:
   -h, --help                display help for command
   -d, --dir <dir>           create project in specified directory
   -t, --template <tpl>      specify the template to use
+  --no-git                  skip Git repository initialization
   --tools <tool>            add additional tools, comma separated
   --skill <skill>           add optional skills, comma separated
   --override                override files in target directory

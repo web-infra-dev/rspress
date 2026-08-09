@@ -16,6 +16,9 @@ npx create-rspress --dir my-project
 # Using abbreviations
 npx create-rspress -d my-project
 
+# Skip Git initialization
+npx create-rspress --dir my-project --no-git
+
 # Scaffold with the basic theme template
 npx create-rspress --dir my-project --template basic-theme
 
