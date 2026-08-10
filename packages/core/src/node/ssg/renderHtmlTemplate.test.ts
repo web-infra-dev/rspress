@@ -5,6 +5,7 @@ import { renderHtmlTemplate } from './renderHtmlTemplate';
 
 const route: RouteMeta = {
   routePath: '/guide/',
+  pureRoutePath: '/guide/',
   absolutePath: '/root/guide/index.md',
   relativePath: 'guide/index.md',
   pageName: 'guide_index',

@@ -18,16 +18,20 @@ describe('plugin-playground errors', () => {
       }
 
       await expect(
-        plugin.routeGenerated([
-          {
-            absolutePath: filepath,
-            routePath: '/',
-            relativePath: 'index.mdx',
-            pageName: 'index',
-            lang: '',
-            version: '',
-          },
-        ]),
+        plugin.routeGenerated(
+          [
+            {
+              absolutePath: filepath,
+              routePath: '/',
+              pureRoutePath: '/',
+              relativePath: 'index.mdx',
+              pageName: 'index',
+              lang: '',
+              version: '',
+            },
+          ],
+          false,
+        ),
       ).rejects.toThrow(
         `[Playground]: Failed to parse ${filepath}.\nCould not parse expression with acorn`,
       );
