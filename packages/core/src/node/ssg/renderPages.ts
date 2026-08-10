@@ -1,3 +1,5 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { RouteMeta, UserConfig } from '@rspress/shared';
 import { chunk } from '@rspress/shared/lodash-es';
 import { logger } from '@rspress/shared/logger';
@@ -106,7 +108,10 @@ export async function renderPages(
       const Tinypool = await import('tinypool').then(m => m.default);
 
       const pool = new Tinypool({
-        filename: new URL('./renderPageWorker.js', import.meta.url).href,
+        filename: path.join(
+          path.dirname(fileURLToPath(import.meta.url)),
+          'renderPageWorker.js',
+        ),
         // chunk tasks manually
         concurrentTasksPerWorker: 1,
         minThreads: numberOfThreads,
