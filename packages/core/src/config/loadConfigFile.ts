@@ -17,16 +17,11 @@ export async function loadConfigFile(
   customConfigFile?: string,
 ): Promise<{ config: UserConfig; configFilePath: string }> {
   const baseDir = process.cwd();
-  let configFilePath = '';
-  if (customConfigFile) {
-    if (path.isAbsolute(customConfigFile)) {
-      configFilePath = customConfigFile;
-    } else {
-      configFilePath = path.join(baseDir, customConfigFile);
-    }
-  } else {
-    configFilePath = findConfig(path.join(baseDir, DEFAULT_CONFIG_NAME))!;
-  }
+  const configFilePath = customConfigFile
+    ? path.isAbsolute(customConfigFile)
+      ? customConfigFile
+      : path.join(baseDir, customConfigFile)
+    : findConfig(path.join(baseDir, DEFAULT_CONFIG_NAME));
   if (!configFilePath) {
     logger.info(`No config file found in ${baseDir}`);
     return { config: {}, configFilePath: '' };

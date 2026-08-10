@@ -154,7 +154,7 @@ export function pluginPlayground(
               e.message = `${message}\n${e.message}`;
               throw e;
             }
-            throw new Error(`${message}\n${String(e)}`);
+            throw new Error(`${message}\n${String(e)}`, { cause: e });
           }
         }),
       );

@@ -205,15 +205,13 @@ async function metaFileItemToSidebarItem(
   extensions: string[],
   mdFileSet: Set<string>,
 ): Promise<SidebarItem | null> {
-  let metaItem: FileSideMeta | null = null;
-  if (typeof metaItemRaw === 'string') {
-    metaItem = {
-      name: metaItemRaw,
-      type: 'file',
-    };
-  } else {
-    metaItem = metaItemRaw;
-  }
+  const metaItem: FileSideMeta =
+    typeof metaItemRaw === 'string'
+      ? {
+          name: metaItemRaw,
+          type: 'file',
+        }
+      : metaItemRaw;
 
   const { name, context, icon, label, overviewHeaders, tag } = metaItem;
   const metaFilePath = join(workDir, '_meta.json');
