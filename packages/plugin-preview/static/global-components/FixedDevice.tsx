@@ -1,5 +1,6 @@
 import { useDark, usePage } from '@rspress/core/runtime';
 import { useCallback, useEffect, useRef, useState } from 'react';
+// @ts-ignore -- this declaration is generated concurrently by the package build
 import { normalizeId } from '../../dist/utils';
 import { getPageFullUrl, getPageUrl } from './common/getPageUrl';
 import MobileOperation from './common/PreviewOperations';
