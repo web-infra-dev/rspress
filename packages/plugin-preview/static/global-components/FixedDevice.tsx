@@ -1,6 +1,5 @@
 import { useDark, usePage } from '@rspress/core/runtime';
 import { useCallback, useEffect, useRef, useState } from 'react';
-// @ts-expect-error
 import { normalizeId } from '../../dist/utils';
 import { getPageFullUrl, getPageUrl } from './common/getPageUrl';
 import MobileOperation from './common/PreviewOperations';
