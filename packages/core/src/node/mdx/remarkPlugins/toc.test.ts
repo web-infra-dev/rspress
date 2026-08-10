@@ -214,7 +214,7 @@ describe('parseToc', () => {
   test('collects h1-h6 anchor ids', () => {
     const tree: MdastRoot = {
       type: 'root',
-      children: [1, 2, 3, 4, 5, 6].map(depth => ({
+      children: ([1, 2, 3, 4, 5, 6] as const).map(depth => ({
         type: 'heading',
         depth,
         children: [{ type: 'text', value: `Heading ${depth}` }],
