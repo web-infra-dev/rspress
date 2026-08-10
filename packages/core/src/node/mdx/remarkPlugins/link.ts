@@ -233,6 +233,7 @@ function normalizeLink(
     return { url: nodeUrl };
   }
 
+  // rslint-disable-next-line prefer-const
   let { url, hash, search } = parseUrl(nodeUrl);
 
   // 1. [](/api/getting-started) or [](/en/api/getting-started)

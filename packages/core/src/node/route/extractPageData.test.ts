@@ -9,12 +9,14 @@ const fixtureContentProcessingDir = join(
 );
 
 function createRoute(relativePath: string, fixtureDir: string) {
+  const routePath = `/${relativePath.replace(/\.(mdx?|md)$/, '')}`;
   return {
     absolutePath: join(fixtureDir, relativePath),
     lang: '',
     pageName: relativePath.replace(/\.(mdx?|md)$/, ''),
+    pureRoutePath: routePath,
     relativePath,
-    routePath: `/${relativePath.replace(/\.(mdx?|md)$/, '')}`,
+    routePath,
     version: '',
   };
 }
@@ -33,6 +35,7 @@ describe('extractPageData', async () => {
               absolutePath: absolutize('/a.mdx'),
               lang: '',
               pageName: 'a',
+              pureRoutePath: '/a',
               relativePath: 'a.mdx',
               routePath: '/a',
               version: '',
@@ -41,6 +44,7 @@ describe('extractPageData', async () => {
               absolutePath: absolutize('/guide/b.mdx'),
               lang: '',
               pageName: 'guide_b',
+              pureRoutePath: '/guide/b',
               relativePath: 'guide/b.mdx',
               routePath: '/guide/b',
               version: '',
@@ -49,6 +53,7 @@ describe('extractPageData', async () => {
               absolutePath: absolutize('/guide/c.tsx'),
               lang: '',
               pageName: 'guide_c',
+              pureRoutePath: '/guide/c',
               relativePath: 'guide/c.tsx',
               routePath: '/guide/c',
               version: '',
@@ -57,13 +62,14 @@ describe('extractPageData', async () => {
               absolutePath: absolutize('/index.mdx'),
               lang: '',
               pageName: 'index',
+              pureRoutePath: '/',
               relativePath: 'index.mdx',
               routePath: '/',
               version: '',
             },
           }),
         getRoutePageByRoutePath: () => undefined,
-      } as RouteService,
+      } as unknown as RouteService,
       {
         alias: {},
         replaceRules: [],
@@ -149,6 +155,7 @@ describe('getPageIndexInfoByRoute', async () => {
         absolutePath: absolutize('/index.mdx'),
         lang: '',
         pageName: 'index',
+        pureRoutePath: '/',
         relativePath: 'index.mdx',
         routePath: '/',
         version: '',

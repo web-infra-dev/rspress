@@ -9,15 +9,15 @@ const SHOW_TEXT = 4;
 type FakeNode = FakeElement | FakeTextNode;
 
 interface FakeTextNode {
-  nodeType: number;
+  nodeType: typeof TEXT_NODE;
   nodeName: '#text';
   nodeValue: string;
-  parentElement: FakeElement;
+  parentElement: FakeElement | null;
   previousSibling: FakeNode | null;
 }
 
 interface FakeElement {
-  nodeType: number;
+  nodeType: typeof ELEMENT_NODE;
   nodeName: string;
   tagName: string;
   ownerDocument: FakeDocument;
@@ -63,7 +63,7 @@ afterEach(() => {
   if (originalNode) {
     globalScope.Node = originalNode;
   } else {
-    delete globalScope.Node;
+    Reflect.deleteProperty(globalScope, 'Node');
   }
 });
 
@@ -159,12 +159,12 @@ function createElement(
   return element;
 }
 
-function createText(ownerDocument: FakeDocument, value: string): FakeTextNode {
+function createText(value: string): FakeTextNode {
   return {
     nodeType: TEXT_NODE,
     nodeName: '#text',
     nodeValue: value,
-    parentElement: null as unknown as FakeElement,
+    parentElement: null,
     previousSibling: null,
   };
 }
@@ -193,7 +193,7 @@ describe('getCopyableText', () => {
     const p = createElement(document, 'P');
     const pre = createElement(document, 'PRE');
     const code = createElement(document, 'CODE');
-    const codeText = createText(document, 'npm install package-name');
+    const codeText = createText('npm install package-name');
 
     appendChild(ol, li);
     appendChild(li, p);
@@ -211,7 +211,7 @@ describe('getCopyableText', () => {
     const li = createElement(document, 'LI');
     const pre = createElement(document, 'PRE');
     const code = createElement(document, 'CODE');
-    const codeText = createText(document, 'docker run image');
+    const codeText = createText('docker run image');
 
     appendChild(ul, li);
     appendChild(li, pre);
@@ -227,8 +227,8 @@ describe('getCopyableText', () => {
     const ul = createElement(document, 'UL');
     const firstLi = createElement(document, 'LI');
     const secondLi = createElement(document, 'LI');
-    const firstText = createText(document, 'First step');
-    const secondText = createText(document, 'Second step');
+    const firstText = createText('First step');
+    const secondText = createText('Second step');
 
     appendChild(ul, firstLi);
     appendChild(ul, secondLi);
@@ -245,7 +245,7 @@ describe('getCopyableText', () => {
     const li = createElement(document, 'LI');
     const pre = createElement(document, 'PRE');
     const code = createElement(document, 'CODE');
-    const codeText = createText(document, 'command1 arg1\ncommand2 arg2');
+    const codeText = createText('command1 arg1\ncommand2 arg2');
 
     appendChild(ol, li);
     appendChild(li, pre);

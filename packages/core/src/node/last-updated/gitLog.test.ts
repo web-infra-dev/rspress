@@ -91,6 +91,7 @@ describe('pluginLastUpdated against a real repository', () => {
 
     await plugin.routeGenerated?.(
       pages.map(page => ({ absolutePath: page._filepath }) as RouteMeta),
+      false,
     );
     await Promise.all(pages.map(page => plugin.extendPageData?.(page, true)));
 

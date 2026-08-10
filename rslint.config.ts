@@ -15,6 +15,19 @@ export default defineConfig([
   js.configs.recommended,
   ts.configs.recommended,
   {
+    languageOptions: {
+      parserOptions: {
+        project: [
+          './tsconfig.json',
+          './scripts/config/tsconfig.json',
+          './packages/*/tsconfig*.json',
+          './packages/*/tests/tsconfig.json',
+          './website/tsconfig.json',
+        ],
+      },
+    },
+  },
+  {
     rules: {
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
