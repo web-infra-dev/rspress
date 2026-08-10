@@ -34,7 +34,6 @@ export const splitRoutePathParts = (
 
   let versionPart = '';
   let langPart = '';
-  let purePathPart = '';
 
   const parts: string[] = relativePath.split('/').filter(Boolean);
 
@@ -52,7 +51,7 @@ export const splitRoutePathParts = (
     }
   }
 
-  purePathPart = parts.join('/');
+  const purePathPart = parts.join('/');
 
   return [
     versionPart,
