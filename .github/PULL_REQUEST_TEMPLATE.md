@@ -1,12 +1,14 @@
 ## Summary
 
+<!--- Please introduce what this PR changes and why. For behavior changes, include a before / after comparison to help reviewers understand the impact. -->
+
 ## Related Issue
 
 <!--- Provide link of related issues -->
 
 ## Screenshots
 
-<!--- Required for theme or other visual changes. Add before and after screenshots when applicable. Otherwise, remove this section. -->
+<!--- For theme or other visual changes, please include before and after screenshots to help reviewers understand the change. Otherwise, remove this section. -->
 
 ## Checklist
 
