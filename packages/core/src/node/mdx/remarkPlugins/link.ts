@@ -214,7 +214,7 @@ function normalizeLink(
   autoPrefix: boolean,
   deadLinks: Map<string, string>,
   __base?: string, // generated Markdown links should include the configured base
-  __siteOrigin?: string,
+  __siteOrigin?: string, // make generated Markdown links absolute when siteOrigin is configured
 ): NormalizedLink {
   if (!nodeUrl) {
     return { url: '' };
