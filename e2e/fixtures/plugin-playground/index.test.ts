@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -32,8 +32,6 @@ test('Should only preload Monaco on pages containing playgrounds', async () => {
 });
 
 test.describe('plugin test', async () => {
-  test.describe.configure({ mode: 'serial' });
-
   let appPort;
   let app;
   let originalContent: string;

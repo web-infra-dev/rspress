@@ -8,9 +8,6 @@ importers:
 
   .:
     devDependencies:
-      '@playwright/test':
-        specifier: 1.62.1
-        version: 1.62.1
       '@rsbuild/plugin-react':
         specifier: ~2.1.0
         version: 2.1.0(@rsbuild/core@2.1.13)(@rspack/core@2.1.10(@swc/helpers@0.5.23))
@@ -22,10 +19,13 @@ importers:
         version: link:scripts/config
       '@rstest/adapter-rslib':
         specifier: 0.11.8
-        version: 0.11.8(@rslib/core@1.0.0-beta.3(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(typescript@7.0.2))(@rstest/core@0.11.8)(typescript@7.0.2)
+        version: 0.11.8(@rslib/core@1.0.0-beta.3(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(typescript@7.0.2))(@rstest/core@https://pkg.pr.new/@rstest/core@b811f89)(typescript@7.0.2)
       '@rstest/core':
-        specifier: ^0.11.8
-        version: 0.11.8
+        specifier: https://pkg.pr.new/@rstest/core@b811f89
+        version: https://pkg.pr.new/@rstest/core@b811f89
+      '@rstest/playwright':
+        specifier: https://pkg.pr.new/@rstest/playwright@b811f89
+        version: https://pkg.pr.new/@rstest/playwright@b811f89(@rstest/core@https://pkg.pr.new/@rstest/core@b811f89)(playwright@1.62.1)
       '@types/cross-spawn':
         specifier: ^6.0.6
         version: 6.0.6
@@ -3721,11 +3721,6 @@ packages:
     resolution: {integrity: sha512-tmmZ3lQxAe/k/+rNnXQRawJ4NjxO2hqiOLTHvWchtGZULp4RyFeh6aU4XdOYBFe2KE1oShQTv4AblOs2iOrNnQ==}
     engines: {node: '>= 10.0.0'}
 
-  '@playwright/test@1.62.1':
-    resolution: {integrity: sha512-DTcUc8qii+cpHvtOwggMtBRMjKZHXYWdw8syRYu2vtzuq4Wxphqq4NfCs5Zt44L6mA8rfDfj+PHnxFc/FeK6mQ==}
-    engines: {node: '>=20'}
-    hasBin: true
-
   '@publint/pack@0.1.4':
     resolution: {integrity: sha512-HDVTWq3H0uTXiU0eeSQntcVUTPP3GamzeXI41+x7uU9J65JgWQh3qWZHblR1i0npXfFtF+mxBiU2nJH8znxWnQ==}
     engines: {node: '>=18'}
@@ -4167,6 +4162,7 @@ packages:
 
   '@rstest/adapter-rslib@0.11.8':
     resolution: {integrity: sha512-PnRrCgTbRH+sFuS/6ZbhDAUEl/n0PkhmzQJxZCYQQEl3w+jGOrLQSAMgh9g/Z2XGM1yfbysn+5HZmGH2kL+E6w==}
+    version: 0.11.8
     peerDependencies:
       '@rslib/core': '>=0.18.6 || ^1.0.0-0'
       '@rstest/core': ^0.11.0
@@ -4175,8 +4171,9 @@ packages:
       typescript:
         optional: true
 
-  '@rstest/core@0.11.8':
-    resolution: {integrity: sha512-XworMa277b5Cf4/Box18frFjWGP4dO/NIals+Ck/Q8nhe1z1t8j0P67zh6rv5xTdE3CCEfItICGvdjzz6VRhLg==}
+  '@rstest/core@https://pkg.pr.new/@rstest/core@b811f89':
+    resolution: {integrity: sha512-T0pTHRYs6Unwhdwbe+cHosyLWok7fcqysxlhFh3ZBZGN3JOSK5Cj96F20LJuRoYSWIOiSkQcU+4i2IeBbt+sSw==, tarball: https://pkg.pr.new/@rstest/core@b811f89}
+    version: 0.11.8
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -4187,6 +4184,14 @@ packages:
         optional: true
       jsdom:
         optional: true
+
+  '@rstest/playwright@https://pkg.pr.new/@rstest/playwright@b811f89':
+    resolution: {integrity: sha512-vUnkIuCphH+p9CwHazss9NCnNa9yzDiy3UWqrhmwlrcg2a4iMGeatBWpwEKaSs/uNxgXBamqCE2/jyz0qvBFBw==, tarball: https://pkg.pr.new/@rstest/playwright@b811f89}
+    version: 0.11.8
+    engines: {node: ^20.19.0 || >=22.12.0}
+    peerDependencies:
+      '@rstest/core': ^0.11.8
+      playwright: ^1.49.1
 
   '@rushstack/node-core-library@5.23.3':
     resolution: {integrity: sha512-f6uuza7Um65bwsIJgf0MRs7IPA5IG+A+zs1AYGQvpZmLjtTGdfHowhQw4kwF0pPhJCrU4UHNhK8Qa6tLygYZCA==}
@@ -9277,10 +9282,6 @@ snapshots:
       '@parcel/watcher-win32-x64': 2.5.6
     optional: true
 
-  '@playwright/test@1.62.1':
-    dependencies:
-      playwright: 1.62.1
-
   '@publint/pack@0.1.4': {}
 
   '@quansync/fs@1.0.0':
@@ -9722,20 +9723,25 @@ snapshots:
 
   '@rstackjs/create-toolkit@2.2.3': {}
 
-  '@rstest/adapter-rslib@0.11.8(@rslib/core@1.0.0-beta.3(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(typescript@7.0.2))(@rstest/core@0.11.8)(typescript@7.0.2)':
+  '@rstest/adapter-rslib@0.11.8(@rslib/core@1.0.0-beta.3(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(typescript@7.0.2))(@rstest/core@https://pkg.pr.new/@rstest/core@b811f89)(typescript@7.0.2)':
     dependencies:
       '@rslib/core': 1.0.0-beta.3(@microsoft/api-extractor@7.58.12(@types/node@22.19.15))(typescript@7.0.2)
-      '@rstest/core': 0.11.8
+      '@rstest/core': https://pkg.pr.new/@rstest/core@b811f89
     optionalDependencies:
       typescript: 7.0.2
 
-  '@rstest/core@0.11.8':
+  '@rstest/core@https://pkg.pr.new/@rstest/core@b811f89':
     dependencies:
       '@rsbuild/core': 2.1.13
       '@types/chai': 5.2.3
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
       - core-js
+
+  '@rstest/playwright@https://pkg.pr.new/@rstest/playwright@b811f89(@rstest/core@https://pkg.pr.new/@rstest/core@b811f89)(playwright@1.62.1)':
+    dependencies:
+      '@rstest/core': https://pkg.pr.new/@rstest/core@b811f89
+      playwright: 1.62.1
 
   '@rushstack/node-core-library@5.23.3(@types/node@22.19.15)':
     dependencies:
