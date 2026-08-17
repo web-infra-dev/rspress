@@ -6,7 +6,7 @@
 
 ## Screenshots
 
-<!--- Required for theme or other visual changes. Add before and after screenshots when applicable. Otherwise, remove this section. -->
+<!--- Required for theme or other visual changes. You must provide a before / after comparison. Otherwise, remove this section. -->
 
 ## Checklist
 
