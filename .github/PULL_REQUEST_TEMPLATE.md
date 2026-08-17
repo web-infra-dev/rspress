@@ -8,7 +8,7 @@
 
 ## Screenshots
 
-<!--- For theme or other visual changes, please include a before / after comparison to help reviewers understand the change. Otherwise, remove this section. -->
+<!--- For theme or other visual changes, please include before and after screenshots to help reviewers understand the change. Otherwise, remove this section. -->
 
 ## Checklist
 
