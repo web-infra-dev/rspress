@@ -33,6 +33,9 @@ class TwoslashPopupContainer extends HTMLElement {
       element,
     );
 
+    TwoslashPopupPortal.instance.append(element);
+    element.dataset.initialized = 'true';
+
     // Position it once up front so it doesn't sit at the bottom of the page
     // (its unset `top`/`left` static position) before it's first shown.
     void updatePosition();
@@ -47,10 +50,6 @@ class TwoslashPopupContainer extends HTMLElement {
       element,
       cleanup: () => cleanups.forEach(cleanup => cleanup()),
     };
-    TwoslashPopupPortal.instance.append(this.#clone.element);
-
-    // Mark it as initialized to differentiate between the original and the clone.
-    this.#clone.element.dataset.initialized = 'true';
   }
 
   disconnectedCallback() {
