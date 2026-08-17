@@ -8,6 +8,7 @@ import {
   normalizeHref,
   parseUrl,
   withBase,
+  withSiteOrigin,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import type { Root } from 'mdast';
@@ -212,7 +213,8 @@ function normalizeLink(
   cleanUrls: boolean | string,
   autoPrefix: boolean,
   deadLinks: Map<string, string>,
-  __base?: string, // just for plugin-llms, we should normalize the link with base
+  __base?: string, // generated Markdown links should include the configured base
+  __siteOrigin?: string,
 ): NormalizedLink {
   if (!nodeUrl) {
     return { url: '' };
@@ -280,6 +282,9 @@ function normalizeLink(
   if (__base) {
     url = withBase(url, __base);
   }
+  if (__siteOrigin) {
+    url = withSiteOrigin(url, __siteOrigin);
+  }
   return { url, routePath, hash };
 }
 
@@ -295,12 +300,14 @@ export const remarkLink =
     remarkLinkOptions,
     lint,
     __base,
+    __siteOrigin,
   }: {
     cleanUrls: boolean | string;
     routeService: RouteService | null;
     remarkLinkOptions?: MarkdownOptions['link'];
     lint?: boolean;
     __base?: string;
+    __siteOrigin?: string;
   }) =>
   (tree: Root, file: VFile) => {
     const {
@@ -320,6 +327,7 @@ export const remarkLink =
         autoPrefix,
         deadLinks,
         __base,
+        __siteOrigin,
       );
       if (link.hash) {
         anchorLinks.set(nodeUrl, link);
@@ -337,6 +345,7 @@ export const remarkLink =
         autoPrefix,
         deadLinks,
         __base,
+        __siteOrigin,
       );
       if (link.hash) {
         anchorLinks.set(nodeUrl, link);
