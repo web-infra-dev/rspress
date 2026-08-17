@@ -1,6 +1,6 @@
 ## Summary
 
-<!--- Introduce what this PR changes and why. You must describe the behavior before and after this change. -->
+<!--- Please introduce what this PR changes and why. For behavior changes, include a before / after comparison to help reviewers understand the impact. -->
 
 ## Related Issue
 
@@ -8,7 +8,7 @@
 
 ## Screenshots
 
-<!--- Required for theme or other visual changes. You must provide a before / after comparison. Otherwise, remove this section. -->
+<!--- For theme or other visual changes, please include a before / after comparison to help reviewers understand the change. Otherwise, remove this section. -->
 
 ## Checklist
 
