@@ -133,8 +133,12 @@ class TwoslashPopupContainer extends HTMLElement {
     };
 
     const hidePopup = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
       // Add a slight delay to avoid flickering when moving the mouse between the trigger and the popup.
       timeoutId = setTimeout(() => {
+        timeoutId = null;
         popup.dataset.state = 'hidden';
         stopTracking?.();
         stopTracking = null;
@@ -151,7 +155,14 @@ class TwoslashPopupContainer extends HTMLElement {
       trigger.removeEventListener('mouseleave', hidePopup);
       popup.removeEventListener('mouseenter', showPopup);
       popup.removeEventListener('mouseleave', hidePopup);
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+
       stopTracking?.();
+      stopTracking = null;
     };
   }
 }
