@@ -114,6 +114,7 @@ const rsbuildPluginLlms = ({
               filepath,
               routeServiceRef.current!,
               baseRef.current,
+              siteOriginRef.current,
               typeof mdFiles !== 'boolean'
                 ? (mdFiles?.mdxToMd ?? false)
                 : false,

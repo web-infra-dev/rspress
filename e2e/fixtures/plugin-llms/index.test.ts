@@ -71,6 +71,14 @@ test.describe('plugin-llms', async () => {
     expect(llmsFullTxt).toContain(
       'url: https://example.com/docs/api/commands.md',
     );
+
+    const guideMd = await readFile(
+      path.resolve(appDir, 'doc_build', 'guide', 'index.md'),
+      'utf-8',
+    );
+    expect(guideMd).toContain(
+      '[API documentation](https://example.com/docs/api/index.md)',
+    );
   });
 
   test('should order llms.txt entries according to _meta.json', async () => {
