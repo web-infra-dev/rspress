@@ -28,19 +28,28 @@ class TwoslashPopupContainer extends HTMLElement {
 
     // Clone it to avoid breaking React's rendering tree.
     const element = this.cloneNode(true) as TwoslashPopupContainer;
+    const { updatePosition, startTracking } = this.#createPositionTracker(
+      trigger,
+      element,
+    );
+
+    TwoslashPopupPortal.instance.append(element);
+    element.dataset.initialized = 'true';
+
+    // Position it once up front so it doesn't sit at the bottom of the page
+    // (its unset `top`/`left` static position) before it's first shown.
+    void updatePosition();
     const cleanups = [
-      this.#registerUpdatePosition(trigger, element),
-      this.#registerPopupEvent(trigger, element),
+      // "always" popups need tracking for their whole lifetime; hover popups
+      // start/stop it themselves in #registerPopupEvent.
+      element.dataset.always === 'true' ? startTracking() : () => {},
+      this.#registerPopupEvent(trigger, element, startTracking),
     ];
 
     this.#clone = {
       element,
       cleanup: () => cleanups.forEach(cleanup => cleanup()),
     };
-    TwoslashPopupPortal.instance.append(this.#clone.element);
-
-    // Mark it as initialized to differentiate between the original and the clone.
-    this.#clone.element.dataset.initialized = 'true';
   }
 
   disconnectedCallback() {
@@ -56,12 +65,12 @@ class TwoslashPopupContainer extends HTMLElement {
     );
   }
 
-  #registerUpdatePosition(
+  #createPositionTracker(
     trigger: TwoslashPopupTrigger,
     popup: TwoslashPopupContainer,
-  ): () => void {
+  ): { updatePosition: () => Promise<void>; startTracking: () => () => void } {
     const arrowElement = popup.findArrow();
-    return autoUpdate(trigger, popup, async () => {
+    const updatePosition = async () => {
       const position = await computePosition(trigger, popup, {
         placement: 'bottom-start',
         middleware: [
@@ -93,12 +102,18 @@ class TwoslashPopupContainer extends HTMLElement {
       arrowElement.style.left = `${position.middlewareData.arrow?.x}px`;
       arrowElement.style.top = `${position.middlewareData.arrow?.y}px`;
       arrowElement.dataset.side = position.placement;
-    });
+    };
+
+    return {
+      updatePosition,
+      startTracking: () => autoUpdate(trigger, popup, updatePosition),
+    };
   }
 
   #registerPopupEvent(
     trigger: TwoslashPopupTrigger,
     popup: TwoslashPopupContainer,
+    startTracking: () => () => void,
   ) {
     // If the popup is always visible, do nothing.
     if (popup.dataset.always === 'true') {
@@ -106,19 +121,27 @@ class TwoslashPopupContainer extends HTMLElement {
     }
 
     let timeoutId: NodeJS.Timeout | null = null;
+    let stopTracking: (() => void) | null = null;
 
     const showPopup = () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
         timeoutId = null;
       }
+      stopTracking ??= startTracking();
       popup.dataset.state = 'show';
     };
 
     const hidePopup = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
       // Add a slight delay to avoid flickering when moving the mouse between the trigger and the popup.
       timeoutId = setTimeout(() => {
+        timeoutId = null;
         popup.dataset.state = 'hidden';
+        stopTracking?.();
+        stopTracking = null;
       }, 100);
     };
 
@@ -132,6 +155,14 @@ class TwoslashPopupContainer extends HTMLElement {
       trigger.removeEventListener('mouseleave', hidePopup);
       popup.removeEventListener('mouseenter', showPopup);
       popup.removeEventListener('mouseleave', hidePopup);
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+
+      stopTracking?.();
+      stopTracking = null;
     };
   }
 }
