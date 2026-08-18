@@ -12,15 +12,15 @@ _2026 年 8 月 3 日_
 
 ## 发现问题
 
-故事从一个真实的 Rspress 用户的问题开始。
+故事始于一位 Rspress 用户遇到的真实问题。
 
-这个用户将站点部署在 `/next/` 路径下，并在首页中使用了相对链接：
+这位用户将站点部署在 `/next/` 路径下，并在首页中使用了相对链接：
 
 ```html
 <a href="./guide/start/quick-start">快速开始</a>
 ```
 
-访问站点根地址时，无论 URL 是否以 `/` 结尾，链接都能正常跳转。访问 `/next/` 时，链接也会正确跳转到：
+访问站点的域名根地址时，无论 URL 是否以 `/` 结尾，链接都能正常跳转。访问 `/next/` 时，链接也会正确跳转到：
 
 ```text
 /next/guide/start/quick-start
@@ -38,11 +38,11 @@ _2026 年 8 月 3 日_
 
 ### 根地址是一个特例
 
-[RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.3) 规定，对于 HTTP(S) URL，空 path 与 `/` 等价。因此 `https://example.com` 发出的请求仍然是 `GET /`。
+[RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-6.2.3) 规定，对于 HTTP(S) URL，空 path 与 `/` 等价。因此，即使输入的是 `https://example.com`，浏览器发出的请求仍然是 `GET /`。
 
 ### Trailing slash 会改变相对链接的解析结果
 
-浏览器会根据当前 URL 解析相对链接。对它来说，`/next` 的最后一段是当前资源名，而 `/next/` 表示当前资源位于一个目录下：
+浏览器会以当前页面的 URL 为基准解析相对链接。对它来说，`/next` 的最后一段是当前资源名，而 `/next/` 表示当前资源位于一个目录下：
 
 ```js
 new URL('./guide/start', 'https://example.com/next').pathname;
@@ -52,16 +52,16 @@ new URL('./guide/start', 'https://example.com/next/').pathname;
 // => /next/guide/start
 ```
 
-客户端路由通常采用比较宽松的匹配策略。例如，[React Router 默认会忽略 path 末尾的 `/`](https://github.com/remix-run/react-router/blob/react-router%407.18.2/packages/react-router/lib/router/utils.ts#L1576-L1578)，因此下面两个 URL 都能匹配 path 为 `/guide` 的同一个路由：
+在客户端路由这一层，URL 匹配通常比 Web server 的文件查找更宽松。以 [React Router](https://github.com/remix-run/react-router/blob/react-router%407.18.2/packages/react-router/lib/router/utils.ts#L1576-L1578) 为例，它默认不区分 path 末尾是否带 `/`，因此下面两个 URL 都能匹配 path 为 `/guide` 的同一个路由：
 
 - `/guide`
 - `/guide/`
 
-React Router 不会自动移除 `.html`，也不会将 `/index.html` 视为目录首页。`/guide.html` 和 `/guide/index.html` 是否可以访问，取决于框架或 Web server 的额外处理。
+不过，这种宽松只适用于路由匹配，并不意味着客户端会自动规范化 URL。React Router 不会主动移除 `.html`，也不会将 `/index.html` 视为目录首页。`/guide.html` 和 `/guide/index.html` 能否访问，仍取决于框架或 Web server 是否提供了额外处理。
 
 这也解释了为什么“页面能打开”和“页面中的相对链接正确”是两个问题。宽松匹配只能保证客户端找到路由，不会修改地址栏中的 URL；只要地址栏仍是 `/next`，浏览器就会按照第一种方式解析相对路径。
 
-这种差异来自 Web 早期将 URL path 映射到文件系统的习惯。下面两个地址可能对应两份不同的静态产物：
+这种差异延续自早期 Web 将 URL path 映射到文件系统的设计。下面两个地址可能对应两份不同的静态产物：
 
 ```text
 /guide.html       -> dist/guide.html
@@ -72,11 +72,11 @@ React Router 不会自动移除 `.html`，也不会将 `/index.html` 视为目�
 
 ## 解决问题
 
-解决这个问题的关键，是让地址栏中的 URL 与站点生成的 URL 保持一致。
+解决这个问题的关键，是让地址栏中的当前 URL 与站点生成的首选 URL 保持一致。
 
 Rspress 的 [`route.cleanUrls`](/zh/api/config/config-basic#routecleanurls) 用于控制生成的 URL 是否带有 `.html` 后缀。但它只能控制 Rspress 生成的链接，无法阻止用户从书签、搜索结果或外部网站访问 `/guide.html`、`/guide/` 等其他写法。
 
-因此，Rspress 增加了 `route.cleanUrlsRedirect`。客户端启动时，它会先匹配真实路由，再按照 `cleanUrls` 选择的格式，通过 `history.replaceState` 修正地址栏。例如在 `cleanUrls: true` 时：
+因此，Rspress 增加了 `route.cleanUrlsRedirect`。客户端启动时，它会先匹配真实路由，再按照 `cleanUrls` 选择的格式，通过 `history.replaceState` 修正地址栏。例如，当 `cleanUrls: true` 时：
 
 - `/guide.html`、`/guide/`、`/guide/index.html` → `/guide`
 - `/reference/index.html` → `/reference/`
@@ -92,20 +92,20 @@ export default defineConfig({
 });
 ```
 
-这次规范化发生在页面渲染前，不会刷新页面，并会保留站点 `base`、query、hash 和已有的 history state。对于开头的例子，Rspress 会先将 `/next` 修正为 `/next/`，再渲染页面，相对链接也就不会跳出 `/next/`。
+规范化发生在页面渲染前，不会刷新页面，并会保留站点 `base`、query、hash 和已有的 history state。对于开头的例子，Rspress 会先将 `/next` 修正为 `/next/`，再渲染页面，相对链接也就不会跳出 `/next/`。
 
-从 Rspress 2.1.0 开始，`cleanUrls` 会默认开启，`cleanUrlsRedirect` 也会作为默认开启的客户端兜底。虽然它不能 100% 替代服务端的 301/308，也不能单独解决重复 URL 的 SEO 问题，但仍是一道强有力的兜底，至少能够避免 URL 格式不一致引发的代码逻辑错误。
+在当前的 Rspress 2.0 中，`cleanUrls` 仍需显式开启，而 `cleanUrlsRedirect` 已默认开启。从 Rspress 2.1.0 开始，两者都会默认开启。虽然客户端规范化不能完全替代服务端的 301/308，也不能单独解决重复 URL 的 SEO 问题，但仍能避免 URL 格式不一致引发的代码逻辑错误。
 
-具体设计与测试可以查看 [PR #3571](https://github.com/web-infra-dev/rspress/pull/3571)。
+完整的 URL 转换规则和配置说明，请参阅 [`route.cleanUrlsRedirect` API 文档](/zh/api/config/config-basic#routecleanurlsredirect)。
 
 ### 最佳实践
 
 今天，URL 不再需要对应磁盘文件；选择带不带 trailing slash 是站点策略，而不是对错。但浏览器和搜索引擎仍将 `/about` 与 `/about/` 视为两个 URL。
 
-为了避免代码逻辑错误或同一页面被多个 URL 收录，需要做到：
+为了避免代码逻辑错误，也避免同一页面被多个 URL 收录，需要做到：
 
 1. **服务端**：使用 301/308 将 `/about` 和 `/about/` 合并到同一个首选 URL；`/about.html` 和 `/about/index.html` 等变体也可以一并处理。例如，Cloudflare Workers Static Assets 默认支持 [`auto-trailing-slash`](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/)：普通 HTML 文件使用 `/file`，目录首页使用 `/folder/`，其他写法会以 307 跳转到对应的规范 URL。
-2. **客户端**：开启 `cleanUrls`，并有客户端重定向兜底。托管平台无法配置重定向时，它可以在页面最早入口写回首选 URL；但必须等 HTML 和 JavaScript 加载后才能执行，不能 100% 替代服务端重定向。
+2. **客户端**：开启 `cleanUrls`，并使用客户端重定向兜底。托管平台无法配置重定向时，它可以在页面最早入口写回首选 URL；但必须等 HTML 和 JavaScript 加载后才能执行，不能完全替代服务端重定向。
 
 **所有 URL 保持一致：**站内链接、canonical、sitemap 和分享地址都输出首选 URL，其他写法通过 301/308 跳转过去。
 
