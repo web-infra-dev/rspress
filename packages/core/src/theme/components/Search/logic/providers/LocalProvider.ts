@@ -50,7 +50,7 @@ const cyrillicRegex = /[\u0400-\u04FF]/g;
 
 function tokenize(str: string, regex: RegExp) {
   const words: string[] = [];
-  let m: RegExpExecArray | null = null;
+  let m: RegExpExecArray | null;
   do {
     m = regex.exec(str);
     if (m) {

@@ -33,7 +33,7 @@
     "feed": "^5.2.1"
   },
   "devDependencies": {
-    "@rslib/core": "1.0.0-beta.1",
+    "@rslib/core": "1.0.0-beta.3",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.18",
     "react": "^19.2.8",

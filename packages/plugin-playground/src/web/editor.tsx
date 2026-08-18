@@ -26,7 +26,7 @@ function getLoaderConfig() {
     if (keys.length > 0) {
       loaderConfig = __PLAYGROUND_MONACO_LOADER__;
     }
-  } catch (_e) {
+  } catch {
     // ignore
   }
 
@@ -43,7 +43,7 @@ loader.config(loaderConfig);
 function getMonacoOptions() {
   try {
     return __PLAYGROUND_MONACO_OPTIONS__;
-  } catch (_e) {
+  } catch {
     // ignore
   }
   return {};

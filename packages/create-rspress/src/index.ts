@@ -7,7 +7,7 @@ import {
   type ESLintTemplateName,
   type RslintTemplateName,
   select,
-} from 'create-rstack';
+} from '@rstackjs/create-toolkit';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const templates = ['basic', 'basic-theme', 'i18n', 'i18n-theme'] as const;
@@ -83,6 +83,7 @@ create({
   root: path.resolve(__dirname, '..'),
   name: 'rspress',
   templates: [...templates],
+  git: !process.argv.includes('--no-git'),
   getTemplateName,
   mapESLintTemplate,
   mapRslintTemplate,

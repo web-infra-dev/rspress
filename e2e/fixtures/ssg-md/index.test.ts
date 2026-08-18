@@ -54,6 +54,9 @@ test('llms should be successful', async () => {
         '> For AI agents: the complete documentation index is available at https://example.com/docs/llms.txt, the full documentation bundle is available at https://example.com/docs/llms-full.txt.',
       ),
   ).toBeTruthy();
+  expect(indexMd).toContain(
+    '[MDX and React components](https://example.com/docs/components.md)',
+  );
 
   const indexHtml = await fs.readFile(
     path.join(docBuildDir, 'index.html'),

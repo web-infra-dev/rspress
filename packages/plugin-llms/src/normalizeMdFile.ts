@@ -46,6 +46,7 @@ async function normalizeMdFile(
   filepath: string,
   routeService: RouteService,
   base: string,
+  siteOrigin: string | undefined,
   mdxToMd: boolean,
   isMd: boolean,
   remarkPlugins: PluggableList,
@@ -67,6 +68,7 @@ async function normalizeMdFile(
         autoPrefix: true,
       },
       __base: base,
+      __siteOrigin: siteOrigin,
     } satisfies Parameters<typeof remarkLink>[0])
     .use(remarkPlugins)
     .use(remarkStringify);

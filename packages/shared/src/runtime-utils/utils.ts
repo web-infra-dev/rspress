@@ -121,7 +121,6 @@ export function replaceLang(
 
   let versionPart = '';
   let langPart = '';
-  let purePathPart = '';
 
   const parts = url.split('/').filter(Boolean);
 
@@ -140,7 +139,7 @@ export function replaceLang(
     parts.shift();
   }
 
-  purePathPart = parts.join('/') || '';
+  let purePathPart = parts.join('/') || '';
 
   if ((versionPart || langPart) && !purePathPart) {
     purePathPart = cleanUrls ? 'index' : 'index.html';

@@ -22,7 +22,7 @@ const TEST_RESTART_FILE = path.resolve(import.meta.dirname, 'siteConfig.ts');
 
 test.describe('hmr test', async () => {
   let appPort: number;
-  let app: Awaited<ReturnType<typeof runDevCommand>>;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | null = null;
   let originalContent: string;
   let originalFragmentContent: string;
   let originalNavContent: string;
@@ -34,17 +34,17 @@ test.describe('hmr test', async () => {
     devOutput.match(/restarting server as .* changed/g)?.length ?? 0;
 
   test.beforeAll(async () => {
-    const appDir = import.meta.dirname;
-    appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
-    (app as { stdout?: NodeJS.ReadableStream }).stdout?.on('data', chunk => {
-      devOutput += chunk.toString();
-    });
     originalContent = await fs.readFile(TEST_FILE, 'utf-8');
     originalFragmentContent = await fs.readFile(TEST_FRAGMENT_FILE, 'utf-8');
     originalNavContent = await fs.readFile(TEST_NAV_FILE, 'utf-8');
     originalMetaContent = await fs.readFile(TEST_META_FILE, 'utf-8');
     originalRestartFileContent = await fs.readFile(TEST_RESTART_FILE, 'utf-8');
+
+    appPort = await getPort();
+    app = await runDevCommand(import.meta.dirname, appPort);
+    (app as { stdout?: NodeJS.ReadableStream }).stdout?.on('data', chunk => {
+      devOutput += chunk.toString();
+    });
   });
 
   test.afterAll(async () => {
@@ -59,7 +59,7 @@ test.describe('hmr test', async () => {
     await fs.rm(TEST_ADDED_FILE, { force: true });
   });
 
-  test('Test page', async ({ page }) => {
+  test('update page content without restarting', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/guide/test.html`, {
       waitUntil: 'networkidle',
     });
@@ -108,40 +108,68 @@ test.describe('hmr test', async () => {
   test('restart when routes or config dependencies change', async ({
     page,
   }) => {
+    const addedPageUrl = `http://localhost:${appPort}/guide/test-temp-added.html`;
+    const stablePageUrl = `http://localhost:${appPort}/guide/test.html`;
+    // Ensure the initial file watchers are ready before the first mutation.
+    await page.goto(stablePageUrl, {
+      waitUntil: 'networkidle',
+    });
+
     await fs.writeFile(TEST_ADDED_FILE, '# Added route');
-    await expect.poll(getRestartCount).toBe(1);
+    await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(1);
 
     await expect
-      .poll(async () => {
-        try {
-          await page.goto(
-            `http://localhost:${appPort}/guide/test-temp-added.html`,
-          );
-          return page.locator('h1').textContent();
-        } catch {
-          return null;
-        }
-      })
+      .poll(
+        async () => {
+          try {
+            await page.goto(addedPageUrl, { timeout: 10_000 });
+            return page.locator('h1').textContent();
+          } catch {
+            return null;
+          }
+        },
+        { timeout: 30_000 },
+      )
       .toContain('Added route');
 
     await fs.rm(TEST_ADDED_FILE);
-    await expect.poll(getRestartCount).toBe(2);
+    await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(2);
+
+    // The 404 confirms that the unlink restart finished before the next change.
+    await expect
+      .poll(
+        async () => {
+          try {
+            await page.goto(addedPageUrl, { timeout: 10_000 });
+            return page.locator('body').textContent();
+          } catch {
+            return null;
+          }
+        },
+        { timeout: 30_000 },
+      )
+      .toContain('404');
 
     await fs.writeFile(
       TEST_RESTART_FILE,
       originalRestartFileContent.replace('HMR fixture', 'Restarted fixture'),
     );
-    await expect.poll(getRestartCount).toBe(3);
+    await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(3);
 
     await expect
-      .poll(async () => {
-        try {
-          await page.reload();
-          return page.title();
-        } catch {
-          return '';
-        }
-      })
+      .poll(
+        async () => {
+          try {
+            await page.goto(stablePageUrl, {
+              timeout: 10_000,
+            });
+            return page.title();
+          } catch {
+            return '';
+          }
+        },
+        { timeout: 30_000 },
+      )
       .toContain('Restarted fixture');
   });
 });

@@ -107,7 +107,7 @@ async function getRepoPrefix(dir: string): Promise<string | undefined> {
       cwd: dir,
     });
     return stdout.trim();
-  } catch (_e) {
+  } catch {
     return undefined;
   }
 }
@@ -153,7 +153,7 @@ async function collectGitInfo(dir: string): Promise<Map<string, GitInfo>> {
       ],
       { cwd: dir },
     ));
-  } catch (_e) {
+  } catch {
     return infoByPath;
   }
 

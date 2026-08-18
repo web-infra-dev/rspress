@@ -28,6 +28,8 @@ minimumReleaseAgeExclude:
   - '@rsdoctor/*'
   - '@rslint/*'
   - '@rstack-dev/*'
+  - '@rstackjs/create-toolkit'
+  - heading-case
   # Renovate security update: nx@22.7.2
   - nx@22.7.2
 

@@ -40,8 +40,6 @@ log/
 
 **/*/typings/auto-generated
 
-.changeset/pre.json
-
 .pnpm-store/
 .agents/skills/
 .cursor/skills/

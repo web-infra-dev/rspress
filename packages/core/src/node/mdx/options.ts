@@ -95,6 +95,7 @@ export async function createMDXOptions(options: {
                 autoPrefix: true,
               },
               __base: config?.base,
+              __siteOrigin: config?.siteOrigin,
             }
           : {
               // we do cleanUrls in runtime side

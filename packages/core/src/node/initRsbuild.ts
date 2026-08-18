@@ -408,7 +408,12 @@ async function createInternalBuildConfig(
           .options(swcLoaderOptions)
           .end()
           .use('mdx-loader')
-          .loader(fileURLToPath(new URL('./mdx/loader.js', import.meta.url)))
+          .loader(
+            path.join(
+              path.dirname(fileURLToPath(import.meta.url)),
+              'mdx/loader.js',
+            ),
+          )
           .options({
             config,
             docDirectory: userDocRoot,

@@ -29,7 +29,12 @@ function callTransformerPre(
       meta: rawMeta !== undefined ? { __raw: rawMeta } : undefined,
     },
   } satisfies TransformerPreContext;
-  return transformer.pre!.call(context, pre) as Element;
+  return transformer.pre!.call(
+    context as unknown as ThisParameterType<
+      NonNullable<typeof transformer.pre>
+    >,
+    pre,
+  ) as Element;
 }
 
 describe('transformerAddTitle', () => {

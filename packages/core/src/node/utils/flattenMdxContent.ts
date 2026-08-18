@@ -98,7 +98,7 @@ export async function flattenMdxContent(
         path.dirname(basePath),
         alias,
       );
-    } catch (_e) {
+    } catch {
       continue;
     }
 
