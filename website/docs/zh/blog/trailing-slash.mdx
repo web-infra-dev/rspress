@@ -76,7 +76,7 @@ new URL('./guide/start', 'https://example.com/next/').pathname;
 
 Rspress 的 [`route.cleanUrls`](/zh/api/config/config-basic#routecleanurls) 用于控制生成的 URL 是否带有 `.html` 后缀。但它只能控制 Rspress 生成的链接，无法阻止用户从书签、搜索结果或外部网站访问 `/guide.html`、`/guide/` 等其他写法。
 
-因此，Rspress 增加了 `route.cleanUrlsRedirect`。客户端启动时，它会先匹配真实路由，再按照 `cleanUrls` 选择的格式，通过 `history.replaceState` 修正地址栏。例如，当 `cleanUrls: true` 时：
+因此，Rspress 在 2.1.0 中新增了 `route.cleanUrlsRedirect`。客户端启动时，它会先匹配真实路由，再按照 `cleanUrls` 选择的格式，通过 `history.replaceState` 修正地址栏。例如，当 `cleanUrls: true` 时：
 
 - `/guide.html`、`/guide/`、`/guide/index.html` → `/guide`
 - `/reference/index.html` → `/reference/`
@@ -86,6 +86,7 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
+    // 从 Rspress 2.1.0 开始，以下两个配置会默认开启。
     cleanUrls: true,
     cleanUrlsRedirect: true,
   },
@@ -94,7 +95,7 @@ export default defineConfig({
 
 规范化发生在页面渲染前，不会刷新页面，并会保留站点 `base`、query、hash 和已有的 history state。对于开头的例子，Rspress 会先将 `/next` 修正为 `/next/`，再渲染页面，相对链接也就不会跳出 `/next/`。
 
-在当前的 Rspress 2.0 中，`cleanUrls` 仍需显式开启，而 `cleanUrlsRedirect` 已默认开启。从 Rspress 2.1.0 开始，两者都会默认开启。虽然客户端规范化不能完全替代服务端的 301/308，也不能单独解决重复 URL 的 SEO 问题，但仍能避免 URL 格式不一致引发的代码逻辑错误。
+从 Rspress 2.1.0 开始，`cleanUrls` 和 `cleanUrlsRedirect` 都会默认开启。虽然客户端规范化不能完全替代服务端的 301/308，也不能单独解决重复 URL 的 SEO 问题，但仍能避免 URL 格式不一致引发的代码逻辑错误。
 
 完整的 URL 转换规则和配置说明，请参阅 [`route.cleanUrlsRedirect` API 文档](/zh/api/config/config-basic#routecleanurlsredirect)。
 
