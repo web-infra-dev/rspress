@@ -714,7 +714,11 @@ export function HomeSections() {
         eyebrow={t('homeExtendEyebrow')}
         title={t('homeExtendTitle')}
         description={t('homeExtendDesc')}
-        points={[t('homeExtendPoint1'), t('homeExtendPoint2')]}
+        points={[
+          t('homeExtendPoint1'),
+          t('homeExtendPoint2'),
+          t('homeExtendPoint3'),
+        ]}
         linkText={t('homeExtendLink')}
         linkHref={`${prefix}/guide/basic/custom-theme`}
         visual={

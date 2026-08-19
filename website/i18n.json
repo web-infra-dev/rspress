@@ -147,6 +147,10 @@
     "zh": "主题定制：CSS 变量、布局插槽，或 rspress eject 弹出源码",
     "en": "Theme via CSS variables, layout slots, or rspress eject"
   },
+  "homeExtendPoint3": {
+    "zh": "使用 rspress-custom-theme skill，让 AI Agent 辅助完成主题定制",
+    "en": "Use the rspress-custom-theme skill to customize your theme with an AI agent"
+  },
   "homeExtendLink": {
     "zh": "开始定制",
     "en": "Start customizing"
