@@ -396,6 +396,7 @@
 
 /* scaled-down replica of the real LlmsCopyButton (.rp-llms-button) */
 .copyMdButton {
+  appearance: none;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -410,6 +411,20 @@
   font-weight: 500;
   white-space: nowrap;
   box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover {
+    border-color: var(--rp-c-brand);
+    color: var(--rp-c-brand-dark);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--rp-c-brand);
+    outline-offset: 2px;
+  }
 
   svg {
     width: 12px;
@@ -555,6 +570,11 @@
   &[data-active] {
     box-shadow: inset 0 0 0 1.5px var(--rp-c-brand);
   }
+
+  &:focus-visible {
+    outline: 2px solid var(--rp-c-brand);
+    outline-offset: 1px;
+  }
 }
 
 .autoNavSidebar {
@@ -583,6 +603,11 @@
   border-radius: 8px;
   cursor: pointer;
   transition: box-shadow 0.15s ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--rp-c-brand);
+    outline-offset: 1px;
+  }
 }
 
 .sidebarItem {
@@ -591,6 +616,11 @@
   color: var(--rp-c-text-1);
   cursor: pointer;
   transition: box-shadow 0.15s ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--rp-c-brand);
+    outline-offset: 1px;
+  }
 
   &.sidebarItemActive {
     background-color: var(--rp-c-brand-tint);
@@ -608,6 +638,11 @@
   color: var(--rp-c-text-1);
   cursor: pointer;
   transition: box-shadow 0.15s ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--rp-c-brand);
+    outline-offset: 1px;
+  }
 
   svg {
     width: 12px;

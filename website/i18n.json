@@ -150,5 +150,9 @@
   "homeExtendLink": {
     "zh": "开始定制",
     "en": "Start customizing"
+  },
+  "homeYourPlugin": {
+    "zh": "你的插件",
+    "en": "Your plugin"
   }
 }

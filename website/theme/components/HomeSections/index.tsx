@@ -1,5 +1,6 @@
 import { useI18n, useLang } from '@rspress/core/runtime';
 import {
+  copyToClipboard,
   IconArrowRight,
   IconCopy,
   IconFile,
@@ -8,8 +9,11 @@ import {
 } from '@rspress/core/theme-original';
 import {
   type CSSProperties,
+  type KeyboardEvent,
   type PropsWithChildren,
   type ReactNode,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
 import styles from './index.module.scss';
@@ -109,8 +113,74 @@ const SSG_MD_TABS = [
   { key: 'llms', label: 'llms.txt' },
 ] as const;
 
-function SsgMdVisual() {
+const INTRODUCTION_MARKDOWN = `# Introduction
+
+Rspress is a lightning fast static site generator based on Rsbuild.
+
+\`\`\`ts title="index.ts"
+console.log('Hello Rspress');
+\`\`\``;
+
+function SsgMdVisual(props: { copyText: string; copiedText: string }) {
   const [tab, setTab] = useState<SsgMdTab>('md');
+  const [copied, setCopied] = useState(false);
+  const copyTimer = useRef<number | null>(null);
+  const tabRefs = useRef<Record<SsgMdTab, HTMLButtonElement | null>>({
+    html: null,
+    md: null,
+    llms: null,
+  });
+
+  useEffect(
+    () => () => {
+      if (copyTimer.current) {
+        window.clearTimeout(copyTimer.current);
+      }
+    },
+    [],
+  );
+
+  const handleCopy = async () => {
+    if (!(await copyToClipboard(INTRODUCTION_MARKDOWN))) {
+      return;
+    }
+
+    setCopied(true);
+    if (copyTimer.current) {
+      window.clearTimeout(copyTimer.current);
+    }
+    copyTimer.current = window.setTimeout(() => {
+      setCopied(false);
+      copyTimer.current = null;
+    }, 1000);
+  };
+
+  const handleTabKeyDown = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    currentTab: SsgMdTab,
+  ) => {
+    const currentIndex = SSG_MD_TABS.findIndex(item => item.key === currentTab);
+    let nextIndex: number | null = null;
+
+    if (event.key === 'ArrowRight') {
+      nextIndex = (currentIndex + 1) % SSG_MD_TABS.length;
+    } else if (event.key === 'ArrowLeft') {
+      nextIndex = (currentIndex - 1 + SSG_MD_TABS.length) % SSG_MD_TABS.length;
+    } else if (event.key === 'Home') {
+      nextIndex = 0;
+    } else if (event.key === 'End') {
+      nextIndex = SSG_MD_TABS.length - 1;
+    }
+
+    if (nextIndex === null) {
+      return;
+    }
+
+    event.preventDefault();
+    const nextTab = SSG_MD_TABS[nextIndex].key;
+    setTab(nextTab);
+    tabRefs.current[nextTab]?.focus();
+  };
 
   return (
     <div className={styles.ssgMdVisual}>
@@ -164,19 +234,27 @@ function SsgMdVisual() {
             type="file"
             name="llms-full.txt"
             accent
-            current={tab === 'llms'}
             tag="full"
           />
         </div>
       </div>
       <div className={`${styles.card} ${styles.llmsCard}`}>
-        <div className={styles.tabHeader}>
+        <div className={styles.tabHeader} role="tablist">
           {SSG_MD_TABS.map(({ key, label }) => (
             <button
               key={key}
+              ref={element => {
+                tabRefs.current[key] = element;
+              }}
               type="button"
+              id={`home-ssg-md-tab-${key}`}
+              role="tab"
+              aria-controls={`home-ssg-md-panel-${key}`}
+              aria-selected={tab === key}
+              tabIndex={tab === key ? 0 : -1}
               className={`${styles.tab} ${tab === key ? styles.tabActive : ''}`}
               onClick={() => setTab(key)}
+              onKeyDown={event => handleTabKeyDown(event, key)}
             >
               {label}
             </button>
@@ -184,15 +262,25 @@ function SsgMdVisual() {
         </div>
         <div className={styles.tabPanels}>
           <div
+            id="home-ssg-md-panel-html"
+            role="tabpanel"
+            aria-labelledby="home-ssg-md-tab-html"
+            aria-hidden={tab !== 'html'}
             className={`${styles.tabPanel} ${tab === 'html' ? styles.tabPanelVisible : styles.tabPanelHidden}`}
           >
             <div className={styles.pagePreview}>
               <div className={styles.pageHead}>
                 <div className={styles.pageTitle}>Introduction</div>
-                <div className={styles.copyMdButton}>
-                  <IconCopy />
-                  <span>Copy Markdown</span>
-                </div>
+                <button
+                  type="button"
+                  className={styles.copyMdButton}
+                  onClick={() => void handleCopy()}
+                >
+                  {copied ? <IconSuccess /> : <IconCopy />}
+                  <span aria-live="polite">
+                    {copied ? props.copiedText : props.copyText}
+                  </span>
+                </button>
               </div>
               <div className={styles.pageText} style={{ width: '94%' }} />
               <div className={styles.pageText} style={{ width: '80%' }} />
@@ -205,6 +293,10 @@ function SsgMdVisual() {
             </div>
           </div>
           <div
+            id="home-ssg-md-panel-md"
+            role="tabpanel"
+            aria-labelledby="home-ssg-md-tab-md"
+            aria-hidden={tab !== 'md'}
             className={`${styles.tabPanel} ${tab === 'md' ? styles.tabPanelVisible : styles.tabPanelHidden}`}
           >
             <div className={styles.llmsContent}>
@@ -219,6 +311,10 @@ function SsgMdVisual() {
             </div>
           </div>
           <div
+            id="home-ssg-md-panel-llms"
+            role="tabpanel"
+            aria-labelledby="home-ssg-md-tab-llms"
+            aria-hidden={tab !== 'llms'}
             className={`${styles.tabPanel} ${tab === 'llms' ? styles.tabPanelVisible : styles.tabPanelHidden}`}
           >
             <div className={styles.llmsContent}>
@@ -228,10 +324,10 @@ function SsgMdVisual() {
               </div>
               <div className={styles.llmsH2}>## Docs</div>
               <div className={styles.llmsItem}>
-                - <span>[Introduction](/guide/introduction.md)</span>
+                - <span>[Introduction](/guide/start/introduction.md)</span>
               </div>
               <div className={styles.llmsItem}>
-                - <span>[Quick Start](/guide/getting-started.md)</span>
+                - <span>[Quick Start](/guide/start/getting-started.md)</span>
               </div>
             </div>
           </div>
@@ -248,8 +344,11 @@ function AutoNavVisual() {
   const wireHandlers = (id: string) => ({
     onMouseEnter: () => setWiring(id),
     onMouseLeave: () => setWiring(null),
+    onFocus: () => setWiring(id),
+    onBlur: () => setWiring(null),
+    tabIndex: 0,
   });
-  // bijective: hovering either side frames both the source and its counterpart
+  // Hovering or focusing either side frames the source and its counterpart.
   const ringFor = (id: string) => (wiring === id ? true : undefined);
   const targetClass = (id: string, base: string) =>
     `${base} ${ringFor(id) ? styles.wireTarget : ''}`;
@@ -508,7 +607,8 @@ const PLUGINS = [
   { name: 'RSS', icon: <IconRss />, link: '/plugin/official-plugins/rss' },
 ];
 
-function ExtendVisual({ langPrefix = '' }: { langPrefix?: string }) {
+function ExtendVisual(props: { langPrefix?: string; yourPluginText: string }) {
+  const { langPrefix = '', yourPluginText } = props;
   return (
     <div className={styles.extendVisual}>
       <div className={`${styles.card} ${styles.pluginsCard}`}>
@@ -536,7 +636,7 @@ function ExtendVisual({ langPrefix = '' }: { langPrefix?: string }) {
             href={`${langPrefix}/plugin/system/write-a-plugin`}
           >
             <IconPlus />
-            <span>Your plugin</span>
+            <span>{yourPluginText}</span>
           </Link>
         </div>
       </div>
@@ -593,7 +693,12 @@ export function HomeSections() {
         ]}
         linkText={t('homeSsgMdLink')}
         linkHref={`${prefix}/guide/basic/ssg-md`}
-        visual={<SsgMdVisual />}
+        visual={
+          <SsgMdVisual
+            copyText={t('copyMarkdownText')}
+            copiedText={t('promptCopiedText')}
+          />
+        }
       />
       <Section
         eyebrow={t('homeNavEyebrow')}
@@ -612,7 +717,12 @@ export function HomeSections() {
         points={[t('homeExtendPoint1'), t('homeExtendPoint2')]}
         linkText={t('homeExtendLink')}
         linkHref={`${prefix}/guide/basic/custom-theme`}
-        visual={<ExtendVisual langPrefix={prefix} />}
+        visual={
+          <ExtendVisual
+            langPrefix={prefix}
+            yourPluginText={t('homeYourPlugin')}
+          />
+        }
       />
     </div>
   );
