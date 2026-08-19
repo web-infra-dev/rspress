@@ -28,6 +28,7 @@ import { CssModificationIndicator } from '../docs/components/CssModificationIndi
 import { CssStyleSync } from '../docs/components/CssStyleSync';
 import { BlogBackButton } from './components/BlogBackButton';
 import { HeroInteractive } from './components/HeroInteractive';
+import { HomeSections } from './components/HomeSections';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
 import './index.css';
@@ -35,7 +36,12 @@ import './index.css';
 function HomeLayout() {
   return (
     <BasicHomeLayout
-      afterFeatures={<ToolStack />}
+      afterFeatures={
+        <>
+          <HomeSections />
+          <ToolStack />
+        </>
+      }
       afterHeroActions={
         <div
           className="rp-doc"

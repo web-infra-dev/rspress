@@ -70,5 +70,85 @@
   "bannerHref": {
     "zh": "/zh/guide/start/ai#agent-skills",
     "en": "/guide/start/ai#agent-skills"
+  },
+  "homeSsgMdEyebrow": {
+    "zh": "SSG-MD · llms.txt",
+    "en": "SSG-MD · llms.txt"
+  },
+  "homeSsgMdTitle": {
+    "zh": "人看 HTML，\nAI 读 Markdown",
+    "en": "HTML for humans,\nMarkdown for AI"
+  },
+  "homeSsgMdDesc": {
+    "zh": "同一份源文件，两套产物。每个页面既是给人阅读的 HTML（SSG），也是给大语言模型的 Markdown 副本（SSG-MD），并遵循 llms.txt 规范生成站点级索引与全文。",
+    "en": "One source, two outputs. Every page is built as a fast HTML page for readers (SSG) and a clean Markdown twin for LLMs (SSG-MD), with site-wide llms.txt and llms-full.txt following the llms.txt standard."
+  },
+  "homeSsgMdPoint1": {
+    "zh": "每个页面都有 .md 副本，URL 中 .html 换成 .md 即可访问",
+    "en": "Every page gets a .md twin — swap .html for .md in the URL"
+  },
+  "homeSsgMdPoint2": {
+    "zh": "按导航结构生成 llms.txt 索引与 llms-full.txt 全文",
+    "en": "llms.txt index and llms-full.txt, ordered by your navigation"
+  },
+  "homeSsgMdPoint3": {
+    "zh": "MDX 组件渲染为干净的 Markdown，而非语法噪音",
+    "en": "MDX components render to clean Markdown, not syntax noise"
+  },
+  "homeSsgMdLink": {
+    "zh": "了解 SSG-MD",
+    "en": "Explore SSG-MD"
+  },
+  "homeNavEyebrow": {
+    "zh": "_nav.json / _meta.json",
+    "en": "_nav.json / _meta.json"
+  },
+  "homeNavTitle": {
+    "zh": "导航与侧边栏，自动生成",
+    "en": "Navigation that writes itself"
+  },
+  "homeNavDesc": {
+    "zh": "在内容旁边声明导航结构：Rspress 通过 _nav.json 和 _meta.json 生成导航栏与侧边栏，并支持热更新，结构调整即时生效。",
+    "en": "Declare the navbar and sidebar next to your content. Rspress generates them from _nav.json and _meta.json — with hot reload, so structure changes show up instantly."
+  },
+  "homeNavPoint1": {
+    "zh": "_nav.json 生成导航栏，各目录 _meta.json 生成侧边栏",
+    "en": "Navbar from _nav.json, per-directory sidebars from _meta.json"
+  },
+  "homeNavPoint2": {
+    "zh": "支持排序、标签、图标、分组标题、分隔线与自定义链接",
+    "en": "Order, labels, icons, section headers, dividers and custom links"
+  },
+  "homeNavPoint3": {
+    "zh": "页面元信息写在 frontmatter 中，与内容放在一起",
+    "en": "Page metadata stays in frontmatter, next to the content"
+  },
+  "homeNavLink": {
+    "zh": "了解自动生成导航",
+    "en": "Learn about auto nav & sidebar"
+  },
+  "homeExtendEyebrow": {
+    "zh": "插件与主题",
+    "en": "Plugins & Themes"
+  },
+  "homeExtendTitle": {
+    "zh": "扩展构建流程，定制主题外观",
+    "en": "Extend the build, shape the theme"
+  },
+  "homeExtendDesc": {
+    "zh": "通过插件机制介入构建的每个阶段，主题则可以从 CSS 变量一路定制到完全弹出的组件源码。",
+    "en": "Hook into every stage with the plugin system, and tailor the look from CSS variables to fully ejected components."
+  },
+  "homeExtendPoint1": {
+    "zh": "官方插件覆盖搜索、Sitemap、API 文档、组件预览等场景",
+    "en": "Official plugins for search, sitemap, API docs, previews and more"
+  },
+  "homeExtendPoint2": {
+    "zh": "主题定制：CSS 变量、布局插槽，或 rspress eject 弹出源码",
+    "en": "Theme via CSS variables, layout slots, or rspress eject"
+  },
+  "homeExtendLink": {
+    "zh": "开始定制",
+    "en": "Start customizing"
   }
 }
