@@ -9,7 +9,7 @@ import {
   type SidebarSectionHeader,
   type UserConfig,
 } from '@rspress/shared';
-import { matchPath } from 'react-router-dom';
+import { matchPath } from 'react-router';
 import type { RouteService } from '../../route/RouteService';
 import { generateLlmsFullTxt, generateLlmsTxt } from './llmsTxt';
 

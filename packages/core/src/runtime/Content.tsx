@@ -1,5 +1,5 @@
 import { type ReactNode, Suspense, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { pathnameToRouteService } from './route';
 
 // TODO: fallback should be a loading spinner

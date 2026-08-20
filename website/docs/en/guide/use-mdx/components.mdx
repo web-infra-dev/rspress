@@ -106,14 +106,19 @@ We recommend using `.mdx` files for document content and `.tsx` files for intera
 
 ## React version requirements
 
-| Dependency         | Allowed Range          | Default Version | Notes                                     |
-| ------------------ | ---------------------- | --------------- | ----------------------------------------- |
-| `react`            | `^18.0.0 \|\| ^19.0.0` | 19              | React 17 is no longer supported           |
-| `react-dom`        | `^18.0.0 \|\| ^19.0.0` | 19              | Keep consistent with react version        |
-| `react-router-dom` | `^6.0.0 \|\| ^7.0.0`   | 7               | Uses project version if already installed |
+| Dependency         | Allowed Range          | Default Version | Notes                           |
+| ------------------ | ---------------------- | --------------- | ------------------------------- |
+| `react`            | `^18.0.0 \|\| ^19.0.0` | 19              | React 17 is no longer supported |
+| `react-dom`        | `^18.0.0 \|\| ^19.0.0` | 19              | Keep consistent with React      |
+| `react-router`     | `^8.0.0`               | 8               | Built-in default                |
+| `react-router-dom` | `^7.0.0`               | -               | Optional project-level override |
 
 :::tip
 
-If `react`, `react-dom`, or `react-router-dom` is already installed in your project, Rspress will prioritize using the version installed in your project rather than the built-in default version.
+React Router 8 requires Node.js 22.22+ and React 19.2.7+. Install `react-router-dom@7` to switch to React Router 7; Rspress will prioritize that project-installed version over the built-in React Router 8.
+
+```bash
+pnpm add react-router-dom@7
+```
 
 :::

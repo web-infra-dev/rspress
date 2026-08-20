@@ -34,12 +34,17 @@ Rspress V2 no longer supports Node.js 16 and 18. Please upgrade to **Node.js ^20
 | ------------------ | ---------------------- | ------- | ----------------------------------------------- |
 | `react`            | `^18.0.0 \|\| ^19.0.0` | 19      | React 17 is no longer supported                 |
 | `react-dom`        | `^18.0.0 \|\| ^19.0.0` | 19      | Keeps in sync with react version                |
-| `react-router-dom` | `^6.0.0 \|\| ^7.0.0`   | 7       | Uses project version if already installed       |
+| `react-router`     | `^8.0.0`               | 8       | Built-in default                                |
+| `react-router-dom` | `^7.0.0`               | -       | Optional project override                       |
 | `unified`          | `^11.0.0`              | 11      | Custom remark/rehype plugins must be compatible |
 
 :::tip
 
-If `react`, `react-dom`, or `react-router-dom` is already installed in your project, Rspress will use the project's version instead of the built-in default version.
+React Router 8 requires Node.js 22.22+ and React 19.2.7+. To use React Router 7 instead, install `react-router-dom@7` in your project. Rspress will prioritize the project-installed `react-router-dom` over its built-in React Router 8.
+
+```bash
+pnpm add react-router-dom@7
+```
 
 :::
 

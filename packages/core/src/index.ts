@@ -47,7 +47,7 @@ export {
   getNodeAttribute,
   mergeDocConfig,
 } from '@rspress/shared/node-utils';
-export { matchPath } from 'react-router-dom';
+export { matchPath } from 'react-router';
 export type { UserConfigAsyncFn } from './config/defineConfig';
 // config
 export { defineConfig } from './config/defineConfig';

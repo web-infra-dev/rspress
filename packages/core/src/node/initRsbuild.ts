@@ -61,7 +61,7 @@ import {
   createError,
   resolveReactAlias,
   resolveReactRenderToMarkdownAlias,
-  resolveReactRouterDomAlias,
+  resolveReactRouterAlias,
 } from './utils';
 
 function isPluginIncluded(config: UserConfig, pluginName: string): boolean {
@@ -143,12 +143,12 @@ async function createInternalBuildConfig(
   const [
     reactCSRAlias,
     reactSSRAlias,
-    reactRouterDomAlias,
+    reactRouterAlias,
     reactRenderToMarkdownAlias,
   ] = await Promise.all([
     resolveReactAlias(false),
     enableSSG ? resolveReactAlias(true) : Promise.resolve({}),
-    resolveReactRouterDomAlias(),
+    resolveReactRouterAlias(),
     enableSSG && config.llms
       ? resolveReactRenderToMarkdownAlias()
       : Promise.resolve({}),
@@ -470,7 +470,7 @@ async function createInternalBuildConfig(
         resolve: {
           alias: {
             ...reactCSRAlias,
-            ...reactRouterDomAlias,
+            ...reactRouterAlias,
           },
         },
         source: {
@@ -508,7 +508,7 @@ async function createInternalBuildConfig(
               resolve: {
                 alias: {
                   ...reactSSRAlias,
-                  ...reactRouterDomAlias,
+                  ...reactRouterAlias,
                 },
               },
               source: {
@@ -541,7 +541,7 @@ async function createInternalBuildConfig(
               resolve: {
                 alias: {
                   ...reactSSRAlias,
-                  ...reactRouterDomAlias,
+                  ...reactRouterAlias,
                   ...reactRenderToMarkdownAlias,
                 },
               },
