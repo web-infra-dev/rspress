@@ -61,6 +61,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           package-manager-cache: false
 
+      - name: Activate Pnpm
+        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        run: corepack install --global pnpm@11.20.0
+
       - name: Nx Cache
         id: nx-cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
