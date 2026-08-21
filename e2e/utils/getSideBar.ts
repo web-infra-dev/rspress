@@ -1,4 +1,4 @@
-import type { Locator, Page } from '@playwright/test';
+import type { Locator, Page } from '@e2e/test';
 
 export function getNavbar(page: Page): Locator {
   // Query both nav menus (left + right) rendered in the layout

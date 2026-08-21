@@ -15,7 +15,7 @@
     "prepare": "skills-package-manager install && pnpm run build && simple-git-hooks",
     "preview:website": "cd website && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
-    "test:e2e": "playwright test",
+    "test:e2e": "rstest run --config rstest.e2e.config.mts",
     "test:unit": "rstest run",
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },
@@ -27,7 +27,7 @@
       "prettier --write",
       "heading-case --write"
     ],
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+    "*.{js,jsx,ts,tsx,mts,mjs,cjs}": [
       "rslint --fix",
       "prettier --write"
     ],
@@ -41,8 +41,9 @@
     "@rsbuild/plugin-react": "~2.1.0",
     "@rslint/core": "^0.7.3",
     "@rspress/config": "workspace:*",
-    "@rstest/adapter-rslib": "0.11.8",
-    "@rstest/core": "^0.11.8",
+    "@rstest/adapter-rslib": "0.11.9",
+    "@rstest/core": "^0.11.9",
+    "@rstest/playwright": "^0.11.9",
     "@types/cross-spawn": "^6.0.6",
     "@types/node": "^22.8.1",
     "@typescript/native": "npm:typescript@7.0.2",

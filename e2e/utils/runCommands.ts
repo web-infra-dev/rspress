@@ -57,7 +57,9 @@ export async function runNpmScript(
           resolve(instance);
         }
       }
-      process.stdout.write(message);
+      if (process.env.RSTEST !== 'true') {
+        process.stdout.write(message);
+      }
     }
 
     instance.stdout!.on('data', handleStdout);
