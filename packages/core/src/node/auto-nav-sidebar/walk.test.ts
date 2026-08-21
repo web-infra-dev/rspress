@@ -37,7 +37,7 @@ describe('walk', () => {
     RouteService.__instance__ = defaultMock;
   });
 
-  it('basic', async () => {
+  it('generates navigation and sidebar data', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs');
     const metaFileSet = new Set<string>();
     const mdFileSet = new Set<string>();

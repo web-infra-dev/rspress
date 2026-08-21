@@ -11,7 +11,7 @@ import {
 
 const HMR_TEST_FILE = path.resolve(import.meta.dirname, 'doc/hmr.mdx');
 
-test.describe('plugin test', async () => {
+test.describe('plugin preview development', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {

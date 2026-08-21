@@ -3,7 +3,7 @@ import path from 'node:path';
 import { expect, test } from '@e2e/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
-test('ssg-fail-strict test', async () => {
+test('fails the build in strict SSG mode', async () => {
   const appDir = import.meta.dirname;
   try {
     await runBuildCommand(appDir);

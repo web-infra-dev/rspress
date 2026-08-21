@@ -1,6 +1,6 @@
 // Rstest Snapshot v1
 
-exports[`remarkFileCodeBlock > basic 1`] = `
+exports[`remarkFileCodeBlock > loads code from referenced files 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 import {Callout as $$$callout$$$} from "@rspress/core/theme";

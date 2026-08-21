@@ -5,7 +5,7 @@ import { afterAll, beforeAll, describe, expect, it } from '@rstest/core';
 import { compile } from '../processor';
 
 describe('mdx', () => {
-  it('basic', async () => {
+  it('transforms relative image paths', async () => {
     const result = await compile({
       source: `
 ![alt1](./test3.jpg)

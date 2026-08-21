@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/test';
 import { getNavbar } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('Auto nav and sidebar test', async () => {
+test.describe('auto nav and sidebar', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
