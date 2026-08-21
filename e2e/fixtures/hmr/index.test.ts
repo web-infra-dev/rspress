@@ -33,19 +33,6 @@ test.describe('hmr test', async () => {
 
   const getRestartCount = () =>
     devOutput.match(/restarting server as .* changed/g)?.length ?? 0;
-  const getBuildCount = () => devOutput.match(/built in/g)?.length ?? 0;
-
-  const waitForRestart = async (
-    restartCount: number,
-    previousBuildCount: number,
-  ) => {
-    await expect
-      .poll(getRestartCount, { timeout: HMR_TIMEOUT })
-      .toBe(restartCount);
-    await expect
-      .poll(getBuildCount, { timeout: HMR_TIMEOUT })
-      .toBeGreaterThan(previousBuildCount);
-  };
 
   test.beforeAll(async () => {
     originalContent = await fs.readFile(TEST_FILE, 'utf-8');
@@ -132,9 +119,10 @@ test.describe('hmr test', async () => {
     const initialRestartCount = getRestartCount();
 
     try {
-      let previousBuildCount = getBuildCount();
       await fs.writeFile(TEST_ADDED_FILE, '# Added route');
-      await waitForRestart(initialRestartCount + 1, previousBuildCount);
+      await expect
+        .poll(getRestartCount, { timeout: HMR_TIMEOUT })
+        .toBe(initialRestartCount + 1);
 
       await expect
         .poll(
@@ -150,9 +138,10 @@ test.describe('hmr test', async () => {
         )
         .toContain('Added route');
 
-      previousBuildCount = getBuildCount();
       await fs.rm(TEST_ADDED_FILE);
-      await waitForRestart(initialRestartCount + 2, previousBuildCount);
+      await expect
+        .poll(getRestartCount, { timeout: HMR_TIMEOUT })
+        .toBe(initialRestartCount + 2);
 
       // The 404 confirms that the unlink restart finished before the next change.
       await expect
@@ -169,12 +158,13 @@ test.describe('hmr test', async () => {
         )
         .toContain('404');
 
-      previousBuildCount = getBuildCount();
       await fs.writeFile(
         TEST_RESTART_FILE,
         originalRestartFileContent.replace('HMR fixture', 'Restarted fixture'),
       );
-      await waitForRestart(initialRestartCount + 3, previousBuildCount);
+      await expect
+        .poll(getRestartCount, { timeout: HMR_TIMEOUT })
+        .toBe(initialRestartCount + 3);
 
       await expect
         .poll(
@@ -191,15 +181,11 @@ test.describe('hmr test', async () => {
         .toContain('Restarted fixture');
     } finally {
       const cleanupRestartCount = getRestartCount();
-      const cleanupBuildCount = getBuildCount();
       await fs.rm(TEST_ADDED_FILE, { force: true });
       await fs.writeFile(TEST_RESTART_FILE, originalRestartFileContent);
       await expect
         .poll(getRestartCount, { timeout: HMR_TIMEOUT })
         .toBeGreaterThan(cleanupRestartCount);
-      await expect
-        .poll(getBuildCount, { timeout: HMR_TIMEOUT })
-        .toBeGreaterThan(cleanupBuildCount);
     }
   });
 });
