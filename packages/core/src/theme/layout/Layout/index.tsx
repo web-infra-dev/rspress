@@ -118,6 +118,12 @@ const HeadTags = memo(
   },
 );
 
+const ClientEffects = () => {
+  useSetup();
+  useScrollReset();
+  return null;
+};
+
 export function Layout(props: LayoutProps) {
   const {
     top,
@@ -177,6 +183,10 @@ export function Layout(props: LayoutProps) {
   } = page;
   const localesData = useLocaleSiteData();
 
+  const {
+    frontmatter: { navbar: showNavbar = true },
+  } = useFrontmatter();
+
   // Always show sidebar by default
   // Priority: front matter title > h1 title
   let title = (frontmatter.title as string) ?? articleTitle;
@@ -221,16 +231,9 @@ export function Layout(props: LayoutProps) {
   if (import.meta.env.SSG_MD) {
     return <>{getContentLayout()}</>;
   }
-
-  useSetup();
-  useScrollReset();
-
-  const {
-    frontmatter: { navbar: showNavbar = true },
-  } = useFrontmatter();
-
   return (
     <>
+      <ClientEffects />
       <HeadTags
         lang={currentLang}
         title={title}
