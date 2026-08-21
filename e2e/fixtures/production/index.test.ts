@@ -6,7 +6,7 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-test.describe('basic test', async () => {
+test.describe('production build', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {

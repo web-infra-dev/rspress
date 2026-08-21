@@ -1,6 +1,6 @@
 // Rstest Snapshot v1
 
-exports[`mdx > basic 1`] = `
+exports[`mdx > transforms relative image paths 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 import image0 from "./test3.jpg";

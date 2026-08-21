@@ -12,7 +12,7 @@ import {
   withoutLang,
 } from './utils';
 
-describe('test shared utils', () => {
+describe('shared runtime utils', () => {
   test('withoutLang', () => {
     const langs = ['zh', 'en'];
     expect(withoutLang('/zh/guide/', langs)).toBe('/guide/');

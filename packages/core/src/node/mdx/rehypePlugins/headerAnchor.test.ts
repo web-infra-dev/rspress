@@ -2,7 +2,7 @@ import { describe, expect, it } from '@rstest/core';
 import { compile } from '../processor';
 
 describe('rehypeHeadAnchor', () => {
-  it('basic', async () => {
+  it('adds unique heading anchor IDs', async () => {
     const result = await compile({
       source: `
 # Guide

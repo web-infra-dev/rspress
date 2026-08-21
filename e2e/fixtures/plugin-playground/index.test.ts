@@ -31,7 +31,7 @@ test('Should only preload Monaco on pages containing playgrounds', async () => {
   }
 });
 
-test.describe('plugin test', async () => {
+test.describe('plugin playground rendering and HMR', async () => {
   let appPort;
   let app;
   let originalContent: string;

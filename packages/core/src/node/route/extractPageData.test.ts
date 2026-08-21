@@ -22,7 +22,7 @@ function createRoute(relativePath: string, fixtureDir: string) {
 }
 
 describe('extractPageData', async () => {
-  it('basic', async () => {
+  it('extracts page data from basic routes', async () => {
     const fixtureBasicDir = join(__dirname, './fixtures/basic');
     const absolutize = (relativePath: string) => {
       return join(fixtureBasicDir, `.${relativePath}`);

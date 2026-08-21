@@ -26,7 +26,7 @@ async function initRouteService(
 }
 
 describe('RouteService', async () => {
-  it('basic', async () => {
+  it('generates routes from the basic fixture', async () => {
     const { routeData, routeCode } = await initRouteService({});
     expect(routeData).toMatchInlineSnapshot(`
       Map {
@@ -398,7 +398,7 @@ describe('RouteService', async () => {
 });
 
 describe('RouteService with i18n', async () => {
-  it('basic', async () => {
+  it('generates localized routes', async () => {
     const BASIC_DIR = path.join(__dirname, 'fixtures', 'locales');
 
     const { routeData } = await initRouteService(

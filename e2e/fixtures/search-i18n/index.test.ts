@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 import { searchInPage } from '../../utils/search';
 
-test.describe('search i18n test', async () => {
+test.describe('localized search', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
 

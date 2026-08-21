@@ -6,7 +6,7 @@ import {
 } from '../../../utils/runCommands';
 import { searchInPage } from '../../../utils/search';
 
-test.describe('api-docgen locales test', async () => {
+test.describe('API docgen locales', async () => {
   let appPort: number;
   let app: unknown;
 

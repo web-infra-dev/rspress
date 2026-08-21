@@ -8,7 +8,7 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-test.describe('plugin test', async () => {
+test.describe('site with base path', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
