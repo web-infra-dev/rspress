@@ -49,10 +49,29 @@ test.describe('plugin test', async () => {
       waitUntil: 'networkidle',
     });
     const transformedCodePreview = await page
-      .frameLocator('iframe')
+      .frameLocator('.rp-preview iframe')
       .getByText('VUE')
       .innerText();
 
     expect(transformedCodePreview).toBe('Hello World VUE');
+
+    const fixedIframe = page.locator('.rp-fixed-device__iframe');
+    const fixedIframeBody = fixedIframe.contentFrame().locator('body');
+    await expect(fixedIframeBody).toContainText('Hello World VUE');
+    await expect(fixedIframeBody).toContainText('Hello World VUE FIXED');
+
+    const fixedEntry = fixedIframe.contentFrame().locator('.vue-fixed-entry');
+    await expect(fixedEntry).toHaveAttribute('data-route-path', '/guide/vue');
+    await expect(fixedEntry).toHaveAttribute('data-lang', 'en');
+
+    // The two fixed demos are preview-only and should not render code blocks.
+    await expect(page.locator('.rspress-doc > .rp-preview')).toHaveCount(1);
+
+    const mobileDemoLink = page.locator('.rp-fixed-device__mobile-link');
+    await expect(mobileDemoLink).toHaveAttribute('target', '_blank');
+    await expect(mobileDemoLink).toHaveAttribute(
+      'href',
+      /(?:\/~demo\/|:\d+\/)_guide_vue$/,
+    );
   });
 });
