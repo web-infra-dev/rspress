@@ -42,9 +42,6 @@ jobs:
           node-version-file: '.nvmrc'
           package-manager-cache: false
 
-      - name: Activate Pnpm
-        run: corepack install --global pnpm@11.20.0
-
       - name: Install Dependencies
         run: pnpm install --ignore-scripts
 
