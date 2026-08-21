@@ -37,12 +37,13 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "1.62.1",
     "@rsbuild/plugin-react": "~2.1.0",
     "@rslint/core": "^0.7.3",
     "@rspress/config": "workspace:*",
-    "@rstest/adapter-rslib": "0.11.8",
-    "@rstest/core": "https://pkg.pr.new/@rstest/core@b811f89",
-    "@rstest/playwright": "https://pkg.pr.new/@rstest/playwright@b811f89",
+    "@rstest/adapter-rslib": "0.11.9",
+    "@rstest/core": "^0.11.9",
+    "@rstest/playwright": "^0.11.9",
     "@types/cross-spawn": "^6.0.6",
     "@types/node": "^22.8.1",
     "@typescript/native": "npm:typescript@7.0.2",
