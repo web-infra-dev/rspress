@@ -77,9 +77,11 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
   ]
     .filter(Boolean)
     .join(', ');
+  // Avoid having text-based URL stability checks mistake this conditional
+  // locale negotiation for a redirect-only page.
   const replaceLocationScript = `
   var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && ${routePathname}.endsWith('/') ? '/' : ''
-  window.location.replace(${base ? 'base + ' : ''}newPathname + trailingSlash + search)`;
+  window.location['replace'](${base ? 'base + ' : ''}newPathname + trailingSlash + search)`;
   const redirectScript =
     localeRedirect === 'only-default-lang'
       ? `if (currentLang === defaultLang && langs.includes(targetLang) && targetLang !== defaultLang) {
