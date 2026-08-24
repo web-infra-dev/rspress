@@ -9,7 +9,7 @@
 
 ## Build, test, and development commands
 
-- Install: `pnpm install` (Node >= 18.0, pnpm >= 10.15).
+- Install: `pnpm install` (Node >= 22.12, pnpm >= 11.22).
 - Build: `pnpm build` (all) and `pnpm build:website`.
 - Watch dev: `pnpm dev` (all packages) or `pnpm dev:website` (documentation site).
 - Lint/format: `pnpm lint`; auto-fix: `pnpm format`.
