@@ -1,4 +1,4 @@
-import { defineConfig, js, ts } from '@rslint/core';
+import { defineConfig, globals, js, ts } from '@rslint/core';
 
 export default defineConfig([
   {
@@ -14,6 +14,32 @@ export default defineConfig([
   },
   js.configs.recommended,
   ts.configs.recommended,
+  {
+    files: [
+      '**/*.cjs',
+      'packages/core/scripts/**/*.mjs',
+      'packages/core/tests/config/**/*.{js,mjs}',
+      'scripts/**/*.{js,mjs}',
+    ],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  {
+    files: [
+      'e2e/fixtures/public-dir/doc/public/test.js',
+      'packages/plugin-preview/static/iframe/**/*.js',
+    ],
+    languageOptions: {
+      globals: globals.browser,
+    },
+  },
+  {
+    files: ['**/*.cjs', 'scripts/skipCI.js'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
   {
     languageOptions: {
       parserOptions: {
