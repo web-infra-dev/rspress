@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('tabs-component test', async () => {
+test.describe('tabs component', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
 

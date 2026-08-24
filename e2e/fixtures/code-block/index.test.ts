@@ -6,7 +6,7 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-test.describe('plugin shiki test', async () => {
+test.describe('Shiki code blocks', async () => {
   let appPort: number;
   let app: unknown;
   test.beforeAll(async () => {

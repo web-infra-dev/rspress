@@ -2,7 +2,7 @@ import { describe, expect, it } from '@rstest/core';
 import { compile } from '../processor';
 
 describe('mdx', () => {
-  it('basic', async () => {
+  it('transforms relative Markdown links', async () => {
     const result = await compile({
       source: `
 [link1](./test1.md)

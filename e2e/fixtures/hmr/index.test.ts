@@ -21,7 +21,7 @@ const TEST_ADDED_FILE = path.resolve(
 const TEST_RESTART_FILE = path.resolve(import.meta.dirname, 'siteConfig.ts');
 const HMR_TIMEOUT = 30_000;
 
-test.describe('hmr test', async () => {
+test.describe('HMR', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null = null;
   let originalContent: string;

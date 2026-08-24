@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('plugin test', async () => {
+test.describe('plugin preview with custom entries', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {

@@ -1,6 +1,6 @@
 // Rstest Snapshot v1
 
-exports[`mdx > basic 1`] = `
+exports[`mdx > transforms relative Markdown links 1`] = `
 "/*jsx link will not be transformed*/
 import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";

@@ -17,7 +17,7 @@ async function pathExists(path: string): Promise<boolean> {
   }
 }
 
-test.describe('basic test', async () => {
+test.describe('public directory', async () => {
   test('should not generate the routes for html/js/mdx files in publicDir', async () => {
     const appDir = import.meta.dirname;
     await runBuildCommand(appDir);
