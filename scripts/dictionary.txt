@@ -1,4 +1,5 @@
 # Custom Dictionary Words
+afdocs
 algoliasearch
 alinks
 analyse
@@ -21,6 +22,7 @@ Bytedance
 caniuse
 chunkhash
 Chunktmp
+Cherny
 classname
 codesandbox
 compat
@@ -88,6 +90,7 @@ menlo
 metastring
 microhei
 midscene
+Mintlify
 modularly
 napi
 networkidle

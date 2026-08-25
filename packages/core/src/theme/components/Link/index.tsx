@@ -5,7 +5,8 @@ import type React from 'react';
 import type { ComponentProps, TransitionStartFunction } from 'react';
 import { forwardRef } from 'react';
 import './index.scss';
-import { getHref, useLinkNavigate } from './useLinkNavigate';
+import { getHref } from './getHref';
+import { useLinkNavigate } from './useLinkNavigate';
 
 export interface LinkProps extends ComponentProps<'a'> {
   href?: string;
@@ -55,7 +56,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
     ...otherProps
   } = props;
 
-  const { linkType, removeBaseHref, withBaseHref } = getHref(href);
+  const { linkType, removeBaseHref, routePath, withBaseHref } = getHref(href);
   const navigate = useLinkNavigate({ startTransition });
 
   if (linkType === 'external') {
@@ -98,10 +99,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
         className={clsx(className, 'rp-link')}
         onMouseEnter={event => {
           onMouseEnter?.(event);
-          preloadLink(removeBaseHref);
+          preloadLink(routePath);
         }}
         onTouchStart={() => {
-          preloadLink(removeBaseHref);
+          preloadLink(routePath);
         }}
         onClick={e => {
           onClick?.(e);
@@ -135,10 +136,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
       className={clsx(className, 'rp-link')}
       onMouseEnter={event => {
         onMouseEnter?.(event);
-        preloadLink(removeBaseHref);
+        preloadLink(routePath);
       }}
       onTouchStart={() => {
-        preloadLink(removeBaseHref);
+        preloadLink(routePath);
       }}
       onClick={e => {
         onClick?.(e);

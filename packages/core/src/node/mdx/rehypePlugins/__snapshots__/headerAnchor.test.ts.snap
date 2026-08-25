@@ -1,6 +1,6 @@
 // Rstest Snapshot v1
 
-exports[`rehypeHeadAnchor > basic 1`] = `
+exports[`rehypeHeadAnchor > adds unique heading anchor IDs 1`] = `
 "/*prettier-ignore-start*/
 /*prettier-ignore-end*/
 import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";

@@ -331,7 +331,7 @@ async function createInternalBuildConfig(
             buildCache: {
               // 1. config file: rspress.config.ts
               buildDependencies: [
-                new URL(import.meta.url).href, // this file,  __filename
+                fileURLToPath(import.meta.url), // this file, __filename
                 pluginDriver.getConfigFilePath(), // rspress.config.ts
               ],
               cacheDigest: [

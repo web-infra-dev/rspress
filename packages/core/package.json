@@ -1,6 +1,6 @@
 {
   "name": "@rspress/core",
-  "version": "2.0.19",
+  "version": "2.0.20",
   "description": "The Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -104,10 +104,10 @@
     "vfile": "^6.0.3"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.58.12",
+    "@microsoft/api-extractor": "^7.59.0",
     "@rsbuild/plugin-sass": "~2.0.1",
     "@rsbuild/plugin-svgr": "^2.0.5",
-    "@rslib/core": "1.0.0-beta.3",
+    "@rslib/core": "1.0.0-rc.0",
     "@rspress/config": "workspace:*",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/hast": "^3.0.5",

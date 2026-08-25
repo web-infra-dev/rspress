@@ -1,4 +1,4 @@
-import { expect, type Page, test } from '@playwright/test';
+import { expect, type Page, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -6,7 +6,7 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-test.describe('basic test', async () => {
+test.describe('Markdown asset links', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runPreviewCommand>> | null;
   test.afterAll(async () => {

@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('plugin-playground-preview combined test', async () => {
+test.describe('plugin playground and preview integration', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -6,7 +6,7 @@ import {
 } from '../../../utils/runCommands';
 import { searchInPage } from '../../../utils/search';
 
-test.describe('api-docgen test', async () => {
+test.describe('API docgen', async () => {
   let appPort: number;
   let app: unknown;
 

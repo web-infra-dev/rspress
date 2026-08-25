@@ -1,0 +1,16 @@
+# Target
+
+{[...Array(40).keys()].map(index => (
+
+  <p key={index}>
+    This paragraph makes the document height sensitive to the available content
+    width, so adding the target page sidebar changes the heading position before
+    anchor scrolling.
+  </p>
+))}
+
+## Target heading
+
+Target content.
+
+<div style={{ height: '100vh' }} />

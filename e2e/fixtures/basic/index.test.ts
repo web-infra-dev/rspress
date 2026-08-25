@@ -1,4 +1,4 @@
-import { expect, type Page, test } from '@playwright/test';
+import { expect, type Page, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -12,7 +12,7 @@ const CLI_BASE = '/bar/';
 const getIsDark = (page: Page) =>
   page.evaluate(() => document.documentElement.classList.contains('rp-dark'));
 
-test.describe('basic test', async () => {
+test.describe('basic site', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {

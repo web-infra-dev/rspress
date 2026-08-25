@@ -63,7 +63,7 @@ Come and chat with us on [Discord](https://discord.gg/XsaKEEk4mW)! The Rstack te
 
 ## 🌟 Quality
 
-Rspress uses [Web Infra QoS](https://web-infra-qos.netlify.app?product=rspress) to observe the trend of key metrics, such as bundle size, compile speed and install size.
+Rspress uses [Web Infra QoS](https://web-infra-qos.pages.dev/?product=rspress) to observe the trend of key metrics, such as bundle size, compile speed and install size.
 
 ## 📖 License
 

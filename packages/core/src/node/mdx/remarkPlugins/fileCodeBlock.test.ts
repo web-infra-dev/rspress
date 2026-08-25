@@ -11,7 +11,7 @@ rs.mock('node:process', () => {
 });
 
 describe('remarkFileCodeBlock', () => {
-  it('basic', async () => {
+  it('loads code from referenced files', async () => {
     vol.fromJSON({
       '/usr/rspress-project/docs/_Demo.jsx': `export default () => {
   return <div>hello world</div>;

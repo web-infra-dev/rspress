@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -10,7 +10,7 @@ import fixture from './fixture.json' with { type: 'json' };
 const appDir = import.meta.dirname;
 const feedUrl = `${fixture.base}rss/blog.xml`;
 
-test.describe('plugin rss test', async () => {
+test.describe('RSS plugin', async () => {
   let appPort: number;
   let app: unknown;
   let prefix: string;

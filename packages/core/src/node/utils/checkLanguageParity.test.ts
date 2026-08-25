@@ -36,7 +36,7 @@ describe('checkLanguageParity', () => {
     },
   } as UserConfig;
 
-  it('expect check all directory when empty config', async () => {
+  it('checks all directories when include is empty', async () => {
     vol.fromJSON({
       '/content/en/docs/guide.mdx': 'English content',
       '/content/zh/docs/guide.mdx': '中文内容',
@@ -73,7 +73,7 @@ describe('checkLanguageParity', () => {
     );
   });
 
-  it('test exclude config both on path and file', async () => {
+  it('excludes configured paths and files', async () => {
     vol.fromJSON({
       '/content/en/docs/guide.mdx': 'English content',
       '/content/zh/docs/guide.mdx': '中文内容',

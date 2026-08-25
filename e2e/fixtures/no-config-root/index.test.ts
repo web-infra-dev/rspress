@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -7,7 +7,7 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-test.describe('no config.root dev test', async () => {
+test.describe('development without config.root', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {
@@ -31,7 +31,7 @@ test.describe('no config.root dev test', async () => {
   });
 });
 
-test.describe('no config.root build and preview test', async () => {
+test.describe('build and preview without config.root', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runPreviewCommand>> | null;
   test.beforeAll(async () => {

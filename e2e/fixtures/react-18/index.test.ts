@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -18,7 +18,7 @@ function getPackageVersion(name: string) {
   return JSON.parse(readFileSync(pkgJsonPath, 'utf-8')).version as string;
 }
 
-test.describe('React 18 dev test', async () => {
+test.describe('React 18 development', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {

@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 const TEST_FILE = path.resolve(import.meta.dirname, 'doc/guide/test.mdx');
@@ -19,8 +19,9 @@ const TEST_ADDED_FILE = path.resolve(
   'doc/guide/test-temp-added.mdx',
 );
 const TEST_RESTART_FILE = path.resolve(import.meta.dirname, 'siteConfig.ts');
+const HMR_TIMEOUT = 30_000;
 
-test.describe('hmr test', async () => {
+test.describe('HMR', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null = null;
   let originalContent: string;
@@ -115,61 +116,76 @@ test.describe('hmr test', async () => {
       waitUntil: 'networkidle',
     });
 
-    await fs.writeFile(TEST_ADDED_FILE, '# Added route');
-    await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(1);
+    const initialRestartCount = getRestartCount();
 
-    await expect
-      .poll(
-        async () => {
-          try {
-            await page.goto(addedPageUrl, { timeout: 10_000 });
-            return page.locator('h1').textContent();
-          } catch {
-            return null;
-          }
-        },
-        { timeout: 30_000 },
-      )
-      .toContain('Added route');
+    try {
+      await fs.writeFile(TEST_ADDED_FILE, '# Added route');
+      await expect
+        .poll(getRestartCount, { timeout: HMR_TIMEOUT })
+        .toBe(initialRestartCount + 1);
 
-    await fs.rm(TEST_ADDED_FILE);
-    await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(2);
+      await expect
+        .poll(
+          async () => {
+            try {
+              await page.goto(addedPageUrl, { timeout: 10_000 });
+              return page.locator('h1').textContent();
+            } catch {
+              return null;
+            }
+          },
+          { timeout: HMR_TIMEOUT },
+        )
+        .toContain('Added route');
 
-    // The 404 confirms that the unlink restart finished before the next change.
-    await expect
-      .poll(
-        async () => {
-          try {
-            await page.goto(addedPageUrl, { timeout: 10_000 });
-            return page.locator('body').textContent();
-          } catch {
-            return null;
-          }
-        },
-        { timeout: 30_000 },
-      )
-      .toContain('404');
+      await fs.rm(TEST_ADDED_FILE);
+      await expect
+        .poll(getRestartCount, { timeout: HMR_TIMEOUT })
+        .toBe(initialRestartCount + 2);
 
-    await fs.writeFile(
-      TEST_RESTART_FILE,
-      originalRestartFileContent.replace('HMR fixture', 'Restarted fixture'),
-    );
-    await expect.poll(getRestartCount, { timeout: 30_000 }).toBe(3);
+      // The 404 confirms that the unlink restart finished before the next change.
+      await expect
+        .poll(
+          async () => {
+            try {
+              await page.goto(addedPageUrl, { timeout: 10_000 });
+              return page.locator('body').textContent();
+            } catch {
+              return null;
+            }
+          },
+          { timeout: HMR_TIMEOUT },
+        )
+        .toContain('404');
 
-    await expect
-      .poll(
-        async () => {
-          try {
-            await page.goto(stablePageUrl, {
-              timeout: 10_000,
-            });
-            return page.title();
-          } catch {
-            return '';
-          }
-        },
-        { timeout: 30_000 },
-      )
-      .toContain('Restarted fixture');
+      await fs.writeFile(
+        TEST_RESTART_FILE,
+        originalRestartFileContent.replace('HMR fixture', 'Restarted fixture'),
+      );
+      await expect
+        .poll(getRestartCount, { timeout: HMR_TIMEOUT })
+        .toBe(initialRestartCount + 3);
+
+      await expect
+        .poll(
+          async () => {
+            try {
+              await page.goto(stablePageUrl, { timeout: 10_000 });
+              return page.title();
+            } catch {
+              return '';
+            }
+          },
+          { timeout: HMR_TIMEOUT },
+        )
+        .toContain('Restarted fixture');
+    } finally {
+      const cleanupRestartCount = getRestartCount();
+      await fs.rm(TEST_ADDED_FILE, { force: true });
+      await fs.writeFile(TEST_RESTART_FILE, originalRestartFileContent);
+      await expect
+        .poll(getRestartCount, { timeout: HMR_TIMEOUT })
+        .toBeGreaterThan(cleanupRestartCount);
+    }
   });
 });

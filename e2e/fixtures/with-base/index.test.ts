@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -8,7 +8,7 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-test.describe('plugin test', async () => {
+test.describe('site with base path', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
