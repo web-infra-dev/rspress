@@ -240,7 +240,7 @@ Rspress is a React-based static site generator built on Rsbuild.
 
 [AFDocs](https://afdocs.dev/) is the companion open-source tool for the [Agent-Friendly Documentation Spec](https://agentdocsspec.com/). Its [checks reference](https://afdocs.dev/checks/) lists 23 checks across 7 categories, together with the pass, warning, and failure criteria for each check.
 
-Several Rspress Agent-friendly optimizations described in this article also correspond to AFDocs checks:
+Several Rspress Agent-friendly optimizations described in this article can be validated through AFDocs checks:
 
 | Rspress capability      | AFDocs checks                                                                                                                                                                                              | What it checks                                            |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
@@ -249,6 +249,8 @@ Several Rspress Agent-friendly optimizations described in this article also corr
 | `Accept: text/markdown` | [`content-negotiation`](https://afdocs.dev/checks/markdown-availability#content-negotiation)                                                                                                               | Whether the request header returns Markdown               |
 | `LlmsHint`              | [`llms-txt-directive-html`](https://afdocs.dev/checks/content-discoverability#llms-txt-directive-html), [`llms-txt-directive-md`](https://afdocs.dev/checks/content-discoverability#llms-txt-directive-md) | Whether Agents can discover the index from a single page  |
 | Dual output             | [`markdown-content-parity`](https://afdocs.dev/checks/observability#markdown-content-parity)                                                                                                               | Whether HTML and Markdown express the same content        |
+
+Rspress also uses other AFDocs checks to guide further improvements, including metrics such as HTML size.
 
 Run the following command to check a public documentation site:
 

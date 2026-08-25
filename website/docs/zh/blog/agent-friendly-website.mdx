@@ -240,7 +240,7 @@ Rspress is a React-based static site generator built on Rsbuild.
 
 [AFDocs](https://afdocs.dev/) 是 [Agent-Friendly Documentation Spec](https://agentdocsspec.com/) 的配套开源工具。[检查文档](https://afdocs.dev/checks/)列出了 7 个类别、23 项检查，以及每一项的通过、警告和失败条件。
 
-本文介绍的多项 Rspress Agent-friendly 优化，也恰好对应 AFDocs 的检查规则：
+本文介绍的多项 Rspress Agent-friendly 优化，都可以通过 AFDocs 的检查规则加以验证：
 
 | Rspress 的能力          | AFDocs 检查                                                                                                                                                                                                | 检查的问题                        |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
@@ -249,6 +249,8 @@ Rspress is a React-based static site generator built on Rsbuild.
 | `Accept: text/markdown` | [`content-negotiation`](https://afdocs.dev/checks/markdown-availability#content-negotiation)                                                                                                               | 携带该请求头时能否获得 Markdown   |
 | `LlmsHint`              | [`llms-txt-directive-html`](https://afdocs.dev/checks/content-discoverability#llms-txt-directive-html)、[`llms-txt-directive-md`](https://afdocs.dev/checks/content-discoverability#llms-txt-directive-md) | Agent 从单篇页面能否发现文档索引  |
 | 双产物                  | [`markdown-content-parity`](https://afdocs.dev/checks/observability#markdown-content-parity)                                                                                                               | HTML 和 Markdown 是否表达相同内容 |
+
+除此之外，Rspress 也参考 AFDocs 的其他检查，进一步优化了 HTML 体积等指标。
 
 运行以下命令检查公开文档站：
 
