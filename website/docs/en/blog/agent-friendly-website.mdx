@@ -172,7 +172,7 @@ function _createMdxContent() {
 ```tsx
 export function Tab({ label }: { label: string }) {
   if (import.meta.env.SSG_MD) {
-    return <>{`** Here is a Tab named ${label}**`}</>;
+    return <>{`**Here is a Tab named ${label}**`}</>;
   }
   return <div>{label}</div>;
 }
