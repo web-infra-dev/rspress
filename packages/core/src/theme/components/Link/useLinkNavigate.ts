@@ -1,15 +1,11 @@
 import {
-  cleanUrlByConfig,
   initPageData,
   isActive,
-  isExternalUrl,
   pathnameToRouteService,
-  removeBase,
   useLocation,
   useNavigate as useNavigateInner,
   useSite,
   warmPageData,
-  withBase,
 } from '@rspress/core/runtime';
 import nprogress from 'nprogress';
 import {
@@ -17,51 +13,9 @@ import {
   type TransitionStartFunction,
   useCallback,
 } from 'react';
+import { getHref } from './getHref';
 
 nprogress.configure({ showSpinner: false });
-
-function isAbsoluteUrl(url: string): boolean {
-  return url.startsWith('/');
-}
-
-type LinkType = 'external' | 'hashOnly' | 'relative' | 'internal';
-
-function getLinkType(href: string): LinkType {
-  if (isExternalUrl(href)) {
-    return 'external';
-  }
-  if (href.startsWith('#')) {
-    return 'hashOnly';
-  }
-
-  if (!isAbsoluteUrl(href)) {
-    return 'relative';
-  }
-
-  return 'internal';
-}
-
-export function getHref(href: string): {
-  withBaseHref: string;
-  removeBaseHref: string;
-  linkType: LinkType;
-} {
-  let withBaseHref;
-  const linkType = getLinkType(href);
-
-  if (linkType === 'external' || linkType === 'hashOnly') {
-    return { linkType: linkType, withBaseHref: href, removeBaseHref: href };
-  }
-
-  if (linkType === 'relative' && !import.meta.env.SSR) {
-    withBaseHref = new URL(href, window.location.href).pathname;
-  } else {
-    withBaseHref = withBase(cleanUrlByConfig(href));
-  }
-  const removeBaseHref = removeBase(withBaseHref);
-
-  return { withBaseHref, removeBaseHref, linkType };
-}
 
 /**
  * For import { Link } from '@rspress/core/theme';
@@ -81,7 +35,8 @@ export function useLinkNavigate(
 
   return useCallback(
     async (href: string) => {
-      const { linkType, removeBaseHref, withBaseHref } = getHref(href);
+      const { linkType, removeBaseHref, routePath, withBaseHref } =
+        getHref(href);
       if (linkType === 'external' || linkType === 'hashOnly') {
         window.location.assign(href);
         return;
@@ -92,13 +47,13 @@ export function useLinkNavigate(
         const inCurrPage = isActive(removeBaseHref, currPagePathname);
 
         if (!import.meta.env.SSR && !inCurrPage) {
-          const matchedRoute = pathnameToRouteService(removeBaseHref);
+          const matchedRoute = pathnameToRouteService(routePath);
           if (matchedRoute) {
             const timer = setTimeout(() => {
               nprogress.start();
             }, 200);
-            const data = await initPageData(removeBaseHref);
-            warmPageData(removeBaseHref, data);
+            const data = await initPageData(routePath);
+            warmPageData(routePath, data);
             clearTimeout(timer);
             nprogress.done();
           } else {
