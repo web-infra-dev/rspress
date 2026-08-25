@@ -6,6 +6,8 @@ sidebar: false
 pageType: doc
 ---
 
+import { TweetEmbed } from 'rspress-plugin-third-parties';
+
 _2026 年 8 月 20 日_
 
 # 怎样构建一个 Agent-friendly 的网站
@@ -21,9 +23,14 @@ Claude Code、Cursor、Codex 等 Agent 已经会直接查阅文档、调用 API 
 
 不止是人类读者，Rspress 致力于让每个文档都能被 Agent 更好地发现、读取和理解。下面介绍一下 Rspress 在 Agent-friendly 上的最佳实践：
 
-![Rspress 的 AFDocs 评分](./agent-friendly-website-afdocs-scorecard.png)
-
-_Rspress 在 afdocs 中的评分为 100/100_
+<TweetEmbed
+  id="2090359544769913185"
+  caption={
+    <a href="https://x.com/Soon_Iter/status/2090359544769913185?s=20">
+      Rspress 在 AFDocs 中的评分为 100/100
+    </a>
+  }
+/>
 
 ## llms.txt：Agent 时代的 sitemap
 
@@ -262,7 +269,7 @@ npx afdocs check https://docs.example.com --format scorecard
 - `llms-txt-directive-html`：Agent 直接访问某个 HTML 页面时，是否知道网站存在 `llms.txt` 和当前页的 Markdown；
 - `llms-txt-directive-md`：Agent 拿到一篇 Markdown 后，是否知道去哪里查找整个文档站。
 
-Agent 可能从深层文档进入网站，不经过首页或 `/llms.txt`。因此，每个页面都需要暴露 `llms.txt` 地址。
+即使网站已经提供 Markdown，Agent 从深层文档进入时，也不一定知道当前页面的 Markdown 版本和 `/llms.txt` 的存在。因此，每个页面都需要主动暴露这些入口。
 
 Rspress 原生提供 [`injectLlmsHint`](/zh/api/config/config-theme#injectllmshint) 配置。启用 SSG-MD 后，生成的 HTML 会在正文靠前的位置注入一段视觉隐藏的纯文本：
 
