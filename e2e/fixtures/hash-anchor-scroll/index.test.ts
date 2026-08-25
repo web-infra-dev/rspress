@@ -19,12 +19,12 @@ test.describe('hash anchor scrolling', async () => {
 
   test('scrolls after the target layout is ready', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
-    await page.goto(`http://localhost:${appPort}/source`, {
+    await page.goto(`http://localhost:${appPort}/docs/source`, {
       waitUntil: 'networkidle',
     });
 
     await page.getByRole('link', { name: 'Target section' }).click();
-    await expect(page).toHaveURL(/\/target#target-heading$/);
+    await expect(page).toHaveURL(/\/docs\/target\?from=source#target-heading$/);
 
     const headingOffset = await page.locator('#target-heading').evaluate(el => {
       const scrollPaddingTop = Number.parseFloat(
