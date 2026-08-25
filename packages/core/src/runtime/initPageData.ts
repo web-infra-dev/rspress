@@ -51,24 +51,17 @@ const slots: [CacheSlot, CacheSlot, CacheSlot] = [
   undefined,
 ];
 
-function getCacheKey(routePath: string): string {
-  // Page data is route-based, while warmed links may include search and hash.
-  return cleanUrl(routePath);
-}
-
 // Warm slot 0 with the target page's data before navigation.
 export function warmPageData(routePath: string, data: Page): void {
   // Trample whatever the current "next" page will be in our cache.
-  slots[0] = { routePath: getCacheKey(routePath), data };
+  slots[0] = { routePath, data };
 }
 
 // Check the cache on route change. Direction is implicit: a slot 0 match means forward navigation (the page was
 // explicitly warmed by useLinkNavigate), a slot 2 match means backward navigation (the page was retained from a prior
 // forward shift). On match, slots are shifted to reflect the new navigation position.
 export function consumeCachedPageData(routePath: string): Page | undefined {
-  const cacheKey = getCacheKey(routePath);
-
-  if (slots[0]?.routePath === cacheKey) {
+  if (slots[0]?.routePath === routePath) {
     // Forward navigation: next becomes current, current becomes previous
     const data = slots[0].data;
     slots[2] = slots[1];
@@ -76,7 +69,7 @@ export function consumeCachedPageData(routePath: string): Page | undefined {
     slots[0] = undefined;
     return data;
   }
-  if (slots[2]?.routePath === cacheKey) {
+  if (slots[2]?.routePath === routePath) {
     // Backward navigation: previous becomes current, current becomes next
     const data = slots[2].data;
     slots[0] = slots[1];
@@ -93,7 +86,7 @@ export function consumeCachedPageData(routePath: string): Page | undefined {
 // alone it may be warming an unrelated page.
 export function setCurrentPageData(routePath: string, data: Page): void {
   slots[2] = slots[1];
-  slots[1] = { routePath: getCacheKey(routePath), data };
+  slots[1] = { routePath, data };
 }
 
 export async function initPageData(routePath: string): Promise<Page> {

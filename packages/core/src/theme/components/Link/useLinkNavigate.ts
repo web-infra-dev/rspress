@@ -11,6 +11,7 @@ import {
   warmPageData,
   withBase,
 } from '@rspress/core/runtime';
+import { cleanUrl } from '@rspress/shared';
 import nprogress from 'nprogress';
 import {
   startTransition as reactStartTransition,
@@ -92,13 +93,14 @@ export function useLinkNavigate(
         const inCurrPage = isActive(removeBaseHref, currPagePathname);
 
         if (!import.meta.env.SSR && !inCurrPage) {
-          const matchedRoute = pathnameToRouteService(removeBaseHref);
+          const routePath = cleanUrl(removeBaseHref);
+          const matchedRoute = pathnameToRouteService(routePath);
           if (matchedRoute) {
             const timer = setTimeout(() => {
               nprogress.start();
             }, 200);
-            const data = await initPageData(removeBaseHref);
-            warmPageData(removeBaseHref, data);
+            const data = await initPageData(routePath);
+            warmPageData(routePath, data);
             clearTimeout(timer);
             nprogress.done();
           } else {

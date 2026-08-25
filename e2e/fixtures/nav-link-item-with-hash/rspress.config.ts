@@ -7,14 +7,6 @@ export default defineConfig({
     cleanUrls: true,
   },
   themeConfig: {
-    sidebar: {
-      '/target': [
-        {
-          text: 'Target',
-          link: '/target',
-        },
-      ],
-    },
     nav: [
       {
         text: 'PageA',

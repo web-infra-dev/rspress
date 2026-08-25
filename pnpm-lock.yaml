@@ -503,6 +503,28 @@ importers:
         specifier: ^19.2.4
         version: 19.2.4(@types/react@19.2.18)
 
+  e2e/fixtures/hash-anchor-scroll:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.18
+        version: 19.2.18
+      '@types/react-dom':
+        specifier: ^19.2.4
+        version: 19.2.4(@types/react@19.2.18)
+
   e2e/fixtures/heading-title:
     dependencies:
       '@rspress/core':
