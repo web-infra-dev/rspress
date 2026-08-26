@@ -1,14 +1,49 @@
 import { expect, test } from '@e2e/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runPreviewCommand,
+} from '../../utils/runCommands';
+
+type BannerProbeWindow = typeof window & {
+  __bannerWasVisible: boolean;
+};
+
+function installBannerVisibilityProbe(storageKey: string) {
+  window.localStorage.setItem(storageKey, 'true');
+  const state = window as BannerProbeWindow;
+  state.__bannerWasVisible = false;
+
+  const inspectBanner = () => {
+    const banner = document.querySelector('.rp-banner');
+    if (banner && getComputedStyle(banner).display !== 'none') {
+      state.__bannerWasVisible = true;
+    }
+  };
+
+  const observer = new MutationObserver(() => {
+    inspectBanner();
+    if (state.__bannerWasVisible) {
+      observer.disconnect();
+    }
+  });
+  observer.observe(document, {
+    childList: true,
+    subtree: true,
+  });
+  window.addEventListener('load', () => observer.disconnect(), { once: true });
+}
 
 test.describe('banner', async () => {
   let appPort: number;
-  let app: Awaited<ReturnType<typeof runDevCommand>> | null;
+  let app: Awaited<ReturnType<typeof runPreviewCommand>> | null;
 
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
+    await runBuildCommand(appDir);
+    app = await runPreviewCommand(appDir, appPort);
   });
 
   test.afterAll(async () => {
@@ -35,30 +70,7 @@ test.describe('banner', async () => {
   });
 
   test('Banner does not flash when previously dismissed', async ({ page }) => {
-    await page.addInitScript(() => {
-      window.localStorage.setItem('rp-banner-closed', 'true');
-      const state = window as typeof window & {
-        __bannerWasVisible: boolean;
-      };
-      state.__bannerWasVisible = false;
-
-      const detectVisibleBanner = () => {
-        const banner = document.querySelector('.rp-banner');
-        if (banner && getComputedStyle(banner).display !== 'none') {
-          state.__bannerWasVisible = true;
-        }
-      };
-
-      new MutationObserver(detectVisibleBanner).observe(document, {
-        childList: true,
-        subtree: true,
-      });
-      const detectVisibleBannerOnFrame = () => {
-        detectVisibleBanner();
-        requestAnimationFrame(detectVisibleBannerOnFrame);
-      };
-      requestAnimationFrame(detectVisibleBannerOnFrame);
-    });
+    await page.addInitScript(installBannerVisibilityProbe, 'rp-banner-closed');
 
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
@@ -66,9 +78,7 @@ test.describe('banner', async () => {
 
     expect(
       await page.evaluate(
-        () =>
-          (window as typeof window & { __bannerWasVisible: boolean })
-            .__bannerWasVisible,
+        () => (window as BannerProbeWindow).__bannerWasVisible,
       ),
     ).toBe(false);
     await expect(page.locator('.rp-banner')).toHaveCount(0);

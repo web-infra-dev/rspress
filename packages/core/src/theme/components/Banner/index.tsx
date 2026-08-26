@@ -84,6 +84,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
       storage?: 'localStorage' | 'sessionStorage' | false;
       customChildren?: ReactNode;
     };
+    const isCustom = 'customChildren' in props;
 
     const [height, setHeight] = useState(36);
     const ref = mergeRefs(forwardedRef, element => {
@@ -98,7 +99,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
 
     useEffect(() => {
       let isDisabled = false;
-      if (typeof window !== 'undefined' && storage && storageKey) {
+      if (!isCustom && typeof window !== 'undefined' && storage && storageKey) {
         try {
           isDisabled = Boolean(window[storage].getItem(storageKey));
         } catch {
@@ -112,7 +113,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
       return () => {
         document.documentElement.classList.remove(hiddenClass);
       };
-    }, [hiddenClass, storage, storageKey]);
+    }, [hiddenClass, isCustom, storage, storageKey]);
 
     if (!display || disable) {
       return null;
@@ -120,7 +121,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
 
     return (
       <>
-        {storage && storageKey ? (
+        {!isCustom && storage && storageKey ? (
           <script
             data-rp-banner-hidden-class={hiddenClass}
             data-rp-banner-storage={storage}
