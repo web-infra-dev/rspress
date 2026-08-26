@@ -34,18 +34,6 @@ html.dark {
   color-scheme: dark;
 }
 
-/* Toggled by applyThemeToDOM for one frame while the theme class flips, so
-   every themed surface switches in sync instead of fading at its own pace.
-   A static rule toggled via a root class (rather than an injected <style>)
-   stays compatible with strict CSP. `*` does not match -webkit- scrollbar
-   pseudo-elements; their suppression lives next to their transition in
-   scrollbar.scss. */
-html.rp-theme-switching *,
-html.rp-theme-switching *::before,
-html.rp-theme-switching *::after {
-  transition: none !important;
-}
-
 body {
   margin: 0;
   width: 100%;

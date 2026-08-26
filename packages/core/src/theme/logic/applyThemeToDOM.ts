@@ -12,8 +12,8 @@ export const applyThemeToDOM = (theme: ThemeValue) => {
   root.classList.toggle('rp-dark', isDark);
   root.style.colorScheme = theme;
   if (changed) {
-    // The `.rp-theme-switching` rule in base.css disables transitions so
-    // every themed surface switches in sync.
+    // The `.rp-theme-switching` rule in SwitchAppearance/global.scss disables
+    // transitions so every themed surface switches in sync.
     root.classList.add('rp-theme-switching');
     // Force a style flush so the suppression applies before it is removed.
     void window.getComputedStyle(root).opacity;

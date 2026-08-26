@@ -24,14 +24,6 @@
     transition: background 0.2s ease;
   }
 
-  /* Cancels the transition above during a theme switch — the universal
-     suppression rule in base.css cannot match -webkit- scrollbar
-     pseudo-elements. Kept as its own rule: an unrecognized -webkit-
-     pseudo-element can invalidate a whole selector list. */
-  html.rp-theme-switching &::-webkit-scrollbar-thumb {
-    transition: none !important;
-  }
-
   /* Scrollbar thumb hover state */
   &::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.1);

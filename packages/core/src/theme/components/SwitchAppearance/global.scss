@@ -4,6 +4,17 @@
   mix-blend-mode: normal;
 }
 
+/* Toggled by applyThemeToDOM for one frame while the theme class flips, so
+   every themed surface switches in sync instead of fading at its own pace.
+   A static rule toggled via a root class (rather than an injected <style>)
+   stays compatible with strict CSP. */
+html.rp-theme-switching *,
+html.rp-theme-switching *::before,
+html.rp-theme-switching *::after,
+html.rp-theme-switching *::-webkit-scrollbar-thumb {
+  transition: none !important;
+}
+
 /* Toggled by SwitchAppearance while the appearance view transition runs; the
    'flip' and 'root' view-transition names conflict otherwise, see
    https://github.com/web-infra-dev/rspress/pull/1272 */
