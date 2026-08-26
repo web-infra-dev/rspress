@@ -42,6 +42,13 @@ html.rp-theme-switching *::after {
   transition: none !important;
 }
 
+/* Scrollbar thumbs transition their background and are not matched by `*`.
+   Kept as a separate rule: a browser that does not recognize the
+   -webkit- pseudo-element would drop every selector sharing the list. */
+html.rp-theme-switching *::-webkit-scrollbar-thumb {
+  transition: none !important;
+}
+
 /* Toggled by SwitchAppearance while the appearance view transition runs; the
    'flip' and 'root' view-transition names conflict otherwise, see
    https://github.com/web-infra-dev/rspress/pull/1272 */
