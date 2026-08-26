@@ -12,6 +12,14 @@
     gap: 24px;
   }
 
+  &--left {
+    margin-left: 32px;
+
+    @media (max-width: 1279px) {
+      margin-left: 24px;
+    }
+  }
+
   &__item {
     display: flex;
     height: 100%;
