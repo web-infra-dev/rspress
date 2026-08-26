@@ -34,6 +34,46 @@ test.describe('banner', async () => {
     expect(stored).toBe('true');
   });
 
+  test('Banner does not flash when previously dismissed', async ({ page }) => {
+    await page.addInitScript(() => {
+      window.localStorage.setItem('rp-banner-closed', 'true');
+      const state = window as typeof window & {
+        __bannerWasVisible: boolean;
+      };
+      state.__bannerWasVisible = false;
+
+      const detectVisibleBanner = () => {
+        const banner = document.querySelector('.rp-banner');
+        if (banner && getComputedStyle(banner).display !== 'none') {
+          state.__bannerWasVisible = true;
+        }
+      };
+
+      new MutationObserver(detectVisibleBanner).observe(document, {
+        childList: true,
+        subtree: true,
+      });
+      const detectVisibleBannerOnFrame = () => {
+        detectVisibleBanner();
+        requestAnimationFrame(detectVisibleBannerOnFrame);
+      };
+      requestAnimationFrame(detectVisibleBannerOnFrame);
+    });
+
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    expect(
+      await page.evaluate(
+        () =>
+          (window as typeof window & { __bannerWasVisible: boolean })
+            .__bannerWasVisible,
+      ),
+    ).toBe(false);
+    await expect(page.locator('.rp-banner')).toHaveCount(0);
+  });
+
   test('Banner message stays single line on narrow viewport', async ({
     page,
   }) => {

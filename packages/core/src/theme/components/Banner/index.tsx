@@ -1,7 +1,20 @@
 import { IconClose, Link, mergeRefs, SvgWrapper } from '@rspress/core/theme';
 import clsx from 'clsx';
-import { forwardRef, type ReactNode, useEffect, useState } from 'react';
+import { forwardRef, type ReactNode, useEffect, useId, useState } from 'react';
 import './index.scss';
+
+const inlineStorageScript = `(function () {
+  var script = document.currentScript;
+  if (!script) return;
+  try {
+    var storage = window[script.dataset.rpBannerStorage];
+    var storageKey = script.dataset.rpBannerStorageKey;
+    var hiddenClass = script.dataset.rpBannerHiddenClass;
+    if (storage && storageKey && hiddenClass && storage.getItem(storageKey)) {
+      document.documentElement.classList.add(hiddenClass);
+    }
+  } catch (e) {}
+})();`;
 
 export type BannerProps = {
   /**
@@ -79,14 +92,27 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
       }
     });
     const [disable, setDisable] = useState(false);
+    const bannerId = useId().replace(/[^a-zA-Z0-9_-]/g, '');
+    const bannerClass = `rp-banner-${bannerId}`;
+    const hiddenClass = `${bannerClass}-hidden`;
 
-    // TODO: support SSR
     useEffect(() => {
-      if (typeof window === 'undefined' || !storage || !storageKey) {
-        return;
+      let isDisabled = false;
+      if (typeof window !== 'undefined' && storage && storageKey) {
+        try {
+          isDisabled = Boolean(window[storage].getItem(storageKey));
+        } catch {
+          isDisabled = false;
+        }
       }
-      setDisable(Boolean(window[storage].getItem(storageKey)));
-    }, []);
+
+      document.documentElement.classList.toggle(hiddenClass, isDisabled);
+      setDisable(isDisabled);
+
+      return () => {
+        document.documentElement.classList.remove(hiddenClass);
+      };
+    }, [hiddenClass, storage, storageKey]);
 
     if (!display || disable) {
       return null;
@@ -94,7 +120,17 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
 
     return (
       <>
-        <div className={clsx('rp-banner', className)} ref={ref}>
+        {storage && storageKey ? (
+          <script
+            data-rp-banner-hidden-class={hiddenClass}
+            data-rp-banner-storage={storage}
+            data-rp-banner-storage-key={storageKey}
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: inlineStorageScript }}
+          />
+        ) : null}
+        <style>{`:root {--rp-banner-height: ${height}px;} :root.${hiddenClass} {--rp-banner-height: 0px;} :root.${hiddenClass} .${bannerClass} {display: none;}`}</style>
+        <div className={clsx('rp-banner', bannerClass, className)} ref={ref}>
           {customChildren ?? (
             <>
               <Link
@@ -107,9 +143,14 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
               <SvgWrapper
                 icon={IconClose}
                 onClick={() => {
+                  document.documentElement.classList.add(hiddenClass);
                   setDisable(true);
                   if (storage) {
-                    window[storage].setItem(storageKey, 'true');
+                    try {
+                      window[storage].setItem(storageKey, 'true');
+                    } catch {
+                      return;
+                    }
                   }
                 }}
                 className="rp-banner__close"
@@ -117,7 +158,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(
             </>
           )}
         </div>
-        <style>{`:root {--rp-banner-height: ${height}px;}`}</style>
       </>
     );
   },
