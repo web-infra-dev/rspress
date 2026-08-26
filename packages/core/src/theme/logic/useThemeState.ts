@@ -16,9 +16,19 @@ type ThemeConfigValue = ThemeValue | 'auto';
 const applyThemeToDOM = (theme: ThemeValue) => {
   if (!document?.documentElement) return;
   const root = document.documentElement;
+  // Suppress CSS transitions for one frame so every themed surface (nav,
+  // code blocks, etc.) switches in sync instead of fading at its own pace.
+  const style = document.createElement('style');
+  style.textContent = '* { transition: none !important; }';
+  document.head.appendChild(style);
   root.classList.toggle('dark', theme === 'dark');
   root.classList.toggle('rp-dark', theme === 'dark');
   root.style.colorScheme = theme;
+  // Force a style flush so the rule takes effect before it is removed.
+  window.getComputedStyle(style).opacity;
+  requestAnimationFrame(() => {
+    document.head.removeChild(style);
+  });
 };
 
 function useSystemTheme(): ThemeValue {
