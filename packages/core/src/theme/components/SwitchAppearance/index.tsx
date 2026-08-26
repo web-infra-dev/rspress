@@ -13,16 +13,12 @@ const supportAppearanceTransition = () => {
 };
 
 // two view-transition name is conflicted, 'flip' and 'root', see https://github.com/web-infra-dev/rspress/pull/1272
+// The rule lives in base.css (html.rp-appearance-transition) instead of an
+// injected <style> to stay compatible with strict CSP.
 const removeClipViewTransition = () => {
-  const styleDom = document.createElement('style');
-  styleDom.innerHTML = `
-      .rspress-doc {
-        view-transition-name: none !important;
-      }
-  `;
-  document.head.appendChild(styleDom);
+  document.documentElement.classList.add('rp-appearance-transition');
   return () => {
-    document.head.removeChild(styleDom);
+    document.documentElement.classList.remove('rp-appearance-transition');
   };
 };
 

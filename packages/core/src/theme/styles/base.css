@@ -34,6 +34,21 @@ html.dark {
   color-scheme: dark;
 }
 
+/* Toggled by applyThemeToDOM for one frame while the theme class flips, so
+   every themed surface switches in sync instead of fading at its own pace. */
+html.rp-theme-switching *,
+html.rp-theme-switching *::before,
+html.rp-theme-switching *::after {
+  transition: none !important;
+}
+
+/* Toggled by SwitchAppearance while the appearance view transition runs; the
+   'flip' and 'root' view-transition names conflict otherwise, see
+   https://github.com/web-infra-dev/rspress/pull/1272 */
+html.rp-appearance-transition .rspress-doc {
+  view-transition-name: none !important;
+}
+
 body {
   margin: 0;
   width: 100%;

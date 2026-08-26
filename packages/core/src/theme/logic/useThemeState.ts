@@ -13,22 +13,33 @@ const MEDIA_QUERY = '(prefers-color-scheme: dark)';
 type ThemeValue = 'dark' | 'light';
 type ThemeConfigValue = ThemeValue | 'auto';
 
-const applyThemeToDOM = (theme: ThemeValue) => {
-  if (!document?.documentElement) return;
-  const root = document.documentElement;
-  // Suppress CSS transitions for one frame so every themed surface (nav,
-  // code blocks, etc.) switches in sync instead of fading at its own pace.
-  const style = document.createElement('style');
-  style.textContent = '* { transition: none !important; }';
-  document.head.appendChild(style);
-  root.classList.toggle('dark', theme === 'dark');
-  root.classList.toggle('rp-dark', theme === 'dark');
+/**
+ * @internal exported for testing
+ */
+export const applyThemeToDOM = (theme: ThemeValue) => {
+  const root = document?.documentElement;
+  if (!root) return;
+  const isDark = theme === 'dark';
+  // Suppress transitions only when the theme actually flips — the call after
+  // hydration matches the DOM already set by the inline theme script, and the
+  // suppression toggle forces two whole-document style recalcs.
+  const changed = root.classList.contains('dark') !== isDark;
+  if (changed) {
+    // The `.rp-theme-switching` rule lives in base.css instead of an injected
+    // <style> to stay compatible with strict CSP (style-src without
+    // 'unsafe-inline').
+    root.classList.add('rp-theme-switching');
+  }
+  root.classList.toggle('dark', isDark);
+  root.classList.toggle('rp-dark', isDark);
   root.style.colorScheme = theme;
-  // Force a style flush so the rule takes effect before it is removed.
-  window.getComputedStyle(style).opacity;
-  requestAnimationFrame(() => {
-    document.head.removeChild(style);
-  });
+  if (changed) {
+    // Force a style flush so the suppression applies before it is removed.
+    window.getComputedStyle(root).opacity;
+    requestAnimationFrame(() => {
+      root.classList.remove('rp-theme-switching');
+    });
+  }
 };
 
 function useSystemTheme(): ThemeValue {
