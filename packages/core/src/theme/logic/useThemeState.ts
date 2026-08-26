@@ -22,7 +22,7 @@ export const applyThemeToDOM = (theme: ThemeValue) => {
   const isDark = theme === 'dark';
   // Suppress transitions only when the theme actually flips — the call after
   // hydration matches the DOM already set by the inline theme script, and the
-  // suppression toggle forces two whole-document style recalcs.
+  // suppression toggle forces two whole-document style recalculations.
   const changed = root.classList.contains('dark') !== isDark;
   if (changed) {
     // The `.rp-theme-switching` rule lives in base.css instead of an injected
