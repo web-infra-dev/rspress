@@ -4,6 +4,13 @@
   mix-blend-mode: normal;
 }
 
+/* Toggled by SwitchAppearance while the appearance view transition runs; the
+   'flip' and 'root' view-transition names conflict otherwise, see
+   https://github.com/web-infra-dev/rspress/pull/1272 */
+html.rp-appearance-transition .rspress-doc {
+  view-transition-name: none !important;
+}
+
 ::view-transition-old(root),
 .dark::view-transition-new(root) {
   z-index: 1;

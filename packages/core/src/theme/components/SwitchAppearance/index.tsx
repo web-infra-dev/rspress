@@ -12,9 +12,8 @@ const supportAppearanceTransition = () => {
   );
 };
 
-// two view-transition name is conflicted, 'flip' and 'root', see https://github.com/web-infra-dev/rspress/pull/1272
-// The rule lives in base.css (html.rp-appearance-transition) instead of an
-// injected <style> to stay compatible with strict CSP.
+// Toggles the `html.rp-appearance-transition` rule in global.scss — see the
+// comment there and https://github.com/web-infra-dev/rspress/pull/1272
 const removeClipViewTransition = () => {
   document.documentElement.classList.add('rp-appearance-transition');
   return () => {

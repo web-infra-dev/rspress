@@ -1,7 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it, rs } from '@rstest/core';
-import { applyThemeToDOM } from './useThemeState';
-
-rs.mock('@rspress/core/runtime', () => ({}));
+import { afterEach, beforeEach, describe, expect, it } from '@rstest/core';
+import { applyThemeToDOM } from './applyThemeToDOM';
 
 // The repository's unit tests run in a plain node environment, so the few DOM
 // APIs applyThemeToDOM touches are stubbed here instead of pulling in jsdom.
