@@ -394,7 +394,8 @@
 
     a {
       color: var(--rp-prompt-accent, var(--rp-c-brand-dark));
-      border-bottom: 1px solid currentColor;
+      text-decoration: underline;
+      text-underline-offset: 4px;
 
       & > code {
         color: inherit;

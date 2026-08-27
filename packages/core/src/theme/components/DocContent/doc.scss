@@ -36,7 +36,8 @@
       overflow-wrap: break-word;
 
       &:hover {
-        border-bottom: 1px solid currentColor;
+        text-decoration: underline;
+        text-underline-offset: 4px;
         opacity: 0.85;
       }
       &[target='_blank'] {
