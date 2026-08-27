@@ -52,6 +52,8 @@
     position: relative;
     z-index: 1;
     margin: 0;
+    width: fit-content;
+    min-width: 100%;
     background: transparent;
   }
 
