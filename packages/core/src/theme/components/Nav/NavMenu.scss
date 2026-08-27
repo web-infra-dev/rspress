@@ -1,23 +1,17 @@
 .rp-nav-menu {
+  --rp-nav-menu-item-gap: 32px;
+
   display: inline-flex;
   align-items: center;
   height: 100%;
   list-style: none;
 
-  @media (min-width: 1280px) {
-    gap: 32px;
-  }
-
   @media (max-width: 1279px) {
-    gap: 24px;
+    --rp-nav-menu-item-gap: 24px;
   }
 
   &--left {
-    margin-left: 32px;
-
-    @media (max-width: 1279px) {
-      margin-left: 24px;
-    }
+    margin: 0 0 0 24px;
   }
 
   &__item {
@@ -34,6 +28,8 @@
       align-items: center;
       height: 100%;
       gap: 4px;
+      padding: 0 calc(var(--rp-nav-menu-item-gap) / 2) 0
+        calc(var(--rp-nav-menu-item-gap) / 2);
 
       // text
       text-align: center;
@@ -41,6 +37,14 @@
       font-style: normal;
       font-weight: 500;
       line-height: 22px;
+    }
+
+    &:first-child > .rp-nav-menu__item__container {
+      padding-left: 0;
+    }
+
+    &:last-child > .rp-nav-menu__item__container {
+      padding-right: 0;
     }
 
     &__icon {
