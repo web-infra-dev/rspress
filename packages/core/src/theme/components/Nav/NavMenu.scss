@@ -1,23 +1,18 @@
 .rp-nav-menu {
+  --rp-nav-menu-item-padding-x: 16px;
+
   display: inline-flex;
   align-items: center;
   height: 100%;
   list-style: none;
-
-  @media (min-width: 1280px) {
-    gap: 32px;
-  }
+  margin-inline: calc(0px - var(--rp-nav-menu-item-padding-x));
 
   @media (max-width: 1279px) {
-    gap: 24px;
+    --rp-nav-menu-item-padding-x: 12px;
   }
 
   &--left {
-    margin-left: 32px;
-
-    @media (max-width: 1279px) {
-      margin-left: 24px;
-    }
+    margin-inline-start: var(--rp-nav-menu-item-padding-x);
   }
 
   &__item {
@@ -34,6 +29,7 @@
       align-items: center;
       height: 100%;
       gap: 4px;
+      padding-inline: var(--rp-nav-menu-item-padding-x);
 
       // text
       text-align: center;
