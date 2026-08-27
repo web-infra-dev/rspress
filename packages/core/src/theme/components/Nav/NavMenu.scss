@@ -11,11 +11,7 @@
   }
 
   &--left {
-    margin: 0 0 0 32px;
-
-    @media (max-width: 1279px) {
-      margin: 0 0 0 24px;
-    }
+    margin: 0 0 0 24px;
   }
 
   &__item {
