@@ -5,14 +5,15 @@
   align-items: center;
   height: 100%;
   list-style: none;
-  margin-inline: calc(0px - var(--rp-nav-menu-item-padding-x));
+  margin: 0 calc(0px - var(--rp-nav-menu-item-padding-x)) 0
+    calc(0px - var(--rp-nav-menu-item-padding-x));
 
   @media (max-width: 1279px) {
     --rp-nav-menu-item-padding-x: 12px;
   }
 
   &--left {
-    margin-inline: var(--rp-nav-menu-item-padding-x) 0;
+    margin: 0 0 0 var(--rp-nav-menu-item-padding-x);
   }
 
   &__item {
