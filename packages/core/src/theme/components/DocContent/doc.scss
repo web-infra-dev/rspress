@@ -37,6 +37,7 @@
 
       &:hover {
         text-decoration: underline;
+        text-underline-offset: 4px;
         opacity: 0.85;
       }
       &[target='_blank'] {
