@@ -1,5 +1,5 @@
 .rp-nav-menu {
-  --rp-nav-menu-item-padding-x: 16px;
+  --rp-nav-menu-item-gap: 32px;
 
   display: inline-flex;
   align-items: center;
@@ -7,7 +7,7 @@
   list-style: none;
 
   @media (max-width: 1279px) {
-    --rp-nav-menu-item-padding-x: 12px;
+    --rp-nav-menu-item-gap: 24px;
   }
 
   &--left {
@@ -28,8 +28,8 @@
       align-items: center;
       height: 100%;
       gap: 4px;
-      padding: 0 var(--rp-nav-menu-item-padding-x) 0
-        var(--rp-nav-menu-item-padding-x);
+      padding: 0 calc(var(--rp-nav-menu-item-gap) / 2) 0
+        calc(var(--rp-nav-menu-item-gap) / 2);
 
       // text
       text-align: center;
