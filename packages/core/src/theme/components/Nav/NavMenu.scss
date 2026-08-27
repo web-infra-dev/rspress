@@ -12,7 +12,7 @@
   }
 
   &--left {
-    margin-inline-start: var(--rp-nav-menu-item-padding-x);
+    margin-inline: var(--rp-nav-menu-item-padding-x) 0;
   }
 
   &__item {
