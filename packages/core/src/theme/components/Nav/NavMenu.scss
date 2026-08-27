@@ -30,7 +30,8 @@
       align-items: center;
       height: 100%;
       gap: 4px;
-      padding-inline: var(--rp-nav-menu-item-padding-x);
+      padding: 0 var(--rp-nav-menu-item-padding-x) 0
+        var(--rp-nav-menu-item-padding-x);
 
       // text
       text-align: center;
