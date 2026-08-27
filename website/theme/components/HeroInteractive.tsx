@@ -1,113 +1,55 @@
-import {
-  CodeBlock,
-  IconGithub,
-  IconMoon,
-  IconSearch,
-  IconSun,
-} from '@rspress/core/theme';
 import styles from './HeroInteractive.module.scss';
+
+const PATHS = [
+  { label: '起', value: '01' },
+  { label: '承', value: '02' },
+  { label: '转', value: '03' },
+  { label: '合', value: '04' },
+];
 
 export function HeroInteractive() {
   return (
-    <div className={styles.wrapper}>
-      <img
-        className={styles.logo}
-        src="https://assets.rspack.rs/rspress/rspress-logo.svg"
-        alt="Rspress Logo"
-      />
-      <div className={styles.glowLeft} />
-      <div className={styles.glowRight} />
-      <div className={styles.container}>
-        <div className={styles.nav}>
-          <div className={styles.navLeft}>
-            <img
-              src="https://assets.rspack.rs/rspress/rspress-logo.svg"
-              alt="Rspress Logo"
-            />
-            <span>Rspress</span>
-          </div>
-          <div className={styles.navRight}>
-            <div className={styles.fakeSearch}>
-              <IconSearch />
-            </div>
-            <div className={styles.navItem}>English</div>
-            <div className={`${styles.navItem} ${styles.icon}`}>
-              <div className={styles.sun}>
-                <IconSun />
-              </div>
-              <div className={styles.moon}>
-                <IconMoon />
-              </div>
-            </div>
-            <div className={`${styles.navItem} ${styles.icon}`}>
-              <IconGithub />
-            </div>
-          </div>
-        </div>
-        <div className={styles.body}>
-          <div className={styles.sidebar}>
-            <div style={{ width: '40%' }} className={styles.sidebarHeader} />
-            <div className={`${styles.sidebarItem} ${styles.active}`}>
-              <div style={{ width: '70%' }} />
-            </div>
-            <div className={styles.sidebarItem}>
-              <div style={{ width: '50%' }} />
-            </div>
-            <div
-              style={{ width: '60%', marginTop: 12 }}
-              className={styles.sidebarHeader}
-            />
-            <div className={styles.sidebarItem}>
-              <div style={{ width: '40%' }} />
-            </div>
-            <div className={styles.sidebarItem}>
-              <div style={{ width: '60%' }} />
-            </div>
-            <div className={styles.sidebarItem}>
-              <div style={{ width: '50%' }} />
-            </div>
-          </div>
-          <div className={styles.main}>
-            <div className={styles.title}>Hello Rspress</div>
-            <div className={styles.skeletonText} />
-            <div className={styles.skeletonText} />
+    <div className={styles.wrapper} aria-hidden="true">
+      <div className={styles.sun} />
+      <div className={styles.mist} />
+      <div className={styles.mountainBack} />
+      <div className={styles.mountainFront} />
 
-            <div className={styles.cards}>
-              <div className={styles.card}>
-                <CodeBlock title="index.mdx" lang="Markdown">
-                  <pre className={styles.codeContent}>
-                    <code>
-                      <div className="line">
-                        <span style={{ color: 'var(--shiki-foreground)' }}>
-                          # Hello Rspress
-                        </span>
-                      </div>
-                      <br />
-                      <div className="line">
-                        <span className={styles.punctuation}>```</span>
-                        <span className={styles.function}>ts</span>{' '}
-                        <span>title</span>
-                        <span className={styles.punctuation}>=</span>
-                        <span className={styles.string}>"index.ts"</span>
-                      </div>
-                      <div className="line">
-                        <span className={styles.constant}>console</span>
-                        <span className={styles.punctuation}>.</span>
-                        <span className={styles.function}>log</span>
-                        <span className={styles.punctuation}>(</span>
-                        <span className={styles.string}>'Hello Rspress'</span>
-                        <span className={styles.punctuation}>);</span>
-                      </div>
-                      <div className="line">
-                        <span className={styles.punctuation}>```</span>
-                      </div>
-                    </code>
-                  </pre>
-                </CodeBlock>
-              </div>
-            </div>
-          </div>
+      <div className={styles.wheel}>
+        <div className={styles.wheelOuter} />
+        <div className={styles.wheelMiddle} />
+        <div className={styles.wheelInner}>
+          <img
+            src="https://assets.rspack.rs/rspress/rspress-logo.svg"
+            alt=""
+          />
         </div>
+        <span className={styles.runeOne}>疾</span>
+        <span className={styles.runeTwo}>构</span>
+        <span className={styles.runeThree}>文</span>
+        <span className={styles.runeFour}>道</span>
+      </div>
+
+      <div className={styles.staff} />
+      <div className={styles.seal}>
+        <span>如</span>
+        <span>意</span>
+      </div>
+
+      <div className={styles.chapter}>
+        <span className={styles.chapterEyebrow}>天命 · 文牒</span>
+        <strong>一念成章</strong>
+        <i />
+        <p>以 Rust 为锋，以 Markdown 载道</p>
+      </div>
+
+      <div className={styles.paths}>
+        {PATHS.map(path => (
+          <div className={styles.path} key={path.value}>
+            <span>{path.value}</span>
+            <b>{path.label}</b>
+          </div>
+        ))}
       </div>
     </div>
   );

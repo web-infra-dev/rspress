@@ -13,3 +13,195 @@
 .blog-back-button a:focus-visible {
   color: var(--rp-c-brand);
 }
+
+/* “The Destined Scribe” — an original ink-and-bronze theme inspired by
+ * classical Chinese scrolls, carved seals and game chapter screens. */
+:root {
+  --wukong-ink: #241d16;
+  --wukong-paper: #ede3ca;
+  --wukong-paper-deep: #dfcfaa;
+  --wukong-cinnabar: #9d2c1e;
+  --wukong-gold: #a4773f;
+  --rp-c-brand: #9d2c1e;
+  --rp-c-brand-light: #bd4a31;
+  --rp-c-brand-dark: #702016;
+  --rp-c-brand-tint: rgb(157 44 30 / 10%);
+  --rp-c-bg: #ede3ca;
+  --rp-c-bg-soft: #e7d9ba;
+  --rp-c-bg-mute: #dcc9a4;
+  --rp-c-text-1: #241d16;
+  --rp-c-text-2: #5f5547;
+  --rp-c-text-3: #887964;
+  --rp-c-divider-light: rgb(58 43 29 / 15%);
+  --rp-radius: 2px;
+  --rp-radius-large: 3px;
+  --rp-home-hero-title-bg: linear-gradient(115deg, #201a14 15%, #9d2c1e 60%, #664324);
+  --rp-home-feature-bg: linear-gradient(145deg, rgb(244 235 212 / 68%), rgb(214 195 157 / 44%));
+  --rp-font-family-base: 'Noto Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+}
+
+.dark {
+  --wukong-ink: #d8c7a3;
+  --wukong-paper: #151411;
+  --wukong-paper-deep: #201d18;
+  --wukong-cinnabar: #b54835;
+  --wukong-gold: #bb9154;
+  --rp-c-brand: #b54835;
+  --rp-c-brand-light: #cc6a50;
+  --rp-c-brand-dark: #d8aa67;
+  --rp-c-brand-tint: rgb(181 72 53 / 13%);
+  --rp-c-bg: #151411;
+  --rp-c-bg-soft: #1c1a16;
+  --rp-c-bg-mute: #26221c;
+  --rp-c-text-1: #ded1b6;
+  --rp-c-text-2: #ada187;
+  --rp-c-text-3: #766d5d;
+  --rp-c-divider-light: rgb(210 183 129 / 13%);
+  --rp-home-hero-title-bg: linear-gradient(115deg, #eadcbd 15%, #c34f37 58%, #b68b51);
+  --rp-home-feature-bg: linear-gradient(145deg, rgb(43 39 31 / 85%), rgb(18 17 14 / 75%));
+}
+
+body {
+  background-color: var(--rp-c-bg);
+  background-image:
+    linear-gradient(90deg, transparent 49.9%, rgb(71 52 31 / 3%) 50%, transparent 50.1%),
+    repeating-linear-gradient(0deg, rgb(70 52 31 / 2%) 0 1px, transparent 1px 5px),
+    radial-gradient(ellipse at 10% 12%, rgb(147 99 46 / 8%), transparent 32%);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 90px rgb(31 23 15 / 12%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.055'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.rp-nav {
+  border-bottom: 1px solid transparent;
+  background: linear-gradient(var(--rp-c-bg), var(--rp-c-bg)) padding-box,
+    linear-gradient(90deg, transparent, var(--wukong-gold), transparent) border-box;
+  box-shadow: 0 10px 35px rgb(38 27 16 / 5%);
+}
+
+.rp-nav-logo { filter: sepia(0.8) saturate(0.6) contrast(1.15); }
+
+.rp-home-hero {
+  min-height: 610px;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+.rp-home-hero::before {
+  content: '游 记 · 壹';
+  position: absolute;
+  top: 8%;
+  left: -22px;
+  color: var(--wukong-cinnabar);
+  font: 12px/1 'STKaiti', 'KaiTi', serif;
+  letter-spacing: 0.45em;
+  writing-mode: vertical-rl;
+}
+
+.rp-home-hero__container { z-index: 2; }
+
+.rp-home-hero__title-brand {
+  letter-spacing: 0.06em;
+  filter: drop-shadow(0 8px 20px rgb(57 37 19 / 9%));
+}
+
+.rp-home-hero__subtitle {
+  font-family: 'STKaiti', 'KaiTi', var(--rp-font-family-base);
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+.rp-home-hero__tagline {
+  position: relative;
+  padding-left: 50px;
+  letter-spacing: 0.12em;
+}
+
+.rp-home-hero__tagline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 36px;
+  height: 1px;
+  background: var(--wukong-cinnabar);
+}
+
+.rp-home-hero__action {
+  position: relative;
+  min-width: 132px;
+  justify-content: center;
+  border-radius: 1px !important;
+  clip-path: polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+  letter-spacing: 0.12em;
+}
+
+.rp-home-hero__image { flex: 1.25; overflow: visible; }
+
+.rp-home-feature {
+  position: relative;
+  padding-top: 5.5rem;
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent, var(--wukong-gold), transparent) 1;
+}
+
+.rp-home-feature::before {
+  content: '六艺皆备 · 开卷有益';
+  position: absolute;
+  top: 1.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--rp-c-text-3);
+  font: 13px/1 'STKaiti', 'KaiTi', serif;
+  letter-spacing: 0.36em;
+  white-space: nowrap;
+}
+
+.rp-home-feature__card {
+  position: relative;
+  border-radius: 2px !important;
+  border-color: rgb(87 61 35 / 20%) !important;
+  box-shadow: 0 12px 30px rgb(45 31 18 / 6%) !important;
+}
+
+.rp-home-feature__card::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgb(114 78 40 / 9%);
+  pointer-events: none;
+}
+
+.rp-home-feature__icon img { filter: sepia(1) saturate(0.5) contrast(1.3); }
+
+.rp-doc-layout__outline,
+.rp-doc-layout__sidebar { background: rgb(237 227 202 / 58%); backdrop-filter: blur(14px); }
+.dark .rp-doc-layout__outline,
+.dark .rp-doc-layout__sidebar { background: rgb(21 20 17 / 72%); }
+
+.rp-doc h1,
+.rp-doc h2,
+.rp-doc h3 { font-family: 'STKaiti', 'KaiTi', var(--rp-font-family-base); letter-spacing: 0.03em; }
+.rp-doc h1 { border-bottom: 1px solid; border-image: linear-gradient(90deg, var(--wukong-cinnabar), transparent 72%) 1; padding-bottom: 0.5em; }
+.rp-doc blockquote { border-left-color: var(--wukong-cinnabar); background: rgb(149 105 52 / 6%); }
+.rp-codeblock { border-radius: 2px !important; box-shadow: 0 15px 35px rgb(34 24 15 / 8%); }
+
+@media (max-width: 1000px) {
+  .rp-home-hero { min-height: auto; padding-top: 30px; }
+  .rp-home-hero::before { display: none; }
+  .rp-home-hero__tagline { padding-left: 0; }
+  .rp-home-hero__tagline::before { display: none; }
+  .rp-home-hero__image { max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
