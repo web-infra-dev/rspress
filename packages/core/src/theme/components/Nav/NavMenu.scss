@@ -11,7 +11,11 @@
   }
 
   &--left {
-    margin: 0 0 0 var(--rp-nav-menu-item-padding-x);
+    margin: 0 0 0 32px;
+
+    @media (max-width: 1279px) {
+      margin: 0 0 0 24px;
+    }
   }
 
   &__item {
@@ -37,6 +41,14 @@
       font-style: normal;
       font-weight: 500;
       line-height: 22px;
+    }
+
+    &:first-child > .rp-nav-menu__item__container {
+      padding-left: 0;
+    }
+
+    &:last-child > .rp-nav-menu__item__container {
+      padding-right: 0;
     }
 
     &__icon {
