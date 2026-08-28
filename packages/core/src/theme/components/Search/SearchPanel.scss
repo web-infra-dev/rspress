@@ -30,6 +30,9 @@
     color: var(--rp-c-brand);
     margin-left: 0.5rem;
     cursor: pointer;
+    // CJK cancel text can break between characters and get squeezed
+    // by the 100%-width input form, keep it on one line.
+    white-space: nowrap;
 
     @media (min-width: 640px) {
       display: none;
