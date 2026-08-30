@@ -1,7 +1,6 @@
 {
   "recommendations": [
-    "rstack.rslint",
-    "esbenp.prettier-vscode",
+    "rstack.rstack",
     "streetsidesoftware.code-spell-checker",
     "unifiedjs.vscode-mdx"
   ]
