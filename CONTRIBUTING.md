@@ -159,15 +159,16 @@ pnpm run test:e2e
 
 ---
 
-## Linting
+## Code quality checks
 
-To help maintain consistency and readability of the codebase, we use a ESLint to lint the codes.
-
-You can run the Linter by executing the following command:
+Rspress uses Rstack CLI to lint, type-check, and verify formatting. Before submitting a pull request, run:
 
 ```sh
-pnpm run lint
+pnpm run check
+pnpm run check-spell
 ```
+
+To run only linting and type checking, use `pnpm run lint`. To apply formatting and heading-case fixes, use `pnpm run format`.
 
 ---
 
