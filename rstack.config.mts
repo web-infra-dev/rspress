@@ -62,3 +62,12 @@ define.fmt({
   singleQuote: true,
   sortPackageJson: true,
 });
+
+define.staged({
+  '*.{md,mdx,css,less,scss,json,jsonc,json5}': [
+    'rs fmt',
+    'heading-case --write',
+  ],
+  '*.{js,jsx,ts,tsx,mts,mjs,cjs}': ['rs lint --fix', 'rs fmt'],
+  'package.json': ['pnpm run check-dependency-version'],
+});
