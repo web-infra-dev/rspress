@@ -5,7 +5,7 @@
 - Monorepo via `pnpm` + `Nx`.
 - Packages: `packages/core` (CLI + `@rspress/core`), `packages/theme-default` (Default theme), `packages/plugin-*` (Official plugins), `packages/create-rspress` (scaffolder).
 - Tests: unit tests are generally colocated with their source files; `packages/core/tests` contains CLI integration tests, and `e2e/` contains end-to-end tests. Website examples are in `website/`.
-- Key config: `nx.json`, `rslint.config.ts`, `.prettierrc`, `rstest.e2e.config.mts`, `pnpm-workspace.yaml`.
+- Key config: `nx.json`, `rstack.config.mts`, `rstest.e2e.config.mts`, `pnpm-workspace.yaml`.
 
 ## Build, test, and development commands
 
@@ -18,7 +18,7 @@
 ## Coding style & naming conventions
 
 - TypeScript + ESM; spaces; single quotes.
-- Rslint is the canonical linter; Prettier formats code, MD/CSS/JSON, and `package.json`.
+- Rstack CLI is the canonical linter and formatter; it formats code, MD/CSS/JSON, and `package.json`.
 - Filenames: `camelCase` or `PascalCase`.
 
 ## Testing guidelines

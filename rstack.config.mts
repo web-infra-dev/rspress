@@ -1,16 +1,8 @@
-import { defineConfig, globals, js, ts } from '@rslint/core';
+import { define } from 'rstack';
 
-export default defineConfig([
+define.lint(({ globals, js, ts }) => [
   {
-    ignores: [
-      '**/*.d.ts',
-      '**/compiled/**',
-      '**/dist/**',
-      '**/dist-*/**',
-      '**/doc_build/**',
-      '**/node_modules/**',
-      '**/packages/create-rspress/template-*/rspress.config.ts',
-    ],
+    ignores: ['**/*.d.ts'],
   },
   js.configs.recommended,
   ts.configs.recommended,
@@ -63,3 +55,10 @@ export default defineConfig([
     },
   },
 ]);
+
+define.fmt({
+  arrowParens: 'avoid',
+  ignorePatterns: ['skills-lock.yaml'],
+  singleQuote: true,
+  sortPackageJson: true,
+});

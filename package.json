@@ -9,9 +9,9 @@
     "check-spell": "pnpm cspell && heading-case",
     "dev": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run-many -t dev --exclude @rspress-fixture/* --exclude @rspress/docs",
     "dev:website": "cross-env NX_DAEMON=false NX_REJECT_UNKNOWN_LOCAL_CACHE=0 nx run @rspress/docs:dev",
-    "format": "rslint --fix && prettier . --write && heading-case --write",
+    "format": "rs lint --fix && rs fmt && heading-case --write",
     "generate-release-pr": "zx scripts/generateReleasePr.mjs",
-    "lint": "rslint --type-check && prettier . --check && pnpm run check-spell",
+    "lint": "rs lint --type-check && rs fmt --check && pnpm run check-spell",
     "prepare": "skills-package-manager install && pnpm run build && simple-git-hooks",
     "preview:website": "cd website && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
@@ -24,22 +24,21 @@
   },
   "nano-staged": {
     "*.{md,mdx,css,less,scss,json,jsonc,json5}": [
-      "prettier --write",
+      "rs fmt",
       "heading-case --write"
     ],
     "*.{js,jsx,ts,tsx,mts,mjs,cjs}": [
-      "rslint --fix",
-      "prettier --write"
+      "rs lint --fix",
+      "rs fmt"
     ],
     "package.json": [
       "pnpm run check-dependency-version",
-      "prettier --write"
+      "rs fmt"
     ]
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",
     "@rsbuild/plugin-react": "~2.1.0",
-    "@rslint/core": "^0.8.1",
     "@rspress/config": "workspace:*",
     "@rstest/adapter-rslib": "0.11.9",
     "@rstest/core": "^0.11.9",
@@ -59,8 +58,7 @@
     "nx": "22.7.8",
     "path-serializer": "0.6.0",
     "playwright": "1.62.1",
-    "prettier": "3.9.6",
-    "prettier-plugin-packagejson": "^3.0.2",
+    "rstack": "^0.6.5",
     "simple-git-hooks": "^2.13.1",
     "skills-package-manager": "0.11.0",
     "tree-kill": "^1.2.2",

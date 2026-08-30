@@ -8,6 +8,7 @@
     "rspress-best-practices": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-best-practices",
     "rspress-description-generator": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-description-generator",
     "rspress-docs-generator": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-docs-generator",
-    "create-draft-release-notes": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/.agents/skills/create-draft-release-notes"
+    "create-draft-release-notes": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/.agents/skills/create-draft-release-notes",
+    "rstack-cli-docs": "github:rstackjs/rstack-cli#ca22d59ada547fe661247401f88a0dc193322bb5&path:/.agents/skills/rstack-cli-docs"
   }
 }
