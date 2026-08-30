@@ -159,7 +159,7 @@ pnpm run test:e2e
 
 ---
 
-## Code quality checks
+## Check
 
 Rspress uses Rstack CLI to lint, type-check, and verify formatting. Before submitting a pull request, run:
 
@@ -167,8 +167,6 @@ Rspress uses Rstack CLI to lint, type-check, and verify formatting. Before submi
 pnpm run check
 pnpm run check-spell
 ```
-
-To run only linting and type checking, use `pnpm run lint`. To apply formatting and heading-case fixes, use `pnpm run format`.
 
 ---
 
