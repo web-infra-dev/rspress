@@ -12,7 +12,7 @@
 - Install: `pnpm install` (Node >= 22.12, pnpm >= 11.22).
 - Build: `pnpm build` (all) and `pnpm build:website`.
 - Watch dev: `pnpm dev` (all packages) or `pnpm dev:website` (documentation site).
-- Lint/format: `pnpm lint`; auto-fix: `pnpm format`.
+- Checks: `pnpm check` (lint, type-check, and formatting) and `pnpm check-spell`; lint only: `pnpm lint`; auto-format: `pnpm format`.
 - Tests: `pnpm test`; targeted: `pnpm test:unit` or `pnpm test:e2e`; update snapshots: `pnpm testu`.
 
 ## Coding style & naming conventions
@@ -29,7 +29,7 @@
 
 ## Commit & pull request guidelines
 
-- Conventional Commits (e.g., `feat(plugin-algolia): ...`); keep commits focused; run lint + tests.
+- Conventional Commits (e.g., `feat(plugin-algolia): ...`); keep commits focused; run checks + tests.
 - User-facing changes should include description, linked issues, and doc/example updates when needed.
 
 ### PR title format

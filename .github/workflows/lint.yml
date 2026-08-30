@@ -48,8 +48,11 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Lint
-        run: pnpm run lint
+      - name: Check
+        run: pnpm run check
+
+      - name: Check Spell
+        run: pnpm run check-spell
 
       - name: Check Dependency Version
         run: pnpm run check-dependency-version
