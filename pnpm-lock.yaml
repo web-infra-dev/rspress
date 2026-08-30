@@ -59,9 +59,6 @@ importers:
       heading-case:
         specifier: ^1.1.5
         version: 1.1.5
-      nano-staged:
-        specifier: ^0.9.0
-        version: 0.9.0
       nx:
         specifier: 22.7.8
         version: 22.7.8
@@ -74,9 +71,6 @@ importers:
       rstack:
         specifier: ^0.6.5
         version: 0.6.5(@microsoft/api-extractor@7.59.0(@types/node@22.19.15))(@rspress/core@packages+core)(jiti@2.7.0)(typescript@7.0.2)
-      simple-git-hooks:
-        specifier: ^2.13.1
-        version: 2.13.1
       skills-package-manager:
         specifier: 0.11.0
         version: 0.11.0
@@ -7173,11 +7167,6 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  nano-staged@0.9.0:
-    resolution: {integrity: sha512-0JfyX4i0Vp5HhC9RDtJ1kp7psz8CFuS3Gya3Z6WZv//QCwA9dPzi1S803VdR0c0P6R7sSvweZ5mSJmYQ/N+loQ==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    hasBin: true
-
   nanoid@3.3.18:
     resolution: {integrity: sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -8021,10 +8010,6 @@ packages:
   signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
-
-  simple-git-hooks@2.13.1:
-    resolution: {integrity: sha512-WszCLXwT4h2k1ufIXAgsbiTOazqqevFCIncOuUBZJ91DdvWcC5+OFkluWRQPrcuSYd8fjq+o2y1QfWqYMoAToQ==}
-    hasBin: true
 
   skills-package-manager@0.11.0:
     resolution: {integrity: sha512-WD7JgUNefusVOBzOAacuT4XqL2aIPSvtP2brDHqM9gyby8rMU/vLZphoL9jwxQz6RWtHOAvobqDqvCcS5bf9iw==}
@@ -13914,10 +13899,6 @@ snapshots:
 
   ms@2.1.3: {}
 
-  nano-staged@0.9.0:
-    dependencies:
-      picocolors: 1.1.1
-
   nanoid@3.3.18: {}
 
   negotiator@0.6.3: {}
@@ -15042,8 +15023,6 @@ snapshots:
   signal-exit@3.0.7: {}
 
   signal-exit@4.1.0: {}
-
-  simple-git-hooks@2.13.1: {}
 
   skills-package-manager@0.11.0: {}
 

@@ -10,7 +10,6 @@ packages:
 allowBuilds:
   nx: false
   sharp: true
-  simple-git-hooks: false
 
 hoistPattern: []
 
