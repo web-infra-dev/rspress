@@ -5,10 +5,11 @@ import { fileURLToPath } from 'node:url';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
-import { defineConfig } from '@rslib/core';
+import { define } from 'rstack';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const require = createRequire(import.meta.url);
+const configDir = import.meta.dirname;
 const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
 const tinypoolDistPath = path.join(
   path.dirname(require.resolve('tinypool/package.json')),
@@ -45,7 +46,7 @@ const PRESERVE_IMPORT_META_ENV = {
   'import.meta.env': 'import.meta.env',
 };
 
-export default defineConfig({
+define.lib({
   plugins: [pluginPublint()],
   lib: [
     {
@@ -85,10 +86,7 @@ export default defineConfig({
           output: {
             library: {
               type: 'modern-module',
-              preserveModules: path.resolve(
-                path.dirname(fileURLToPath(import.meta.url)),
-                './src',
-              ),
+              preserveModules: path.resolve(configDir, './src'),
             },
           },
         },
@@ -158,7 +156,7 @@ export default defineConfig({
           {
             from: './theme/components',
             to: '../eject-theme/components',
-            context: path.join(__dirname, 'src'),
+            context: path.join(configDir, 'src'),
           },
         ],
       },

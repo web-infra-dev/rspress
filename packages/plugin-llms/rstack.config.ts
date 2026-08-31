@@ -1,11 +1,11 @@
 import { fileURLToPath } from 'node:url';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { defineConfig } from '@rslib/core';
+import { define } from 'rstack';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
 
-export default defineConfig({
+define.lib({
   plugins: [pluginPublint()],
   lib: [
     {

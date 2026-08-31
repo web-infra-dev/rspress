@@ -10,5 +10,5 @@
     "skipLibCheck": true,
     "moduleResolution": "bundler"
   },
-  "include": ["rslib.config.ts"]
+  "include": ["rstack.config.ts"]
 }

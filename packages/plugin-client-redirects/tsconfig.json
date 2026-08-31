@@ -3,13 +3,14 @@
   "compilerOptions": {
     "declarationDir": "dist",
     "composite": true,
-    "rootDir": "."
+    "rootDir": ".",
+    "types": ["node", "rstack/types"]
   },
   "references": [
     {
       "path": "../shared"
     }
   ],
-  "include": ["src", "index.d.ts", "rslib.config.ts"],
+  "include": ["src", "index.d.ts", "rstack.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

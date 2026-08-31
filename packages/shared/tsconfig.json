@@ -5,7 +5,8 @@
     "strict": true,
     "declarationDir": "dist",
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["node", "rstack/types"]
   },
   "include": ["src"],
   "exclude": ["**/node_modules"]

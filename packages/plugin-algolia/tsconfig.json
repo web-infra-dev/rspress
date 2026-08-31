@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "composite": true,
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["node", "rstack/types"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"],
