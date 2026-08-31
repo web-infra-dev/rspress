@@ -9,7 +9,7 @@ import { define } from 'rstack';
 import { pluginPublint } from 'rsbuild-plugin-publint';
 
 const require = createRequire(import.meta.url);
-const configDir = path.dirname(fileURLToPath(import.meta.url));
+const configDir = import.meta.dirname;
 const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
 const tinypoolDistPath = path.join(
   path.dirname(require.resolve('tinypool/package.json')),
