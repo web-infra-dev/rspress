@@ -597,6 +597,125 @@ describe('getPageIndexInfoByRoute', async () => {
     );
   });
 
+  it('should strip container directive markers from search content', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-container-directive.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo.content).toBe(`This is the actual description.
+
+This tip content should not appear in description.
+
+More description text after the tip.
+
+Section two
+
+Content in section two.`);
+    expect(pageIndexInfo.content).not.toContain(':::');
+  });
+
+  it('should strip split container directive markers from search content', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute(
+        'with-container-directive-blank-lines.mdx',
+        fixtureContentProcessingDir,
+      ),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo.content).toBe(`This is the description.
+
+This tip has blank lines around it.
+
+More text after.
+
+Section two
+
+Content here.`);
+    expect(pageIndexInfo.content).not.toContain(':::');
+  });
+
+  it('should strip indented container directive markers from searchable code content', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute(
+        'with-indented-container-directive.mdx',
+        fixtureContentProcessingDir,
+      ),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: true,
+      },
+    );
+
+    expect(pageIndexInfo.content).toBe(`Configure enough memory for redis.
+
+{
+  "Resource": "arn:aws:s3:::test"
+}`);
+    expect(pageIndexInfo.content).not.toContain(':::tip');
+    expect(pageIndexInfo.content).not.toMatch(/(^|\n)\s*:::/);
+    expect(pageIndexInfo.content).toContain('arn:aws:s3:::test');
+  });
+
+  it('should strip GitHub alert markers from search content', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-github-alert.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo.content).toBe(`Intro before alert.
+
+Remember to configure enough memory for redis.
+Otherwise the process may OOM.
+
+Section two
+
+More content here.`);
+    expect(pageIndexInfo.content).not.toContain('[!TIP]');
+  });
+
+  it('should strip custom heading ids from search content', async () => {
+    const pageIndexInfo = await getPageIndexInfoByRoute(
+      createRoute('with-heading-custom-id.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+
+    expect(pageIndexInfo.content).toBe(`Intro text.
+
+Redis notes
+
+Configure enough memory for redis.
+
+Plain custom id
+
+More content here.`);
+    expect(pageIndexInfo.content).not.toContain('{#redis-notes}');
+    expect(pageIndexInfo.content).not.toContain('{#plain-custom-id}');
+  });
+
   it('should skip code blocks when extracting description', async () => {
     const pageIndexInfo = await getPageIndexInfoByRoute(
       createRoute('with-code.mdx', fixtureContentProcessingDir),
