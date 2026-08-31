@@ -63,7 +63,7 @@ Examples:
 
 ## Documentation standards
 
-- Heading case: Run `npx heading-case --write` to format markdown/mdx heading case before committing documentation changes.
+- Heading case: Run `pnpm format` to format Markdown/MDX heading case before committing documentation changes.
 
 ## Security & configuration tips
 
