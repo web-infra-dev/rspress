@@ -21,8 +21,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
+    "build": "rs lib",
+    "dev": "rs lib -w",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.59.0",
-    "@rslib/core": "1.0.0-rc.0",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.18",

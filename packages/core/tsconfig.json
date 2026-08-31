@@ -4,7 +4,8 @@
     "declarationDir": "dist",
     "rootDir": "src",
     "composite": true,
-    "lib": ["ESNext", "DOM"]
+    "lib": ["ESNext", "DOM"],
+    "types": ["node", "rstack/types"]
   },
   "include": ["src"],
   "references": [

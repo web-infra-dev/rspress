@@ -3,7 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "rootDir": ".",
-    "types": ["node", "@rsbuild/core/types"]
+    "types": ["node", "rstack/types"]
   },
   "include": ["src", "static/"],
   "references": [
