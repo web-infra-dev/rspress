@@ -4,7 +4,7 @@
   --shiki-background: transparent; /* Priority higher than var(--rp-code-block-bg); */
 
   --shiki-token-constant: #1976d2;
-  --shiki-token-string: #31a94d;
+  --shiki-token-string: #032f62;
   --shiki-token-comment: rgb(182, 180, 180);
   --shiki-token-keyword: #cf2727;
   --shiki-token-parameter: #f59403;
