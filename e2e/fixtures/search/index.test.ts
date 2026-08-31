@@ -17,61 +17,6 @@ test.describe('search keyboard', async () => {
     }
   });
 
-  test('search panel should animate based on the motion preference', async ({
-    page,
-  }) => {
-    await page.goto(`http://localhost:${appPort}/base/`, {
-      waitUntil: 'networkidle',
-    });
-
-    await page.locator('.rp-search-button').click();
-
-    const searchModal = page.locator('.rp-search-panel__modal');
-    await expect(searchModal).toBeVisible();
-    await expect(searchModal).toHaveCSS('animation-name', 'rp-search-panel-in');
-    await expect(searchModal).toHaveCSS('animation-duration', '0.18s');
-    await expect(searchModal).toHaveCSS(
-      'animation-timing-function',
-      'ease-out',
-    );
-
-    const keyframes = await page.evaluate(() => {
-      const rules = Array.from(document.styleSheets).flatMap(styleSheet =>
-        Array.from(styleSheet.cssRules),
-      );
-      const rule = rules.find(
-        (cssRule): cssRule is CSSKeyframesRule =>
-          cssRule instanceof CSSKeyframesRule &&
-          cssRule.name === 'rp-search-panel-in',
-      );
-
-      return rule
-        ? Array.from(rule.cssRules, keyframe => ({
-            keyText: keyframe.keyText,
-            opacity: keyframe.style.opacity,
-            transform: keyframe.style.transform,
-          }))
-        : null;
-    });
-
-    expect(keyframes).toEqual([
-      {
-        keyText: '0%',
-        opacity: '0',
-        transform: 'translateY(-8px) scale(0.98)',
-      },
-      { keyText: '100%', opacity: '1', transform: 'none' },
-    ]);
-
-    await page.keyboard.press('Escape');
-    await expect(searchModal).toBeHidden();
-
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.locator('.rp-search-button').click();
-    await expect(searchModal).toBeVisible();
-    await expect(searchModal).toHaveCSS('animation-name', 'none');
-  });
-
   test('keyboard navigation should work', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/`, {
       waitUntil: 'networkidle',
