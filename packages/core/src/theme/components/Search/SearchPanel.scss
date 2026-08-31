@@ -19,6 +19,11 @@
     padding: 20px;
     padding-bottom: 20px;
     height: auto;
+    animation: rp-search-panel-in 0.18s ease-out;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
   }
 
   &__header {
@@ -121,5 +126,17 @@
     &__input {
       font-size: 16px;
     }
+  }
+}
+
+@keyframes rp-search-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
