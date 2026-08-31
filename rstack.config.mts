@@ -1,4 +1,5 @@
 import { define } from 'rstack';
+import skillsJson from './skills.json' with { type: 'json' };
 
 define.lint(({ globals, js, ts }) => [
   {
@@ -58,16 +59,20 @@ define.lint(({ globals, js, ts }) => [
 
 define.fmt({
   arrowParens: 'avoid',
-  ignorePatterns: ['skills-lock.yaml'],
+  ignorePatterns: [
+    'skills-lock.yaml',
+    // Ignore installed Skills because their formatting may differ from this repository.
+    ...Object.keys(skillsJson.skills).map(
+      name => `${skillsJson.installDir}/${name}`,
+    ),
+  ],
+  plugins: ['heading-case'],
   singleQuote: true,
   sortPackageJson: true,
 });
 
 define.staged({
-  '*.{md,mdx,css,less,scss,json,jsonc,json5}': [
-    'rs fmt',
-    'heading-case --write',
-  ],
+  '*.{md,mdx,css,less,scss,json,jsonc,json5}': ['rs fmt'],
   '*.{js,jsx,ts,tsx,mts,mjs,cjs}': ['rs lint --fix', 'rs fmt'],
   'package.json': ['pnpm run check-dependency-version'],
 });

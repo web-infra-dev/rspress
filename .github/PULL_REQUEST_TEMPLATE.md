@@ -2,7 +2,7 @@
 
 <!--- Please introduce what this PR changes and why. For behavior changes, include a before / after comparison to help reviewers understand the impact. -->
 
-## Related Issue
+## Related issue
 
 <!--- Provide link of related issues -->
 
