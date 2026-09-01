@@ -10,6 +10,7 @@ import {
 } from '../../utils/runCommands';
 
 const HMR_TEST_FILE = path.resolve(import.meta.dirname, 'doc/hmr.mdx');
+const HMR_TIMEOUT = 30_000;
 
 test.describe('plugin preview development', async () => {
   let appPort;
@@ -227,11 +228,13 @@ test.describe('plugin preview HMR', async () => {
   });
 
   test.afterAll(async () => {
-    if (app) {
-      await killProcess(app);
+    try {
+      if (app) {
+        await killProcess(app);
+      }
+    } finally {
+      await fs.writeFile(HMR_TEST_FILE, originalContent);
     }
-    // Restore original content
-    await fs.writeFile(HMR_TEST_FILE, originalContent);
   });
 
   test('HMR for preview="internal"', async ({ page }) => {
@@ -243,18 +246,21 @@ test.describe('plugin preview HMR', async () => {
     const internalCard = page.locator('.rp-preview--internal__card').first();
     await expect(internalCard).toContainText('HMR Internal Original');
 
-    // Modify the file
     const updatedContent = originalContent.replace(
       'HMR Internal Original',
       'HMR Internal Updated',
     );
-    await fs.writeFile(HMR_TEST_FILE, updatedContent);
-
-    // Wait for HMR to apply
-    await expect(internalCard).toContainText('HMR Internal Updated');
-
-    // Restore for next test
-    await fs.writeFile(HMR_TEST_FILE, originalContent);
+    try {
+      await fs.writeFile(HMR_TEST_FILE, updatedContent);
+      await expect(internalCard).toContainText('HMR Internal Updated', {
+        timeout: HMR_TIMEOUT,
+      });
+    } finally {
+      await fs.writeFile(HMR_TEST_FILE, originalContent);
+      await expect(internalCard).toContainText('HMR Internal Original', {
+        timeout: HMR_TIMEOUT,
+      });
+    }
   });
 
   test('HMR for preview="iframe-follow"', async ({ page }) => {
@@ -271,20 +277,22 @@ test.describe('plugin preview HMR', async () => {
       'HMR Iframe Follow Original',
     );
 
-    // Modify the file
     const updatedContent = originalContent.replace(
       'HMR Iframe Follow Original',
       'HMR Iframe Follow Updated',
     );
-    await fs.writeFile(HMR_TEST_FILE, updatedContent);
-
-    // Wait for HMR to apply
-    await expect(iframe.contentFrame().locator('body')).toContainText(
-      'HMR Iframe Follow Updated',
-    );
-
-    // Restore for next test
-    await fs.writeFile(HMR_TEST_FILE, originalContent);
+    const iframeBody = iframe.contentFrame().locator('body');
+    try {
+      await fs.writeFile(HMR_TEST_FILE, updatedContent);
+      await expect(iframeBody).toContainText('HMR Iframe Follow Updated', {
+        timeout: HMR_TIMEOUT,
+      });
+    } finally {
+      await fs.writeFile(HMR_TEST_FILE, originalContent);
+      await expect(iframeBody).toContainText('HMR Iframe Follow Original', {
+        timeout: HMR_TIMEOUT,
+      });
+    }
   });
 
   test('HMR for preview="iframe-fixed"', async ({ page }) => {
@@ -299,19 +307,21 @@ test.describe('plugin preview HMR', async () => {
       'HMR Iframe Fixed Original',
     );
 
-    // Modify the file
     const updatedContent = originalContent.replace(
       'HMR Iframe Fixed Original',
       'HMR Iframe Fixed Updated',
     );
-    await fs.writeFile(HMR_TEST_FILE, updatedContent);
-
-    // Wait for HMR to apply
-    await expect(fixedIframe.contentFrame().locator('body')).toContainText(
-      'HMR Iframe Fixed Updated',
-    );
-
-    // Restore for next test
-    await fs.writeFile(HMR_TEST_FILE, originalContent);
+    const fixedIframeBody = fixedIframe.contentFrame().locator('body');
+    try {
+      await fs.writeFile(HMR_TEST_FILE, updatedContent);
+      await expect(fixedIframeBody).toContainText('HMR Iframe Fixed Updated', {
+        timeout: HMR_TIMEOUT,
+      });
+    } finally {
+      await fs.writeFile(HMR_TEST_FILE, originalContent);
+      await expect(fixedIframeBody).toContainText('HMR Iframe Fixed Original', {
+        timeout: HMR_TIMEOUT,
+      });
+    }
   });
 });

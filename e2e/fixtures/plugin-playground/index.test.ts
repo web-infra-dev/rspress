@@ -15,6 +15,7 @@ const MONACO_PRELOAD_URLS = [
   `${MONACO_PREFIX}/loader.js`,
   `${MONACO_PREFIX}/editor/editor.main.js`,
 ];
+const HMR_TIMEOUT = 30_000;
 
 test('Should only preload Monaco on pages containing playgrounds', async () => {
   const appDir = import.meta.dirname;
@@ -82,16 +83,26 @@ test.describe('plugin playground rendering and HMR', async () => {
       waitUntil: 'networkidle',
     });
 
+    const originalPreview = page
+      .locator('.rp-playground > .rp-playground-runner > div')
+      .getByText('Hello World Internal (default)');
+    const updatedPreview = page
+      .locator('.rp-playground > .rp-playground-runner > div')
+      .getByText('Hello World Internal (updated)');
+    await expect(originalPreview).toHaveCount(1);
+
     const updatedContent = originalContent.replace(
       'Hello World Internal (default)',
       'Hello World Internal (updated)',
     );
-    await fs.writeFile(DOC_FILE, updatedContent);
-
-    await expect(
-      page
-        .locator('.rp-playground > .rp-playground-runner > div')
-        .getByText('Hello World Internal (updated)'),
-    ).toHaveCount(1);
+    try {
+      await fs.writeFile(DOC_FILE, updatedContent);
+      await expect(updatedPreview).toHaveCount(1, { timeout: HMR_TIMEOUT });
+    } finally {
+      // Keep retries independent: writing the same updated content again does
+      // not reliably emit another watcher event.
+      await fs.writeFile(DOC_FILE, originalContent);
+      await expect(originalPreview).toHaveCount(1, { timeout: HMR_TIMEOUT });
+    }
   });
 });

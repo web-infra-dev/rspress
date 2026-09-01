@@ -16,7 +16,7 @@
     "prepare": "skills-package-manager install && pnpm run build && rs hooks",
     "preview:website": "cd website && npm run preview",
     "test": "pnpm test:unit && pnpm test:e2e",
-    "test:e2e": "rstest run --config rstest.e2e.config.mts",
+    "test:e2e": "rstest run --config rstest.e2e.config.mts --exclude \"e2e/fixtures/{hmr,plugin-playground,plugin-preview}/index.test.ts\" && rstest run e2e/fixtures/hmr/index.test.ts e2e/fixtures/plugin-playground/index.test.ts e2e/fixtures/plugin-preview/index.test.ts --config rstest.e2e.config.mts --pool.maxWorkers=1",
     "test:unit": "rstest run",
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },

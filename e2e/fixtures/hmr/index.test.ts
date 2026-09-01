@@ -49,15 +49,18 @@ test.describe('HMR', async () => {
   });
 
   test.afterAll(async () => {
-    if (app) {
-      await killProcess(app);
+    try {
+      if (app) {
+        await killProcess(app);
+      }
+    } finally {
+      await fs.writeFile(TEST_FILE, originalContent);
+      await fs.writeFile(TEST_FRAGMENT_FILE, originalFragmentContent);
+      await fs.writeFile(TEST_NAV_FILE, originalNavContent);
+      await fs.writeFile(TEST_META_FILE, originalMetaContent);
+      await fs.writeFile(TEST_RESTART_FILE, originalRestartFileContent);
+      await fs.rm(TEST_ADDED_FILE, { force: true });
     }
-    await fs.writeFile(TEST_FILE, originalContent);
-    await fs.writeFile(TEST_FRAGMENT_FILE, originalFragmentContent);
-    await fs.writeFile(TEST_NAV_FILE, originalNavContent);
-    await fs.writeFile(TEST_META_FILE, originalMetaContent);
-    await fs.writeFile(TEST_RESTART_FILE, originalRestartFileContent);
-    await fs.rm(TEST_ADDED_FILE, { force: true });
   });
 
   test('update page content without restarting', async ({ page }) => {
@@ -68,41 +71,67 @@ test.describe('HMR', async () => {
     // basic
     const helloParagraph = page.locator('p', { hasText: 'Hello world' });
     await expect(helloParagraph).toBeVisible();
-    await fs.writeFile(
-      TEST_FILE,
-      originalContent.replace('Hello world', 'Hello hmr world'),
-    );
-    await expect(
-      page.locator('p', { hasText: 'Hello hmr world' }),
-    ).toBeVisible();
+    try {
+      await fs.writeFile(
+        TEST_FILE,
+        originalContent.replace('Hello world', 'Hello hmr world'),
+      );
+      await expect(
+        page.locator('p', { hasText: 'Hello hmr world' }),
+      ).toBeVisible({ timeout: HMR_TIMEOUT });
+    } finally {
+      await fs.writeFile(TEST_FILE, originalContent);
+      await expect(helloParagraph).toBeVisible({ timeout: HMR_TIMEOUT });
+    }
 
     // file code block
-    await expect(page.getByText('This is mdx fragment')).toBeVisible();
-    await fs.writeFile(
-      TEST_FRAGMENT_FILE,
-      originalFragmentContent.replace('This is', 'This is hmr'),
-    );
-    await expect(page.getByText('This is hmr mdx fragment')).toBeVisible();
+    const originalFragment = page.getByText('This is mdx fragment');
+    await expect(originalFragment).toBeVisible();
+    try {
+      await fs.writeFile(
+        TEST_FRAGMENT_FILE,
+        originalFragmentContent.replace('This is', 'This is hmr'),
+      );
+      await expect(page.getByText('This is hmr mdx fragment')).toBeVisible({
+        timeout: HMR_TIMEOUT,
+      });
+    } finally {
+      await fs.writeFile(TEST_FRAGMENT_FILE, originalFragmentContent);
+      await expect(originalFragment).toBeVisible({ timeout: HMR_TIMEOUT });
+    }
 
     // _nav.json
-    await expect(
-      page.locator('.rp-nav-menu__item', { hasText: 'Guide' }),
-    ).toBeVisible();
-    await fs.writeFile(
-      TEST_NAV_FILE,
-      originalNavContent.replace('"Guide"', '"HMR Guide"'),
-    );
-    await expect(
-      page.locator('.rp-nav-menu__item', { hasText: 'HMR Guide' }),
-    ).toBeVisible();
+    const originalNavItem = page
+      .locator('.rp-nav-menu__item')
+      .getByText('Guide', { exact: true });
+    await expect(originalNavItem).toBeVisible();
+    try {
+      await fs.writeFile(
+        TEST_NAV_FILE,
+        originalNavContent.replace('"Guide"', '"HMR Guide"'),
+      );
+      await expect(
+        page.locator('.rp-nav-menu__item', { hasText: 'HMR Guide' }),
+      ).toBeVisible({ timeout: HMR_TIMEOUT });
+    } finally {
+      await fs.writeFile(TEST_NAV_FILE, originalNavContent);
+      await expect(originalNavItem).toBeVisible({ timeout: HMR_TIMEOUT });
+    }
+
     // _meta.json
-    await expect(
-      page.locator('.rp-sidebar-item span', { hasText: 'Test' }),
-    ).toBeVisible();
-    await fs.writeFile(TEST_META_FILE, '["foo"]');
-    await expect(
-      page.locator('.rp-sidebar-item span', { hasText: 'Foo' }),
-    ).toBeVisible();
+    const originalSidebarItem = page.locator('.rp-sidebar-item span', {
+      hasText: 'Test',
+    });
+    await expect(originalSidebarItem).toBeVisible();
+    try {
+      await fs.writeFile(TEST_META_FILE, '["foo"]');
+      await expect(
+        page.locator('.rp-sidebar-item span', { hasText: 'Foo' }),
+      ).toBeVisible({ timeout: HMR_TIMEOUT });
+    } finally {
+      await fs.writeFile(TEST_META_FILE, originalMetaContent);
+      await expect(originalSidebarItem).toBeVisible({ timeout: HMR_TIMEOUT });
+    }
     expect(getRestartCount()).toBe(0);
   });
 
