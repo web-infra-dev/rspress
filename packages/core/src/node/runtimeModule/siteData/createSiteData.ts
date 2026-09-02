@@ -5,13 +5,15 @@ import { normalizeThemeConfig } from './normalizeThemeConfig';
 export async function createSiteData(userConfig: UserConfig): Promise<{
   siteData: Omit<SiteData, 'root' | 'pages'>;
 }> {
-  // prevent modify the origin config object
-  const tempSearchObj = Object.assign({}, userConfig.search);
-
-  // searchHooks is a absolute path which may leak information
-  if (tempSearchObj) {
-    tempSearchObj.searchHooks = undefined;
-  }
+  const search =
+    userConfig.search === false
+      ? false
+      : {
+          mode: 'local' as const,
+          ...userConfig.search,
+          // searchHooks is an absolute path which may leak information
+          searchHooks: undefined,
+        };
 
   const siteData: Omit<SiteData, 'root' | 'pages'> = {
     base: userConfig.base ?? '/',
@@ -33,7 +35,7 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
       default: userConfig?.multiVersion?.default || '',
       versions: userConfig?.multiVersion?.versions || [],
     },
-    search: tempSearchObj ?? { mode: 'local' },
+    search,
     markdown: {
       showLineNumbers: userConfig?.markdown?.showLineNumbers ?? false,
       defaultWrapCode: userConfig?.markdown?.defaultWrapCode ?? false,
