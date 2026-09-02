@@ -480,6 +480,7 @@ export interface PageIndexInfo {
   toc: Header[];
   content: string;
   description?: string;
+  _deps?: string[];
   _flattenContent?: string;
   frontmatter: FrontMatterMeta;
   lang: string;
