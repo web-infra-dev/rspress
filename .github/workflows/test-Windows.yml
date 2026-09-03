@@ -83,11 +83,19 @@ jobs:
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm run build
 
+      - name: Build Website # for test
+        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        run: pnpm run build:website
+
+      - name: Unit Test
+        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        run: pnpm run test:unit
+
       - name: E2E Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         env:
           PROBE_FORCE: ${{ inputs.probe_force || 'none' }}
-        run: pnpm rstest run --config rstest.e2e.config.mts e2e/fixtures/hmr e2e/fixtures/plugin-playground
+        run: pnpm run test:e2e
 
       - name: Print probe log
         if: always()
