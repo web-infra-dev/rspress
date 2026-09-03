@@ -88,7 +88,7 @@ this usage is not allowed, please use below:
         const promise = readFile(resolvedFilePath, 'utf-8')
           .then(fileContent => {
             // hmr in dev
-            addDependency?.(resolvedFilePath);
+            addDependency?.(path.normalize(resolvedFilePath));
             node.value = fileContent;
           })
           .catch(e => {

@@ -62,7 +62,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
                 await docgen(docgenOptions);
               }
               for (const filePath of sourceFiles) {
-                addDependency(filePath);
+                addDependency(path.normalize(filePath));
               }
               return `export default ${JSON.stringify(apiDocMap)};`;
             },

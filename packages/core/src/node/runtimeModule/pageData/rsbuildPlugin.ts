@@ -1,3 +1,4 @@
+import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { PageData } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
@@ -74,7 +75,7 @@ export const rsbuildPluginDocVM = async ({
           // TODO: support hmr
           // This place needs to obtain the specific file that has been modified and update the file information.
           for (const file of ref.filepaths) {
-            addDependency(file);
+            addDependency(path.normalize(file));
           }
 
           return `export const pageData = ${JSON.stringify(ref.pageData, null, 2)};

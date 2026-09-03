@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import { join } from 'node:path';
+import { join, normalize } from 'node:path';
 import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
@@ -136,9 +136,9 @@ export const i18nVMPlugin: VirtualModulePlugin = context => {
 
       const isExist = await pathExists(configPath);
       if (isExist) {
-        addDependency(configPath);
+        addDependency(normalize(configPath));
       } else {
-        addMissingDependency(configPath);
+        addMissingDependency(normalize(configPath));
       }
       const i18nData = await getI18nData(config, pluginDriver);
 

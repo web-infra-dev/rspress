@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { isProduction } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { modifyConfigWithAutoNavSide } from '../../auto-nav-sidebar';
@@ -64,12 +65,12 @@ export const siteDataVMPlugin: VirtualModulePlugin = context => {
     mdFileSet: Set<string>,
   ) => {
     for (const metaFile of metaFileSet) {
-      addDependency(metaFile);
+      addDependency(path.normalize(metaFile));
     }
     // TODO: incremental
     // perf issue of add too much md files to dependencies, trigger auto-nav-sidebar too often
     for (const mdFile of mdFileSet) {
-      addDependency(mdFile);
+      addDependency(path.normalize(mdFile));
     }
   };
 
