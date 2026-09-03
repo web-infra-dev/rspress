@@ -11,7 +11,7 @@
   padding-left: var(--rp-steps-gap);
   counter-reset: step;
 
-  h3 {
+  > :is(h2, h3, h4, h5, h6) {
     counter-increment: step;
     margin-top: 0;
     position: relative;
