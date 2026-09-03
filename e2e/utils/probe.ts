@@ -154,6 +154,21 @@ export class ProbePlugin {
         },
       );
 
+      // 3b. Build order of the modules that matter: pages (targets) vs the virtual modules that
+      //     register page paths, to see whose spelling reaches the dependency maps first.
+      const interesting = (m: any) => {
+        const r = typeof m?.resource === 'string' ? m.resource : '';
+        return isTarget(r) || /virtual-(page-data|routes)\.js$/.test(r) ? r : '';
+      };
+      compilation.hooks.buildModule.tap('probe', (m: any) => {
+        const r = interesting(m);
+        if (r) log(`MODULE build-start ${r}`);
+      });
+      compilation.hooks.succeedModule.tap('probe', (m: any) => {
+        const r = interesting(m);
+        if (r) log(`MODULE build-end ${r}`);
+      });
+
       if (buildIndex === 0 && force !== 'none') {
         for (const t of targets) {
           const p = force === 'slash' ? t.replace(/\\/g, '/') : t;
