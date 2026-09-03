@@ -65,7 +65,10 @@ export class ProbePlugin {
     const isTarget = (p: string) => targets.some(t => norm(t) === norm(p));
     const hits = (list: string[]) => JSON.stringify(list.filter(isTarget));
     const log = (msg: string) =>
-      fs.appendFileSync(this.#log, `${new Date().toISOString()} [${name}] ${msg}\n`);
+      fs.appendFileSync(
+        this.#log,
+        `${new Date().toISOString()} [${name}] ${msg}\n`,
+      );
     const record = (source: string, spelling: string, detail: string) => {
       if (!isNonNative(spelling)) return;
       this.#record(source, spelling, detail);
@@ -113,7 +116,10 @@ export class ProbePlugin {
           const resource = loaderContext.resourcePath;
           // Order signal with no extra hook cost: this fires when a module's JS loaders start,
           // i.e. after the module was resolved (and its native spelling interned).
-          if (isTarget(resource) || /virtual-(page-data|routes)\.js$/.test(resource)) {
+          if (
+            isTarget(resource) ||
+            /virtual-(page-data|routes)\.js$/.test(resource)
+          ) {
             log(`LOADER start ${resource}`);
           }
           for (const fn of [
@@ -125,36 +131,66 @@ export class ProbePlugin {
             const orig = loaderContext[fn];
             if (typeof orig !== 'function') continue;
             loaderContext[fn] = (dep: string) => {
-              record(`loader.${fn}`, dep, `resource=${resource} stack=${shortStack()}`);
+              record(
+                `loader.${fn}`,
+                dep,
+                `resource=${resource} stack=${shortStack()}`,
+              );
               return orig.call(loaderContext, dep);
             };
           }
           const wrapResolver = (label: string, resolver: any) =>
             function (this: any, context: string, request: string, cb?: any) {
-              record(`${label}.context`, context, `request=${request} resource=${resource}`);
+              record(
+                `${label}.context`,
+                context,
+                `request=${request} resource=${resource}`,
+              );
               if (typeof cb === 'function') {
-                return resolver.call(this, context, request, (err: any, result: any) => {
-                  if (typeof result === 'string')
-                    record(`${label}.result`, result, `request=${request} context=${context}`);
-                  cb(err, result);
-                });
+                return resolver.call(
+                  this,
+                  context,
+                  request,
+                  (err: any, result: any) => {
+                    if (typeof result === 'string')
+                      record(
+                        `${label}.result`,
+                        result,
+                        `request=${request} context=${context}`,
+                      );
+                    cb(err, result);
+                  },
+                );
               }
               const ret = resolver.call(this, context, request);
               if (ret && typeof ret.then === 'function') {
-                ret.then((result: any) => {
-                  if (typeof result === 'string')
-                    record(`${label}.result`, result, `request=${request} context=${context}`);
-                }, () => {});
+                ret.then(
+                  (result: any) => {
+                    if (typeof result === 'string')
+                      record(
+                        `${label}.result`,
+                        result,
+                        `request=${request} context=${context}`,
+                      );
+                  },
+                  () => {},
+                );
               }
               return ret;
             };
           if (typeof loaderContext.resolve === 'function') {
-            loaderContext.resolve = wrapResolver('loader.resolve', loaderContext.resolve);
+            loaderContext.resolve = wrapResolver(
+              'loader.resolve',
+              loaderContext.resolve,
+            );
           }
           if (typeof loaderContext.getResolve === 'function') {
             const getResolve = loaderContext.getResolve;
             loaderContext.getResolve = (options: any) =>
-              wrapResolver('loader.getResolve', getResolve.call(loaderContext, options));
+              wrapResolver(
+                'loader.getResolve',
+                getResolve.call(loaderContext, options),
+              );
           }
         },
       );
