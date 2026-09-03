@@ -3,7 +3,7 @@ import path from 'node:path';
 import type { RspressPlugin } from '@rspress/core';
 import { logger } from '@rspress/core';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
-import { apiDocMap } from './constants';
+import { apiDocMap, PACKAGE_ROOT } from './constants';
 import { docgen } from './docgen';
 import type { PluginOptions, SupportLanguages } from './types';
 
@@ -101,7 +101,7 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
     },
     markdown: {
       globalComponents: [
-        path.join(__dirname, '..', 'static', 'global-components', 'API.tsx'),
+        path.join(PACKAGE_ROOT, 'static', 'global-components', 'API.tsx'),
       ],
     },
   };

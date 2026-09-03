@@ -13,7 +13,7 @@ import {
 } from '@rspress/core';
 import picocolors from 'picocolors';
 import entryContent from '../static/iframe/entry?raw';
-import { STATIC_DIR } from './constants';
+import { PACKAGE_ROOT, STATIC_DIR } from './constants';
 import { generateEntry } from './generateEntry';
 import { pluginLogger, previewLogger } from './logger';
 import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
@@ -179,7 +179,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     },
     builderConfig: {
       source: {
-        include: [join(__dirname, '..')],
+        include: [PACKAGE_ROOT],
       },
       tools: {
         bundlerChain(chain) {
