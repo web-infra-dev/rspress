@@ -81,7 +81,7 @@ jobs:
 
       - name: Install Dependencies
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: pnpm install --ignore-scripts
+        run: pnpm install --ignore-scripts --no-frozen-lockfile
 
       - name: Build Packages
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}

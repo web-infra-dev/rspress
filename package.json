@@ -54,5 +54,11 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "pnpm": {
+    "overrides": {
+      "@rspack/core": "2.1.10",
+      "@rsbuild/core": "2.1.13"
+    }
   }
 }
