@@ -221,7 +221,7 @@ export class ProbePlugin {
         startTime: number,
         options: any,
         callback: any,
-        callbackUndelayed: any,
+        callbackEarly: any,
       ) => {
         const fl = Array.from(files);
         const dl = Array.from(dirs);
@@ -247,8 +247,8 @@ export class ProbePlugin {
             callback(err, fileTimeInfo, ctxTimeInfo, changed, removed);
           },
           (fileName: string, changeTime: number) => {
-            log(`watch undelayed ${fileName} ${changeTime}`);
-            callbackUndelayed?.(fileName, changeTime);
+            log(`watch early ${fileName} ${changeTime}`);
+            callbackEarly?.(fileName, changeTime);
           },
         );
       };
