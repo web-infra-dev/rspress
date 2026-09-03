@@ -37,3 +37,8 @@ minimumReleaseAgeExclude:
 strictDepBuilds: true
 
 strictPeerDependencies: false
+
+# diag: pin main's versions (pnpm 11 ignores package.json pnpm.overrides)
+overrides:
+  '@rspack/core': 2.1.10
+  '@rsbuild/core': 2.1.13
