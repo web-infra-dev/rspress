@@ -144,8 +144,18 @@ export async function runPreviewCommand(
 }
 
 export async function getPort() {
+  const workerId = Number(process.env.RSTEST_WORKER_ID);
+  // Rstest workers are separate processes, so the in-memory port map alone
+  // cannot prevent two parallel workers from selecting the same port.
+  const workerPortRange = Number.isInteger(workerId)
+    ? getRandomPort.makeRange(
+        20_000 + workerId * 1_000,
+        20_999 + workerId * 1_000,
+      )
+    : undefined;
+
   while (true) {
-    const port = await getRandomPort();
+    const port = await getRandomPort({ port: workerPortRange });
     if (!portMap.get(port)) {
       portMap.set(port, 1);
       return port;
