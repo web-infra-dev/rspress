@@ -1,7 +1,7 @@
 name: Test (Windows)
 
 concurrency:
-  group: windows-test-${{ github.ref }}-${{ inputs.probe_force || 'pr' }}
+  group: windows-test-${{ github.ref }}-${{ inputs.probe_force || 'pr' }}-${{ inputs.e2e_filter || 'full' }}
   cancel-in-progress: true
 
 # Controls when the action will run.
@@ -18,6 +18,10 @@ on:
       probe_force:
         description: 'none | slash | native'
         default: 'none'
+        type: string
+      e2e_filter:
+        description: 'rstest file filters; empty = full suite'
+        default: ''
         type: string
 
 permissions: {}
@@ -95,7 +99,7 @@ jobs:
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         env:
           PROBE_FORCE: ${{ inputs.probe_force || 'none' }}
-        run: pnpm run test:e2e
+        run: pnpm rstest run --config rstest.e2e.config.mts ${{ inputs.e2e_filter }}
 
       - name: Print probe log
         if: always()

@@ -163,31 +163,8 @@ export class ProbePlugin {
       }
     });
 
-    // 4. Module factory: request/context spellings going into the resolver, and what comes out.
-    compiler.hooks.normalModuleFactory.tap('probe', (nmf: any) => {
-      nmf.hooks.beforeResolve.tap('probe', (rd: any) => {
-        record(
-          'nmf.beforeResolve.context',
-          rd.context,
-          `request=${rd.request} issuer=${rd.contextInfo?.issuer}`,
-        );
-        if (isSlashAbsolute(rd.request)) {
-          record(
-            'nmf.beforeResolve.request',
-            rd.request,
-            `context=${rd.context} issuer=${rd.contextInfo?.issuer}`,
-          );
-        }
-      });
-      nmf.hooks.afterResolve.tap('probe', (rd: any) => {
-        const r = rd.createData?.resource;
-        if (typeof r !== 'string') return;
-        record('nmf.afterResolve.resource', r, `request=${rd.request} context=${rd.context}`);
-        if (isTarget(r)) {
-          log(`RESOLVED ${spell(r)} ${r} :: request=${rd.request} context=${rd.context}`);
-        }
-      });
-    });
+    // 4. (removed) per-resolve nmf taps: every earlier run showed the resolver returning the
+    //    native spelling for `D:/...` requests; the taps only add a JS round trip per module.
 
     // 5. What rspack registers with watchpack and what watchpack delivers back.
     compiler.hooks.watchRun.tap('probe', () => {
