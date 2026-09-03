@@ -1,7 +1,7 @@
 name: Test (Windows)
 
 concurrency:
-  group: windows-test-${{ github.head_ref }}
+  group: windows-test-${{ github.ref }}-${{ inputs.probe_force || 'pr' }}
   cancel-in-progress: true
 
 # Controls when the action will run.
@@ -14,6 +14,11 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      probe_force:
+        description: 'none | slash | native'
+        default: 'none'
+        type: string
 
 permissions: {}
 
@@ -78,17 +83,16 @@ jobs:
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm run build
 
-      - name: Build Website # for test
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: pnpm run build:website
-
-      - name: Unit Test
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: pnpm run test:unit
-
       - name: E2E Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: pnpm run test:e2e
+        env:
+          PROBE_FORCE: ${{ inputs.probe_force || 'none' }}
+        run: pnpm rstest run --config rstest.e2e.config.mts e2e/fixtures/hmr e2e/fixtures/plugin-playground
+
+      - name: Print probe log
+        if: always()
+        shell: bash
+        run: cat e2e/fixtures/hmr/probe.log e2e/fixtures/plugin-playground/probe.log || echo 'no probe log'
 
       - name: Upload Playwright Traces
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
