@@ -92,7 +92,7 @@ jobs:
       - name: Print probe log
         if: always()
         shell: bash
-        run: cat e2e/fixtures/hmr/probe.log || echo 'no probe log'
+        run: cat e2e/fixtures/hmr/probe.log e2e/fixtures/plugin-playground/probe.log || echo 'no probe log'
 
       - name: Upload Playwright Traces
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
