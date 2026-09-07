@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type { PageIndexInfo, RouteMeta } from '@rspress/shared';
 import { getPageKey } from '../utils/getPageKey';
-import { slash } from '../utils/normalizePath';
+import { slash } from '../utils/slash';
 import { RouteService } from './RouteService';
 
 export class RoutePage {
