@@ -1,12 +1,23 @@
 import { define } from 'rstack';
 import skillsJson from './skills.json' with { type: 'json' };
 
-define.lint(({ globals, js, ts }) => [
+define.lint(({ globals, js, rstestPlugin, ts }) => [
   {
     ignores: ['**/*.d.ts'],
   },
   js.configs.recommended,
   ts.configs.recommended,
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    ...rstestPlugin.configs.recommended,
+    rules: {
+      ...rstestPlugin.configs.recommended.rules,
+      'rstest/no-standalone-expect': [
+        'error',
+        { additionalTestBlockFunctions: ['test'] },
+      ],
+    },
+  },
   {
     files: [
       '**/*.cjs',
