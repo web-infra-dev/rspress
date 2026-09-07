@@ -32,8 +32,12 @@ describe('RoutePage on Windows', () => {
       String.raw`C:\repo\docs\index.mdx`,
     );
     expect(routePage.routeMeta.relativePath).toBe('guide/index.mdx');
+    expect(routeService.getRoutePageByFilePath(absolutePath)).toBe(routePage);
+    expect(
+      routeService.getRoutePageByFilePath('C:/repo/docs/./guide/index.mdx'),
+    ).toBe(routePage);
     expect(routeService.generateRoutesCode()).toContain(
-      `import(/* webpackChunkName: "${getRouteChunkName(routePage.routeMeta)}" */ "C:/repo/docs/guide/index.mdx")`,
+      String.raw`import(/* webpackChunkName: "${getRouteChunkName(routePage.routeMeta)}" */ "C:\\repo\\docs\\guide\\index.mdx")`,
     );
   });
 });

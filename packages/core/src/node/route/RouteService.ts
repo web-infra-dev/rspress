@@ -13,7 +13,7 @@ import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import { PUBLIC_DIR } from '../constants';
-import { createError, slash } from '../utils';
+import { createError } from '../utils';
 import {
   getRoutePathParts,
   normalizeRoutePath,
@@ -211,10 +211,7 @@ export class RouteService {
       throw createError(`routePath ${routePath} has already been added`);
     }
     this.routeData.set(routePath, routePage);
-    this.#routeDataByFilePath.set(
-      path.normalize(routePage.routeMeta.absolutePath),
-      routePage,
-    );
+    this.#routeDataByFilePath.set(routePage.routeMeta.absolutePath, routePage);
   }
 
   getRoutes(): RouteMeta[] {
@@ -300,8 +297,7 @@ import { lazyWithPreload } from "react-lazy-with-preload";
 ${routeMeta
   .map((route, index) => {
     const chunkName = getRouteChunkName(route);
-    const moduleRequest = slash(route.absolutePath);
-    return `const loadRoute${index} = () => import(/* webpackChunkName: "${chunkName}" */ ${JSON.stringify(moduleRequest)})
+    return `const loadRoute${index} = () => import(/* webpackChunkName: "${chunkName}" */ ${JSON.stringify(route.absolutePath)})
 const Route${index} = lazyWithPreload(loadRoute${index})`;
   })
   .join('\n')}
