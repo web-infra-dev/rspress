@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Native View Transition dark mode baseline</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          sans-serif;
+        color: #202124;
+        background: #ffffff;
+      }
+
+      :root.dark {
+        color-scheme: dark;
+        color: #f1f3f5;
+        background: #101214;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: inherit;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 72px;
+        padding: 0 24px;
+        border-bottom: 1px solid #8885;
+      }
+
+      button {
+        width: 44px;
+        height: 44px;
+        border: 1px solid #8886;
+        border-radius: 50%;
+        color: inherit;
+        background: transparent;
+        cursor: pointer;
+        font-size: 20px;
+      }
+
+      main {
+        width: min(760px, calc(100% - 48px));
+        margin: 72px auto;
+      }
+
+      .card {
+        margin-top: 32px;
+        padding: 24px;
+        border: 1px solid #8885;
+        border-radius: 16px;
+        background: #8881;
+      }
+
+      output {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 10000;
+        display: grid;
+        gap: 2px;
+        min-width: 220px;
+        padding: 12px 14px;
+        border: 1px solid #8886;
+        border-radius: 10px;
+        background: inherit;
+        box-shadow: 0 8px 24px #0002;
+        font:
+          12px/1.5 ui-monospace,
+          monospace;
+      }
+
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+      }
+
+      ::view-transition-old(root),
+      .dark::view-transition-new(root) {
+        z-index: 1;
+      }
+
+      ::view-transition-new(root),
+      .dark::view-transition-old(root) {
+        z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <strong>Native View Transition baseline</strong>
+      <button id="appearance" type="button" aria-label="Toggle dark mode">
+        ◐
+      </button>
+    </header>
+    <main>
+      <h1>Dark mode circle reveal</h1>
+      <p>
+        This page has no framework. The circle must stay centered on the button
+        at every browser zoom level and device pixel ratio.
+      </p>
+      <div class="card">
+        Compare this animation with the Rspress page at the same viewport size.
+      </div>
+    </main>
+    <output id="coordinates"></output>
+    <script>
+      const root = document.documentElement;
+      const button = document.querySelector('#appearance');
+      const output = document.querySelector('#coordinates');
+      const roundPercentage = value => Math.round(value * 1e6) / 1e6;
+
+      const renderCoordinates = event => {
+        output.innerHTML = `
+          <span>click: ${Math.round(event?.clientX ?? 0)}, ${Math.round(event?.clientY ?? 0)}</span>
+          <span>viewport: ${innerWidth} × ${innerHeight}</span>
+          <span>DPR: ${devicePixelRatio}</span>
+        `;
+      };
+
+      renderCoordinates();
+      addEventListener('resize', () => renderCoordinates());
+      addEventListener('pointerdown', renderCoordinates, true);
+
+      button.addEventListener('click', event => {
+        const isDark = !root.classList.contains('dark');
+        const x = event.clientX;
+        const y = event.clientY;
+        const endRadius = Math.hypot(
+          Math.max(x, innerWidth - x + 200),
+          Math.max(y, innerHeight - y + 200),
+        );
+        const normalizedDiagonal =
+          Math.hypot(innerWidth, innerHeight) / Math.SQRT2;
+        const xPercentage = roundPercentage((x / innerWidth) * 100);
+        const yPercentage = roundPercentage((y / innerHeight) * 100);
+        const endRadiusPercentage = roundPercentage(
+          (endRadius / normalizedDiagonal) * 100,
+        );
+
+        if (!document.startViewTransition) {
+          root.classList.toggle('dark', isDark);
+          return;
+        }
+
+        const transition = document.startViewTransition(() => {
+          root.classList.toggle('dark', isDark);
+        });
+        const clipPath = [
+          `circle(0% at ${xPercentage}% ${yPercentage}%)`,
+          `circle(${endRadiusPercentage}% at ${xPercentage}% ${yPercentage}%)`,
+        ];
+
+        transition.ready.then(() => {
+          root.animate(
+            { clipPath: isDark ? [...clipPath].reverse() : clipPath },
+            {
+              duration: 400,
+              easing: 'ease-in',
+              pseudoElement: isDark
+                ? '::view-transition-old(root)'
+                : '::view-transition-new(root)',
+            },
+          );
+        });
+      });
+    </script>
+  </body>
+</html>
