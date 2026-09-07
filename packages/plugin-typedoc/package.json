@@ -34,7 +34,7 @@
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
+    "@types/react-dom": "^19.2.7",
     "react": "^19.2.8",
     "rsbuild-plugin-publint": "^1.0.0",
     "typescript": "^6.0.3"
