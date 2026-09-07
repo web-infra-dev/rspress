@@ -1,3 +1,4 @@
+import * as path from 'node:path';
 import { expect, test } from '@e2e/test';
 import {
   getPort,
@@ -42,23 +43,24 @@ test.describe('custom headers', async () => {
       page.locator('meta[name="config-tuple-head"]'),
     ).toHaveAttribute('content', 'config-tuple-head-value');
 
+    const expectedPathSuffix = path.join(
+      'e2e',
+      'fixtures',
+      'custom-headers',
+      'doc',
+      'index.mdx',
+    );
     const configFnStringMetaContent = await page
       .locator('meta[name="config-fn-string-head"]')
       .getAttribute('content');
     expect(
-      configFnStringMetaContent?.endsWith(
-        'e2e/fixtures/custom-headers/doc/index.mdx',
-      ),
+      configFnStringMetaContent?.endsWith(expectedPathSuffix),
     ).toBeTruthy();
 
     const configFnTupleMetaContent = await page
       .locator('meta[name="config-fn-tuple-head"]')
       .getAttribute('content');
-    expect(
-      configFnTupleMetaContent?.endsWith(
-        'e2e/fixtures/custom-headers/doc/index.mdx',
-      ),
-    ).toBeTruthy();
+    expect(configFnTupleMetaContent?.endsWith(expectedPathSuffix)).toBeTruthy();
   });
 
   test('frontmatter headers should be injected', async ({ page }) => {
