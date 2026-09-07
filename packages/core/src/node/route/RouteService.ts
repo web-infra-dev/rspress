@@ -13,7 +13,7 @@ import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
 import type { ComponentType } from 'react';
 import { glob } from 'tinyglobby';
 import { PUBLIC_DIR } from '../constants';
-import { createError } from '../utils';
+import { createError, slash } from '../utils';
 import {
   getRoutePathParts,
   normalizeRoutePath,
@@ -300,7 +300,8 @@ import { lazyWithPreload } from "react-lazy-with-preload";
 ${routeMeta
   .map((route, index) => {
     const chunkName = getRouteChunkName(route);
-    return `const loadRoute${index} = () => import(/* webpackChunkName: "${chunkName}" */ '${route.absolutePath}')
+    const moduleRequest = slash(route.absolutePath);
+    return `const loadRoute${index} = () => import(/* webpackChunkName: "${chunkName}" */ ${JSON.stringify(moduleRequest)})
 const Route${index} = lazyWithPreload(loadRoute${index})`;
   })
   .join('\n')}

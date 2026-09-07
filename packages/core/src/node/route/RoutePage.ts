@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type { PageIndexInfo, RouteMeta } from '@rspress/shared';
 import { getPageKey } from '../utils/getPageKey';
-import { normalizePath, slash } from '../utils/normalizePath';
+import { slash } from '../utils/normalizePath';
 import { RouteService } from './RouteService';
 
 export class RoutePage {
@@ -41,6 +41,7 @@ export class RoutePage {
     docDir: string,
   ): RouteMeta {
     const routeService = RouteService.getInstance();
+    const absolutePath = path.normalize(filepath);
     const {
       routePath: normalizedPath,
       lang,
@@ -50,8 +51,8 @@ export class RoutePage {
     return {
       routePath: normalizedPath,
       pureRoutePath,
-      absolutePath: normalizePath(filepath),
-      relativePath: absolutePathToRelativePath(filepath, docDir),
+      absolutePath,
+      relativePath: absolutePathToRelativePath(absolutePath, docDir),
       pageName: getPageKey(routePath),
       lang,
       version,
@@ -71,6 +72,7 @@ function absolutePathToRouteMeta(
   docsDir: string,
   routeService: RouteService = RouteService.getInstance(),
 ): RouteMeta {
+  absolutePath = path.normalize(absolutePath);
   const relativePath = absolutePathToRelativePath(absolutePath, docsDir);
 
   const { lang, pureRoutePath, routePath, version } =
