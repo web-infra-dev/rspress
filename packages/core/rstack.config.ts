@@ -47,6 +47,13 @@ const PRESERVE_IMPORT_META_ENV = {
 };
 
 define.lib({
+  tools: {
+    rspack: {
+      experiments: {
+        runtimeMode: 'rspack',
+      },
+    },
+  },
   plugins: [pluginPublint()],
   lib: [
     {
