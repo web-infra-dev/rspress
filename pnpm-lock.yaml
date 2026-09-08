@@ -2456,8 +2456,8 @@ importers:
         specifier: 0.28.20
         version: 0.28.20(typescript@6.0.3)
       typedoc-plugin-markdown:
-        specifier: 4.12.0
-        version: 4.12.0(typedoc@0.28.20(typescript@6.0.3))
+        specifier: 4.13.0
+        version: 4.13.0(typedoc@0.28.20(typescript@6.0.3))
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.59.0
@@ -7237,10 +7237,6 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  postcss@8.5.26:
-    resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
-    engines: {node: ^10 || ^12 || >=14}
-
   postcss@8.5.28:
     resolution: {integrity: sha512-RRuzqDtt5Y9h3quz5hWhK+TPnsmVs6WwSU6LkJMeY4HstUEDuYTG8UJSdawMRzmzAtV+KEoG8N3Qg2qLy5vM/A==}
     engines: {node: ^10 || ^12 || >=14}
@@ -8194,8 +8190,8 @@ packages:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
 
-  typedoc-plugin-markdown@4.12.0:
-    resolution: {integrity: sha512-eJDEMAfxCmede22c/Jw7d0FA13ggAQv+KkwQYKYCdqI02cin6Rc9QRwbG/7XvvHWinuFejySnZVUWDtvGk3Vbg==}
+  typedoc-plugin-markdown@4.13.0:
+    resolution: {integrity: sha512-OHaOLoMTS0wL2ud73WXvxv486mrUEtgXxW4iKiTOGJVipT/VBWY76rlVRMQGes7aVonoIf5roWRe1UvHbufLlQ==}
     engines: {node: '>= 18'}
     peerDependencies:
       typedoc: 0.28.x
@@ -10892,7 +10888,7 @@ snapshots:
       '@vue/shared': 3.5.42
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.26
+      postcss: 8.5.28
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.31':
@@ -13977,12 +13973,6 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  postcss@8.5.26:
-    dependencies:
-      nanoid: 3.3.18
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
-
   postcss@8.5.28:
     dependencies:
       nanoid: 3.3.18
@@ -15089,7 +15079,7 @@ snapshots:
 
   type-fest@4.41.0: {}
 
-  typedoc-plugin-markdown@4.12.0(typedoc@0.28.20(typescript@6.0.3)):
+  typedoc-plugin-markdown@4.13.0(typedoc@0.28.20(typescript@6.0.3)):
     dependencies:
       typedoc: 0.28.20(typescript@6.0.3)
 
