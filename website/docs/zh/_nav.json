@@ -2,27 +2,32 @@
   {
     "text": "指南",
     "link": "/guide/start/introduction",
-    "activeMatch": "/guide/"
+    "activeMatch": "/guide/",
+    "position": "left"
   },
   {
     "text": "插件",
     "link": "/plugin/system/introduction",
-    "activeMatch": "/plugin/"
+    "activeMatch": "/plugin/",
+    "position": "left"
   },
   {
     "text": "UI",
     "link": "/ui/vars",
-    "activeMatch": "/ui/"
+    "activeMatch": "/ui/",
+    "position": "left"
   },
   {
     "text": "API",
     "link": "/api/",
-    "activeMatch": "/api/"
+    "activeMatch": "/api/",
+    "position": "left"
   },
   {
     "text": "博客",
     "link": "/blog/",
-    "activeMatch": "/blog/"
+    "activeMatch": "/blog/",
+    "position": "left"
   },
   {
     "text": "版本",
@@ -35,6 +40,7 @@
         "text": "Rspress 1.x 文档",
         "link": "https://v1.rspress.rs/zh/"
       }
-    ]
+    ],
+    "position": "left"
   }
 ]

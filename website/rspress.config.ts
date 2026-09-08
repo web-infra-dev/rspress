@@ -196,6 +196,7 @@ export default defineConfig({
     exclude: ['**/fragments/**', 'components/**'],
   },
   themeConfig: {
+    darkMode: 'dark',
     lastUpdated: process.env.NODE_ENV === 'production',
     footer: {
       message: '© 2023-present ByteDance Inc.',

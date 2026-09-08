@@ -2,27 +2,32 @@
   {
     "text": "Guide",
     "link": "/guide/start/introduction",
-    "activeMatch": "/guide/"
+    "activeMatch": "/guide/",
+    "position": "left"
   },
   {
     "text": "Plugin",
     "link": "/plugin/system/introduction",
-    "activeMatch": "/plugin/"
+    "activeMatch": "/plugin/",
+    "position": "left"
   },
   {
     "text": "UI",
     "link": "/ui/vars",
-    "activeMatch": "/ui/"
+    "activeMatch": "/ui/",
+    "position": "left"
   },
   {
     "text": "API",
     "link": "/api/",
-    "activeMatch": "/api/"
+    "activeMatch": "/api/",
+    "position": "left"
   },
   {
     "text": "Blog",
     "link": "/blog/",
-    "activeMatch": "/blog/"
+    "activeMatch": "/blog/",
+    "position": "left"
   },
   {
     "text": "Version",
@@ -35,6 +40,7 @@
         "text": "Rspress 1.x Docs",
         "link": "https://v1.rspress.rs/"
       }
-    ]
+    ],
+    "position": "left"
   }
 ]

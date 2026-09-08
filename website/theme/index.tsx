@@ -5,79 +5,43 @@ import {
   useLocation,
 } from '@rspress/core/runtime';
 import {
-  Banner,
   DocLayout as BasicDocLayout,
-  HomeHero as BasicHomeHero,
-  HomeLayout as BasicHomeLayout,
   Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
   Callout,
   type DocLayoutProps,
-  type HomeHeroProps,
   Link,
-  PackageManagerTabs,
 } from '@rspress/core/theme-original';
 import {
   Search as PluginAlgoliaSearch,
   ZH_LOCALES,
 } from '@rspress/plugin-algolia/runtime';
-import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import type { PropsWithChildren } from 'react';
 import { CssModificationProvider } from '../docs/components/CssModificationContext';
 import { CssModificationIndicator } from '../docs/components/CssModificationIndicator';
 import { CssStyleSync } from '../docs/components/CssStyleSync';
 import { BlogBackButton } from './components/BlogBackButton';
-import { HeroInteractive } from './components/HeroInteractive';
-import { HomeSections } from './components/HomeSections';
+import {
+  BlackMythHome,
+  MythNavTitle,
+  MythSidebarTitle,
+} from './components/BlackMyth';
 import { Tag } from './components/Tag';
-import { ToolStack } from './components/ToolStack';
 import './index.css';
+import './blackMyth.css';
 
 function HomeLayout() {
-  return (
-    <BasicHomeLayout
-      afterFeatures={
-        <>
-          <HomeSections />
-          <ToolStack />
-        </>
-      }
-      afterHeroActions={
-        <div
-          className="rp-doc"
-          style={{ width: '100%', maxWidth: 450, margin: '-1rem 0' }}
-        >
-          <PackageManagerTabs command="create rspress@latest" />
-        </div>
-      }
-    />
-  );
+  return <BlackMythHome />;
 }
 
-const HomeHero = ({ image: _, ...otherProps }: HomeHeroProps) => {
-  return <BasicHomeHero image={<HeroInteractive />} {...otherProps} />;
-};
-
 const Layout = () => {
-  const t = useI18n<typeof import('i18n')>();
-  const { pathname } = useLocation();
-  const isHomePage = pathname === '/' || pathname === '/zh/';
-
   return (
     <CssModificationProvider>
       <CssStyleSync />
       <CssModificationIndicator />
       <BasicLayout
-        beforeNav={
-          isHomePage ? (
-            <Banner
-              href={t('bannerHref')}
-              message={t('bannerMessage')}
-              storageKey="rp-banner-rspress-custom-theme-v2-closed"
-            />
-          ) : null
-        }
-        beforeNavTitle={<NavIcon />}
+        navTitle={<MythNavTitle />}
+        beforeSidebar={<MythSidebarTitle />}
       />
     </CssModificationProvider>
   );
@@ -169,12 +133,4 @@ function getCustomMDXComponent() {
 }
 
 export * from '@rspress/core/theme-original';
-export {
-  DocLayout,
-  getCustomMDXComponent,
-  HomeHero,
-  HomeLayout,
-  Layout,
-  Search,
-  Tag,
-};
+export { DocLayout, getCustomMDXComponent, HomeLayout, Layout, Search, Tag };
