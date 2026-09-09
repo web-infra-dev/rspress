@@ -15,7 +15,6 @@ export function CssModificationIndicator() {
     <FloatingToolbar
       label={lang === 'en' ? 'CSS modified' : 'CSS 已修改'}
       kind="css"
-      placement="top"
     >
       <button type="button" onClick={resetAll} className={styles.action}>
         {lang === 'en' ? 'Reset' : '复原'}

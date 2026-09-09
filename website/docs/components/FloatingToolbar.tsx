@@ -4,20 +4,14 @@ import styles from './FloatingToolbar.module.scss';
 export function FloatingToolbar({
   label,
   kind,
-  placement,
   children,
 }: {
   label: string;
   kind: 'slots' | 'css';
-  placement: 'top' | 'bottom';
   children: ReactNode;
 }) {
   return (
-    <div
-      className={`${styles.toolbar} ${styles[placement]}`}
-      role="region"
-      aria-label={label}
-    >
+    <div className={styles.toolbar} role="region" aria-label={label}>
       <span className={styles.status}>
         <span className={styles.icon} aria-hidden="true">
           <svg

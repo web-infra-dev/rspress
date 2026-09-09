@@ -1,6 +1,7 @@
 import { useLang } from '@rspress/core/runtime';
 import { Layout, type LayoutProps, Link } from '@rspress/core/theme-original';
 import { createContext, useContext, useState } from 'react';
+import { CssModificationIndicator } from './CssModificationIndicator';
 import { FloatingToolbar } from './FloatingToolbar';
 import toolbarStyles from './FloatingToolbar.module.scss';
 import styles from './SlotPreview.module.scss';
@@ -81,26 +82,28 @@ export function SlotPreviewLayout(props: LayoutProps) {
       value={{ enabled, toggle: () => setEnabled(value => !value) }}
     >
       <Layout {...previewProps} />
-      {enabled ? (
-        <FloatingToolbar
-          label={isZh ? '插槽预览' : 'Slot preview'}
-          kind="slots"
-          placement="bottom"
-        >
-          <Link className={toolbarStyles.link} href={isZh ? '/zh/' : '/'}>
-            {isZh ? '首页插槽' : 'Homepage slots'}
-            <span aria-hidden="true">→</span>
-          </Link>
-          <button
-            type="button"
-            className={toolbarStyles.action}
-            aria-label={isZh ? '退出插槽预览' : 'Exit slot preview'}
-            onClick={() => setEnabled(false)}
+      <div className={toolbarStyles.stack}>
+        {enabled ? (
+          <FloatingToolbar
+            label={isZh ? '插槽预览' : 'Slot preview'}
+            kind="slots"
           >
-            {isZh ? '退出' : 'Exit'}
-          </button>
-        </FloatingToolbar>
-      ) : null}
+            <Link className={toolbarStyles.link} href={isZh ? '/zh/' : '/'}>
+              {isZh ? '首页插槽' : 'Homepage slots'}
+              <span aria-hidden="true">→</span>
+            </Link>
+            <button
+              type="button"
+              className={toolbarStyles.action}
+              aria-label={isZh ? '退出插槽预览' : 'Exit slot preview'}
+              onClick={() => setEnabled(false)}
+            >
+              {isZh ? '退出' : 'Exit'}
+            </button>
+          </FloatingToolbar>
+        ) : null}
+        <CssModificationIndicator />
+      </div>
     </SlotPreviewContext.Provider>
   );
 }

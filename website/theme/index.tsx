@@ -24,7 +24,6 @@ import {
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import type { PropsWithChildren } from 'react';
 import { CssModificationProvider } from '../docs/components/CssModificationContext';
-import { CssModificationIndicator } from '../docs/components/CssModificationIndicator';
 import { CssStyleSync } from '../docs/components/CssStyleSync';
 import { SlotPreviewLayout } from '../docs/components/SlotPreview';
 import { BlogBackButton } from './components/BlogBackButton';
@@ -69,7 +68,6 @@ const Layout = () => {
   return (
     <CssModificationProvider>
       <CssStyleSync />
-      <CssModificationIndicator />
       <SlotPreviewLayout
         beforeNav={
           isHomePage ? (
