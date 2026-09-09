@@ -48,6 +48,20 @@ export function SlotPreviewToggle() {
       aria-pressed={enabled}
       onClick={toggle}
     >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="3" y="3" width="18" height="18" rx="3" />
+        <path d="M3 9h18M9 9v12" />
+      </svg>
       {enabled
         ? isZh
           ? '退出插槽预览'
