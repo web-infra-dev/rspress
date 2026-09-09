@@ -4,6 +4,7 @@ import { type MouseEvent, useContext } from 'react';
 import './global.scss';
 import './index.scss';
 import { flushSync } from 'react-dom';
+import { getClipPath } from './getClipPath';
 
 const supportAppearanceTransition = () => {
   return (
@@ -36,11 +37,6 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
       const x = event.clientX;
       const y = event.clientY;
 
-      const endRadius = Math.hypot(
-        Math.max(x, innerWidth - x + 200),
-        Math.max(y, innerHeight - y + 200),
-      );
-
       const dispose = removeClipViewTransition();
       const transition = document.startViewTransition(async () => {
         flushSync(() => {
@@ -49,30 +45,30 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
         });
       });
 
-      const clipPath = [
-        `circle(0px at ${x}px ${y}px)`,
-        `circle(${endRadius}px at ${x}px ${y}px)`,
-      ];
-      transition.ready.then(() => {
-        document.documentElement
-          .animate(
-            {
-              clipPath: isDark ? [...clipPath].reverse() : clipPath,
-            },
-            {
-              duration: 400,
-              easing: 'ease-in',
-              pseudoElement: isDark
-                ? '::view-transition-old(root)'
-                : '::view-transition-new(root)',
-
-              id: '',
-            },
-          )
-          .finished.then(() => {
-            dispose();
-          });
+      const clipPath = getClipPath({
+        height: innerHeight,
+        width: innerWidth,
+        x,
+        y,
       });
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: isDark ? [...clipPath].reverse() : clipPath,
+          },
+          {
+            duration: 400,
+            easing: 'ease-in',
+            fill: 'both',
+            pseudoElement: isDark
+              ? '::view-transition-old(root)'
+              : '::view-transition-new(root)',
+
+            id: '',
+          },
+        );
+      });
+      transition.finished.then(dispose, dispose);
     } else {
       setTheme(nextTheme);
       onClick?.();
