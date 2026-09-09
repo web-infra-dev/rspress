@@ -61,25 +61,3 @@
     outline-offset: 3px;
   }
 }
-
-.toolbar {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 100;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-  max-width: calc(100vw - 32px);
-  padding: 12px;
-  border: 1px solid var(--rp-c-brand);
-  border-radius: 12px;
-  background: var(--rp-c-bg);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
-  font-size: 14px;
-
-  a {
-    color: var(--rp-c-brand);
-  }
-}

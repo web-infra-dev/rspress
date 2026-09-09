@@ -1,6 +1,8 @@
 import { useLang } from '@rspress/core/runtime';
 import { Layout, type LayoutProps, Link } from '@rspress/core/theme-original';
 import { createContext, useContext, useState } from 'react';
+import { FloatingToolbar } from './FloatingToolbar';
+import toolbarStyles from './FloatingToolbar.module.scss';
 import styles from './SlotPreview.module.scss';
 
 const slots = [
@@ -80,16 +82,24 @@ export function SlotPreviewLayout(props: LayoutProps) {
     >
       <Layout {...previewProps} />
       {enabled ? (
-        <div
-          className={styles.toolbar}
-          role="region"
-          aria-label={isZh ? '插槽预览' : 'Slot preview'}
+        <FloatingToolbar
+          label={isZh ? '插槽预览' : 'Slot preview'}
+          kind="slots"
+          placement="bottom"
         >
-          <Link href={isZh ? '/zh/' : '/'}>
-            {isZh ? '查看首页插槽' : 'View homepage slots'}
+          <Link className={toolbarStyles.link} href={isZh ? '/zh/' : '/'}>
+            {isZh ? '首页插槽' : 'Homepage slots'}
+            <span aria-hidden="true">→</span>
           </Link>
-          <SlotPreviewToggle />
-        </div>
+          <button
+            type="button"
+            className={toolbarStyles.action}
+            aria-label={isZh ? '退出插槽预览' : 'Exit slot preview'}
+            onClick={() => setEnabled(false)}
+          >
+            {isZh ? '退出' : 'Exit'}
+          </button>
+        </FloatingToolbar>
       ) : null}
     </SlotPreviewContext.Provider>
   );

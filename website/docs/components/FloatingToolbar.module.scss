@@ -1,0 +1,112 @@
+.toolbar {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 20px;
+  max-width: calc(100vw - 32px);
+  padding: 8px 10px;
+  border: 1px solid var(--rp-c-divider-light);
+  border-radius: 14px;
+  background: var(--rp-c-bg);
+  color: var(--rp-c-text-1);
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 3%),
+    0 8px 32px rgb(0 0 0 / 10%);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.top {
+  top: calc(
+    var(--rp-banner-height, 0px) + var(--rp-nav-height) +
+      var(--rp-sidebar-menu-height) + 12px
+  );
+}
+
+.bottom {
+  bottom: max(20px, env(safe-area-inset-bottom));
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--rp-c-brand-tint);
+  color: var(--rp-c-brand);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action,
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 32px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+
+  &:focus-visible {
+    outline: 2px solid var(--rp-c-brand);
+    outline-offset: 2px;
+  }
+}
+
+.action {
+  border: 1px solid var(--rp-c-divider-light);
+  background: var(--rp-c-bg-soft);
+  color: var(--rp-c-text-1);
+
+  &:hover {
+    background: var(--rp-c-bg-mute);
+  }
+}
+
+.link {
+  color: var(--rp-c-text-2);
+
+  &:hover {
+    background: var(--rp-c-brand-tint);
+    color: var(--rp-c-brand);
+  }
+}
+
+@media (max-width: 767px) {
+  .toolbar {
+    right: max(16px, env(safe-area-inset-right));
+    gap: 8px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action,
+  .link {
+    transition: none;
+  }
+}
