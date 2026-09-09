@@ -1,3 +1,4 @@
+import type React from 'react';
 import { afterEach, describe, expect, it, rs } from '@rstest/core';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { renderToMarkdownString } from 'react-render-to-markdown';
@@ -21,6 +22,7 @@ let page = defaultPage;
 let site = defaultSite;
 
 rs.mock('@rspress/core/runtime', () => ({
+  Head: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
   routePathToMdPath: (path: string) => `/docs${path}index.md`,
   usePage: () => ({ page }),
   useSite: () => ({ site }),
@@ -57,6 +59,12 @@ describe('LlmsHint', () => {
     expect(html).not.toContain('<a ');
     expect(html).toContain(
       'For AI agents: the complete documentation index is available at https://example.com/docs/llms.txt, the full documentation bundle is available at https://example.com/docs/llms-full.txt, and this page is available as Markdown at https://example.com/docs/guide/index.md.',
+    );
+    expect(html).toContain(
+      '<link rel="alternate" type="text/markdown" href="https://example.com/docs/guide/index.md"/>',
+    );
+    expect(html).toContain(
+      '<link rel="describedby" href="https://example.com/docs/llms.txt"/>',
     );
   });
 
