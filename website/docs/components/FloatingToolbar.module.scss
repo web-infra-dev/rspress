@@ -25,7 +25,7 @@
   gap: 8px 20px;
   max-width: calc(100vw - 32px);
   padding: 10px 12px;
-  border: 1px solid var(--rp-c-divider-light);
+  border: 1px solid color-mix(in srgb, var(--rp-c-brand) 50%, var(--rp-c-bg));
   border-radius: 14px;
   background: var(--rp-c-bg);
   color: var(--rp-c-text-1);

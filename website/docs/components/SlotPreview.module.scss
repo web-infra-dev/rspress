@@ -90,6 +90,32 @@
   }
 }
 
+:global(.rp-callout--tip) .button {
+  min-height: 38px;
+  padding: 7px 10px;
+  border-color: var(--rp-container-tip-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--rp-container-tip-text);
+  box-shadow: none;
+  font-weight: 500;
+
+  &:hover,
+  &[aria-pressed='true'] {
+    background: var(--rp-container-tip-code-bg);
+    color: var(--rp-container-tip-text);
+    box-shadow: none;
+  }
+
+  &[aria-pressed='true']:hover {
+    background: var(--rp-container-tip-code-bg);
+  }
+
+  &:focus-visible {
+    outline-color: var(--rp-container-tip-text);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .button {
     transition: none;
