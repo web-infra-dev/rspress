@@ -4,12 +4,14 @@ import { clearAllBodyScrollLocks, disableBodyScroll } from 'body-scroll-lock';
 import clsx from 'clsx';
 import { useEffect, useRef } from 'react';
 import './index.scss';
+import type { NavItemsSlots } from '../Nav';
+import { NavListContext } from '../NavList/context';
 import { NavScreenAppearance } from './NavScreenAppearance';
 import { NavScreenLangs } from './NavScreenLangs';
 import { NavScreenMenu } from './NavScreenMenu';
 import { NavScreenVersions } from './NavScreenVersions';
 
-export interface NavScreenProps {
+export interface NavScreenProps extends NavItemsSlots {
   isScreenOpen: boolean;
   toggleScreen: () => void;
 }
@@ -19,7 +21,7 @@ export function NavScreenDivider() {
 }
 
 export function NavScreen(props: NavScreenProps) {
-  const { isScreenOpen, toggleScreen } = props;
+  const { isScreenOpen, toggleScreen, ...navItemsSlots } = props;
   const screen = useRef<HTMLDivElement | null>(null);
   const menuItems = useNav();
 
@@ -53,7 +55,9 @@ export function NavScreen(props: NavScreenProps) {
         className="rp-nav-screen__container"
         onClick={e => e.stopPropagation()}
       >
-        <NavScreenMenu menuItems={menuItems} />
+        <NavListContext.Provider value="screen">
+          <NavScreenMenu menuItems={menuItems} {...navItemsSlots} />
+        </NavListContext.Provider>
         <NavScreenDivider />
         <NavScreenAppearance />
         <NavScreenLangs />

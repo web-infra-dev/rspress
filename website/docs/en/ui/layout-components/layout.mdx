@@ -74,6 +74,12 @@ const Layout = () => (
     beforeNavMenu={<div>beforeNavMenu</div>}
     /* After nav menu */
     afterNavMenu={<div>afterNavMenu</div>}
+    /* Before/after the left navigation items (desktop and mobile) */
+    beforeLeftNavItems={<div>beforeLeftNavItems</div>}
+    afterLeftNavItems={<div>afterLeftNavItems</div>}
+    /* Before/after the right navigation items (desktop and mobile) */
+    beforeRightNavItems={<div>beforeRightNavItems</div>}
+    afterRightNavItems={<div>afterRightNavItems</div>}
     /* Above left sidebar */
     beforeSidebar={<div>beforeSidebar</div>}
     /* Below left sidebar */
@@ -108,3 +114,25 @@ export * from '@rspress/core/theme-original';
 ```
 
 </details>
+
+### Custom navigation lists
+
+Use `beforeLeftNavItems`, `afterLeftNavItems`, `beforeRightNavItems`, and `afterRightNavItems` to insert custom navigation content. With [NavList](./nav-list), the same `items` automatically render as a horizontal desktop menu or a vertical list in the expanded mobile menu, without checking the viewport width.
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [
+  { text: 'Community', link: '/community' },
+  {
+    text: 'Resources',
+    items: [{ text: 'Examples', link: '/examples' }],
+  },
+];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```

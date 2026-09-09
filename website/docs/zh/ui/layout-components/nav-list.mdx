@@ -1,0 +1,49 @@
+---
+description: 在桌面端和移动端导航插槽中渲染自定义导航列表。
+overviewHeaders: []
+---
+
+# NavList
+
+`NavList` 根据所在的导航容器渲染导航列表。只需将它传入一次 [Layout](./layout) 导航插槽，就能同时支持桌面端和移动端菜单。
+
+## 用法
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [
+  { text: 'Community', link: '/community' },
+  { text: 'Resources', items: [{ text: 'Examples', link: '/examples' }] },
+];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+桌面端使用主题的横向导航和下拉菜单；移动端展开菜单后，使用纵向链接和可展开的分组。链接高亮和跳转复用主题已有行为。
+
+## Props
+
+### items
+
+- **类型：** `NavItem[]`
+- **必填**
+
+使用与 [`themeConfig.nav`](/api/config/config-theme#nav) 相同的导航项结构，支持链接和嵌套菜单。插入位置由外层插槽决定，传给 `NavList` 的导航项中的 `position` 不会过滤或移动这些导航项。
+
+## 导航插槽
+
+| Layout 属性           | 桌面端位置                                     |
+| --------------------- | ---------------------------------------------- |
+| `beforeLeftNavItems`  | 左侧导航项之前                                 |
+| `afterLeftNavItems`   | 左侧导航项之后                                 |
+| `beforeRightNavItems` | 搜索框之后、右侧导航项之前                     |
+| `afterRightNavItems`  | 右侧导航项之后，语言、版本、外观和社交控件之前 |
+
+移动端保留已配置导航项的顺序，插槽位于对应位置的首项之前或末项之后。如果某个位置没有导航项，插槽仍会显示：左侧插槽位于列表开头，右侧插槽位于列表末尾。
+
+在这些插槽中使用 `NavList` 即可自动适配两端。也可以插入任意自定义元素，但其内部布局需要自行处理。在移动端导航容器之外，`NavList` 使用桌面端呈现方式。

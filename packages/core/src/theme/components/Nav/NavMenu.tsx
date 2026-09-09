@@ -168,25 +168,39 @@ export function NavVersions() {
 export function NavMenu({
   menuItems,
   position,
+  before,
+  after,
 }: {
   menuItems: NavItem[];
-  position: 'left' | 'right';
+  position?: 'left' | 'right';
+  before?: ReactNode;
+  after?: ReactNode;
 }) {
-  const getPosition = (menuItem: NavItem) => menuItem.position ?? 'right';
+  const items = useMemo(() => {
+    return position
+      ? menuItems.filter(item => (item.position ?? 'right') === position)
+      : menuItems;
+  }, [menuItems, position]);
 
-  const leftOrRightMenuItems = useMemo(() => {
-    return menuItems.filter(item => getPosition(item) === position);
-  }, [menuItems]);
+  const menu = items.length ? (
+    <ul className={clsx('rp-nav-menu', position && `rp-nav-menu--${position}`)}>
+      {items.map((item, index) => (
+        <NavMenuItem key={index} menuItem={item} />
+      ))}
+    </ul>
+  ) : null;
 
-  if (leftOrRightMenuItems.length === 0) {
-    return null;
+  if (before == null && after == null) {
+    return menu;
   }
 
   return (
-    <ul className={clsx('rp-nav-menu', `rp-nav-menu--${position}`)}>
-      {leftOrRightMenuItems.map((item, index) => {
-        return <NavMenuItem key={index} menuItem={item} />;
-      })}
-    </ul>
+    <div
+      className={clsx('rp-nav-items', position && `rp-nav-items--${position}`)}
+    >
+      {before}
+      {menu}
+      {after}
+    </div>
   );
 }
