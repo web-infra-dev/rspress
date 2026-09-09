@@ -5,6 +5,7 @@ description: 通过 CSS 变量、BEM 类名覆盖样式，或使用 ESM 重导�
 # 自定义主题
 
 import { Prompt } from '@rspress/core/theme';
+import { SlotPreviewToggle } from '../../../components/SlotPreview';
 
 <Prompt custom>
 
@@ -166,7 +167,9 @@ export * from '@rspress/core/theme-original';
 
 :::tip
 
-[`Layout`](/ui/layout-components/layout) 组件设计了一系列的插槽 props 专门用于 wrap，你可以通过这些 props 来扩展默认主题的布局：
+[`Layout`](/ui/layout-components/layout) 组件设计了一系列的插槽 props 专门用于 wrap，你可以通过这些 props 来扩展默认主题的布局。点击下方按钮，在当前页面预览各个插槽的位置。
+
+<SlotPreviewToggle />
 
 :::
 
