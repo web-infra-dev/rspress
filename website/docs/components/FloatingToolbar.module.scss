@@ -15,6 +15,11 @@
   &:empty {
     display: none;
   }
+
+  // The responsive sidebar and outline share this overlay mask.
+  :global(body:has(.rp-sidebar-menu__mask)) & {
+    visibility: hidden;
+  }
 }
 
 .toolbar {
