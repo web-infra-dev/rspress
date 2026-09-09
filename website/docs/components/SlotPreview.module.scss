@@ -1,3 +1,73 @@
+.slot {
+  position: relative;
+  display: flow-root;
+
+  // Keep the content's own layout, including components that render nothing.
+  > .content {
+    display: contents;
+  }
+
+  &:is(
+    [data-slot-container$='NavTitle'],
+    [data-slot-container$='NavMenu'],
+    [data-slot-container='navTitle']
+  ) {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  // The wrapper takes over the banner's sticky positioning during preview.
+  &:has(> .content > :global(.rp-banner)) {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+
+    > .content > :global(.rp-banner) {
+      position: relative;
+      z-index: auto;
+    }
+  }
+
+  &:has(> .content:not(:empty)) > .marker {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    background:
+      linear-gradient(var(--rp-c-brand-tint), var(--rp-c-brand-tint)),
+      color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
+    pointer-events: none;
+
+    > .label {
+      position: sticky;
+      top: calc(var(--rp-nav-height) + var(--rp-banner-height, 0px) + 8px);
+      max-width: 100%;
+      padding: 2px 4px;
+      border-radius: 3px;
+      background: color-mix(in srgb, var(--rp-c-bg) 85%, transparent);
+    }
+
+    &:is(
+      [data-slot-preview$='NavTitle'],
+      [data-slot-preview$='NavMenu'],
+      [data-slot-preview='navTitle']
+    ) {
+      align-items: center;
+
+      > .label {
+        position: static;
+        background: transparent;
+      }
+    }
+  }
+}
+
 .marker {
   display: block;
   padding: 6px 8px;
