@@ -288,19 +288,16 @@ describe('redirectToCleanUrl', () => {
     (pathname, canonicalPathname) => {
       siteData.route.cleanUrls = true;
       const replaceState = rs.fn();
+      const expectedCalls =
+        pathname === canonicalPathname ? [] : [[null, '', canonicalPathname]];
 
       expect(
         redirectToCleanUrl(
           { pathname, search: '', hash: '' },
           { replaceState, state: null },
         ),
-      ).toBe(pathname !== canonicalPathname);
-
-      if (pathname !== canonicalPathname) {
-        expect(replaceState).toHaveBeenCalledWith(null, '', canonicalPathname);
-      } else {
-        expect(replaceState).not.toHaveBeenCalled();
-      }
+      ).toBe(expectedCalls.length > 0);
+      expect(replaceState.mock.calls).toEqual(expectedCalls);
     },
   );
 
@@ -327,19 +324,16 @@ describe('redirectToCleanUrl', () => {
     'normalizes %s to %s when cleanUrls is false',
     (pathname, canonicalPathname) => {
       const replaceState = rs.fn();
+      const expectedCalls =
+        pathname === canonicalPathname ? [] : [[null, '', canonicalPathname]];
 
       expect(
         redirectToCleanUrl(
           { pathname, search: '', hash: '' },
           { replaceState, state: null },
         ),
-      ).toBe(pathname !== canonicalPathname);
-
-      if (pathname !== canonicalPathname) {
-        expect(replaceState).toHaveBeenCalledWith(null, '', canonicalPathname);
-      } else {
-        expect(replaceState).not.toHaveBeenCalled();
-      }
+      ).toBe(expectedCalls.length > 0);
+      expect(replaceState.mock.calls).toEqual(expectedCalls);
     },
   );
 
