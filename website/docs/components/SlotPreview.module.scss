@@ -50,10 +50,10 @@
   min-height: 44px;
   max-width: 100%;
   padding: 10px 16px;
-  border: 1px solid color-mix(in srgb, var(--rp-c-brand) 30%, var(--rp-c-bg));
+  border: 1px solid var(--rp-c-brand);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--rp-c-brand) 5%, var(--rp-c-bg));
-  color: color-mix(in srgb, var(--rp-c-brand) 65%, var(--rp-c-text-1));
+  background: var(--rp-c-brand-tint);
+  color: var(--rp-c-brand);
   font-size: 14px;
   font-weight: 600;
   line-height: 22px;
@@ -67,7 +67,7 @@
   }
 
   &:hover {
-    border-color: var(--rp-c-brand);
+    border-color: var(--rp-c-brand-dark);
     background: var(--rp-c-brand-tint);
   }
 
