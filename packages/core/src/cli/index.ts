@@ -64,7 +64,7 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
 
           devServer = await dev({
             docDirectory,
-            configResult,
+            config: configResult,
             extraBuilderConfig: { server: { port, host } },
             restart,
           });
@@ -114,7 +114,7 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
       try {
         await build({
           docDirectory,
-          configResult,
+          config: configResult,
         });
       } catch (err) {
         logger.error(err);
@@ -151,7 +151,7 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
         }
 
         await serve({
-          configResult,
+          config: configResult,
           host,
           port,
         });

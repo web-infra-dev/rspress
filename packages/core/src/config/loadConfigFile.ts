@@ -35,6 +35,21 @@ export async function loadConfigFile(
   });
 }
 
+export function normalizeConfigResult(
+  config: UserConfig | LoadConfigResult<UserConfig>,
+  configFilePath?: string,
+): LoadConfigResult<UserConfig> {
+  if ('content' in config && 'filePath' in config && 'dependencies' in config) {
+    return config;
+  }
+
+  return {
+    content: config,
+    filePath: configFilePath || null,
+    dependencies: [],
+  };
+}
+
 export function resolveDocRoot(
   cwd: string,
   cliRoot?: string,

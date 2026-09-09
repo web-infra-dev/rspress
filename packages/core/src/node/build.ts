@@ -1,5 +1,6 @@
 import type { LoadConfigResult } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
+import { normalizeConfigResult } from '../config/loadConfigFile';
 import { modifyConfigWithAutoNavSide } from './auto-nav-sidebar';
 import { initRsbuild } from './initRsbuild';
 import { hintSSGFalse } from './logger/hint';
@@ -9,11 +10,16 @@ import { checkLanguageParity } from './utils/checkLanguageParity';
 
 interface BuildOptions {
   docDirectory: string;
-  configResult: LoadConfigResult<UserConfig>;
+  config: UserConfig | LoadConfigResult<UserConfig>;
+  configFilePath?: string;
 }
 
 export async function build(options: BuildOptions) {
-  const { docDirectory, configResult } = options;
+  const { docDirectory } = options;
+  const configResult = normalizeConfigResult(
+    options.config,
+    options.configFilePath,
+  );
   const { content: config } = configResult;
   // 1. create PluginDriver
   const pluginDriver = await PluginDriver.create(configResult, true);

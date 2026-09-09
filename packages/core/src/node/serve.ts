@@ -4,12 +4,14 @@ import {
   type RsbuildInstance,
 } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
+import { normalizeConfigResult } from '../config/loadConfigFile';
 import { initRsbuild } from './initRsbuild';
 import { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
 
 interface ServeOptions {
-  configResult: LoadConfigResult<UserConfig>;
+  config: UserConfig | LoadConfigResult<UserConfig>;
+  configFilePath?: string;
   port?: number;
   host?: string;
 }
@@ -18,7 +20,11 @@ interface ServeOptions {
 export async function serve(
   options: ServeOptions,
 ): Promise<ReturnType<RsbuildInstance['preview']>> {
-  const { configResult, port: userPort, host: userHost } = options;
+  const { port: userPort, host: userHost } = options;
+  const configResult = normalizeConfigResult(
+    options.config,
+    options.configFilePath,
+  );
   const { content: config } = configResult;
   const envPort = process.env.PORT;
   const envHost = process.env.HOST;

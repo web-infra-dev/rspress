@@ -1,5 +1,6 @@
 import type { LoadConfigResult, RestartFn, RsbuildConfig } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
+import { normalizeConfigResult } from '../config/loadConfigFile';
 import { initRsbuild } from './initRsbuild';
 import { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
@@ -10,14 +11,20 @@ interface ServerInstance {
 }
 
 interface DevOptions {
+  appDirectory?: string;
   docDirectory: string;
-  configResult: LoadConfigResult<UserConfig>;
+  config: UserConfig | LoadConfigResult<UserConfig>;
+  configFilePath?: string;
   extraBuilderConfig?: RsbuildConfig;
   restart?: RestartFn;
 }
 
 export async function dev(options: DevOptions): Promise<ServerInstance> {
-  const { docDirectory, configResult, extraBuilderConfig, restart } = options;
+  const { docDirectory, extraBuilderConfig, restart } = options;
+  const configResult = normalizeConfigResult(
+    options.config,
+    options.configFilePath,
+  );
   // 1. create PluginDriver
   const pluginDriver = await PluginDriver.create(configResult, false);
   const modifiedConfig = await pluginDriver.modifyConfig();
