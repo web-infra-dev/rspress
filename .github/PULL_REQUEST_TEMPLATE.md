@@ -1,18 +1,9 @@
-## Summary
+## Motivation
 
-<!--- Please introduce what this PR changes and why. For behavior changes, include a before / after comparison to help reviewers understand the impact. -->
+<!-- Explain the problem or motivation and why it matters. Include relevant context and links to issues or discussions. -->
 
-## Related issue
+## Changes
 
-<!--- Provide link of related issues -->
+<!-- Describe how this PR addresses the motivation and what behavior changes. Focus on the key approach rather than a file-by-file summary. -->
 
-## Screenshots
-
-<!--- For theme or other visual changes, please include before and after screenshots to help reviewers understand the change. Otherwise, remove this section. -->
-
-## Checklist
-
-<!--- Check and mark with an "x" -->
-
-- [ ] Tests updated (or not required).
-- [ ] Documentation updated (or not required).
+<!-- For visual changes, include before and after screenshots. -->
