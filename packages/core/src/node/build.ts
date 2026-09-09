@@ -1,3 +1,4 @@
+import type { LoadConfigResult } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import { modifyConfigWithAutoNavSide } from './auto-nav-sidebar';
 import { initRsbuild } from './initRsbuild';
@@ -8,14 +9,14 @@ import { checkLanguageParity } from './utils/checkLanguageParity';
 
 interface BuildOptions {
   docDirectory: string;
-  config: UserConfig;
-  configFilePath: string;
+  configResult: LoadConfigResult<UserConfig>;
 }
 
 export async function build(options: BuildOptions) {
-  const { docDirectory, config, configFilePath } = options;
+  const { docDirectory, configResult } = options;
+  const { content: config } = configResult;
   // 1. create PluginDriver
-  const pluginDriver = await PluginDriver.create(config, configFilePath, true);
+  const pluginDriver = await PluginDriver.create(configResult, true);
   const modifiedConfig = await pluginDriver.modifyConfig();
   const enableSSG = Boolean(
     (modifiedConfig.ssg || modifiedConfig.llms) ?? true,
@@ -41,7 +42,7 @@ export async function build(options: BuildOptions) {
     // else only build client bundle
     const rsbuild = await initRsbuild(
       docDirectory,
-      modifiedConfig,
+      { ...configResult, content: modifiedConfig },
       pluginDriver,
       routeService,
       enableSSG,

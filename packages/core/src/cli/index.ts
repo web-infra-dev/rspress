@@ -51,9 +51,8 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
         let devServer: Awaited<ReturnType<typeof dev>>;
         const startDevServer = async () => {
           const { port, host } = options || {};
-          const { config, configFilePath } = await loadConfigFile(
-            options?.config,
-          );
+          const configResult = await loadConfigFile(options?.config);
+          const { content: config } = configResult;
 
           config.root = resolveDocRoot(cwd, root, config.root);
 
@@ -64,10 +63,8 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
           const docDirectory = config.root;
 
           devServer = await dev({
-            appDirectory: cwd,
             docDirectory,
-            config,
-            configFilePath,
+            configResult,
             extraBuilderConfig: { server: { port, host } },
             restart,
           });
@@ -104,7 +101,8 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
     .action(async (root, options) => {
       setNodeEnv('production');
       const cwd = process.cwd();
-      const { config, configFilePath } = await loadConfigFile(options.config);
+      const configResult = await loadConfigFile(options.config);
+      const { content: config } = configResult;
 
       config.root = resolveDocRoot(cwd, root, config.root);
 
@@ -116,8 +114,7 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
       try {
         await build({
           docDirectory,
-          config,
-          configFilePath,
+          configResult,
         });
       } catch (err) {
         logger.error(err);
@@ -144,9 +141,8 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
         setNodeEnv('production');
         const cwd = process.cwd();
         const { port, host } = options || {};
-        const { config, configFilePath } = await loadConfigFile(
-          options?.config,
-        );
+        const configResult = await loadConfigFile(options?.config);
+        const { content: config } = configResult;
 
         config.root = resolveDocRoot(cwd, root, config.root);
 
@@ -155,10 +151,9 @@ export function runCLI({ argv = process.argv }: RunCLIOptions = {}): void {
         }
 
         await serve({
-          config,
+          configResult,
           host,
           port,
-          configFilePath,
         });
       },
     );

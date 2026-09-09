@@ -1,4 +1,5 @@
 import path from 'node:path';
+import type { LoadConfigResult } from '@rsbuild/core';
 import {
   addLeadingSlash,
   addTrailingSlash,
@@ -25,7 +26,6 @@ type RspressPluginHookKeys =
 
 export class PluginDriver {
   #config: UserConfig;
-  #configFilePath: string;
 
   #plugins: RspressPlugin[];
 
@@ -34,28 +34,21 @@ export class PluginDriver {
   haveNavSidebarConfig = false;
 
   static async create(
-    config: UserConfig,
-    configFilePath: string,
+    configResult: LoadConfigResult<UserConfig>,
     isProd: boolean,
   ): Promise<PluginDriver> {
-    const pluginDriver = new PluginDriver(config, configFilePath, isProd);
+    const pluginDriver = new PluginDriver(configResult, isProd);
     await pluginDriver.init();
     return pluginDriver;
   }
 
   private constructor(
-    config: UserConfig,
-    configFilePath: string,
+    configResult: LoadConfigResult<UserConfig>,
     isProd: boolean,
   ) {
-    this.#config = config;
-    this.#configFilePath = configFilePath;
+    this.#config = configResult.content;
     this.#isProd = isProd;
     this.#plugins = [];
-  }
-
-  getConfigFilePath() {
-    return this.#configFilePath;
   }
 
   // The init function is used to initialize the doc plugins and will execute before the build process.

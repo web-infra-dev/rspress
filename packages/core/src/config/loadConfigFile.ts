@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import type { LoadConfigResult } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import {
   DEFAULT_CONFIG_EXTENSIONS,
@@ -15,7 +16,7 @@ const findConfig = (basePath: string): string | undefined => {
 
 export async function loadConfigFile(
   customConfigFile?: string,
-): Promise<{ config: UserConfig; configFilePath: string }> {
+): Promise<LoadConfigResult<UserConfig>> {
   const baseDir = process.cwd();
   const configFilePath = customConfigFile
     ? path.isAbsolute(customConfigFile)
@@ -24,19 +25,14 @@ export async function loadConfigFile(
     : findConfig(path.join(baseDir, DEFAULT_CONFIG_NAME));
   if (!configFilePath) {
     logger.info(`No config file found in ${baseDir}`);
-    return { config: {}, configFilePath: '' };
+    return { content: {}, filePath: null, dependencies: [] };
   }
 
   const { loadConfig } = await import('@rsbuild/core');
-  const { content } = await loadConfig({
+  return loadConfig<UserConfig>({
     cwd: path.dirname(configFilePath),
     path: configFilePath,
   });
-
-  return {
-    config: content as UserConfig,
-    configFilePath,
-  };
 }
 
 export function resolveDocRoot(
