@@ -1,0 +1,85 @@
+.marker {
+  display: block;
+  padding: 6px 8px;
+  margin: 4px;
+  border: 1px dashed var(--rp-c-brand);
+  border-radius: 4px;
+  background: var(--rp-c-brand-tint);
+  color: var(--rp-c-text-1);
+  font-family: var(--rp-font-family-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  overflow-wrap: anywhere;
+
+  &:is(
+    [data-slot-preview$='NavTitle'],
+    [data-slot-preview$='NavMenu'],
+    [data-slot-preview='navTitle']
+  ) {
+    flex-shrink: 0;
+    max-width: 64px;
+    padding: 4px;
+    margin: 2px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  :global(.rp-nav):has(.marker) {
+    height: auto;
+    min-height: var(--rp-nav-height);
+    flex-wrap: wrap;
+    gap: 4px;
+    padding-block: 8px;
+
+    :global(.rp-nav__left),
+    :global(.rp-nav__right) {
+      height: auto;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+  }
+}
+
+.button {
+  padding: 8px 12px;
+  border: 1px solid var(--rp-c-brand);
+  border-radius: 8px;
+  background: var(--rp-c-bg);
+  color: var(--rp-c-text-1);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--rp-c-brand-tint);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--rp-c-brand);
+    outline-offset: 3px;
+  }
+}
+
+.toolbar {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100vw - 32px);
+  padding: 12px;
+  border: 1px solid var(--rp-c-brand);
+  border-radius: 12px;
+  background: var(--rp-c-bg);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+  font-size: 14px;
+
+  a {
+    color: var(--rp-c-brand);
+  }
+}
