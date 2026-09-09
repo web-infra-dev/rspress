@@ -1813,7 +1813,7 @@ importers:
         version: 19.2.18
       '@types/react-dom':
         specifier: ^19.2.4
-        version: 19.2.4(@types/react@19.2.18)
+        version: 19.2.7(@types/react@19.2.18)
 
   e2e/fixtures/with-base:
     dependencies:
