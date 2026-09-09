@@ -9,11 +9,11 @@ import {
   DocLayout as BasicDocLayout,
   HomeHero as BasicHomeHero,
   HomeLayout as BasicHomeLayout,
-  Layout as BasicLayout,
   getCustomMDXComponent as basicGetCustomMDXComponent,
   Callout,
   type DocLayoutProps,
   type HomeHeroProps,
+  type HomeLayoutProps,
   Link,
   PackageManagerTabs,
 } from '@rspress/core/theme-original';
@@ -24,8 +24,8 @@ import {
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import type { PropsWithChildren } from 'react';
 import { CssModificationProvider } from '../docs/components/CssModificationContext';
-import { CssModificationIndicator } from '../docs/components/CssModificationIndicator';
 import { CssStyleSync } from '../docs/components/CssStyleSync';
+import { SlotPreview, SlotPreviewLayout } from '../docs/components/SlotPreview';
 import { BlogBackButton } from './components/BlogBackButton';
 import { HeroInteractive } from './components/HeroInteractive';
 import { HomeSections } from './components/HomeSections';
@@ -33,14 +33,16 @@ import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
 import './index.css';
 
-function HomeLayout() {
+function HomeLayout(props: HomeLayoutProps) {
   return (
     <BasicHomeLayout
+      {...props}
       afterFeatures={
-        <>
+        <SlotPreview name="afterFeatures">
+          {props.afterFeatures}
           <HomeSections />
           <ToolStack />
-        </>
+        </SlotPreview>
       }
       afterHeroActions={
         <div
@@ -66,8 +68,7 @@ const Layout = () => {
   return (
     <CssModificationProvider>
       <CssStyleSync />
-      <CssModificationIndicator />
-      <BasicLayout
+      <SlotPreviewLayout
         beforeNav={
           isHomePage ? (
             <Banner
@@ -88,10 +89,10 @@ const DocLayout = (props: DocLayoutProps) => {
     <BasicDocLayout
       {...props}
       beforeDocContent={
-        <>
+        <SlotPreview name="beforeDocContent">
           <BlogBackButton />
           {props.beforeDocContent}
-        </>
+        </SlotPreview>
       }
     />
   );

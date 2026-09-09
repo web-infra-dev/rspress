@@ -3,6 +3,8 @@ description: Layout 布局组件，作为整个页面的布局容器，提供丰
 overviewHeaders: []
 ---
 
+import { SlotPreviewToggle } from '../../../components/SlotPreview';
+
 # Layout
 
 `Layout` 是 Rspress 的核心布局组件，作为整个页面的布局容器。它提供了丰富的插槽 props，可以在不 eject 的情况下扩展默认主题的布局。
@@ -23,6 +25,10 @@ export * from '@rspress/core/theme-original';
 ## 插槽 Props
 
 `Layout` 组件设计了一系列的插槽 props 用于扩展默认主题的布局：
+
+点击下方按钮，在页面中预览各插槽的位置。
+
+<SlotPreviewToggle />
 
 <details>
 

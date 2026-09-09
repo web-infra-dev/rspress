@@ -1,0 +1,142 @@
+.stack {
+  position: fixed;
+  top: calc(
+    var(--rp-banner-height, 0px) + var(--rp-nav-height) +
+      var(--rp-sidebar-menu-height) + 12px
+  );
+  right: max(20px, env(safe-area-inset-right));
+  z-index: calc(var(--rp-z-index-nav, 60) + 1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+
+  &:empty {
+    display: none;
+  }
+
+  // The responsive sidebar and outline share this overlay mask.
+  :global(body:has(.rp-sidebar-menu__mask)) & {
+    visibility: hidden;
+  }
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 20px;
+  max-width: calc(100vw - 32px);
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--rp-c-brand) 50%, var(--rp-c-bg));
+  border-radius: 14px;
+  background: var(--rp-c-bg);
+  color: var(--rp-c-text-1);
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 3%),
+    0 8px 32px rgb(0 0 0 / 10%);
+  font-size: 14px;
+  line-height: 22px;
+  animation: slideIn 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--rp-c-brand-tint);
+  color: var(--rp-c-brand);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action,
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+
+  &:focus-visible {
+    outline: 2px solid var(--rp-c-brand);
+    outline-offset: 2px;
+  }
+}
+
+.action {
+  border: 1px solid var(--rp-c-divider-light);
+  background: var(--rp-c-bg-soft);
+  color: var(--rp-c-text-1);
+
+  &:hover {
+    background: var(--rp-c-bg-mute);
+  }
+}
+
+.link {
+  color: var(--rp-c-text-2);
+
+  &:hover {
+    background: var(--rp-c-brand-tint);
+    color: var(--rp-c-brand);
+  }
+}
+
+@media (max-width: 767px) {
+  .stack {
+    right: max(16px, env(safe-area-inset-right));
+  }
+
+  .toolbar {
+    gap: 8px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toolbar {
+    animation: none;
+  }
+
+  .action,
+  .link {
+    transition: none;
+  }
+}
