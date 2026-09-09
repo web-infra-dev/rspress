@@ -3,12 +3,12 @@
   "installDir": ".agents/skills",
   "linkTargets": [".cursor/skills"],
   "skills": {
-    "pr-creator": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/.agents/skills/pr-creator",
-    "rspress-custom-theme": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-custom-theme",
-    "rspress-best-practices": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-best-practices",
-    "rspress-description-generator": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-description-generator",
-    "rspress-docs-generator": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/skills/rspress-docs-generator",
-    "create-draft-release-notes": "github:rstackjs/agent-skills#8a81d07f2a0339ac19b958216b2ce5ea1b84dc81&path:/.agents/skills/create-draft-release-notes",
-    "rstack-cli-docs": "github:rstackjs/rstack-cli#ca22d59ada547fe661247401f88a0dc193322bb5&path:/.agents/skills/rstack-cli-docs"
+    "pr-creator": "github:rstackjs/agent-skills#c6348a1127e0022ea1f99f00dba701b6a8524024&path:/.agents/skills/pr-creator",
+    "rspress-custom-theme": "github:rstackjs/agent-skills#c6348a1127e0022ea1f99f00dba701b6a8524024&path:/skills/rspress-custom-theme",
+    "rspress-best-practices": "github:rstackjs/agent-skills#c6348a1127e0022ea1f99f00dba701b6a8524024&path:/skills/rspress-best-practices",
+    "rspress-description-generator": "github:rstackjs/agent-skills#c6348a1127e0022ea1f99f00dba701b6a8524024&path:/skills/rspress-description-generator",
+    "rspress-docs-generator": "github:rstackjs/agent-skills#c6348a1127e0022ea1f99f00dba701b6a8524024&path:/skills/rspress-docs-generator",
+    "create-draft-release-notes": "github:rstackjs/agent-skills#c6348a1127e0022ea1f99f00dba701b6a8524024&path:/.agents/skills/create-draft-release-notes",
+    "rstack-cli-docs": "github:rstackjs/rstack-cli#c0ab876d3b3732925b48e1843c7728ad670e56b3&path:/.agents/skills/rstack-cli-docs"
   }
 }
