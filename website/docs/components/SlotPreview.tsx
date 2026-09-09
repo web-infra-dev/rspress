@@ -38,6 +38,10 @@ const SlotPreviewContext = createContext({
 });
 
 export function SlotPreviewToggle() {
+  if (import.meta.env.SSG_MD) {
+    return null;
+  }
+
   const { enabled, toggle } = useContext(SlotPreviewContext);
   const isZh = useLang() === 'zh';
 
