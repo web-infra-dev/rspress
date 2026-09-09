@@ -211,10 +211,7 @@ export class RouteService {
       throw createError(`routePath ${routePath} has already been added`);
     }
     this.routeData.set(routePath, routePage);
-    this.#routeDataByFilePath.set(
-      path.normalize(routePage.routeMeta.absolutePath),
-      routePage,
-    );
+    this.#routeDataByFilePath.set(routePage.routeMeta.absolutePath, routePage);
   }
 
   getRoutes(): RouteMeta[] {
@@ -300,7 +297,7 @@ import { lazyWithPreload } from "react-lazy-with-preload";
 ${routeMeta
   .map((route, index) => {
     const chunkName = getRouteChunkName(route);
-    return `const loadRoute${index} = () => import(/* webpackChunkName: "${chunkName}" */ '${route.absolutePath}')
+    return `const loadRoute${index} = () => import(/* webpackChunkName: "${chunkName}" */ ${JSON.stringify(route.absolutePath)})
 const Route${index} = lazyWithPreload(loadRoute${index})`;
   })
   .join('\n')}

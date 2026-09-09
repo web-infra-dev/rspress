@@ -3,11 +3,7 @@ import path from 'node:path';
 import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { createError } from './error';
-
-// Normalize path separators to forward slashes
-function normalizePath(filePath: string) {
-  return filePath.split(path.sep).join('/');
-}
+import { slash } from './slash';
 
 /**
  * Recursively retrieves all Markdown files (.md and .mdx) from a directory.
@@ -59,7 +55,7 @@ async function collectModuleFiles(
     // Recursively collect Markdown files
     const files = await getAllMarkdownFilesFrom(langModuleDir);
     for (const file of files) {
-      const relativePath = normalizePath(path.relative(langDirPath, file));
+      const relativePath = slash(path.relative(langDirPath, file));
       // exclude may includes path and files
       if (
         excludedDirs.some(excludedDir => {
@@ -75,9 +71,7 @@ async function collectModuleFiles(
     }
   } catch (e) {
     logger.error(e);
-    throw createError(
-      `Failed to access directory: ${normalizePath(langModuleDir)}`,
-    );
+    throw createError(`Failed to access directory: ${slash(langModuleDir)}`);
   }
 
   return fileLangMap;
@@ -139,7 +133,7 @@ export async function checkLanguageParity(config: UserConfig) {
     if (missingLanguagesFile.length > 0) {
       throw createError(
         `Check language parity failed! Missing content:\n${missingLanguagesFile
-          .map(file => `        - ${normalizePath(file)}`)
+          .map(file => `        - ${slash(file)}`)
           .join('\n')}`,
       );
     }

@@ -179,6 +179,7 @@ export interface RouteMeta {
    * Route path without language and version prefixes.
    */
   pureRoutePath: string;
+  /** Native absolute file system path. */
   absolutePath: string;
   relativePath: string;
   pageName: string;

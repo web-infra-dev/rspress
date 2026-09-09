@@ -10,7 +10,7 @@ import {
   applyReplaceRules,
   createError,
   escapeMarkdownHeadingIds,
-  normalizePath,
+  slash,
 } from '../utils';
 import { createMDXOptions } from './options';
 import type { TocItem } from './remarkPlugins/toc';
@@ -111,7 +111,7 @@ async function compile(options: CompileOptions): Promise<string> {
 
 MDXContent.__RSPRESS_PAGE_META = {};
 MDXContent.__RSPRESS_PAGE_META["${encodeURIComponent(
-      normalizePath(path.relative(docDirectory, filepath)),
+      slash(path.relative(docDirectory, filepath)),
     )}"] = ${JSON.stringify(pageMeta)};
 `;
     return result;
