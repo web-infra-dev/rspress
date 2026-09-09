@@ -74,6 +74,12 @@ const Layout = () => (
     beforeNavMenu={<div>beforeNavMenu</div>}
     /* 导航栏菜单之后 */
     afterNavMenu={<div>afterNavMenu</div>}
+    /* 左侧导航项之前/之后（桌面端和移动端） */
+    beforeLeftNavItems={<div>beforeLeftNavItems</div>}
+    afterLeftNavItems={<div>afterLeftNavItems</div>}
+    /* 右侧导航项之前/之后（桌面端和移动端） */
+    beforeRightNavItems={<div>beforeRightNavItems</div>}
+    afterRightNavItems={<div>afterRightNavItems</div>}
     /* 左侧侧边栏上面 */
     beforeSidebar={<div>beforeSidebar</div>}
     /* 左侧侧边栏下面 */
@@ -108,3 +114,25 @@ export * from '@rspress/core/theme-original';
 ```
 
 </details>
+
+### 自定义导航列表
+
+使用 `beforeLeftNavItems`、`afterLeftNavItems`、`beforeRightNavItems` 和 `afterRightNavItems` 插入自定义导航内容。配合 [NavList](./nav-list)，同一份 `items` 会自动呈现为桌面端横向菜单或移动端展开菜单中的纵向列表，无需判断屏幕宽度。
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [
+  { text: 'Community', link: '/community' },
+  {
+    text: 'Resources',
+    items: [{ text: 'Examples', link: '/examples' }],
+  },
+];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```

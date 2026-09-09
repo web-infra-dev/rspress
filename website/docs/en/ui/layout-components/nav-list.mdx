@@ -1,0 +1,49 @@
+---
+description: Render custom navigation lists in desktop and mobile navigation slots.
+overviewHeaders: []
+---
+
+# NavList
+
+`NavList` renders a list of navigation items using the surrounding navigation's presentation. Pass it to a [Layout](./layout) navigation slot once to support both desktop and mobile menus.
+
+## Usage
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [
+  { text: 'Community', link: '/community' },
+  { text: 'Resources', items: [{ text: 'Examples', link: '/examples' }] },
+];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+On desktop, `NavList` uses the theme's horizontal navigation and dropdown menus. In the expanded mobile menu, it uses vertical links and expandable groups. Link highlighting and navigation use the existing theme behavior.
+
+## Props
+
+### items
+
+- **Type:** `NavItem[]`
+- **Required**
+
+Uses the same item structure as [`themeConfig.nav`](/api/config/config-theme#nav), including links and nested items. The surrounding slot determines placement; `position` on items passed to `NavList` does not filter or move them.
+
+## Navigation slots
+
+| Layout prop           | Desktop placement                                                                          |
+| --------------------- | ------------------------------------------------------------------------------------------ |
+| `beforeLeftNavItems`  | Before the left navigation items                                                           |
+| `afterLeftNavItems`   | After the left navigation items                                                            |
+| `beforeRightNavItems` | After search, before the right navigation items                                            |
+| `afterRightNavItems`  | After the right navigation items, before language, version, appearance and social controls |
+
+The mobile menu preserves the configured navigation item order. Each slot appears before the first or after the last item with the corresponding position. If a position has no items, its slots still render: left slots at the beginning and right slots at the end of the list.
+
+Use `NavList` within these slots for automatic adaptation. Arbitrary custom elements can also be inserted, but their internal layout remains your responsibility. Outside the mobile navigation context, `NavList` uses the desktop presentation.

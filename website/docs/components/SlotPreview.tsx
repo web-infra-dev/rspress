@@ -16,6 +16,10 @@ const slots = [
   'afterNavTitle',
   'beforeNavMenu',
   'afterNavMenu',
+  'beforeLeftNavItems',
+  'afterLeftNavItems',
+  'beforeRightNavItems',
+  'afterRightNavItems',
   'beforeSidebar',
   'afterSidebar',
   'beforeOutline',
@@ -121,7 +125,14 @@ export function SlotPreviewLayout(props: LayoutProps) {
       value={{ enabled, toggle: () => setEnabled(value => !value) }}
     >
       <Layout {...previewProps} />
-      <div className={toolbarStyles.stack}>
+      <div
+        className={toolbarStyles.stack}
+        style={
+          enabled
+            ? { top: 'auto', bottom: 'max(20px, env(safe-area-inset-bottom))' }
+            : undefined
+        }
+      >
         {enabled ? (
           <FloatingToolbar
             label={isZh ? '插槽预览' : 'Slot preview'}

@@ -10,6 +10,7 @@
   &:is(
     [data-slot-container$='NavTitle'],
     [data-slot-container$='NavMenu'],
+    [data-slot-container$='NavItems'],
     [data-slot-container='navTitle']
   ) {
     display: flex;
@@ -56,6 +57,7 @@
     &:is(
       [data-slot-preview$='NavTitle'],
       [data-slot-preview$='NavMenu'],
+      [data-slot-preview$='NavItems'],
       [data-slot-preview='navTitle']
     ) {
       align-items: center;
@@ -85,6 +87,7 @@
   &:is(
     [data-slot-preview$='NavTitle'],
     [data-slot-preview$='NavMenu'],
+    [data-slot-preview$='NavItems'],
     [data-slot-preview='navTitle']
   ) {
     flex-shrink: 0;
@@ -95,20 +98,25 @@
   }
 }
 
-@media (max-width: 767px) {
-  :global(.rp-nav):has(.marker) {
-    height: auto;
-    min-height: var(--rp-nav-height);
-    flex-wrap: wrap;
-    gap: 4px;
-    padding-block: 8px;
+:global(.rp-nav):has(.marker) {
+  height: auto;
+  min-height: var(--rp-nav-height);
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-block: 8px;
 
-    :global(.rp-nav__left),
-    :global(.rp-nav__right) {
-      height: auto;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
+  :global(.rp-nav__left),
+  :global(.rp-nav__right) {
+    height: auto;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  :global(.rp-nav-items) {
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 }
 

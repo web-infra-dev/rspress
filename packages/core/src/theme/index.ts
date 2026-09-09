@@ -44,6 +44,7 @@ export {
 export { LlmsCopyRow } from './components/Llms/LlmsCopyRow';
 export { LlmsOpenRow } from './components/Llms/LlmsOpenRow';
 export { Nav, type NavProps } from './components/Nav/index';
+export { NavList, type NavListProps } from './components/NavList';
 export { NavHamburger } from './components/NavHamburger/index';
 export { NavTitle } from './components/NavTitle/index';
 export { Outline } from './components/Outline/index';
