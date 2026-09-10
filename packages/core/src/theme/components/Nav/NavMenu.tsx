@@ -18,7 +18,6 @@ import { type ReactNode, useMemo } from 'react';
 import { NavListContext } from '../NavList/context';
 import { useLangsMenu, useVersionsMenu } from './hooks';
 import './NavMenu.scss';
-import clsx from 'clsx';
 
 export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
   return <SvgWrapper icon={IconArrowDown} {...props} />;
@@ -187,7 +186,7 @@ export function NavMenu({
     return null;
 
   return (
-    <ul className={clsx('rp-nav-menu', position && `rp-nav-menu--${position}`)}>
+    <ul className={cls('rp-nav-menu', position && `rp-nav-menu--${position}`)}>
       <NavListContext.Provider value="items">
         {beforeNavItems}
         {items.map((item, index) => (
