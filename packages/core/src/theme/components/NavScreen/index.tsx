@@ -21,7 +21,14 @@ export function NavScreenDivider() {
 }
 
 export function NavScreen(props: NavScreenProps) {
-  const { isScreenOpen, toggleScreen, ...navItemsSlots } = props;
+  const {
+    isScreenOpen,
+    toggleScreen,
+    beforeLeftNavItems,
+    afterLeftNavItems,
+    beforeRightNavItems,
+    afterRightNavItems,
+  } = props;
   const screen = useRef<HTMLDivElement | null>(null);
   const menuItems = useNav();
 
@@ -56,7 +63,13 @@ export function NavScreen(props: NavScreenProps) {
         onClick={e => e.stopPropagation()}
       >
         <NavListContext.Provider value="screen">
-          <NavScreenMenu menuItems={menuItems} {...navItemsSlots} />
+          <NavScreenMenu
+            menuItems={menuItems}
+            beforeLeftNavItems={beforeLeftNavItems}
+            afterLeftNavItems={afterLeftNavItems}
+            beforeRightNavItems={beforeRightNavItems}
+            afterRightNavItems={afterRightNavItems}
+          />
         </NavListContext.Provider>
         <NavScreenDivider />
         <NavScreenAppearance />
