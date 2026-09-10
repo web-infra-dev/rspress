@@ -20,6 +20,27 @@
     right: 0;
     left: auto;
   }
+
+  @media (min-width: 1920px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+
+    > .label {
+      display: block;
+      position: static;
+      width: auto;
+      max-width: 100%;
+      padding: 0 4px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      font-size: 9px;
+      line-height: 12px;
+      white-space: normal;
+    }
+  }
 }
 
 .slot {
