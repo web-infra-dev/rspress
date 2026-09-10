@@ -295,8 +295,15 @@ function OperationReference({
                   <button
                     className="rp-openapi-send"
                     type="button"
+                    aria-busy={pending}
                     onClick={pending ? () => controller.current?.abort() : send}
                   >
+                    {pending && (
+                      <span
+                        className="rp-openapi-request-spinner"
+                        aria-hidden="true"
+                      />
+                    )}
                     {pending ? 'Cancel' : 'Send'}
                   </button>
                 )}
@@ -425,7 +432,6 @@ function OperationReference({
                   {error}
                 </p>
               )}
-              {pending && <p role="status">Sending request…</p>}
             </section>
           )}
           {data.operation.description && (
