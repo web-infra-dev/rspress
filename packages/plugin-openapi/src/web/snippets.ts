@@ -1,3 +1,4 @@
+// cspell:ignore snippetz nethttp httpclient reqwest
 import { shellCurl } from '@scalar/snippetz/plugins/shell/curl';
 import { jsFetch } from '@scalar/snippetz/plugins/js/fetch';
 import { pythonRequests } from '@scalar/snippetz/plugins/python/requests';

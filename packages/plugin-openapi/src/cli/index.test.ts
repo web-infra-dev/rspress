@@ -1,3 +1,4 @@
+// cspell:ignore getallplanets createplanet getplanet
 import { createServer } from 'node:http';
 import {
   mkdir,

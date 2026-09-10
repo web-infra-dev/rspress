@@ -1,3 +1,4 @@
+// cspell:ignore upgrader apidevtools
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { upgrade } from '@scalar/openapi-upgrader';
