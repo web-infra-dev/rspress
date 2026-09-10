@@ -66,9 +66,12 @@ function SchemaView({
           key={name}
           title={
             <>
-              <code>{name}</code>{' '}
+              <code>{name}</code>
               {schema.required?.includes(name) && (
-                <span className="rp-openapi-required">required</span>
+                <>
+                  {' '}
+                  <span className="rp-openapi-required">required</span>
+                </>
               )}
             </>
           }
@@ -255,166 +258,176 @@ function OperationReference({
       )}
       <div className="rp-openapi-columns">
         <div className="rp-openapi-main">
-          <section className="rp-openapi-playground" aria-label="API request">
-            <label className="rp-openapi-server">
-              Server URL
-              <input
-                aria-label="Server URL"
-                list={`${id}-servers`}
-                value={input.server}
-                onChange={event =>
-                  setInput({ ...input, server: event.target.value })
-                }
-              />
-            </label>
-            <datalist id={`${id}-servers`}>
-              {data.servers.map(server => (
-                <option key={server.url} value={serverURL(server)}>
-                  {server.description}
-                </option>
-              ))}
-            </datalist>
-            <div className="rp-openapi-endpoint">
-              <span className={`rp-openapi-method rp-openapi-${data.method}`}>
-                {data.method.toUpperCase()}
-              </span>
-              <code>{data.path}</code>
+          {import.meta.env.SSG_MD ? (
+            <p>
+              <strong>{data.method.toUpperCase()}</strong>{' '}
+              <code>
+                {input.server}
+                {data.path}
+              </code>
+            </p>
+          ) : (
+            <section className="rp-openapi-playground" aria-label="API request">
+              <label className="rp-openapi-server">
+                Server URL
+                <input
+                  aria-label="Server URL"
+                  list={`${id}-servers`}
+                  value={input.server}
+                  onChange={event =>
+                    setInput({ ...input, server: event.target.value })
+                  }
+                />
+              </label>
+              <datalist id={`${id}-servers`}>
+                {data.servers.map(server => (
+                  <option key={server.url} value={serverURL(server)}>
+                    {server.description}
+                  </option>
+                ))}
+              </datalist>
+              <div className="rp-openapi-endpoint">
+                <span className={`rp-openapi-method rp-openapi-${data.method}`}>
+                  {data.method.toUpperCase()}
+                </span>
+                <code>{data.path}</code>
+                {playground && (
+                  <button
+                    className="rp-openapi-send"
+                    type="button"
+                    onClick={pending ? () => controller.current?.abort() : send}
+                  >
+                    {pending ? 'Cancel' : 'Send'}
+                  </button>
+                )}
+              </div>
               {playground && (
-                <button
-                  className="rp-openapi-send"
-                  type="button"
-                  onClick={pending ? () => controller.current?.abort() : send}
-                >
-                  {pending ? 'Cancel' : 'Send'}
-                </button>
-              )}
-            </div>
-            {playground && (
-              <>
-                {data.parameters.length > 0 && (
-                  <Disclosure embedded title="Parameters">
-                    <div className="rp-openapi-fields">
-                      {data.parameters.map(parameter => (
-                        <label key={`${parameter.in}:${parameter.name}`}>
-                          {parameter.name}{' '}
-                          <small>
-                            {parameter.in}
-                            {parameter.required ? ' · required' : ''}
-                          </small>
-                          <input
-                            aria-label={`${parameter.in} ${parameter.name}`}
-                            value={
-                              input.values[
-                                `${parameter.in}:${parameter.name}`
-                              ] ?? ''
-                            }
-                            onChange={event =>
-                              setInput({
-                                ...input,
-                                values: {
-                                  ...input.values,
-                                  [`${parameter.in}:${parameter.name}`]:
-                                    event.target.value,
-                                },
-                              })
-                            }
-                          />
-                        </label>
-                      ))}
-                    </div>
-                  </Disclosure>
-                )}
-                {data.security.length > 0 && (
-                  <Disclosure embedded title="Authorization">
-                    <div className="rp-openapi-fields">
-                      <select
-                        aria-label="Security requirement"
-                        value={input.securityIndex}
-                        onChange={event =>
-                          setInput({
-                            ...input,
-                            securityIndex: Number(event.target.value),
-                          })
-                        }
-                      >
-                        {data.security.map((requirement, index) => (
-                          <option key={index} value={index}>
-                            {Object.keys(requirement).join(' + ') ||
-                              'No authentication'}
-                          </option>
+                <>
+                  {data.parameters.length > 0 && (
+                    <Disclosure embedded title="Parameters">
+                      <div className="rp-openapi-fields">
+                        {data.parameters.map(parameter => (
+                          <label key={`${parameter.in}:${parameter.name}`}>
+                            {parameter.name}{' '}
+                            <small>
+                              {parameter.in}
+                              {parameter.required ? ' · required' : ''}
+                            </small>
+                            <input
+                              aria-label={`${parameter.in} ${parameter.name}`}
+                              value={
+                                input.values[
+                                  `${parameter.in}:${parameter.name}`
+                                ] ?? ''
+                              }
+                              onChange={event =>
+                                setInput({
+                                  ...input,
+                                  values: {
+                                    ...input.values,
+                                    [`${parameter.in}:${parameter.name}`]:
+                                      event.target.value,
+                                  },
+                                })
+                              }
+                            />
+                          </label>
                         ))}
-                      </select>
-                      {Object.keys(
-                        data.security[input.securityIndex] ?? {},
-                      ).map(name => (
-                        <label key={name}>
-                          {name}
-                          <input
-                            type="password"
-                            autoComplete="off"
-                            value={input.auth[name] ?? ''}
-                            onChange={event =>
-                              setInput({
-                                ...input,
-                                auth: {
-                                  ...input.auth,
-                                  [name]: event.target.value,
-                                },
-                              })
-                            }
-                          />
-                        </label>
-                      ))}
-                      <small>
-                        For OAuth, paste an access token. For Basic, enter
-                        username:password.
-                      </small>
-                    </div>
-                  </Disclosure>
-                )}
-                {requestBody && (
-                  <Disclosure embedded title="Request body">
-                    <div className="rp-openapi-fields">
-                      <select
-                        aria-label="Request content type"
-                        value={input.mediaType}
-                        onChange={event =>
-                          setInput({
-                            ...input,
-                            mediaType: event.target.value,
-                            body: display(
-                              mediaExample(
-                                document,
-                                contents[event.target.value],
+                      </div>
+                    </Disclosure>
+                  )}
+                  {data.security.length > 0 && (
+                    <Disclosure embedded title="Authorization">
+                      <div className="rp-openapi-fields">
+                        <select
+                          aria-label="Security requirement"
+                          value={input.securityIndex}
+                          onChange={event =>
+                            setInput({
+                              ...input,
+                              securityIndex: Number(event.target.value),
+                            })
+                          }
+                        >
+                          {data.security.map((requirement, index) => (
+                            <option key={index} value={index}>
+                              {Object.keys(requirement).join(' + ') ||
+                                'No authentication'}
+                            </option>
+                          ))}
+                        </select>
+                        {Object.keys(
+                          data.security[input.securityIndex] ?? {},
+                        ).map(name => (
+                          <label key={name}>
+                            {name}
+                            <input
+                              type="password"
+                              autoComplete="off"
+                              value={input.auth[name] ?? ''}
+                              onChange={event =>
+                                setInput({
+                                  ...input,
+                                  auth: {
+                                    ...input.auth,
+                                    [name]: event.target.value,
+                                  },
+                                })
+                              }
+                            />
+                          </label>
+                        ))}
+                        <small>
+                          For OAuth, paste an access token. For Basic, enter
+                          username:password.
+                        </small>
+                      </div>
+                    </Disclosure>
+                  )}
+                  {requestBody && (
+                    <Disclosure embedded title="Request body">
+                      <div className="rp-openapi-fields">
+                        <select
+                          aria-label="Request content type"
+                          value={input.mediaType}
+                          onChange={event =>
+                            setInput({
+                              ...input,
+                              mediaType: event.target.value,
+                              body: display(
+                                mediaExample(
+                                  document,
+                                  contents[event.target.value],
+                                ),
                               ),
-                            ),
-                          })
-                        }
-                      >
-                        {Object.keys(contents).map(type => (
-                          <option key={type}>{type}</option>
-                        ))}
-                      </select>
-                      <textarea
-                        aria-label="Request body"
-                        rows={8}
-                        value={input.body}
-                        onChange={event =>
-                          setInput({ ...input, body: event.target.value })
-                        }
-                      />
-                    </div>
-                  </Disclosure>
-                )}
-              </>
-            )}
-            {error && (
-              <p role="alert" className="rp-openapi-error">
-                {error}
-              </p>
-            )}
-            {pending && <p role="status">Sending request…</p>}
-          </section>
+                            })
+                          }
+                        >
+                          {Object.keys(contents).map(type => (
+                            <option key={type}>{type}</option>
+                          ))}
+                        </select>
+                        <textarea
+                          aria-label="Request body"
+                          rows={8}
+                          value={input.body}
+                          onChange={event =>
+                            setInput({ ...input, body: event.target.value })
+                          }
+                        />
+                      </div>
+                    </Disclosure>
+                  )}
+                </>
+              )}
+              {error && (
+                <p role="alert" className="rp-openapi-error">
+                  {error}
+                </p>
+              )}
+              {pending && <p role="status">Sending request…</p>}
+            </section>
+          )}
           {data.operation.description && (
             <p className="rp-openapi-description">
               {data.operation.description}
@@ -487,99 +500,123 @@ function OperationReference({
             ))}
           </section>
         </div>
-        <aside
-          className="rp-openapi-examples"
-          aria-label="Request and response examples"
-        >
-          <Tabs
-            className="rp-openapi-samples"
-            keepDOM={false}
-            onChange={index => setLanguage(languages[index])}
-          >
-            {languages.map(item => (
-              <Tab
-                key={item}
-                value={item}
-                label={
-                  <button
-                    type="button"
-                    className="rp-openapi-tab-label"
-                    aria-pressed={language === item}
-                  >
-                    {item}
-                  </button>
-                }
-              >
-                <CodePanel
-                  text={language === item ? snippet : ''}
-                  lang={
-                    {
-                      cURL: 'bash',
-                      JavaScript: 'javascript',
-                      Go: 'go',
-                      Python: 'python',
-                      Java: 'java',
-                      'C#': 'csharp',
-                      Rust: 'rust',
-                    }[item]
-                  }
-                />
-              </Tab>
+        {import.meta.env.SSG_MD ? (
+          <section>
+            <h2>Request example</h2>
+            <CodePanel text={snippet} lang="bash" />
+            <h2>Response examples</h2>
+            {responses.map(([status, response]) => (
+              <section key={status}>
+                <h3>{status}</h3>
+                {Object.entries(response.content ?? {}).map(([type, media]) => {
+                  const example = mediaExample(document, media);
+                  return example === undefined ? null : (
+                    <div key={type}>
+                      <p>
+                        <code>{type}</code>
+                      </p>
+                      <CodePanel text={display(example)} />
+                    </div>
+                  );
+                })}
+              </section>
             ))}
-          </Tabs>
-          <Tabs
-            className="rp-openapi-samples"
-            keepDOM={false}
-            onChange={index => setResponseStatus(responses[index][0])}
+          </section>
+        ) : (
+          <aside
+            className="rp-openapi-examples"
+            aria-label="Request and response examples"
           >
-            {responses.map(([status]) => (
-              <Tab
-                key={status}
-                value={status}
-                label={
-                  <button
-                    type="button"
-                    className="rp-openapi-tab-label"
-                    aria-pressed={responseStatus === status}
-                  >
-                    {status}
-                  </button>
-                }
-              >
-                <div className="rp-openapi-response-meta">
-                  <span>Response example</span>
-                  {Object.keys(responseContents).length > 0 && (
-                    <select
-                      aria-label="Response content type"
-                      value={selectedMedia ?? ''}
-                      onChange={event => setResponseMedia(event.target.value)}
+            <Tabs
+              className="rp-openapi-samples"
+              keepDOM={false}
+              onChange={index => setLanguage(languages[index])}
+            >
+              {languages.map(item => (
+                <Tab
+                  key={item}
+                  value={item}
+                  label={
+                    <button
+                      type="button"
+                      className="rp-openapi-tab-label"
+                      aria-pressed={language === item}
                     >
-                      {Object.keys(responseContents).map(type => (
-                        <option key={type}>{type}</option>
-                      ))}
-                    </select>
-                  )}
-                </div>
+                      {item}
+                    </button>
+                  }
+                >
+                  <CodePanel
+                    text={language === item ? snippet : ''}
+                    lang={
+                      {
+                        cURL: 'bash',
+                        JavaScript: 'javascript',
+                        Go: 'go',
+                        Python: 'python',
+                        Java: 'java',
+                        'C#': 'csharp',
+                        Rust: 'rust',
+                      }[item]
+                    }
+                  />
+                </Tab>
+              ))}
+            </Tabs>
+            <Tabs
+              className="rp-openapi-samples"
+              keepDOM={false}
+              onChange={index => setResponseStatus(responses[index][0])}
+            >
+              {responses.map(([status]) => (
+                <Tab
+                  key={status}
+                  value={status}
+                  label={
+                    <button
+                      type="button"
+                      className="rp-openapi-tab-label"
+                      aria-pressed={responseStatus === status}
+                    >
+                      {status}
+                    </button>
+                  }
+                >
+                  <div className="rp-openapi-response-meta">
+                    <span>Response example</span>
+                    {Object.keys(responseContents).length > 0 && (
+                      <select
+                        aria-label="Response content type"
+                        value={selectedMedia ?? ''}
+                        onChange={event => setResponseMedia(event.target.value)}
+                      >
+                        {Object.keys(responseContents).map(type => (
+                          <option key={type}>{type}</option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
+                  <CodePanel
+                    text={display(
+                      mediaExample(document, responseContents[selectedMedia]),
+                    )}
+                  />
+                </Tab>
+              ))}
+            </Tabs>
+            {result && (
+              <div className="rp-openapi-panel" role="status">
                 <CodePanel
-                  text={display(
-                    mediaExample(document, responseContents[selectedMedia]),
-                  )}
+                  title={`${result.status} · ${result.elapsed} ms`}
+                  text={result.body}
                 />
-              </Tab>
-            ))}
-          </Tabs>
-          {result && (
-            <div className="rp-openapi-panel" role="status">
-              <CodePanel
-                title={`${result.status} · ${result.elapsed} ms`}
-                text={result.body}
-              />
-              <Disclosure embedded title="Response headers">
-                <pre>{result.headers}</pre>
-              </Disclosure>
-            </div>
-          )}
-        </aside>
+                <Disclosure embedded title="Response headers">
+                  <pre>{result.headers}</pre>
+                </Disclosure>
+              </div>
+            )}
+          </aside>
+        )}
       </div>
     </div>
   );

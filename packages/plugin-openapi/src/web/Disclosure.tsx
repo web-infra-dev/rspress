@@ -17,6 +17,17 @@ export function Disclosure({
   const [open, setOpen] = useState(defaultOpen);
   const contentId = useId();
 
+  if (import.meta.env.SSG_MD) {
+    return (
+      <div>
+        <p>
+          <strong>{title}</strong>
+        </p>
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div
       className={`rp-openapi-disclosure${embedded ? ' rp-openapi-disclosure--embedded' : ''}`}
