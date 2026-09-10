@@ -1,88 +1,113 @@
-.layer {
-  position: fixed;
-  inset: 0;
-  z-index: var(--rp-z-index-nav, 60);
-  pointer-events: none;
-}
+.slot {
+  position: relative;
+  display: flow-root;
 
-.marker {
-  position: absolute;
-  padding: 0;
-  border: 1px dashed var(--rp-c-brand);
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--rp-c-brand) 12%, var(--rp-c-bg));
-  color: var(--rp-c-text-1);
-  cursor: help;
-  pointer-events: auto;
+  // Keep the content's own layout, including components that render nothing.
+  > .content {
+    display: contents;
+  }
 
-  &:hover,
-  &:focus {
+  &:is(
+    [data-slot-container$='NavTitle'],
+    [data-slot-container$='NavMenu'],
+    [data-slot-container='navTitle']
+  ) {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  // The wrapper takes over the banner's sticky positioning during preview.
+  &:has(> .content > :global(.rp-banner)) {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+
+    > .content > :global(.rp-banner) {
+      position: relative;
+      z-index: auto;
+    }
+  }
+
+  &:has(> .content:not(:empty)) > .marker {
+    position: absolute;
+    inset: 0;
     z-index: 1;
-    outline: 2px solid var(--rp-c-bg);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    background:
+      linear-gradient(var(--rp-c-brand-tint), var(--rp-c-brand-tint)),
+      color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
+    pointer-events: none;
 
-    .label {
-      display: block;
+    > .label {
+      position: sticky;
+      top: calc(var(--rp-nav-height) + var(--rp-banner-height, 0px) + 8px);
+      max-width: 100%;
+      padding: 2px 4px;
+      border-radius: 3px;
+      background: color-mix(in srgb, var(--rp-c-bg) 85%, transparent);
+    }
+
+    &:is(
+      [data-slot-preview$='NavTitle'],
+      [data-slot-preview$='NavMenu'],
+      [data-slot-preview='navTitle']
+    ) {
+      align-items: center;
+
+      > .label {
+        position: static;
+        background: transparent;
+      }
     }
   }
 }
 
-.label {
-  display: none;
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: calc(100vw - 24px);
-  padding: 6px 10px;
-  border: 1px solid var(--rp-c-brand);
-  border-radius: 6px;
-  background: var(--rp-c-bg);
-  box-shadow: 0 3px 12px rgb(0 0 0 / 12%);
-  font: 12px / 1.6 var(--rp-font-family-mono);
-  text-align: left;
-  pointer-events: none;
+.marker {
+  display: block;
+  padding: 6px 8px;
+  margin: 4px;
+  border: 1px dashed var(--rp-c-brand);
+  border-radius: 4px;
+  background: var(--rp-c-brand-tint);
+  color: var(--rp-c-text-1);
+  font-family: var(--rp-font-family-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  overflow-wrap: anywhere;
 
-  span {
-    display: block;
-  }
-
-  [data-align='start'] & {
-    left: 0;
-    transform: none;
-  }
-
-  [data-align='end'] & {
-    left: auto;
-    right: 0;
-    transform: none;
-  }
-
-  [data-above='true'] & {
-    top: auto;
-    bottom: calc(100% + 6px);
+  &:is(
+    [data-slot-preview$='NavTitle'],
+    [data-slot-preview$='NavMenu'],
+    [data-slot-preview='navTitle']
+  ) {
+    flex-shrink: 0;
+    max-width: 64px;
+    padding: 4px;
+    margin: 2px;
+    font-size: 10px;
   }
 }
 
-@media (min-width: 1280px) {
-  .marker[data-readable='true']:not(:hover, :focus) {
-    padding: 2px 4px;
+@media (max-width: 767px) {
+  :global(.rp-nav):has(.marker) {
+    height: auto;
+    min-height: var(--rp-nav-height);
+    flex-wrap: wrap;
+    gap: 4px;
+    padding-block: 8px;
 
-    .label {
-      display: block;
-      position: static;
-      width: auto;
-      max-width: none;
-      padding: 0;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-      font-size: 9px;
-      line-height: 12px;
-      text-align: center;
-      overflow-wrap: anywhere;
-      transform: none;
+    :global(.rp-nav__left),
+    :global(.rp-nav__right) {
+      height: auto;
+      flex-wrap: wrap;
+      gap: 4px;
     }
   }
 }
