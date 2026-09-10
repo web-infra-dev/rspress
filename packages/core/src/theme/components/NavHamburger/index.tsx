@@ -38,7 +38,10 @@ export function NavHamburger(props: NavItemsSlots) {
       {isScreenOpen &&
         createPortal(
           <NavScreen
-            {...props}
+            beforeLeftNavItems={props.beforeLeftNavItems}
+            afterLeftNavItems={props.afterLeftNavItems}
+            beforeRightNavItems={props.beforeRightNavItems}
+            afterRightNavItems={props.afterRightNavItems}
             isScreenOpen={isScreenOpen}
             toggleScreen={toggleScreen}
           />,

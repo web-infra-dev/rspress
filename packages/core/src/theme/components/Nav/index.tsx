@@ -33,7 +33,10 @@ export function Nav(props: NavProps) {
     beforeNavMenu,
     afterNavMenu,
     navTitle,
-    ...navItemsSlots
+    beforeLeftNavItems,
+    afterLeftNavItems,
+    beforeRightNavItems,
+    afterRightNavItems,
   } = props;
   const navList = useNav();
   const { site } = useSite();
@@ -50,8 +53,8 @@ export function Nav(props: NavProps) {
         <NavMenu
           menuItems={navList}
           position="left"
-          beforeNavItems={navItemsSlots.beforeLeftNavItems}
-          afterNavItems={navItemsSlots.afterLeftNavItems}
+          beforeNavItems={beforeLeftNavItems}
+          afterNavItems={afterLeftNavItems}
         />
         {afterNavTitle}
       </div>
@@ -64,8 +67,8 @@ export function Nav(props: NavProps) {
         <NavMenu
           menuItems={navList}
           position="right"
-          beforeNavItems={navItemsSlots.beforeRightNavItems}
-          afterNavItems={navItemsSlots.afterRightNavItems}
+          beforeNavItems={beforeRightNavItems}
+          afterNavItems={afterRightNavItems}
         />
         <div className="rp-nav__others">
           <NavMenuDivider />
@@ -76,7 +79,12 @@ export function Nav(props: NavProps) {
         </div>
 
         {/* only in mobile */}
-        <NavHamburger {...navItemsSlots} />
+        <NavHamburger
+          beforeLeftNavItems={beforeLeftNavItems}
+          afterLeftNavItems={afterLeftNavItems}
+          beforeRightNavItems={beforeRightNavItems}
+          afterRightNavItems={afterRightNavItems}
+        />
         {afterNavMenu}
       </div>
     </header>
