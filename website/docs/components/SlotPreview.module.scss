@@ -1,26 +1,16 @@
 .layer {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: var(--rp-z-index-nav, 60);
   pointer-events: none;
-}
-
-.guides {
-  width: 100%;
-  height: 100%;
-  stroke: var(--rp-c-brand);
-  stroke-dasharray: 2 2;
-  opacity: 0.6;
 }
 
 .marker {
   position: absolute;
-  width: 14px;
-  height: 10px;
   padding: 0;
   border: 1px dashed var(--rp-c-brand);
   border-radius: 2px;
-  background: var(--rp-c-brand-tint);
+  background: color-mix(in srgb, var(--rp-c-brand) 12%, var(--rp-c-bg));
   color: var(--rp-c-text-1);
   cursor: help;
   pointer-events: auto;
@@ -39,7 +29,7 @@
 .label {
   display: none;
   position: absolute;
-  top: 18px;
+  top: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
   width: max-content;
@@ -70,14 +60,13 @@
 
   [data-above='true'] & {
     top: auto;
-    bottom: 18px;
+    bottom: calc(100% + 6px);
   }
 }
 
 @media (min-width: 1280px) {
-  .marker {
+  .marker[data-readable='true']:not(:hover, :focus) {
     padding: 2px 4px;
-    background: var(--rp-c-bg);
 
     .label {
       display: block;

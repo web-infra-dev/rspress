@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import styles from './SlotPreview.module.scss';
 
 type Box = { left: number; top: number; width: number; height: number };
-type Marker = { names: string[]; x: number; y: number; box?: Box };
+type Marker = { names: string[]; box: Box; navigation: boolean };
 type Edge = 'top' | 'bottom' | 'left' | 'right';
 
 /** Read existing layout geometry; previewing must not add content to any slot. */
@@ -30,29 +30,53 @@ export function SlotPreviewOverlay() {
         const rect = element.getBoundingClientRect();
         if (!rect.width && !rect.height) return;
         const horizontal = edge === 'top' || edge === 'bottom';
-        const x = horizontal ? rect.left + rect.width / 2 : rect[edge];
         const nav = element.closest('.rp-nav');
-        const y = horizontal
-          ? rect[edge]
-          : (nav?.getBoundingClientRect().top ?? rect.top) + 8;
+        const navigation = !!nav && (!horizontal || name === 'navTitle');
+        const x = horizontal ? rect.left + rect.width / 2 : rect[edge];
+        const y = horizontal ? rect[edge] : rect.top + rect.height / 2;
         if (x < 0 || x > innerWidth || y < 0 || y > innerHeight) return;
-        // Do not show offscreen sidebar/outline content through its scroll container.
         const aside = element.closest('aside');
         if (aside) {
           const clip = aside.getBoundingClientRect();
           if (y < clip.top || y > clip.bottom) return;
         }
-        const point = {
-          x: Math.max(8, Math.min(innerWidth - 8, x)),
-          y: Math.max(8, Math.min(innerHeight - 8, y)),
+        const navRect = nav?.getBoundingClientRect();
+        // A slot without content has no area of its own. Show a translucent
+        // strip along its insertion boundary, spanning the containing region.
+        const height = navigation
+          ? Math.min(44, navRect!.height - 20)
+          : ['top', 'beforeNav', 'afterNav', 'bottom'].includes(name)
+            ? 6
+            : 28;
+        const width = navigation
+          ? name === 'navTitle'
+            ? rect.width
+            : 112
+          : rect.width;
+        const box = {
+          left: Math.max(4, navigation ? x - width / 2 : rect.left),
+          top: navigation
+            ? navRect!.top + (navRect!.height - height) / 2
+            : Math.max(0, edge === 'top' ? y - height : y),
+          width: Math.min(width, innerWidth - 8),
+          height,
         };
+        box.left = Math.min(box.left, innerWidth - box.width - 4);
+        // Coincident insertion boundaries share one region instead of stacking
+        // several independent labels over the same location.
         const existing = next.find(
           marker =>
-            Math.abs(marker.x - point.x) < 2 &&
-            Math.abs(marker.y - point.y) < 2,
+            marker.navigation === navigation &&
+            Math.abs(
+              marker.box.left +
+                marker.box.width / 2 -
+                (box.left + box.width / 2),
+            ) < 2 &&
+            Math.abs(marker.box.top - box.top) < 2 &&
+            (navigation || Math.abs(marker.box.width - box.width) < 2),
         );
         if (existing) existing.names.push(name);
-        else next.push({ names: [name], ...point });
+        else next.push({ names: [name], box, navigation });
       };
       const at = (name: string, selector: string, edge: Edge) =>
         add(name, document.querySelector(selector), edge);
@@ -128,45 +152,60 @@ export function SlotPreviewOverlay() {
         at('afterSidebar', '.rp-doc-layout__sidebar > :last-child', 'bottom');
         at('bottom', 'body', 'bottom');
       }
-      if (innerWidth >= 1280) {
-        // Keep labels readable without moving any of the underlying page content.
-        const placed: Box[] = [];
-        const toolbar = document.querySelector('[data-slot-preview-toolbar]');
-        if (toolbar) placed.push(toolbar.getBoundingClientRect());
-        next.sort((a, b) => a.y - b.y || a.x - b.x);
-        for (const marker of next) {
-          const width = Math.min(
-            128,
-            Math.max(...marker.names.map(name => name.length)) * 5.5 + 10,
-          );
-          const height = marker.names.length * 12 + 6;
-          const box = {
-            left: Math.max(
-              8,
-              Math.min(innerWidth - width - 8, marker.x - width / 2),
-            ),
-            top: Math.min(innerHeight - height - 8, marker.y),
-            width,
-            height,
-          };
-          for (let attempt = 0; attempt <= next.length; attempt++) {
-            const overlap = placed.find(
-              other =>
-                box.left < other.left + other.width + 4 &&
-                box.left + box.width + 4 > other.left &&
-                box.top < other.top + other.height + 4 &&
-                box.top + box.height + 4 > other.top,
-            );
-            if (!overlap) break;
-            box.top = overlap.top + overlap.height + 4;
-            if (box.top + height > innerHeight - 8)
-              box.top = Math.max(8, overlap.top - height - 4);
-          }
-          marker.box = box;
-          placed.push(box);
+      // Keep navigation regions on the navbar itself. Divide overlapping areas
+      // at the midpoint between their boundaries; never move labels elsewhere.
+      const navMarkers = next
+        .filter(marker => marker.navigation)
+        .sort(
+          (a, b) => a.box.left + a.box.width / 2 - b.box.left - b.box.width / 2,
+        );
+      const centers = navMarkers.map(({ box }) => box.left + box.width / 2);
+      navMarkers.forEach(({ box }, index) => {
+        const left = index ? (centers[index - 1] + centers[index]) / 2 + 2 : 4;
+        const right =
+          index < centers.length - 1
+            ? (centers[index] + centers[index + 1]) / 2 - 2
+            : innerWidth - 4;
+        const end = Math.min(box.left + box.width, right);
+        box.left = Math.max(box.left, left);
+        box.width = Math.max(4, end - box.left);
+      });
+      const strips = next
+        .filter(marker => !marker.navigation)
+        .sort((a, b) => a.box.top - b.box.top);
+      for (let index = 0; index < strips.length; index++) {
+        const box = strips[index].box;
+        const following = strips
+          .slice(index + 1)
+          .find(
+            ({ box: other }) =>
+              Math.abs(box.left - other.left) < 2 &&
+              Math.abs(box.width - other.width) < 2,
+          )?.box;
+        if (following && box.top + box.height > following.top) {
+          const boundary = (box.top + box.height + following.top) / 2;
+          const bottom = following.top + following.height;
+          box.height = Math.max(2, boundary - box.top - 1);
+          following.top = boundary + 1;
+          following.height = Math.max(2, bottom - following.top);
         }
       }
-      setMarkers(next);
+      const hamburger = document.querySelector('.rp-nav-hamburger__sm');
+      if (hamburger?.getClientRects().length) {
+        const control = hamburger.getBoundingClientRect();
+        for (const { box } of navMarkers) {
+          if (box.left < control.right && box.left + box.width > control.left) {
+            const leftSpace = control.left - box.left;
+            const rightSpace = box.left + box.width - control.right;
+            if (leftSpace >= rightSpace) box.width = Math.max(0, leftSpace - 4);
+            else {
+              box.left = control.right + 4;
+              box.width = Math.max(0, rightSpace - 4);
+            }
+          }
+        }
+      }
+      setMarkers(next.filter(({ box }) => box.width > 0));
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -208,24 +247,36 @@ export function SlotPreviewOverlay() {
 
   return createPortal(
     <div className={styles.layer}>
-      <svg className={styles.guides} aria-hidden="true">
-        {markers
-          .filter(marker => marker.box)
-          .map(({ names, x, y, box }) => (
-            <line key={names.join(' ')} x1={x} y1={y} x2={x} y2={box!.top} />
-          ))}
-      </svg>
-      {markers.map(({ names, x, y, box }) => (
+      {markers.map(({ names, box }) => (
         <button
           key={names.join(' ')}
           type="button"
           className={styles.marker}
           data-slot-preview={names.join(' ')}
           data-align={
-            x < 180 ? 'start' : x > innerWidth - 180 ? 'end' : undefined
+            box.left < 180
+              ? 'start'
+              : box.left + box.width > innerWidth - 180
+                ? 'end'
+                : undefined
           }
-          data-above={y > innerHeight - 100}
-          style={box ?? { left: x - 7, top: y - 5 }}
+          data-above={box.top > innerHeight - 100}
+          data-readable={
+            box.width >= 48 &&
+            box.height >=
+              names.reduce(
+                (lines, name) =>
+                  lines +
+                  Math.ceil(
+                    name.length /
+                      Math.max(1, Math.floor((box.width - 8) / 5.5)),
+                  ),
+                0,
+              ) *
+                12 +
+                8
+          }
+          style={box}
           aria-label={names.join(', ')}
         >
           <span className={styles.label} aria-hidden="true">
