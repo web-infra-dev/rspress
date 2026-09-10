@@ -1,0 +1,248 @@
+.rp-openapi {
+  --oa-border: var(--rp-c-divider);
+  --oa-bg: var(--rp-c-bg-soft);
+  color: var(--rp-c-text-1);
+  width: 100%;
+}
+.rp-openapi h1 {
+  margin-bottom: 28px;
+}
+.rp-openapi-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.rp-openapi-main,
+.rp-openapi-examples {
+  min-width: 0;
+}
+.rp-openapi-examples {
+  position: sticky;
+  top: calc(var(--rp-nav-height, 72px) + 24px);
+  display: grid;
+  gap: 20px;
+}
+.rp-openapi-panel,
+.rp-openapi-playground {
+  border: 1px solid var(--oa-border);
+  border-radius: 14px;
+  background: var(--oa-bg);
+  overflow: hidden;
+}
+.rp-openapi-playground {
+  box-shadow: 0 3px 6px rgb(0 0 0 / 5%);
+}
+.rp-openapi-server {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--oa-border);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.rp-openapi input,
+.rp-openapi textarea,
+.rp-openapi select {
+  background: var(--rp-c-bg);
+  color: var(--rp-c-text-1);
+  border: 1px solid var(--oa-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font: inherit;
+  min-width: 0;
+}
+.rp-openapi input:focus-visible,
+.rp-openapi textarea:focus-visible,
+.rp-openapi button:focus-visible,
+.rp-openapi select:focus-visible,
+.rp-openapi summary:focus-visible {
+  outline: 2px solid var(--rp-c-brand);
+  outline-offset: 2px;
+}
+.rp-openapi-server input {
+  flex: 1;
+  width: 0;
+  font-family: var(--rp-font-family-mono);
+  font-size: 13px;
+}
+.rp-openapi-endpoint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  overflow-wrap: anywhere;
+}
+.rp-openapi-method {
+  font: 600 13px var(--rp-font-family-mono);
+  color: var(--rp-c-brand);
+}
+.rp-openapi-get {
+  color: #159957;
+}
+.rp-openapi-post {
+  color: #487bff;
+}
+.rp-openapi-delete {
+  color: #e5484d;
+}
+.rp-openapi-put,
+.rp-openapi-patch {
+  color: #b88700;
+}
+.rp-openapi button {
+  cursor: pointer;
+  font: inherit;
+}
+.rp-openapi-send {
+  margin-left: auto;
+  background: var(--rp-c-brand);
+  color: var(--rp-c-bg);
+  border: none;
+  padding: 7px 16px;
+  border-radius: 7px;
+  font-weight: 600;
+}
+.rp-openapi summary {
+  cursor: pointer;
+  padding: 12px 0;
+  font-size: 14px;
+}
+.rp-openapi-playground > details {
+  padding: 0 16px;
+  border-top: 1px solid var(--oa-border);
+}
+.rp-openapi-fields {
+  display: grid;
+  gap: 12px;
+  padding: 4px 0 16px;
+}
+.rp-openapi-fields label {
+  display: grid;
+  gap: 5px;
+  font-size: 13px;
+}
+.rp-openapi-fields small,
+.rp-openapi-muted {
+  color: var(--rp-c-text-2);
+}
+.rp-openapi textarea {
+  resize: vertical;
+  font-family: var(--rp-font-family-mono);
+  font-size: 13px;
+}
+.rp-openapi-description {
+  margin: 24px 0 40px;
+  white-space: pre-wrap;
+}
+.rp-openapi-main h2 {
+  margin-top: 40px;
+  font-size: 22px;
+  border: none;
+}
+.rp-openapi-parameter {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--oa-border);
+}
+.rp-openapi-parameter h3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 0;
+  font-size: 16px;
+}
+.rp-openapi-schema {
+  padding: 8px 0 8px 12px;
+  border-left: 1px solid var(--oa-border);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.rp-openapi-schema p {
+  margin: 8px 0;
+}
+.rp-openapi-property {
+  margin: 5px 0;
+}
+.rp-openapi-chip {
+  border: 1px solid var(--oa-border);
+  border-radius: 5px;
+  padding: 2px 6px;
+  margin-left: 8px;
+  font-size: 12px;
+}
+.rp-openapi-required {
+  color: #d35050;
+  font-size: 12px;
+  margin-left: 8px;
+}
+.rp-openapi-tabs {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--oa-border);
+}
+.rp-openapi-tabs button {
+  padding: 10px 12px;
+  white-space: nowrap;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--rp-c-text-2);
+  background: transparent;
+  font-size: 13px;
+}
+.rp-openapi-tabs button[aria-pressed='true'] {
+  color: var(--rp-c-brand);
+  border-bottom-color: var(--rp-c-brand);
+}
+.rp-openapi-tabs select {
+  margin-left: auto;
+  font-size: 11px;
+  max-width: 160px;
+  border: none;
+  background: transparent;
+}
+.rp-openapi-code-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px 0;
+  font-size: 12px;
+  color: var(--rp-c-text-2);
+}
+.rp-openapi-code-heading button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  padding: 3px 5px;
+}
+.rp-openapi-code pre,
+.rp-openapi-panel pre {
+  margin: 0;
+  padding: 16px;
+  max-height: 480px;
+  overflow: auto;
+  background: transparent;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.rp-openapi-code pre code {
+  padding: 0;
+  background: transparent;
+  font-size: inherit;
+}
+.rp-openapi-panel > details {
+  padding: 0 16px;
+}
+.rp-openapi-error {
+  padding: 0 16px;
+  color: #d35050;
+  font-size: 13px;
+}
+@media (max-width: 1100px) {
+  .rp-openapi-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rp-openapi-examples {
+    position: static;
+  }
+}
