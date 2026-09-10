@@ -119,7 +119,7 @@ export * from '@rspress/core/theme-original';
 
 这些插槽位于原有的 `<ul>` 内，分别在首个导航项之前或末个导航项之后。`NavList` 直接渲染 `<li>`，沿用已有菜单的间距。
 
-使用 `beforeLeftNavItems`、`afterLeftNavItems`、`beforeRightNavItems` 和 `afterRightNavItems` 插入自定义导航内容。配合 [NavList](./nav-list)，同一份 `items` 会自动呈现为桌面端横向菜单或移动端展开菜单中的纵向列表，无需判断屏幕宽度。
+使用 `beforeLeftNavItems`、`afterLeftNavItems`、`beforeRightNavItems` 和 `afterRightNavItems` 插入自定义导航内容。配合 `NavList`，同一份 `items` 会自动呈现为桌面端横向菜单或移动端展开菜单中的纵向列表，无需判断屏幕宽度。
 
 预览也包含这四个插槽。在移动端，展开导航菜单即可查看它们的位置。
 
@@ -140,3 +140,7 @@ export function Layout() {
 
 export * from '@rspress/core/theme-original';
 ```
+
+`NavList` 的必填属性 `items` 类型为 `NavItem[]`，使用与 [`themeConfig.nav`](/api/config/config-theme#nav) 相同的结构，支持链接和嵌套菜单。插入位置由插槽决定，导航项中的 `position` 不会过滤或移动这些导航项。
+
+移动端保留已配置导航项的顺序，插槽位于对应位置的首项之前或末项之后。如果该位置没有导航项，左侧插槽位于列表开头，右侧插槽位于列表末尾。如果使用自定义内容代替 `NavList`，桌面端应使用 `<li>` 元素，并自行处理移动端的呈现。
