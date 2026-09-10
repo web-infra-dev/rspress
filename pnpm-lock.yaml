@@ -2643,6 +2643,9 @@ importers:
       '@rspress/plugin-llms':
         specifier: workspace:*
         version: link:../packages/plugin-llms
+      '@rspress/plugin-openapi':
+        specifier: workspace:*
+        version: link:../packages/plugin-openapi
       '@rspress/plugin-playground':
         specifier: workspace:*
         version: link:../packages/plugin-playground
