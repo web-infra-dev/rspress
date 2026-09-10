@@ -124,32 +124,37 @@ describe('OpenAPI page generation', () => {
     );
     expect(await read('api/get-planet.mdx')).toContain('APIReference');
   });
-  it('resolves remote server URLs against the specification URL', async () => {
-    const document = structuredClone(fixture);
-    document.servers = [
-      { url: '/v2/{region}', variables: { region: { default: 'eu' } } },
-    ];
-    const server = createServer((_, response) => {
-      response.setHeader('Content-Type', 'application/json');
-      response.end(JSON.stringify(document));
-    });
-    await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve));
-    try {
-      const address = server.address() as { port: number };
-      const origin = `http://127.0.0.1:${address.port}`;
-      await pluginOpenAPI({
-        input: `${origin}/spec/openapi.json`,
-        allowPrivateUrls: true,
-      }).config!({ root }, utils, true);
-      expect(await read('api/getallplanets.mdx')).toContain(
-        `${origin}/v2/{region}`,
+  it.each([false, true])(
+    'resolves remote servers including empty lists (%s)',
+    async empty => {
+      const document = structuredClone(fixture);
+      document.servers = empty
+        ? []
+        : [{ url: '/v2/{region}', variables: { region: { default: 'eu' } } }];
+      const server = createServer((_, response) => {
+        response.setHeader('Content-Type', 'application/json');
+        response.end(JSON.stringify(document));
+      });
+      await new Promise<void>(resolve =>
+        server.listen(0, '127.0.0.1', resolve),
       );
-    } finally {
-      await new Promise<void>((resolve, reject) =>
-        server.close(error => (error ? reject(error) : resolve())),
-      );
-    }
-  });
+      try {
+        const address = server.address() as { port: number };
+        const origin = `http://127.0.0.1:${address.port}`;
+        await pluginOpenAPI({
+          input: `${origin}/spec/openapi.json`,
+          allowPrivateUrls: true,
+        }).config!({ root }, utils, true);
+        expect(await read('api/getallplanets.mdx')).toContain(
+          empty ? `${origin}/` : `${origin}/v2/{region}`,
+        );
+      } finally {
+        await new Promise<void>((resolve, reject) =>
+          server.close(error => (error ? reject(error) : resolve())),
+        );
+      }
+    },
+  );
   it('upgrades Swagger 2.0 files', async () => {
     const file = path.join(root, 'swagger.json');
     await writeFile(

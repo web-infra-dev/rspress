@@ -57,6 +57,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Planet'
+          text/plain:
+            example: Hello Mars
+          application/x-www-form-urlencoded:
+            example:
+              name: Mars & Venus
+              tags: [rocky, red]
       responses:
         '201':
           description: Planet created
@@ -69,6 +75,8 @@ paths:
           type: string
     get:
       operationId: getPlanet
+      security:
+        - token: []
       summary: Get a planet
       tags:
         - Planets
@@ -82,6 +90,10 @@ paths:
         '404':
           description: Planet not found
 components:
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
   schemas:
     Planet:
       type: object

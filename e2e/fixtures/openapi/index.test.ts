@@ -81,4 +81,108 @@ test.describe('OpenAPI plugin', () => {
       ),
     ).toBe(true);
   });
+  test('sends text and form examples in the selected wire format', async ({
+    page,
+  }) => {
+    const bodies: string[] = [];
+    const types: string[] = [];
+    await page.route('https://example.com/v1/planets', async route => {
+      bodies.push(route.request().postData() ?? '');
+      types.push(route.request().headers()['content-type']);
+      await route.fulfill({
+        contentType: 'application/json',
+        body: '{"ok":true}',
+      });
+    });
+    await page.goto(`http://localhost:${appPort}/api/createplanet`);
+    await page
+      .getByRole('button', { name: 'Request body', exact: true })
+      .click();
+    for (const [type, expected] of [
+      ['text/plain', 'Hello Mars'],
+      [
+        'application/x-www-form-urlencoded',
+        'name=Mars+%26+Venus&tags=rocky&tags=red',
+      ],
+    ]) {
+      await page
+        .getByRole('combobox', { name: 'Request content type' })
+        .selectOption(type);
+      await expect(
+        page.getByRole('textbox', { name: 'Request body', exact: true }),
+      ).toHaveValue(expected);
+      await page.getByRole('button', { name: 'Send', exact: true }).click();
+      await expect(page.getByRole('status')).toContainText('true');
+    }
+    expect(bodies).toEqual([
+      'Hello Mars',
+      'name=Mars+%26+Venus&tags=rocky&tags=red',
+    ]);
+    expect(types).toEqual(['text/plain', 'application/x-www-form-urlencoded']);
+  });
+  test('requires real credentials for Send even when examples have placeholders', async ({
+    page,
+  }) => {
+    const credentials: string[] = [];
+    await page.route('https://example.com/v1/planets/*', async route => {
+      credentials.push(route.request().headers().authorization);
+      await route.fulfill({
+        contentType: 'application/json',
+        body: '{"name":"Mars"}',
+      });
+    });
+    await page.goto(`http://localhost:${appPort}/api/getplanet`);
+    await expect(page.locator('.rp-openapi-code').first()).toContainText(
+      'YOUR_ACCESS_TOKEN',
+    );
+    await page.getByRole('button', { name: 'Send', exact: true }).click();
+    await expect(page.getByRole('alert')).toContainText(
+      'Enter credentials for token',
+    );
+    expect(credentials).toEqual([]);
+    await page
+      .getByRole('button', { name: 'Authorization', exact: true })
+      .click();
+    await page.getByLabel('token', { exact: true }).fill('real-token');
+    await page.getByRole('button', { name: 'Send', exact: true }).click();
+    await expect(page.getByRole('status')).toContainText('Mars');
+    expect(credentials).toEqual(['Bearer real-token']);
+  });
+  test('renders empty servers and authenticated examples with playground disabled', async ({
+    page,
+  }) => {
+    const port = await getPort();
+    const readonlyApp = await runDevCommand(
+      import.meta.dirname,
+      port,
+      'rspress.readonly.config.ts',
+    );
+    try {
+      await page.goto(`http://localhost:${port}/api/status`);
+      await expect(
+        page.getByRole('heading', { name: 'Get status', exact: true }),
+      ).toBeVisible();
+      await expect(page.getByLabel('Server URL', { exact: true })).toHaveValue(
+        '/',
+      );
+      await expect(
+        page.getByRole('button', { name: 'Send', exact: true }),
+      ).toHaveCount(0);
+      await expect(
+        page.getByRole('button', { name: 'Authorization', exact: true }),
+      ).toHaveCount(0);
+      await expect(page.locator('.rp-openapi-code').first()).toContainText(
+        'YOUR_ACCESS_TOKEN',
+      );
+      await page.getByRole('button', { name: 'Python', exact: true }).click();
+      await expect(page.locator('.rp-openapi-code').first()).toContainText(
+        'YOUR_ACCESS_TOKEN',
+      );
+      await expect(page.locator('.rp-openapi-code').first()).toContainText(
+        'requests',
+      );
+    } finally {
+      await killProcess(readonlyApp);
+    }
+  });
 });

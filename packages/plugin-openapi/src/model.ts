@@ -60,6 +60,7 @@ export function getOperations(document: OpenAPIDocument): OperationData[] {
           },
         ),
       );
+      const servers = operation.servers ?? item.servers ?? document.servers;
       return [
         {
           id,
@@ -67,9 +68,7 @@ export function getOperations(document: OpenAPIDocument): OperationData[] {
           method,
           operation,
           parameters: [...parameters.values()],
-          servers: operation.servers ??
-            item.servers ??
-            document.servers ?? [{ url: '/' }],
+          servers: servers?.length ? servers : [{ url: '/' }],
           security: operation.security ?? document.security ?? [],
         },
       ];

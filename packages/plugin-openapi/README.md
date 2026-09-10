@@ -1,3 +1,5 @@
+<!-- cspell:ignore upgrader snippetz getallplanets -->
+
 # @rspress/plugin-openapi
 
 Generate API reference pages from OpenAPI with native Rspress navigation, a responsive two-column layout, schema details, request examples, and an interactive playground.
@@ -46,7 +48,7 @@ The Send button sends a request directly from the browser. Path/query/header par
 
 For OAuth/OpenID Connect, paste an existing access token. Credentials remain in page memory and are never persisted. Requests time out after 30 seconds and can be cancelled. HTTP status, elapsed time, response body, and accessible response headers are displayed. API servers must allow the documentation site's origin through CORS.
 
-Code examples use `@scalar/snippetz` for cURL, JavaScript, Go, Python, Java, C#, and Rust. Examples are generated from the same prepared request used by Send. Rspress's `CodeBlockRuntime` provides syntax highlighting and copying.
+Code examples use `@scalar/snippetz` for cURL, JavaScript, Go, Python, Java, C#, and Rust. Examples use the same parameters and body as Send, with placeholder credentials until real credentials are entered. Send still requires real credentials. Rspress's `CodeBlockRuntime` provides syntax highlighting and copying.
 
 ## Current limitations
 

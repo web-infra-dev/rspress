@@ -179,7 +179,7 @@ This option controls specification loading. It does not configure a proxy for Se
 
 Click **Cancel** to stop a pending request. Requests time out after 30 seconds. **Response example** on the right comes from the specification; actual request results appear separately.
 
-Request examples are available for cURL, JavaScript, Go, Python, Java, C# and Rust. Switch tabs to view a language and use the code block's copy button. Once the required parameters, credentials and body are filled in, examples update with your inputs.
+Request examples are available for cURL, JavaScript, Go, Python, Java, C# and Rust. Switch tabs to view a language and use the code block's copy button. Examples update with your inputs and use placeholder credentials until real credentials are entered. Send still requires real credentials, while `playground: false` keeps the placeholder examples available.
 
 ### Authentication
 
@@ -223,7 +223,7 @@ Send calls the API directly from the reader's browser. Check the Server URL and 
 
 OpenAPI 3.0 and 3.1 JSON/YAML specifications are supported, along with conversion of Swagger 2.0 files. OpenAPI 3.2, webhooks and callbacks are not supported yet.
 
-The playground supports JSON, plain text and URL-encoded request bodies. Supported parameter styles include `simple` path parameters, `form` and `deepObject` query parameters, and space- or pipe-delimited query arrays. File uploads, cookie authentication and other serialization styles are not currently supported; unsupported formats produce an error.
+The playground supports JSON, plain text and URL-encoded request bodies. Initial examples follow the selected content type. Edit plain text directly, and enter URL-encoded bodies as `name=Mars&limit=3`. Supported parameter styles include `simple` path parameters, `form` and `deepObject` query parameters, and space- or pipe-delimited query arrays. File uploads, cookie authentication and other serialization styles are not currently supported; unsupported formats produce an error.
 
 ### Descriptions do not render Markdown formatting
 

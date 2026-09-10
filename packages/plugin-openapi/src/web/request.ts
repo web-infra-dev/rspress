@@ -1,5 +1,6 @@
-import { resolveRef } from '../model';
+import { mediaExample, resolveRef } from '../model';
 import type {
+  MediaType,
   OpenAPIDocument,
   OperationData,
   Parameter,
@@ -11,6 +12,31 @@ export function serverURL(server: Server): string {
     /\{([^}]+)\}/g,
     (_, name: string) => server.variables?.[name]?.default ?? `{${name}}`,
   );
+}
+/** Format the initial editor value in the representation sent over HTTP. */
+export function requestBodyExample(
+  document: OpenAPIDocument,
+  mediaType: string,
+  media?: MediaType,
+): string {
+  const example = mediaExample(document, media);
+  if (example === undefined) return '';
+  const type = mediaType.split(';')[0].trim().toLowerCase();
+  if (type === 'application/x-www-form-urlencoded') {
+    if (typeof example === 'string') return example;
+    const form = new URLSearchParams();
+    for (const [name, value] of Object.entries(example ?? {})) {
+      for (const item of Array.isArray(value) ? value : [value]) {
+        form.append(
+          name,
+          typeof item === 'object' ? JSON.stringify(item) : String(item),
+        );
+      }
+    }
+    return form.toString();
+  }
+  if (!type.includes('json') && typeof example === 'string') return example;
+  return JSON.stringify(example, null, 2);
 }
 export function parameterValue(
   document: OpenAPIDocument,
@@ -159,10 +185,11 @@ export function prepareRequest(
     throw new Error('Only HTTP and HTTPS servers are supported.');
   let body: string | undefined;
   if (input.body && data.method !== 'get' && data.method !== 'head') {
-    if (input.mediaType.includes('json')) JSON.parse(input.body);
+    const type = input.mediaType.split(';')[0].trim().toLowerCase();
+    if (type.includes('json')) JSON.parse(input.body);
     else if (
-      input.mediaType !== 'text/plain' &&
-      input.mediaType !== 'application/x-www-form-urlencoded'
+      type !== 'text/plain' &&
+      type !== 'application/x-www-form-urlencoded'
     )
       throw new Error(
         `Request content type ${input.mediaType} is not supported by the playground.`,

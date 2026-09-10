@@ -8,8 +8,18 @@ import {
 } from '../model';
 import type { OpenAPIDocument, OperationData, Schema } from '../types';
 import { Disclosure } from './Disclosure';
-import { prepareRequest, serverURL, type RequestInput } from './request';
-import { generateSnippet, languages, type Language } from './snippets';
+import {
+  prepareRequest,
+  requestBodyExample,
+  serverURL,
+  type RequestInput,
+} from './request';
+import {
+  generateSnippet,
+  prepareExampleRequest,
+  languages,
+  type Language,
+} from './snippets';
 
 export interface APIReferenceProps {
   document: OpenAPIDocument;
@@ -160,7 +170,7 @@ function OperationReference({
           ];
         }),
       ),
-      body: display(mediaExample(document, contents[mediaType])),
+      body: requestBodyExample(document, mediaType, contents[mediaType]),
       mediaType,
       auth: {},
       securityIndex: 0,
@@ -185,13 +195,15 @@ function OperationReference({
     }
   }, [document, data, input]);
   const snippet = useMemo(() => {
-    if (!preview.request) return preview.error;
     try {
-      return generateSnippet(preview.request, language);
-    } catch {
-      return 'Unable to generate this example.';
+      return generateSnippet(
+        prepareExampleRequest(document, data, input),
+        language,
+      );
+    } catch (error) {
+      return (error as Error).message;
     }
-  }, [preview, language]);
+  }, [document, data, input, language]);
   const responses = Object.entries(data.operation.responses ?? {}).map(
     ([status, response]) => [status, resolveRef(document, response)] as const,
   );
@@ -401,11 +413,10 @@ function OperationReference({
                             setInput({
                               ...input,
                               mediaType: event.target.value,
-                              body: display(
-                                mediaExample(
-                                  document,
-                                  contents[event.target.value],
-                                ),
+                              body: requestBodyExample(
+                                document,
+                                event.target.value,
+                                contents[event.target.value],
                               ),
                             })
                           }

@@ -181,6 +181,8 @@ pluginOpenAPI({
 
 请求示例支持 cURL、JavaScript、Go、Python、Java、C# 和 Rust。切换 Tabs 可以查看对应代码，并使用代码块的复制按钮。参数、凭证和请求体填写完整后，示例会随输入更新。
 
+代码示例在未填写凭证时使用占位符，填写后会随输入更新。Send 仍要求填写真实凭证；设置 `playground: false` 时也可以查看带占位凭证的示例。
+
 ### 鉴权方式
 
 | 方式                   | 如何填写                                               |
@@ -224,6 +226,8 @@ Send 从读者的浏览器直接发送请求。检查 Server URL 和网络连接
 支持 OpenAPI 3.0、3.1 的 JSON/YAML 描述文件，以及 Swagger 2.0 文件转换。当前不支持 OpenAPI 3.2、webhooks 和 callbacks。
 
 在线调试支持 JSON、纯文本及 URL-encoded 请求体。路径参数支持 `simple`，查询参数支持 `form`、`deepObject` 及空格或竖线分隔的数组。当前不支持文件上传、cookie 鉴权或其他参数序列化方式；遇到不支持的格式时会提示错误。
+
+请求体的初始示例会按所选内容类型生成。纯文本可以直接编辑；URL 编码表单使用 `name=Mars&limit=3` 的格式。
 
 ### 为什么描述中的 Markdown 没有格式化
 

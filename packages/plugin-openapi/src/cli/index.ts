@@ -44,6 +44,7 @@ export function pluginOpenAPI(options: PluginOpenAPIOptions): RspressPlugin {
       if (typeof input === 'string' && /^https?:\/\//.test(input)) {
         document.servers ??= [{ url: '/' }];
         const normalizeServers = (servers: OpenAPIDocument['servers']) => {
+          if (servers?.length === 0) servers.push({ url: '/' });
           for (const server of servers ?? []) {
             if (!/^[a-zA-Z][a-zA-Z\d+.-]*:/.test(server.url)) {
               server.url = new URL(server.url, input).href
