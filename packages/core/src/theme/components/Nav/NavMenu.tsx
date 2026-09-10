@@ -169,13 +169,13 @@ export function NavVersions() {
 export function NavMenu({
   menuItems,
   position,
-  before,
-  after,
+  beforeNavItems,
+  afterNavItems,
 }: {
   menuItems: NavItem[];
   position?: 'left' | 'right';
-  before?: ReactNode;
-  after?: ReactNode;
+  beforeNavItems?: ReactNode;
+  afterNavItems?: ReactNode;
 }) {
   const items = useMemo(() => {
     return position
@@ -183,16 +183,17 @@ export function NavMenu({
       : menuItems;
   }, [menuItems, position]);
 
-  if (!items.length && before == null && after == null) return null;
+  if (!items.length && beforeNavItems == null && afterNavItems == null)
+    return null;
 
   return (
     <ul className={clsx('rp-nav-menu', position && `rp-nav-menu--${position}`)}>
       <NavListContext.Provider value="items">
-        {before}
+        {beforeNavItems}
         {items.map((item, index) => (
           <NavMenuItem key={index} menuItem={item} />
         ))}
-        {after}
+        {afterNavItems}
       </NavListContext.Provider>
     </ul>
   );

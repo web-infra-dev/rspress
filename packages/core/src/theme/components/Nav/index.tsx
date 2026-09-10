@@ -50,8 +50,8 @@ export function Nav(props: NavProps) {
         <NavMenu
           menuItems={navList}
           position="left"
-          before={navItemsSlots.beforeLeftNavItems}
-          after={navItemsSlots.afterLeftNavItems}
+          beforeNavItems={navItemsSlots.beforeLeftNavItems}
+          afterNavItems={navItemsSlots.afterLeftNavItems}
         />
         {afterNavTitle}
       </div>
@@ -64,8 +64,8 @@ export function Nav(props: NavProps) {
         <NavMenu
           menuItems={navList}
           position="right"
-          before={navItemsSlots.beforeRightNavItems}
-          after={navItemsSlots.afterRightNavItems}
+          beforeNavItems={navItemsSlots.beforeRightNavItems}
+          afterNavItems={navItemsSlots.afterRightNavItems}
         />
         <div className="rp-nav__others">
           <NavMenuDivider />
