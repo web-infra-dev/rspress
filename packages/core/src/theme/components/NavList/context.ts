@@ -1,3 +1,3 @@
 import { createContext } from 'react';
 
-export const NavListContext = createContext<'bar' | 'screen'>('bar');
+export const NavListContext = createContext<'bar' | 'items' | 'screen'>('bar');

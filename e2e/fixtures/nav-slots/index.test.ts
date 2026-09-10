@@ -32,16 +32,24 @@ for (const empty of [false, true]) {
         const errors: string[] = [];
         page.on('pageerror', error => errors.push(error.message));
         await page.goto(`http://localhost:${appPort}/`);
-        const left = page.locator('.rp-nav-items--left');
-        const right = page.locator('.rp-nav-items--right');
+        const left = page.locator('.rp-nav-menu--left');
+        const right = page.locator('.rp-nav-menu--right');
         const labels =
-          '.rp-nav-menu > .rp-nav-menu__item > .rp-nav-menu__item__container';
+          ':scope > .rp-nav-menu__item > .rp-nav-menu__item__container';
         await expect(left.locator(labels)).toHaveText(
           empty ? ['BL', 'AL'] : ['BL', 'L1', 'L2', 'AL'],
         );
         await expect(right.locator(labels)).toHaveText(
           empty ? ['BR', 'AR', 'More'] : ['BR', 'R1', 'R2', 'AR', 'More'],
         );
+        await expect(
+          page.locator('.rp-nav__left > ul.rp-nav-menu--left'),
+        ).toHaveCount(1);
+        await expect(
+          page.locator('.rp-nav__right > ul.rp-nav-menu--right'),
+        ).toHaveCount(1);
+        await expect(page.locator('.rp-nav-menu .rp-nav-menu')).toHaveCount(0);
+        await expect(page.locator('.rp-nav-menu > :not(li)')).toHaveCount(0);
         await right.getByText('More', { exact: true }).hover();
         await right.getByRole('link', { name: 'Target', exact: true }).click();
         await expect(page).toHaveURL(/\/target$/);
@@ -59,8 +67,8 @@ for (const empty of [false, true]) {
       }) => {
         await page.setViewportSize({ width: 390, height: 844 });
         await page.goto(`http://localhost:${appPort}/`);
-        await expect(page.locator('.rp-nav-items--left')).toBeHidden();
-        await expect(page.locator('.rp-nav-items--right')).toBeHidden();
+        await expect(page.locator('.rp-nav-menu--left')).toBeHidden();
+        await expect(page.locator('.rp-nav-menu--right')).toBeHidden();
         await page.locator('.rp-nav-hamburger__sm').click();
         const screen = page.locator('.rp-nav-screen');
         await expect(screen).toBeVisible();

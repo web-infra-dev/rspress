@@ -15,6 +15,7 @@ import {
 } from '@rspress/core/theme';
 import cls from 'clsx';
 import { type ReactNode, useMemo } from 'react';
+import { NavListContext } from '../NavList/context';
 import { useLangsMenu, useVersionsMenu } from './hooks';
 import './NavMenu.scss';
 import clsx from 'clsx';
@@ -182,25 +183,17 @@ export function NavMenu({
       : menuItems;
   }, [menuItems, position]);
 
-  const menu = items.length ? (
-    <ul className={clsx('rp-nav-menu', position && `rp-nav-menu--${position}`)}>
-      {items.map((item, index) => (
-        <NavMenuItem key={index} menuItem={item} />
-      ))}
-    </ul>
-  ) : null;
-
-  if (before == null && after == null) {
-    return menu;
-  }
+  if (!items.length && before == null && after == null) return null;
 
   return (
-    <div
-      className={clsx('rp-nav-items', position && `rp-nav-items--${position}`)}
-    >
-      {before}
-      {menu}
-      {after}
-    </div>
+    <ul className={clsx('rp-nav-menu', position && `rp-nav-menu--${position}`)}>
+      <NavListContext.Provider value="items">
+        {before}
+        {items.map((item, index) => (
+          <NavMenuItem key={index} menuItem={item} />
+        ))}
+        {after}
+      </NavListContext.Provider>
+    </ul>
   );
 }

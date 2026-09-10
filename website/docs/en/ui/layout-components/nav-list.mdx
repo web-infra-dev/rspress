@@ -46,4 +46,4 @@ Uses the same item structure as [`themeConfig.nav`](/api/config/config-theme#nav
 
 The mobile menu preserves the configured navigation item order. Each slot appears before the first or after the last item with the corresponding position. If a position has no items, its slots still render: left slots at the beginning and right slots at the end of the list.
 
-Use `NavList` within these slots for automatic adaptation. Arbitrary custom elements can also be inserted, but their internal layout remains your responsibility. Outside the mobile navigation context, `NavList` uses the desktop presentation.
+Use `NavList` within these slots for automatic adaptation. On desktop, these slots are inside the existing `<ul>` and `NavList` renders sibling `<li>` elements directly. Custom slot content must use list items on desktop and handle its mobile presentation. Outside the mobile navigation context, `NavList` uses the desktop presentation.
