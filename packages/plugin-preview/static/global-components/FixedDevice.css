@@ -9,6 +9,25 @@
   --rp-device-border: 1px solid #e5e6e8;
 }
 
+.rp-fixed-device__mobile-link {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  color: var(--rp-c-text-2);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  background: var(--rp-c-bg);
+  border: 1px solid var(--rp-c-divider);
+  border-radius: 20px;
+  box-shadow: var(--rp-shadow-2);
+}
+
 /* Block: rp-fixed-device */
 .rp-fixed-device {
   display: none;
@@ -50,6 +69,10 @@
 }
 
 @media (min-width: 960px) {
+  .rp-fixed-device__mobile-link {
+    display: none;
+  }
+
   .rp-fixed-device {
     display: inline;
   }

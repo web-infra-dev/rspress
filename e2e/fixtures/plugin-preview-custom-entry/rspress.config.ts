@@ -8,7 +8,36 @@ export default defineConfig({
   plugins: [
     pluginPreview({
       iframeOptions: {
-        customEntry: ({ demoPath }) => {
+        customEntry: meta => {
+          const { demoPath } = meta;
+          if (meta.previewMode === 'iframe-fixed') {
+            const imports = meta.demos
+              .map(
+                (demo, index) =>
+                  `import Demo_${index} from ${JSON.stringify(
+                    demo.sourcePath ?? demo.demoPath,
+                  )};`,
+              )
+              .join('\n');
+            const children = meta.demos
+              .map((_demo, index) => `h(Demo_${index})`)
+              .join(', ');
+
+            return `
+import { createApp, h } from 'vue';
+${imports}
+const App = {
+  render() {
+    return h('div', {
+      class: 'vue-fixed-entry',
+      'data-route-path': ${JSON.stringify(meta.route.routePath)},
+      'data-lang': ${JSON.stringify(meta.route.lang)},
+    }, [${children}]);
+  },
+};
+createApp(App).mount('#root');
+`;
+          }
           if (demoPath.endsWith('.vue')) {
             return `
 import { createApp } from 'vue';
