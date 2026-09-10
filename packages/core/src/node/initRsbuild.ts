@@ -3,6 +3,7 @@ import path from 'node:path';
 import { cwd } from 'node:process';
 import { fileURLToPath } from 'node:url';
 import type {
+  LoadConfigResult,
   RestartFn,
   RsbuildConfig,
   RsbuildInstance,
@@ -329,16 +330,14 @@ async function createInternalBuildConfig(
       ...(process.env.RSPRESS_PERSISTENT_CACHE !== 'false'
         ? {
             buildCache: {
-              // 1. config file: rspress.config.ts
               buildDependencies: [
                 fileURLToPath(import.meta.url), // this file, __filename
-                pluginDriver.getConfigFilePath(), // rspress.config.ts
               ],
               cacheDigest: [
-                // 2.other configuration files which are not included in rspress.config.ts should be added to cacheDigest
-                // 2.1 routeService glob
+                // Other configuration files which are not included in rspress.config.ts should be added to cacheDigest
+                // 1 routeService glob
                 routeService.generateRoutesCode(),
-                // 2.2. auto-nav-sidebar _nav.json or _meta.json
+                // 2. auto-nav-sidebar _nav.json or _meta.json
                 JSON.stringify(
                   config.themeConfig?.locales?.map(i => ({
                     nav: i.nav,
@@ -575,16 +574,16 @@ async function createInternalBuildConfig(
 
 export async function initRsbuild(
   rootDir: string,
-  config: UserConfig,
+  configResult: LoadConfigResult<UserConfig>,
   pluginDriver: PluginDriver,
   routeService: RouteService,
   enableSSG: boolean,
   options: {
-    configFileMeta?: RsbuildConfig['_privateMeta'];
     extraRsbuildConfig?: RsbuildConfig;
     restart?: RestartFn;
   } = {},
 ): Promise<RsbuildInstance> {
+  const { content: config } = configResult;
   const userDocRoot = path.resolve(rootDir || config.root!);
 
   hintBuilderPluginsBreakingChange(config);
@@ -607,14 +606,14 @@ export async function initRsbuild(
     config.builderConfig || {},
     options.extraRsbuildConfig || {},
   );
-  if (options.configFileMeta) {
-    rsbuildConfig._privateMeta = options.configFileMeta;
-  }
 
   const rsbuild = await createRsbuild({
     callerName: 'rspress',
     restart: options.restart,
-    rsbuildConfig,
+    config: {
+      ...configResult,
+      content: rsbuildConfig,
+    },
   });
 
   return rsbuild;

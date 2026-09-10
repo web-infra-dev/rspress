@@ -8,11 +8,7 @@ import { lintRule } from 'unified-lint-rule';
 
 import config from './rspress.config.mjs';
 
-const pluginDriver = await PluginDriver.create(
-  config,
-  path.resolve(import.meta.dirname, 'rspress.config.mjs'),
-  false,
-);
+const pluginDriver = await PluginDriver.create(config, false);
 const routeService = await RouteService.create({
   config,
   scanDir: config.root,

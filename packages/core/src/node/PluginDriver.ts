@@ -25,7 +25,6 @@ type RspressPluginHookKeys =
 
 export class PluginDriver {
   #config: UserConfig;
-  #configFilePath: string;
 
   #plugins: RspressPlugin[];
 
@@ -33,29 +32,31 @@ export class PluginDriver {
 
   haveNavSidebarConfig = false;
 
-  static async create(
+  static create(config: UserConfig, isProd: boolean): Promise<PluginDriver>;
+  // TODO: Remove this overload when the legacy (config, configFilePath, isProd) argument format no longer needs compatibility.
+  static create(
     config: UserConfig,
     configFilePath: string,
     isProd: boolean,
+  ): Promise<PluginDriver>;
+  static async create(
+    config: UserConfig,
+    configFilePathOrIsProd: string | boolean,
+    isProd = false,
   ): Promise<PluginDriver> {
-    const pluginDriver = new PluginDriver(config, configFilePath, isProd);
+    if (typeof configFilePathOrIsProd === 'boolean') {
+      isProd = configFilePathOrIsProd;
+    }
+
+    const pluginDriver = new PluginDriver(config, isProd);
     await pluginDriver.init();
     return pluginDriver;
   }
 
-  private constructor(
-    config: UserConfig,
-    configFilePath: string,
-    isProd: boolean,
-  ) {
+  private constructor(config: UserConfig, isProd: boolean) {
     this.#config = config;
-    this.#configFilePath = configFilePath;
     this.#isProd = isProd;
     this.#plugins = [];
-  }
-
-  getConfigFilePath() {
-    return this.#configFilePath;
   }
 
   // The init function is used to initialize the doc plugins and will execute before the build process.
