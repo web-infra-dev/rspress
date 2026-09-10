@@ -4,7 +4,9 @@ import {
   useSite,
   withBase,
   withSiteOrigin,
+  Head,
 } from '@rspress/core/runtime';
+
 import type React from 'react';
 
 const visuallyHiddenStyle: React.CSSProperties = {
@@ -67,8 +69,14 @@ export function LlmsHint() {
   });
 
   return (
-    <div className="rp-llms-hint" style={visuallyHiddenStyle}>
-      {hintText}
-    </div>
+    <>
+      <Head>
+        <link rel="alternate" type="text/markdown" href={pageMdUrl} />
+        <link rel="describedby" href={llmsTxtUrl} />
+      </Head>
+      <div className="rp-llms-hint" style={visuallyHiddenStyle}>
+        {hintText}
+      </div>
+    </>
   );
 }
