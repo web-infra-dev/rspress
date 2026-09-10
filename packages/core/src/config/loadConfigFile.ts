@@ -18,7 +18,7 @@ export async function loadConfigFile(
     ),
   });
 
-  if (!result.filePath && result.dependencies.length === 0) {
+  if (!result.filePath) {
     logger.info(`No config file found in ${process.cwd()}`);
   }
 
