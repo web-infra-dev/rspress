@@ -183,9 +183,7 @@ export function Layout(props: LayoutProps) {
   } = page;
   const localesData = useLocaleSiteData();
 
-  const {
-    frontmatter: { navbar: showNavbar = true },
-  } = useFrontmatter();
+  const { navbar: showNavbar = true } = frontmatter;
 
   // Always show sidebar by default
   // Priority: front matter title > h1 title
