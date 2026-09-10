@@ -25,7 +25,7 @@ import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import type { PropsWithChildren } from 'react';
 import { CssModificationProvider } from '../docs/components/CssModificationContext';
 import { CssStyleSync } from '../docs/components/CssStyleSync';
-import { SlotPreviewLayout } from '../docs/components/SlotPreview';
+import { SlotPreview, SlotPreviewLayout } from '../docs/components/SlotPreview';
 import { BlogBackButton } from './components/BlogBackButton';
 import { HeroInteractive } from './components/HeroInteractive';
 import { HomeSections } from './components/HomeSections';
@@ -38,11 +38,11 @@ function HomeLayout(props: HomeLayoutProps) {
     <BasicHomeLayout
       {...props}
       afterFeatures={
-        <>
+        <SlotPreview name="afterFeatures">
           {props.afterFeatures}
           <HomeSections />
           <ToolStack />
-        </>
+        </SlotPreview>
       }
       afterHeroActions={
         <div
@@ -89,10 +89,10 @@ const DocLayout = (props: DocLayoutProps) => {
     <BasicDocLayout
       {...props}
       beforeDocContent={
-        <>
+        <SlotPreview name="beforeDocContent">
           <BlogBackButton />
           {props.beforeDocContent}
-        </>
+        </SlotPreview>
       }
     />
   );
