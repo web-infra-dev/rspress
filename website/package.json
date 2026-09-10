@@ -21,6 +21,7 @@
     "@rstack-dev/doc-ui": "^1.14.8",
     "@shikijs/transformers": "^4.2.0",
     "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "rsbuild-plugin-google-analytics": "^1.0.6",
