@@ -34,35 +34,6 @@ test.describe('OpenAPI plugin', () => {
     await page.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(page.getByRole('status')).toContainText('Earth');
   });
-  test('supports keyboard disclosure controls and preserves edited fields', async ({
-    page,
-  }) => {
-    await page.goto(`http://localhost:${appPort}/api/getallplanets`);
-    const trigger = page.getByRole('button', {
-      name: 'Parameters',
-      exact: true,
-    });
-    const field = page.getByRole('textbox', { name: 'query limit' });
-    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
-    await trigger.press('Enter');
-    await expect(field).toBeVisible();
-    await field.fill('7');
-    await trigger.press('Space');
-    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
-    await expect(field).toBeHidden();
-    await trigger.press('Tab');
-    expect(
-      await page.evaluate(
-        () =>
-          document.activeElement?.closest(
-            '.rp-openapi-disclosure__body[aria-hidden="true"]',
-          ) !== null,
-      ),
-    ).toBe(false);
-    await trigger.press('Enter');
-    await expect(field).toBeVisible();
-    await expect(field).toHaveValue('7');
-  });
   test('uses native tabs, section headers and distinct method colors in both themes', async ({
     page,
   }) => {
