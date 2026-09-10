@@ -16,6 +16,10 @@ const slots = [
   'afterNavTitle',
   'beforeNavMenu',
   'afterNavMenu',
+  'beforeLeftNavItems',
+  'afterLeftNavItems',
+  'beforeRightNavItems',
+  'afterRightNavItems',
   'beforeSidebar',
   'afterSidebar',
   'beforeOutline',
@@ -59,6 +63,7 @@ export function SlotPreview({
         tabIndex={
           name.endsWith('NavTitle') ||
           name.endsWith('NavMenu') ||
+          name.endsWith('NavItems') ||
           name === 'navTitle'
             ? 0
             : undefined

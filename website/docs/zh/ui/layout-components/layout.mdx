@@ -119,6 +119,8 @@ export * from '@rspress/core/theme-original';
 
 使用 `beforeLeftNavItems`、`afterLeftNavItems`、`beforeRightNavItems` 和 `afterRightNavItems` 插入自定义导航内容。配合 [NavList](./nav-list)，同一份 `items` 会自动呈现为桌面端横向菜单或移动端展开菜单中的纵向列表，无需判断屏幕宽度。
 
+预览也包含这四个插槽。在移动端，展开导航菜单即可查看它们的位置。
+
 ```tsx title="theme/index.tsx"
 import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
 

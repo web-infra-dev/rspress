@@ -60,6 +60,7 @@
   &:is(
     [data-slot-container$='NavTitle'],
     [data-slot-container$='NavMenu'],
+    [data-slot-container$='NavItems'],
     [data-slot-container='navTitle']
   ) {
     display: flex;
@@ -106,6 +107,7 @@
     &:is(
       [data-slot-preview$='NavTitle'],
       [data-slot-preview$='NavMenu'],
+      [data-slot-preview$='NavItems'],
       [data-slot-preview='navTitle']
     ) {
       inset: 0 auto 0 50%;
@@ -135,6 +137,7 @@
   &:is(
     [data-slot-preview$='NavTitle'],
     [data-slot-preview$='NavMenu'],
+    [data-slot-preview$='NavItems'],
     [data-slot-preview='navTitle']
   ) {
     flex-shrink: 0;
