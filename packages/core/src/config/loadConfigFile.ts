@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import path from 'node:path';
 import type { LoadConfigResult } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
@@ -8,31 +7,22 @@ import {
 } from '@rspress/shared/constants';
 import { logger } from '@rspress/shared/logger';
 
-const findConfig = (basePath: string): string | undefined => {
-  return DEFAULT_CONFIG_EXTENSIONS.map(ext => basePath + ext).find(
-    fs.existsSync,
-  );
-};
-
 export async function loadConfigFile(
   customConfigFile?: string,
 ): Promise<LoadConfigResult<UserConfig>> {
-  const baseDir = process.cwd();
-  const configFilePath = customConfigFile
-    ? path.isAbsolute(customConfigFile)
-      ? customConfigFile
-      : path.join(baseDir, customConfigFile)
-    : findConfig(path.join(baseDir, DEFAULT_CONFIG_NAME));
-  if (!configFilePath) {
-    logger.info(`No config file found in ${baseDir}`);
-    return { content: {}, filePath: null, dependencies: [] };
+  const { loadConfig } = await import('@rsbuild/core');
+  const result = await loadConfig<UserConfig>({
+    path: customConfigFile,
+    configFileNames: DEFAULT_CONFIG_EXTENSIONS.map(
+      ext => DEFAULT_CONFIG_NAME + ext,
+    ),
+  });
+
+  if (!result.filePath && result.dependencies.length === 0) {
+    logger.info(`No config file found in ${process.cwd()}`);
   }
 
-  const { loadConfig } = await import('@rsbuild/core');
-  return loadConfig<UserConfig>({
-    cwd: path.dirname(configFilePath),
-    path: configFilePath,
-  });
+  return result;
 }
 
 export function normalizeConfigResult(

@@ -42,7 +42,7 @@ export async function serve(
     },
   });
 
-  const pluginDriver = await PluginDriver.create(configResult, true);
+  const pluginDriver = await PluginDriver.create(configResult.content, true);
 
   const modifiedConfig = await pluginDriver.modifyConfig();
 

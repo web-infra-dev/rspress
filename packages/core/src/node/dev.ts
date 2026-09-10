@@ -26,7 +26,7 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
     options.configFilePath,
   );
   // 1. create PluginDriver
-  const pluginDriver = await PluginDriver.create(configResult, false);
+  const pluginDriver = await PluginDriver.create(configResult.content, false);
   const modifiedConfig = await pluginDriver.modifyConfig();
 
   try {

@@ -22,7 +22,7 @@ export async function build(options: BuildOptions) {
   );
   const { content: config } = configResult;
   // 1. create PluginDriver
-  const pluginDriver = await PluginDriver.create(configResult, true);
+  const pluginDriver = await PluginDriver.create(configResult.content, true);
   const modifiedConfig = await pluginDriver.modifyConfig();
   const enableSSG = Boolean(
     (modifiedConfig.ssg || modifiedConfig.llms) ?? true,

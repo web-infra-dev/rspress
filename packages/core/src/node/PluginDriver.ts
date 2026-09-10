@@ -1,5 +1,4 @@
 import path from 'node:path';
-import type { LoadConfigResult } from '@rsbuild/core';
 import {
   addLeadingSlash,
   addTrailingSlash,
@@ -34,19 +33,16 @@ export class PluginDriver {
   haveNavSidebarConfig = false;
 
   static async create(
-    configResult: LoadConfigResult<UserConfig>,
+    config: UserConfig,
     isProd: boolean,
   ): Promise<PluginDriver> {
-    const pluginDriver = new PluginDriver(configResult, isProd);
+    const pluginDriver = new PluginDriver(config, isProd);
     await pluginDriver.init();
     return pluginDriver;
   }
 
-  private constructor(
-    configResult: LoadConfigResult<UserConfig>,
-    isProd: boolean,
-  ) {
-    this.#config = configResult.content;
+  private constructor(config: UserConfig, isProd: boolean) {
+    this.#config = config;
     this.#isProd = isProd;
     this.#plugins = [];
   }
