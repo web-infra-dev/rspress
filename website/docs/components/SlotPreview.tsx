@@ -1,68 +1,16 @@
 import { useLang } from '@rspress/core/runtime';
 import { Layout, type LayoutProps, Link } from '@rspress/core/theme-original';
-import { createContext, type ReactNode, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { CssModificationIndicator } from './CssModificationIndicator';
 import { FloatingToolbar } from './FloatingToolbar';
 import toolbarStyles from './FloatingToolbar.module.scss';
 import styles from './SlotPreview.module.scss';
-
-const slots = [
-  'top',
-  'bottom',
-  'beforeNav',
-  'afterNav',
-  'beforeNavTitle',
-  'navTitle',
-  'afterNavTitle',
-  'beforeNavMenu',
-  'afterNavMenu',
-  'beforeLeftNavItems',
-  'afterLeftNavItems',
-  'beforeRightNavItems',
-  'afterRightNavItems',
-  'beforeSidebar',
-  'afterSidebar',
-  'beforeOutline',
-  'afterOutline',
-  'beforeDoc',
-  'afterDoc',
-  'beforeDocContent',
-  'afterDocContent',
-  'beforeDocFooter',
-  'afterDocFooter',
-  'beforeHero',
-  'afterHero',
-  'beforeFeatures',
-  'afterFeatures',
-] as const satisfies readonly (keyof LayoutProps)[];
+import { SlotPreviewOverlay } from './SlotPreviewOverlay';
 
 const SlotPreviewContext = createContext({
   enabled: false,
   toggle: () => {},
 });
-
-export function SlotPreview({
-  name,
-  children,
-}: {
-  name: (typeof slots)[number];
-  children?: ReactNode;
-}) {
-  const { enabled } = useContext(SlotPreviewContext);
-
-  if (!enabled) {
-    return children;
-  }
-
-  return (
-    <div className={styles.slot} data-slot-container={name}>
-      <div className={styles.content}>{children}</div>
-      <span className={styles.marker} data-slot-preview={name}>
-        <span className={styles.label}>{name}</span>
-      </span>
-    </div>
-  );
-}
 
 export function SlotPreviewToggle() {
   if (import.meta.env.SSG_MD) {
@@ -93,13 +41,7 @@ export function SlotPreviewToggle() {
         <rect x="3" y="3" width="18" height="18" rx="3" />
         <path d="M3 9h18M9 9v12" />
       </svg>
-      {enabled
-        ? isZh
-          ? '退出插槽预览'
-          : 'Exit slot preview'
-        : isZh
-          ? '点击查看插槽所在位置'
-          : 'Show slot locations'}
+      {isZh ? '点击查看插槽所在位置' : 'Show slot locations'}
     </button>
   );
 }
@@ -107,32 +49,14 @@ export function SlotPreviewToggle() {
 export function SlotPreviewLayout(props: LayoutProps) {
   const [enabled, setEnabled] = useState(false);
   const isZh = useLang() === 'zh';
-  const previewProps = { ...props };
-
-  if (enabled) {
-    for (const slot of slots) {
-      // These slots are assembled and previewed in the website's custom layouts.
-      if (slot === 'afterFeatures' || slot === 'beforeDocContent') {
-        continue;
-      }
-
-      previewProps[slot] = <SlotPreview name={slot}>{props[slot]}</SlotPreview>;
-    }
-  }
 
   return (
     <SlotPreviewContext.Provider
       value={{ enabled, toggle: () => setEnabled(value => !value) }}
     >
-      <Layout {...previewProps} />
-      <div
-        className={toolbarStyles.stack}
-        style={
-          enabled
-            ? { top: 'auto', bottom: 'max(20px, env(safe-area-inset-bottom))' }
-            : undefined
-        }
-      >
+      <Layout {...props} />
+      {enabled ? <SlotPreviewOverlay /> : null}
+      <div className={toolbarStyles.stack} data-slot-preview-toolbar>
         {enabled ? (
           <FloatingToolbar
             label={isZh ? '插槽预览' : 'Slot preview'}
