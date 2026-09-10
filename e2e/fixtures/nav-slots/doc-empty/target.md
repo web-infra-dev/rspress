@@ -1,3 +1,0 @@
-# Target
-
-Navigation destination.
