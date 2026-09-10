@@ -32,10 +32,22 @@ export class PluginDriver {
 
   haveNavSidebarConfig = false;
 
+  static create(config: UserConfig, isProd: boolean): Promise<PluginDriver>;
+  // TODO: Remove this overload when the legacy (config, configFilePath, isProd) argument format no longer needs compatibility.
+  static create(
+    config: UserConfig,
+    configFilePath: string,
+    isProd: boolean,
+  ): Promise<PluginDriver>;
   static async create(
     config: UserConfig,
-    isProd: boolean,
+    configFilePathOrIsProd: string | boolean,
+    isProd = false,
   ): Promise<PluginDriver> {
+    if (typeof configFilePathOrIsProd === 'boolean') {
+      isProd = configFilePathOrIsProd;
+    }
+
     const pluginDriver = new PluginDriver(config, isProd);
     await pluginDriver.init();
     return pluginDriver;
