@@ -7,6 +7,7 @@ import {
   schemaExample,
 } from '../model';
 import type { OpenAPIDocument, OperationData, Schema } from '../types';
+import { Disclosure } from './Disclosure';
 import { prepareRequest, serverURL, type RequestInput } from './request';
 import { generateSnippet, languages, type Language } from './snippets';
 
@@ -61,34 +62,34 @@ function SchemaView({
         </p>
       )}
       {Object.entries(schema.properties ?? {}).map(([name, property]) => (
-        <details key={name} className="rp-openapi-property">
-          <summary>
-            <code>{name}</code>{' '}
-            {schema.required?.includes(name) && (
-              <span className="rp-openapi-required">required</span>
-            )}
-          </summary>
+        <Disclosure
+          key={name}
+          title={
+            <>
+              <code>{name}</code>{' '}
+              {schema.required?.includes(name) && (
+                <span className="rp-openapi-required">required</span>
+              )}
+            </>
+          }
+        >
           <SchemaView document={document} schema={property} depth={depth + 1} />
-        </details>
+        </Disclosure>
       ))}
       {schema.items && (
-        <details>
-          <summary>Array items</summary>
+        <Disclosure title="Array items">
           <SchemaView
             document={document}
             schema={schema.items}
             depth={depth + 1}
           />
-        </details>
+        </Disclosure>
       )}
       {(['allOf', 'oneOf', 'anyOf'] as const).map(kind =>
         schema[kind]?.map((part, index) => (
-          <details key={`${kind}-${index}`}>
-            <summary>
-              {kind} · {index + 1}
-            </summary>
+          <Disclosure key={`${kind}-${index}`} title={`${kind} · ${index + 1}`}>
             <SchemaView document={document} schema={part} depth={depth + 1} />
-          </details>
+          </Disclosure>
         )),
       )}
     </div>
@@ -291,8 +292,7 @@ function OperationReference({
             {playground && (
               <>
                 {data.parameters.length > 0 && (
-                  <details>
-                    <summary>Parameters</summary>
+                  <Disclosure embedded title="Parameters">
                     <div className="rp-openapi-fields">
                       {data.parameters.map(parameter => (
                         <label key={`${parameter.in}:${parameter.name}`}>
@@ -322,11 +322,10 @@ function OperationReference({
                         </label>
                       ))}
                     </div>
-                  </details>
+                  </Disclosure>
                 )}
                 {data.security.length > 0 && (
-                  <details>
-                    <summary>Authorization</summary>
+                  <Disclosure embedded title="Authorization">
                     <div className="rp-openapi-fields">
                       <select
                         aria-label="Security requirement"
@@ -371,11 +370,10 @@ function OperationReference({
                         username:password.
                       </small>
                     </div>
-                  </details>
+                  </Disclosure>
                 )}
                 {requestBody && (
-                  <details>
-                    <summary>Request body</summary>
+                  <Disclosure embedded title="Request body">
                     <div className="rp-openapi-fields">
                       <select
                         aria-label="Request content type"
@@ -406,7 +404,7 @@ function OperationReference({
                         }
                       />
                     </div>
-                  </details>
+                  </Disclosure>
                 )}
               </>
             )}
@@ -456,22 +454,25 @@ function OperationReference({
               <h2>Request body</h2>
               <p>{requestBody.description}</p>
               {Object.entries(contents).map(([type, media]) => (
-                <details key={type} open>
-                  <summary>{type}</summary>
+                <Disclosure key={type} defaultOpen title={type}>
                   {media.schema && (
                     <SchemaView document={document} schema={media.schema} />
                   )}
-                </details>
+                </Disclosure>
               ))}
             </section>
           )}
           <section>
             <h2>Response body</h2>
             {responses.map(([status, response]) => (
-              <details key={status}>
-                <summary>
-                  <code>{status}</code> {response.description}
-                </summary>
+              <Disclosure
+                key={status}
+                title={
+                  <>
+                    <code>{status}</code> {response.description}
+                  </>
+                }
+              >
                 {Object.entries(response.content ?? {}).map(([type, media]) => (
                   <div key={type}>
                     <p>
@@ -482,7 +483,7 @@ function OperationReference({
                     )}
                   </div>
                 ))}
-              </details>
+              </Disclosure>
             ))}
           </section>
         </div>
@@ -573,10 +574,9 @@ function OperationReference({
                 title={`${result.status} · ${result.elapsed} ms`}
                 text={result.body}
               />
-              <details>
-                <summary>Response headers</summary>
+              <Disclosure embedded title="Response headers">
                 <pre>{result.headers}</pre>
-              </details>
+              </Disclosure>
             </div>
           )}
         </aside>
