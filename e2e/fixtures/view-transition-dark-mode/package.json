@@ -1,5 +1,5 @@
 {
-  "name": "rspress-doc-template",
+  "name": "@rspress-fixture/view-transition-dark-mode",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -9,14 +9,13 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.21"
+    "@rspress/core": "workspace:*",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.7",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "typescript": "^6.0.3"
+    "@types/react-dom": "^19.2.7"
   }
 }

@@ -1,0 +1,43 @@
+---
+description: Reproduce and compare Rspress and native View Transition dark mode animations across viewport sizes and device pixel ratios
+---
+
+import { CoordinateReadout } from '../src/CoordinateReadout';
+
+# Rspress appearance transition
+
+This page only enables `themeConfig.enableAppearanceAnimation`. Use the
+appearance button in the upper-right corner and check whether the circle is
+centered on the pointer.
+
+<CoordinateReadout />
+
+## Compare with the browser baseline
+
+Open <a href="/native.html">the native View Transition version</a> in the same
+browser, at the same window size and zoom level. It uses percentage coordinates
+relative to the View Transition snapshot, without Rspress or React.
+
+## Things to compare
+
+- The circle center should match the appearance button that was clicked.
+- Browser zoom and device pixel ratio should not move the center.
+- Resizing the window should only change the final radius.
+
+### Content block
+
+This section makes the light/dark boundary easier to see while the transition
+is running.
+
+```ts
+const center = { x: event.clientX, y: event.clientY };
+const radius = Math.hypot(
+  Math.max(center.x, innerWidth - center.x + 200),
+  Math.max(center.y, innerHeight - center.y + 200),
+);
+const normalizedDiagonal = Math.hypot(innerWidth, innerHeight) / Math.SQRT2;
+
+const clipPath = `circle(${(radius / normalizedDiagonal) * 100}% at ${
+  (center.x / innerWidth) * 100
+}% ${(center.y / innerHeight) * 100}%)`;
+```

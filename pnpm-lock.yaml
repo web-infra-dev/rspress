@@ -18,14 +18,14 @@ importers:
         specifier: workspace:*
         version: link:scripts/config
       '@rstest/adapter-rslib':
-        specifier: 0.11.9
-        version: 0.11.9(@rslib/core@1.0.0(@microsoft/api-extractor@7.59.0(@types/node@22.19.15))(typescript@7.0.2))(@rstest/core@0.11.12)(typescript@7.0.2)
+        specifier: 0.11.12
+        version: 0.11.12(@rslib/core@1.0.0(@microsoft/api-extractor@7.59.0(@types/node@22.19.15))(typescript@7.0.2))(@rstest/core@0.11.12)(typescript@7.0.2)
       '@rstest/core':
-        specifier: ^0.11.9
+        specifier: ^0.11.12
         version: 0.11.12
       '@rstest/playwright':
-        specifier: ^0.11.9
-        version: 0.11.9(@rstest/core@0.11.12)(playwright@1.62.1)
+        specifier: ^0.11.12
+        version: 0.11.12(@rstest/core@0.11.12)(playwright@1.62.1)
       '@types/cross-spawn':
         specifier: ^6.0.6
         version: 6.0.6
@@ -1793,6 +1793,28 @@ importers:
         specifier: ^19.2.7
         version: 19.2.7(@types/react@19.2.18)
 
+  e2e/fixtures/view-transition-dark-mode:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.8.1
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.18
+        version: 19.2.18
+      '@types/react-dom':
+        specifier: ^19.2.7
+        version: 19.2.7(@types/react@19.2.18)
+
   e2e/fixtures/with-base:
     dependencies:
       react:
@@ -2011,8 +2033,8 @@ importers:
   packages/create-rspress:
     dependencies:
       '@rstackjs/create-toolkit':
-        specifier: 2.2.4
-        version: 2.2.4
+        specifier: 2.2.6
+        version: 2.2.6
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.59.0
@@ -2456,8 +2478,8 @@ importers:
         specifier: 0.28.20
         version: 0.28.20(typescript@6.0.3)
       typedoc-plugin-markdown:
-        specifier: 4.12.0
-        version: 4.12.0(typedoc@0.28.20(typescript@6.0.3))
+        specifier: 4.13.0
+        version: 4.13.0(typedoc@0.28.20(typescript@6.0.3))
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.59.0
@@ -4162,12 +4184,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rstackjs/create-toolkit@2.2.4':
-    resolution: {integrity: sha512-YVnA9aTZKPTql8Hzyf9o5chWAICNJ46CYoPwADrSObyBxF1jlvB5gO5M+yXYoZT/VNWh1Abm0TvTtmAh4EeT3A==}
+  '@rstackjs/create-toolkit@2.2.6':
+    resolution: {integrity: sha512-kBJ6btUXKpJEqq1c6sSCfukjb2NK4zWpl3sKj4pk91cdI6L5If7NFaov6RRpTP/EuVW37wkVV5FlXJKZQPEC3Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  '@rstest/adapter-rslib@0.11.9':
-    resolution: {integrity: sha512-qdkgl3bxgb1twAEAcNK1yB+ZoheGAlQd1O1Ziuk+AtTQxqPZN82y5dctlMn/gsbNHZxezMWs+5i+xWHJC9iMGg==}
+  '@rstest/adapter-rslib@0.11.12':
+    resolution: {integrity: sha512-YIJ+4uTmTYCPWtsoePZ9nTsA9j0OVa24sM0nvwWig4inhKJi50Aa7+yd//N9CtQ0Gc608BJ5S5fo9w/DfCSWYA==}
     peerDependencies:
       '@rslib/core': '>=0.18.6 || ^1.0.0-0'
       '@rstest/core': ^0.11.0
@@ -4189,8 +4211,8 @@ packages:
       jsdom:
         optional: true
 
-  '@rstest/playwright@0.11.9':
-    resolution: {integrity: sha512-Dseeyu/RRAp0g/N+e7QOG3WUTX34igyZPEW/xWUhzW4x+ELEPTwxWqsX3YNKvgVUH9V0aSeDQqyn2CMgtpfbeA==}
+  '@rstest/playwright@0.11.12':
+    resolution: {integrity: sha512-fU9BjRnCTsJNw2oEOY1aq/ozSt5gGuZMW6NwVHZrdxmi/uwypoYIcWSAE/kWukRzAazaSdO+wYZ4fB2IC8kLCA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@rstest/core': ^0.11.9
@@ -7884,8 +7906,8 @@ packages:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
 
-  typedoc-plugin-markdown@4.12.0:
-    resolution: {integrity: sha512-eJDEMAfxCmede22c/Jw7d0FA13ggAQv+KkwQYKYCdqI02cin6Rc9QRwbG/7XvvHWinuFejySnZVUWDtvGk3Vbg==}
+  typedoc-plugin-markdown@4.13.0:
+    resolution: {integrity: sha512-OHaOLoMTS0wL2ud73WXvxv486mrUEtgXxW4iKiTOGJVipT/VBWY76rlVRMQGes7aVonoIf5roWRe1UvHbufLlQ==}
     engines: {node: '>= 18'}
     peerDependencies:
       typedoc: 0.28.x
@@ -9694,9 +9716,9 @@ snapshots:
   '@rstackjs/cli-win32-x64-msvc@0.7.3':
     optional: true
 
-  '@rstackjs/create-toolkit@2.2.4': {}
+  '@rstackjs/create-toolkit@2.2.6': {}
 
-  '@rstest/adapter-rslib@0.11.9(@rslib/core@1.0.0(@microsoft/api-extractor@7.59.0(@types/node@22.19.15))(typescript@7.0.2))(@rstest/core@0.11.12)(typescript@7.0.2)':
+  '@rstest/adapter-rslib@0.11.12(@rslib/core@1.0.0(@microsoft/api-extractor@7.59.0(@types/node@22.19.15))(typescript@7.0.2))(@rstest/core@0.11.12)(typescript@7.0.2)':
     dependencies:
       '@rslib/core': 1.0.0(@microsoft/api-extractor@7.59.0(@types/node@22.19.15))(typescript@7.0.2)
       '@rstest/core': 0.11.12
@@ -9711,7 +9733,7 @@ snapshots:
       - '@module-federation/runtime-tools'
       - core-js
 
-  '@rstest/playwright@0.11.9(@rstest/core@0.11.12)(playwright@1.62.1)':
+  '@rstest/playwright@0.11.12(@rstest/core@0.11.12)(playwright@1.62.1)':
     dependencies:
       '@rstest/core': 0.11.12
       playwright: 1.62.1
@@ -14429,7 +14451,7 @@ snapshots:
 
   type-fest@4.41.0: {}
 
-  typedoc-plugin-markdown@4.12.0(typedoc@0.28.20(typescript@6.0.3)):
+  typedoc-plugin-markdown@4.13.0(typedoc@0.28.20(typescript@6.0.3)):
     dependencies:
       typedoc: 0.28.20(typescript@6.0.3)
 
