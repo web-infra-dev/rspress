@@ -62,6 +62,14 @@ test.describe('Navigation slots', () => {
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
+    await page.addInitScript(() => {
+      // Safari 15.3 and older do not provide this ES2023 method.
+      Object.defineProperty(Array.prototype, 'findLastIndex', {
+        value: undefined,
+        configurable: true,
+        writable: true,
+      });
+    });
     await page.goto(`http://localhost:${appPort}/`);
     await expect(page.locator('.rp-nav-menu--left')).toBeHidden();
     await expect(page.locator('.rp-nav-menu--right')).toBeHidden();

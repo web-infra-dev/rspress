@@ -11,10 +11,19 @@ export function NavScreenMenu({
   beforeRightNavItems,
   afterRightNavItems,
 }: { menuItems: NavItem[] } & NavItemsSlots) {
-  const firstLeft = menuItems.findIndex(item => item.position === 'left');
-  const lastLeft = menuItems.findLastIndex(item => item.position === 'left');
-  const firstRight = menuItems.findIndex(item => item.position !== 'left');
-  const lastRight = menuItems.findLastIndex(item => item.position !== 'left');
+  let firstLeft = -1;
+  let lastLeft = -1;
+  let firstRight = -1;
+  let lastRight = -1;
+  menuItems.forEach((item, index) => {
+    if (item.position === 'left') {
+      if (firstLeft === -1) firstLeft = index;
+      lastLeft = index;
+    } else {
+      if (firstRight === -1) firstRight = index;
+      lastRight = index;
+    }
+  });
 
   return (
     <>
