@@ -21,7 +21,7 @@ define.lib({
         distPath: {
           root: 'dist/cli',
         },
-        externals: ['@types/react', 'rspress'],
+        externals: ['@types/react'],
       },
       syntax: 'es2023',
       dts: {
@@ -35,7 +35,7 @@ define.lib({
       },
       plugins: [pluginReact()],
       output: {
-        externals: ['@types/react', 'rspress'],
+        externals: ['@types/react'],
         distPath: {
           root: 'dist/web',
         },
