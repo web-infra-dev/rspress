@@ -86,6 +86,7 @@
   position: sticky;
   top: calc(var(--rp-nav-height, 72px) + 24px);
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
 }
 .rp-openapi-panel,
