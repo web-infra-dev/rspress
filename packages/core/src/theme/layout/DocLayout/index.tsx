@@ -42,6 +42,16 @@ export function DocLayout(props: DocLayoutProps) {
   } = props;
   const { frontmatter } = useFrontmatter();
 
+  const {
+    isOutlineOpen,
+    isSidebarOpen,
+    sidebarMenu,
+    asideLayoutRef,
+    sidebarLayoutRef,
+  } = useSidebarMenu(beforeOutline, afterOutline);
+
+  const { rspressDocRef } = useWatchToc();
+
   const isOverviewPage = frontmatter?.overview ?? false;
 
   const sidebar = frontmatter?.sidebar ?? true;
@@ -72,16 +82,6 @@ export function DocLayout(props: DocLayoutProps) {
   }
 
   const isDocWide = pageType === 'doc-wide';
-
-  const {
-    isOutlineOpen,
-    isSidebarOpen,
-    sidebarMenu,
-    asideLayoutRef,
-    sidebarLayoutRef,
-  } = useSidebarMenu(beforeOutline, afterOutline);
-
-  const { rspressDocRef } = useWatchToc();
 
   return (
     <>
