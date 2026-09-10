@@ -1,0 +1,212 @@
+{/* cspell:ignore getallplanets */}
+
+# @rspress/plugin-openapi <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-openapi" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+Turn an OpenAPI description into Rspress API reference pages. Each operation gets its own page where readers can explore parameters, request bodies and response schemas, copy request examples, or fill in inputs and click **Send** to call the API.
+
+The plugin uses Rspress's sidebar, Tabs and code blocks, with dark mode and mobile support. Use it to document HTTP APIs. For TypeScript module documentation, use [plugin-typedoc](./typedoc).
+
+## Installation
+
+Requires Node.js 22.12.0 or later.
+
+<PackageManagerTabs command="add @rspress/plugin-openapi -D" />
+
+## Generate your first API reference
+
+### Prepare an OpenAPI file
+
+Create `openapi.yaml` in your project root. This example describes an endpoint that lists planets:
+
+```yaml title="openapi.yaml"
+openapi: 3.1.0
+info:
+  title: Planets API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /planets:
+    get:
+      operationId: getAllPlanets
+      summary: Get all planets
+      description: List planets, using limit to control the number of results.
+      tags:
+        - Planets
+      parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results.
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+              example:
+                - name: Mars
+                - name: Earth
+```
+
+`https://api.example.com` is a placeholder. Replace `servers[].url` with your API's address before trying Send.
+
+### Register the plugin
+
+Register the plugin in `rspress.config.ts` and add a navigation link to an operation page:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginOpenAPI } from '@rspress/plugin-openapi';
+
+export default defineConfig({
+  root: 'docs',
+  plugins: [
+    pluginOpenAPI({
+      input: './openapi.yaml',
+      routePrefix: '/api',
+    }),
+  ],
+  themeConfig: {
+    nav: [{ text: 'API', link: '/api/getallplanets' }],
+  },
+});
+```
+
+Start Rspress and open `/api/getallplanets`. The sidebar shows a **Planets** section header followed by a **Get all planets** link with a green **GET** badge.
+
+Pages are generated when Rspress starts or builds. You do not need to create MDX files or `_meta.json`, and generated content is not written into your `docs` source directory. Restart the development server after changing the specification or any referenced files.
+
+## Organize pages and navigation
+
+| OpenAPI field          | Use in the documentation                                             |
+| ---------------------- | -------------------------------------------------------------------- |
+| `operationId`          | Page path: `getAllPlanets` becomes `/api/getallplanets`              |
+| `summary`              | Page title and sidebar link text; falls back to the operation ID     |
+| `description`          | Explanatory text for an operation or field                           |
+| `tags[0]`              | Sidebar section header; falls back to `info.title`                   |
+| HTTP method            | Colored endpoint and sidebar badges, such as green GET and blue POST |
+| `example` / `examples` | Request or response sample content                                   |
+
+Each operation generates one page. Without `operationId`, the plugin derives an identifier from the method and path: `GET /planets` becomes `/api/get-planets`. Identifiers are lowercased and characters unsuitable for URLs are replaced with hyphens. Duplicate identifiers or conflicting generated paths fail the build.
+
+`routePrefix` sets the page URL prefix; it does not generate an `/api` overview page. Link navigation to a specific operation. If your site uses `base`, do not include it again in `routePrefix`.
+
+To choose your own sidebar order, disable the generated sidebar and configure `themeConfig.sidebar`:
+
+```ts
+pluginOpenAPI({
+  input: './openapi.yaml',
+  sidebar: false,
+});
+```
+
+```ts
+// Inside themeConfig in rspress.config.ts
+sidebar: {
+  '/api/': [
+    { sectionHeaderText: 'Planets' },
+    { text: 'Get all planets', link: '/api/getallplanets', tag: 'GET' },
+  ],
+},
+```
+
+When automatic sidebar generation is enabled, the plugin replaces the sidebar entry for `routePrefix` and preserves entries for other paths.
+
+## Load a remote specification
+
+You can also pass an HTTP(S) URL as `input`:
+
+```ts
+pluginOpenAPI({
+  input: 'https://api.example.com/openapi.yaml',
+  routePrefix: '/api',
+});
+```
+
+The URL and any external files referenced with `$ref` must be accessible when Rspress starts or builds. Relative server URLs in remote specifications are resolved against the specification's URL.
+
+To load a specification from a local service or private network, set `allowPrivateUrls: true`:
+
+```ts
+pluginOpenAPI({
+  input: 'http://localhost:3000/openapi.json',
+  allowPrivateUrls: true,
+});
+```
+
+This option controls specification loading. It does not configure a proxy for Send or bypass CORS. `input` also accepts an OpenAPI 3 document object, for example when importing existing JSON data in your configuration.
+
+## Try an API request
+
+1. Check or edit the API address in **Server URL**.
+2. Expand **Parameters** and fill in path, query or header values. Use JSON for arrays and objects, such as `["red", "blue"]`.
+3. If the operation requires authentication, expand **Authorization** and enter credentials.
+4. If the operation accepts a body, expand **Request body**, choose a content type and edit the content.
+5. Click **Send** to inspect the actual response status, elapsed time, body and browser-accessible headers.
+
+Click **Cancel** to stop a pending request. Requests time out after 30 seconds. **Response example** on the right comes from the specification; actual request results appear separately.
+
+Request examples are available for cURL, JavaScript, Go, Python, Java, C# and Rust. Switch tabs to view a language and use the code block's copy button. Once the required parameters, credentials and body are filled in, examples update with your inputs.
+
+### Authentication
+
+| Scheme                 | What to enter                                                          |
+| ---------------------- | ---------------------------------------------------------------------- |
+| API key                | The key value; header and query locations are supported                |
+| Bearer                 | The token, without the `Bearer ` prefix                                |
+| Basic                  | `username:password`                                                    |
+| OAuth / OpenID Connect | An existing access token; login and token acquisition are not provided |
+
+Credentials remain in the current page's memory and are not persisted. If the operation declares alternative security requirements, select one. All credentials within the selected requirement must be supplied together.
+
+### Show documentation without send
+
+Disable the request editor and Send button while keeping reference content and code examples:
+
+```ts
+pluginOpenAPI({
+  input: './openapi.yaml',
+  playground: false,
+});
+```
+
+## Options
+
+| Option             | Type                        | Default  | Description                                                                                                                         |
+| ------------------ | --------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `input`            | `string \| OpenAPIDocument` | Required | JSON/YAML path, HTTP(S) URL or OpenAPI 3 document object; relative file paths resolve from the working directory where Rspress runs |
+| `routePrefix`      | `string`                    | `'/api'` | URL prefix for generated pages                                                                                                      |
+| `sidebar`          | `boolean`                   | `true`   | Generate sidebar section headers and operation links                                                                                |
+| `playground`       | `boolean`                   | `true`   | Show request inputs and the Send button                                                                                             |
+| `allowPrivateUrls` | `boolean`                   | `false`  | Allow loading specifications from localhost or private network URLs                                                                 |
+
+## Troubleshooting and current limitations
+
+### Send reports a network error
+
+Send calls the API directly from the reader's browser. Check the Server URL and network connection, and ensure that the API allows the documentation site's origin through CORS. The plugin does not provide a proxy or send browser cookies. These requirements also apply when you deploy the documentation as a static site.
+
+### Supported specifications and request formats
+
+OpenAPI 3.0 and 3.1 JSON/YAML specifications are supported, along with conversion of Swagger 2.0 files. OpenAPI 3.2, webhooks and callbacks are not supported yet.
+
+The playground supports JSON, plain text and URL-encoded request bodies. Supported parameter styles include `simple` path parameters, `form` and `deepObject` query parameters, and space- or pipe-delimited query arrays. File uploads, cookie authentication and other serialization styles are not currently supported; unsupported formats produce an error.
+
+### Descriptions do not render Markdown formatting
+
+Descriptions currently render as plain text. Markdown, HTML and MDX inside descriptions are not interpreted.
+
+### Generated examples do not match business constraints
+
+Synthesized examples are illustrative and are not guaranteed to satisfy every schema constraint. Provide explicit `example` or `examples` values in your specification when possible. Recursive schema display and example generation have depth limits. Large specifications also increase generated page data size.
