@@ -119,7 +119,7 @@ export * from '@rspress/core/theme-original';
 
 These slots are inside the existing `<ul>`, before its first item or after its last item. `NavList` renders `<li>` elements directly, sharing the existing menu spacing.
 
-Use `beforeLeftNavItems`, `afterLeftNavItems`, `beforeRightNavItems`, and `afterRightNavItems` to insert custom navigation content. With [NavList](./nav-list), the same `items` automatically render as a horizontal desktop menu or a vertical list in the expanded mobile menu, without checking the viewport width.
+Use `beforeLeftNavItems`, `afterLeftNavItems`, `beforeRightNavItems`, and `afterRightNavItems` to insert custom navigation content. With `NavList`, the same `items` automatically render as a horizontal desktop menu or a vertical list in the expanded mobile menu, without checking the viewport width.
 
 The preview also includes these four slots. On mobile, open the navigation menu to see their positions.
 
@@ -140,3 +140,7 @@ export function Layout() {
 
 export * from '@rspress/core/theme-original';
 ```
+
+`NavList` requires an `items` prop of type `NavItem[]`, using the same structure as [`themeConfig.nav`](/api/config/config-theme#nav). It supports links and nested menus. The slot determines placement; `position` on these items does not filter or move them.
+
+The mobile menu preserves the configured item order. Slots appear before the first or after the last item with the corresponding position. If that position has no items, left slots appear at the beginning and right slots at the end. For custom content instead of `NavList`, use `<li>` elements on desktop and handle the mobile presentation yourself.
