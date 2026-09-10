@@ -53,7 +53,19 @@ export function SlotPreview({
   return (
     <div className={styles.slot} data-slot-container={name}>
       <div className={styles.content}>{children}</div>
-      <span className={styles.marker} data-slot-preview={name}>
+      <span
+        className={styles.marker}
+        data-slot-preview={name}
+        tabIndex={
+          name.endsWith('NavTitle') ||
+          name.endsWith('NavMenu') ||
+          name === 'navTitle'
+            ? 0
+            : undefined
+        }
+        role="img"
+        aria-label={name}
+      >
         <span className={styles.label}>{name}</span>
       </span>
     </div>

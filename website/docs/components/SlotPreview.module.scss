@@ -1,6 +1,35 @@
+@mixin nav-label {
+  > .label {
+    display: var(--nav-slot-label-display, none);
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    padding: 4px 8px;
+    border: 1px solid var(--rp-c-brand);
+    border-radius: 4px;
+    background: var(--rp-c-bg);
+    color: var(--rp-c-text-1);
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  &[data-slot-preview='afterNavMenu'] > .label {
+    right: 0;
+    left: auto;
+  }
+}
+
 .slot {
   position: relative;
   display: flow-root;
+
+  &:hover,
+  &:focus-within {
+    --nav-slot-label-display: block;
+  }
 
   // Keep the content's own layout, including components that render nothing.
   > .content {
@@ -58,12 +87,12 @@
       [data-slot-preview$='NavMenu'],
       [data-slot-preview='navTitle']
     ) {
-      align-items: center;
+      inset: 0 auto 0 50%;
+      width: 24px;
+      height: 100%;
+      transform: translateX(-50%);
 
-      > .label {
-        position: static;
-        background: transparent;
-      }
+      @include nav-label;
     }
   }
 }
@@ -88,10 +117,19 @@
     [data-slot-preview='navTitle']
   ) {
     flex-shrink: 0;
-    max-width: 64px;
+    position: relative;
+    box-sizing: border-box;
+    width: 24px;
+    height: 40px;
     padding: 4px;
     margin: 2px;
     font-size: 10px;
+
+    &[data-slot-preview='navTitle'] {
+      height: 25px;
+    }
+
+    @include nav-label;
   }
 }
 
