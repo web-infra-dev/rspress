@@ -19,7 +19,10 @@ describe('OpenAPI page generation', () => {
       true,
     );
     expect(config.themeConfig!.sidebar!['/guide/']).toHaveLength(1);
-    expect(config.themeConfig!.sidebar!['/api/']).toHaveLength(1);
+    expect(config.themeConfig!.sidebar!['/api/']).toHaveLength(4);
+    expect(config.themeConfig!.sidebar!['/api/'][0]).toEqual({
+      sectionHeaderText: 'Planets',
+    });
     const pages = await plugin.addPages!({}, true);
     expect(pages).toHaveLength(3);
     expect(pages[0].routePath).toBe('/api/getallplanets');

@@ -1,6 +1,71 @@
+:root {
+  --rp-openapi-get: #16804a;
+  --rp-openapi-post: #2563eb;
+  --rp-openapi-put: #a66900;
+  --rp-openapi-patch: #8b5cf6;
+  --rp-openapi-delete: #dc3545;
+  --rp-openapi-options: #087f8c;
+  --rp-openapi-head: #64748b;
+  --rp-openapi-trace: #a54b94;
+}
+.dark {
+  --rp-openapi-get: #50ce8e;
+  --rp-openapi-post: #7aa7ff;
+  --rp-openapi-put: #e9b949;
+  --rp-openapi-patch: #b69aff;
+  --rp-openapi-delete: #ff818c;
+  --rp-openapi-options: #57cbd6;
+  --rp-openapi-head: #a5b4c8;
+  --rp-openapi-trace: #e293d2;
+}
+.rp-sidebar-item .rp-badge[data-text='GET'],
+.rp-openapi-get {
+  --method-color: var(--rp-openapi-get);
+}
+.rp-sidebar-item .rp-badge[data-text='POST'],
+.rp-openapi-post {
+  --method-color: var(--rp-openapi-post);
+}
+.rp-sidebar-item .rp-badge[data-text='PUT'],
+.rp-openapi-put {
+  --method-color: var(--rp-openapi-put);
+}
+.rp-sidebar-item .rp-badge[data-text='PATCH'],
+.rp-openapi-patch {
+  --method-color: var(--rp-openapi-patch);
+}
+.rp-sidebar-item .rp-badge[data-text='DELETE'],
+.rp-openapi-delete {
+  --method-color: var(--rp-openapi-delete);
+}
+.rp-sidebar-item .rp-badge[data-text='OPTIONS'],
+.rp-openapi-options {
+  --method-color: var(--rp-openapi-options);
+}
+.rp-sidebar-item .rp-badge[data-text='HEAD'],
+.rp-openapi-head {
+  --method-color: var(--rp-openapi-head);
+}
+.rp-sidebar-item .rp-badge[data-text='TRACE'],
+.rp-openapi-trace {
+  --method-color: var(--rp-openapi-trace);
+}
+.rp-sidebar-item .rp-badge[data-text='GET'],
+.rp-sidebar-item .rp-badge[data-text='POST'],
+.rp-sidebar-item .rp-badge[data-text='PUT'],
+.rp-sidebar-item .rp-badge[data-text='PATCH'],
+.rp-sidebar-item .rp-badge[data-text='DELETE'],
+.rp-sidebar-item .rp-badge[data-text='OPTIONS'],
+.rp-sidebar-item .rp-badge[data-text='HEAD'],
+.rp-sidebar-item .rp-badge[data-text='TRACE'],
+.rp-openapi-method {
+  color: var(--method-color);
+  background: color-mix(in srgb, var(--method-color) 10%, transparent);
+  font-family: var(--rp-font-family-mono);
+  font-weight: 600;
+}
 .rp-openapi {
-  --oa-border: var(--rp-c-divider);
-  --oa-bg: var(--rp-c-bg-soft);
+  --oa-border: var(--rp-c-divider-light);
   color: var(--rp-c-text-1);
   width: 100%;
 }
@@ -9,7 +74,7 @@
 }
 .rp-openapi-columns {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+  grid-template-columns: minmax(0, 1.4fr) minmax(300px, 1fr);
   gap: 28px;
   align-items: start;
 }
@@ -21,17 +86,15 @@
   position: sticky;
   top: calc(var(--rp-nav-height, 72px) + 24px);
   display: grid;
-  gap: 20px;
+  gap: 24px;
 }
 .rp-openapi-panel,
 .rp-openapi-playground {
-  border: 1px solid var(--oa-border);
-  border-radius: 14px;
-  background: var(--oa-bg);
+  border: var(--rp-code-block-border);
+  border-radius: var(--rp-radius);
+  background: var(--rp-c-bg);
   overflow: hidden;
-}
-.rp-openapi-playground {
-  box-shadow: 0 3px 6px rgb(0 0 0 / 5%);
+  box-shadow: var(--rp-code-block-shadow);
 }
 .rp-openapi-server {
   display: flex;
@@ -39,7 +102,9 @@
   gap: 12px;
   padding: 12px 16px;
   border-bottom: 1px solid var(--oa-border);
+  background: var(--rp-code-title-bg);
   font-size: 13px;
+  font-weight: 500;
   white-space: nowrap;
 }
 .rp-openapi input,
@@ -48,7 +113,7 @@
   background: var(--rp-c-bg);
   color: var(--rp-c-text-1);
   border: 1px solid var(--oa-border);
-  border-radius: 6px;
+  border-radius: var(--rp-radius-small);
   padding: 8px 10px;
   font: inherit;
   min-width: 0;
@@ -66,6 +131,14 @@
   width: 0;
   font-family: var(--rp-font-family-mono);
   font-size: 13px;
+  border-color: transparent;
+  background: transparent;
+  padding: 5px 8px;
+}
+.rp-openapi-server input:hover,
+.rp-openapi-server input:focus {
+  background: var(--rp-c-bg);
+  border-color: var(--oa-border);
 }
 .rp-openapi-endpoint {
   display: flex;
@@ -74,44 +147,50 @@
   padding: 16px;
   overflow-wrap: anywhere;
 }
+.rp-openapi .rp-openapi-endpoint > code {
+  background: transparent;
+  padding: 0;
+  color: var(--rp-c-text-1);
+  font-size: 14px;
+}
 .rp-openapi-method {
-  font: 600 13px var(--rp-font-family-mono);
-  color: var(--rp-c-brand);
-}
-.rp-openapi-get {
-  color: #159957;
-}
-.rp-openapi-post {
-  color: #487bff;
-}
-.rp-openapi-delete {
-  color: #e5484d;
-}
-.rp-openapi-put,
-.rp-openapi-patch {
-  color: #b88700;
+  font-size: 12px;
+  padding: 4px 7px;
+  border-radius: var(--rp-radius-small);
 }
 .rp-openapi button {
   cursor: pointer;
   font: inherit;
 }
-.rp-openapi-send {
+.rp-openapi .rp-openapi-send {
   margin-left: auto;
   background: var(--rp-c-brand);
-  color: var(--rp-c-bg);
+  color: #fff;
   border: none;
-  padding: 7px 16px;
-  border-radius: 7px;
+  padding: 7px 18px;
+  border-radius: var(--rp-radius-small);
+  font-size: 13px;
   font-weight: 600;
+  transition: opacity 0.2s;
+}
+.rp-openapi-send:hover {
+  opacity: 0.85;
 }
 .rp-openapi summary {
   cursor: pointer;
   padding: 12px 0;
   font-size: 14px;
 }
-.rp-openapi-playground > details {
+.rp-openapi .rp-openapi-playground > details {
+  margin: 0;
   padding: 0 16px;
+  border: none;
   border-top: 1px solid var(--oa-border);
+  border-radius: 0;
+  background: transparent;
+}
+.rp-openapi-playground > details > summary {
+  font-weight: 500;
 }
 .rp-openapi-fields {
   display: grid;
@@ -132,110 +211,126 @@
   font-family: var(--rp-font-family-mono);
   font-size: 13px;
 }
-.rp-openapi-description {
-  margin: 24px 0 40px;
+.rp-openapi .rp-openapi-description {
+  margin: 24px 0 32px;
   white-space: pre-wrap;
+  line-height: 1.75;
 }
-.rp-openapi-main h2 {
-  margin-top: 40px;
-  font-size: 22px;
+.rp-openapi .rp-openapi-main h2 {
+  margin: 32px 0 16px;
+  padding: 0;
+  font-size: 21px;
   border: none;
 }
 .rp-openapi-parameter {
-  padding: 16px 0;
+  padding: 18px 0;
   border-bottom: 1px solid var(--oa-border);
 }
-.rp-openapi-parameter h3 {
+.rp-openapi .rp-openapi-parameter h3 {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 0;
-  font-size: 16px;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 0;
+  font-size: 15px;
+}
+.rp-openapi .rp-openapi-parameter h3 code {
+  color: var(--rp-c-text-1);
+  background: transparent;
+  padding: 0;
+}
+.rp-openapi .rp-openapi-parameter > p {
+  margin: 8px 0;
+  color: var(--rp-c-text-2);
+  font-size: 14px;
 }
 .rp-openapi-schema {
   padding: 8px 0 8px 12px;
   border-left: 1px solid var(--oa-border);
-  font-size: 14px;
+  font-size: 13px;
   overflow-wrap: anywhere;
 }
-.rp-openapi-schema p {
-  margin: 8px 0;
+.rp-openapi-parameter > .rp-openapi-schema {
+  border: none;
+  padding: 4px 0;
+  color: var(--rp-c-text-2);
+}
+.rp-openapi .rp-openapi-schema p {
+  margin: 6px 0;
 }
 .rp-openapi-property {
   margin: 5px 0;
 }
 .rp-openapi-chip {
   border: 1px solid var(--oa-border);
-  border-radius: 5px;
+  border-radius: var(--rp-radius-small);
   padding: 2px 6px;
   margin-left: 8px;
   font-size: 12px;
 }
 .rp-openapi-required {
-  color: #d35050;
+  color: var(--rp-openapi-delete);
   font-size: 12px;
   margin-left: 8px;
 }
-.rp-openapi-tabs {
-  display: flex;
-  overflow-x: auto;
-  border-bottom: 1px solid var(--oa-border);
-}
-.rp-openapi-tabs button {
-  padding: 10px 12px;
-  white-space: nowrap;
-  border: none;
-  border-bottom: 2px solid transparent;
-  color: var(--rp-c-text-2);
-  background: transparent;
-  font-size: 13px;
-}
-.rp-openapi-tabs button[aria-pressed='true'] {
-  color: var(--rp-c-brand);
-  border-bottom-color: var(--rp-c-brand);
-}
-.rp-openapi-tabs select {
-  margin-left: auto;
-  font-size: 11px;
-  max-width: 160px;
-  border: none;
-  background: transparent;
-}
-.rp-openapi-code-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 12px 0;
-  font-size: 12px;
-  color: var(--rp-c-text-2);
-}
-.rp-openapi-code-heading button {
-  background: transparent;
-  border: none;
-  color: inherit;
-  padding: 3px 5px;
-}
-.rp-openapi-code pre,
-.rp-openapi-panel pre {
+.rp-openapi .rp-openapi-samples {
   margin: 0;
-  padding: 16px;
-  max-height: 480px;
-  overflow: auto;
-  background: transparent;
-  font-size: 12px;
-  line-height: 1.7;
 }
-.rp-openapi-code pre code {
+.rp-openapi .rp-openapi-tab-label {
+  display: block;
   padding: 0;
   background: transparent;
-  font-size: inherit;
+  border: 0;
+  color: inherit;
+  font: inherit;
+}
+.rp-openapi-samples > .rp-tabs__label {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.rp-openapi-samples .rp-tabs__label__item {
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+.rp-openapi-samples > .rp-tabs__content > .rp-tabs__content__item {
+  padding: 0;
+}
+.rp-openapi .rp-openapi-code > .rp-codeblock {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+.rp-openapi-code .rp-codeblock__content__scroll-container {
+  max-height: 480px;
+}
+.rp-openapi-response-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--oa-border);
+  color: var(--rp-c-text-2);
+  font-size: 12px;
+}
+.rp-openapi-response-meta select {
+  padding: 4px;
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  max-width: 65%;
 }
 .rp-openapi-panel > details {
   padding: 0 16px;
 }
+.rp-openapi-panel > details pre {
+  overflow: auto;
+  font-size: 12px;
+}
 .rp-openapi-error {
   padding: 0 16px;
-  color: #d35050;
+  color: var(--rp-openapi-delete);
   font-size: 13px;
 }
 @media (max-width: 1100px) {
@@ -245,4 +340,8 @@
   .rp-openapi-examples {
     position: static;
   }
+}
+
+.rp-openapi .rp-openapi-main h2::before {
+  display: none;
 }

@@ -105,7 +105,10 @@ export function pluginOpenAPI(options: PluginOpenAPIOptions): RspressPlugin {
         config.themeConfig ??= {};
         config.themeConfig.sidebar = {
           ...config.themeConfig.sidebar,
-          [`${prefix}/`]: [...groups].map(([text, items]) => ({ text, items })),
+          [`${prefix}/`]: [...groups].flatMap(([text, items]) => [
+            { sectionHeaderText: text },
+            ...items,
+          ]),
         };
       }
       return config;

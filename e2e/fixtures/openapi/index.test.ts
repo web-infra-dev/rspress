@@ -37,6 +37,39 @@ test.describe('OpenAPI plugin', () => {
     await page.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(page.getByRole('status')).toContainText('Earth');
   });
+  test('uses native tabs, section headers and distinct method colors in both themes', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/api/getallplanets`);
+    await expect(page.locator('.rp-sidebar-section-header')).toHaveText(
+      'Planets',
+    );
+    await expect(page.locator('.rp-openapi-examples > .rp-tabs')).toHaveCount(
+      2,
+    );
+    for (const theme of ['light', 'dark'] as const) {
+      await page.emulateMedia({ colorScheme: theme });
+      const get = page
+        .locator('.rp-sidebar-item .rp-badge[data-text="GET"]')
+        .first();
+      const post = page
+        .locator('.rp-sidebar-item .rp-badge[data-text="POST"]')
+        .first();
+      await expect(get).toBeVisible();
+      const getColor = await get.evaluate(
+        element => getComputedStyle(element).color,
+      );
+      const postColor = await post.evaluate(
+        element => getComputedStyle(element).color,
+      );
+      expect(getColor).not.toBe(postColor);
+    }
+    await page.goto(`http://localhost:${appPort}/api/getplanet`);
+    await page.getByRole('button', { name: '404', exact: true }).click();
+    await expect(page.locator('.rp-openapi-samples').last()).toContainText(
+      'No response body',
+    );
+  });
   test('shows request failures and stays within the viewport on mobile', async ({
     page,
   }) => {

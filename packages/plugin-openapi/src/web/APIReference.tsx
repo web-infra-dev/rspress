@@ -1,4 +1,4 @@
-import { CodeBlockRuntime } from '@rspress/core/theme';
+import { CodeBlockRuntime, Tabs, Tab } from '@rspress/core/theme';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
   getOperations,
@@ -490,63 +490,83 @@ function OperationReference({
           className="rp-openapi-examples"
           aria-label="Request and response examples"
         >
-          <div className="rp-openapi-panel">
-            <div className="rp-openapi-tabs" aria-label="Code language">
-              {languages.map(item => (
-                <button
-                  key={item}
-                  type="button"
-                  aria-pressed={language === item}
-                  onClick={() => setLanguage(item)}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-            <CodePanel
-              text={snippet}
-              lang={
-                {
-                  cURL: 'bash',
-                  JavaScript: 'javascript',
-                  Go: 'go',
-                  Python: 'python',
-                  Java: 'java',
-                  'C#': 'csharp',
-                  Rust: 'rust',
-                }[language]
-              }
-            />
-          </div>
-          <div className="rp-openapi-panel">
-            <div className="rp-openapi-tabs">
-              {responses.map(([status]) => (
-                <button
-                  type="button"
-                  key={status}
-                  aria-pressed={responseStatus === status}
-                  onClick={() => setResponseStatus(status)}
-                >
-                  {status}
-                </button>
-              ))}
-              <select
-                aria-label="Response content type"
-                value={selectedMedia ?? ''}
-                onChange={event => setResponseMedia(event.target.value)}
+          <Tabs
+            className="rp-openapi-samples"
+            keepDOM={false}
+            onChange={index => setLanguage(languages[index])}
+          >
+            {languages.map(item => (
+              <Tab
+                key={item}
+                value={item}
+                label={
+                  <button
+                    type="button"
+                    className="rp-openapi-tab-label"
+                    aria-pressed={language === item}
+                  >
+                    {item}
+                  </button>
+                }
               >
-                {Object.keys(responseContents).map(type => (
-                  <option key={type}>{type}</option>
-                ))}
-              </select>
-            </div>
-            <CodePanel
-              title="Response example"
-              text={display(
-                mediaExample(document, responseContents[selectedMedia]),
-              )}
-            />
-          </div>
+                <CodePanel
+                  text={language === item ? snippet : ''}
+                  lang={
+                    {
+                      cURL: 'bash',
+                      JavaScript: 'javascript',
+                      Go: 'go',
+                      Python: 'python',
+                      Java: 'java',
+                      'C#': 'csharp',
+                      Rust: 'rust',
+                    }[item]
+                  }
+                />
+              </Tab>
+            ))}
+          </Tabs>
+          <Tabs
+            className="rp-openapi-samples"
+            keepDOM={false}
+            onChange={index => setResponseStatus(responses[index][0])}
+          >
+            {responses.map(([status]) => (
+              <Tab
+                key={status}
+                value={status}
+                label={
+                  <button
+                    type="button"
+                    className="rp-openapi-tab-label"
+                    aria-pressed={responseStatus === status}
+                  >
+                    {status}
+                  </button>
+                }
+              >
+                <div className="rp-openapi-response-meta">
+                  <span>Response example</span>
+                  {Object.keys(responseContents).length > 0 && (
+                    <select
+                      aria-label="Response content type"
+                      value={selectedMedia ?? ''}
+                      onChange={event => setResponseMedia(event.target.value)}
+                    >
+                      {Object.keys(responseContents).map(type => (
+                        <option key={type}>{type}</option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+                <CodePanel
+                  text={display(
+                    mediaExample(document, responseContents[selectedMedia]),
+                  )}
+                />
+              </Tab>
+            ))}
+          </Tabs>
           {result && (
             <div className="rp-openapi-panel" role="status">
               <CodePanel

@@ -24,7 +24,7 @@ export default defineConfig({
 
 `input` accepts a JSON/YAML path relative to the working directory, an HTTP(S) URL, or an OpenAPI 3 document object. External references are bundled at build time. Swagger 2.0 files are upgraded using Scalar's OpenAPI upgrader. OpenAPI 3.0 and 3.1 are supported; this is not a complete JSON Schema validator.
 
-The plugin generates one page per operation and groups the sidebar by the operation's first tag. Routes use a lowercase, URL-safe operation ID, falling back to the method and path. Conflicting IDs or slugs fail the build. Generated pages live in Rspress's temporary directory, not the documentation source tree.
+The plugin generates one page per operation and groups the sidebar under section headers using the operation's first tag. Routes use a lowercase, URL-safe operation ID, falling back to the method and path. Conflicting IDs or slugs fail the build. Generated pages live in Rspress's temporary directory, not the documentation source tree.
 
 | Option             | Default  | Description                                        |
 | ------------------ | -------- | -------------------------------------------------- |
