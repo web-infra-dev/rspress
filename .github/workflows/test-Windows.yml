@@ -86,10 +86,6 @@ jobs:
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm run test:unit
 
-      - name: Install Playwright Chromium
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: pnpm exec playwright install chromium --only-shell
-
       - name: E2E Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm run test:e2e
