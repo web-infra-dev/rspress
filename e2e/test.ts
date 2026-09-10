@@ -9,9 +9,7 @@ const isCI = Boolean(process.env.CI);
 export const test = baseTest.extend({
   playwright: async ({ task }, use) => {
     await use({
-      // Windows uses Playwright's pinned headless shell instead of system Chrome.
-      launchOptions:
-        isCI && process.platform !== 'win32' ? { channel: 'chrome' } : {},
+      launchOptions: isCI ? { channel: 'chrome' } : {},
       contextOptions: {
         viewport: { width: 1440, height: 900 },
       },
