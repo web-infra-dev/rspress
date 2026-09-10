@@ -6,6 +6,10 @@
   height: 100%;
   list-style: none;
 
+  &:empty {
+    display: none;
+  }
+
   @media (max-width: 1279px) {
     --rp-nav-menu-item-gap: 24px;
   }
@@ -113,29 +117,6 @@
       margin-right: 0.1em;
 
       color: var(--rp-c-text-3);
-    }
-  }
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-}
-
-.rp-nav-items {
-  &:empty {
-    display: none;
-  }
-
-  display: inline-flex;
-  align-items: center;
-  height: 100%;
-  gap: 24px;
-
-  &--left {
-    margin-left: 24px;
-
-    > .rp-nav-menu--left {
-      margin-left: 0;
     }
   }
 

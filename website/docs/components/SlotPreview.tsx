@@ -1,6 +1,12 @@
 import { useLang } from '@rspress/core/runtime';
 import { Layout, type LayoutProps, Link } from '@rspress/core/theme-original';
-import { createContext, type ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 import { CssModificationIndicator } from './CssModificationIndicator';
 import { FloatingToolbar } from './FloatingToolbar';
 import toolbarStyles from './FloatingToolbar.module.scss';
@@ -41,6 +47,15 @@ const SlotPreviewContext = createContext({
   toggle: () => {},
 });
 
+const mobileNavQuery = '(max-width: 768px)';
+const subscribeMobileNav = (notify: () => void) => {
+  const query = window.matchMedia(mobileNavQuery);
+  query.addEventListener('change', notify);
+  return () => query.removeEventListener('change', notify);
+};
+const getMobileNav = () => window.matchMedia(mobileNavQuery).matches;
+const getServerMobileNav = () => false;
+
 export function SlotPreview({
   name,
   children,
@@ -49,13 +64,19 @@ export function SlotPreview({
   children?: ReactNode;
 }) {
   const { enabled } = useContext(SlotPreviewContext);
+  const mobileNav = useSyncExternalStore(
+    subscribeMobileNav,
+    getMobileNav,
+    getServerMobileNav,
+  );
+  const Container = name.endsWith('NavItems') && !mobileNav ? 'li' : 'div';
 
   if (!enabled) {
     return children;
   }
 
   return (
-    <div className={styles.slot} data-slot-container={name}>
+    <Container className={styles.slot} data-slot-container={name}>
       <div className={styles.content}>{children}</div>
       <span
         className={styles.marker}
@@ -73,7 +94,7 @@ export function SlotPreview({
       >
         <span className={styles.label}>{name}</span>
       </span>
-    </div>
+    </Container>
   );
 }
 
