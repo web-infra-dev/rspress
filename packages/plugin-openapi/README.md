@@ -16,7 +16,7 @@ export default defineConfig({
   plugins: [
     pluginOpenAPI({
       input: './openapi.yaml',
-      routePrefix: '/api',
+      outDir: 'api',
     }),
   ],
 });
@@ -24,17 +24,21 @@ export default defineConfig({
 
 `input` accepts a JSON/YAML path relative to the working directory, an HTTP(S) URL, or an OpenAPI 3 document object. External references are bundled at build time. Swagger 2.0 files are upgraded using Scalar's OpenAPI upgrader. OpenAPI 3.0 and 3.1 are supported; this is not a complete JSON Schema validator.
 
-The plugin generates one page per operation and groups the sidebar under section headers using the operation's first tag. Routes use a lowercase, URL-safe operation ID, falling back to the method and path. Conflicting IDs or slugs fail the build. Generated pages live in Rspress's temporary directory, not the documentation source tree.
+The plugin generates one page per operation and groups the sidebar under section headers using the operation's first tag. Routes use a lowercase, URL-safe operation ID, falling back to the method and path. Conflicting IDs or slugs fail the build. Generated MDX pages and `_meta.json` are written into `api` under the documentation root and discovered by Rspress's normal file-based routing.
 
-| Option             | Default  | Description                                        |
-| ------------------ | -------- | -------------------------------------------------- |
-| `input`            | Required | Local file, URL, or document object                |
-| `allowPrivateUrls` | `false`  | Allow localhost/private network specification URLs |
-| `routePrefix`      | `/api`   | Prefix of generated routes                         |
-| `sidebar`          | `true`   | Generate sidebar groups for the route prefix       |
-| `playground`       | `true`   | Show editable request inputs and Send button       |
+| Option             | Default  | Description                                         |
+| ------------------ | -------- | --------------------------------------------------- |
+| `input`            | Required | Local file, URL, or document object                 |
+| `allowPrivateUrls` | `false`  | Allow localhost/private network specification URLs  |
+| `outDir`           | `api`    | Output directory relative to the documentation root |
+| `sidebar`          | `true`   | Generate _meta.json in the output directory         |
+| `playground`       | `true`   | Show editable request inputs and Send button        |
 
-Existing sidebar entries outside the generated prefix are preserved. Use `sidebar: false` to supply your own sidebar. Use multiple plugin instances with distinct prefixes for multiple specifications. Restart the dev server after changing a specification or a referenced file.
+The plugin does not change `themeConfig.sidebar`. Use file-based `_nav.json` / `_meta.json` navigation to discover the generated sidebar, or configure links manually if your site uses `themeConfig.nav` or `themeConfig.sidebar`. Use `sidebar: false` to disable `_meta.json` generation.
+
+Generated MDX pages are refreshed on each start/build, and removed operations are cleaned up. Handwritten pages are preserved; filename collisions fail the build. Unmodified `_meta.json` is refreshed automatically. User-edited metadata is preserved, so maintain its links yourself when operations change. Delete `_meta.json` to resume automatic generation.
+
+Add generated MDX and `.openapi-manifest.json` to `.gitignore`; keep a customized `_meta.json` in Git. If no files need customization, ignore the entire output directory. Use separate output directories for separate specifications. Restart the dev server after changing a specification or a referenced file.
 
 ## Playground
 

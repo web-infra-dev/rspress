@@ -74,18 +74,41 @@ export default defineConfig({
   plugins: [
     pluginOpenAPI({
       input: './openapi.yaml',
-      routePrefix: '/api',
+      outDir: 'api',
     }),
   ],
-  themeConfig: {
-    nav: [{ text: 'API', link: '/api/getallplanets' }],
-  },
 });
+```
+
+Create `_nav.json` in the documentation root to add an API navigation entry. Rspress then reads the sidebar from the generated `_meta.json`:
+
+```json title="docs/_nav.json"
+[{ "text": "API", "link": "/api/getallplanets" }]
 ```
 
 Start Rspress and open `/api/getallplanets`. The sidebar shows a **Planets** section header followed by a **Get all planets** link with a green **GET** badge.
 
-Pages are generated when Rspress starts or builds. You do not need to create MDX files or `_meta.json`, and generated content is not written into your `docs` source directory. Restart the development server after changing the specification or any referenced files.
+The plugin writes real files into the documentation root when Rspress starts or builds. Rspress discovers them through its normal file-based routing:
+
+```tree
+docs
+├── _nav.json
+└── api
+    ├── _meta.json
+    ├── .openapi-manifest.json
+    └── getallplanets.mdx
+```
+
+`outDir` defaults to `api`, relative to the documentation `root`. Generated `.mdx` pages are refreshed each time; edit descriptions in the OpenAPI specification rather than in generated pages. Removing an operation removes its generated page. Handwritten pages in the same directory are preserved, and a filename collision with a handwritten page produces an error.
+
+Restart the development server after changing the specification or a referenced file. Ignore generated MDX and the manifest used to track navigation state in Git:
+
+```text title=".gitignore"
+/docs/api/*.mdx
+/docs/api/.openapi-manifest.json
+```
+
+Narrow these ignore patterns if you keep handwritten MDX in the same directory. You can edit and commit `_meta.json`; subsequent generation preserves customized metadata. If you do not customize generated content, you can ignore the entire `/docs/api/` directory instead.
 
 ## Organize pages and navigation
 
@@ -100,28 +123,25 @@ Pages are generated when Rspress starts or builds. You do not need to create MDX
 
 Each operation generates one page. Without `operationId`, the plugin derives an identifier from the method and path: `GET /planets` becomes `/api/get-planets`. Identifiers are lowercased and characters unsuitable for URLs are replaced with hyphens. Duplicate identifiers or conflicting generated paths fail the build.
 
-`routePrefix` sets the page URL prefix; it does not generate an `/api` overview page. Link navigation to a specific operation. If your site uses `base`, do not include it again in `routePrefix`.
+`outDir` determines the location inside the documentation root, and Rspress derives URLs from those file paths. For example, `outDir: 'reference/api'` writes to `docs/reference/api` and produces `/reference/api/getallplanets`. Output must stay inside the documentation root. No overview page is generated; link navigation to a specific operation.
 
-To choose your own sidebar order, disable the generated sidebar and configure `themeConfig.sidebar`:
+To customize sidebar order or labels, edit the generated `_meta.json`:
 
-```ts
-pluginOpenAPI({
-  input: './openapi.yaml',
-  sidebar: false,
-});
+```json title="docs/api/_meta.json"
+[
+  { "type": "section-header", "label": "Planets" },
+  {
+    "type": "file",
+    "name": "getallplanets",
+    "label": "Get all planets",
+    "tag": "GET"
+  }
+]
 ```
 
-```ts
-// Inside themeConfig in rspress.config.ts
-sidebar: {
-  '/api/': [
-    { sectionHeaderText: 'Planets' },
-    { text: 'Get all planets', link: '/api/getallplanets', tag: 'GET' },
-  ],
-},
-```
+Unmodified metadata updates with the specification. Once you edit it, the plugin preserves it, so maintain the navigation yourself when adding or removing operations. Delete `_meta.json` to restore automatic generation.
 
-When automatic sidebar generation is enabled, the plugin replaces the sidebar entry for `routePrefix` and preserves entries for other paths.
+`sidebar: false` disables `_meta.json` generation; it does not hide Rspress's sidebar. The plugin does not change `themeConfig.sidebar`. If an existing site sets `themeConfig.nav` or `themeConfig.sidebar`, keep managing API links there, or move navigation to `_nav.json` / `_meta.json` to use file-based navigation.
 
 ## Load a remote specification
 
@@ -130,7 +150,7 @@ You can also pass an HTTP(S) URL as `input`:
 ```ts
 pluginOpenAPI({
   input: 'https://api.example.com/openapi.yaml',
-  routePrefix: '/api',
+  outDir: 'api',
 });
 ```
 
@@ -186,8 +206,8 @@ pluginOpenAPI({
 | Option             | Type                        | Default  | Description                                                                                                                         |
 | ------------------ | --------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `input`            | `string \| OpenAPIDocument` | Required | JSON/YAML path, HTTP(S) URL or OpenAPI 3 document object; relative file paths resolve from the working directory where Rspress runs |
-| `routePrefix`      | `string`                    | `'/api'` | URL prefix for generated pages                                                                                                      |
-| `sidebar`          | `boolean`                   | `true`   | Generate sidebar section headers and operation links                                                                                |
+| `outDir`           | `string`                    | `'api'`  | Output directory relative to the documentation root                                                                                 |
+| `sidebar`          | `boolean`                   | `true`   | Generate `_meta.json` with section headers and operation links                                                                      |
 | `playground`       | `boolean`                   | `true`   | Show request inputs and the Send button                                                                                             |
 | `allowPrivateUrls` | `boolean`                   | `false`  | Allow loading specifications from localhost or private network URLs                                                                 |
 

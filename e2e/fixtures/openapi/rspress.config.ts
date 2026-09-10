@@ -4,6 +4,5 @@ import { pluginOpenAPI } from '@rspress/plugin-openapi';
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
   title: 'OpenAPI Example',
-  themeConfig: { nav: [{ text: 'API', link: '/api/getallplanets' }] },
-  plugins: [pluginOpenAPI({ input: './openapi.yaml' })],
+  plugins: [pluginOpenAPI({ input: './openapi.yaml', outDir: 'api' })],
 });
