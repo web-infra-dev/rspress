@@ -31,7 +31,7 @@ export const useReadPercent = () => {
         Math.min(Math.max(0, ((scrollTop - 50 + deltaHeight) / h) * 100), 100),
       ) || 0
     );
-  }, [scrollTop, height]);
+  }, [h, scrollTop, height]);
 
   return [readPercent, scrollTop];
 };
