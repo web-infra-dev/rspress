@@ -21,12 +21,6 @@
     align-items: center;
     gap: 2px;
   }
-  &__others {
-    display: flex;
-    @media (max-width: 1280px) {
-      display: none;
-    }
-  }
 }
 
 .rp-nav-screen-divider {
