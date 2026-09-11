@@ -5,6 +5,15 @@ import { pluginPublint } from 'rsbuild-plugin-publint';
 const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
 
 define.lib({
+  tools: {
+    rspack: {
+      experiments: {
+        // The Rspack runtime currently breaks `exports = module.exports`
+        // assignments in gray-matter.
+        runtimeMode: 'webpack',
+      },
+    },
+  },
   dts: {
     typescriptPath,
     bundle: true,
