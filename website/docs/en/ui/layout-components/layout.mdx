@@ -74,6 +74,12 @@ const Layout = () => (
     beforeNavMenu={<div>beforeNavMenu</div>}
     /* After nav menu */
     afterNavMenu={<div>afterNavMenu</div>}
+    /* Before/after the left navigation items (desktop and mobile) */
+    beforeLeftNavItems={<li>beforeLeftNavItems</li>}
+    afterLeftNavItems={<li>afterLeftNavItems</li>}
+    /* Before/after the right navigation items (desktop and mobile) */
+    beforeRightNavItems={<li>beforeRightNavItems</li>}
+    afterRightNavItems={<li>afterRightNavItems</li>}
     /* Above left sidebar */
     beforeSidebar={<div>beforeSidebar</div>}
     /* Below left sidebar */
@@ -108,3 +114,21 @@ export * from '@rspress/core/theme-original';
 ```
 
 </details>
+
+### Custom navigation lists
+
+Use `beforeLeftNavItems` / `afterLeftNavItems` and `beforeRightNavItems` / `afterRightNavItems` to insert items before or after the left and right navigation lists. `NavList` automatically adapts to desktop and mobile.
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [{ text: 'Community', link: '/community' }];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+`items` uses the same structure as [`themeConfig.nav`](/api/config/config-theme#nav); placement is determined by the slot.

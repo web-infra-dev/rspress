@@ -74,6 +74,12 @@ const Layout = () => (
     beforeNavMenu={<div>beforeNavMenu</div>}
     /* 导航栏菜单之后 */
     afterNavMenu={<div>afterNavMenu</div>}
+    /* 左侧导航项之前/之后（桌面端和移动端） */
+    beforeLeftNavItems={<li>beforeLeftNavItems</li>}
+    afterLeftNavItems={<li>afterLeftNavItems</li>}
+    /* 右侧导航项之前/之后（桌面端和移动端） */
+    beforeRightNavItems={<li>beforeRightNavItems</li>}
+    afterRightNavItems={<li>afterRightNavItems</li>}
     /* 左侧侧边栏上面 */
     beforeSidebar={<div>beforeSidebar</div>}
     /* 左侧侧边栏下面 */
@@ -108,3 +114,21 @@ export * from '@rspress/core/theme-original';
 ```
 
 </details>
+
+### 自定义导航列表
+
+通过 `beforeLeftNavItems` / `afterLeftNavItems` 和 `beforeRightNavItems` / `afterRightNavItems` 在左右导航项前后插入内容。`NavList` 自动适配桌面端和移动端。
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [{ text: 'Community', link: '/community' }];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+`items` 使用与 [`themeConfig.nav`](/api/config/config-theme#nav) 相同的结构，插入位置由插槽决定。

@@ -6,6 +6,10 @@
   height: 100%;
   list-style: none;
 
+  &:empty {
+    display: none;
+  }
+
   @media (max-width: 1279px) {
     --rp-nav-menu-item-gap: 24px;
   }
