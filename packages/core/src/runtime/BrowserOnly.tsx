@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
+import { browser, use } from './reactDom';
 
 export interface BrowserOnlyProps {
   children: () => ReactNode | Promise<ReactNode>;
@@ -22,7 +23,7 @@ type BrowserOnlyState =
       error: unknown;
     };
 
-export function BrowserOnly(props: BrowserOnlyProps) {
+function OldBrowserOnly(props: BrowserOnlyProps) {
   const { children, fallback = null } = props;
   const [state, setState] = useState<BrowserOnlyState>({
     status: 'pending',
@@ -69,4 +70,28 @@ export function BrowserOnly(props: BrowserOnlyProps) {
   return fallback;
 }
 
+const ModernBrowserOnly = (props: BrowserOnlyProps): any => {
+  const { children } = props;
+  use(browser!());
+  const content = useMemo(() => children(), [children]);
+  if (content instanceof Promise) {
+    return use(content);
+  }
+
+  return content;
+};
+
+export function BrowserOnly(props: BrowserOnlyProps) {
+  const { fallback = null } = props;
+
+  if (typeof use === 'function' && typeof browser === 'function') {
+    return (
+      <Suspense fallback={fallback}>
+        <ModernBrowserOnly {...props} />
+      </Suspense>
+    );
+  }
+
+  return <OldBrowserOnly {...props} />;
+}
 export default BrowserOnly;
