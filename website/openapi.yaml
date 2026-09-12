@@ -1,0 +1,149 @@
+openapi: 3.1.0
+info:
+  title: JSONPlaceholder API
+  version: 1.0.0
+  description: A public test API. Write operations are simulated and do not persist changes.
+servers:
+  - url: https://jsonplaceholder.typicode.com
+    description: Public test server
+paths:
+  /posts:
+    get:
+      operationId: list-posts
+      summary: List posts
+      tags:
+        - Posts
+      description: Explore the posts in this public test API. Filter by user, edit the query parameter and click Send to see the live response.
+      parameters:
+        - name: userId
+          in: query
+          description: Only return posts belonging to this user.
+          example: 1
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: A collection of posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+    post:
+      operationId: create-post
+      summary: Create a post
+      tags:
+        - Posts
+      description: Send a JSON request body to create a post. JSONPlaceholder simulates the operation and returns a new ID; the post is not saved.
+      requestBody:
+        $ref: '#/components/requestBodies/Post'
+      responses:
+        '201':
+          description: The simulated new post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+  /posts/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the post to retrieve or change.
+        example: 1
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+    get:
+      operationId: get-post
+      summary: Get a post
+      tags:
+        - Posts
+      description: Retrieve a single post by ID. Change the path parameter and click Send to explore a different post.
+      responses:
+        '200':
+          description: The requested post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          description: No post exists with this ID
+          content:
+            application/json:
+              schema:
+                type: object
+              example: {}
+    put:
+      operationId: update-post
+      summary: Update a post
+      tags:
+        - Posts
+      description: Replace a post using a JSON request body. JSONPlaceholder simulates the update; changes are not saved.
+      requestBody:
+        $ref: '#/components/requestBodies/Post'
+      responses:
+        '200':
+          description: The simulated updated post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+    delete:
+      operationId: delete-post
+      summary: Delete a post
+      tags:
+        - Posts
+      description: JSONPlaceholder simulates deleting the selected post and returns an empty object. The original post remains available.
+      responses:
+        '200':
+          description: The simulated deletion succeeded
+          content:
+            application/json:
+              schema:
+                type: object
+              example: {}
+components:
+  requestBodies:
+    Post:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostInput'
+          example:
+            userId: 1
+            title: Hello from Rspress
+            body: Try editing this request body before clicking Send.
+  schemas:
+    PostInput:
+      type: object
+      required:
+        - userId
+        - title
+        - body
+      properties:
+        userId:
+          type: integer
+          description: The author of the post.
+          example: 1
+        title:
+          type: string
+          description: The title of the post.
+          example: Hello from Rspress
+        body:
+          type: string
+          description: The content of the post.
+          example: Explore interactive OpenAPI documentation.
+    Post:
+      allOf:
+        - $ref: '#/components/schemas/PostInput'
+        - type: object
+          properties:
+            id:
+              type: integer
+              description: The unique ID of the post.
+              example: 1

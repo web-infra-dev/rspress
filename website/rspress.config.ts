@@ -5,6 +5,7 @@ import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import { defineConfig } from '@rspress/core';
 import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
+import { pluginOpenAPI } from '@rspress/plugin-openapi';
 import { pluginPlayground } from '@rspress/plugin-playground';
 import { pluginPreview } from '@rspress/plugin-preview';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
@@ -99,6 +100,14 @@ export default defineConfig({
     },
   },
   plugins: [
+    ...['en', 'zh'].map(lang => ({
+      ...pluginOpenAPI({
+        input: path.join(import.meta.dirname, 'openapi.yaml'),
+        outDir: `${lang}/openapi-demo`,
+      }),
+      // Rspress requires a unique name for each plugin instance.
+      name: `openapi-demo-${lang}`,
+    })),
     pluginPreview({
       previewLanguages: ['tsx', 'jsx', 'mdx'],
       iframeOptions: {

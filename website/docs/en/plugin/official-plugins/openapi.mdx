@@ -1,0 +1,234 @@
+{/* cspell:ignore getallplanets */}
+
+# @rspress/plugin-openapi <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-openapi" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+Turn an OpenAPI description into Rspress API reference pages. Each operation gets its own page where readers can explore parameters, request bodies and response schemas, copy request examples, or fill in inputs and click **Send** to call the API.
+
+The plugin uses Rspress's sidebar, Tabs and code blocks, with dark mode and mobile support. Use it to document HTTP APIs. For TypeScript module documentation, use [plugin-typedoc](./typedoc).
+
+Try the [interactive demo](/openapi-demo/list-posts.mdx) to explore the generated reference and send requests to [JSONPlaceholder](https://jsonplaceholder.typicode.com/guide/). Create, update and delete requests are simulated by the test API; they do not persist changes.
+
+## Installation
+
+Requires Node.js 22.12.0 or later.
+
+<PackageManagerTabs command="add @rspress/plugin-openapi -D" />
+
+## Generate your first API reference
+
+### Prepare an OpenAPI file
+
+Create `openapi.yaml` in your project root. This example describes an endpoint that lists planets:
+
+```yaml title="openapi.yaml"
+openapi: 3.1.0
+info:
+  title: Planets API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /planets:
+    get:
+      operationId: getAllPlanets
+      summary: Get all planets
+      description: List planets, using limit to control the number of results.
+      tags:
+        - Planets
+      parameters:
+        - name: limit
+          in: query
+          description: The maximum number of results.
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+              example:
+                - name: Mars
+                - name: Earth
+```
+
+`https://api.example.com` is a placeholder. Replace `servers[].url` with your API's address before trying Send.
+
+### Register the plugin
+
+Register the plugin in `rspress.config.ts` and add a navigation link to an operation page:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginOpenAPI } from '@rspress/plugin-openapi';
+
+export default defineConfig({
+  root: 'docs',
+  plugins: [
+    pluginOpenAPI({
+      input: './openapi.yaml',
+      outDir: 'api',
+    }),
+  ],
+});
+```
+
+Create `_nav.json` in the documentation root to add an API navigation entry. Rspress then reads the sidebar from the generated `_meta.json`:
+
+```json title="docs/_nav.json"
+[{ "text": "API", "link": "/api/getallplanets" }]
+```
+
+Start Rspress and open `/api/getallplanets`. The sidebar shows a **Planets** section header followed by a **Get all planets** link with a green **GET** badge.
+
+The plugin writes real files into the documentation root when Rspress starts or builds. Rspress discovers them through its normal file-based routing:
+
+```tree
+docs
+├── _nav.json
+└── api
+    ├── _meta.json
+    ├── .openapi-manifest.json
+    └── getallplanets.mdx
+```
+
+`outDir` defaults to `api`, relative to the documentation `root`. Generated `.mdx` pages are refreshed each time; edit descriptions in the OpenAPI specification rather than in generated pages. Removing an operation removes its generated page. Handwritten pages in the same directory are preserved, and a filename collision with a handwritten page produces an error.
+
+Restart the development server after changing the specification or a referenced file. Ignore generated MDX and the manifest used to track navigation state in Git:
+
+```text title=".gitignore"
+/docs/api/*.mdx
+/docs/api/.openapi-manifest.json
+```
+
+Narrow these ignore patterns if you keep handwritten MDX in the same directory. You can edit and commit `_meta.json`; subsequent generation preserves customized metadata. If you do not customize generated content, you can ignore the entire `/docs/api/` directory instead.
+
+## Organize pages and navigation
+
+| OpenAPI field          | Use in the documentation                                             |
+| ---------------------- | -------------------------------------------------------------------- |
+| `operationId`          | Page path: `getAllPlanets` becomes `/api/getallplanets`              |
+| `summary`              | Page title and sidebar link text; falls back to the operation ID     |
+| `description`          | Explanatory text for an operation or field                           |
+| `tags[0]`              | Sidebar section header; falls back to `info.title`                   |
+| HTTP method            | Colored endpoint and sidebar badges, such as green GET and blue POST |
+| `example` / `examples` | Request or response sample content                                   |
+
+Each operation generates one page. Without `operationId`, the plugin derives an identifier from the method and path: `GET /planets` becomes `/api/get-planets`. Identifiers are lowercased and characters unsuitable for URLs are replaced with hyphens. Duplicate identifiers or conflicting generated paths fail the build.
+
+`outDir` determines the location inside the documentation root, and Rspress derives URLs from those file paths. For example, `outDir: 'reference/api'` writes to `docs/reference/api` and produces `/reference/api/getallplanets`. Output must stay inside the documentation root. No overview page is generated; link navigation to a specific operation.
+
+To customize sidebar order or labels, edit the generated `_meta.json`:
+
+```json title="docs/api/_meta.json"
+[
+  { "type": "section-header", "label": "Planets" },
+  {
+    "type": "file",
+    "name": "getallplanets",
+    "label": "Get all planets",
+    "tag": "GET"
+  }
+]
+```
+
+Unmodified metadata updates with the specification. Once you edit it, the plugin preserves it, so maintain the navigation yourself when adding or removing operations. Delete `_meta.json` to restore automatic generation.
+
+`sidebar: false` disables `_meta.json` generation; it does not hide Rspress's sidebar. The plugin does not change `themeConfig.sidebar`. If an existing site sets `themeConfig.nav` or `themeConfig.sidebar`, keep managing API links there, or move navigation to `_nav.json` / `_meta.json` to use file-based navigation.
+
+## Load a remote specification
+
+You can also pass an HTTP(S) URL as `input`:
+
+```ts
+pluginOpenAPI({
+  input: 'https://api.example.com/openapi.yaml',
+  outDir: 'api',
+});
+```
+
+The URL and any external files referenced with `$ref` must be accessible when Rspress starts or builds. Relative server URLs in remote specifications are resolved against the specification's URL.
+
+To load a specification from a local service or private network, set `allowPrivateUrls: true`:
+
+```ts
+pluginOpenAPI({
+  input: 'http://localhost:3000/openapi.json',
+  allowPrivateUrls: true,
+});
+```
+
+This option controls specification loading. It does not configure a proxy for Send or bypass CORS. `input` also accepts an OpenAPI 3 document object, for example when importing existing JSON data in your configuration.
+
+## Try an API request
+
+1. Check or edit the API address in **Server URL**.
+2. Expand **Parameters** and fill in path, query or header values. Use JSON for arrays and objects, such as `["red", "blue"]`.
+3. If the operation requires authentication, expand **Authorization** and enter credentials.
+4. If the operation accepts a body, expand **Request body**, choose a content type and edit the content.
+5. Click **Send** to inspect the actual response status, elapsed time, body and browser-accessible headers.
+
+Click **Cancel** to stop a pending request. Requests time out after 30 seconds. **Response example** on the right comes from the specification; actual request results appear separately.
+
+Request examples are available for cURL, JavaScript, Go, Python, Java, C# and Rust. Switch tabs to view a language and use the code block's copy button. Examples update with your inputs and use placeholder credentials until real credentials are entered. Send still requires real credentials, while `playground: false` keeps the placeholder examples available.
+
+### Authentication
+
+| Scheme                 | What to enter                                                          |
+| ---------------------- | ---------------------------------------------------------------------- |
+| API key                | The key value; header and query locations are supported                |
+| Bearer                 | The token, without the `Bearer ` prefix                                |
+| Basic                  | `username:password`                                                    |
+| OAuth / OpenID Connect | An existing access token; login and token acquisition are not provided |
+
+Credentials remain in the current page's memory and are not persisted. If the operation declares alternative security requirements, select one. All credentials within the selected requirement must be supplied together.
+
+### Show documentation without send
+
+Disable the request editor and Send button while keeping reference content and code examples:
+
+```ts
+pluginOpenAPI({
+  input: './openapi.yaml',
+  playground: false,
+});
+```
+
+## Options
+
+| Option             | Type                        | Default  | Description                                                                                                                         |
+| ------------------ | --------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `input`            | `string \| OpenAPIDocument` | Required | JSON/YAML path, HTTP(S) URL or OpenAPI 3 document object; relative file paths resolve from the working directory where Rspress runs |
+| `outDir`           | `string`                    | `'api'`  | Output directory relative to the documentation root                                                                                 |
+| `sidebar`          | `boolean`                   | `true`   | Generate `_meta.json` with section headers and operation links                                                                      |
+| `playground`       | `boolean`                   | `true`   | Show request inputs and the Send button                                                                                             |
+| `allowPrivateUrls` | `boolean`                   | `false`  | Allow loading specifications from localhost or private network URLs                                                                 |
+
+## Troubleshooting and current limitations
+
+### Send reports a network error
+
+Send calls the API directly from the reader's browser. Check the Server URL and network connection, and ensure that the API allows the documentation site's origin through CORS. The plugin does not provide a proxy or send browser cookies. These requirements also apply when you deploy the documentation as a static site.
+
+### Supported specifications and request formats
+
+OpenAPI 3.0 and 3.1 JSON/YAML specifications are supported, along with conversion of Swagger 2.0 files. OpenAPI 3.2, webhooks and callbacks are not supported yet.
+
+The playground supports JSON, plain text and URL-encoded request bodies. Initial examples follow the selected content type. Edit plain text directly, and enter URL-encoded bodies as `name=Mars&limit=3`. Supported parameter styles include `simple` path parameters, `form` and `deepObject` query parameters, and space- or pipe-delimited query arrays. File uploads, cookie authentication and other serialization styles are not currently supported; unsupported formats produce an error.
+
+### Descriptions do not render Markdown formatting
+
+Descriptions currently render as plain text. Markdown, HTML and MDX inside descriptions are not interpreted.
+
+### Generated examples do not match business constraints
+
+Synthesized examples are illustrative and are not guaranteed to satisfy every schema constraint. Provide explicit `example` or `examples` values in your specification when possible. Recursive schema display and example generation have depth limits. Large specifications also increase generated page data size.
