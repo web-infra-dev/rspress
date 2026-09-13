@@ -160,14 +160,18 @@ export class LocalProvider implements Provider {
           str.flatMap(s => tokenize(s, cyrillicRegex)),
       },
     });
+    const pending: Promise<unknown>[] = [];
     for (const item of pagesForSearch) {
       // Add search index async to avoid blocking the main thread
       // Type assertion: PageIndexForFlexSearch is compatible with FlexSearchCompatibleData at runtime
       const flexSearchItem = item as unknown as FlexSearchCompatibleData;
-      this.#index!.addAsync(item.routePath, flexSearchItem);
-      this.#cjkIndex!.addAsync(item.routePath, flexSearchItem);
-      this.#cyrillicIndex!.addAsync(item.routePath, flexSearchItem);
+      pending.push(
+        this.#index!.addAsync(item.routePath, flexSearchItem),
+        this.#cjkIndex!.addAsync(item.routePath, flexSearchItem),
+        this.#cyrillicIndex!.addAsync(item.routePath, flexSearchItem),
+      );
     }
+    await Promise.all(pending);
   }
 
   async search(query: SearchQuery) {
