@@ -252,4 +252,9 @@ export function pluginPreview(options?: Options): RspressPlugin {
   };
 }
 
-export type { Options };
+export type {
+  CustomEntry,
+  CustomEntryDemo,
+  Options,
+  PreviewRouteMeta,
+} from './types';
