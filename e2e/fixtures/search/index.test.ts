@@ -138,8 +138,8 @@ test.describe('search keyboard', async () => {
     });
 
     // Verify search panel is closed initially
-    let searchPanel = await page.$('.rp-search-panel__mask');
-    expect(searchPanel).toBeNull();
+    const searchPanel = page.locator('.rp-search-panel__mask');
+    await expect(searchPanel).toHaveCount(0);
 
     // Press Cmd+K (or Ctrl+K on non-Mac)
     const isMac = process.platform === 'darwin';
@@ -148,11 +148,7 @@ test.describe('search keyboard', async () => {
     } else {
       await page.keyboard.press('Control+KeyK');
     }
-    await page.waitForTimeout(200);
-
-    // Verify search panel is open
-    searchPanel = await page.$('.rp-search-panel__mask');
-    expect(searchPanel).not.toBeNull();
+    await expect(searchPanel).toBeVisible();
 
     // Press Cmd+K / Ctrl+K again
     if (isMac) {
@@ -160,11 +156,7 @@ test.describe('search keyboard', async () => {
     } else {
       await page.keyboard.press('Control+KeyK');
     }
-    await page.waitForTimeout(200);
-
-    // Verify search panel is closed
-    searchPanel = await page.$('.rp-search-panel__mask');
-    expect(searchPanel).toBeNull();
+    await expect(searchPanel).toHaveCount(0);
   });
 
   test('should reset to first suggestion when search query changes', async ({

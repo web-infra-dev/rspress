@@ -1,15 +1,44 @@
 import { NoSSR } from '@rspress/core/runtime';
-import { SearchButton, SearchPanel } from '@rspress/core/theme';
-import { useState } from 'react';
+import { SearchButton } from '@rspress/core/theme';
+import { lazy, Suspense, useEffect, useState } from 'react';
+
+const SearchPanel = lazy(() => import('./SearchPanelLoader'));
 
 export function Search() {
+  const [activated, setActivated] = useState(false);
   const [focused, setFocused] = useState(false);
+
+  const openSearch = () => {
+    setActivated(true);
+    setFocused(true);
+  };
+
+  useEffect(() => {
+    if (activated) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.code === 'KeyK' && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        openSearch();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [activated]);
+
   return (
     <>
-      <SearchButton setFocused={setFocused} />
-      <NoSSR>
-        <SearchPanel focused={focused} setFocused={setFocused} />
-      </NoSSR>
+      <SearchButton setFocused={openSearch} />
+      {activated ? (
+        <NoSSR>
+          <Suspense fallback={null}>
+            <SearchPanel focused={focused} setFocused={setFocused} />
+          </Suspense>
+        </NoSSR>
+      ) : null}
     </>
   );
 }
