@@ -92,11 +92,14 @@ export class LocalProvider implements Provider {
       return [];
     }
 
-    const handleError = (result: unknown) => {
+    const handleError = (result: unknown): never => {
       console.error(
         'Failed to fetch search index, please reload the page and try again.',
       );
       console.error(result);
+      throw result instanceof Error
+        ? result
+        : new Error('Failed to fetch search index');
     };
 
     try {
@@ -104,11 +107,10 @@ export class LocalProvider implements Provider {
       if (result.ok) {
         return result.json();
       }
-      handleError(result);
+      return handleError(result);
     } catch (error) {
-      handleError(error);
+      return handleError(error);
     }
-    return [];
   }
 
   async fetchSearchIndex(options: SearchOptions) {

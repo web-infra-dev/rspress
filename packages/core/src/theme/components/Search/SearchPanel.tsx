@@ -78,8 +78,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const pageSearcherRef = useRef<PageSearcher | null>(null);
   const pageSearcherConfigRef = useRef<PageSearcherConfig | null>(null);
   const [initStatus, setInitStatus] = useState<
-    'initial' | 'initing' | 'inited'
+    'initial' | 'initing' | 'inited' | 'error'
   >('initial');
+  const [searchError, setSearchError] = useState<string>();
   const searchResultRef = useRef<HTMLDivElement>(null);
   const searchResultTabRef = useRef<HTMLDivElement>(null);
   const mousePositionRef = useRef<{
@@ -185,8 +186,15 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
     const searcher = createSearcher();
 
+    setSearchError(undefined);
     setInitStatus('initing');
-    await searcher.init();
+    try {
+      await searcher.init();
+    } catch (error) {
+      setSearchError(error instanceof Error ? error.message : String(error));
+      setInitStatus('error');
+      return;
+    }
     setInitStatus('inited');
 
     const query = searchInputRef.current?.value;
@@ -308,7 +316,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       setInitStatus('initial');
       pageSearcherRef.current = null;
       const searcher = createSearcher();
-      searcher.fetchSearchIndex();
+      searcher.fetchSearchIndex().catch(() => {});
     }
   }, [lang, version, versionedSearch]);
 
@@ -544,12 +552,17 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                 </h2>
               </div>
 
-              {query && initStatus === 'inited' ? (
+              {(query || initStatus === 'error') &&
+              (initStatus === 'inited' || initStatus === 'error') ? (
                 <div
                   className="rp-search-panel__results rp-scrollbar"
                   ref={searchResultRef}
                 >
-                  {renderSearchResult(searchResult, isSearching)}
+                  {initStatus === 'error' ? (
+                    <div className="rp-search-panel__error">{searchError}</div>
+                  ) : (
+                    renderSearchResult(searchResult, isSearching)
+                  )}
                 </div>
               ) : null}
             </div>
