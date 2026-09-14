@@ -92,6 +92,12 @@
     opacity: 0.8;
   }
 
+  &__error {
+    padding: 2rem 0;
+    color: var(--rp-c-text-2);
+    text-align: center;
+  }
+
   &__tabs {
     position: sticky;
     background-color: var(--rp-c-bg-soft);
