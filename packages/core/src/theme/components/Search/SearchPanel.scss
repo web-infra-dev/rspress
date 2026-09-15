@@ -136,7 +136,8 @@
     &__input-form {
       height: 40px;
 
-      svg {
+      &__search-icon,
+      &__close {
         width: 16px;
         height: 16px;
       }
