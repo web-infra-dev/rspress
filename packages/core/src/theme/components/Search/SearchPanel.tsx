@@ -8,23 +8,19 @@ import {
   Tabs,
   useLinkNavigate,
 } from '@rspress/core/theme';
-import { debounce } from '@rspress/shared/lodash-es';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
-import { getSearchIndexURL } from './logic/providers/LocalProvider';
-import { PageSearcher } from './logic/search';
 import type {
-  CustomMatchResult,
   DefaultMatchResult,
   DefaultMatchResultItem,
   MatchResult,
-  PageSearcherConfig,
 } from './logic/types';
 import { RenderType } from './logic/types';
 import { NoSearchResult } from './NoSearchResult';
 import './SearchPanel.scss';
 import { SuggestItem } from './SuggestItem';
+import { useSearchPanel } from './useSearchPanel';
 
 const KEY_CODE = {
   ARROW_UP: 'ArrowUp',
@@ -38,19 +34,6 @@ export interface SearchPanelProps {
   focused: boolean;
   setFocused: (focused: boolean) => void;
 }
-
-const useDebounce = <T extends (...args: any[]) => any>(cb: T) => {
-  const cbRef = useRef(cb);
-  cbRef.current = cb;
-  const debounced = useCallback(
-    debounce(
-      ((...args: Parameters<T>): ReturnType<T> => cbRef.current(...args)) as T,
-      150,
-    ),
-    [],
-  );
-  return debounced;
-};
 
 const normalizeSuggestions = (
   suggestions: DefaultMatchResult['result'],
@@ -69,18 +52,7 @@ const normalizeSuggestions = (
 };
 
 export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
-  const [query, setQuery] = useState('');
-  const [searchResult, setSearchResult] = useState<MatchResult>([]);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
-  const [isSearching, setIsSearching] = useState(false);
-  const [resultTabIndex, setResultTabIndex] = useState(0);
-  const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
-  const pageSearcherRef = useRef<PageSearcher | null>(null);
-  const pageSearcherConfigRef = useRef<PageSearcherConfig | null>(null);
-  const [initStatus, setInitStatus] = useState<
-    'initial' | 'initing' | 'inited' | 'error'
-  >('initial');
-  const [searchError, setSearchError] = useState<string>();
   const searchResultRef = useRef<HTMLDivElement>(null);
   const searchResultTabRef = useRef<HTMLDivElement>(null);
   const mousePositionRef = useRef<{
@@ -139,71 +111,30 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     return null;
   }
 
-  const versionedSearch =
-    typeof search !== 'boolean' && (search?.versioned ?? true);
-  const searchIndexURL = getSearchIndexURL(
+  const {
+    currentRenderType,
+    currentSuggestions,
+    currentSuggestionIndex,
+    handleQueryChange,
+    initStatus,
+    isSearching,
+    query,
+    resultTabIndex,
+    searchError,
+    searchIndexURL,
+    searchResult,
+    setCurrentSuggestionIndex,
+    setIsSearching,
+    setQuery,
+    setResultTabIndex,
+  } = useSearchPanel({
+    focused,
     lang,
-    versionedSearch ? version : '',
-  );
-  const DEFAULT_RESULT = [
-    { group: siteTitle, result: [], renderType: RenderType.Default },
-  ];
-  const currentSuggestions =
-    (searchResult[resultTabIndex]?.result as DefaultMatchResultItem[]) ?? [];
-  const currentRenderType =
-    searchResult[resultTabIndex]?.renderType ?? RenderType.Default;
-
-  /**
-   * Create page searcher instance.
-   */
-  const createSearcher = () => {
-    if (pageSearcherRef.current) {
-      return pageSearcherRef.current;
-    }
-
-    const pageSearcherConfig = {
-      currentLang: lang,
-      currentVersion: version,
-    };
-    const pageSearcher = new PageSearcher({
-      indexName: siteTitle,
-      ...search,
-      ...pageSearcherConfig,
-    });
-    pageSearcherRef.current = pageSearcher;
-    pageSearcherConfigRef.current = pageSearcherConfig;
-
-    return pageSearcherRef.current;
-  };
-
-  /**
-   * Call `searcher.init` to initialize the search index
-   */
-  async function initSearch() {
-    if (initStatus !== 'initial') {
-      return;
-    }
-
-    const searcher = createSearcher();
-
-    setSearchError(undefined);
-    setInitStatus('initing');
-    try {
-      await searcher.init();
-    } catch (error) {
-      setSearchError(error instanceof Error ? error.message : String(error));
-      setInitStatus('error');
-      return;
-    }
-    setInitStatus('inited');
-
-    const query = searchInputRef.current?.value;
-    if (query) {
-      const matched = await searcher.match(query);
-      setSearchResult(matched || DEFAULT_RESULT);
-      setIsSearching(false);
-    }
-  }
+    search,
+    siteTitle,
+    version,
+    searchInputRef,
+  });
 
   const clearSearchState = () => {
     setFocused(false);
@@ -295,92 +226,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     currentSuggestions,
     currentSuggestionIndex,
   ]);
-
-  useEffect(() => {
-    if (focused) {
-      setSearchResult(DEFAULT_RESULT);
-      initSearch();
-    } else {
-      setQuery('');
-    }
-  }, [focused]);
-
-  // init pageSearcher again when lang or version changed
-  useEffect(() => {
-    const { currentLang, currentVersion } = pageSearcherConfigRef.current ?? {};
-    const isLangChanged = lang !== currentLang;
-    const isVersionChanged = versionedSearch && version !== currentVersion;
-
-    if (isLangChanged || isVersionChanged) {
-      // reset status first
-      setInitStatus('initial');
-      pageSearcherRef.current = null;
-      const searcher = createSearcher();
-      searcher.fetchSearchIndex().catch(() => {});
-    }
-  }, [lang, version, versionedSearch]);
-
-  const handleQueryChangedImpl = async (value: string) => {
-    let newQuery = value;
-    setQuery(newQuery);
-    if (!newQuery) {
-      setIsSearching(false);
-      return;
-    }
-    if (newQuery) {
-      const searchResult: MatchResult = [];
-
-      if ('beforeSearch' in userSearchHooks) {
-        const key = 'beforeSearch' as const;
-        const transformedQuery = await userSearchHooks[key](newQuery);
-        if (transformedQuery) {
-          newQuery = transformedQuery;
-        }
-      }
-
-      const defaultSearchResult =
-        await pageSearcherRef.current?.match(newQuery);
-
-      if (defaultSearchResult) {
-        searchResult.push(...defaultSearchResult);
-      }
-
-      if ('onSearch' in userSearchHooks) {
-        const key = 'onSearch' as const;
-        const customSearchResult = await userSearchHooks[key](
-          newQuery,
-          searchResult as DefaultMatchResult[],
-        );
-        if (customSearchResult) {
-          searchResult.push(
-            ...customSearchResult.map(
-              item =>
-                ({
-                  renderType: RenderType.Custom,
-                  ...item,
-                }) as CustomMatchResult,
-            ),
-          );
-        }
-      }
-
-      if ('afterSearch' in userSearchHooks) {
-        const key = 'afterSearch' as const;
-        await userSearchHooks[key](newQuery, searchResult);
-      }
-
-      // only setSearchResult when query is current query value
-      const currQuery = searchInputRef.current?.value;
-      if (currQuery === newQuery) {
-        // Reset current suggestion index to 0 when search query changes
-        setCurrentSuggestionIndex(0);
-        setSearchResult(searchResult || DEFAULT_RESULT);
-        setIsSearching(false);
-      }
-    }
-  };
-
-  const handleQueryChange = useDebounce(handleQueryChangedImpl);
 
   const renderSearchResult = (result: MatchResult, isSearching: boolean) => {
     if (result.length === 1) {
