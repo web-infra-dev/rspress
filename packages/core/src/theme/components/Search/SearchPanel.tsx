@@ -297,22 +297,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     }
   }, [focused]);
 
-  // Prefetch the search index when the page is idle
-  useEffect(() => {
-    let idleCallbackID: number | undefined;
-    if ('requestIdleCallback' in window && !pageSearcherRef.current) {
-      idleCallbackID = window.requestIdleCallback(() => {
-        const searcher = createSearcher();
-        searcher.fetchSearchIndex();
-      });
-    }
-    return () => {
-      if (idleCallbackID !== undefined && 'cancelIdleCallback' in window) {
-        window.cancelIdleCallback(idleCallbackID);
-      }
-    };
-  }, []);
-
   // init pageSearcher again when lang or version changed
   useEffect(() => {
     const { currentLang, currentVersion } = pageSearcherConfigRef.current ?? {};
