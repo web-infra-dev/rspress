@@ -4,6 +4,7 @@
   "sitemap",
   "client-redirects",
   "typedoc",
+  "openapi",
   "api-docgen",
   "preview",
   "playground",

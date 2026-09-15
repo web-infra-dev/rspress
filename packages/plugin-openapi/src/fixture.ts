@@ -1,0 +1,112 @@
+import type { OpenAPIDocument } from './types';
+export const fixture: OpenAPIDocument = {
+  openapi: '3.1.0',
+  info: { title: 'Planets API', version: '1.0.0' },
+  servers: [{ url: 'https://example.com/v1' }],
+  paths: {
+    '/planets': {
+      get: {
+        operationId: 'getAllPlanets',
+        summary: 'Get all planets',
+        tags: ['Planets'],
+        description:
+          'Explore the planets in our galaxy. Filter the collection and discover your next destination.',
+        parameters: [
+          {
+            name: 'limit',
+            in: 'query',
+            description: 'The number of planets to return.',
+            schema: { type: 'integer', format: 'int64', default: 10 },
+          },
+          {
+            name: 'offset',
+            in: 'query',
+            description: 'The number of planets to skip.',
+            schema: { type: 'integer', default: 0 },
+          },
+        ],
+        responses: {
+          '200': {
+            description: 'A collection of planets',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    data: {
+                      type: 'array',
+                      items: { $ref: '#/components/schemas/Planet' },
+                    },
+                  },
+                },
+                example: {
+                  data: [
+                    {
+                      id: 1,
+                      name: 'Mars',
+                      description: 'The red planet',
+                      type: 'terrestrial',
+                      radius: 0.532,
+                      gravity: 0.378,
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      },
+      post: {
+        operationId: 'createPlanet',
+        summary: 'Create a planet',
+        tags: ['Planets'],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/Planet' },
+            },
+          },
+        },
+        responses: { '201': { description: 'Planet created' } },
+      },
+    },
+    '/planets/{id}': {
+      parameters: [
+        { name: 'id', in: 'path', required: true, schema: { type: 'string' } },
+      ],
+      get: {
+        operationId: 'getPlanet',
+        summary: 'Get a planet',
+        tags: ['Planets'],
+        responses: {
+          '200': {
+            description: 'Planet',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/Planet' },
+              },
+            },
+          },
+          '404': { description: 'Planet not found' },
+        },
+      },
+    },
+  },
+  components: {
+    schemas: {
+      Planet: {
+        type: 'object',
+        required: ['name'],
+        properties: {
+          id: { type: 'integer' },
+          name: { type: 'string', example: 'Mars' },
+          moons: {
+            type: 'array',
+            items: { $ref: '#/components/schemas/Planet' },
+          },
+        },
+      },
+    },
+  },
+};

@@ -53,6 +53,7 @@ export function Badge({
 
   return (
     <span
+      data-text={typeof content === 'string' ? content : undefined}
       className={clsx(
         'rp-badge',
         `rp-badge--${type}`,
