@@ -1,3 +1,4 @@
+import { usePageData } from '@rspress/core/runtime';
 import type { LocalSearchOptions } from '@rspress/core';
 import { debounce } from '@rspress/shared/lodash-es';
 import {
@@ -32,19 +33,16 @@ const useDebounce = <T extends (...args: any[]) => any>(cb: T) => {
 
 export function useSearchPanel({
   focused,
-  lang,
-  search,
-  siteTitle,
-  version,
   searchInputRef,
 }: {
   focused: boolean;
-  lang: string;
-  search: LocalSearchOptions;
-  siteTitle: string;
-  version: string;
   searchInputRef: RefObject<HTMLInputElement | null>;
 }) {
+  const {
+    siteData,
+    page: { lang, version },
+  } = usePageData();
+  const { search, title: siteTitle } = siteData;
   const [query, setQuery] = useState('');
   const [searchResult, setSearchResult] = useState<MatchResult>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -56,12 +54,12 @@ export function useSearchPanel({
   const [searchError, setSearchError] = useState<string>();
   const pageSearcherRef = useRef<PageSearcher | null>(null);
   const pageSearcherConfigRef = useRef<PageSearcherConfig | null>(null);
-  const versionedSearch =
-    typeof search !== 'boolean' && (search?.versioned ?? true);
-  const searchIndexURL = getSearchIndexURL(
-    lang,
-    versionedSearch ? version : '',
-  );
+  const searchEnabled = search !== false;
+  const searchOptions: LocalSearchOptions = search === false ? {} : search;
+  const versionedSearch = searchEnabled && (search?.versioned ?? true);
+  const searchIndexURL = searchEnabled
+    ? getSearchIndexURL(lang, versionedSearch ? version : '')
+    : undefined;
   const DEFAULT_RESULT = [
     { group: siteTitle, result: [], renderType: RenderType.Default },
   ];
@@ -73,7 +71,7 @@ export function useSearchPanel({
     const pageSearcherConfig = { currentLang: lang, currentVersion: version };
     const pageSearcher = new PageSearcher({
       indexName: siteTitle,
-      ...search,
+      ...searchOptions,
       ...pageSearcherConfig,
     });
     pageSearcherRef.current = pageSearcher;
@@ -105,15 +103,21 @@ export function useSearchPanel({
   };
 
   useEffect(() => {
+    if (!searchEnabled) {
+      return;
+    }
     if (focused) {
       setSearchResult(DEFAULT_RESULT);
       initSearch();
     } else {
       setQuery('');
     }
-  }, [focused]);
+  }, [focused, searchEnabled]);
 
   useEffect(() => {
+    if (!searchEnabled) {
+      return;
+    }
     const { currentLang, currentVersion } = pageSearcherConfigRef.current ?? {};
     const isLangChanged = lang !== currentLang;
     const isVersionChanged = versionedSearch && version !== currentVersion;
@@ -124,7 +128,7 @@ export function useSearchPanel({
         .fetchSearchIndex()
         .catch(() => {});
     }
-  }, [lang, version, versionedSearch]);
+  }, [lang, version, versionedSearch, searchEnabled]);
 
   const handleQueryChangedImpl = async (value: string) => {
     let newQuery = value;
@@ -165,15 +169,24 @@ export function useSearchPanel({
   };
 
   const handleQueryChange = useDebounce(handleQueryChangedImpl);
+  const handleQueryInput = (value: string) => {
+    setIsSearching(Boolean(value));
+    handleQueryChange(value);
+  };
+  const clearQuery = () => {
+    setQuery('');
+    setIsSearching(false);
+  };
 
   return {
-    DEFAULT_RESULT,
+    searchEnabled,
+    clearQuery,
     currentRenderType:
       searchResult[resultTabIndex]?.renderType ?? RenderType.Default,
     currentSuggestions:
       (searchResult[resultTabIndex]?.result as DefaultMatchResult['result']) ??
       [],
-    handleQueryChange,
+    handleQueryInput,
     initStatus,
     isSearching,
     resultTabIndex,
@@ -183,8 +196,6 @@ export function useSearchPanel({
     query,
     currentSuggestionIndex,
     setCurrentSuggestionIndex,
-    setIsSearching,
-    setQuery,
     setResultTabIndex,
   };
 }

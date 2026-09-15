@@ -1,4 +1,4 @@
-import { Head, useI18n, usePageData } from '@rspress/core/runtime';
+import { Head, useI18n } from '@rspress/core/runtime';
 import {
   IconClose,
   IconLoading,
@@ -99,23 +99,15 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       }
     }
   };
-  const {
-    siteData,
-    page: { lang, version },
-  } = usePageData();
   const t = useI18n();
   const navigate = useLinkNavigate();
-  const { search, title: siteTitle } = siteData;
-
-  if (search === false) {
-    return null;
-  }
 
   const {
     currentRenderType,
     currentSuggestions,
     currentSuggestionIndex,
-    handleQueryChange,
+    clearQuery,
+    handleQueryInput,
     initStatus,
     isSearching,
     query,
@@ -123,18 +115,14 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     searchError,
     searchIndexURL,
     searchResult,
+    searchEnabled,
     setCurrentSuggestionIndex,
-    setIsSearching,
-    setQuery,
     setResultTabIndex,
-  } = useSearchPanel({
-    focused,
-    lang,
-    search,
-    siteTitle,
-    version,
-    searchInputRef,
-  });
+  } = useSearchPanel({ focused, searchInputRef });
+
+  if (!searchEnabled) {
+    return null;
+  }
 
   const clearSearchState = () => {
     setFocused(false);
@@ -379,8 +367,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     inputMode="search"
                     onChange={e => {
                       const value = e.target.value;
-                      setIsSearching(Boolean(value));
-                      handleQueryChange(value);
+                      handleQueryInput(value);
                     }}
                   />
                   <label>
@@ -394,7 +381,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                             clearSearchState();
                           } else {
                             searchInputRef.current.value = '';
-                            setQuery('');
+                            clearQuery();
                           }
                         }
                       }}
