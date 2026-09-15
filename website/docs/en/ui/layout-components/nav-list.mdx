@@ -1,0 +1,43 @@
+---
+description: NavList component for rendering custom navigation items across desktop and mobile layouts.
+overviewHeaders: []
+---
+
+# NavList
+
+`NavList` renders custom navigation items using the presentation of the surrounding navigation. When it is used with the navigation slots of [`Layout`](/ui/layout-components/layout), the same items work in both desktop and mobile navigation.
+
+## Usage
+
+Use `NavList` with one of the navigation item slots provided by `Layout`:
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [
+  { text: 'Community', link: '/community' },
+  {
+    text: 'Resources',
+    items: [
+      { text: 'Blog', link: '/blog' },
+      { text: 'GitHub', link: 'https://github.com' },
+    ],
+  },
+];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+The navigation slots are rendered in the same position on desktop and mobile. See [Layout](/ui/layout-components/layout#custom-navigation-lists) for the available slots.
+
+## Props
+
+### items
+
+- **Type:** `NavItem[]`
+
+The navigation items to render. The item structure is the same as [`themeConfig.nav`](/api/config/config-theme#nav), including links, nested items, icons, tags, and active matching.
