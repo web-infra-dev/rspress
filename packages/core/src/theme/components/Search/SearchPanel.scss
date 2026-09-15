@@ -79,7 +79,7 @@
   }
 
   &__search-icon--loading {
-    animation: rp-search-panel-icon-tide 1s ease-in-out infinite;
+    animation: rp-search-panel-icon-loading 1s ease-in-out infinite;
 
     @media (prefers-reduced-motion: reduce) {
       animation: none;
@@ -150,7 +150,7 @@
   }
 }
 
-@keyframes rp-search-panel-icon-tide {
+@keyframes rp-search-panel-icon-loading {
   0%,
   100% {
     opacity: 0.35;
