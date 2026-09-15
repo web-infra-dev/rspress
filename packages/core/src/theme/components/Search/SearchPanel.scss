@@ -159,10 +159,10 @@
 @keyframes rp-search-panel-icon-loading {
   0%,
   100% {
-    opacity: 0.35;
+    opacity: 1;
   }
 
   50% {
-    opacity: 1;
+    opacity: 0;
   }
 }
