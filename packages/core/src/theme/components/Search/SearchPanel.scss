@@ -79,7 +79,7 @@
   }
 
   &__search-icon--loading {
-    animation: rp-search-panel-icon-tide 1.4s ease-in-out infinite;
+    animation: rp-search-panel-icon-tide 1s ease-in-out infinite;
 
     @media (prefers-reduced-motion: reduce) {
       animation: none;
