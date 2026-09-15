@@ -511,7 +511,14 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               <div className="rp-search-panel__header">
                 <div className="rp-search-panel__input-form">
                   <label>
-                    <SvgWrapper icon={IconSearch} />
+                    <SvgWrapper
+                      icon={IconSearch}
+                      className={`rp-search-panel__search-icon${
+                        initStatus === 'initing'
+                          ? ' rp-search-panel__search-icon--loading'
+                          : ''
+                      }`}
+                    />
                   </label>
                   <input
                     className="rp-search-panel__input"
