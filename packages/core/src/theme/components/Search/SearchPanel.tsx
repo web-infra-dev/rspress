@@ -1,4 +1,4 @@
-import { useI18n, usePageData } from '@rspress/core/runtime';
+import { Head, useI18n, usePageData } from '@rspress/core/runtime';
 import {
   IconClose,
   IconLoading,
@@ -12,6 +12,7 @@ import { debounce } from '@rspress/shared/lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
+import { getSearchIndexURL } from './logic/providers/LocalProvider';
 import { PageSearcher } from './logic/search';
 import type {
   CustomMatchResult,
@@ -132,8 +133,17 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const t = useI18n();
   const navigate = useLinkNavigate();
   const { search, title: siteTitle } = siteData;
+
+  if (search === false) {
+    return null;
+  }
+
   const versionedSearch =
     typeof search !== 'boolean' && (search?.versioned ?? true);
+  const searchIndexURL = getSearchIndexURL(
+    lang,
+    versionedSearch ? version : '',
+  );
   const DEFAULT_RESULT = [
     { group: siteTitle, result: [], renderType: RenderType.Default },
   ];
@@ -141,10 +151,6 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     (searchResult[resultTabIndex]?.result as DefaultMatchResultItem[]) ?? [];
   const currentRenderType =
     searchResult[resultTabIndex]?.renderType ?? RenderType.Default;
-
-  if (search === false) {
-    return null;
-  }
 
   /**
    * Create page searcher instance.
@@ -490,6 +496,11 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   return (
     <>
+      {searchIndexURL && (
+        <Head>
+          <link rel="prefetch" href={searchIndexURL} />
+        </Head>
+      )}
       {focused &&
         createPortal(
           <div
