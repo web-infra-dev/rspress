@@ -323,6 +323,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
   const handleQueryChangedImpl = async (value: string) => {
     let newQuery = value;
     setQuery(newQuery);
+    if (!newQuery) {
+      setIsSearching(false);
+      return;
+    }
     if (newQuery) {
       const searchResult: MatchResult = [];
 
@@ -514,7 +518,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     <SvgWrapper
                       icon={IconSearch}
                       className={`rp-search-panel__search-icon${
-                        initStatus === 'initing'
+                        initStatus === 'initing' || isSearching
                           ? ' rp-search-panel__search-icon--loading'
                           : ''
                       }`}
@@ -528,7 +532,11 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     autoComplete="off"
                     autoFocus
                     inputMode="search"
-                    onChange={e => handleQueryChange(e.target.value)}
+                    onChange={e => {
+                      const value = e.target.value;
+                      setIsSearching(Boolean(value));
+                      handleQueryChange(value);
+                    }}
                   />
                   <label>
                     <SvgWrapper
