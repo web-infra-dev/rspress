@@ -6,6 +6,7 @@ import {
 } from '@rspress/core/theme';
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
+import type { NavItemsSlots } from '../Nav';
 import { NavVersions } from '../Nav/NavMenu';
 import { NavScreen, NavScreenDivider } from '../NavScreen';
 import { NavScreenAppearance } from '../NavScreen/NavScreenAppearance';
@@ -13,7 +14,7 @@ import { NavScreenLangs } from '../NavScreen/NavScreenLangs';
 import './index.scss';
 import { useNavScreen } from './useNavScreen';
 
-export function NavHamburger() {
+export function NavHamburger(props: NavItemsSlots) {
   const items = (
     <div className="rp-nav-hamburger__md__hover-group">
       <NavScreenAppearance />
@@ -36,7 +37,14 @@ export function NavHamburger() {
     <>
       {isScreenOpen &&
         createPortal(
-          <NavScreen isScreenOpen={isScreenOpen} toggleScreen={toggleScreen} />,
+          <NavScreen
+            beforeLeftNavItems={props.beforeLeftNavItems}
+            afterLeftNavItems={props.afterLeftNavItems}
+            beforeRightNavItems={props.beforeRightNavItems}
+            afterRightNavItems={props.afterRightNavItems}
+            isScreenOpen={isScreenOpen}
+            toggleScreen={toggleScreen}
+          />,
           document.getElementById('__rspress_modal_container')!,
         )}
 
