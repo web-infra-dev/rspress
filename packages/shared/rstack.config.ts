@@ -8,9 +8,7 @@ define.lib({
   tools: {
     rspack: {
       experiments: {
-        // The Rspack runtime currently breaks `exports = module.exports`
-        // assignments in gray-matter.
-        runtimeMode: 'webpack',
+        runtimeMode: 'rspack',
       },
     },
   },
