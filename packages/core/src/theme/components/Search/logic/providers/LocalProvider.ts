@@ -157,9 +157,7 @@ export class LocalProvider implements Provider {
     // English Index
     this.#index = new Document({
       ...createOptions,
-      // Full tokenization creates O(n^2) substrings, so skip long tokens such as
-      // base64 data to limit memory usage. Apply this only to the default index:
-      // the length check runs before CJK/Cyrillic character splitting in finalize.
+      // Limit token length for performance: https://github.com/web-infra-dev/rspress/pull/3682
       // cspell:ignore maxlength
       encoder: { maxlength: 64 },
     });
