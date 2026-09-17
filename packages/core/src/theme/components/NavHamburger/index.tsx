@@ -55,7 +55,7 @@ export function NavHamburger(props: NavItemsSlots) {
           'rp-nav-hamburger--active': isScreenOpen,
         })}
       >
-        <SvgWrapper icon={IconSmallMenu} />
+        <SvgWrapper icon={IconSmallMenu} width={20} height={20} />
       </button>
 
       <button
