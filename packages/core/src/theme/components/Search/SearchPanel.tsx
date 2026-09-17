@@ -391,7 +391,9 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   ref={searchResultRef}
                 >
                   {initStatus === 'error' ? (
-                    <div className="rp-search-panel__error">{searchError}</div>
+                    <div className="rp-search-panel__error">
+                      Error: {searchError}
+                    </div>
                   ) : (
                     renderSearchResult(searchResult)
                   )}
