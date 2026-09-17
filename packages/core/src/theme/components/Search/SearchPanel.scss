@@ -7,7 +7,8 @@
     bottom: 0;
     background: #3c3c3c66;
     backdrop-filter: blur(5px);
-    z-index: 100;
+    // Keep the modal above the sticky banner (z-index: 999).
+    z-index: 1000;
   }
 
   &__modal {
@@ -130,7 +131,7 @@
 
   @media (max-width: 960px) {
     &__modal {
-      margin-top: 0;
+      margin-top: calc(32px + env(safe-area-inset-top, 0px));
     }
 
     &__input-form {
