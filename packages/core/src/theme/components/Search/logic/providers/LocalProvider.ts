@@ -65,25 +65,6 @@ const cjkRegex =
   /[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]|[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]|[\u3041-\u3096]|[\u30A1-\u30FA]/giu;
 const cyrillicRegex = /[\u0400-\u04FF]/g;
 
-/**
- * Longest token that goes into the default search index, in characters.
- *
- * FlexSearch is configured below with `tokenize: 'full'`, which indexes every
- * substring of every token, so a token costs the square of its length. A
- * multi-kilobyte token — a base64 data URI or a JWT pasted into a code sample —
- * expands into tens of millions of substrings and can exhaust the tab's memory
- * before the index has finished building.
- *
- * Real prose never gets close: the longest English words run about 20-30
- * characters and long code identifiers about 40-50.
- *
- * This deliberately applies to the default index only. FlexSearch enforces the
- * limit *before* `finalize` runs, and the CJK and Cyrillic indexes rely on
- * `finalize` to split a run into individual characters — capping them would
- * discard a long CJK sentence without punctuation rather than splitting it.
- */
-const MAX_TOKEN_LENGTH = 64;
-
 function tokenize(str: string, regex: RegExp) {
   const words: string[] = [];
   let m: RegExpExecArray | null;
@@ -176,8 +157,11 @@ export class LocalProvider implements Provider {
     // English Index
     this.#index = new Document({
       ...createOptions,
+      // Full tokenization creates O(n^2) substrings, so skip long tokens such as
+      // base64 data to limit memory usage. Apply this only to the default index:
+      // the length check runs before CJK/Cyrillic character splitting in finalize.
       // cspell:ignore maxlength
-      encoder: { maxlength: MAX_TOKEN_LENGTH },
+      encoder: { maxlength: 64 },
     });
     // CJK: Chinese, Japanese, Korean
     this.#cjkIndex = new Document({
