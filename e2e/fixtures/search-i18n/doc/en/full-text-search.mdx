@@ -1,0 +1,10 @@
+import { useFullTextSearch } from '@rspress/core/theme';
+
+export function SearchStatus() {
+  const { initialized } = useFullTextSearch();
+  return <span data-testid="search-initialized">{String(initialized)}</span>;
+}
+
+# Full-text search
+
+<SearchStatus />
