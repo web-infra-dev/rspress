@@ -1,7 +1,6 @@
 import { Head, useI18n } from '@rspress/core/runtime';
 import {
   IconClose,
-  IconLoading,
   IconSearch,
   SvgWrapper,
   Tab,
@@ -215,16 +214,13 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     currentSuggestionIndex,
   ]);
 
-  const renderSearchResult = (result: MatchResult, isSearching: boolean) => {
+  const renderSearchResult = (result: MatchResult) => {
     if (result.length === 1) {
       const currentSearchResult = result[0]
         .result as DefaultMatchResult['result'];
-      if (currentSearchResult.length === 0 && !isSearching) {
-        return <NoSearchResult query={query} />;
-      }
       return (
         <div ref={searchResultTabRef}>
-          {renderSearchResultItem(currentSearchResult, query, isSearching)}
+          {renderSearchResultItem(currentSearchResult)}
         </div>
       );
     }
@@ -244,7 +240,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         {result.map(item => (
           <Tab key={item.group} label={item.group}>
             {item.renderType === RenderType.Default &&
-              renderSearchResultItem(item.result, query, isSearching)}
+              renderSearchResultItem(item.result)}
             {item.renderType === RenderType.Custom &&
               userSearchHooks[renderKey](item.result)}
           </Tab>
@@ -255,21 +251,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   const renderSearchResultItem = (
     suggestionList: DefaultMatchResult['result'],
-    query: string,
-    isSearching: boolean,
   ) => {
-    // if isSearching, show loading svg
-    if (isSearching) {
-      return (
-        <div className="rp-search-panel__loading">
-          <SvgWrapper icon={IconLoading} />
-        </div>
-      );
-    }
-
-    // if no result, show the no result tip
+    // Wait for the current search before showing the no-results message.
     if (suggestionList.length === 0 && initStatus === 'inited') {
-      return <NoSearchResult query={query} />;
+      return isSearching ? null : <NoSearchResult query={query} />;
     }
 
     const normalizedSuggestions = normalizeSuggestions(suggestionList);
@@ -408,7 +393,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                   {initStatus === 'error' ? (
                     <div className="rp-search-panel__error">{searchError}</div>
                   ) : (
-                    renderSearchResult(searchResult, isSearching)
+                    renderSearchResult(searchResult)
                   )}
                 </div>
               ) : null}
