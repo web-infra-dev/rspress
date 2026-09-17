@@ -106,18 +106,27 @@ export async function createPageData(context: FactoryContext): Promise<{
     pages.map(async pageData => pluginDriver.extendPageData(pageData)),
   );
 
-  const filepaths: string[] = [];
+  const filepaths = new Set<string>();
   const pageData: PageData = {
     pages: pages.map(page => {
       // omit some fields for runtime size
-      const { content: _content, _filepath, _flattenContent, ...rest } = page;
-      filepaths.push(_filepath);
+      const {
+        content: _content,
+        _deps,
+        _filepath,
+        _flattenContent,
+        ...rest
+      } = page;
+      filepaths.add(_filepath);
+      for (const dep of _deps ?? []) {
+        filepaths.add(dep);
+      }
       return rest;
     }),
   };
 
   return {
-    filepaths,
+    filepaths: [...filepaths],
     pageData,
     searchIndex,
     indexHashByGroup,
