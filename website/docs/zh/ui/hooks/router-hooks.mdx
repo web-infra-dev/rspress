@@ -8,6 +8,10 @@ Rspress 直接重导出 `react-router-dom` 的路由能力，你可以无需额�
 
 - **类型：** 与对应的 `react-router-dom` Hook 保持一致
 
+Rspress 使用 React Router 的 Data 模式。调用 `navigate('/guide')` 时，路由 loader 会先加载目标页面的数据和异步模块，完成后再一起更新位置、正文和页面数据。加载期间保留当前页面，无需先调用 `useLinkNavigate` 或手动预加载。
+
+使用内置的 React Router 7 时，`navigate()` 返回 `Promise<void>`，可以通过 `await navigate('/guide')` 等待导航完成。通过 `useNavigation().state` 可以读取导航的 `idle`、`loading` 或 `submitting` 状态。默认主题的 `Link` 仍会在 hover 时提前预加载目标页面模块。
+
 下面是一个使用示例：
 
 ```tsx preview

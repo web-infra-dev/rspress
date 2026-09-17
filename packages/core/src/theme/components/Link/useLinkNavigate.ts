@@ -1,35 +1,21 @@
 import {
-  initPageData,
-  isActive,
   pathnameToRouteService,
-  useLocation,
-  useNavigate as useNavigateInner,
+  useNavigate,
   useSite,
-  warmPageData,
 } from '@rspress/core/runtime';
-import nprogress from 'nprogress';
-import {
-  startTransition as reactStartTransition,
-  type TransitionStartFunction,
-  useCallback,
-} from 'react';
+import { type TransitionStartFunction, useCallback } from 'react';
 import { getHref } from './getHref';
 
-nprogress.configure({ showSpinner: false });
-
 /**
- * For import { Link } from '@rspress/core/theme';
- * useNavigate with preload logic
+ * Navigate with Rspress link normalization. The router loader handles page
+ * loading for both this helper and the native useNavigate hook.
  */
-export function useLinkNavigate(
-  {
-    startTransition = reactStartTransition,
-  }: { startTransition?: TransitionStartFunction } = {
-    startTransition: reactStartTransition,
-  },
-): (href: string) => Promise<void> {
-  const { pathname: currPagePathname } = useLocation();
-  const navigate = useNavigateInner();
+export function useLinkNavigate({
+  startTransition,
+}: { startTransition?: TransitionStartFunction } = {}): (
+  href: string,
+) => Promise<void> {
+  const navigate = useNavigate();
   const { site } = useSite();
   const useTransitions = site?.route?.useTransitions;
 
@@ -41,41 +27,22 @@ export function useLinkNavigate(
         window.location.assign(href);
         return;
       }
+      if (!pathnameToRouteService(routePath)) {
+        window.location.assign(withBaseHref);
+        return;
+      }
 
-      const isTransitionable = !!(useTransitions && startTransition);
-      const preloadChunkThenNavigate = async () => {
-        const inCurrPage = isActive(removeBaseHref, currPagePathname);
-
-        if (!import.meta.env.SSR && !inCurrPage) {
-          const matchedRoute = pathnameToRouteService(routePath);
-          if (matchedRoute) {
-            const timer = setTimeout(() => {
-              nprogress.start();
-            }, 200);
-            const data = await initPageData(routePath);
-            warmPageData(routePath, data);
-            clearTimeout(timer);
-            nprogress.done();
-          } else {
-            window.location.assign(withBaseHref);
-            return;
-          }
-        }
-        if (isTransitionable) {
-          startTransition(() => {
-            return navigate(removeBaseHref, { replace: false });
-          });
-        } else {
-          navigate(removeBaseHref, { replace: false });
-        }
-      };
-
-      if (isTransitionable) {
-        startTransition(preloadChunkThenNavigate);
+      if (useTransitions && startTransition) {
+        let navigation: void | Promise<void> = undefined;
+        startTransition(() => {
+          navigation = navigate(removeBaseHref);
+          return navigation;
+        });
+        await navigation;
       } else {
-        preloadChunkThenNavigate();
+        await navigate(removeBaseHref);
       }
     },
-    [useTransitions, currPagePathname, navigate, startTransition],
+    [useTransitions, navigate, startTransition],
   );
 }

@@ -1,8 +1,8 @@
 import { removeBase } from '@rspress/core/runtime';
 import { startTransition } from 'react';
 import { hydrateRoot } from 'react-dom/client';
-import { ClientApp } from './ClientApp';
-import { initPageData, setCurrentPageData } from './initPageData';
+import { ClientApp, createClientRouter } from './ClientApp';
+import { initPageData } from './initPageData';
 import { redirectToCleanUrl } from './route';
 
 // difference from csrClientEntry.tsx
@@ -16,11 +16,11 @@ async function renderInBrowser() {
   const container = document.getElementById('__rspress_root')!;
   const pathname = removeBase(window.location.pathname);
   const initialPageData = await initPageData(pathname);
-  setCurrentPageData(pathname, initialPageData);
+  const router = createClientRouter(initialPageData);
   // why startTransition?
   // https://github.com/facebook/docusaurus/pull/9051
   startTransition(() => {
-    hydrateRoot(container, <ClientApp initialPageData={initialPageData} />, {
+    hydrateRoot(container, <ClientApp router={router} />, {
       onRecoverableError(error, errorInfo) {
         if (error instanceof Error) {
           console.warn('hydrateRoot recoverable error:', error, errorInfo);
