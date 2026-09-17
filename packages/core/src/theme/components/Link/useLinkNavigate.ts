@@ -1,5 +1,7 @@
 import {
+  isActive,
   pathnameToRouteService,
+  useLocation,
   useNavigate,
   useSite,
 } from '@rspress/core/runtime';
@@ -15,6 +17,7 @@ export function useLinkNavigate({
 }: { startTransition?: TransitionStartFunction } = {}): (
   href: string,
 ) => Promise<void> {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const { site } = useSite();
   const useTransitions = site?.route?.useTransitions;
@@ -27,7 +30,12 @@ export function useLinkNavigate({
         window.location.assign(href);
         return;
       }
-      if (!pathnameToRouteService(routePath)) {
+      // Keep same-page links client-side, including on a 404 page, so clicking
+      // a parent menu link does not reload the document and close its submenu.
+      if (
+        !isActive(removeBaseHref, pathname) &&
+        !pathnameToRouteService(routePath)
+      ) {
         window.location.assign(withBaseHref);
         return;
       }
@@ -43,6 +51,6 @@ export function useLinkNavigate({
         await navigate(removeBaseHref);
       }
     },
-    [useTransitions, navigate, startTransition],
+    [useTransitions, pathname, navigate, startTransition],
   );
 }
