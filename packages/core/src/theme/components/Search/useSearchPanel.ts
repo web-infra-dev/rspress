@@ -89,14 +89,27 @@ export function useSearchPanel({
     try {
       await searcher.init();
     } catch (error) {
+      if (pageSearcherRef.current !== searcher) {
+        return;
+      }
       setSearchError(error instanceof Error ? error.message : String(error));
       setInitStatus('error');
+      setIsSearching(false);
+      return;
+    }
+    if (pageSearcherRef.current !== searcher) {
       return;
     }
     setInitStatus('inited');
     const currentQuery = searchInputRef.current?.value;
     if (currentQuery) {
       const matched = await searcher.match(currentQuery);
+      if (
+        pageSearcherRef.current !== searcher ||
+        searchInputRef.current?.value !== currentQuery
+      ) {
+        return;
+      }
       setSearchResult(matched || DEFAULT_RESULT);
       setIsSearching(false);
     }
@@ -123,6 +136,8 @@ export function useSearchPanel({
     const isVersionChanged = versionedSearch && version !== currentVersion;
     if (isLangChanged || isVersionChanged) {
       setInitStatus('initial');
+      setSearchError(undefined);
+      setIsSearching(false);
       pageSearcherRef.current = null;
       createSearcher()
         .fetchSearchIndex()
