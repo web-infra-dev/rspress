@@ -129,34 +129,6 @@ test.describe('localized search', async () => {
     );
   });
 
-  test('shows an index load error and logs the failure once', async ({
-    page,
-  }) => {
-    const failureMessages: string[] = [];
-    page.on('console', message => {
-      if (
-        message.type() === 'error' &&
-        message.text().includes('Failed to fetch search index')
-      ) {
-        failureMessages.push(message.text());
-      }
-    });
-    await page.route('**/search_index.en.*.json', route =>
-      route.fulfill({ status: 503, body: 'Index unavailable' }),
-    );
-    await page.goto(`http://localhost:${appPort}`);
-    await page.locator('.rp-search-button').click();
-    await expect(page.locator('.rp-search-panel__error')).toHaveText(
-      'Error: Failed to fetch search index',
-    );
-    await expect(page.locator('.rp-search-panel__search-icon')).not.toHaveClass(
-      /--loading/,
-    );
-    expect(failureMessages).toEqual([
-      'Failed to fetch search index, please reload the page and try again.',
-    ]);
-  });
-
   test('public full-text search handles an index load failure', async ({
     page,
   }) => {
