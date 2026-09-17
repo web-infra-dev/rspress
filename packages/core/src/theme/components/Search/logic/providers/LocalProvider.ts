@@ -107,7 +107,7 @@ export class LocalProvider implements Provider {
       if (result.ok) {
         return result.json();
       }
-      return handleError(result);
+      throw result;
     } catch (error) {
       return handleError(error);
     }
