@@ -4,7 +4,7 @@ import { LocalProvider } from './LocalProvider';
 import type { SearchOptions } from '../types';
 
 rs.mock('virtual-page-data', () => {
-  return { searchIndexHash: { '###en': 'testhash' } };
+  return { searchIndexHash: { '###en': 'test-hash' } };
 });
 
 /** A token far longer than anything a person would search for. */
@@ -93,7 +93,7 @@ describe('LocalProvider oversized tokens', () => {
     expect(await routePathsFor(provider, 'tekton')).toContain('/with-blob');
   });
 
-  it('keeps a long unpunctuated CJK run searchable', async () => {
+  it('keeps a long CJK run without punctuation searchable', async () => {
     const provider = await createProvider();
 
     // The CJK index splits this per character in `finalize`, which runs *after*

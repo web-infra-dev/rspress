@@ -80,7 +80,7 @@ const cyrillicRegex = /[\u0400-\u04FF]/g;
  * This deliberately applies to the default index only. FlexSearch enforces the
  * limit *before* `finalize` runs, and the CJK and Cyrillic indexes rely on
  * `finalize` to split a run into individual characters — capping them would
- * discard a long unpunctuated CJK sentence outright rather than splitting it.
+ * discard a long CJK sentence without punctuation rather than splitting it.
  */
 const MAX_TOKEN_LENGTH = 64;
 
@@ -176,6 +176,7 @@ export class LocalProvider implements Provider {
     // English Index
     this.#index = new Document({
       ...createOptions,
+      // cspell:ignore maxlength
       encoder: { maxlength: MAX_TOKEN_LENGTH },
     });
     // CJK: Chinese, Japanese, Korean
