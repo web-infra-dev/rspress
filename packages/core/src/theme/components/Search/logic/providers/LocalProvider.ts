@@ -155,7 +155,12 @@ export class LocalProvider implements Provider {
     };
     // Init Search Indexes
     // English Index
-    this.#index = new Document(createOptions);
+    this.#index = new Document({
+      ...createOptions,
+      // Limit token length for performance: https://github.com/web-infra-dev/rspress/pull/3682
+      // cspell:ignore maxlength
+      encoder: { maxlength: 64 },
+    });
     // CJK: Chinese, Japanese, Korean
     this.#cjkIndex = new Document({
       ...createOptions,
