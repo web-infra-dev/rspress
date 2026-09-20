@@ -1,4 +1,5 @@
-import { expect, type Page, test } from '@e2e/test';
+import { expect, test } from '@rstest/playwright';
+import type { Page } from 'playwright';
 import {
   getPort,
   killProcess,
@@ -272,8 +273,8 @@ test.describe('SSG dark mode no flash', async () => {
     if (isDark) {
       const appearanceToggle = page.locator('.rp-switch-appearance').first();
       await appearanceToggle.click();
-      await expect(page.locator('html')).not.toHaveClass(/rp-dark/);
     }
+    await expect(page.locator('html')).not.toHaveClass(/rp-dark/);
 
     // Step 2: Reload and check early state
     await page.reload({ waitUntil: 'domcontentloaded' });

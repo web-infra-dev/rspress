@@ -1,5 +1,5 @@
-import type { Locator, Page } from '@e2e/test';
-import { expect, test } from '@e2e/test';
+import { expect, test } from '@rstest/playwright';
+import type { Locator, Page } from 'playwright';
 import {
   getPort,
   killProcess,
@@ -25,6 +25,8 @@ interface NavSuiteConfig {
 }
 
 const createNavSuite = ({ title, configFile, paths }: NavSuiteConfig) => {
+  // The suite title is intentionally supplied by each scenario.
+  // rslint-disable-next-line rstest/valid-title
   test.describe(title, () => {
     let appPort: number;
     let app: Awaited<ReturnType<typeof runDevCommand>>;

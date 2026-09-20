@@ -1,4 +1,4 @@
-import type { Page } from '@e2e/test';
+import type { Page } from 'playwright';
 
 export function getShouldOpenNewPage<T>(
   page: Page,

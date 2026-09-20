@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/test';
+import { expect, test } from '@rstest/playwright';
 
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
@@ -55,19 +55,10 @@ test.describe('dynamic toc', async () => {
     const firstItem = tocItems.nth(0);
     await expect(firstItem).toHaveAttribute('data-depth', '0');
 
-    // If there are more items, check different depths
-    if (count > 1) {
-      // Check for h3 with data-depth="1"
-      const h3Items = page.locator('.rp-toc-item[data-depth="1"]');
-      const h3Count = await h3Items.count();
-      expect(h3Count).toBeGreaterThan(0);
-    }
+    const h3Count = await page.locator('.rp-toc-item[data-depth="1"]').count();
+    expect(h3Count).toBeGreaterThan(count > 1 ? 0 : -1);
 
-    if (count > 2) {
-      // Check for h4 with data-depth="2"
-      const h4Items = page.locator('.rp-toc-item[data-depth="2"]');
-      const h4Count = await h4Items.count();
-      expect(h4Count).toBeGreaterThan(0);
-    }
+    const h4Count = await page.locator('.rp-toc-item[data-depth="2"]').count();
+    expect(h4Count).toBeGreaterThan(count > 2 ? 0 : -1);
   });
 });

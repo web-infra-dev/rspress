@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { expect, test } from '@e2e/test';
+import { expect, test } from '@rstest/playwright';
 import { getNavbarItems, getSidebarTexts } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 

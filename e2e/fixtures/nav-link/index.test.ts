@@ -1,11 +1,6 @@
 import os from 'node:os';
-import {
-  expect,
-  type Locator,
-  type Page,
-  type PlaywrightFixture,
-  test,
-} from '@e2e/test';
+import { expect, type PlaywrightFixture, test } from '@rstest/playwright';
+import type { Locator, Page } from 'playwright';
 import { getShouldOpenNewPage } from '../../utils/newPage';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
@@ -71,6 +66,8 @@ test.describe('Navigation with <Link>', async () => {
     ] satisfies Parameters<Locator['click']>[0][];
 
     for (const clickOption of clickOptionCases) {
+      // The title includes the generated click options for each scenario.
+      // rslint-disable-next-line rstest/valid-title
       test(JSON.stringify(clickOption), async () => {
         await expect(
           scope.shouldOpenNewPage(() => scope.anchor.click(clickOption)),

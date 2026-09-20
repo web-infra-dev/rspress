@@ -1,15 +1,11 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@e2e/test';
+import { expect, test } from '@rstest/playwright';
 import { runBuildCommand } from '../../utils/runCommands';
 
 test('fails the build in strict SSG mode', async () => {
   const appDir = import.meta.dirname;
-  try {
-    await runBuildCommand(appDir);
-  } catch (err) {
-    expect(err).toBeInstanceOf(Error);
-  }
+  await expect(runBuildCommand(appDir)).rejects.toBeInstanceOf(Error);
 });
 
 test('csr should be successful', async () => {

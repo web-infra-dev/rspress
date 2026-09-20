@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import { expect, test } from '@e2e/test';
+import { expect, test } from '@rstest/playwright';
 import {
   getPort,
   killProcess,
