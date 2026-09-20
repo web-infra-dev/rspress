@@ -48,6 +48,32 @@ test.describe('dynamic toc', async () => {
     await expect(literalItem.locator('strong')).toHaveCount(0);
   });
 
+  test('Should omit browser-serialized void elements from TOC tooltips', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    const headingHtml = await page.locator('.rspress-doc').evaluate(doc => {
+      const heading = document.createElement('h2');
+      heading.id = 'logo-image';
+      heading.className = 'rp-toc-include';
+      heading.textContent = 'Logo ';
+      const image = document.createElement('img');
+      image.src =
+        'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+      heading.appendChild(image);
+      doc.appendChild(heading);
+      return heading.innerHTML;
+    });
+    expect(headingHtml).toContain('<img ');
+    expect(headingHtml).not.toContain('/>');
+    await expect(
+      page.locator('.rp-toc-item[href="#logo-image"]'),
+    ).toHaveAttribute('title', 'Logo');
+  });
+
   test('Data depth attribute', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/test-depth`, {
       waitUntil: 'networkidle',

@@ -107,6 +107,19 @@ describe('parseInlineMarkdownText', () => {
     ).toBe('this is image');
   });
 
+  it.each([
+    ['Logo <img src="/logo.svg">', 'Logo'],
+    ['Logo <IMG src="/logo.svg">', 'Logo'],
+    ['Before<br>After', 'BeforeAfter'],
+    ['Title <input disabled><hr>', 'Title'],
+    ['Class: Foo<T> <img src="/logo.svg">', 'Class: Foo<T>'],
+    ['Code `<img src="/logo.svg">`', 'Code <img src="/logo.svg">'],
+    ['Escaped \\<img\\>', 'Escaped <img>'],
+    ['Class: Foo<img-custom>', 'Class: Foo<img-custom>'],
+  ])('handles browser-serialized void elements in %s', (input, expected) => {
+    expect(parseInlineMarkdownText(input)).toBe(expected);
+  });
+
   it('decodes the HTML entities collected from the DOM', () => {
     expect(parseInlineMarkdownText('dynamic &amp; content')).toBe(
       'dynamic & content',

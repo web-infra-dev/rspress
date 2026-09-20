@@ -48,6 +48,9 @@ const DELETE_TEXT_PATTERN = /~{2}(.*?)~{2}/g;
 // <\/?[a-z]: Matches an opening or a closing tag, a tag name always starts with a letter.
 // [^>]*: Matches the rest of the tag, including its attributes.
 const HTML_TAG_PATTERN = /<\/?[a-z][^>]*>/gi;
+// Browser innerHTML omits the trailing slash on HTML void elements.
+const HTML_VOID_ELEMENT_PATTERN =
+  /<(?:area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)(?=[\s/>])[^>]*>/gi;
 // Matches named entities like `&amp;` as well as numeric ones like `&#39;` and `&#x27;`.
 const HTML_ENTITY_PATTERN = /&(#\d+|#x[0-9a-f]+|[a-z][0-9a-z]*);/gi;
 
@@ -202,7 +205,11 @@ export function renderInlineMarkdown(text: string) {
  */
 export function parseInlineMarkdownText(mdx: string) {
   const protectedText = protectInlineMarkdown(mdx);
-  const source = renderHtmlOrText(protectedText.text);
+  // Strip void elements independently of paired/self-closing HTML detection,
+  // after protecting literal tags in escapes and code spans.
+  const source = renderHtmlOrText(
+    protectedText.text.replace(HTML_VOID_ELEMENT_PATTERN, ''),
+  );
   const plainText = (
     'children' in source
       ? (source.children ?? '')
