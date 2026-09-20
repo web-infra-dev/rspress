@@ -47,6 +47,9 @@ const STRONG_TEXT_PATTERN = /\*{2}(?!\*)(.*?)\*{2}(?!\*)/g;
 const EMPHASIS_TEXT_PATTERN = /\*(?!\*)(.*?)\*(?!\*)/g;
 const DELETE_TEXT_PATTERN = /~{2}(.*?)~{2}/g;
 const INLINE_CODE_PATTERN = /`[^`]+`/g;
+// Match code spans before backslash escapes, which only apply outside code.
+// The character ranges cover all ASCII punctuation accepted by Markdown.
+const INLINE_CODE_OR_ESCAPE_PATTERN = /`[^`]+`|\\([!-/:-@[-`{-~])/g;
 // <\/?[a-z]: Matches an opening or a closing tag, a tag name always starts with a letter.
 // [^>]*: Matches the rest of the tag, including its attributes.
 const HTML_TAG_PATTERN = /<\/?[a-z][^>]*>/gi;
@@ -96,8 +99,12 @@ function decodeHtmlEntities(text: string) {
  */
 export function renderInlineMarkdown(text: string) {
   const htmlText = text
-    // replace `<list>` to prevent disappearing in dom, but not replace \<number\>
-    .replace(INLINE_CODE_PATTERN, match => match.replace(/</g, '&lt;'))
+    // Keep escaped punctuation literal even when inline formatting produces HTML.
+    .replace(
+      INLINE_CODE_OR_ESCAPE_PATTERN,
+      (match, escaped: string | undefined) =>
+        escaped ? `&#${escaped.charCodeAt(0)};` : match.replace(/</g, '&lt;'),
+    )
     .replace(STRONG_TEXT_PATTERN, '<strong>$1</strong>')
     .replace(EMPHASIS_TEXT_PATTERN, '<em>$1</em>')
     .replace(DELETE_TEXT_PATTERN, '<del>$1</del>')

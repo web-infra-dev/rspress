@@ -1,6 +1,41 @@
 import { describe, expect, it } from '@rstest/core';
 
-import { parseInlineMarkdownText } from './utils';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { parseInlineMarkdownText, renderInlineMarkdown } from './utils';
+
+describe('renderInlineMarkdown', () => {
+  it.each([
+    ['Class: Component\\<P, S, SS\\>', 'Class: Component&#60;P, S, SS&#62;'],
+    [
+      'Class: Component\\<P = \\{ \\}, S = \\{ \\}, SS = `any`\\>',
+      'Class: Component&#60;P = &#123; &#125;, S = &#123; &#125;, SS = <code>any</code>&#62;',
+    ],
+    ['Class: Foo\\<T = \\{ \\}\\>', 'Class: Foo&#60;T = &#123; &#125;&#62;'],
+    ['Class: Bar\\<T = `any`\\>', 'Class: Bar&#60;T = <code>any</code>&#62;'],
+  ])('renders escaped generic heading %s', (text, html) => {
+    expect(renderToStaticMarkup(<span {...renderInlineMarkdown(text)} />)).toBe(
+      `<span>${html}</span>`,
+    );
+  });
+
+  it.each([
+    [
+      '\\*literal\\* and **bold**',
+      '&#42;literal&#42; and <strong>bold</strong>',
+    ],
+    ['\\`literal\\` and `code`', '&#96;literal&#96; and <code>code</code>'],
+    ['\\\\{value}', '&#92;{value}'],
+    ['`\\{value\\}`', '<code>\\{value\\}</code>'],
+    [
+      '<strong>HTML</strong> and *emphasis*',
+      '<strong>HTML</strong> and <em>emphasis</em>',
+    ],
+  ])('preserves inline formatting and literal escapes in %s', (text, html) => {
+    expect(renderToStaticMarkup(<span {...renderInlineMarkdown(text)} />)).toBe(
+      `<span>${html}</span>`,
+    );
+  });
+});
 
 describe('parseInlineMarkdownText', () => {
   it('strips the inline markdown syntax', () => {
