@@ -24,7 +24,7 @@ test.describe('inline Markdown', async () => {
     });
 
     const sidebar = page.locator('.rp-doc-layout__sidebar .rp-sidebar-item');
-    await expect(sidebar).toHaveCount(9);
+    await expect(sidebar).toHaveCount(12);
 
     const sidebarTexts = (await sidebar.allTextContents()).map(text =>
       text.trim(),
@@ -40,6 +40,9 @@ test.describe('inline Markdown', async () => {
         '-m <number>',
         'delete',
         'link',
+        'Class: Component<P = { }, S = { }, SS = any>',
+        'Class: Foo<T = { }>',
+        'Class: Bar<T = any>',
       ].join(','),
     );
 
@@ -59,6 +62,9 @@ test.describe('inline Markdown', async () => {
       '-m &lt;number&gt;',
       '<del>delete</del>',
       'link',
+      'Class: Component&lt;P = { }, S = { }, SS = <code>any</code>&gt;',
+      'Class: Foo&lt;T = { }&gt;',
+      'Class: Bar&lt;T = <code>any</code>&gt;',
     ];
     for (const [index, html] of sidebarInnerHtml.entries()) {
       expect(html).toContain(expectedSidebarInnerHtml[index]);
@@ -90,6 +96,9 @@ test.describe('inline Markdown', async () => {
         '-m <number>',
         'delete',
         'link',
+        'Class: Component<P = { }, S = { }, SS = any>',
+        'Class: Foo<T = { }>',
+        'Class: Bar<T = any>',
       ].join(','),
     );
 
@@ -109,6 +118,9 @@ test.describe('inline Markdown', async () => {
         '-m &lt;number&gt;',
         '<del>delete</del>',
         'link',
+        'Class: Component&lt;P = { }, S = { }, SS = <code>any</code>&gt;',
+        'Class: Foo&lt;T = { }&gt;',
+        'Class: Bar&lt;T = <code>any</code>&gt;',
       ].join(','),
     );
 
@@ -124,6 +136,9 @@ test.describe('inline Markdown', async () => {
       '-m <number>',
       'delete',
       'link',
+      'Class: Component<P = { }, S = { }, SS = any>',
+      'Class: Foo<T = { }>',
+      'Class: Bar<T = any>',
     ]);
 
     const overviewTitlesCount = await overviewTitles.count();
@@ -141,6 +156,9 @@ test.describe('inline Markdown', async () => {
       '-m &lt;number&gt;',
       '<del>delete</del>',
       'link',
+      'Class: Component&lt;P = { }, S = { }, SS = <code>any</code>&gt;',
+      'Class: Foo&lt;T = { }&gt;',
+      'Class: Bar&lt;T = <code>any</code>&gt;',
     ];
     for (const [index, html] of titleInnerHtml.entries()) {
       expect(html).toContain(expectedTitleInnerHtml[index]);

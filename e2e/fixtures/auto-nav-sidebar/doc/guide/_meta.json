@@ -1,9 +1,5 @@
 [
   "index",
-  "generic-parameters",
-  "generic-defaults",
-  "generic-braces",
-  "generic-code",
   {
     "type": "dir",
     "name": "advanced",

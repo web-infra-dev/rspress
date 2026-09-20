@@ -7,5 +7,8 @@
   "code",
   "escape",
   "delete",
-  "link"
+  "link",
+  "generic-defaults",
+  "generic-braces",
+  "generic-code"
 ]

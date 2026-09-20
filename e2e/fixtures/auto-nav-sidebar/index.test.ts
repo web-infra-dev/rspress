@@ -39,33 +39,6 @@ test.describe('auto nav and sidebar', async () => {
     );
   });
 
-  test('Should render escaped Markdown headings in sidebar labels', async ({
-    page,
-  }) => {
-    await page.goto(`http://localhost:${appPort}/guide/generic-defaults.html`, {
-      waitUntil: 'networkidle',
-    });
-
-    const sidebar = page.locator('.rp-doc-layout__sidebar');
-    for (const [name, text] of [
-      ['generic-parameters', 'Class: Component<P, S, SS>'],
-      ['generic-defaults', 'Class: Component<P = { }, S = { }, SS = any>'],
-      ['generic-braces', 'Class: Foo<T = { }>'],
-      ['generic-code', 'Class: Bar<T = any>'],
-    ]) {
-      const label = sidebar.locator(
-        `a[href="/guide/${name}.html"] .rp-sidebar-item__left > .rp-doc`,
-      );
-      await expect(label).toHaveText(text);
-    }
-    await expect(
-      sidebar.locator('a[href="/guide/generic-defaults.html"] code'),
-    ).toHaveText('any');
-    await expect(page.locator('h1')).toContainText(
-      'Class: Component<P = { }, S = { }, SS = any>',
-    );
-  });
-
   test('Should render sidebar icons and tags correctly', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/sidebar-icon/`, {
       waitUntil: 'networkidle',
