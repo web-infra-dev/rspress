@@ -25,6 +25,8 @@ interface NavSuiteConfig {
 }
 
 const createNavSuite = ({ title, configFile, paths }: NavSuiteConfig) => {
+  // The suite title is intentionally supplied by each scenario.
+  // rslint-disable-next-line rstest/valid-title
   test.describe(title, () => {
     let appPort: number;
     let app: Awaited<ReturnType<typeof runDevCommand>>;
