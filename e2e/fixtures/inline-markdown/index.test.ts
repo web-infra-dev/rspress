@@ -177,6 +177,9 @@ test.describe('inline Markdown', async () => {
       'emphasis',
       'delete',
       'This is a long string to test regex performance',
+      'Class: Bar<T = any>',
+      '**literal**',
+      '&lt;',
       'this is link rsbuild',
       'this is bold link rsbuild',
       'this is code link rsbuild',
@@ -199,6 +202,9 @@ test.describe('inline Markdown', async () => {
       '<em>emphasis</em>',
       '<del>delete</del>',
       '<code>This is a long string to test regex performance</code>',
+      'Class: Bar&lt;T = <code>any</code>&gt;',
+      '<code>**literal**</code>',
+      '<code>&amp;lt;</code>',
       'this is link rsbuild',
       'this is bold link <strong>rsbuild</strong>',
       'this is code link <code>rsbuild</code>',
@@ -215,7 +221,7 @@ test.describe('inline Markdown', async () => {
     });
 
     const asideItems = page.locator('.rp-toc-item__text');
-    await expect(asideItems).toHaveCount(9);
+    await expect(asideItems).toHaveCount(12);
 
     const asideTexts = (await asideItems.allTextContents()).map(text =>
       text.trim(),
@@ -231,6 +237,9 @@ test.describe('inline Markdown', async () => {
         'emphasis',
         'delete',
         'This is a long string to test regex performance',
+        'Class: Bar<T = any>',
+        '**literal**',
+        '&lt;',
       ].join(','),
     );
 
@@ -251,6 +260,9 @@ test.describe('inline Markdown', async () => {
         '<em>emphasis</em>',
         '<del>delete</del>',
         '<code>This is a long string to test regex performance</code>',
+        'Class: Bar&lt;T = <code>any</code>&gt;',
+        '<code>**literal**</code>',
+        '<code>&amp;lt;</code>',
       ].join(','),
     );
 
@@ -299,6 +311,26 @@ test.describe('inline Markdown', async () => {
         `#${selector.split('#')[1]}`,
       );
     }
+  });
+
+  test('Should preserve escaped headings in previous and next page links', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/inline/generic-braces`, {
+      waitUntil: 'networkidle',
+    });
+    const previous = page.locator(
+      '.rp-prev-next-page__prev .rp-prev-next-page__item__title',
+    );
+    const next = page.locator(
+      '.rp-prev-next-page__next .rp-prev-next-page__item__title',
+    );
+    await expect(previous).toHaveText(
+      'Class: Component<P = { }, S = { }, SS = any>',
+    );
+    await expect(previous.locator('code')).toHaveText('any');
+    await expect(next).toHaveText('Class: Bar<T = any>');
+    await expect(next.locator('code')).toHaveText('any');
   });
 
   test('Should render html like <img> with inline markdown syntax correctly', async ({

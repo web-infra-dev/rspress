@@ -5,13 +5,13 @@ import { parseInlineMarkdownText, renderInlineMarkdown } from './utils';
 
 describe('renderInlineMarkdown', () => {
   it.each([
-    ['Class: Component\\<P, S, SS\\>', 'Class: Component&#60;P, S, SS&#62;'],
+    ['Class: Component\\<P, S, SS\\>', 'Class: Component&lt;P, S, SS&gt;'],
     [
       'Class: Component\\<P = \\{ \\}, S = \\{ \\}, SS = `any`\\>',
-      'Class: Component&#60;P = &#123; &#125;, S = &#123; &#125;, SS = <code>any</code>&#62;',
+      'Class: Component&lt;P = { }, S = { }, SS = <code>any</code>&gt;',
     ],
-    ['Class: Foo\\<T = \\{ \\}\\>', 'Class: Foo&#60;T = &#123; &#125;&#62;'],
-    ['Class: Bar\\<T = `any`\\>', 'Class: Bar&#60;T = <code>any</code>&#62;'],
+    ['Class: Foo\\<T = \\{ \\}\\>', 'Class: Foo&lt;T = { }&gt;'],
+    ['Class: Bar\\<T = `any`\\>', 'Class: Bar&lt;T = <code>any</code>&gt;'],
   ])('renders escaped generic heading %s', (text, html) => {
     expect(renderToStaticMarkup(<span {...renderInlineMarkdown(text)} />)).toBe(
       `<span>${html}</span>`,
@@ -19,13 +19,31 @@ describe('renderInlineMarkdown', () => {
   });
 
   it.each([
-    [
-      '\\*literal\\* and **bold**',
-      '&#42;literal&#42; and <strong>bold</strong>',
-    ],
-    ['\\`literal\\` and `code`', '&#96;literal&#96; and <code>code</code>'],
-    ['\\\\{value}', '&#92;{value}'],
+    ['\\*literal\\* and **bold**', '*literal* and <strong>bold</strong>'],
+    ['\\`literal\\` and `code`', '`literal` and <code>code</code>'],
+    ['\\\\{value}', '\\{value}'],
     ['`\\{value\\}`', '<code>\\{value\\}</code>'],
+    ['Class: Foo<T> \\{', 'Class: Foo&lt;T&gt; {'],
+    ['Class: Foo<T> `any`', 'Class: Foo&lt;T&gt; <code>any</code>'],
+    ['Class: Foo<T> &amp; `any`', 'Class: Foo&lt;T&gt; &amp; <code>any</code>'],
+    ['&amp;lt;', '&amp;lt;'],
+    [
+      '`**literal**` and **bold**',
+      '<code>**literal**</code> and <strong>bold</strong>',
+    ],
+    ['**`literal`**', '<strong><code>literal</code></strong>'],
+    ['`&lt;`', '<code>&amp;lt;</code>'],
+    ['`<b>&</b>`', '<code>&lt;b&gt;&amp;&lt;/b&gt;</code>'],
+    ['``a`b``', '<code>a`b</code>'],
+    ['`unclosed', '`unclosed'],
+    ['`` `code` ``', '<code>`code`</code>'],
+    ['` a\nb `', '<code>a b</code>'],
+    ['`  `', '<code>  </code>'],
+    ['<code>**literal** &amp;lt;</code>', '<code>**literal** &amp;lt;</code>'],
+    ['\\&lt;', '&amp;lt;'],
+    ['\\*literal\\*', '*literal*'],
+    ['**bold** and \\*literal\\*', '<strong>bold</strong> and *literal*'],
+    ['prefix\u00000\u0000 `code`', 'prefix\u00000\u0000 <code>code</code>'],
     [
       '<strong>HTML</strong> and *emphasis*',
       '<strong>HTML</strong> and <em>emphasis</em>',
@@ -38,6 +56,20 @@ describe('renderInlineMarkdown', () => {
 });
 
 describe('parseInlineMarkdownText', () => {
+  it.each([
+    ['Class: Bar\\<T = `any`\\>', 'Class: Bar<T = any>'],
+    ['Class: Bar<T = `any`>', 'Class: Bar<T = any>'],
+    ['Class: Foo<T> &amp; `any`', 'Class: Foo<T> & any'],
+    ['\\*literal\\* and **bold**', '*literal* and bold'],
+    ['`**literal**`', '**literal**'],
+    ['`&lt;`', '&lt;'],
+    ['``a`b``', 'a`b'],
+    ['<code>**literal** &amp;lt;</code>', '**literal** &lt;'],
+    ['\\&lt;', '&lt;'],
+  ])('preserves literal content in %s', (input, expected) => {
+    expect(parseInlineMarkdownText(input)).toBe(expected);
+  });
+
   it('strips the inline markdown syntax', () => {
     expect(parseInlineMarkdownText('this is bold **rsbuild**')).toBe(
       'this is bold rsbuild',
