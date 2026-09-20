@@ -1,11 +1,6 @@
 import os from 'node:os';
-import {
-  expect,
-  type Locator,
-  type Page,
-  type PlaywrightFixture,
-  test,
-} from '@e2e/test';
+import { expect, type PlaywrightFixture, test } from '@rstest/playwright';
+import type { Locator, Page } from 'playwright';
 import { getShouldOpenNewPage } from '../../utils/newPage';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 

@@ -1,5 +1,5 @@
 import assert from 'node:assert';
-import type { Page } from '@e2e/test';
+import type { Page } from 'playwright';
 
 async function getSearchButton(page: Page) {
   const desktopButton = await page.$('.rp-search-button');

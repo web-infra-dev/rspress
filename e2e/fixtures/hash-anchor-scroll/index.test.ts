@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/test';
+import { expect, test } from '@rstest/playwright';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('hash anchor scrolling', async () => {

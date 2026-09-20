@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@e2e/test';
+import { expect, test } from '@rstest/playwright';
 import { runBuildCommand } from '../../utils/runCommands';
 
 test('fails the build in strict SSG mode', async () => {

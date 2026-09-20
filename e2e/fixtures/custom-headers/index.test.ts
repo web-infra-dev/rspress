@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import { expect, test } from '@e2e/test';
+import { expect, test } from '@rstest/playwright';
 import {
   getPort,
   killProcess,
