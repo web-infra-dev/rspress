@@ -36,13 +36,6 @@ Claude Code、Cursor、Codex 等 Agent 已经会直接查阅文档、调用 API 
 
 [llms.txt 规范](https://llmstxt.org/)定义了一种放在网站根目录或子路径下的 Markdown 索引，包含网站简介和详细内容的链接。
 
-当前规范只要求一个表示项目名称的一级标题。以下内容均为可选：
-
-- 引用块形式的项目摘要；
-- 不使用标题的补充说明；
-- 由二级标题分组的链接列表，可附内容描述；
-- 一个名为 `Optional` 的分组，放置上下文不足时可以跳过的内容。
-
 例如：
 
 ```md
@@ -292,7 +285,7 @@ Markdown 产物使用引用块：
 > https://example.com/llms-full.txt.
 ```
 
-Markdown 已是当前页面，因此 Hint 只保留 `llms.txt` 和 `llms-full.txt`。两种输出分别对应 `llms-txt-directive-html` 和 `llms-txt-directive-md` 检查。
+两种输出分别对应 `llms-txt-directive-html` 和 `llms-txt-directive-md` 检查。
 
 ## 参考资料
 
