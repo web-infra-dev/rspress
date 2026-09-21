@@ -21,7 +21,7 @@
     "update:rsbuild": "npx taze minor --include /rsbuild/ -w -r -l"
   },
   "devDependencies": {
-    "@playwright/test": "1.62.1",
+    "@playwright/test": "1.63.0",
     "@rsbuild/plugin-react": "~2.1.0",
     "@rspress/config": "workspace:*",
     "@rstest/adapter-rslib": "0.12.0",
@@ -40,7 +40,7 @@
     "heading-case": "^2.0.2",
     "nx": "22.7.12",
     "path-serializer": "0.7.0",
-    "playwright": "1.62.1",
+    "playwright": "1.63.0",
     "rstack": "^0.7.6",
     "skills-package-manager": "0.11.0",
     "tree-kill": "^1.2.2",
