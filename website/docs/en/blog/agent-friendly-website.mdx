@@ -36,13 +36,6 @@ Rspress is built for more than human readers. It aims to make every document eas
 
 The [llms.txt specification](https://llmstxt.org/) defines a Markdown index placed at the root or a subpath of a website. It contains an introduction to the website and links to detailed content.
 
-The current specification requires only an H1 containing the project name. Everything else is optional:
-
-- A project summary in a blockquote;
-- Additional context without a heading;
-- Link lists grouped by H2 headings, optionally with descriptions;
-- A section named `Optional` for content that can be skipped when context is limited.
-
 For example:
 
 ```md
@@ -292,7 +285,7 @@ The Markdown output uses a blockquote:
 > https://example.com/llms-full.txt.
 ```
 
-Because the Agent already has the current page in Markdown, the hint includes only `llms.txt` and `llms-full.txt`. The two outputs correspond to the `llms-txt-directive-html` and `llms-txt-directive-md` checks.
+The two outputs correspond to the `llms-txt-directive-html` and `llms-txt-directive-md` checks.
 
 ## References
 
