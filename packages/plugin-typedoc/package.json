@@ -27,10 +27,10 @@
   },
   "dependencies": {
     "typedoc": "0.28.20",
-    "typedoc-plugin-markdown": "4.13.0"
+    "typedoc-plugin-markdown": "4.13.1"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.59.0",
+    "@microsoft/api-extractor": "^7.59.1",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.18",
