@@ -34,7 +34,7 @@ Rspress 是一个基于 Rsbuild 的静态站点生成器，致力于让每个文
 
 ## llms.txt：Agent 时代的 sitemap
 
-[llms.txt 规范](https://llmstxt.org/)定义了一种放在网站根目录或子路径下的 Markdown 索引文件，包含网站简介和详细内容。
+[llms.txt 规范](https://llmstxt.org/)定义了一种放在网站根目录或子路径下的 Markdown 索引文件，包含网站简介和指向详细内容的链接。
 
 `sitemap.xml` 面向搜索引擎收录页面；`llms.txt` 面向 Agent 的内容发现和渐进式披露：先提供精简的文档索引，再让 Agent 按需读取相关页面。
 
@@ -64,7 +64,7 @@ doc_build/
 │       ├── introduction.html               # HTML 页面，给人阅读
 │       └── introduction.md                 # Markdown 页面，给 Agent 阅读
 ├── sitemap.xml                             # HTML 文档索引
-├── llms.txt                                # Markdown 精简的文档索引
+├── llms.txt                                # Markdown 精简的页面内容链接索引
 └── llms-full.txt                           # 整站 Markdown 内容
 ```
 
