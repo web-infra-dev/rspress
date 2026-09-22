@@ -21,7 +21,7 @@ However, a website that provides a great experience for humans may still be diff
 - Humans can ignore navigation, buttons, and ads, while Agents must extract the main content from a large amount of HTML;
 - Even if a website provides Markdown, Agents may not know it exists.
 
-Rspress is built for more than human readers. It aims to make every document easier for Agents to discover, read, and understand. This article introduces Rspress's Agent-friendly best practices:
+Rspress is a static site generator built on Rsbuild. It aims to make every document easier for Agents to discover, read, and understand. This article introduces Rspress's Agent-friendly best practices.
 
 <TweetEmbed
   id="2090359544769913185"
@@ -34,9 +34,11 @@ Rspress is built for more than human readers. It aims to make every document eas
 
 ## llms.txt: A sitemap for the agent era
 
-The [llms.txt specification](https://llmstxt.org/) defines a Markdown index placed at the root or a subpath of a website. It contains an introduction to the website and links to detailed content.
+The [llms.txt specification](https://llmstxt.org/) defines a Markdown index file placed at the root or a subpath of a website. It contains an introduction to the website and links to detailed content.
 
-For example:
+`sitemap.xml` helps search engines index pages; `llms.txt` helps Agents discover content through progressive disclosure: it first provides a concise documentation index, then lets Agents read relevant pages on demand.
+
+For example, the Rspress website's `llms.txt` file is available at [https://rspress.rs/llms.txt](https://rspress.rs/llms.txt):
 
 ```md
 # Rspress
@@ -47,9 +49,9 @@ For example:
 
 - [Introduction](https://rspress.rs/guide/start/introduction.md): Introduction to Rspress
 - [Quick Start](https://rspress.rs/guide/start/quick-start.md): Quick Start
-```
 
-`sitemap.xml` helps search engines index pages; `llms.txt` helps Agents discover content through progressive disclosure: it first provides a concise documentation index, then lets Agents read relevant pages on demand.
+// ...
+```
 
 Rspress's current `doc_build` output falls into three categories: HTML for humans, per-page Markdown for Agents, and index files for content discovery.
 
@@ -61,7 +63,8 @@ doc_build/
 │   └── start/
 │       ├── introduction.html               # HTML page for humans
 │       └── introduction.md                 # Markdown page for Agents
-├── llms.txt                                # Concise documentation index
+├── sitemap.xml                             # HTML documentation index
+├── llms.txt                                # Concise Markdown index file
 └── llms-full.txt                           # Full-site Markdown content
 ```
 
@@ -266,7 +269,7 @@ Notably, AFDocs does not evaluate writing quality or the correctness of Agent an
 
 Even when a website provides Markdown, an Agent entering through a deeply nested page may not know that the current page has a Markdown version or that `/llms.txt` exists. Each page therefore needs to expose these entry points explicitly.
 
-Rspress provides the [`injectLlmsHint`](/api/config/config-theme#injectllmshint) configuration. After SSG-MD is enabled, Rspress injects visually hidden plain text near the beginning of the main content in generated HTML:
+Rspress enables [`injectLlmsHint`](/api/config/config-theme#injectllmshint) by default. When SSG-MD is enabled, Rspress injects visually hidden plain text near the beginning of the main content in generated HTML:
 
 {/* prettier-ignore */}
 ```html
@@ -277,7 +280,7 @@ This does not use `display: none`, `hidden`, or `aria-hidden`. The URLs also app
 
 [The AFDocs `llms-txt-directive-html` rule](https://afdocs.dev/checks/content-discoverability#llms-txt-directive-html) emphasizes the same requirement: a directive can be visually hidden with techniques such as `clip-rect` or `sr-only`, but it must remain in the DOM and survive HTML-to-Markdown conversion.
 
-The Markdown output uses a blockquote:
+The generated Markdown output also includes the following content:
 
 ```md
 > For AI agents: the complete documentation index is available at
@@ -285,7 +288,7 @@ The Markdown output uses a blockquote:
 > https://example.com/llms-full.txt.
 ```
 
-The two outputs correspond to the `llms-txt-directive-html` and `llms-txt-directive-md` checks.
+The two outputs correspond to `llms-txt-directive-html` and `llms-txt-directive-md`.
 
 ## References
 
