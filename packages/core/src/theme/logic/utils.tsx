@@ -42,14 +42,15 @@ export function renderHtmlOrText(
 // but it’s sufficient for most common Markdown usage scenarios
 // while maintaining compatibility with all browsers (including Safari).
 // For some complex cases, more complex parsing logic or the use of a specialized Markdown AST parsing library may be required.
-const CODE_TEXT_PATTERN = /`(.*?)`/g;
 const STRONG_TEXT_PATTERN = /\*{2}(?!\*)(.*?)\*{2}(?!\*)/g;
 const EMPHASIS_TEXT_PATTERN = /\*(?!\*)(.*?)\*(?!\*)/g;
 const DELETE_TEXT_PATTERN = /~{2}(.*?)~{2}/g;
-const INLINE_CODE_PATTERN = /`[^`]+`/g;
 // <\/?[a-z]: Matches an opening or a closing tag, a tag name always starts with a letter.
 // [^>]*: Matches the rest of the tag, including its attributes.
 const HTML_TAG_PATTERN = /<\/?[a-z][^>]*>/gi;
+// Browser innerHTML omits the trailing slash on HTML void elements.
+const HTML_VOID_ELEMENT_PATTERN =
+  /<(?:area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)(?=[\s/>])[^>]*>/gi;
 // Matches named entities like `&amp;` as well as numeric ones like `&#39;` and `&#x27;`.
 const HTML_ENTITY_PATTERN = /&(#\d+|#x[0-9a-f]+|[a-z][0-9a-z]*);/gi;
 
@@ -84,6 +85,85 @@ function decodeHtmlEntities(text: string) {
   });
 }
 
+function escapeHtml(text: string) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+// Keep literal fragments out of the formatting and HTML detection passes. The
+// marker does not occur in the input, so user text cannot
+// accidentally refer to a protected fragment.
+function protectInlineMarkdown(text: string) {
+  let marker = '\u0000';
+  while (text.includes(marker)) {
+    marker += '\u0000';
+  }
+  const fragments: { text: string; html: string }[] = [];
+  const protect = (value: string, html = escapeHtml(value)) => {
+    const index = fragments.push({ text: value, html }) - 1;
+    return `${marker}${index}${marker}`;
+  };
+
+  // Backslash escapes apply to ASCII punctuation outside code spans. Code
+  // spans close on a backtick run of exactly the same length as their opener.
+  const pattern =
+    /\\([!-/:-@[-`{-~])|`+|<code\b[^>]*>[\s\S]*?<\/code>|&(#\d+|#x[0-9a-f]+|[a-z][0-9a-z]*);/gi;
+  const backticks = /`+/g;
+  let result = '';
+  let offset = 0;
+  let match: RegExpExecArray | null;
+  while ((match = pattern.exec(text))) {
+    result += text.slice(offset, match.index);
+    if (match[1]) {
+      result += protect(match[1]);
+    } else if (match[0].startsWith('&')) {
+      // An entity must not make surrounding generic type text become HTML.
+      result += protect(decodeHtmlEntities(match[0]), match[0]);
+    } else if (match[0].startsWith('<')) {
+      // Dynamic TOC entries can already contain code rendered by React.
+      result += protect(
+        decodeHtmlEntities(match[0].replace(HTML_TAG_PATTERN, '')),
+        match[0],
+      );
+    } else {
+      backticks.lastIndex = pattern.lastIndex;
+      let closing: RegExpExecArray | null;
+      while ((closing = backticks.exec(text))) {
+        if (closing[0].length === match[0].length) break;
+      }
+      if (closing) {
+        let value = text
+          .slice(pattern.lastIndex, closing.index)
+          .replace(/\r\n?|\n/g, ' ');
+        if (
+          value.startsWith(' ') &&
+          value.endsWith(' ') &&
+          /[^ ]/.test(value)
+        ) {
+          value = value.slice(1, -1);
+        }
+        result += protect(value, `<code>${escapeHtml(value)}</code>`);
+        pattern.lastIndex = closing.index + closing[0].length;
+      } else {
+        result += protect(match[0]);
+      }
+    }
+    offset = pattern.lastIndex;
+  }
+  result += text.slice(offset);
+
+  return {
+    text: result,
+    restore: (value: string, format: 'text' | 'html') =>
+      value.replace(
+        new RegExp(`${marker}(\\d+)${marker}`, 'g'),
+        (_, index: string) => fragments[Number(index)][format],
+      ),
+  };
+}
+
 /**
  * In this method, we will render the markdown text to inline html and support basic markdown syntax, including the following:
  * - bold
@@ -95,15 +175,24 @@ function decodeHtmlEntities(text: string) {
  * @private
  */
 export function renderInlineMarkdown(text: string) {
-  const htmlText = text
-    // replace `<list>` to prevent disappearing in dom, but not replace \<number\>
-    .replace(INLINE_CODE_PATTERN, match => match.replace(/</g, '&lt;'))
+  const protectedText = protectInlineMarkdown(text);
+  // Decide whether the source is HTML before generated tags or escaped
+  // characters can change that decision. Plain text is escaped as a whole.
+  const source = renderHtmlOrText(protectedText.text);
+  const htmlText = (
+    'children' in source
+      ? escapeHtml(source.children ?? '')
+      : source.dangerouslySetInnerHTML.__html
+  )
     .replace(STRONG_TEXT_PATTERN, '<strong>$1</strong>')
     .replace(EMPHASIS_TEXT_PATTERN, '<em>$1</em>')
-    .replace(DELETE_TEXT_PATTERN, '<del>$1</del>')
-    .replace(CODE_TEXT_PATTERN, '<code>$1</code>');
+    .replace(DELETE_TEXT_PATTERN, '<del>$1</del>');
 
-  return renderHtmlOrText(htmlText);
+  return {
+    dangerouslySetInnerHTML: {
+      __html: protectedText.restore(htmlText, 'html'),
+    },
+  };
 }
 
 /**
@@ -115,14 +204,20 @@ export function renderInlineMarkdown(text: string) {
  * @private
  */
 export function parseInlineMarkdownText(mdx: string) {
-  const plainText = mdx
-    // escape `<list>` in inline code, so that it is not stripped as an HTML tag
-    .replace(INLINE_CODE_PATTERN, match => match.replace(/</g, '&lt;'))
+  const protectedText = protectInlineMarkdown(mdx);
+  // Strip void elements independently of paired/self-closing HTML detection,
+  // after protecting literal tags in escapes and code spans.
+  const source = renderHtmlOrText(
+    protectedText.text.replace(HTML_VOID_ELEMENT_PATTERN, ''),
+  );
+  const plainText = (
+    'children' in source
+      ? (source.children ?? '')
+      : source.dangerouslySetInnerHTML.__html.replace(HTML_TAG_PATTERN, '')
+  )
     .replace(STRONG_TEXT_PATTERN, '$1')
     .replace(EMPHASIS_TEXT_PATTERN, '$1')
-    .replace(DELETE_TEXT_PATTERN, '$1')
-    .replace(CODE_TEXT_PATTERN, '$1')
-    .replace(HTML_TAG_PATTERN, '');
+    .replace(DELETE_TEXT_PATTERN, '$1');
 
-  return decodeHtmlEntities(plainText).trim();
+  return protectedText.restore(decodeHtmlEntities(plainText), 'text').trim();
 }
