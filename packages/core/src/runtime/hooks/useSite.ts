@@ -1,6 +1,12 @@
 import type { SiteData } from '@rspress/shared';
-import siteData from 'virtual-site-data';
+import { useSyncExternalStore } from 'react';
+import { getSiteData, subscribeSiteData } from '../siteData';
 
 export function useSite(): { site: SiteData } {
-  return { site: siteData };
+  const site = useSyncExternalStore(
+    subscribeSiteData,
+    getSiteData,
+    getSiteData,
+  );
+  return { site };
 }

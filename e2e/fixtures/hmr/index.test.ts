@@ -189,3 +189,56 @@ test.describe('HMR', async () => {
     }
   });
 });
+
+test.describe('HMR with lazy compilation', async () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>> | null = null;
+  let originalNavContent: string;
+
+  test.beforeAll(async () => {
+    originalNavContent = await fs.readFile(TEST_NAV_FILE, 'utf-8');
+    appPort = await getPort();
+    app = await runDevCommand(
+      import.meta.dirname,
+      appPort,
+      'rspress.lazy.config.ts',
+    );
+  });
+
+  test.afterAll(async () => {
+    if (app) {
+      await killProcess(app);
+    }
+    await fs.writeFile(TEST_NAV_FILE, originalNavContent);
+  });
+
+  test('updates site data without a full reload', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/guide/test.html`, {
+      waitUntil: 'networkidle',
+    });
+
+    await expect(
+      page.locator('.rp-nav-menu__item', { hasText: 'Guide' }),
+    ).toBeVisible();
+    await page.evaluate(() => {
+      (window as Window & { __rspressHmrMarker?: string }).__rspressHmrMarker =
+        'preserved';
+    });
+
+    await fs.writeFile(
+      TEST_NAV_FILE,
+      originalNavContent.replace('"Guide"', '"HMR Guide"'),
+    );
+
+    await expect(
+      page.locator('.rp-nav-menu__item', { hasText: 'HMR Guide' }),
+    ).toBeVisible();
+    expect(
+      await page.evaluate(
+        () =>
+          (window as Window & { __rspressHmrMarker?: string })
+            .__rspressHmrMarker,
+      ),
+    ).toBe('preserved');
+  });
+});
