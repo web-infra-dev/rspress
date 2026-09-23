@@ -141,7 +141,6 @@ export function pluginSitemap(
 
   const discoveryConfig = options.discovery ?? {};
   const linkTagOption = discoveryConfig.linkTag ?? true;
-  
 
   const sitemaps: Sitemap[] = [];
   const set = new Set();
