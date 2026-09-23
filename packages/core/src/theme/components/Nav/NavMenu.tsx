@@ -15,9 +15,9 @@ import {
 } from '@rspress/core/theme';
 import cls from 'clsx';
 import { type ReactNode, useMemo } from 'react';
+import { NavListContext } from '../NavList/context';
 import { useLangsMenu, useVersionsMenu } from './hooks';
 import './NavMenu.scss';
-import clsx from 'clsx';
 
 export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
   return <SvgWrapper icon={IconArrowDown} {...props} />;
@@ -168,25 +168,32 @@ export function NavVersions() {
 export function NavMenu({
   menuItems,
   position,
+  beforeNavItems,
+  afterNavItems,
 }: {
   menuItems: NavItem[];
-  position: 'left' | 'right';
+  position?: 'left' | 'right';
+  beforeNavItems?: ReactNode;
+  afterNavItems?: ReactNode;
 }) {
-  const getPosition = (menuItem: NavItem) => menuItem.position ?? 'right';
+  const items = useMemo(() => {
+    return position
+      ? menuItems.filter(item => (item.position ?? 'right') === position)
+      : menuItems;
+  }, [menuItems, position]);
 
-  const leftOrRightMenuItems = useMemo(() => {
-    return menuItems.filter(item => getPosition(item) === position);
-  }, [menuItems]);
-
-  if (leftOrRightMenuItems.length === 0) {
+  if (!items.length && beforeNavItems == null && afterNavItems == null)
     return null;
-  }
 
   return (
-    <ul className={clsx('rp-nav-menu', `rp-nav-menu--${position}`)}>
-      {leftOrRightMenuItems.map((item, index) => {
-        return <NavMenuItem key={index} menuItem={item} />;
-      })}
+    <ul className={cls('rp-nav-menu', position && `rp-nav-menu--${position}`)}>
+      <NavListContext.Provider value="items">
+        {beforeNavItems}
+        {items.map((item, index) => (
+          <NavMenuItem key={index} menuItem={item} />
+        ))}
+        {afterNavItems}
+      </NavListContext.Provider>
     </ul>
   );
 }

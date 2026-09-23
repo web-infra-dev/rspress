@@ -1,29 +1,25 @@
-import { useI18n, usePageData } from '@rspress/core/runtime';
+import { Head, useI18n } from '@rspress/core/runtime';
 import {
   IconClose,
-  IconLoading,
   IconSearch,
   SvgWrapper,
   Tab,
   Tabs,
   useLinkNavigate,
 } from '@rspress/core/theme';
-import { debounce } from '@rspress/shared/lodash-es';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import * as userSearchHooks from 'virtual-search-hooks';
-import { PageSearcher } from './logic/search';
 import type {
-  CustomMatchResult,
   DefaultMatchResult,
   DefaultMatchResultItem,
   MatchResult,
-  PageSearcherConfig,
 } from './logic/types';
 import { RenderType } from './logic/types';
 import { NoSearchResult } from './NoSearchResult';
 import './SearchPanel.scss';
 import { SuggestItem } from './SuggestItem';
+import { useSearchPanel } from './useSearchPanel';
 
 const KEY_CODE = {
   ARROW_UP: 'ArrowUp',
@@ -37,19 +33,6 @@ export interface SearchPanelProps {
   focused: boolean;
   setFocused: (focused: boolean) => void;
 }
-
-const useDebounce = <T extends (...args: any[]) => any>(cb: T) => {
-  const cbRef = useRef(cb);
-  cbRef.current = cb;
-  const debounced = useCallback(
-    debounce(
-      ((...args: Parameters<T>): ReturnType<T> => cbRef.current(...args)) as T,
-      150,
-    ),
-    [],
-  );
-  return debounced;
-};
 
 const normalizeSuggestions = (
   suggestions: DefaultMatchResult['result'],
@@ -68,17 +51,7 @@ const normalizeSuggestions = (
 };
 
 export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
-  const [query, setQuery] = useState('');
-  const [searchResult, setSearchResult] = useState<MatchResult>([]);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
-  const [isSearching, setIsSearching] = useState(false);
-  const [resultTabIndex, setResultTabIndex] = useState(0);
-  const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
-  const pageSearcherRef = useRef<PageSearcher | null>(null);
-  const pageSearcherConfigRef = useRef<PageSearcherConfig | null>(null);
-  const [initStatus, setInitStatus] = useState<
-    'initial' | 'initing' | 'inited'
-  >('initial');
   const searchResultRef = useRef<HTMLDivElement>(null);
   const searchResultTabRef = useRef<HTMLDivElement>(null);
   const mousePositionRef = useRef<{
@@ -125,70 +98,29 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
       }
     }
   };
-  const {
-    siteData,
-    page: { lang, version },
-  } = usePageData();
   const t = useI18n();
   const navigate = useLinkNavigate();
-  const { search, title: siteTitle } = siteData;
-  const versionedSearch =
-    typeof search !== 'boolean' && (search?.versioned ?? true);
-  const DEFAULT_RESULT = [
-    { group: siteTitle, result: [], renderType: RenderType.Default },
-  ];
-  const currentSuggestions =
-    (searchResult[resultTabIndex]?.result as DefaultMatchResultItem[]) ?? [];
-  const currentRenderType =
-    searchResult[resultTabIndex]?.renderType ?? RenderType.Default;
 
-  if (search === false) {
+  const {
+    currentRenderType,
+    currentSuggestions,
+    currentSuggestionIndex,
+    clearQuery,
+    handleQueryInput,
+    initStatus,
+    isSearching,
+    query,
+    resultTabIndex,
+    searchError,
+    searchIndexURL,
+    searchResult,
+    searchEnabled,
+    setCurrentSuggestionIndex,
+    setResultTabIndex,
+  } = useSearchPanel({ focused, searchInputRef });
+
+  if (!searchEnabled) {
     return null;
-  }
-
-  /**
-   * Create page searcher instance.
-   */
-  const createSearcher = () => {
-    if (pageSearcherRef.current) {
-      return pageSearcherRef.current;
-    }
-
-    const pageSearcherConfig = {
-      currentLang: lang,
-      currentVersion: version,
-    };
-    const pageSearcher = new PageSearcher({
-      indexName: siteTitle,
-      ...search,
-      ...pageSearcherConfig,
-    });
-    pageSearcherRef.current = pageSearcher;
-    pageSearcherConfigRef.current = pageSearcherConfig;
-
-    return pageSearcherRef.current;
-  };
-
-  /**
-   * Call `searcher.init` to initialize the search index
-   */
-  async function initSearch() {
-    if (initStatus !== 'initial') {
-      return;
-    }
-
-    const searcher = createSearcher();
-
-    setInitStatus('initing');
-    await searcher.init();
-    setInitStatus('inited');
-
-    const query = searchInputRef.current?.value;
-    if (query) {
-      const matched = await searcher.match(query);
-      setSearchResult(matched || DEFAULT_RESULT);
-      setIsSearching(false);
-    }
   }
 
   const clearSearchState = () => {
@@ -282,114 +214,13 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     currentSuggestionIndex,
   ]);
 
-  useEffect(() => {
-    if (focused) {
-      setSearchResult(DEFAULT_RESULT);
-      initSearch();
-    } else {
-      setQuery('');
-    }
-  }, [focused]);
-
-  // Prefetch the search index when the page is idle
-  useEffect(() => {
-    let idleCallbackID: number | undefined;
-    if ('requestIdleCallback' in window && !pageSearcherRef.current) {
-      idleCallbackID = window.requestIdleCallback(() => {
-        const searcher = createSearcher();
-        searcher.fetchSearchIndex();
-      });
-    }
-    return () => {
-      if (idleCallbackID !== undefined && 'cancelIdleCallback' in window) {
-        window.cancelIdleCallback(idleCallbackID);
-      }
-    };
-  }, []);
-
-  // init pageSearcher again when lang or version changed
-  useEffect(() => {
-    const { currentLang, currentVersion } = pageSearcherConfigRef.current ?? {};
-    const isLangChanged = lang !== currentLang;
-    const isVersionChanged = versionedSearch && version !== currentVersion;
-
-    if (isLangChanged || isVersionChanged) {
-      // reset status first
-      setInitStatus('initial');
-      pageSearcherRef.current = null;
-      const searcher = createSearcher();
-      searcher.fetchSearchIndex();
-    }
-  }, [lang, version, versionedSearch]);
-
-  const handleQueryChangedImpl = async (value: string) => {
-    let newQuery = value;
-    setQuery(newQuery);
-    if (newQuery) {
-      const searchResult: MatchResult = [];
-
-      if ('beforeSearch' in userSearchHooks) {
-        const key = 'beforeSearch' as const;
-        const transformedQuery = await userSearchHooks[key](newQuery);
-        if (transformedQuery) {
-          newQuery = transformedQuery;
-        }
-      }
-
-      const defaultSearchResult =
-        await pageSearcherRef.current?.match(newQuery);
-
-      if (defaultSearchResult) {
-        searchResult.push(...defaultSearchResult);
-      }
-
-      if ('onSearch' in userSearchHooks) {
-        const key = 'onSearch' as const;
-        const customSearchResult = await userSearchHooks[key](
-          newQuery,
-          searchResult as DefaultMatchResult[],
-        );
-        if (customSearchResult) {
-          searchResult.push(
-            ...customSearchResult.map(
-              item =>
-                ({
-                  renderType: RenderType.Custom,
-                  ...item,
-                }) as CustomMatchResult,
-            ),
-          );
-        }
-      }
-
-      if ('afterSearch' in userSearchHooks) {
-        const key = 'afterSearch' as const;
-        await userSearchHooks[key](newQuery, searchResult);
-      }
-
-      // only setSearchResult when query is current query value
-      const currQuery = searchInputRef.current?.value;
-      if (currQuery === newQuery) {
-        // Reset current suggestion index to 0 when search query changes
-        setCurrentSuggestionIndex(0);
-        setSearchResult(searchResult || DEFAULT_RESULT);
-        setIsSearching(false);
-      }
-    }
-  };
-
-  const handleQueryChange = useDebounce(handleQueryChangedImpl);
-
-  const renderSearchResult = (result: MatchResult, isSearching: boolean) => {
+  const renderSearchResult = (result: MatchResult) => {
     if (result.length === 1) {
       const currentSearchResult = result[0]
         .result as DefaultMatchResult['result'];
-      if (currentSearchResult.length === 0 && !isSearching) {
-        return <NoSearchResult query={query} />;
-      }
       return (
         <div ref={searchResultTabRef}>
-          {renderSearchResultItem(currentSearchResult, query, isSearching)}
+          {renderSearchResultItem(currentSearchResult)}
         </div>
       );
     }
@@ -409,7 +240,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
         {result.map(item => (
           <Tab key={item.group} label={item.group}>
             {item.renderType === RenderType.Default &&
-              renderSearchResultItem(item.result, query, isSearching)}
+              renderSearchResultItem(item.result)}
             {item.renderType === RenderType.Custom &&
               userSearchHooks[renderKey](item.result)}
           </Tab>
@@ -420,21 +251,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   const renderSearchResultItem = (
     suggestionList: DefaultMatchResult['result'],
-    query: string,
-    isSearching: boolean,
   ) => {
-    // if isSearching, show loading svg
-    if (isSearching) {
-      return (
-        <div className="rp-search-panel__loading">
-          <SvgWrapper icon={IconLoading} />
-        </div>
-      );
-    }
-
-    // if no result, show the no result tip
+    // Wait for the current search before showing the no-results message.
     if (suggestionList.length === 0 && initStatus === 'inited') {
-      return <NoSearchResult query={query} />;
+      return isSearching ? null : <NoSearchResult query={query} />;
     }
 
     const normalizedSuggestions = normalizeSuggestions(suggestionList);
@@ -490,6 +310,11 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
 
   return (
     <>
+      {searchIndexURL && (
+        <Head>
+          <link rel="prefetch" href={searchIndexURL} />
+        </Head>
+      )}
       {focused &&
         createPortal(
           <div
@@ -508,7 +333,14 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               <div className="rp-search-panel__header">
                 <div className="rp-search-panel__input-form">
                   <label>
-                    <SvgWrapper icon={IconSearch} />
+                    <SvgWrapper
+                      icon={IconSearch}
+                      className={`rp-search-panel__search-icon${
+                        initStatus === 'initing' || isSearching
+                          ? ' rp-search-panel__search-icon--loading'
+                          : ''
+                      }`}
+                    />
                   </label>
                   <input
                     className="rp-search-panel__input"
@@ -518,7 +350,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                     autoComplete="off"
                     autoFocus
                     inputMode="search"
-                    onChange={e => handleQueryChange(e.target.value)}
+                    onChange={e => {
+                      const value = e.target.value;
+                      handleQueryInput(value);
+                    }}
                   />
                   <label>
                     <SvgWrapper
@@ -531,7 +366,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                             clearSearchState();
                           } else {
                             searchInputRef.current.value = '';
-                            setQuery('');
+                            clearQuery();
                           }
                         }
                       }}
@@ -549,12 +384,19 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
                 </h2>
               </div>
 
-              {query && initStatus === 'inited' ? (
+              {(query || initStatus === 'error') &&
+              (initStatus === 'inited' || initStatus === 'error') ? (
                 <div
                   className="rp-search-panel__results rp-scrollbar"
                   ref={searchResultRef}
                 >
-                  {renderSearchResult(searchResult, isSearching)}
+                  {initStatus === 'error' ? (
+                    <div className="rp-search-panel__error">
+                      Error: {searchError}
+                    </div>
+                  ) : (
+                    renderSearchResult(searchResult)
+                  )}
                 </div>
               ) : null}
             </div>

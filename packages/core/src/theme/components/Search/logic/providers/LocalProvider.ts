@@ -44,6 +44,23 @@ type FlexSearchDocumentWithType = Document<
   false
 >;
 
+export function getSearchIndexURL(
+  lang: string,
+  version: string,
+): string | undefined {
+  const searchIndexGroupID = `${version ?? ''}###${lang ?? ''}`;
+  const searchIndexHashValue = searchIndexHash[searchIndexGroupID];
+
+  // for example, in page-type-home fixture, there is only home index.md, so no search index generated
+  if (!searchIndexHashValue) {
+    return undefined;
+  }
+
+  const searchIndexVersion = version ? `.${version.replace('.', '_')}` : '';
+  const searchIndexLang = lang ? `.${lang}` : '';
+  return `${removeTrailingSlash(__WEBPACK_PUBLIC_PATH__)}/static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHashValue}.json`;
+}
+
 const cjkRegex =
   /[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]|[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]|[\u3041-\u3096]|[\u30A1-\u30FA]/giu;
 const cyrillicRegex = /[\u0400-\u04FF]/g;
@@ -70,22 +87,19 @@ export class LocalProvider implements Provider {
   #fetchPromise?: Promise<PageIndexInfo[]>;
 
   async #getPages(lang: string, version: string): Promise<PageIndexInfo[]> {
-    const searchIndexGroupID = `${version ?? ''}###${lang ?? ''}`;
-
-    // for example, in page-type-home fixture, there is only home index.md, so no search index generated
-    if (!searchIndexHash[searchIndexGroupID]) {
+    const searchIndexURL = getSearchIndexURL(lang, version);
+    if (!searchIndexURL) {
       return [];
     }
 
-    const searchIndexVersion = version ? `.${version.replace('.', '_')}` : '';
-    const searchIndexLang = lang ? `.${lang}` : '';
-    const searchIndexURL = `${removeTrailingSlash(__WEBPACK_PUBLIC_PATH__)}/static/${SEARCH_INDEX_NAME}${searchIndexVersion}${searchIndexLang}.${searchIndexHash[searchIndexGroupID]}.json`;
-
-    const handleError = (result: unknown) => {
+    const handleError = (result: unknown): never => {
       console.error(
         'Failed to fetch search index, please reload the page and try again.',
       );
       console.error(result);
+      throw result instanceof Error
+        ? result
+        : new Error('Failed to fetch search index');
     };
 
     try {
@@ -93,11 +107,10 @@ export class LocalProvider implements Provider {
       if (result.ok) {
         return result.json();
       }
-      handleError(result);
+      throw result;
     } catch (error) {
-      handleError(error);
+      return handleError(error);
     }
-    return [];
   }
 
   async fetchSearchIndex(options: SearchOptions) {
@@ -144,7 +157,12 @@ export class LocalProvider implements Provider {
     };
     // Init Search Indexes
     // English Index
-    this.#index = new Document(createOptions);
+    this.#index = new Document({
+      ...createOptions,
+      // Limit token length for performance: https://github.com/web-infra-dev/rspress/pull/3682
+      // cspell:ignore maxlength
+      encoder: { maxlength: 64 },
+    });
     // CJK: Chinese, Japanese, Korean
     this.#cjkIndex = new Document({
       ...createOptions,
@@ -160,14 +178,18 @@ export class LocalProvider implements Provider {
           str.flatMap(s => tokenize(s, cyrillicRegex)),
       },
     });
+    const pending: Promise<unknown>[] = [];
     for (const item of pagesForSearch) {
       // Add search index async to avoid blocking the main thread
       // Type assertion: PageIndexForFlexSearch is compatible with FlexSearchCompatibleData at runtime
       const flexSearchItem = item as unknown as FlexSearchCompatibleData;
-      this.#index!.addAsync(item.routePath, flexSearchItem);
-      this.#cjkIndex!.addAsync(item.routePath, flexSearchItem);
-      this.#cyrillicIndex!.addAsync(item.routePath, flexSearchItem);
+      pending.push(
+        this.#index!.addAsync(item.routePath, flexSearchItem),
+        this.#cjkIndex!.addAsync(item.routePath, flexSearchItem),
+        this.#cyrillicIndex!.addAsync(item.routePath, flexSearchItem),
+      );
     }
+    await Promise.all(pending);
   }
 
   async search(query: SearchQuery) {
