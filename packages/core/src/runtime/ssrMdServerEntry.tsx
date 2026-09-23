@@ -1,42 +1,26 @@
-import {
-  PageContext,
-  pathnameToRouteService,
-  removeTrailingSlash,
-  ThemeContext,
-  withBase,
-} from '@rspress/core/runtime';
+import { ThemeContext } from '@rspress/core/runtime';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import { renderToMarkdownString } from 'react-render-to-markdown';
-import { StaticRouter } from 'react-router-dom';
-import { App } from './App';
-import { initPageData } from './initPageData';
+import { StaticRouterProvider } from 'react-router-dom';
+import { createServerRouter } from './createServerRouter';
 
 const DEFAULT_THEME = 'light';
-
-async function preloadRoute(pathname: string) {
-  const route = pathnameToRouteService(pathname);
-  await route?.preload();
-}
 
 export async function render(
   routePath: string,
   head: Unhead,
 ): Promise<{ appMd: string }> {
-  const initialPageData = await initPageData(routePath);
-  await preloadRoute(routePath);
+  const { router, context } = await createServerRouter(routePath);
 
   const appMd = await renderToMarkdownString(
     <ThemeContext.Provider value={{ theme: DEFAULT_THEME }}>
-      <PageContext.Provider value={{ data: initialPageData }}>
-        <StaticRouter
-          location={withBase(routePath)}
-          basename={removeTrailingSlash(withBase('/'))}
-        >
-          <UnheadProvider value={head}>
-            <App />
-          </UnheadProvider>
-        </StaticRouter>
-      </PageContext.Provider>
+      <UnheadProvider value={head}>
+        <StaticRouterProvider
+          router={router}
+          context={context}
+          hydrate={false}
+        />
+      </UnheadProvider>
     </ThemeContext.Provider>,
   );
 
