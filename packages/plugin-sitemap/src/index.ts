@@ -48,11 +48,6 @@ export interface LinkTagOptions {
    */
   type?: string;
   /**
-   * Title attribute for the link element.
-   * @default 'Sitemap'
-   */
-  title?: string;
-  /**
    * Explicitly override the sitemap href.
    */
   href?: string;
@@ -146,7 +141,7 @@ export function pluginSitemap(
 
   const discoveryConfig = options.discovery ?? {};
   const linkTagOption = discoveryConfig.linkTag ?? true;
-  const robotsOption = discoveryConfig.robots ?? false;
+  
 
   const sitemaps: Sitemap[] = [];
   const set = new Set();
@@ -169,7 +164,6 @@ export function pluginSitemap(
         attrs: {
           rel: linkOpts.rel || 'sitemap',
           type: linkOpts.type || 'application/xml',
-          title: linkOpts.title || 'Sitemap',
           href: sitemapHref,
         },
       };
