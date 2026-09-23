@@ -50,9 +50,38 @@ export type IframeOptions = {
   customEntry?: (meta: CustomEntry) => string;
 };
 
-export interface CustomEntry {
+export type PreviewRouteMeta = Pick<
+  RouteMeta,
+  'pageName' | 'routePath' | 'pureRoutePath' | 'lang' | 'version'
+>;
+
+export interface CustomEntryDemo {
+  id: string;
   demoPath: string;
+  /** Absolute path of an external `file` code block. */
+  sourcePath?: string;
+  title: string;
 }
+
+interface CustomFollowEntry {
+  previewMode: 'iframe-follow';
+  demoPath: string;
+  demos: [CustomEntryDemo];
+  route: PreviewRouteMeta;
+}
+
+interface CustomFixedEntry {
+  previewMode: 'iframe-fixed';
+  /**
+   * The default framework-specific aggregate module. Custom fixed entries
+   * should normally import modules from `demos` instead.
+   */
+  demoPath: string;
+  demos: CustomEntryDemo[];
+  route: PreviewRouteMeta;
+}
+
+export type CustomEntry = CustomFollowEntry | CustomFixedEntry;
 
 export type RemarkPluginOptions = Required<
   Pick<
@@ -73,8 +102,10 @@ export type DemoInfo = Record<
   {
     id: string;
     path: string;
+    sourcePath?: string;
     title: string;
     previewMode: 'iframe-fixed' | 'iframe-follow';
+    route: PreviewRouteMeta;
   }[]
 >;
 
