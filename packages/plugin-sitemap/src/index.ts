@@ -36,11 +36,51 @@ interface CustomMaps {
   [routePath: string]: Sitemap;
 }
 
+export interface LinkTagOptions {
+  /**
+   * Relationship attribute.
+   * @default 'sitemap'
+   */
+  rel?: string;
+  /**
+   * MIME type attribute.
+   * @default 'application/xml'
+   */
+  type?: string;
+  /**
+   * Title attribute for the link element.
+   * @default 'Sitemap'
+   */
+  title?: string;
+  /**
+   * Explicitly override the sitemap href.
+   */
+  href?: string;
+}
+
+interface SitemapDiscoveryOptions {
+  /**
+   * Injects `<link rel="sitemap" ... />` into the HTML `<head>`.
+   * Pass `true` for standard tag or an object for customization.
+   * @default true
+   */
+  linkTag?: boolean | LinkTagOptions;
+
+  /**
+   * Generates or safely updates `robots.txt` referencing the sitemap.
+   * Pass `true` for standard robots.txt or an object for custom policies.
+   * @default false
+   * @todo Feature not yet implemented. This option currently has no effect.
+   */
+  robots?: boolean;
+}
+
 export interface PluginSitemapOptions {
   siteUrl?: string;
   customMaps?: CustomMaps;
   defaultPriority?: Priority;
   defaultChangeFreq?: ChangeFreq;
+  discovery?: SitemapDiscoveryOptions;
 }
 
 function ensureTrailingSlash(url: string) {
@@ -73,6 +113,10 @@ function getSiteUrl(siteUrl: string | undefined, config: UserConfig) {
   }
 }
 
+function getSitemapUrl(resolvedSiteUrl: string): string {
+  return `${resolvedSiteUrl.replace(/\/$/, '')}/sitemap.xml`;
+}
+
 const generateNode = (sitemap: Sitemap): string => {
   let result = '<url>';
   for (const [tag, value] of Object.entries(sitemap)) {
@@ -99,16 +143,61 @@ export function pluginSitemap(
     defaultChangeFreq = 'monthly',
     defaultPriority = '0.5',
   } = options;
+
+  const discoveryConfig = options.discovery ?? {};
+  const linkTagOption = discoveryConfig.linkTag ?? true;
+  const robotsOption = discoveryConfig.robots ?? false;
+
   const sitemaps: Sitemap[] = [];
   const set = new Set();
   let resolvedSiteUrl = '';
   return {
     name: '@rspress/plugin-sitemap',
+    config(config) {
+      resolvedSiteUrl = getSiteUrl(siteUrl, config);
+
+      if (!linkTagOption) {
+        return config;
+      }
+
+      const computedSitemapUrl = getSitemapUrl(resolvedSiteUrl);
+      const linkOpts = typeof linkTagOption === 'object' ? linkTagOption : {};
+      const sitemapHref = linkOpts.href || computedSitemapUrl;
+
+      const tag = {
+        tag: 'link',
+        attrs: {
+          rel: linkOpts.rel || 'sitemap',
+          type: linkOpts.type || 'application/xml',
+          title: linkOpts.title || 'Sitemap',
+          href: sitemapHref,
+        },
+      };
+
+      const existingTags = config.builderConfig?.html?.tags;
+      const mergedTags = Array.isArray(existingTags)
+        ? [...existingTags, tag]
+        : existingTags
+          ? [existingTags, tag]
+          : [tag];
+
+      return {
+        ...config,
+        builderConfig: {
+          ...config.builderConfig,
+          html: {
+            ...config.builderConfig?.html,
+            tags: mergedTags as any,
+          },
+        },
+      };
+    },
     beforeBuild(config, isProd) {
       if (isProd) {
         resolvedSiteUrl = getSiteUrl(siteUrl, config);
       }
     },
+
     async extendPageData(pageData, isProd) {
       if (isProd) {
         if (!set.has(pageData.routePath)) {
