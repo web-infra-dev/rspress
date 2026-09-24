@@ -50,7 +50,7 @@ export default defineConfig({
 
 站点的可选部署 origin，例如 `https://foo.github.io`。
 
-Rspress 在生成需要绝对 URL 的文件时会结合该值和 [`base`](#base)，例如 `llms.txt` 链接或插件输出。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。
+Rspress 在生成需要绝对 URL 的文件时会结合该值和 [`base`](#base)，例如 `sitemap.xml`、`llms.txt` 链接或插件输出。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。
 
 如果没有配置 `siteOrigin`，Rspress 会回退使用 `base + routePath`。
 
@@ -406,6 +406,127 @@ export default defineConfig({
   --rp-c-brand: #f00;
 }
 ```
+
+## sitemap
+
+- **类型**：`boolean | SitemapOptions`
+- **默认值**：`true`
+
+在生产构建时向输出目录生成 `sitemap.xml`。此功能已内置于 Rspress，无需安装插件，在 `ssg: false` 时也可使用。
+
+配置 [`siteOrigin`](#siteorigin) 可让 sitemap 包含绝对 URL。Rspress 会将 `siteOrigin`、[`base`](#base) 和每个页面的路由路径拼接起来：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+  // sitemap 默认开启。
+});
+```
+
+设置 `sitemap: false` 可关闭生成，也可以传入选项对象进行自定义：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  sitemap: {
+    defaultChangeFreq: 'weekly',
+    defaultPriority: '0.7',
+  },
+});
+```
+
+选项类型如下，可从 `@rspress/core` 导入 `SitemapOptions`：
+
+```ts
+type ChangeFreq =
+  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+
+type Priority =
+  | '0.0'
+  | '0.1'
+  | '0.2'
+  | '0.3'
+  | '0.4'
+  | '0.5'
+  | '0.6'
+  | '0.7'
+  | '0.8'
+  | '0.9'
+  | '1.0';
+
+// https://www.sitemaps.org/protocol.html
+interface Sitemap {
+  loc: string;
+  lastmod?: string;
+  changefreq?: ChangeFreq;
+  priority?: Priority;
+}
+
+interface CustomMaps {
+  [routePath: string]: Sitemap;
+}
+
+export interface SitemapOptions {
+  siteUrl?: string;
+  customMaps?: CustomMaps;
+  defaultPriority?: Priority;
+  defaultChangeFreq?: ChangeFreq;
+}
+```
+
+### sitemap.siteUrl
+
+- **类型**：`string`
+- **默认值**：[`siteOrigin`](#siteorigin) + [`base`](#base)，未配置 `siteOrigin` 时使用 `base`
+
+覆盖 sitemap 条目使用的部署 URL。请使用包含基础路径的绝对 URL，例如 `https://example.com/docs/`。此值优先于 `siteOrigin` 和 `base`。
+
+如果既没有配置 `sitemap.siteUrl`，也没有配置 `siteOrigin`，条目会使用 `base + routePath`，保留为相对路径。配置其中任意一项即可生成绝对 sitemap URL。
+
+### sitemap.customMaps
+
+- **类型**：`Record<string, Sitemap>`
+- **默认值**：`{}`
+
+覆盖指定页面的 sitemap 值。键为不含 `base` 的路由路径，值会覆盖生成的 `loc`、`lastmod`、`changefreq` 和 `priority`。`lastmod` 默认使用源文件的修改时间。此选项用于自定义已有页面，不会添加路由。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+  sitemap: {
+    customMaps: {
+      '/guide': {
+        loc: 'https://example.com/docs/guide',
+        lastmod: '2026-01-01',
+        changefreq: 'weekly',
+        priority: '0.8',
+      },
+    },
+  },
+});
+```
+
+### sitemap.defaultChangeFreq
+
+- **类型**：`ChangeFreq`
+- **默认值**：`'monthly'`
+
+每个页面默认的 `changefreq` 值。可选值为 `'always'`、`'hourly'`、`'daily'`、`'weekly'`、`'monthly'`、`'yearly'` 和 `'never'`。可通过 `customMaps` 为指定页面覆盖此值。
+
+### sitemap.defaultPriority
+
+- **类型**：`Priority`
+- **默认值**：`'0.5'`
+
+每个页面默认的 `priority` 值，可选值从 `'0.0'` 到 `'1.0'`，间隔为 `0.1`。根路由 `/` 使用 `'1.0'`。可通过 `customMaps` 为指定页面覆盖此值。
 
 ## llms
 

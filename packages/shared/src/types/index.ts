@@ -9,6 +9,9 @@ import type {
   NormalizedThemeConfig as NormalizedDefaultThemeConfig,
 } from './theme';
 import type { I18nText } from './theme/i18nText';
+import type { SitemapOptions } from './sitemap';
+
+export type { SitemapOptions } from './sitemap';
 
 // #region theme
 export type { I18nText } from './theme/i18nText';
@@ -237,6 +240,11 @@ export interface UserConfig {
    * Origin of the site, such as `https://example.com`.
    */
   siteOrigin?: string;
+  /**
+   * Generate sitemap.xml during production builds.
+   * @default true
+   */
+  sitemap?: boolean | SitemapOptions;
   /**
    * Path to html icon file.
    * @default ''
