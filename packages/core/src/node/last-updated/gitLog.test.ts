@@ -58,8 +58,11 @@ describe('pluginLastUpdated against a real repository', () => {
     await commit('trunk', '2022-03-04T05:06:07Z');
     // `git merge` demands a committer identity before even looking at the
     // trees — without one it dies with no conflict left behind to resolve.
+    // Force the C locale: the conflict detection below matches the literal
+    // 'CONFLICT', which localized git output (e.g. zh_CN) would not contain.
     await execa('git', [...identity('Merle'), 'merge', 'side'], {
       cwd: repo,
+      env: { LC_ALL: 'C' },
     }).catch((error: { stdout?: string }) => {
       if (!error.stdout?.includes('CONFLICT')) {
         throw error;
