@@ -1,139 +1,31 @@
-# @rspress/plugin-sitemap <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-sitemap" />
+# @rspress/plugin-sitemap (Legacy) <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-sitemap" />
 
 import { SourceCode } from '@rspress/core/theme';
 
-自动生成用于 SEO 的 [站点地图 (sitemap)](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview)，有利于搜索引擎抓取。
+:::warning Legacy 插件
 
-## 安装
+sitemap 生成功能已内置于 Rspress，且默认开启。请使用 [`sitemap`](/zh/api/config/config-basic#sitemap) 配置，无需安装此插件。
 
-import { PackageManagerTabs } from '@rspress/core/theme';
+:::
 
-<PackageManagerTabs command="add @rspress/plugin-sitemap -D" />
+## 迁移
 
-## 使用
+移除 `pluginSitemap` 的导入和 `plugins` 中的调用。如果曾向 `pluginSitemap` 传入选项，将其移至 `sitemap`：
 
-在 `rspress.config.ts` 中写入以下的配置：
-
-```ts
-// rspress.config.ts
-import path from 'path';
+```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
-import { pluginSitemap } from '@rspress/plugin-sitemap';
-
-export default defineConfig({
-  plugins: [
-    pluginSitemap({
-      siteUrl: 'https://example.com', // 替换为你的网站 URL
-    }),
-  ],
-});
-```
-
-## 配置
-
-这个插件接受一个对象参数，类型如下:
-
-```ts
-type ChangeFreq =
-  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
-
-type Priority =
-  | '0.0'
-  | '0.1'
-  | '0.2'
-  | '0.3'
-  | '0.4'
-  | '0.5'
-  | '0.6'
-  | '0.7'
-  | '0.8'
-  | '0.9'
-  | '1.0';
-
-// https://www.sitemaps.org/protocol.html
-interface Sitemap {
-  loc: string;
-  lastmod?: string;
-  changefreq?: ChangeFreq;
-  priority?: Priority;
-}
-
-interface CustomMaps {
-  [routePath: string]: Sitemap;
-}
-
-export interface PluginSitemapOptions {
-  siteUrl?: string;
-  customMaps?: CustomMaps;
-  defaultPriority?: Priority;
-  defaultChangeFreq?: ChangeFreq;
-}
-```
-
-### siteUrl
-
-- **类型**： `string`
-- **默认值**：[`siteOrigin`](/zh/api/config/config-basic#siteorigin) 与 [`base`](/zh/api/config/config-basic#base)，未配置 `siteOrigin` 时使用 `base`
-
-部署访问的站点 URL，例如 `https://example.com`。
-
-sitemap 的 `<loc>` 应是包含协议和域名的绝对 URL，例如 `https://example.com/base/`。当存在 `base` 配置时，插件级 `siteUrl` 需要包含 `base` 的路径。
-
-如果已经在 Rspress 中配置了 [`siteOrigin`](/zh/api/config/config-basic#siteorigin) 和 [`base`](/zh/api/config/config-basic#base)，可以省略插件级 `siteUrl`。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。如果既没有配置插件级 `siteUrl`，也没有配置 `siteOrigin`，插件会回退使用 `base`，这会保留已有的相对路径行为，但不会生成绝对 sitemap URL：
-
-```ts
-// rspress.config.ts
-import path from 'path';
-import { defineConfig } from '@rspress/core';
-import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
   siteOrigin: 'https://example.com',
-  base: '/base/',
-  plugins: [
-    // siteUrl 默认为 'https://example.com/base/'
-    pluginSitemap(),
-  ],
+  sitemap: {
+    defaultChangeFreq: 'weekly',
+    defaultPriority: '0.7',
+  },
 });
 ```
 
-### customMaps
+如果原来使用不带选项的 `pluginSitemap()`，直接移除即可，并保留 [`siteOrigin`](/zh/api/config/config-basic#siteorigin) 配置以生成绝对 URL。如果原来使用了 `siteUrl`，可将其保留为 `sitemap.siteUrl`。
 
-- **类型**：
+已有的插件用法仍然受支持，但会输出 legacy 提示。显式设置的 `sitemap` 选项优先于插件选项；即使仍在使用插件，`sitemap: false` 也会关闭生成。
 
-```ts
-interface Sitemap {
-  loc: string;
-  lastmod?: string;
-  changefreq?: ChangeFreq;
-  priority?: Priority;
-}
-
-interface CustomMaps {
-  [routePath: string]: Sitemap;
-}
-```
-
-- **默认值**：`{}`
-
-用于给某些重要页面单独设置自定义的 sitemap 值。
-
-### defaultChangeFreq
-
-- **类型**：`ChangeFreq`
-- **默认值**：`'monthly'`
-- **可选值**：`"always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"`
-
-> changefreq: 页面可能更改的频率。此值提供一般信息给搜索引擎，可能并不完全与它们爬取页面的频率相对应。
-
-设置生成的 sitemap 文件中，每个页面默认的 [changefreq](https://www.sitemaps.org/protocol.html) 值。
-
-### defaultPriority
-
-- **类型**：`Priority`
-- **默认值**：`'0.5'`
-- **可选值**：`"0.0" | "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6" | "0.7" | "0.8" | "0.9" | "1.0"`
-
-> priority: 此 URL 相对于网站上其他 URL 的优先级。
-
-设置生成的 sitemap 文件中，每个页面默认的 [priority](https://www.sitemaps.org/protocol.html) 值。
+完整选项和默认值请参阅 [`sitemap`](/zh/api/config/config-basic#sitemap)。
