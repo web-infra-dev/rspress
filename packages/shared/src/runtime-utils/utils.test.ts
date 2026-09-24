@@ -34,6 +34,17 @@ describe('shared runtime utils', () => {
     expect(secondResult).toBe('/my-base/guide/');
   });
 
+  test('withBase should not treat asset filenames starting with the base segment as already prefixed', () => {
+    // withBase('/base-logo.png', '/base/') used to return '/base-logo.png'
+    // because the loose startsWith matched the base segment inside the
+    // filename, leaving the asset unprefixed (404 under sub-path deploys).
+    expect(withBase('/base-logo.png', '/base/')).toBe('/base/base-logo.png');
+    // an URL that really is prefixed stays untouched
+    expect(withBase('/base/guide', '/base/')).toBe('/base/guide');
+    // base '/' keeps working
+    expect(withBase('/base-logo.png', '/')).toBe('/base-logo.png');
+  });
+
   test('withSiteOrigin', () => {
     expect(withSiteOrigin('/guide/index.md', 'https://example.com')).toBe(
       'https://example.com/guide/index.md',
