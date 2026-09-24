@@ -7,8 +7,8 @@ import {
   type PageDataLegacy,
 } from '@rspress/shared';
 import { pageData } from 'virtual-page-data';
-import siteData from 'virtual-site-data';
 import { pathnameToRouteService } from './route';
+import { siteData } from './siteData';
 import { isEqualPath } from './utils';
 
 type PageMeta = {

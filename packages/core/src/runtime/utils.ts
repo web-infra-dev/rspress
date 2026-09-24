@@ -11,7 +11,7 @@ import {
   removeHash,
   removeTrailingSlash,
 } from '@rspress/shared';
-import siteData from 'virtual-site-data';
+import { siteData } from './siteData';
 
 function withBase(url = '/'): string {
   return rawWithBase(url, siteData.base);
