@@ -48,6 +48,11 @@ export async function renderHtmlTemplate(
     )
     .join('');
   const routePreloadLinks = renderRoutePreloadLinks(route, routeChunkAssets);
+  const headHtml = [
+    routePreloadLinks,
+    await renderConfigHead(head, route),
+    alternateLinkTags,
+  ].join('');
   const replacedHtmlTemplate = htmlTemplate
     // Don't use `string` as second param
     // To avoid some special characters transformed to the marker, such as `$&`, etc.
@@ -56,14 +61,7 @@ export async function renderHtmlTemplate(
       META_GENERATOR,
       () => `<meta name="generator" content="Rspress v${RSPRESS_VERSION}">`,
     )
-    .replace(
-      HEAD_MARKER,
-      [
-        routePreloadLinks,
-        await renderConfigHead(head, route),
-        alternateLinkTags,
-      ].join(''),
-    );
+    .replace(HEAD_MARKER, () => headHtml);
   return replacedHtmlTemplate;
 }
 

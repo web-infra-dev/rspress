@@ -53,6 +53,17 @@ describe('renderHtmlTemplate', () => {
     expect(html).toBe('<head></head>');
   });
 
+  it('keeps replacement patterns in head config as is', async () => {
+    const head = `<script>a="$&";b="$'";c="$$"</script>`;
+    const html = await renderHtmlTemplate(
+      `<head>${HEAD_MARKER}</head>`,
+      [head],
+      route,
+    );
+
+    expect(html).toBe(`<head>${head}</head>`);
+  });
+
   it('resolves an auto asset prefix relative to the route HTML file', async () => {
     const manifest = {
       assetPrefix: 'auto',
