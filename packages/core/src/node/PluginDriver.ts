@@ -86,6 +86,11 @@ export class PluginDriver {
       );
     }
 
+    if (this.#isProd) {
+      const { pluginSitemap } = await import('./sitemap');
+      this.addPlugin(pluginSitemap());
+    }
+
     (config.plugins || []).forEach(plugin => {
       this.addPlugin(plugin);
     });
@@ -123,6 +128,7 @@ export class PluginDriver {
     this.#config.ssg ??= true;
     this.#config.llms ??= true;
     this.#config.webMcp ??= true;
+    this.#config.sitemap ??= true;
     this.#config.base = addTrailingSlash(
       addLeadingSlash(this.#config.base ?? '/'),
     );
