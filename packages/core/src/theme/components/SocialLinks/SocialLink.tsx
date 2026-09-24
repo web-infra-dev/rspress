@@ -1,5 +1,5 @@
 import type { SocialLink as ISocialLink } from '@rspress/core';
-import iconMap from 'virtual-social-links';
+import { socialLinks } from '@rspress/core/runtime';
 import './index.scss';
 import { GithubStars } from './GithubStars';
 import { useHoverGroup } from '../HoverGroup/useHoverGroup';
@@ -18,7 +18,7 @@ export const SocialLink = (props: SocialLinkProps) => {
 
   let IconComp: React.ReactElement = <></>;
   if (icon) {
-    const html = typeof icon === 'string' ? iconMap[icon] : icon.svg;
+    const html = typeof icon === 'string' ? socialLinks[icon] : icon.svg;
     IconComp = (
       <div
         className="rp-social-links__icon"

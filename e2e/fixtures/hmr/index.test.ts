@@ -1,7 +1,13 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test } from '@e2e/test';
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runDevCommand,
+  runBuildCommand,
+  runPreviewCommand,
+} from '../../utils/runCommands';
 
 const TEST_FILE = path.resolve(import.meta.dirname, 'doc/guide/test.mdx');
 const TEST_FRAGMENT_FILE = path.resolve(
@@ -240,5 +246,121 @@ test.describe('HMR with lazy compilation', async () => {
             .__rspressHmrMarker,
       ),
     ).toBe('preserved');
+  });
+});
+
+test.describe('virtual module HMR', () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
+  const filenames = [
+    'i18n.json',
+    'searchHooks.tsx',
+    'global.css',
+    'virtualProbe.tsx',
+  ];
+  const originals = new Map<string, string>();
+
+  test.beforeAll(async () => {
+    for (const filename of filenames) {
+      originals.set(
+        filename,
+        await fs.readFile(path.join(import.meta.dirname, filename), 'utf-8'),
+      );
+    }
+    appPort = await getPort();
+    app = await runDevCommand(
+      import.meta.dirname,
+      appPort,
+      'rspress.lazy.config.ts',
+    );
+  });
+
+  test.afterAll(async () => {
+    if (app) await killProcess(app);
+    for (const [filename, content] of originals) {
+      await fs.writeFile(path.join(import.meta.dirname, filename), content);
+    }
+  });
+
+  test('updates translations, search hooks, global components and styles without reloading', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/guide/test.html`, {
+      waitUntil: 'networkidle',
+    });
+    const probe = page.getByTestId('virtual-probe');
+    await expect(probe.getByText('Translation before')).toBeVisible();
+    await expect(probe.getByText('Search hook before')).toBeVisible();
+    await expect(probe).toHaveCSS('color', 'rgb(1, 2, 3)');
+    await probe.getByRole('button', { name: 'Count: 0' }).click();
+    await page.evaluate(() => {
+      (window as Window & { __rspressHmrMarker?: string }).__rspressHmrMarker =
+        'preserved';
+    });
+
+    const update = async (filename: string, before: string, after: string) => {
+      await fs.writeFile(
+        path.join(import.meta.dirname, filename),
+        originals.get(filename)!.replace(before, after),
+      );
+    };
+    await update('i18n.json', 'Translation before', 'Translation after');
+    await expect(probe.getByText('Translation after')).toBeVisible();
+    await update('searchHooks.tsx', 'Search hook before', 'Search hook after');
+    await expect(probe.getByText('Search hook after')).toBeVisible();
+    // Export removal must also replace the namespace snapshot.
+    await fs.writeFile(
+      path.join(import.meta.dirname, 'searchHooks.tsx'),
+      'export const onSearch = () => [];',
+    );
+    await expect(probe.getByText('No custom renderer')).toBeVisible();
+    await update('global.css', 'rgb(1, 2, 3)', 'rgb(4, 5, 6)');
+    await expect(probe).toHaveCSS('color', 'rgb(4, 5, 6)');
+    await update('virtualProbe.tsx', 'Count:', 'Updated count:');
+    await expect(
+      probe.getByRole('button', { name: 'Updated count: 1' }),
+    ).toBeVisible();
+    expect(
+      await page.evaluate(
+        () =>
+          (window as Window & { __rspressHmrMarker?: string })
+            .__rspressHmrMarker,
+      ),
+    ).toBe('preserved');
+  });
+});
+
+test.describe('virtual modules in production', () => {
+  let appPort: number;
+  let app: Awaited<ReturnType<typeof runPreviewCommand>>;
+
+  test.beforeAll(async () => {
+    await runBuildCommand(import.meta.dirname, 'rspress.lazy.config.ts');
+    appPort = await getPort();
+    app = await runPreviewCommand(import.meta.dirname, appPort, [
+      '-c',
+      'rspress.lazy.config.ts',
+    ]);
+  });
+
+  test.afterAll(async () => {
+    if (app) await killProcess(app);
+  });
+
+  test('preserves virtual data and global styles in the production build', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/guide/test.html`);
+    const probe = page.getByTestId('virtual-probe');
+    await expect(probe.getByText('Translation before')).toBeVisible();
+    await expect(probe.getByText('Search hook before')).toBeVisible();
+    await expect(probe).toHaveCSS('color', 'rgb(1, 2, 3)');
+    await expect(
+      page
+        .locator('a[href="https://github.com/web-infra-dev/rspress"] svg')
+        .first(),
+    ).toBeVisible();
+    await probe.getByRole('button', { name: 'Count: 0' }).click();
+    await expect(probe.getByRole('button', { name: 'Count: 1' })).toBeVisible();
   });
 });

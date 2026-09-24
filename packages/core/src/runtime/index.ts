@@ -45,3 +45,6 @@ export {
   withBase,
   withSiteOrigin,
 } from './utils';
+export { socialLinks } from './virtual/socialLinks';
+export { useSearchHooks, type SearchHooks } from './virtual/searchHooks';
+export { searchIndexHash } from './virtual/pageData';

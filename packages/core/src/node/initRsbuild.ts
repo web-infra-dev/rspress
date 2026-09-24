@@ -310,7 +310,7 @@ async function createInternalBuildConfig(
       preEntry: [
         // ensure CSS orders and access @theme before @rspress/theme-default to avoid circular dependency
         path.join(DEFAULT_THEME, './styles/index.js'), // 1. @rspress/theme-default global styles
-        'virtual-global-styles', // 2. virtual-global-styles
+        path.join(PACKAGE_ROOT, 'dist/runtime/virtual/globalStyles.js'), // 2. user global styles
         '@theme', // 3. import './index.css'; from 'theme/index.tsx'
       ],
       include: [PACKAGE_ROOT],

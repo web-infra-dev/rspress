@@ -2,7 +2,7 @@ import { PageContext, useLocation } from '@rspress/core/runtime';
 import { Layout, Root } from '@rspress/core/theme';
 import { LlmsHint } from '@rspress/core/theme-original';
 import React, { useContext, useLayoutEffect } from 'react';
-import globalComponents from 'virtual-global-components';
+import { useGlobalComponents } from './virtual/globalComponents';
 import {
   consumeCachedPageData,
   initPageData,
@@ -15,6 +15,7 @@ enum QueryStatus {
 }
 
 export function App() {
+  const globalComponents = useGlobalComponents();
   const { setData: setPageData, data } = useContext(PageContext);
   const { pathname, search } = useLocation();
   useLayoutEffect(() => {
