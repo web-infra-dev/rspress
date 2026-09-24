@@ -269,7 +269,13 @@ export function withBase(url: string, base: string): string {
   const normalizedUrl = addLeadingSlash(url);
   const normalizedBase = normalizeSlash(base);
 
-  const hasBase = normalizedUrl.startsWith(normalizedBase);
+  // The URL already contains the base only when it equals the normalized
+  // base or continues with `base + '/'`. A loose startsWith would also match
+  // URLs whose filename merely begins with the base segment, e.g.
+  // withBase('/base-logo.png', '/base/'), and leave them unprefixed.
+  const hasBase =
+    normalizedUrl === normalizedBase ||
+    normalizedUrl.startsWith(`${normalizedBase}/`);
   if (hasBase) {
     // normalizedUrl => '/base' base => '/base/'
     if (`${normalizedUrl}/` === base) {
