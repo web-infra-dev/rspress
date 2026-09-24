@@ -1,5 +1,5 @@
 import virtualGlobalComponents from 'virtual-global-components';
-import { createExternalStore } from '../createExternalStore';
+import { createExternalStore } from './createExternalStore';
 
 const store = createExternalStore(virtualGlobalComponents);
 

@@ -5,7 +5,7 @@ import type {
   RenderSearchFunction,
 } from '@rspress/core/theme';
 import * as virtualSearchHooks from 'virtual-search-hooks';
-import { createExternalStore } from '../createExternalStore';
+import { createExternalStore } from './createExternalStore';
 
 export interface SearchHooks {
   beforeSearch?: BeforeSearch;

@@ -1,5 +1,5 @@
 import virtualI18nText from 'virtual-i18n-text';
-import { createExternalStore } from '../createExternalStore';
+import { createExternalStore } from './createExternalStore';
 
 const store = createExternalStore(virtualI18nText);
 

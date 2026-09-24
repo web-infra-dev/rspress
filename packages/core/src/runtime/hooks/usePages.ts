@@ -3,7 +3,7 @@ import {
   pageData as virtualPageData,
   searchIndexHash as virtualSearchIndexHash,
 } from 'virtual-page-data';
-import { createExternalStore } from '../createExternalStore';
+import { createExternalStore } from './createExternalStore';
 
 export let pageData: PageData = virtualPageData;
 export let searchIndexHash: Record<string, string> = virtualSearchIndexHash;
