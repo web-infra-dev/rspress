@@ -1,7 +1,7 @@
 import type { Route } from '@rspress/shared';
 import { cleanUrl, normalizeHref } from '@rspress/shared';
 import { routes } from 'virtual-routes';
-import { siteData } from './siteData';
+import { siteData } from './hooks/useSite';
 import { removeBase, removeTrailingSlash } from './utils';
 
 /**

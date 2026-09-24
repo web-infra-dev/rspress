@@ -11,7 +11,7 @@ import {
   removeHash,
   removeTrailingSlash,
 } from '@rspress/shared';
-import { siteData } from './siteData';
+import { siteData } from './hooks/useSite';
 
 function withBase(url = '/'): string {
   return rawWithBase(url, siteData.base);

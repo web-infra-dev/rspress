@@ -1,12 +1,17 @@
 import type { SiteData } from '@rspress/shared';
-import { useSyncExternalStore } from 'react';
-import { getSiteData, subscribeSiteData } from '../siteData';
+import virtualSiteData from 'virtual-site-data';
+import { createExternalStore } from './createExternalStore';
+
+export let siteData: SiteData = virtualSiteData;
+const store = createExternalStore(siteData);
 
 export function useSite(): { site: SiteData } {
-  const site = useSyncExternalStore(
-    subscribeSiteData,
-    getSiteData,
-    getSiteData,
-  );
-  return { site };
+  return { site: store.useValue() };
+}
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept('virtual-site-data', () => {
+    siteData = virtualSiteData;
+    store.update(siteData);
+  });
 }

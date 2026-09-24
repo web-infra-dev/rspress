@@ -1,10 +1,11 @@
 import type { I18nText } from '@rspress/shared';
 import { useCallback } from 'react';
-import i18nTextData from 'virtual-i18n-text';
+import { useI18nText } from './useI18nText';
 import { useLang } from './useLang';
 
 export function useI18n<T>() {
   const lang = useLang();
+  const i18nTextData = useI18nText();
   return useCallback<
     (key: keyof (T & I18nText), params?: Record<string, string>) => string
   >(
@@ -21,6 +22,6 @@ export function useI18n<T>() {
         return params?.[p1] ?? `${p1}`;
       });
     },
-    [lang],
+    [lang, i18nTextData],
   );
 }

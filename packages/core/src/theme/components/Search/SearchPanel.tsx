@@ -1,4 +1,4 @@
-import { Head, useI18n } from '@rspress/core/runtime';
+import { Head, useI18n, useSearchHooks } from '@rspress/core/runtime';
 import {
   IconClose,
   IconSearch,
@@ -9,7 +9,7 @@ import {
 } from '@rspress/core/theme';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import * as userSearchHooks from 'virtual-search-hooks';
+
 import type {
   DefaultMatchResult,
   DefaultMatchResultItem,
@@ -99,6 +99,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
     }
   };
   const t = useI18n();
+  const userSearchHooks = useSearchHooks();
   const navigate = useLinkNavigate();
 
   const {
@@ -242,7 +243,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             {item.renderType === RenderType.Default &&
               renderSearchResultItem(item.result)}
             {item.renderType === RenderType.Custom &&
-              userSearchHooks[renderKey](item.result)}
+              userSearchHooks[renderKey]?.(item.result)}
           </Tab>
         ))}
       </Tabs>
