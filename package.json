@@ -46,10 +46,10 @@
     "tree-kill": "^1.2.2",
     "zx": "^8.8.5"
   },
-  "packageManager": "pnpm@11.27.0",
+  "packageManager": "pnpm@12.6.0",
   "engines": {
     "node": ">=22.12.0",
-    "pnpm": ">=11.27.0"
+    "pnpm": ">=12.6.0"
   },
   "publishConfig": {
     "access": "public",
