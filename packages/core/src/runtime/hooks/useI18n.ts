@@ -1,6 +1,6 @@
 import type { I18nText } from '@rspress/shared';
 import { useCallback } from 'react';
-import { useI18nText } from '../virtual/i18n';
+import { useI18nText } from './useI18nText';
 import { useLang } from './useLang';
 
 export function useI18n<T>() {

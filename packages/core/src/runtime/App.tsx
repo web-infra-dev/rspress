@@ -2,7 +2,7 @@ import { PageContext, useLocation } from '@rspress/core/runtime';
 import { Layout, Root } from '@rspress/core/theme';
 import { LlmsHint } from '@rspress/core/theme-original';
 import React, { useContext, useLayoutEffect } from 'react';
-import { useGlobalComponents } from './virtual/globalComponents';
+import { useGlobalComponents } from './hooks/useGlobalComponents';
 import {
   consumeCachedPageData,
   initPageData,

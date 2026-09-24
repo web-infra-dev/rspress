@@ -1,8 +1,7 @@
 import virtualI18nText from 'virtual-i18n-text';
-import { createVirtualStore } from './createVirtualStore';
+import { createExternalStore } from '../createExternalStore';
 
-const store =
-  createVirtualStore<Record<string, Record<string, string>>>(virtualI18nText);
+const store = createExternalStore(virtualI18nText);
 
 export function useI18nText() {
   return store.useValue();

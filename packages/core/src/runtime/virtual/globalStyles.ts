@@ -1,1 +1,0 @@
-import 'virtual-global-styles';

@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-export function createVirtualStore<T>(initialValue: T) {
+export function createExternalStore<T>(initialValue: T) {
   let value = initialValue;
   const listeners = new Set<() => void>();
   const getSnapshot = () => value;

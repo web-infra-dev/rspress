@@ -6,9 +6,9 @@ import {
   MDX_OR_MD_REGEXP,
   type PageDataLegacy,
 } from '@rspress/shared';
-import { pageData } from './virtual/pageData';
+import { pageData } from './hooks/usePages';
 import { pathnameToRouteService } from './route';
-import { siteData } from './virtual/siteData';
+import { siteData } from './hooks/useSite';
 import { isEqualPath } from './utils';
 
 type PageMeta = {

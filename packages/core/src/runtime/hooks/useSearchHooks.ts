@@ -5,7 +5,7 @@ import type {
   RenderSearchFunction,
 } from '@rspress/core/theme';
 import * as virtualSearchHooks from 'virtual-search-hooks';
-import { createVirtualStore } from './createVirtualStore';
+import { createExternalStore } from '../createExternalStore';
 
 export interface SearchHooks {
   beforeSearch?: BeforeSearch;
@@ -15,7 +15,7 @@ export interface SearchHooks {
 }
 
 // Copy the namespace so each update has a distinct, stable snapshot.
-const store = createVirtualStore<SearchHooks>({ ...virtualSearchHooks });
+const store = createExternalStore<SearchHooks>({ ...virtualSearchHooks });
 
 export function useSearchHooks(): SearchHooks {
   return store.useValue();

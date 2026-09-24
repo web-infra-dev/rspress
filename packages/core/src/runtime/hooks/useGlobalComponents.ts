@@ -1,7 +1,7 @@
 import virtualGlobalComponents from 'virtual-global-components';
-import { createVirtualStore } from './createVirtualStore';
+import { createExternalStore } from '../createExternalStore';
 
-const store = createVirtualStore(virtualGlobalComponents);
+const store = createExternalStore(virtualGlobalComponents);
 
 export function useGlobalComponents() {
   return store.useValue();
