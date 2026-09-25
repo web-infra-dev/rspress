@@ -1,5 +1,5 @@
-import { mkdir, stat, writeFile } from 'node:fs/promises';
-import { dirname, isAbsolute } from 'node:path';
+import { mkdir, stat, writeFile, readFile } from 'node:fs/promises';
+import { dirname, isAbsolute, resolve } from 'node:path';
 import {
   logger,
   type RspressPlugin,
@@ -36,6 +36,73 @@ interface CustomMaps {
   [routePath: string]: Sitemap;
 }
 
+export interface RobotsPolicy {
+  /**
+   * One or more user-agent identifiers (e.g. '*' or ['GPTBot', 'ClaudeBot']).
+   */
+  userAgent: string | string[];
+  /**
+   * Paths allowed to be crawled.
+   */
+  allow?: string | string[];
+  /**
+   * Paths forbidden from crawling.
+   */
+  disallow?: string | string[];
+  /**
+   * Optional crawl-delay directive in seconds.
+   */
+  crawlDelay?: number;
+  /**
+   * Optional clean-param directive (supported by Yandex).
+   */
+  cleanParam?: string | string[];
+}
+
+export interface RobotsOptions {
+  /**
+   * Crawl policies. If omitted, defaults to allowing all crawlers:
+   * `[{ userAgent: '*', allow: '/' }]`
+   */
+  policies?: RobotsPolicy[];
+
+  /**
+   * Additional sitemap URLs to advertise in robots.txt.
+   */
+  additionalSitemaps?: string[];
+
+  /**
+   * Whether to include the generated sitemap.xml in robots.txt.
+   * @default true
+   */
+  includeSitemap?: boolean;
+
+  /**
+   * Domain host directive (supported by Yandex and select search engines).
+   */
+  host?: string;
+
+  /**
+   * Output filename within the distribution root.
+   * @default 'robots.txt'
+   */
+  outputFileName?: string;
+
+  /**
+   * Merge behavior when a robots.txt already exists (e.g. copied from public/):
+   * - 'merge': Safely append missing sitemaps and policies without duplicates (default).
+   * - 'replace': Overwrite the existing robots.txt completely.
+   * - 'preserve': Keep the existing robots.txt completely unmodified.
+   * @default 'merge'
+   */
+  mergeStrategy?: 'merge' | 'replace' | 'preserve';
+
+  /**
+   * Custom hook to synchronously or asynchronously transform final robots.txt content.
+   */
+  transform?: (content: string) => string | Promise<string>;
+}
+
 export interface LinkTagOptions {
   /**
    * Relationship attribute.
@@ -65,9 +132,8 @@ interface SitemapDiscoveryOptions {
    * Generates or safely updates `robots.txt` referencing the sitemap.
    * Pass `true` for standard robots.txt or an object for custom policies.
    * @default false
-   * @todo Feature not yet implemented. This option currently has no effect.
    */
-  robots?: boolean;
+  robotsTxt?: boolean | RobotsOptions;
 }
 
 export interface PluginSitemapOptions {
@@ -76,6 +142,13 @@ export interface PluginSitemapOptions {
   defaultPriority?: Priority;
   defaultChangeFreq?: ChangeFreq;
   discovery?: SitemapDiscoveryOptions;
+}
+function isAbsoluteUrl(url: string): boolean {
+  return /^https?:\/\//i.test(url);
+}
+
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function ensureTrailingSlash(url: string) {
@@ -92,6 +165,105 @@ function normalizeSiteUrl(siteUrl: string): string {
       '[plugin-sitemap] `siteUrl` must be a valid absolute URL with protocol, such as `https://example.com/base/`.',
     );
   }
+}
+
+function serializeRobotsTxt(
+  policies: RobotsPolicy[],
+  sitemaps: string[],
+  host?: string,
+  newline: string = '\n',
+): string {
+  const lines: string[] = [];
+
+  for (const policy of policies) {
+    const agents = Array.isArray(policy.userAgent)
+      ? policy.userAgent
+      : [policy.userAgent];
+    for (const agent of agents) {
+      lines.push(`User-agent: ${agent}`);
+    }
+
+    if (policy.allow) {
+      const allows = Array.isArray(policy.allow)
+        ? policy.allow
+        : [policy.allow];
+      for (const allow of allows) {
+        lines.push(`Allow: ${allow}`);
+      }
+    }
+
+    if (policy.disallow) {
+      const disallows = Array.isArray(policy.disallow)
+        ? policy.disallow
+        : [policy.disallow];
+      for (const disallow of disallows) {
+        lines.push(`Disallow: ${disallow}`);
+      }
+    }
+
+    if (typeof policy.crawlDelay === 'number') {
+      lines.push(`Crawl-delay: ${policy.crawlDelay}`);
+    }
+
+    if (policy.cleanParam) {
+      const cleanParams = Array.isArray(policy.cleanParam)
+        ? policy.cleanParam
+        : [policy.cleanParam];
+      for (const cp of cleanParams) {
+        lines.push(`Clean-param: ${cp}`);
+      }
+    }
+
+    lines.push('');
+  }
+
+  if (host) {
+    lines.push(`Host: ${host}`);
+    lines.push('');
+  }
+
+  for (const sitemap of sitemaps) {
+    lines.push(`Sitemap: ${sitemap}`);
+  }
+
+  return lines.join(newline).trim() + newline;
+}
+
+function reconcileRobotsTxt(
+  existingContent: string,
+  missingSitemaps: string[],
+  policies: RobotsPolicy[] | undefined,
+  newline: string,
+): string {
+  let cleaned = existingContent.replace(/^\uFEFF/, '').trimEnd();
+
+  if (!cleaned.trim()) {
+    const defaultPolicies = policies ?? [{ userAgent: '*', allow: '/' }];
+    return serializeRobotsTxt(
+      defaultPolicies,
+      missingSitemaps,
+      undefined,
+      newline,
+    );
+  }
+
+  const additions: string[] = [];
+
+  for (const sitemapUrl of missingSitemaps) {
+    const pattern = new RegExp(
+      `^\\s*sitemap:\\s*${escapeRegex(sitemapUrl)}\\s*$`,
+      'im',
+    );
+    if (!pattern.test(cleaned)) {
+      additions.push(`Sitemap: ${sitemapUrl}`);
+    }
+  }
+
+  if (additions.length === 0) {
+    return cleaned + newline;
+  }
+
+  return `${cleaned}${newline}${newline}${additions.join(newline)}${newline}`;
 }
 
 function getSiteUrl(siteUrl: string | undefined, config: UserConfig) {
@@ -141,6 +313,7 @@ export function pluginSitemap(
 
   const discoveryConfig = options.discovery ?? {};
   const linkTagOption = discoveryConfig.linkTag ?? true;
+  const robotsOption = discoveryConfig.robotsTxt ?? false;
 
   const sitemaps: Sitemap[] = [];
   const set = new Set();
@@ -212,13 +385,106 @@ export function pluginSitemap(
           typeof config.builderConfig?.output?.distPath === 'string'
             ? config.builderConfig?.output?.distPath
             : config.builderConfig?.output?.distPath?.root;
-        const configPath = config.outDir || distPathRoot;
+        const configPath = config.outDir || distPathRoot || 'doc_build';
+
+        const outputDir = isAbsolute(configPath)
+          ? configPath
+          : resolve(process.cwd(), configPath);
+
         let outputPath = `./${configPath || 'doc_build'}/sitemap.xml`;
         if (isAbsolute(configPath || '')) {
           outputPath = `${configPath}/sitemap.xml`;
         }
         await mkdir(dirname(outputPath), { recursive: true });
         await writeFile(outputPath, generateXml(sitemaps));
+
+        if (!robotsOption) return;
+
+        const robotsConfig: RobotsOptions =
+          typeof robotsOption === 'object' ? robotsOption : {};
+        const fileName = robotsConfig.outputFileName || 'robots.txt';
+        const robotsFilePath = resolve(outputDir, fileName);
+        const mergeStrategy = robotsConfig.mergeStrategy || 'merge';
+
+        if (mergeStrategy === 'preserve') {
+          logger.info(
+            `[plugin-sitemap] Preserving existing ${fileName} unchanged.`,
+          );
+          return;
+        }
+
+        // Collect target sitemap URLs
+        const targetSitemaps: string[] = [];
+        const computedSitemapUrl = getSitemapUrl(resolvedSiteUrl);
+
+        if (robotsConfig.includeSitemap ?? true) {
+          if (isAbsoluteUrl(computedSitemapUrl)) {
+            targetSitemaps.push(computedSitemapUrl);
+          } else {
+            logger.warn(
+              `[plugin-sitemap] Robots.txt requires an absolute URL for the Sitemap directive (RFC 9309). ` +
+                `Resolved "${computedSitemapUrl}" is relative. Specify 'siteUrl' or 'siteOrigin' to enable sitemap injection.`,
+            );
+          }
+        }
+
+        if (robotsConfig.additionalSitemaps?.length) {
+          for (const url of robotsConfig.additionalSitemaps) {
+            if (isAbsoluteUrl(url)) {
+              targetSitemaps.push(url);
+            } else {
+              logger.warn(
+                `[plugin-sitemap] Additional sitemap "${url}" is not an absolute URL and will be skipped in robots.txt.`,
+              );
+            }
+          }
+        }
+
+        // Read existing file if it was copied by Rsbuild from `public/`
+        let existingContent: string | null = null;
+        try {
+          existingContent = await readFile(robotsFilePath, 'utf-8');
+        } catch (err: any) {
+          if (err.code !== 'ENOENT') {
+            throw err;
+          }
+        }
+
+        // Detect line ending (CRLF vs LF)
+        const newline =
+          existingContent && existingContent.includes('\r\n') ? '\r\n' : '\n';
+
+        let finalContent = '';
+
+        if (existingContent !== null && mergeStrategy === 'merge') {
+          logger.info(
+            `[plugin-sitemap] Safely updating existing ${fileName} with sitemap reference.`,
+          );
+          finalContent = reconcileRobotsTxt(
+            existingContent,
+            targetSitemaps,
+            robotsConfig.policies,
+            newline,
+          );
+        } else {
+          logger.info(`[plugin-sitemap] Generating fresh ${fileName}.`);
+          const policies = robotsConfig.policies || [
+            { userAgent: '*', allow: '/' },
+          ];
+          finalContent = serializeRobotsTxt(
+            policies,
+            targetSitemaps,
+            robotsConfig.host,
+            newline,
+          );
+        }
+
+        // Apply user transform hook if defined
+        if (typeof robotsConfig.transform === 'function') {
+          finalContent = await robotsConfig.transform(finalContent);
+        }
+
+        await writeFile(robotsFilePath, finalContent, 'utf-8');
       }
     },
   };
