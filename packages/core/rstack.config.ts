@@ -118,7 +118,13 @@ define.lib({
           root: './dist/runtime',
         },
       },
-      plugins: [pluginReact()],
+      plugins: [
+        pluginReact({
+          reactCompiler: {
+            target: '18',
+          },
+        }),
+      ],
     },
     {
       bundle: false,
@@ -126,7 +132,11 @@ define.lib({
         typescriptPath,
       },
       plugins: [
-        pluginReact(),
+        pluginReact({
+          reactCompiler: {
+            target: '18',
+          },
+        }),
         pluginSvgr({ svgrOptions: { exportType: 'default' } }),
         pluginSass(),
       ],
