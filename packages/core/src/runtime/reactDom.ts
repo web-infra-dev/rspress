@@ -2,6 +2,14 @@ import * as ReactDOM from 'react-dom';
 
 type CrossOrigin = '' | 'anonymous' | 'use-credentials';
 
+declare const browserUsable: unique symbol;
+
+export interface BrowserUsable {
+  readonly [browserUsable]: never;
+}
+
+type Browser = (reason?: string | (() => unknown)) => BrowserUsable;
+
 type Preconnect = (
   href: string,
   options?: {
@@ -41,10 +49,12 @@ type ReactDOMCompat = {
   preconnect?: Preconnect;
   preload?: Preload;
   default?: ReactDOMCompat;
+  browser?: Browser;
 };
 
 const reactDOM = ReactDOM as unknown as ReactDOMCompat;
 
+export const safeBrowserOnly = reactDOM.browser ?? reactDOM.default?.browser;
 export const safePreconnect =
   reactDOM.preconnect ?? reactDOM.default?.preconnect;
 export const safePreload = reactDOM.preload ?? reactDOM.default?.preload;
