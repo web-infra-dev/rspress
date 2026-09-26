@@ -235,7 +235,7 @@ function reconcileRobotsTxt(
   policies: RobotsPolicy[] | undefined,
   newline: string,
 ): string {
-  let cleaned = existingContent.replace(/^\uFEFF/, '').trimEnd();
+  const cleaned = existingContent.replace(/^\uFEFF/, '').trimEnd();
 
   if (!cleaned.trim()) {
     const defaultPolicies = policies ?? [{ userAgent: '*', allow: '/' }];
@@ -451,7 +451,7 @@ export function pluginSitemap(
         const newline =
           existingContent && existingContent.includes('\r\n') ? '\r\n' : '\n';
 
-        let finalContent = '';
+        let finalContent: string;
 
         if (existingContent !== null && mergeStrategy === 'merge') {
           logger.info(
