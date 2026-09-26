@@ -1,0 +1,332 @@
+---
+title: rspress-plugin-third-parties
+description: High-performance third-party embeds, Google Tag Manager, analytics, and non-blocking script strategies for Rspress sites.
+keywords:
+  [
+    rspress,
+    plugin,
+    third-parties,
+    google-analytics,
+    gtm,
+    youtube,
+    twitter,
+    x,
+    google-maps,
+    core-web-vitals,
+    react-19,
+  ]
+---
+
+# rspress-plugin-third-parties <SourceCode href="https://github.com/rstackjs/rspress-plugins/tree/main/packages/rspress-plugin-third-parties" />
+
+import {
+  SourceCode,
+  PackageManagerTabs,
+  Tabs,
+  Tab,
+  Steps,
+} from '@rspress/core/theme';
+
+**`rspress-plugin-third-parties`** brings Next.js-style third-party performance optimizations (`@next/third-parties`) directly to **Rspress**.
+
+External scripts and media embeds (YouTube, Google Maps, Twitter/X posts, GA4, and GTM) are notorious for congesting the browser's main thread, generating Cumulative Layout Shifts (CLS), and drastically lowering Google Lighthouse and Core Web Vitals (LCP, INP, TBT) scores.
+
+This plugin resolves those bottlenecks by providing **zero-weight visual facades**, **smart memory deduplication**, **React 19 SSG resource pre-initialization**, and **non-blocking idle execution strategies**.
+
+:::note
+This is a community-maintained integration.
+:::
+
+## Features
+
+- ⚡ **React 19 Resource Pre-initialization**: Leverages native `ReactDOM.preinit` and `ReactDOM.preload` during static site generation (SSG/SSR) to eliminate render cascades.
+- 🚀 **Zero-Jank Script Execution**: Fine-grained loading strategies (`afterInteractive`, `lazyOnload`, `beforeInteractive`) powered by `requestIdleCallback`.
+- 🧩 **Zero-Weight Media Embeds**: Ultra-lightweight facades for YouTube, Twitter/X, and Google Maps that defer heavy iframes and JS runtimes until user interaction.
+- 🧠 **Global Script Deduplication**: Built-in Map/Set cache registry prevents duplicate script tags and stylesheets across client-side page transitions.
+- 🛠️ **Zero-Config Global Analytics**: Auto-inject Google Analytics 4 across all documentation pages directly via `rspress.config.ts`.
+- 🌓 **Theme-Aware Embeds**: Automatically syncs Twitter/X and media iframe themes with Rspress's dark/light mode toggle.
+
+## Installation
+
+<PackageManagerTabs command="add rspress-plugin-third-parties -D" />
+
+## Usage
+
+### Global analytics registration
+
+To inject Google Analytics globally across your entire documentation site, register the plugin in your `rspress.config.ts`:
+
+```ts
+// rspress.config.ts
+import { defineConfig } from '@rspress/core';
+import { pluginThirdParties } from 'rspress-plugin-third-parties/plugin';
+
+export default defineConfig({
+  plugins: [
+    pluginThirdParties({
+      googleAnalytics: {
+        gaId: 'G-XXXXXXXXXX', // Replace with your GA4 Measurement ID
+        debugMode: false, // Set to true for local validation
+        dataLayerName: 'dataLayer',
+      },
+    }),
+  ],
+});
+```
+
+:::tip
+Global injection automatically tracks route transitions handled by Rspress's client-side router without requiring manual history listeners.
+:::
+
+---
+
+## Component reference
+
+You can import optimized components directly into any `.mdx` page or custom theme layout.
+
+### `<YouTubeEmbed />`
+
+<SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/YouTubeEmbed.tsx" />
+
+Renders a lightweight visual facade using `lite-youtube-embed`. Defers downloading the heavy YouTube iframe and JavaScript runtime (~1.2 MB saved) until the user clicks play.
+
+```mdx
+import { YouTubeEmbed } from 'rspress-plugin-third-parties';
+
+<YouTubeEmbed
+  videoid="sSbDtQTtwBY"
+  height={400}
+  playlabel="Digital Tamizh - A Lineage of Logic, A Future of Code (Unreal Engine Showcase)"
+  params="controls=1&rel=0"
+/>
+```
+
+#### Props
+
+| Prop        | Type     | Default      | Description                                                |
+| :---------- | :------- | :----------- | :--------------------------------------------------------- |
+| `videoid`   | `string` | **Required** | The 11-character YouTube video ID.                         |
+| `playlabel` | `string` | `'Play'`     | Accessible `aria-label` for screen readers.                |
+| `height`    | `number` | `undefined`  | Container height in pixels.                                |
+| `width`     | `number` | `undefined`  | Container width in pixels.                                 |
+| `params`    | `string` | `undefined`  | Custom player URL parameters (e.g. `start=30&autoplay=1`). |
+| `style`     | `string` | `undefined`  | Inline CSS styles applied to the outer container.          |
+
+---
+
+### `<TweetEmbed />`
+
+<SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/TweetEmbed.tsx" />
+
+Zero-overhead Twitter/X post embed powered by `react-tweet`. Fetches raw post data and renders native, accessible HTML components without downloading Twitter's heavy `widgets.js` script. Automatically adapts to Rspress's dark/light theme toggle.
+
+```mdx
+import { TweetEmbed } from 'rspress-plugin-third-parties';
+
+{/* Automatically inherits Rspress dark / light mode */}
+
+<TweetEmbed id="2017178323550605790" />
+```
+
+#### Props
+
+| Prop        | Type                | Default      | Description                                                    |
+| :---------- | :------------------ | :----------- | :------------------------------------------------------------- |
+| `id`        | `string`            | **Required** | The Tweet ID (the numeric sequence from the tweet URL).        |
+| `theme`     | `'light' \| 'dark'` | `useDark()`  | Force a specific color theme. By default tracks Rspress theme. |
+| `caption`   | `ReactNode`         | `undefined`  | Optional accessible caption inside `<figcaption>`.             |
+| `fallback`  | `ReactNode`         | `undefined`  | Custom skeleton component rendered during payload fetch.       |
+| `onError`   | `(err: any) => any` | `undefined`  | Error fallback callback function.                              |
+| `className` | `string`            | `undefined`  | Class names passed to container `<figure>`.                    |
+
+---
+
+### `<GoogleMapsEmbed />`
+
+<SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/GoogleMapsEmbed.tsx" />
+
+Embeds Google Maps using non-blocking iframes with pre-connected DNS origins and native lazy loading.
+
+```mdx
+import { GoogleMapsEmbed } from 'rspress-plugin-third-parties';
+
+<GoogleMapsEmbed
+  apiKey="YOUR_GOOGLE_MAPS_API_KEY"
+  mode="place"
+  q="Point Pedro, Sri Lanka"
+  height={400}
+  zoom="14"
+/>
+```
+
+#### Props
+
+| Prop      | Type                                                            | Default      | Description                                          |
+| :-------- | :-------------------------------------------------------------- | :----------- | :--------------------------------------------------- |
+| `apiKey`  | `string`                                                        | **Required** | Google Maps Embed API key.                           |
+| `mode`    | `'place' \| 'view' \| 'directions' \| 'streetview' \| 'search'` | **Required** | The operational mode for the embedded map.           |
+| `q`       | `string`                                                        | `undefined`  | Target place name, coordinates, or address query.    |
+| `zoom`    | `string`                                                        | `undefined`  | Zoom level between `0` (world) and `21` (buildings). |
+| `maptype` | `'roadmap' \| 'satellite'`                                      | `'roadmap'`  | Visual style of the map tiles.                       |
+| `loading` | `'lazy' \| 'eager'`                                             | `'lazy'`     | Native iframe loading strategy.                      |
+
+---
+
+### `<Script />`
+
+<SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/Script.tsx" />
+
+An advanced script engine that supersedes native `<script>` elements. Features deduplication, React 19 SSG preloading, stylesheet pre-initialization, and idle callback scheduling.
+
+```mdx
+import { Script } from 'rspress-plugin-third-parties';
+
+{/* Injects a floating back-to-top helper during browser idle time */}
+
+<Script 
+  id="san-web-maker-demo"
+  src="https://sanjaiyan-cool.web.app/script/v1/1/SanWebMaker.js" 
+  strategy="lazyOnload" 
+  onReady={() => {
+    (window as any)?.sanScrollTop?.("👆", "#00001c");
+  }}
+/>
+
+{/* Inline script execution with safe evaluation */}
+<Script id="analytics-init">
+  {`window.__DOCS_VERSION__ = "2.0";`}
+</Script>
+```
+
+#### Props
+
+| Prop          | Type                                                        | Default              | Description                                                   |
+| :------------ | :---------------------------------------------------------- | :------------------- | :------------------------------------------------------------ |
+| `src`         | `string`                                                    | `""`                 | Source URL of the script.                                     |
+| `strategy`    | `'afterInteractive' \| 'lazyOnload' \| 'beforeInteractive'` | `'afterInteractive'` | Execution timing relative to page lifecycle.                  |
+| `id`          | `string`                                                    | `src`                | Unique script key used for global cache deduplication.        |
+| `stylesheets` | `string[]`                                                  | `undefined`          | Companion stylesheet URLs to preinit/inject alongside script. |
+| `onLoad`      | `(e: Event) => void`                                        | `undefined`          | Callback fired on initial script load.                        |
+| `onReady`     | `() => void`                                                | `undefined`          | Callback fired on load or immediately if cached.              |
+| `onError`     | `(e: Event) => void`                                        | `undefined`          | Callback fired on script failure.                             |
+| `nonce`       | `string`                                                    | `undefined`          | Cryptographic nonce for Content Security Policies (CSP).      |
+
+---
+
+### `<GoogleTagManager />` & `<GoogleAnalytics />`
+
+Integrate Google Tag Manager (GTM) or isolated GA4 containers on designated pages:
+
+<Tabs>
+  <Tab label="Google Tag Manager">
+
+```mdx
+import { GoogleTagManager } from 'rspress-plugin-third-parties';
+
+<GoogleTagManager
+  gtmId="GTM-XXXXXXX"
+  dataLayer={{ docSection: 'developer-guide', siteEnv: 'production' }}
+/>
+```
+
+  </Tab>
+  <Tab label="Google Analytics 4">
+
+```mdx
+import { GoogleAnalytics } from 'rspress-plugin-third-parties';
+
+<GoogleAnalytics gaId="G-XXXXXXXXXX" debugMode={false} />
+```
+
+  </Tab>
+</Tabs>
+
+---
+
+## Event tracking utility
+
+Dispatch custom GA4 analytics events from your interactive client components:
+
+```tsx
+// docs/components/DocFeedback.tsx
+import React, { useState } from 'react';
+import { sendGAEvent } from 'rspress-plugin-third-parties';
+
+export function DocFeedback() {
+  const [voted, setVoted] = useState(false);
+
+  const handleVote = (sentiment: 'yes' | 'no') => {
+    sendGAEvent('event', 'documentation_feedback', {
+      sentiment,
+      page_path: typeof window !== 'undefined' ? window.location.pathname : '',
+    });
+    setVoted(true);
+  };
+
+  if (voted) return <p>Thank you for your feedback!</p>;
+
+  return (
+    <div style={{ display: 'flex', gap: '8px', marginTop: '1rem' }}>
+      <span>Was this page helpful?</span>
+      <button onClick={() => handleVote('yes')}>👍 Yes</button>
+      <button onClick={() => handleVote('no')}>👎 No</button>
+    </div>
+  );
+}
+```
+
+---
+
+## Performance & script strategies
+
+Choosing the right loading strategy is critical for balancing hydration speed and Total Blocking Time (TBT):
+
+| Strategy                           | Execution Timing                                            | Best Suited For                                     | Impact on Core Web Vitals                                     |
+| :--------------------------------- | :---------------------------------------------------------- | :-------------------------------------------------- | :------------------------------------------------------------ |
+| **`afterInteractive`** _(Default)_ | Injected immediately following client hydration.            | GA4, GTM, search widgets, translation bars.         | Protects **FCP** & **LCP**; non-blocking to document parsing. |
+| **`lazyOnload`**                   | Injected during idle time using `requestIdleCallback`.      | Chat widgets, CRM pixels, feedback forms.           | Minimizes **INP** & **TBT** to near zero.                     |
+| **`beforeInteractive`**            | Injected directly into the static HTML `<head>` during SSG. | Bot verification, critical polyfills, GDPR banners. | Guarantees execution before hydration.                        |
+
+---
+
+## Architecture mechanics
+
+The diagram below illustrates how `rspress-plugin-third-parties` manages resource hints and cache deduplication between static site generation (SSG) and client hydration:
+
+```
+                   ┌────────────────────────────────────────┐
+                   │        Rspress SSG Build Phase         │
+                   └───────────────────┬────────────────────┘
+                                       │
+                   ┌───────────────────▼────────────────────┐
+                   │      Server Pre-render Execution       │
+                   │   Calls safePreload() & safePreinit()  │
+                   └───────────────────┬────────────────────┘
+                                       │
+                                       ▼
+                      HTML Output with Resource Hints
+                   (<link rel="preload">, <link rel="preconnect">)
+                                       │
+                   ┌───────────────────▼────────────────────┐
+                   │       Hydration & Browser Idle         │
+                   └───────────────────┬────────────────────┘
+                                       │
+            ┌──────────────────────────┼──────────────────────────┐
+            ▼                          ▼                          ▼
+   [afterInteractive]             [lazyOnload]           [Cache Registry]
+   Appends script after       Scheduled via browser      Prevents fetching
+   hydration completes.       requestIdleCallback.       duplicate src/id tags.
+```
+
+:::warning Note on React 18 Fallback
+While `rspress-plugin-third-parties` takes full advantage of React 19's native `ReactDOM.preinit` and `preload` APIs, it incorporates automatic fallbacks (`document.createElement('link')`) when running under React 18, ensuring compatibility across older setups.
+:::
+
+## Next steps & further reading
+
+All set! You have successfully integrated non-blocking scripts, zero-CLS media facades, and automated GA4 tracking into your Rspress site without sacrificing Core Web Vitals.
+
+For more advanced configuration, custom `dataLayer` setups, and source code details, refer to [the plugin README](https://github.com/rstackjs/rspress-plugins/tree/main/packages/rspress-plugin-third-parties#readme).
+
+- 🚀 **Interactive Playground**: Test live embeds and inspect network waterfalls at the [Live Demo Site](https://sanjaiyan-dev.github.io/rspress-plugin-third-parties/).
+- 🤖 **AI-Assisted Workflows**: Machine-readable context files for Cursor, Copilot, and LLM coding agents are available at [`llms.txt`](https://sanjaiyan-dev.github.io/rspress-plugin-third-parties/llms.txt) and [`llms-full.txt`](https://sanjaiyan-dev.github.io/rspress-plugin-third-parties/llms-full.txt).
