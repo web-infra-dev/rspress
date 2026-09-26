@@ -38,7 +38,8 @@ export {
 export { useWindowSize } from './hooks/useWindowSize';
 export { initPageData } from './initPageData';
 export { NoSSR } from './NoSSR';
-export { safePreconnect, safePreload } from './reactDom';
+export { safeUse } from './react';
+export { safePreconnect, safePreload, safeBrowserOnly } from './reactDom';
 export { isActive, pathnameToRouteService, preloadLink } from './route';
 export {
   addLeadingSlash,
