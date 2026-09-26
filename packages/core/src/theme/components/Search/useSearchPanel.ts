@@ -1,4 +1,4 @@
-import { usePageData } from '@rspress/core/runtime';
+import { usePageData, useSearchHooks } from '@rspress/core/runtime';
 import type { LocalSearchOptions } from '@rspress/core';
 import { debounce } from '@rspress/shared/lodash-es';
 import {
@@ -8,7 +8,7 @@ import {
   useState,
   type RefObject,
 } from 'react';
-import * as userSearchHooks from 'virtual-search-hooks';
+
 import { getSearchIndexURL } from './logic/providers/LocalProvider';
 import { PageSearcher } from './logic/search';
 import type {
@@ -42,6 +42,7 @@ export function useSearchPanel({
     siteData,
     page: { lang, version },
   } = usePageData();
+  const userSearchHooks = useSearchHooks();
   const { search, title: siteTitle } = siteData;
   const [query, setQuery] = useState('');
   const [searchResult, setSearchResult] = useState<MatchResult>([]);
@@ -153,13 +154,13 @@ export function useSearchPanel({
       return;
     }
     const result: MatchResult = [];
-    if ('beforeSearch' in userSearchHooks) {
+    if (userSearchHooks.beforeSearch) {
       const transformedQuery = await userSearchHooks.beforeSearch(newQuery);
       if (transformedQuery) newQuery = transformedQuery;
     }
     const defaultSearchResult = await pageSearcherRef.current?.match(newQuery);
     if (defaultSearchResult) result.push(...defaultSearchResult);
-    if ('onSearch' in userSearchHooks) {
+    if (userSearchHooks.onSearch) {
       const customSearchResult = await userSearchHooks.onSearch(
         newQuery,
         result as DefaultMatchResult[],
@@ -173,7 +174,7 @@ export function useSearchPanel({
         );
       }
     }
-    if ('afterSearch' in userSearchHooks) {
+    if (userSearchHooks.afterSearch) {
       await userSearchHooks.afterSearch(newQuery, result);
     }
     if (searchInputRef.current?.value === newQuery) {
