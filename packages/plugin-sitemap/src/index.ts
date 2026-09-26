@@ -413,7 +413,6 @@ export function pluginSitemap(
           return;
         }
 
-        // Collect target sitemap URLs
         const targetSitemaps: string[] = [];
         const computedSitemapUrl = getSitemapUrl(resolvedSiteUrl);
 
@@ -440,7 +439,6 @@ export function pluginSitemap(
           }
         }
 
-        // Read existing file if it was copied by Rsbuild from `public/`
         let existingContent: string | null = null;
         try {
           existingContent = await readFile(robotsFilePath, 'utf-8');
@@ -450,7 +448,6 @@ export function pluginSitemap(
           }
         }
 
-        // Detect line ending (CRLF vs LF)
         const newline =
           existingContent && existingContent.includes('\r\n') ? '\r\n' : '\n';
 
@@ -479,11 +476,9 @@ export function pluginSitemap(
           );
         }
 
-        // Apply user transform hook if defined
         if (typeof robotsConfig.transform === 'function') {
           finalContent = await robotsConfig.transform(finalContent);
         }
-
         await writeFile(robotsFilePath, finalContent, 'utf-8');
       }
     },
