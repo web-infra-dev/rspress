@@ -65,6 +65,7 @@ imagex
 inited
 initing
 instantsearch
+Jank
 jfif
 jiti
 jscpuprofile
@@ -81,6 +82,7 @@ llms
 llmstxt
 longpaths
 manypkg
+maptype
 mattcompiles
 mdast
 MDSSG
@@ -113,6 +115,7 @@ picocolors
 pinkpurple
 Pipeable
 pjpeg
+playlabel
 pluggable
 pmmmwh
 pogodin
@@ -121,6 +124,8 @@ preact
 prebundle
 preflights
 prefresh
+preinit
+Preinit
 preprocessors
 Println
 Publint
@@ -152,6 +157,7 @@ speedscope
 srcset
 SSGMD
 stacktracey
+streetview
 styl
 subdir
 subpage
@@ -162,6 +168,7 @@ svgr
 swcrc
 systemjs
 tailwindcss
+Tamizh
 taskkill
 templating
 transpiling
@@ -178,6 +185,7 @@ unpatch
 unplugin
 unshift
 upath
+videoid
 watchpack
 webm
 webp
