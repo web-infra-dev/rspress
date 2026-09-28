@@ -27,6 +27,7 @@ minimumReleaseAgeExclude:
   - '@rsdoctor/*'
   - '@rslint/*'
   - '@rstack-dev/*'
+  - '@rstackjs/cli-*'
   - '@rstackjs/create-toolkit'
   - rstack
   - heading-case
