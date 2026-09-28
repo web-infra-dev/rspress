@@ -49,7 +49,7 @@ jobs:
         run: RSDOCTOR=1 pnpm --filter @rspress-fixture/auto-nav-sidebar run build
 
       - name: Report Compressed Size
-        uses: web-infra-dev/rsdoctor-action@2fbd50933702502f12d2bbef5273afbfd829a289 # main
+        uses: web-infra-dev/rsdoctor-action@f4e6e8ec8b71c748cf6dd546467e22e12341164e # main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           file_path: '{website,e2e/fixtures/auto-nav-sidebar}/doc_build/diff-rsdoctor/**/rsdoctor-data.json'

@@ -7,7 +7,8 @@
     bottom: 0;
     background: #3c3c3c66;
     backdrop-filter: blur(5px);
-    z-index: 100;
+    // Keep the modal above the sticky banner (z-index: 999).
+    z-index: 1000;
   }
 
   &__modal {
@@ -78,18 +79,29 @@
     }
   }
 
+  &__search-icon--loading {
+    animation: rp-search-panel-icon-loading 1s ease-in-out infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &__search-icon {
+    display: inline-block;
+    font-size: 20px;
+  }
+
   &__results {
     max-height: calc(100vh - 230px);
     overflow: scroll;
     padding-right: 2px;
   }
 
-  &__loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 2rem 0;
-    opacity: 0.8;
+  &__error {
+    padding: 2rem 0;
+    color: var(--rp-c-text-2);
+    text-align: center;
   }
 
   &__tabs {
@@ -111,16 +123,17 @@
 
   @media (max-width: 960px) {
     &__modal {
-      margin-top: 0;
+      margin-top: calc(32px + env(safe-area-inset-top, 0px));
     }
 
     &__input-form {
       height: 40px;
+    }
 
-      svg {
-        width: 16px;
-        height: 16px;
-      }
+    &__search-icon,
+    &__close {
+      width: 16px;
+      height: 16px;
     }
 
     &__input {
@@ -133,5 +146,16 @@
   from {
     opacity: 0;
     transform: translateY(-8px) scale(0.98);
+  }
+}
+
+@keyframes rp-search-panel-icon-loading {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
   }
 }

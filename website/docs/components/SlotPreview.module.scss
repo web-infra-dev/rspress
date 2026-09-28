@@ -1,6 +1,56 @@
+@mixin nav-label($wide-width: 64px) {
+  > .label {
+    display: var(--nav-slot-label-display, none);
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    padding: 4px 8px;
+    border: 1px solid var(--rp-c-brand);
+    border-radius: 4px;
+    background: var(--rp-c-bg);
+    color: var(--rp-c-text-1);
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  &[data-slot-preview='afterNavMenu'] > .label {
+    right: 0;
+    left: auto;
+  }
+
+  @media (min-width: 1920px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $wide-width;
+
+    > .label {
+      display: block;
+      position: static;
+      width: auto;
+      max-width: 100%;
+      padding: 0 4px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      font-size: 9px;
+      line-height: 12px;
+      white-space: normal;
+    }
+  }
+}
+
 .slot {
   position: relative;
   display: flow-root;
+
+  &:hover,
+  &:focus-within {
+    --nav-slot-label-display: block;
+  }
 
   // Keep the content's own layout, including components that render nothing.
   > .content {
@@ -10,6 +60,7 @@
   &:is(
     [data-slot-container$='NavTitle'],
     [data-slot-container$='NavMenu'],
+    [data-slot-container$='NavItems'],
     [data-slot-container='navTitle']
   ) {
     display: flex;
@@ -56,14 +107,13 @@
     &:is(
       [data-slot-preview$='NavTitle'],
       [data-slot-preview$='NavMenu'],
+      [data-slot-preview$='NavItems'],
       [data-slot-preview='navTitle']
     ) {
-      align-items: center;
+      width: 100%;
+      height: 100%;
 
-      > .label {
-        position: static;
-        background: transparent;
-      }
+      @include nav-label(100%);
     }
   }
 }
@@ -85,13 +135,23 @@
   &:is(
     [data-slot-preview$='NavTitle'],
     [data-slot-preview$='NavMenu'],
+    [data-slot-preview$='NavItems'],
     [data-slot-preview='navTitle']
   ) {
     flex-shrink: 0;
-    max-width: 64px;
+    position: relative;
+    box-sizing: border-box;
+    width: 24px;
+    height: 40px;
     padding: 4px;
     margin: 2px;
     font-size: 10px;
+
+    &[data-slot-preview='navTitle'] {
+      height: 25px;
+    }
+
+    @include nav-label;
   }
 }
 

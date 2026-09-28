@@ -6,6 +6,13 @@ import { pluginPublint } from 'rsbuild-plugin-publint';
 const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
 
 define.lib({
+  tools: {
+    rspack: {
+      experiments: {
+        runtimeMode: 'rspack',
+      },
+    },
+  },
   plugins: [pluginPublint()],
   lib: [
     {

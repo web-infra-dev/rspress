@@ -8,6 +8,24 @@ define.lint(({ globals, js, rstestPlugin, ts }) => [
   js.configs.recommended,
   ts.configs.recommended,
   {
+    files: ['packages/core/src/**/*.{ts,tsx}'],
+    ignores: ['packages/core/src/runtime/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['virtual-*'],
+              message:
+                'Import virtual module values through @rspress/core/runtime.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     files: ['**/*.test.{ts,tsx}'],
     ...rstestPlugin.configs.recommended,
     rules: {

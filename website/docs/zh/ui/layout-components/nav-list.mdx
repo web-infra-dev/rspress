@@ -1,0 +1,55 @@
+---
+description: NavList 在桌面端导航栏和移动端菜单中渲染自定义导航项。
+overviewHeaders: []
+---
+
+import { VersionBadge } from '../../../components/VersionBadge';
+
+# NavList
+
+<VersionBadge version="2.0.22" />
+
+`NavList` 会根据布局当前的导航展示方式渲染自定义导航项，同一个组件同时适用于桌面端导航栏和展开后的移动端菜单。
+
+## 用法
+
+在[自定义主题](/guide/basic/custom-theme)中，将 `NavList` 传入导航项插槽：
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [
+  { text: '社区', link: '/community' },
+  {
+    text: '资源',
+    items: [{ text: '示例', link: '/examples' }],
+  },
+];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+桌面端会将这些项渲染在导航栏中；在小屏幕上，同一组项会渲染到展开后的移动端菜单中，因此不需要分别实现桌面端和移动端布局。
+
+## Props
+
+### items
+
+- **类型：** `NavItem[]`
+
+要渲染的导航项。数据结构与 [`themeConfig.nav`](/api/config/config-theme#nav) 相同，支持 `text`、`link` 和嵌套的 `items`。
+
+## 插入位置
+
+将 `NavList` 传入 `Layout` 的四个导航项插槽之一：
+
+- `beforeLeftNavItems`
+- `afterLeftNavItems`
+- `beforeRightNavItems`
+- `afterRightNavItems`
+
+插槽决定菜单显示在对应左侧或右侧导航项的前面或后面。

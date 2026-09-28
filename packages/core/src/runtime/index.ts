@@ -1,3 +1,5 @@
+import virtualSocialLinks from 'virtual-social-links';
+
 export {
   isDataUrl,
   isExternalUrl,
@@ -18,7 +20,7 @@ export { useLocaleSiteData } from './hooks/useLocaleSiteData';
 export { useNav } from './hooks/useNav';
 export { PageContext, usePage } from './hooks/usePage';
 export { usePageData } from './hooks/usePageData';
-export { usePages } from './hooks/usePages';
+export { usePages, searchIndexHash } from './hooks/usePages';
 export {
   getSidebarDataGroup,
   useSidebar,
@@ -45,3 +47,5 @@ export {
   withBase,
   withSiteOrigin,
 } from './utils';
+export const socialLinks: Record<string, string> = virtualSocialLinks;
+export { useSearchHooks, type SearchHooks } from './hooks/useSearchHooks';

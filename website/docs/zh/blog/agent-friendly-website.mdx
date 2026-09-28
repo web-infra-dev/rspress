@@ -21,7 +21,7 @@ Claude Code、Cursor、Codex 等 Agent 已经会直接查阅文档、调用 API 
 - 人可以忽略导航、按钮和广告，Agent 却需要先从大量 HTML 中提取正文；
 - 即使网站提供 Markdown，Agent 也不一定知道它的存在。
 
-不止是人类读者，Rspress 致力于让每个文档都能被 Agent 更好地发现、读取和理解。下面介绍一下 Rspress 在 Agent-friendly 上的最佳实践：
+Rspress 是一个基于 Rsbuild 的静态站点生成器，致力于让每个文档都能被 Agent 更好地发现、读取和理解。本文将介绍 Rspress 在 Agent-friendly 上的最佳实践。
 
 <TweetEmbed
   id="2090359544769913185"
@@ -34,16 +34,11 @@ Claude Code、Cursor、Codex 等 Agent 已经会直接查阅文档、调用 API 
 
 ## llms.txt：Agent 时代的 sitemap
 
-[llms.txt 规范](https://llmstxt.org/)定义了一种放在网站根目录或子路径下的 Markdown 索引，包含网站简介和详细内容的链接。
+[llms.txt 规范](https://llmstxt.org/)定义了一种放在网站根目录或子路径下的 Markdown 索引文件，包含网站简介和指向详细内容的链接。
 
-当前规范只要求一个表示项目名称的一级标题。以下内容均为可选：
+`sitemap.xml` 面向搜索引擎收录页面；`llms.txt` 面向 Agent 的内容发现和渐进式披露：先提供精简的文档索引，再让 Agent 按需读取相关页面。
 
-- 引用块形式的项目摘要；
-- 不使用标题的补充说明；
-- 由二级标题分组的链接列表，可附内容描述；
-- 一个名为 `Optional` 的分组，放置上下文不足时可以跳过的内容。
-
-例如：
+例如 Rspress 站点的 `llms.txt` 文件位于 [https://rspress.rs/llms.txt](https://rspress.rs/llms.txt)：
 
 ```md
 # Rspress
@@ -54,9 +49,9 @@ Claude Code、Cursor、Codex 等 Agent 已经会直接查阅文档、调用 API 
 
 - [Introduction](https://rspress.rs/guide/start/introduction.md): Introduction to Rspress
 - [Quick Start](https://rspress.rs/guide/start/quick-start.md): Quick Start
-```
 
-`sitemap.xml` 面向搜索引擎收录页面；`llms.txt` 面向 Agent 的内容发现和渐进式披露：先提供精简的文档索引，再让 Agent 按需读取相关页面。
+// ...
+```
 
 Rspress 目前的 `doc_build` 产物可以分为三部分：给人阅读的 HTML、给 Agent 逐页读取的 Markdown，以及用于内容发现的索引文件。
 
@@ -68,7 +63,8 @@ doc_build/
 │   └── start/
 │       ├── introduction.html               # HTML 页面，给人阅读
 │       └── introduction.md                 # Markdown 页面，给 Agent 阅读
-├── llms.txt                                # 精简的文档索引
+├── sitemap.xml                             # HTML 文档索引
+├── llms.txt                                # Markdown 精简的索引文件
 └── llms-full.txt                           # 整站 Markdown 内容
 ```
 
@@ -273,7 +269,7 @@ npx afdocs check https://docs.example.com --format scorecard
 
 即使网站已经提供 Markdown，Agent 从深层文档进入时，也不一定知道当前页面的 Markdown 版本和 `/llms.txt` 的存在。因此，每个页面都需要主动暴露这些入口。
 
-Rspress 原生提供 [`injectLlmsHint`](/zh/api/config/config-theme#injectllmshint) 配置。启用 SSG-MD 后，生成的 HTML 会在正文靠前的位置注入一段视觉隐藏的纯文本：
+Rspress 默认启用 [`injectLlmsHint`](/zh/api/config/config-theme#injectllmshint) 配置。在启用 SSG-MD 的同时，生成的 HTML 会在正文靠前的位置注入一段视觉隐藏的纯文本：
 
 {/* prettier-ignore */}
 ```html
@@ -284,7 +280,7 @@ Rspress 原生提供 [`injectLlmsHint`](/zh/api/config/config-theme#injectllmshi
 
 [AFDocs 的 `llms-txt-directive-html` 规则](https://afdocs.dev/checks/content-discoverability#llms-txt-directive-html)也强调了这一点：directive 可以使用 `clip-rect` 或 `sr-only` 等方式视觉隐藏，但必须留在 DOM 中，并能经过 HTML-to-Markdown 转换继续存在。
 
-Markdown 产物使用引用块：
+生成的 Markdown 产物中也会包含以下内容：
 
 ```md
 > For AI agents: the complete documentation index is available at
@@ -292,7 +288,7 @@ Markdown 产物使用引用块：
 > https://example.com/llms-full.txt.
 ```
 
-Markdown 已是当前页面，因此 Hint 只保留 `llms.txt` 和 `llms-full.txt`。两种输出分别对应 `llms-txt-directive-html` 和 `llms-txt-directive-md` 检查。
+两种输出分别对应 `llms-txt-directive-html` 和 `llms-txt-directive-md`。
 
 ## 参考资料
 

@@ -1,0 +1,20 @@
+[
+  {
+    "text": "R1",
+    "link": "/"
+  },
+  {
+    "text": "L1",
+    "link": "/",
+    "position": "left"
+  },
+  {
+    "text": "R2",
+    "link": "/"
+  },
+  {
+    "text": "L2",
+    "link": "/",
+    "position": "left"
+  }
+]
