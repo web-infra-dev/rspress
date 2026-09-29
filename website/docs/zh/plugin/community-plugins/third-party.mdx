@@ -1,29 +1,29 @@
 ---
 title: rspress-plugin-third-parties
-description: Embed YouTube videos, tweets, and Google Maps, add Google Analytics or Tag Manager, and control script loading in Rspress.
+description: 在 Rspress 中嵌入 YouTube 视频、推文和 Google 地图，接入 Google Analytics 或 Tag Manager，并控制脚本加载时机。
 ---
 
 # rspress-plugin-third-parties <SourceCode href="https://github.com/rstackjs/rspress-plugins/tree/main/packages/rspress-plugin-third-parties" />
 
 import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
 
-This plugin provides components for YouTube, Twitter/X, and Google Maps, integrations for Google Analytics and Google Tag Manager, and a `Script` component for controlling when scripts load.
+该插件提供 YouTube、Twitter/X 和 Google 地图嵌入组件，支持接入 Google Analytics 和 Google Tag Manager，并通过 `Script` 组件控制脚本加载时机。
 
 :::note
-This is a community-maintained integration.
+这是一个由社区维护的集成方案。
 
-- [Documentation and demos](https://sanjaiyan-dev.github.io/rspress-plugin-third-parties/), maintained by the plugin author.
-- [Plugin README](https://github.com/rstackjs/rspress-plugins/tree/main/packages/rspress-plugin-third-parties#readme) for all component options.
+- [文档与 Demo](https://sanjaiyan-dev.github.io/rspress-plugin-third-parties/)：由插件作者维护。
+- [插件 README](https://github.com/rstackjs/rspress-plugins/tree/main/packages/rspress-plugin-third-parties#readme)：查看完整组件选项。
 
 :::
 
-## Installation
+## 安装 \{#installation}
 
 <PackageManagerTabs command="add rspress-plugin-third-parties -D" />
 
-## Global analytics
+## 全局统计 \{#global-analytics}
 
-To add Google Analytics to all pages, register the plugin in `rspress.config.ts` and replace `G-XXXXXXXXXX` with your GA4 measurement ID:
+在 `rspress.config.ts` 中注册插件，为所有页面添加 Google Analytics。将 `G-XXXXXXXXXX` 替换为你的 GA4 衡量 ID：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -38,17 +38,17 @@ export default defineConfig({
 });
 ```
 
-For client-side navigation tracking, configure [GA4 single-page application measurement](https://developers.google.com/analytics/devguides/collection/ga4/single-page-applications).
+如需跟踪客户端路由跳转，请配置 [GA4 单页应用衡量](https://developers.google.com/analytics/devguides/collection/ga4/single-page-applications)。
 
-## Components
+## 组件 \{#components}
 
-Import components into an MDX page or custom theme. The YouTube and Tweet examples below include live previews alongside their source code.
+在 MDX 页面或自定义主题中导入组件。下方的 YouTube 和 Tweet 示例提供实时预览及对应代码。
 
 ### `<YouTubeEmbed />`
 
 <SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/YouTubeEmbed.tsx" />
 
-Shows a video thumbnail and loads the YouTube player when you click play.
+先显示视频缩略图，点击播放后加载 YouTube 播放器。
 
 ```mdx preview
 import { YouTubeEmbed } from 'rspress-plugin-third-parties';
@@ -63,7 +63,7 @@ import { YouTubeEmbed } from 'rspress-plugin-third-parties';
 
 <SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/TweetEmbed.tsx" />
 
-Embeds a Twitter/X post and follows the site's light or dark theme.
+嵌入 Twitter/X 推文，并跟随站点的亮色或暗色主题。
 
 ```mdx preview
 import { TweetEmbed } from 'rspress-plugin-third-parties';
@@ -75,7 +75,7 @@ import { TweetEmbed } from 'rspress-plugin-third-parties';
 
 <SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/GoogleMapsEmbed.tsx" />
 
-Embeds a Google Map. Replace the placeholder with your Google Maps Embed API key to use this example.
+嵌入 Google 地图。使用此示例时，请将占位符替换为你的 Google Maps Embed API Key。
 
 ```mdx
 import { GoogleMapsEmbed } from 'rspress-plugin-third-parties';
@@ -92,7 +92,7 @@ import { GoogleMapsEmbed } from 'rspress-plugin-third-parties';
 
 <SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/Script.tsx" />
 
-Loads external or inline scripts and deduplicates external script loads across page transitions. The default strategy is `afterInteractive`; use `lazyOnload` to wait until the page has loaded and the browser is idle.
+加载外部或内联脚本，并在页面切换时避免重复加载同一外部脚本。默认策略为 `afterInteractive`；使用 `lazyOnload` 可等到页面加载完成且浏览器空闲时再加载。
 
 ```mdx
 import { Script } from 'rspress-plugin-third-parties';
@@ -104,7 +104,7 @@ import { Script } from 'rspress-plugin-third-parties';
 
 <SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/GoogleTagManager.tsx" />
 
-Add Google Tag Manager to your custom theme layout.
+在自定义主题布局中添加 Google Tag Manager。
 
 ```mdx
 import { GoogleTagManager } from 'rspress-plugin-third-parties';
@@ -116,7 +116,7 @@ import { GoogleTagManager } from 'rspress-plugin-third-parties';
 
 <SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/GoogleAnalytics/index.tsx" />
 
-Add GA4 to your custom theme layout. Skip this component if you already registered the same measurement ID with the global plugin.
+在自定义主题布局中添加 GA4。如果已通过全局插件注册同一个衡量 ID，则无需再添加此组件。
 
 ```mdx
 import { GoogleAnalytics } from 'rspress-plugin-third-parties';
@@ -124,7 +124,7 @@ import { GoogleAnalytics } from 'rspress-plugin-third-parties';
 <GoogleAnalytics gaId="G-XXXXXXXXXX" />
 ```
 
-After configuring Google Analytics, use `sendGAEvent` in an event handler to send custom events:
+配置 Google Analytics 后，可以在事件处理函数中使用 `sendGAEvent` 发送自定义事件：
 
 ```ts
 import { sendGAEvent } from 'rspress-plugin-third-parties';
