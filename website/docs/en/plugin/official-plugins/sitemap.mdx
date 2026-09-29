@@ -1,139 +1,31 @@
-# @rspress/plugin-sitemap <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-sitemap" />
+# @rspress/plugin-sitemap (Legacy) <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-sitemap" />
 
 import { SourceCode } from '@rspress/core/theme';
 
-Automatically generate a [sitemap](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview) for SEO so search engines can crawl your site more easily.
+:::warning Legacy plugin
 
-## Installation
+Sitemap generation is built into Rspress and enabled by default. Use the [`sitemap`](/api/config/config-basic#sitemap) configuration instead of installing this plugin.
 
-import { PackageManagerTabs } from '@rspress/core/theme';
+:::
 
-<PackageManagerTabs command="add @rspress/plugin-sitemap -D" />
+## Migration
 
-## Usage
+Remove the `pluginSitemap` import and its entry in `plugins`. If you passed options to `pluginSitemap`, move them to `sitemap`:
 
-Add the following configuration in `rspress.config.ts`:
-
-```ts
-// rspress.config.ts
-import path from 'path';
+```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
-import { pluginSitemap } from '@rspress/plugin-sitemap';
-
-export default defineConfig({
-  plugins: [
-    pluginSitemap({
-      siteUrl: 'https://example.com', // Replace with your site URL
-    }),
-  ],
-});
-```
-
-## Configuration
-
-This plugin accepts an options object with the following type:
-
-```ts
-type ChangeFreq =
-  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
-
-type Priority =
-  | '0.0'
-  | '0.1'
-  | '0.2'
-  | '0.3'
-  | '0.4'
-  | '0.5'
-  | '0.6'
-  | '0.7'
-  | '0.8'
-  | '0.9'
-  | '1.0';
-
-// https://www.sitemaps.org/protocol.html
-interface Sitemap {
-  loc: string;
-  lastmod?: string;
-  changefreq?: ChangeFreq;
-  priority?: Priority;
-}
-
-interface CustomMaps {
-  [routePath: string]: Sitemap;
-}
-
-export interface PluginSitemapOptions {
-  siteUrl?: string;
-  customMaps?: CustomMaps;
-  defaultPriority?: Priority;
-  defaultChangeFreq?: ChangeFreq;
-}
-```
-
-### siteUrl
-
-- **Type**: `string`
-- **Default**: [`siteOrigin`](/api/config/config-basic#siteorigin) + [`base`](/api/config/config-basic#base), or `base` when `siteOrigin` is not configured
-
-The site URL for deployment access, for example `https://example.com`.
-
-Sitemap `<loc>` entries should be absolute URLs with protocol and domain, such as `https://example.com/base/`. When `base` is configured, plugin-level `siteUrl` must include the `base` path.
-
-If [`siteOrigin`](/api/config/config-basic#siteorigin) and [`base`](/api/config/config-basic#base) are configured in Rspress, you can omit the plugin-level `siteUrl`. The full URL concatenation order is `siteOrigin + base + routePath`. If neither plugin-level `siteUrl` nor `siteOrigin` is configured, the plugin falls back to `base`, which keeps existing relative path behavior but does not generate absolute sitemap URLs.
-
-```ts
-// rspress.config.ts
-import path from 'path';
-import { defineConfig } from '@rspress/core';
-import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
   siteOrigin: 'https://example.com',
-  base: '/base/',
-  plugins: [
-    // siteUrl defaults to 'https://example.com/base/'
-    pluginSitemap(),
-  ],
+  sitemap: {
+    defaultChangeFreq: 'weekly',
+    defaultPriority: '0.7',
+  },
 });
 ```
 
-### customMaps
+If you used `pluginSitemap()` without options, remove it and keep [`siteOrigin`](/api/config/config-basic#siteorigin) configured to generate absolute URLs. If you used `siteUrl`, you can retain it as `sitemap.siteUrl`.
 
-- **Type**:
+Existing plugin usage remains supported with a legacy warning. Explicit `sitemap` options take precedence over plugin options, and `sitemap: false` disables generation even when the plugin is present.
 
-```ts
-interface Sitemap {
-  loc: string;
-  lastmod?: string;
-  changefreq?: ChangeFreq;
-  priority?: Priority;
-}
-
-interface CustomMaps {
-  [routePath: string]: Sitemap;
-}
-```
-
-- **Default**: `{}`
-
-Sets custom sitemap values for specific important pages.
-
-### defaultChangeFreq
-
-- **Type**: `ChangeFreq`
-- **Default**: `'monthly'`
-- **Options**: `"always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"`
-
-> changefreq: How frequently the page is likely to change. This value provides general information to search engines and may not correlate exactly to how often they crawl the page.
-
-Sets the default [changefreq](https://www.sitemaps.org/protocol.html) value for each page in the generated sitemap file.
-
-### defaultPriority
-
-- **Type**: `Priority`
-- **Default**: `'0.5'`
-- **Options**: `"0.0" | "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6" | "0.7" | "0.8" | "0.9" | "1.0"`
-
-> priority: The priority of this URL relative to other URLs on your site.
-
-Sets the default [priority](https://www.sitemaps.org/protocol.html) value for each page in the generated sitemap file.
+See [`sitemap`](/api/config/config-basic#sitemap) for all options and defaults.

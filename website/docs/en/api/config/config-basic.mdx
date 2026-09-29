@@ -50,7 +50,7 @@ export default defineConfig({
 
 The optional deployment origin of the site, for example `https://foo.github.io`.
 
-Rspress uses this value together with [`base`](#base) when generated files need absolute URLs, such as `llms.txt` links or plugin outputs. The full URL concatenation order is `siteOrigin + base + routePath`.
+Rspress uses this value together with [`base`](#base) when generated files need absolute URLs, such as `sitemap.xml`, `llms.txt` links, or plugin outputs. The full URL concatenation order is `siteOrigin + base + routePath`.
 
 If `siteOrigin` is not configured, Rspress uses `base + routePath` as the fallback.
 
@@ -406,6 +406,127 @@ export default defineConfig({
   --rp-c-brand: #f00;
 }
 ```
+
+## sitemap
+
+- **Type**: `boolean | SitemapOptions`
+- **Default**: `true`
+
+Generate `sitemap.xml` in the output directory during production builds. This feature is built into Rspress and does not require a plugin. It also works when `ssg` is `false`.
+
+Configure [`siteOrigin`](#siteorigin) so the sitemap contains absolute URLs. Rspress combines `siteOrigin`, [`base`](#base), and each page's route path:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+  // sitemap is enabled by default.
+});
+```
+
+Set `sitemap: false` to disable generation, or pass an options object to customize it:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  sitemap: {
+    defaultChangeFreq: 'weekly',
+    defaultPriority: '0.7',
+  },
+});
+```
+
+The options have the following type, exported as `SitemapOptions` from `@rspress/core`:
+
+```ts
+type ChangeFreq =
+  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+
+type Priority =
+  | '0.0'
+  | '0.1'
+  | '0.2'
+  | '0.3'
+  | '0.4'
+  | '0.5'
+  | '0.6'
+  | '0.7'
+  | '0.8'
+  | '0.9'
+  | '1.0';
+
+// https://www.sitemaps.org/protocol.html
+interface Sitemap {
+  loc: string;
+  lastmod?: string;
+  changefreq?: ChangeFreq;
+  priority?: Priority;
+}
+
+interface CustomMaps {
+  [routePath: string]: Sitemap;
+}
+
+export interface SitemapOptions {
+  siteUrl?: string;
+  customMaps?: CustomMaps;
+  defaultPriority?: Priority;
+  defaultChangeFreq?: ChangeFreq;
+}
+```
+
+### sitemap.siteUrl
+
+- **Type**: `string`
+- **Default**: [`siteOrigin`](#siteorigin) + [`base`](#base), or `base` when `siteOrigin` is not configured
+
+Override the deployment URL used in sitemap entries. Use an absolute URL that includes the base path, such as `https://example.com/docs/`. This value takes precedence over `siteOrigin` and `base`.
+
+If neither `sitemap.siteUrl` nor `siteOrigin` is configured, entries use `base + routePath` and remain relative paths. Configure either value to generate absolute sitemap URLs.
+
+### sitemap.customMaps
+
+- **Type**: `Record<string, Sitemap>`
+- **Default**: `{}`
+
+Override sitemap values for individual pages. Keys are route paths without `base`, and values override the generated `loc`, `lastmod`, `changefreq`, and `priority`. By default, `lastmod` is the source file's modification time. This option customizes existing pages; it does not add routes.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+  sitemap: {
+    customMaps: {
+      '/guide': {
+        loc: 'https://example.com/docs/guide',
+        lastmod: '2026-01-01',
+        changefreq: 'weekly',
+        priority: '0.8',
+      },
+    },
+  },
+});
+```
+
+### sitemap.defaultChangeFreq
+
+- **Type**: `ChangeFreq`
+- **Default**: `'monthly'`
+
+The default `changefreq` value for each page. Available values are `'always'`, `'hourly'`, `'daily'`, `'weekly'`, `'monthly'`, `'yearly'`, and `'never'`. Use `customMaps` to override it for a specific page.
+
+### sitemap.defaultPriority
+
+- **Type**: `Priority`
+- **Default**: `'0.5'`
+
+The default `priority` value for each page, from `'0.0'` to `'1.0'` in increments of `0.1`. The root route `/` uses `'1.0'`. Use `customMaps` to override it for a specific page.
 
 ## llms
 

@@ -1602,6 +1602,21 @@ importers:
         specifier: ^19.2.7
         version: 19.2.7(@types/react@19.2.18)
 
+  e2e/fixtures/sitemap:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@rspress/plugin-sitemap':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-sitemap
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+
   e2e/fixtures/ssg-fail-strict:
     dependencies:
       '@rspress/core':

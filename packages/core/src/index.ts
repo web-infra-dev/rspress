@@ -29,6 +29,7 @@ export type {
   SidebarGroup,
   SidebarItem,
   SidebarSectionHeader,
+  SitemapOptions,
   SocialLink,
   UserConfig,
 } from '@rspress/shared';
