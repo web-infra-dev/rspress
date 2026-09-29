@@ -11,7 +11,7 @@ import { Tabs, Tab } from '@rspress/core/theme';
 1. 在 `rspress.config.ts` 中配置语言列表和默认语言。
 1. 新建各语言的文档和导航配置文件。
 
-你还可以按需定义翻译文本，在导航配置和自定义组件中复用，或修改内置界面文案。
+如果自定义组件需要翻译文本，或需要修改内置界面文案，可以继续阅读下方的可选章节。
 
 ## 配置 `rspress.config.ts`
 
@@ -125,7 +125,7 @@ export default defineConfig({
 
 ## 定义翻译文本（可选） \{#define-translations-optional}
 
-完成上述配置后，多语言文档站点即可使用。如果希望在导航配置或自定义组件中复用翻译文本，可以定义 `gettingStarted` 等翻译 key，并为各语言提供对应的文本。
+完成上述配置后，多语言文档站点即可使用。如果自定义组件需要翻译文本，可以定义 `welcomeMessage` 等 key，并为各语言提供对应的文本。
 
 Rspress 支持通过两种方式提供相同的翻译数据。**`i18n.json` 和 `i18nSource` 任选一种即可，无需同时配置。**
 
@@ -136,13 +136,9 @@ Rspress 支持通过两种方式提供相同的翻译数据。**`i18n.json` 和 
 
 ```json title="i18n.json"
 {
-  "gettingStarted": {
-    "en": "Getting Started",
-    "zh": "开始"
-  },
-  "guide": {
-    "en": "Guide",
-    "zh": "指南"
+  "welcomeMessage": {
+    "en": "Welcome",
+    "zh": "欢迎"
   }
 }
 ```
@@ -157,13 +153,9 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   i18nSource: {
-    gettingStarted: {
-      en: 'Getting Started',
-      zh: '开始',
-    },
-    guide: {
-      en: 'Guide',
-      zh: '指南',
+    welcomeMessage: {
+      en: 'Welcome',
+      zh: '欢迎',
     },
   },
 });
@@ -172,38 +164,9 @@ export default defineConfig({
 </Tab>
 </Tabs>
 
-两种来源的数据都会合并到导航配置和 `useI18n` 使用的翻译数据中。如果同时配置，对象形式的 `i18nSource` 会覆盖 `i18n.json` 中相同 key、相同语言的文本，其他翻译仍会保留。
+如果同时配置，对象形式的 `i18nSource` 会覆盖 `i18n.json` 中相同 key、相同语言的文本，其他翻译仍会保留。
 
 `i18nSource` 的函数用法请参考 [API 文档](/api/config/config-basic#i18nsource)。如果需要从其他位置读取 JSON 文件，可以配置 [`i18nSourcePath`](/api/config/config-basic#i18nsourcepath)。
-
-### 在导航配置中使用翻译文本
-
-通过任一方式定义翻译后，都可以在各语言的导航配置文件中使用这些 key，Rspress 会根据当前语言解析对应的文本。
-
-在 `_nav.json` 中，将 `text` 设为翻译 key：
-
-```json title="_nav.json"
-[
-  {
-    "text": "guide",
-    "link": "/guide/start/introduction"
-  }
-]
-```
-
-在 `_meta.json` 中，将 `label` 设为翻译 key：
-
-```json title="_meta.json"
-[
-  {
-    "type": "dir",
-    "name": "start",
-    "label": "gettingStarted"
-  }
-]
-```
-
-例如，`guide` 在英文中显示为 `Guide`，在中文中显示为 `指南`；`gettingStarted` 则分别显示为 `Getting Started` 和 `开始`。
 
 {/* cspell:ignore usei */}
 
@@ -217,7 +180,7 @@ import { useI18n } from '@rspress/core/runtime';
 const MyComponent = () => {
   const t = useI18n();
 
-  return <div>{t('gettingStarted')}</div>;
+  return <div>{t('welcomeMessage')}</div>;
 };
 ```
 
