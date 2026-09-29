@@ -227,7 +227,18 @@ export default defineConfig({
 });
 ```
 
-这是一项可选配置，也适用于单语言站点，无需创建 `i18n.json`。
+修改界面文案是可选的，也适用于单语言站点。
+
+如果已经使用了 `i18n.json`，也可以直接在该文件中添加以下条目，覆盖相同的内置文案：
+
+```json title="i18n.json"
+{
+  "editLinkText": {
+    "en": "Edit this page on GitLab",
+    "zh": "在 GitLab 上编辑此页"
+  }
+}
+```
 
 对象形式的 `i18nSource` 会与已有翻译合并，并覆盖 `i18n.json` 和 Rspress 内置文案中的同名条目。它也可以添加自定义翻译 key，供 `useI18n` 使用。
 

@@ -227,7 +227,18 @@ export default defineConfig({
 });
 ```
 
-This configuration is optional and also works on single-language sites. You do not need to create `i18n.json` to use it.
+Customizing UI text is optional and also works on single-language sites.
+
+If you already use `i18n.json`, you can override the same built-in text by adding the entry to that file instead:
+
+```json title="i18n.json"
+{
+  "editLinkText": {
+    "en": "Edit this page on GitLab",
+    "zh": "在 GitLab 上编辑此页"
+  }
+}
+```
 
 The object form of `i18nSource` merges with the existing translations and overrides matching entries from `i18n.json` and Rspress's built-in text. It can also add custom translation keys for use with `useI18n`.
 
