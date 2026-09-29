@@ -2,6 +2,8 @@
 description: Configure languages, organize multilingual docs, and localize navigation, with optional i18n text data and the useI18n hook.
 ---
 
+import { Tabs, Tab } from '@rspress/core/theme';
+
 # i18n
 
 To internationalize a Rspress documentation site, complete the following steps:
@@ -9,7 +11,7 @@ To internationalize a Rspress documentation site, complete the following steps:
 1. Configure the language list and default language in `rspress.config.ts`.
 1. Create docs and navigation files for each language.
 
-Optionally, define shared translations in `i18n.json` and use the `useI18n` hook to read them in custom components.
+Optionally, define shared translations for navigation and custom components, or customize the built-in UI text.
 
 ## Configure `rspress.config.ts`
 
@@ -119,48 +121,24 @@ Similarly, write sidebar labels in the corresponding language:
 ]
 ```
 
-In `docs/zh/guide/_meta.json`, use `开始` as the label. These language-specific navigation files do not require `i18n.json`.
+In `docs/zh/guide/_meta.json`, use `开始` as the label. These language-specific navigation files do not require separate translation data.
 
-## Use `i18n.json` (optional)
+## Define translations (optional)
 
-The setup above is enough for a multilingual documentation site. If you want to manage translations in one place and reuse them in navigation or custom components, you can optionally add an `i18n.json` file.
+The setup above is enough for a multilingual documentation site. If you want to reuse translated text across navigation files or custom components, define translation keys such as `gettingStarted` and provide a value for each language.
 
-### Define I18n text data
+Rspress accepts the same translation data in two ways. **Choose either `i18n.json` or `i18nSource`; you do not need both.**
 
-Create `i18n.json` next to `rspress.config.ts`:
+<Tabs>
+<Tab label="i18n.json">
 
-```tree
-.
-├── docs
-├── i18n.json
-├── package.json
-├── tsconfig.json
-└── rspress.config.ts
-```
-
-Define the text required for internationalization in this JSON file. Its type is:
-
-```ts
-export interface I18n {
-  // key: text id
-  [key: string]: {
-    // key: language
-    [key: string]: string;
-  };
-}
-```
-
-For example:
+Create `i18n.json` next to `rspress.config.ts`. Each key maps language codes to translated text:
 
 ```json title="i18n.json"
 {
   "gettingStarted": {
     "en": "Getting Started",
     "zh": "开始"
-  },
-  "api": {
-    "en": "API",
-    "zh": "API"
   },
   "guide": {
     "en": "Guide",
@@ -169,9 +147,38 @@ For example:
 }
 ```
 
+</Tab>
+<Tab label="i18nSource">
+
+Alternatively, put the same data in the `i18nSource` option in `rspress.config.ts`. This does not require an `i18n.json` file:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: {
+    gettingStarted: {
+      en: 'Getting Started',
+      zh: '开始',
+    },
+    guide: {
+      en: 'Guide',
+      zh: '指南',
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+Both sources are merged into the translations used by navigation and `useI18n`. If you configure both, the object form of `i18nSource` takes precedence for the same key and language; other translations are preserved.
+
+For the function form of `i18nSource`, see the [API reference](/api/config/config-basic#i18nsource). To load the JSON file from another location, use [`i18nSourcePath`](/api/config/config-basic#i18nsourcepath).
+
 ### Use translations in navigation
 
-With `i18n.json` defined, you can use the same translation keys in each language's navigation files. Rspress resolves them using the current language.
+After defining translations with either approach, use the keys in each language's navigation files. Rspress resolves them using the current language.
 
 In `_nav.json`, use translation keys for `text`:
 
@@ -180,10 +187,6 @@ In `_nav.json`, use translation keys for `text`:
   {
     "text": "guide",
     "link": "/guide/start/introduction"
-  },
-  {
-    "text": "api",
-    "link": "/api/"
   }
 ]
 ```
@@ -204,17 +207,25 @@ For example, `guide` becomes `Guide` in English and `指南` in Chinese, while `
 
 ## Use `useI18n` in custom components (optional)
 
-If your MDX components or [custom theme](/guide/basic/custom-theme) also need these translations, use the `useI18n` hook to read them from `i18n.json`.
+In MDX components or a [custom theme](/guide/basic/custom-theme), use `useI18n` to read the translations defined above. The hook works the same whether you use `i18n.json` or `i18nSource`:
 
-import UseI18n from '../../fragments/useI18n.mdx';
+```tsx
+import { useI18n } from '@rspress/core/runtime';
 
-<UseI18n />
+const MyComponent = () => {
+  const t = useI18n();
+
+  return <div>{t('gettingStarted')}</div>;
+};
+```
+
+For more usage details and type hints, see [`useI18n`](/ui/hooks/use-i18n).
 
 ## Customize i18n text
 
 Rspress's default theme includes UI translations for several languages. Missing translations fall back to English.
 
-Use [`i18nSource`](/api/config/config-basic#i18nsource) in `rspress.config.ts` to override existing text or add translations for a language that is not built in. For example, customize the edit link text:
+The translation sources described above can also override built-in text: use an existing key instead of defining a new one. For example, add `editLinkText` to your chosen source to customize the edit link text:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -229,9 +240,7 @@ export default defineConfig({
 });
 ```
 
-Customizing UI text is optional and also works on single-language sites.
-
-If you already use `i18n.json`, you can override the same built-in text by adding the entry to that file instead:
+If you use `i18n.json`, add the same entry there instead:
 
 ```json title="i18n.json"
 {
@@ -244,6 +253,4 @@ If you already use `i18n.json`, you can override the same built-in text by addin
 
 To add another language, add its language code and translated text under each text key in `i18nSource` or `i18n.json`, using the same language code as your site configuration. Any built-in text you have not translated will continue to use its English fallback.
 
-The object form of `i18nSource` merges with the existing translations and overrides matching entries from `i18n.json` and Rspress's built-in text. It can also add custom translation keys for use with `useI18n`.
-
-For the built-in translation keys and function form of `i18nSource`, see the [API reference](/api/config/config-basic#i18nsource). If you prefer a translation file in a different location, configure [`i18nSourcePath`](/api/config/config-basic#i18nsourcepath).
+Customizing UI text is optional and also works on single-language sites. For the complete list of built-in translation keys, see the [API reference](/api/config/config-basic#i18nsource).

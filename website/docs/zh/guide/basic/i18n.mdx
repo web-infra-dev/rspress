@@ -1,6 +1,8 @@
 ---
-description: 配置语言、组织多语言文档并本地化导航，按需使用 i18n.json 和 useI18n 管理翻译文本。
+description: 配置语言、组织多语言文档并本地化导航，按需通过 i18n.json 或 i18nSource 定义翻译文本，并使用 useI18n 在组件中读取。
 ---
+
+import { Tabs, Tab } from '@rspress/core/theme';
 
 # i18n
 
@@ -9,7 +11,7 @@ description: 配置语言、组织多语言文档并本地化导航，按需使�
 1. 在 `rspress.config.ts` 中配置语言列表和默认语言。
 1. 新建各语言的文档和导航配置文件。
 
-你还可以按需在 `i18n.json` 中定义共享的翻译文本，并在自定义组件中通过 `useI18n` hook 获取这些文本。
+你还可以按需定义翻译文本，在导航配置和自定义组件中复用，或修改内置界面文案。
 
 ## 配置 `rspress.config.ts`
 
@@ -119,48 +121,24 @@ export default defineConfig({
 ]
 ```
 
-在 `docs/zh/guide/_meta.json` 中，将标签设为 `开始`。这些按语言编写的导航配置不需要 `i18n.json`。
+在 `docs/zh/guide/_meta.json` 中，将标签设为 `开始`。这些按语言编写的导航配置不需要单独定义翻译数据。
 
-## 使用 `i18n.json`（可选）
+## 定义翻译文本（可选） \{#define-translations-optional}
 
-完成上述配置后，多语言文档站点即可使用。如果希望集中管理翻译文本，并在导航配置或自定义组件中复用，可以按需添加 `i18n.json`。
+完成上述配置后，多语言文档站点即可使用。如果希望在导航配置或自定义组件中复用翻译文本，可以定义 `gettingStarted` 等翻译 key，并为各语言提供对应的文本。
 
-### 定义 I18n 文本数据
+Rspress 支持通过两种方式提供相同的翻译数据。**`i18n.json` 和 `i18nSource` 任选一种即可，无需同时配置。**
 
-在 `rspress.config.ts` 同级目录下创建 `i18n.json`：
+<Tabs>
+<Tab label="i18n.json">
 
-```tree
-.
-├── docs
-├── i18n.json
-├── package.json
-├── tsconfig.json
-└── rspress.config.ts
-```
-
-在这个 JSON 文件中，你可以定义国际化所需的文本，类型定义如下：
-
-```ts
-export interface I18n {
-  // key 为文本 id
-  [key: string]: {
-    // key 为语言
-    [key: string]: string;
-  };
-}
-```
-
-例如：
+在 `rspress.config.ts` 同级目录下创建 `i18n.json`。每个 key 下按语言代码填写翻译文本：
 
 ```json title="i18n.json"
 {
   "gettingStarted": {
     "en": "Getting Started",
     "zh": "开始"
-  },
-  "api": {
-    "en": "API",
-    "zh": "API"
   },
   "guide": {
     "en": "Guide",
@@ -169,9 +147,38 @@ export interface I18n {
 }
 ```
 
+</Tab>
+<Tab label="i18nSource">
+
+也可以将相同的数据写入 `rspress.config.ts` 的 `i18nSource` 配置项，无需创建 `i18n.json` 文件：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: {
+    gettingStarted: {
+      en: 'Getting Started',
+      zh: '开始',
+    },
+    guide: {
+      en: 'Guide',
+      zh: '指南',
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+两种来源的数据都会合并到导航配置和 `useI18n` 使用的翻译数据中。如果同时配置，对象形式的 `i18nSource` 会覆盖 `i18n.json` 中相同 key、相同语言的文本，其他翻译仍会保留。
+
+`i18nSource` 的函数用法请参考 [API 文档](/api/config/config-basic#i18nsource)。如果需要从其他位置读取 JSON 文件，可以配置 [`i18nSourcePath`](/api/config/config-basic#i18nsourcepath)。
+
 ### 在导航配置中使用翻译文本
 
-定义 `i18n.json` 后，可以在各语言的导航配置文件中使用相同的翻译 key，Rspress 会根据当前语言解析这些 key。
+通过任一方式定义翻译后，都可以在各语言的导航配置文件中使用这些 key，Rspress 会根据当前语言解析对应的文本。
 
 在 `_nav.json` 中，将 `text` 设为翻译 key：
 
@@ -180,10 +187,6 @@ export interface I18n {
   {
     "text": "guide",
     "link": "/guide/start/introduction"
-  },
-  {
-    "text": "api",
-    "link": "/api/"
   }
 ]
 ```
@@ -206,17 +209,25 @@ export interface I18n {
 
 ## 自定义组件中使用 `useI18n`（可选） \{#use-usei18n-in-custom-components-optional}
 
-如果 MDX 组件或[自定义主题](/guide/basic/custom-theme)也需要这些翻译文本，可以通过 `useI18n` hook 从 `i18n.json` 中获取。
+在 MDX 组件或[自定义主题](/guide/basic/custom-theme)中，可以通过 `useI18n` 获取上文定义的翻译文本。无论使用 `i18n.json` 还是 `i18nSource`，hook 的用法都相同：
 
-import UseI18n from '../../fragments/useI18n.mdx';
+```tsx
+import { useI18n } from '@rspress/core/runtime';
 
-<UseI18n />
+const MyComponent = () => {
+  const t = useI18n();
+
+  return <div>{t('gettingStarted')}</div>;
+};
+```
+
+更多用法和类型提示请参考 [`useI18n`](/ui/hooks/use-i18n)。
 
 ## 修改 i18n 文案 \{#customize-i18n-text}
 
 Rspress 默认主题内置了多种语言的界面文案。缺少对应语言的翻译时，会回退到英文。
 
-你可以在 `rspress.config.ts` 中通过 [`i18nSource`](/api/config/config-basic#i18nsource) 覆盖已有文案，也可以为尚未内置的语言补充翻译。例如，修改编辑链接的文案：
+上文的翻译配置也可以用来覆盖内置文案，只需使用已有的 key。例如，在你选择的翻译来源中添加 `editLinkText`，修改编辑链接的文案：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -231,9 +242,7 @@ export default defineConfig({
 });
 ```
 
-修改界面文案是可选的，也适用于单语言站点。
-
-如果已经使用了 `i18n.json`，也可以直接在该文件中添加以下条目，覆盖相同的内置文案：
+如果使用 `i18n.json`，则在该文件中添加相同的条目：
 
 ```json title="i18n.json"
 {
@@ -246,6 +255,4 @@ export default defineConfig({
 
 要补充其他语言，在 `i18nSource` 或 `i18n.json` 的各个文案 key 下添加对应的语言代码和翻译文本即可，语言代码应与站点配置一致。尚未翻译的内置文案会继续回退到英文。
 
-对象形式的 `i18nSource` 会与已有翻译合并，并覆盖 `i18n.json` 和 Rspress 内置文案中的同名条目。它也可以添加自定义翻译 key，供 `useI18n` 使用。
-
-内置文案 key 和 `i18nSource` 的函数用法请参考 [API 文档](/api/config/config-basic#i18nsource)。如果希望将翻译文件放在其他位置，可以配置 [`i18nSourcePath`](/api/config/config-basic#i18nsourcepath)。
+修改界面文案是可选的，也适用于单语言站点。完整的内置文案 key 列表请参考 [API 文档](/api/config/config-basic#i18nsource)。
