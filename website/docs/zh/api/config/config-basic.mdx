@@ -137,6 +137,57 @@ export default defineConfig({
 });
 ```
 
+## locales
+
+- **类型**： `Locale[]`
+- **默认值**： `undefined`
+
+配置站点支持的语言，以及各语言的站点信息。
+
+```ts
+export interface Locale {
+  lang: string;
+  label: string;
+  title?: string;
+  description?: string;
+}
+```
+
+| 字段          | 说明                                               |
+| ------------- | -------------------------------------------------- |
+| `lang`        | 语言代码，需要与文档根目录下对应的语言目录名一致。 |
+| `label`       | 导航栏语言切换器中的显示文本。                     |
+| `title`       | 当前语言的站点标题。                               |
+| `description` | 当前语言的站点描述。                               |
+
+将顶层的 [`lang`](#lang) 设为其中一个语言代码，指定站点的默认语言。Rspress 会去掉默认语言路由中的语言前缀。
+
+例如：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  lang: 'en',
+  locales: [
+    {
+      lang: 'en',
+      label: 'English',
+      title: 'My Site',
+      description: 'My site description',
+    },
+    {
+      lang: 'zh',
+      label: '简体中文',
+      title: '站点标题',
+      description: '站点描述',
+    },
+  ],
+});
+```
+
+完整配置流程请参考[国际化](/guide/basic/i18n)。如需按语言配置 `nav`、`sidebar` 等主题选项，请参考 [`themeConfig.locales`](/api/config/config-theme#locales)。
+
 ## i18nSourcePath
 
 - **类型**： `string`
@@ -318,42 +369,6 @@ export default defineConfig({
 该配置同时支持相对路径和绝对路径，相对路径相对于当前工作目录。
 
 更多关于自定义主题的内容，请参阅 [自定义主题](/guide/basic/custom-theme)。
-
-## locales
-
-- **类型**： `Locale[]`
-
-```ts
-export interface Locale {
-  lang: string;
-  label: string;
-  title?: string;
-  description?: string;
-}
-```
-
-站点的多语言配置。比如：
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  locales: [
-    {
-      lang: 'en-US',
-      label: 'English',
-      title: 'My Site',
-      description: 'My site description',
-    },
-    {
-      lang: 'zh-CN',
-      label: '简体中文',
-      title: '站点标题',
-      description: '站点描述',
-    },
-  ],
-});
-```
 
 ## head
 
