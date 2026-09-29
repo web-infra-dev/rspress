@@ -43,9 +43,13 @@ export default defineConfig({
 });
 ```
 
-**Rspress removes the language prefix from routes in the default language**. With `lang: 'en'`, `/en/guide/start/introduction` becomes `/guide/start/introduction`, while the Chinese route keeps its prefix: `/zh/guide/start/introduction`.
+:::tip
 
-:::tip Note
+Rspress removes the language prefix from routes in the default language. With `lang: 'en'`, `/en/guide/start/introduction` becomes `/guide/start/introduction`, while the Chinese route keeps its prefix: `/zh/guide/start/introduction`.
+
+:::
+
+:::warning
 
 `themeConfig.locales` also contains all fields from `locales`, but it will be removed in the future. Use `locales` instead.
 
@@ -121,13 +125,19 @@ Similarly, write sidebar labels in the corresponding language:
 ]
 ```
 
-In `docs/zh/guide/_meta.json`, use `开始` as the label. These language-specific navigation files do not require separate translation data.
+In `docs/zh/guide/_meta.json`, set `"label"` to `"开始"`. These language-specific navigation files do not require separate translation data.
 
 ## Define translations (optional)
 
 The setup above is enough for a multilingual documentation site. If your custom components need translated text, define a key such as `welcomeMessage` and provide a value for each language.
 
-Rspress accepts the same translation data in two ways. **Choose either `i18n.json` or `i18nSource`; you do not need both.**
+Rspress accepts the same translation data in two ways.
+
+:::tip
+
+Choose either `i18n.json` or `i18nSource`; you do not need both.
+
+:::
 
 <Tabs>
 <Tab label="i18n.json">

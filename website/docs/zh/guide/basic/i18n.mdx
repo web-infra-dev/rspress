@@ -4,7 +4,7 @@ description: 配置语言、组织多语言文档并本地化导航，按需通�
 
 import { Tabs, Tab } from '@rspress/core/theme';
 
-# i18n
+# 国际化 \{#i18n}
 
 在 Rspress 中实现文档的国际化，需要完成以下步骤：
 
@@ -43,9 +43,13 @@ export default defineConfig({
 });
 ```
 
-**对于默认语言下的路由，Rspress 会去掉语言前缀**。当 `lang` 为 `'en'` 时，`/en/guide/start/introduction` 会变为 `/guide/start/introduction`，而中文路由会保留前缀：`/zh/guide/start/introduction`。
+:::tip
 
-:::tip 注意
+对于默认语言下的路由，Rspress 会去掉语言前缀。当 `lang` 为 `'en'` 时，`/en/guide/start/introduction` 会变为 `/guide/start/introduction`，而中文路由会保留前缀：`/zh/guide/start/introduction`。
+
+:::
+
+:::warning
 
 `themeConfig.locales` 也包含 `locales` 中的所有字段。不过它将在未来被移除，请尽可能使用 `locales`。
 
@@ -121,13 +125,19 @@ export default defineConfig({
 ]
 ```
 
-在 `docs/zh/guide/_meta.json` 中，将标签设为 `开始`。这些按语言编写的导航配置不需要单独定义翻译数据。
+在 `docs/zh/guide/_meta.json` 中，将 `"label"` 设为 `"开始"`。这些按语言编写的导航配置不需要单独定义翻译数据。
 
 ## 定义翻译文本（可选） \{#define-translations-optional}
 
 完成上述配置后，多语言文档站点即可使用。如果自定义组件需要翻译文本，可以定义 `welcomeMessage` 等 key，并为各语言提供对应的文本。
 
-Rspress 支持通过两种方式提供相同的翻译数据。**`i18n.json` 和 `i18nSource` 任选一种即可，无需同时配置。**
+Rspress 支持通过两种方式提供相同的翻译数据。
+
+:::tip
+
+`i18n.json` 和 `i18nSource` 任选一种即可，无需同时配置。
+
+:::
 
 <Tabs>
 <Tab label="i18n.json">
