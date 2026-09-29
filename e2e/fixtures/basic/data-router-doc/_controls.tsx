@@ -16,8 +16,15 @@ export default function Controls() {
   const { pathname } = useLocation();
   const { page } = usePageData();
   const [completion, setCompletion] = useState('idle');
+  const [renderError, setRenderError] = useState(false);
+  if (renderError) {
+    throw new Error('Error page render fixture');
+  }
   return (
     <div>
+      <button type="button" onClick={() => setRenderError(true)}>
+        Trigger render error
+      </button>
       <button
         type="button"
         onClick={async () => {

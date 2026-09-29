@@ -167,6 +167,86 @@ for (const mode of ['dev', 'build'] as const) {
       await expect(page.getByTestId('page-state')).toHaveText('/missing|404');
     });
 
+    test('shows a recoverable error page when a navigation chunk fails', async ({
+      page,
+    }) => {
+      await page.goto(`http://localhost:${port}/docs/`, {
+        waitUntil: 'networkidle',
+      });
+      await page.route(
+        /\/static\/js\/async\/.*\.js(?:\?.*)?$/,
+        route => route.abort(),
+        { times: 1 },
+      );
+      await page
+        .getByRole('button', { name: 'Native slow', exact: true })
+        .click();
+      await expect(
+        page.getByRole('heading', { name: 'Something went wrong' }),
+      ).toBeVisible();
+      await expect(page).toHaveURL(`http://localhost:${port}/docs/slow`);
+      await expect(page.locator('#nprogress')).toHaveCount(0);
+      await expect(page.locator('.rp-error__details')).toHaveCount(
+        mode === 'dev' ? 1 : 0,
+      );
+      await page.getByRole('button', { name: 'Reload page' }).click();
+      await expect(
+        page.getByRole('heading', { name: 'Slow page', exact: false }),
+      ).toBeVisible();
+      await expect(page.locator('.rp-error')).toHaveCount(0);
+    });
+
+    test('catches render errors without depending on global components', async ({
+      page,
+    }) => {
+      const errors: string[] = [];
+      page.on('console', message => {
+        if (message.type() === 'error') errors.push(message.text());
+      });
+      await page.goto(`http://localhost:${port}/docs/`, {
+        waitUntil: 'networkidle',
+      });
+      await page.getByRole('button', { name: 'Trigger render error' }).click();
+      await expect(
+        page.getByRole('heading', { name: 'Something went wrong' }),
+      ).toBeFocused();
+      await expect(page).toHaveTitle('Something went wrong');
+      if (mode === 'dev') {
+        await expect(page.locator('.rp-error__details')).toContainText(
+          'Error page render fixture',
+        );
+      } else {
+        await expect(page.locator('body')).not.toContainText(
+          'Error page render fixture',
+        );
+      }
+      expect(
+        errors.some(message => message.includes('Error page render fixture')),
+      ).toBe(true);
+      await expect(
+        page.getByRole('link', { name: 'Take me home' }),
+      ).toHaveAttribute('href', '/docs/');
+      await page.getByRole('link', { name: 'Take me home' }).click();
+      await expect(page.getByTestId('page-state')).toHaveText(
+        '/|Navigation home',
+      );
+    });
+
+    test('handles a failed initial page chunk', async ({ page }) => {
+      await page.route(/\/static\/js\/async\/.*\.js(?:\?.*)?$/, route =>
+        route.abort(),
+      );
+      await page.goto(`http://localhost:${port}/docs/slow`);
+      await expect(
+        page.getByRole('heading', { name: 'Something went wrong' }),
+      ).toBeVisible();
+      await page.unrouteAll();
+      await page.getByRole('button', { name: 'Reload page' }).click();
+      await expect(page.getByTestId('page-state')).toHaveText(
+        '/slow|Slow page',
+      );
+    });
+
     if (mode === 'build') {
       test('emits HTML and Markdown with loader data and hydrates without errors', async ({
         page,

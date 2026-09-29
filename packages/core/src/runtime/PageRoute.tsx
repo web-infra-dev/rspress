@@ -6,6 +6,7 @@ import {
   useNavigation,
 } from 'react-router-dom';
 import { App } from './App';
+import { ErrorRoute } from './ErrorRoute';
 import { PageContext } from './hooks/usePage';
 import type { Page } from './initPageData';
 import { PAGE_ROUTE_ID, pageDataLoader } from './pageDataLoader';
@@ -54,6 +55,7 @@ export function createPageRoutes(): RouteObject[] {
       path: '*',
       loader: pageDataLoader,
       element: <PageRoute />,
+      errorElement: <ErrorRoute />,
       hydrateFallbackElement: <></>,
     },
   ];

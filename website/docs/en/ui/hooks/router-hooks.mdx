@@ -2,6 +2,8 @@
 description: Router hooks re-exported from react-router-dom for accessing navigation and location information.
 ---
 
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # Router hooks
 
 Rspress re-exports the routing utilities from `react-router-dom`, letting you access navigation and location data without adding extra dependencies.
@@ -10,9 +12,9 @@ Rspress re-exports the routing utilities from `react-router-dom`, letting you ac
 
 Commonly used hooks include `useLocation`, `useNavigate`, `useParams`, `useSearchParams`, and `useMatches`.
 
-Rspress uses React Router's Data mode. When you call `navigate('/guide')`, the route loader loads the target page's data and async module before updating the location, content, and page data together. The current page stays visible while loading. You do not need to call `useLinkNavigate` or preload the page manually.
+<VersionBadge version="2.1.0" />
 
-With the bundled React Router 7, `navigate()` returns `Promise<void>`, so you can `await navigate('/guide')` to wait for navigation to complete. Use `useNavigation().state` to read the `idle`, `loading`, or `submitting` navigation state. The default theme's `Link` still preloads the target page module on hover.
+Starting with Rspress 2.1.0, routing uses React Router's **Data mode**.
 
 ```tsx
 import { useLocation, useNavigate } from '@rspress/core/runtime';

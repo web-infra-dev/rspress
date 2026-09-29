@@ -1,6 +1,6 @@
 import { removeBase } from '@rspress/core/runtime';
 import { startTransition } from 'react';
-import { hydrateRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import { ClientApp, createClientRouter } from './ClientApp';
 import { initPageData } from './initPageData';
 import { redirectToCleanUrl } from './route';
@@ -15,7 +15,15 @@ async function renderInBrowser() {
 
   const container = document.getElementById('__rspress_root')!;
   const pathname = removeBase(window.location.pathname);
-  const initialPageData = await initPageData(pathname);
+  let initialPageData;
+  try {
+    initialPageData = await initPageData(pathname);
+  } catch {
+    // Let the data router handle a failed initial chunk just like a failed
+    // client navigation. The server HTML cannot be hydrated without its page.
+    createRoot(container).render(<ClientApp router={createClientRouter()} />);
+    return;
+  }
   const router = createClientRouter(initialPageData);
   // why startTransition?
   // https://github.com/facebook/docusaurus/pull/9051
