@@ -269,7 +269,9 @@ export function withBase(url: string, base: string): string {
   const normalizedUrl = addLeadingSlash(url);
   const normalizedBase = normalizeSlash(base);
 
-  const hasBase = normalizedUrl.startsWith(normalizedBase);
+  const hasBase =
+    normalizedUrl === normalizedBase ||
+    normalizedUrl.startsWith(`${normalizedBase}/`);
   if (hasBase) {
     // normalizedUrl => '/base' base => '/base/'
     if (`${normalizedUrl}/` === base) {
@@ -292,7 +294,7 @@ export function removeBase(url: string, base: string) {
   const normalizedUrl = addLeadingSlash(url);
   const normalizedBase = normalizeSlash(base);
   const removedBaseUrl = normalizedUrl.replace(
-    new RegExp(`^${normalizedBase}`),
+    new RegExp(`^${normalizedBase}(?=/|$)`),
     '',
   );
   if (removedBaseUrl === '') {
