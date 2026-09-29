@@ -94,9 +94,12 @@ Within each language directory, use `_nav.json` and `_meta.json` to configure th
 
 ### Navigation bar \_nav.json
 
-In each language's `_nav.json`, write `text` in that language. For example, the English navbar is:
+In each language's `_nav.json`, set `"text"` to the text for that language:
 
-```json title="docs/en/_nav.json"
+<Tabs>
+<Tab label="docs/en/_nav.json">
+
+```json
 [
   {
     "text": "Guide",
@@ -109,7 +112,24 @@ In each language's `_nav.json`, write `text` in that language. For example, the 
 ]
 ```
 
-In `docs/zh/_nav.json`, use Chinese text such as `指南` for the same navigation item.
+</Tab>
+<Tab label="docs/zh/_nav.json">
+
+```json
+[
+  {
+    "text": "指南",
+    "link": "/guide/start/introduction"
+  },
+  {
+    "text": "API",
+    "link": "/api/"
+  }
+]
+```
+
+</Tab>
+</Tabs>
 
 ### Sidebar \_meta.json
 

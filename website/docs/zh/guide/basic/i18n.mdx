@@ -94,9 +94,12 @@ export default defineConfig({
 
 ### 导航栏 \_nav.json
 
-在各语言的 `_nav.json` 中，直接使用对应语言的 `text`。例如，英文导航栏配置为：
+在各语言的 `_nav.json` 中，将 `"text"` 设为对应语言的文本：
 
-```json title="docs/en/_nav.json"
+<Tabs>
+<Tab label="docs/en/_nav.json">
+
+```json
 [
   {
     "text": "Guide",
@@ -109,7 +112,24 @@ export default defineConfig({
 ]
 ```
 
-在 `docs/zh/_nav.json` 中，为同一个导航项使用中文文本，例如 `指南`。
+</Tab>
+<Tab label="docs/zh/_nav.json">
+
+```json
+[
+  {
+    "text": "指南",
+    "link": "/guide/start/introduction"
+  },
+  {
+    "text": "API",
+    "link": "/api/"
+  }
+]
+```
+
+</Tab>
+</Tabs>
 
 ### 侧边栏 \_meta.json
 
