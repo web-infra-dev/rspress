@@ -113,9 +113,12 @@ export default defineConfig({
 
 ### 侧边栏 \_meta.json
 
-同样，在侧边栏配置中直接使用对应语言的标签：
+同样，在侧边栏配置中，将 `"label"` 设为对应语言的文本：
 
-```json title="docs/en/guide/_meta.json"
+<Tabs>
+<Tab label="docs/en/guide/_meta.json">
+
+```json
 [
   {
     "type": "dir",
@@ -125,7 +128,23 @@ export default defineConfig({
 ]
 ```
 
-在 `docs/zh/guide/_meta.json` 中，将 `"label"` 设为 `"开始"`。这些按语言编写的导航配置不需要单独定义翻译数据。
+</Tab>
+<Tab label="docs/zh/guide/_meta.json">
+
+```json
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "开始"
+  }
+]
+```
+
+</Tab>
+</Tabs>
+
+这些按语言编写的导航配置不需要单独定义翻译数据。
 
 ## 定义翻译文本（可选） \{#define-translations-optional}
 

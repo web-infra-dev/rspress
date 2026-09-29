@@ -113,9 +113,12 @@ In `docs/zh/_nav.json`, use Chinese text such as `指南` for the same navigatio
 
 ### Sidebar \_meta.json
 
-Similarly, write sidebar labels in the corresponding language:
+Similarly, set `"label"` to the text for each language:
 
-```json title="docs/en/guide/_meta.json"
+<Tabs>
+<Tab label="docs/en/guide/_meta.json">
+
+```json
 [
   {
     "type": "dir",
@@ -125,7 +128,23 @@ Similarly, write sidebar labels in the corresponding language:
 ]
 ```
 
-In `docs/zh/guide/_meta.json`, set `"label"` to `"开始"`. These language-specific navigation files do not require separate translation data.
+</Tab>
+<Tab label="docs/zh/guide/_meta.json">
+
+```json
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "开始"
+  }
+]
+```
+
+</Tab>
+</Tabs>
+
+These language-specific navigation files do not require separate translation data.
 
 ## Define translations (optional)
 
