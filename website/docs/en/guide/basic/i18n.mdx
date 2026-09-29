@@ -209,3 +209,26 @@ If your MDX components or [custom theme](/guide/basic/custom-theme) also need th
 import UseI18n from '../../fragments/useI18n.mdx';
 
 <UseI18n />
+
+## Customize i18n text
+
+To change Rspress's built-in UI text, configure [`i18nSource`](/api/config/config-basic#i18nsource) in `rspress.config.ts`. For example, customize the edit link text:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: {
+    editLinkText: {
+      en: 'Edit this page on GitLab',
+      zh: '在 GitLab 上编辑此页',
+    },
+  },
+});
+```
+
+This configuration is optional and also works on single-language sites. You do not need to create `i18n.json` to use it.
+
+The object form of `i18nSource` merges with the existing translations and overrides matching entries from `i18n.json` and Rspress's built-in text. It can also add custom translation keys for use with `useI18n`.
+
+For the built-in translation keys and function form of `i18nSource`, see the [API reference](/api/config/config-basic#i18nsource). If you prefer a translation file in a different location, configure [`i18nSourcePath`](/api/config/config-basic#i18nsourcepath).

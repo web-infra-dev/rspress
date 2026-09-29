@@ -209,3 +209,26 @@ export interface I18n {
 import UseI18n from '../../fragments/useI18n.mdx';
 
 <UseI18n />
+
+## 修改 i18n 文案 \{#customize-i18n-text}
+
+如果需要修改 Rspress 内置的界面文案，可以在 `rspress.config.ts` 中配置 [`i18nSource`](/api/config/config-basic#i18nsource)。例如，修改编辑链接的文案：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: {
+    editLinkText: {
+      en: 'Edit this page on GitLab',
+      zh: '在 GitLab 上编辑此页',
+    },
+  },
+});
+```
+
+这是一项可选配置，也适用于单语言站点，无需创建 `i18n.json`。
+
+对象形式的 `i18nSource` 会与已有翻译合并，并覆盖 `i18n.json` 和 Rspress 内置文案中的同名条目。它也可以添加自定义翻译 key，供 `useI18n` 使用。
+
+内置文案 key 和 `i18nSource` 的函数用法请参考 [API 文档](/api/config/config-basic#i18nsource)。如果希望将翻译文件放在其他位置，可以配置 [`i18nSourcePath`](/api/config/config-basic#i18nsourcepath)。
