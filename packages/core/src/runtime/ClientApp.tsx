@@ -31,16 +31,18 @@ export function ClientApp({
 }) {
   const [theme, setTheme] = useThemeState();
   const { site } = useSite();
+  const transitionOptions = {
+    useTransitions: site.route.useTransitions,
+    // React Router 6 uses this flag for updates after async loaders complete.
+    future: { v7_startTransition: site.route.useTransitions },
+  };
 
   return (
     <ThemeContext.Provider
       value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}
     >
       <UnheadProvider head={head}>
-        <RouterProvider
-          router={router}
-          useTransitions={site.route.useTransitions}
-        />
+        <RouterProvider router={router} {...transitionOptions} />
       </UnheadProvider>
     </ThemeContext.Provider>
   );

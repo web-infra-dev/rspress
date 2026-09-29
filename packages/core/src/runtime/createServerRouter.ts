@@ -1,4 +1,7 @@
-import { createStaticHandler, createStaticRouter } from 'react-router-dom';
+import {
+  createStaticHandler,
+  createStaticRouter,
+} from 'virtual-react-router-server';
 import { createPageRoutes } from './PageRoute';
 import { removeTrailingSlash, withBase } from './utils';
 

@@ -1,7 +1,7 @@
 import { ThemeContext } from '@rspress/core/runtime';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import { renderToMarkdownString } from 'react-render-to-markdown';
-import { StaticRouterProvider } from 'react-router-dom';
+import { StaticRouterProvider } from 'virtual-react-router-server';
 import { createServerRouter } from './createServerRouter';
 
 const DEFAULT_THEME = 'light';

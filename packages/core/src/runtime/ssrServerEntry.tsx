@@ -4,7 +4,7 @@ import { ThemeContext } from '@rspress/core/runtime';
 import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import type { ReactNode } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
-import { StaticRouterProvider } from 'react-router-dom';
+import { StaticRouterProvider } from 'virtual-react-router-server';
 import { createServerRouter } from './createServerRouter';
 
 const DEFAULT_THEME = 'light';

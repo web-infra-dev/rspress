@@ -66,25 +66,23 @@ export async function initPageData(routePath: string): Promise<Page> {
   let lang = siteData.lang || '';
   let version = siteData.multiVersion?.default || '';
 
-  if (siteData.lang) {
-    const path = routePath.replace(/^\//, '').split('/').slice(0, 2);
+  const path = routePath.replace(/^\//, '').split('/').slice(0, 2);
 
-    if (siteData.locales.length) {
-      const result = siteData.locales.find(({ lang }) => path.includes(lang));
+  if (siteData.locales.length) {
+    const result = siteData.locales.find(({ lang }) => path.includes(lang));
 
-      if (result) {
-        lang = result.lang;
-      }
+    if (result) {
+      lang = result.lang;
     }
+  }
 
-    if (siteData.multiVersion.versions) {
-      const result = siteData.multiVersion.versions.find(version =>
-        path.includes(version),
-      );
+  if (siteData.multiVersion.versions) {
+    const result = siteData.multiVersion.versions.find(version =>
+      path.includes(version),
+    );
 
-      if (result) {
-        version = result;
-      }
+    if (result) {
+      version = result;
     }
   }
 
