@@ -4,6 +4,8 @@ import { SourceCode } from '@rspress/core/theme';
 
 Automatically generate a [sitemap](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview) for SEO so search engines can crawl your site more easily.
 
+This plugin also supports automatic search engine discovery via HTML `<link rel="sitemap">` tags and automatic `robots.txt` generation or non-destructive merging.
+
 ## Installation
 
 import { PackageManagerTabs } from '@rspress/core/theme';
@@ -16,14 +18,16 @@ Add the following configuration in `rspress.config.ts`:
 
 ```ts
 // rspress.config.ts
-import path from 'path';
 import { defineConfig } from '@rspress/core';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
+  siteOrigin: 'https://example.com',
   plugins: [
     pluginSitemap({
-      siteUrl: 'https://example.com', // Replace with your site URL
+      discovery: {
+        robotsTxt: true, // Generate robots.txt referencing your sitemap
+      },
     }),
   ],
 });
@@ -31,7 +35,7 @@ export default defineConfig({
 
 ## Configuration
 
-This plugin accepts an options object with the following type:
+This plugin accepts an options object with the following types:
 
 ```ts
 type ChangeFreq =
@@ -62,13 +66,106 @@ interface CustomMaps {
   [routePath: string]: Sitemap;
 }
 
+export interface LinkTagOptions {
+  /**
+   * Relationship attribute.
+   * @default 'sitemap'
+   */
+  rel?: string;
+  /**
+   * MIME type attribute.
+   * @default 'application/xml'
+   */
+  type?: string;
+  /**
+   * Explicitly override the sitemap href.
+   */
+  href?: string;
+}
+
+export interface RobotsPolicy {
+  /**
+   * One or more user-agent identifiers (e.g. '*' or ['GPTBot', 'ClaudeBot']).
+   */
+  userAgent: string | string[];
+  /**
+   * Paths allowed to be crawled.
+   */
+  allow?: string | string[];
+  /**
+   * Paths forbidden from crawling.
+   */
+  disallow?: string | string[];
+  /**
+   * Optional crawl-delay directive in seconds.
+   */
+  crawlDelay?: number;
+  /**
+   * Optional clean-param directive (supported by Yandex).
+   */
+  cleanParam?: string | string[];
+}
+
+export interface RobotsOptions {
+  /**
+   * Crawl policies. Defaults to: `[{ userAgent: '*', allow: '/' }]`
+   */
+  policies?: RobotsPolicy[];
+  /**
+   * Additional sitemap URLs to advertise in robots.txt.
+   */
+  additionalSitemaps?: string[];
+  /**
+   * Whether to include the generated sitemap.xml in robots.txt.
+   * @default true
+   */
+  includeSitemap?: boolean;
+  /**
+   * Domain host directive (supported by Yandex and select search engines).
+   */
+  host?: string;
+  /**
+   * Output filename within the distribution root.
+   * @default 'robots.txt'
+   */
+  outputFileName?: string;
+  /**
+   * Merge behavior when a robots.txt already exists (e.g. copied from public/):
+   * - 'merge': Safely append missing sitemaps and policies without duplicates (default).
+   * - 'replace': Overwrite the existing robots.txt completely.
+   * - 'preserve': Keep the existing robots.txt completely unmodified.
+   * @default 'merge'
+   */
+  mergeStrategy?: 'merge' | 'replace' | 'preserve';
+  /**
+   * Custom hook to synchronously or asynchronously transform final robots.txt content.
+   */
+  transform?: (content: string) => string | Promise<string>;
+}
+
+export interface SitemapDiscoveryOptions {
+  /**
+   * Injects `<link rel="sitemap" ... />` into the HTML `<head>`.
+   * @default true
+   */
+  linkTag?: boolean | LinkTagOptions;
+  /**
+   * Generates or safely updates `robots.txt` referencing the sitemap.
+   * @default false
+   */
+  robotsTxt?: boolean | RobotsOptions;
+}
+
 export interface PluginSitemapOptions {
   siteUrl?: string;
   customMaps?: CustomMaps;
   defaultPriority?: Priority;
   defaultChangeFreq?: ChangeFreq;
+  discovery?: SitemapDiscoveryOptions;
 }
 ```
+
+---
 
 ### siteUrl
 
@@ -77,13 +174,14 @@ export interface PluginSitemapOptions {
 
 The site URL for deployment access, for example `https://example.com`.
 
-Sitemap `<loc>` entries should be absolute URLs with protocol and domain, such as `https://example.com/base/`. When `base` is configured, plugin-level `siteUrl` must include the `base` path.
+Sitemap `<loc>` entries must be absolute URLs with protocol and domain. When `base` is configured, plugin-level `siteUrl` must include the `base` path (e.g., `https://example.com/docs/`).
 
-If [`siteOrigin`](/api/config/config-basic#siteorigin) and [`base`](/api/config/config-basic#base) are configured in Rspress, you can omit the plugin-level `siteUrl`. The full URL concatenation order is `siteOrigin + base + routePath`. If neither plugin-level `siteUrl` nor `siteOrigin` is configured, the plugin falls back to `base`, which keeps existing relative path behavior but does not generate absolute sitemap URLs.
+:::tip
+If [`siteOrigin`](/api/config/config-basic#siteorigin) and [`base`](/api/config/config-basic#base) are configured in Rspress root config, you can omit `siteUrl`. The URL will be concatenated automatically as `siteOrigin + base + routePath`.
+:::
 
 ```ts
 // rspress.config.ts
-import path from 'path';
 import { defineConfig } from '@rspress/core';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 
@@ -91,32 +189,34 @@ export default defineConfig({
   siteOrigin: 'https://example.com',
   base: '/base/',
   plugins: [
-    // siteUrl defaults to 'https://example.com/base/'
+    // siteUrl automatically resolves to 'https://example.com/base/'
     pluginSitemap(),
   ],
 });
 ```
 
+---
+
 ### customMaps
 
-- **Type**:
-
-```ts
-interface Sitemap {
-  loc: string;
-  lastmod?: string;
-  changefreq?: ChangeFreq;
-  priority?: Priority;
-}
-
-interface CustomMaps {
-  [routePath: string]: Sitemap;
-}
-```
-
+- **Type**: `Record<string, Sitemap>`
 - **Default**: `{}`
 
-Sets custom sitemap values for specific important pages.
+Allows customizing sitemap fields (`priority`, `changefreq`, `lastmod`, `loc`) for specific route paths.
+
+```ts
+pluginSitemap({
+  customMaps: {
+    '/guide/getting-started': {
+      loc: 'https://example.com/guide/getting-started',
+      priority: '0.9',
+      changefreq: 'weekly',
+    },
+  },
+});
+```
+
+---
 
 ### defaultChangeFreq
 
@@ -124,16 +224,143 @@ Sets custom sitemap values for specific important pages.
 - **Default**: `'monthly'`
 - **Options**: `"always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"`
 
-> changefreq: How frequently the page is likely to change. This value provides general information to search engines and may not correlate exactly to how often they crawl the page.
+Sets the default [changefreq](https://www.sitemaps.org/protocol.html) value for pages in the generated sitemap.
 
-Sets the default [changefreq](https://www.sitemaps.org/protocol.html) value for each page in the generated sitemap file.
+---
 
 ### defaultPriority
 
 - **Type**: `Priority`
-- **Default**: `'0.5'`
+- **Default**: `'0.5'` (Root `/` automatically receives `'1.0'`)
 - **Options**: `"0.0" | "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6" | "0.7" | "0.8" | "0.9" | "1.0"`
 
-> priority: The priority of this URL relative to other URLs on your site.
+Sets the default [priority](https://www.sitemaps.org/protocol.html) value for pages in the generated sitemap.
 
-Sets the default [priority](https://www.sitemaps.org/protocol.html) value for each page in the generated sitemap file.
+---
+
+### discovery
+
+- **Type**: `SitemapDiscoveryOptions`
+- **Default**: `{ linkTag: true, robotsTxt: false }`
+
+Controls how search engines and web crawlers automatically discover your sitemap.
+
+#### discovery.linkTag
+
+- **Type**: `boolean | LinkTagOptions`
+- **Default**: `true`
+
+Controls the automatic injection of `<link rel="sitemap" ... />` into the `<head>` of generated HTML pages.
+
+- Set to `false` to disable tag injection.
+- Pass a `LinkTagOptions` object to customize the attributes or override the `href`.
+
+```ts
+// Disable link tag injection
+pluginSitemap({
+  discovery: {
+    linkTag: false,
+  },
+});
+
+// Custom link tag attributes
+pluginSitemap({
+  discovery: {
+    linkTag: {
+      rel: 'alternate',
+      type: 'application/xml',
+      href: 'https://example.com/custom-sitemap.xml',
+    },
+  },
+});
+```
+
+---
+
+#### discovery.robotsTxt
+
+- **Type**: `boolean | RobotsOptions`
+- **Default**: `false`
+
+Controls the generation or safe merging of a `robots.txt` file referencing the sitemap.
+
+:::warning RFC 9309 Requirement
+Per RFC 9309, `Sitemap:` directives in `robots.txt` must contain a fully-qualified absolute URL (e.g. `https://example.com/sitemap.xml`). Ensure that `siteOrigin` or `siteUrl` is configured; otherwise, the sitemap directive will be skipped with a warning.
+:::
+
+Setting `robotsTxt: true` enables the default setup:
+
+- Generates `robots.txt` allowing all crawlers: `User-agent: *`, `Allow: /`.
+- Adds `Sitemap: https://<site>/sitemap.xml`.
+- If a `robots.txt` already exists in your output directory (e.g. copied from `public/`), it safely appends the missing `Sitemap` directive without modifying existing rules.
+
+##### Custom policies & AI bot controls
+
+You can pass a `RobotsOptions` object to manage crawler access, specify crawl delays, or block specific AI scrapers:
+
+```ts
+// rspress.config.ts
+import { defineConfig } from '@rspress/core';
+import { pluginSitemap } from '@rspress/plugin-sitemap';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  plugins: [
+    pluginSitemap({
+      discovery: {
+        robotsTxt: {
+          policies: [
+            // Standard crawlers: allow all
+            {
+              userAgent: '*',
+              allow: '/',
+              disallow: '/private/',
+            },
+            // Block specific AI scrapers
+            {
+              userAgent: ['GPTBot', 'ClaudeBot', 'CCBot'],
+              disallow: '/',
+            },
+          ],
+          // Additional sitemaps to advertise
+          additionalSitemaps: ['https://example.com/blog-sitemap.xml'],
+        },
+      },
+    }),
+  ],
+});
+```
+
+##### Handling existing robots.txt (`mergeStrategy`)
+
+If you maintain a static `robots.txt` inside your `public/` directory, Rspress will copy it to the build output. You can control how the plugin reconciles with it via `mergeStrategy`:
+
+- `'merge'` (default): Parses existing content and appends missing `Sitemap:` directives without duplicating existing lines. If the existing file is completely empty, default policies are applied.
+- `'replace'`: Completely overwrites the existing file with the generated content.
+- `'preserve'`: Leaves the existing file strictly untouched.
+
+```ts
+pluginSitemap({
+  discovery: {
+    robotsTxt: {
+      mergeStrategy: 'merge', // 'merge' | 'replace' | 'preserve'
+    },
+  },
+});
+```
+
+##### Custom content transformation (`transform`)
+
+You can modify or post-process the final generated `robots.txt` content:
+
+```ts
+pluginSitemap({
+  discovery: {
+    robotsTxt: {
+      transform(content) {
+        return `# Generated by Rspress Sitemap Plugin\n${content}`;
+      },
+    },
+  },
+});
+```
