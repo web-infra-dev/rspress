@@ -9,8 +9,6 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-const config = 'rspress.data-router.config.ts';
-
 // Hold a page chunk until the test explicitly releases it. Hover prefetching
 // cannot hide the loading state because native navigation uses buttons.
 async function holdPageChunk(page: Page) {
@@ -41,13 +39,10 @@ for (const mode of ['dev', 'build'] as const) {
     test.beforeAll(async () => {
       port = await getPort();
       if (mode === 'dev') {
-        app = await runDevCommand(import.meta.dirname, port, config);
+        app = await runDevCommand(import.meta.dirname, port);
       } else {
-        await runBuildCommand(import.meta.dirname, config);
-        app = await runPreviewCommand(import.meta.dirname, port, [
-          '-c',
-          config,
-        ]);
+        await runBuildCommand(import.meta.dirname);
+        app = await runPreviewCommand(import.meta.dirname, port);
       }
     });
     test.afterAll(async () => {
@@ -251,7 +246,7 @@ for (const mode of ['dev', 'build'] as const) {
       test('emits HTML and Markdown with loader data and hydrates without errors', async ({
         page,
       }) => {
-        const output = path.join(import.meta.dirname, 'dist-data-router');
+        const output = path.join(import.meta.dirname, 'doc_build');
         expect(
           await readFile(path.join(output, 'slow.html'), 'utf8'),
         ).toContain('Slow page content.');
