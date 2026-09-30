@@ -1,5 +1,6 @@
 import React, { Suspense, useSyncExternalStore } from 'react';
-import { safeBrowserOnly, safeUse } from '@rspress/core/runtime';
+import { safeUse } from './react';
+import { safeBrowserOnly } from './reactDom';
 
 export interface NoSSRProps {
   children: React.ReactNode;
