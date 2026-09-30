@@ -111,6 +111,12 @@
   }
 }
 
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.5rem;
+}
+
 .link {
   display: inline-flex;
   align-items: center;
@@ -208,6 +214,93 @@
 
   .legendDotSsgMd {
     background-color: var(--rp-c-brand);
+  }
+}
+
+/* ---------- languages and versions ---------- */
+
+.i18nModes {
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid var(--rp-c-divider-light);
+
+  button {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: transparent;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--rp-c-text-2);
+    cursor: pointer;
+
+    &[aria-pressed='true'] {
+      background-color: var(--rp-c-brand-tint);
+      color: var(--rp-c-brand-dark);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--rp-c-brand);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.i18nTree {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  padding: 12px 8px;
+  font-family: var(--rp-font-family-mono);
+  font-size: 13px;
+}
+
+.i18nRoutes {
+  padding: 16px;
+  border-top: 1px solid var(--rp-c-divider-light);
+  background-color: var(--rp-c-bg-soft);
+
+  p {
+    margin: 12px 0 0;
+    color: var(--rp-c-text-2);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+}
+
+.i18nRouteLabel {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--rp-c-text-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.i18nRoute {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12px;
+
+  code {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-family: var(--rp-font-family-mono);
+
+    &:first-child {
+      flex: 1;
+      color: var(--rp-c-text-2);
+    }
+
+    &:last-child {
+      color: var(--rp-c-brand-dark);
+    }
+  }
+
+  svg {
+    flex-shrink: 0;
+    color: var(--rp-c-text-3);
   }
 }
 

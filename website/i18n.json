@@ -127,6 +127,66 @@
     "zh": "了解自动生成导航",
     "en": "Learn about auto nav & sidebar"
   },
+  "homeI18nEyebrow": {
+    "zh": "国际化与多版本",
+    "en": "i18n & Multi-version"
+  },
+  "homeI18nTitle": {
+    "zh": "多种语言，多个版本，\n一目了然的目录结构",
+    "en": "Many languages. Many versions.\nOne clear directory structure."
+  },
+  "homeI18nDesc": {
+    "zh": "把英文文档放进 docs/en，中文文档放进 docs/zh。按语言组织内容，需要多版本时再增加一层版本目录，在同一个站点维护不同语言与版本的文档。",
+    "en": "English docs in docs/en, Chinese docs in docs/zh. Organize content by language, then add a version directory when you need it. Maintain every language and version in one site."
+  },
+  "homeI18nPoint1": {
+    "zh": "语言目录并列，查找原文、对照翻译更直观",
+    "en": "Keep language directories side by side for easy translation reviews"
+  },
+  "homeI18nPoint2": {
+    "zh": "多版本与国际化可组合，延续熟悉的目录结构",
+    "en": "Combine versions and languages with the same familiar structure"
+  },
+  "homeI18nPoint3": {
+    "zh": "内置语言与版本切换，文档链接自动补全前缀",
+    "en": "Built-in language and version switchers, with automatic doc link prefixes"
+  },
+  "homeI18nLink": {
+    "zh": "了解国际化",
+    "en": "Explore i18n"
+  },
+  "homeI18nVersionLink": {
+    "zh": "了解多版本",
+    "en": "Explore multi-version"
+  },
+  "homeI18nExample": {
+    "zh": "文档目录示例",
+    "en": "Documentation directory examples"
+  },
+  "homeI18nLanguages": {
+    "zh": "多语言",
+    "en": "Languages"
+  },
+  "homeI18nVersioned": {
+    "zh": "多语言 + 多版本",
+    "en": "Languages + versions"
+  },
+  "homeI18nDirectory": {
+    "zh": "按目录组织内容",
+    "en": "Content as directories"
+  },
+  "homeI18nRoutes": {
+    "zh": "文件路径 → 页面 URL",
+    "en": "File path → Page URL"
+  },
+  "homeI18nLanguageDefault": {
+    "zh": "示例配置：默认语言为 en，URL 中省略默认语言前缀。",
+    "en": "Example config: en is the default language, so its URL prefix is omitted."
+  },
+  "homeI18nVersionDefault": {
+    "zh": "示例配置：默认语言为 en，默认版本为 v1，URL 中省略这两个默认前缀。",
+    "en": "Example config: en and v1 are the defaults, so both URL prefixes are omitted."
+  },
   "homeExtendEyebrow": {
     "zh": "插件与主题",
     "en": "Plugins & Themes"
