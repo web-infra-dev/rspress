@@ -1,6 +1,6 @@
 {
   "name": "@rspress/core",
-  "version": "2.0.22",
+  "version": "2.0.23",
   "description": "The Rspress Documentation Framework",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -65,7 +65,7 @@
   "dependencies": {
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@rsbuild/core": "^2.2.8",
+    "@rsbuild/core": "^2.2.10",
     "@rsbuild/plugin-react": "~2.1.0",
     "@rspress/shared": "workspace:*",
     "@shikijs/rehype": "^4.2.0",
@@ -103,7 +103,7 @@
     "vfile": "^6.0.3"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.59.1",
+    "@microsoft/api-extractor": "^7.59.2",
     "@rsbuild/plugin-sass": "~2.0.1",
     "@rsbuild/plugin-svgr": "^2.0.5",
     "@rspress/config": "workspace:*",
@@ -112,7 +112,7 @@
     "@types/node": "^22.8.1",
     "@types/nprogress": "^0.2.3",
     "@types/react-dom": "^19.2.7",
-    "@types/web": "^0.0.356",
+    "@types/web": "^0.0.357",
     "cac": "^7.0.0",
     "execa": "8.0.1",
     "mdast-util-directive": "^3.1.0",

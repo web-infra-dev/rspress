@@ -15,6 +15,14 @@ import { SourceCode } from '@rspress/core/theme';
 <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/core/src/theme/components/SourceCode/index.tsx" />
 ```
 
+You can also place `SourceCode` on the same line as a heading. The source code link appears in the document heading and is excluded from the table of contents, without changing the heading anchor.
+
+```mdx
+import { SourceCode } from '@rspress/core/theme';
+
+## Google Analytics <SourceCode href="https://github.com/rstackjs/rspress-plugins" />
+```
+
 ## Props
 
 ```ts

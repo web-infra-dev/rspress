@@ -15,6 +15,14 @@ import { SourceCode } from '@rspress/core/theme';
 <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/core/src/theme/components/SourceCode/index.tsx" />
 ```
 
+你也可以将 `SourceCode` 放在标题同一行。源码链接会显示在正文标题中，不会出现在页内目录中，也不会改变标题锚点。
+
+```mdx
+import { SourceCode } from '@rspress/core/theme';
+
+## Google Analytics <SourceCode href="https://github.com/rstackjs/rspress-plugins" />
+```
+
 ## Props
 
 ```ts

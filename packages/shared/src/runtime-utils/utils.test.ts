@@ -32,6 +32,9 @@ describe('shared runtime utils', () => {
     expect(firstResult).toBe('/my-base/guide/');
     const secondResult = withBase(firstResult, base);
     expect(secondResult).toBe('/my-base/guide/');
+
+    // url that only shares a prefix with the base
+    expect(withBase('/docsify/', '/docs/')).toBe('/docs/docsify/');
   });
 
   test('withSiteOrigin', () => {
@@ -67,6 +70,9 @@ describe('shared runtime utils', () => {
     expect(firstResult).toBe('/guide/');
     const secondResult = removeBase(firstResult, base);
     expect(secondResult).toBe('/guide/');
+
+    // url that only shares a prefix with the base
+    expect(removeBase('/docsify/', '/docs/')).toBe('/docsify/');
   });
 
   test('normalizePosix', () => {

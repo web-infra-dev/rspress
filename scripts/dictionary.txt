@@ -113,6 +113,7 @@ picocolors
 pinkpurple
 Pipeable
 pjpeg
+playlabel
 pluggable
 pmmmwh
 pogodin
@@ -162,6 +163,7 @@ svgr
 swcrc
 systemjs
 tailwindcss
+Tamizh
 taskkill
 templating
 transpiling
@@ -178,6 +180,7 @@ unpatch
 unplugin
 unshift
 upath
+videoid
 watchpack
 webm
 webp
