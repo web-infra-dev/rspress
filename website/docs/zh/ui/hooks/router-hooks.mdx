@@ -2,11 +2,17 @@
 description: 路由相关 hooks，重导出自 react-router-dom，用于访问导航与位置信息。
 ---
 
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # 路由 Hooks
 
 Rspress 直接重导出 `react-router-dom` 的路由能力，你可以无需额外依赖就访问导航与位置信息。常用的 Hook 包括 `useLocation`、`useNavigate`、`useParams`、`useSearchParams` 和 `useMatches`。
 
 - **类型：** 与对应的 `react-router-dom` Hook 保持一致
+
+<VersionBadge version="2.1.0" />
+
+自 Rspress 2.1.0 起，路由使用 React Router 的 **Data 模式**。
 
 下面是一个使用示例：
 

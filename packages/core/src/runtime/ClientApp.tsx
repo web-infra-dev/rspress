@@ -1,6 +1,6 @@
 import {
-  BrowserRouter,
-  PageContext,
+  createBrowserRouter,
+  RouterProvider,
   removeTrailingSlash,
   ThemeContext,
   useSite,
@@ -8,39 +8,42 @@ import {
 } from '@rspress/core/runtime';
 import { useThemeState } from '@rspress/core/theme';
 import { createHead, UnheadProvider } from '@unhead/react/client';
-import { useMemo, useState } from 'react';
-import { App } from './App';
+import { useMemo } from 'react';
 import type { Page } from './initPageData';
+import { PAGE_ROUTE_ID } from './pageDataLoader';
+import { createPageRoutes } from './PageRoute';
 
 const head = createHead();
 
-// eslint-disable-next-line import/no-commonjs
+export function createClientRouter(initialPageData?: Page) {
+  return createBrowserRouter(createPageRoutes(), {
+    basename: removeTrailingSlash(withBase('/')),
+    hydrationData: initialPageData
+      ? { loaderData: { [PAGE_ROUTE_ID]: initialPageData } }
+      : undefined,
+  });
+}
 
 export function ClientApp({
-  initialPageData = null as unknown as Page,
+  router,
 }: {
-  initialPageData?: Page;
+  router: ReturnType<typeof createClientRouter>;
 }) {
-  const [data, setData] = useState(initialPageData);
   const [theme, setTheme] = useThemeState();
   const { site } = useSite();
+  const transitionOptions = {
+    useTransitions: site.route.useTransitions,
+    // React Router 6 uses this flag for updates after async loaders complete.
+    future: { v7_startTransition: site.route.useTransitions },
+  };
 
   return (
     <ThemeContext.Provider
       value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}
     >
-      <PageContext.Provider
-        value={useMemo(() => ({ data, setData }), [data, setData])}
-      >
-        <BrowserRouter
-          basename={removeTrailingSlash(withBase('/'))}
-          useTransitions={site.route.useTransitions}
-        >
-          <UnheadProvider head={head}>
-            <App />
-          </UnheadProvider>
-        </BrowserRouter>
-      </PageContext.Provider>
+      <UnheadProvider head={head}>
+        <RouterProvider router={router} {...transitionOptions} />
+      </UnheadProvider>
     </ThemeContext.Provider>
   );
 }

@@ -17,6 +17,21 @@ test.describe('multi version global sidebar', async () => {
     }
   });
 
+  test('uses the target version on a missing page without locales', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/`, {
+      waitUntil: 'networkidle',
+    });
+    await page.getByRole('button', { name: 'Missing versioned page' }).click();
+    await expect(page.getByTestId('page-context')).toHaveText('v2|en');
+    await expect(
+      page.getByRole('link', { name: 'go to home' }),
+    ).toHaveAttribute('href', '/v2/');
+    await page.getByRole('link', { name: 'go to home' }).click();
+    await expect(page.locator('h1')).toContainText('Version two');
+  });
+
   test('Should keep global sidebar isolated by version', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',

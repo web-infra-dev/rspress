@@ -47,6 +47,12 @@ export interface I18nText {
   notFoundText?: I18nTextValue;
   takeMeHomeText?: I18nTextValue;
 
+  // ErrorLayout
+  errorTitleText?: I18nTextValue;
+  errorDescriptionText?: I18nTextValue;
+  reloadPageText?: I18nTextValue;
+  errorDetailsText?: I18nTextValue;
+
   // prompt
   promptCopyText?: I18nTextValue;
   promptCopiedText?: I18nTextValue;
