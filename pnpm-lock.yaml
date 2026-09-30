@@ -89,11 +89,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@rsdoctor/rspack-plugin':
         specifier: 1.6.4
@@ -105,8 +105,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/auto-nav-sidebar-dir-convention:
     dependencies:
@@ -114,11 +114,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -127,8 +127,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/auto-nav-sidebar-issue-1682:
     dependencies:
@@ -136,11 +136,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -149,8 +149,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/auto-nav-sidebar-no-meta:
     dependencies:
@@ -158,11 +158,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -171,8 +171,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/banner:
     dependencies:
@@ -180,11 +180,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -193,8 +193,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/basic:
     dependencies:
@@ -202,11 +202,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -215,8 +215,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/check-dead-link:
     dependencies:
@@ -224,11 +224,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -237,8 +237,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/clean-urls-redirect:
     dependencies:
@@ -246,11 +246,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -259,8 +259,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/client-redirects:
     dependencies:
@@ -271,11 +271,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-client-redirects
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -284,8 +284,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/code-block:
     dependencies:
@@ -296,11 +296,11 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -309,8 +309,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/code-block-runtime:
     dependencies:
@@ -318,11 +318,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@shikijs/transformers':
         specifier: ^4.2.0
@@ -334,8 +334,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/custom-headers:
     dependencies:
@@ -343,11 +343,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -356,8 +356,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/custom-home-footer:
     dependencies:
@@ -365,11 +365,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -378,8 +378,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/custom-icon:
     dependencies:
@@ -387,11 +387,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -400,8 +400,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/custom-layout:
     dependencies:
@@ -409,11 +409,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -422,8 +422,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/custom-plugin:
     dependencies:
@@ -431,11 +431,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -444,8 +444,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/dynamic-toc:
     dependencies:
@@ -453,11 +453,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -466,8 +466,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/github-alert-mdxjs:
     dependencies:
@@ -475,11 +475,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -488,8 +488,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/hash-anchor-scroll:
     dependencies:
@@ -497,11 +497,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -510,8 +510,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/heading-title:
     dependencies:
@@ -519,11 +519,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -532,8 +532,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/hmr:
     dependencies:
@@ -541,11 +541,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -554,8 +554,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/i18n:
     dependencies:
@@ -563,11 +563,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -576,8 +576,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/i18n-source-text:
     dependencies:
@@ -585,11 +585,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -598,8 +598,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/icon-file-url:
     dependencies:
@@ -607,11 +607,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -620,8 +620,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/inline-markdown:
     dependencies:
@@ -629,11 +629,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -642,8 +642,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/issue-1309:
     dependencies:
@@ -651,11 +651,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -664,8 +664,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/markdown-link:
     dependencies:
@@ -673,11 +673,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -686,8 +686,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/markdown-link-asset:
     dependencies:
@@ -695,11 +695,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -708,8 +708,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/multi-version:
     dependencies:
@@ -717,11 +717,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -730,8 +730,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/multi-version-global-sidebar:
     dependencies:
@@ -739,11 +739,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -752,8 +752,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/multi-version-llms:
     dependencies:
@@ -764,11 +764,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-llms
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -777,8 +777,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/nav-link:
     dependencies:
@@ -786,11 +786,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -799,8 +799,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/nav-link-item-with-hash:
     dependencies:
@@ -808,11 +808,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -821,8 +821,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/nav-link-items:
     dependencies:
@@ -830,11 +830,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -843,8 +843,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/nav-slots:
     dependencies:
@@ -852,11 +852,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -865,8 +865,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/nested-overview:
     dependencies:
@@ -874,11 +874,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -887,8 +887,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/no-config-root:
     dependencies:
@@ -896,11 +896,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -909,8 +909,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/package-manager-tabs:
     dependencies:
@@ -918,11 +918,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -931,8 +931,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/page-head-tags:
     dependencies:
@@ -940,11 +940,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -953,8 +953,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/page-type-home:
     dependencies:
@@ -962,11 +962,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -975,8 +975,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-api-docgen/locales:
     dependencies:
@@ -987,11 +987,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/plugin-api-docgen
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1000,8 +1000,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-api-docgen/single:
     dependencies:
@@ -1012,11 +1012,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/plugin-api-docgen
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1025,8 +1025,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-llms:
     dependencies:
@@ -1037,11 +1037,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-llms
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1050,8 +1050,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-playground:
     dependencies:
@@ -1062,11 +1062,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-playground
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
       solid-js:
         specifier: ^1.9.15
         version: 1.9.15
@@ -1078,8 +1078,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-playground-preview:
     dependencies:
@@ -1093,11 +1093,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1106,8 +1106,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-preview:
     dependencies:
@@ -1124,11 +1124,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1137,8 +1137,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-preview-custom-entry:
     dependencies:
@@ -1152,11 +1152,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-preview
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
       solid-js:
         specifier: ^1.9.15
         version: 1.9.15
@@ -1171,8 +1171,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-rss:
     dependencies:
@@ -1183,11 +1183,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-rss
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1196,8 +1196,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-twoslash:
     dependencies:
@@ -1208,11 +1208,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/plugin-twoslash
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1221,8 +1221,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-typedoc/multi:
     dependencies:
@@ -1233,11 +1233,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/plugin-typedoc
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1246,8 +1246,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/plugin-typedoc/single:
     dependencies:
@@ -1258,11 +1258,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/plugin-typedoc
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1271,8 +1271,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/production:
     dependencies:
@@ -1280,11 +1280,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1293,8 +1293,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/public-dir:
     dependencies:
@@ -1302,11 +1302,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1315,8 +1315,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/react-18:
     dependencies:
@@ -1352,14 +1352,14 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
       react-router-dom:
         specifier: ^7.18.4
-        version: 7.18.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1368,8 +1368,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/react-router-dom-6:
     dependencies:
@@ -1402,11 +1402,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1415,8 +1415,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -1436,11 +1436,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1449,8 +1449,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -1467,11 +1467,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1480,8 +1480,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/search:
     dependencies:
@@ -1489,11 +1489,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@rspress/plugin-algolia':
         specifier: workspace:*
@@ -1505,8 +1505,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/search-algolia:
     dependencies:
@@ -1514,11 +1514,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@rspress/plugin-algolia':
         specifier: workspace:*
@@ -1530,8 +1530,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/search-code-blocks:
     dependencies:
@@ -1539,11 +1539,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1552,8 +1552,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/search-hooks:
     dependencies:
@@ -1561,11 +1561,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@rspress/plugin-algolia':
         specifier: workspace:*
@@ -1577,8 +1577,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/search-i18n:
     dependencies:
@@ -1586,11 +1586,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1599,8 +1599,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/ssg-fail-strict:
     dependencies:
@@ -1608,11 +1608,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1621,8 +1621,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/ssg-md:
     dependencies:
@@ -1630,11 +1630,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1643,8 +1643,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/ssg-missing-public:
     dependencies:
@@ -1652,11 +1652,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1665,8 +1665,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/ssg-worker:
     dependencies:
@@ -1674,11 +1674,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1687,8 +1687,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/tabs-component:
     dependencies:
@@ -1696,11 +1696,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1709,8 +1709,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/tailwind-v4:
     dependencies:
@@ -1755,11 +1755,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1768,8 +1768,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/title-number:
     dependencies:
@@ -1777,11 +1777,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1790,8 +1790,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/title-suffix:
     dependencies:
@@ -1799,11 +1799,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1812,8 +1812,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/view-transition-dark-mode:
     dependencies:
@@ -1821,11 +1821,11 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/core
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@types/node':
         specifier: ^22.8.1
@@ -1834,17 +1834,17 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   e2e/fixtures/with-base:
     dependencies:
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@rspress/core':
         specifier: workspace:*
@@ -1856,8 +1856,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
 
   packages/core:
     dependencies:
@@ -1866,7 +1866,7 @@ importers:
         version: 3.1.1(supports-color@9.4.0)
       '@mdx-js/react':
         specifier: ^3.1.1
-        version: 3.1.1(@types/react@19.2.18)(react@19.2.8)
+        version: 3.1.1(@types/react@19.2.18)(react@19.3.0)
       '@rsbuild/core':
         specifier: ^2.2.10
         version: 2.2.10
@@ -1887,7 +1887,7 @@ importers:
         version: 19.2.18
       '@unhead/react':
         specifier: ^2.1.17
-        version: 2.1.17(react@19.2.8)
+        version: 2.1.17(react@19.3.0)
       body-scroll-lock:
         specifier: 4.0.0-beta.0
         version: 4.0.0-beta.0
@@ -1919,20 +1919,20 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
       react-lazy-with-preload:
         specifier: ^2.2.1
         version: 2.2.1
       react-render-to-markdown:
         specifier: 19.1.0
-        version: 19.1.0(react@19.2.8)
+        version: 19.1.0(react@19.3.0)
       react-router-dom:
         specifier: ^7.18.4
-        version: 7.18.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       rehype-external-links:
         specifier: ^3.0.0
         version: 3.0.0
@@ -2001,8 +2001,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
       '@types/web':
         specifier: ^0.0.357
         version: 0.0.357
@@ -2078,7 +2078,7 @@ importers:
         version: 4.7.0
       '@docsearch/react':
         specifier: ^4.7.0
-        version: 4.7.0(@algolia/client-search@5.50.0)(@types/react@19.2.18)(algoliasearch@5.50.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(search-insights@2.17.3)
+        version: 4.7.0(@algolia/client-search@5.50.0)(@types/react@19.2.18)(algoliasearch@5.50.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(search-insights@2.17.3)
       '@rspress/core':
         specifier: workspace:^2.0.10
         version: link:../core
@@ -2099,14 +2099,14 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
       rsbuild-plugin-publint:
         specifier: ^1.0.0
         version: 1.0.0(@rsbuild/core@2.2.10)
@@ -2130,7 +2130,7 @@ importers:
         version: 2.4.0(typescript@6.0.3)
       react-markdown:
         specifier: ^10.1.0
-        version: 10.1.0(@types/react@19.2.18)(react@19.2.8)(supports-color@9.4.0)
+        version: 10.1.0(@types/react@19.2.18)(react@19.3.0)(supports-color@9.4.0)
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1(supports-color@9.4.0)
@@ -2157,17 +2157,17 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
       react-router-dom:
         specifier: ^7.18.4
-        version: 7.18.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       rsbuild-plugin-publint:
         specifier: ^1.0.0
         version: 1.0.0(@rsbuild/core@2.2.10)
@@ -2197,11 +2197,11 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       rsbuild-plugin-publint:
         specifier: ^1.0.0
         version: 1.0.0(@rsbuild/core@2.2.10)
@@ -2255,8 +2255,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       rsbuild-plugin-publint:
         specifier: ^1.0.0
         version: 1.0.0(@rsbuild/core@2.2.10)
@@ -2274,7 +2274,7 @@ importers:
         version: 3.1.1(supports-color@7.2.0)
       '@monaco-editor/react':
         specifier: ~4.7.0
-        version: 4.7.0(monaco-editor@0.55.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 4.7.0(monaco-editor@0.55.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@oxidation-compiler/napi':
         specifier: ^0.2.0
         version: 0.2.0
@@ -2319,17 +2319,17 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
       mdast-util-mdx-jsx:
         specifier: ^3.2.0
         version: 3.2.0(supports-color@7.2.0)
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
       rsbuild-plugin-publint:
         specifier: ^1.0.0
         version: 1.0.0(@rsbuild/core@2.2.10)
@@ -2356,7 +2356,7 @@ importers:
         version: 1.1.1
       qrcode.react:
         specifier: ^4.2.0
-        version: 4.2.0(react@19.2.8)
+        version: 4.2.0(react@19.3.0)
     devDependencies:
       '@types/mdast':
         specifier: ^4.0.4
@@ -2368,8 +2368,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
       mdast-util-mdx-jsx:
         specifier: ^3.2.0
         version: 3.2.0(supports-color@7.2.0)
@@ -2377,11 +2377,11 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(supports-color@7.2.0)
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
       rsbuild-plugin-publint:
         specifier: ^1.0.0
         version: 1.0.0(@rsbuild/core@2.2.10)
@@ -2411,8 +2411,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       rsbuild-plugin-publint:
         specifier: ^1.0.0
         version: 1.0.0(@rsbuild/core@2.2.10)
@@ -2482,8 +2482,8 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       rsbuild-plugin-publint:
         specifier: ^1.0.0
         version: 1.0.0(@rsbuild/core@2.2.10)
@@ -2516,11 +2516,11 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: ^19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: ^19.3.0
+        version: 19.3.0(@types/react@19.2.18)
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       rsbuild-plugin-publint:
         specifier: ^1.0.0
         version: 1.0.0(@rsbuild/core@2.2.10)
@@ -2625,11 +2625,11 @@ importers:
         specifier: ^19.2.18
         version: 19.2.18
       react:
-        specifier: ^19.2.8
-        version: 19.2.8
+        specifier: ^19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: ^19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
       rsbuild-plugin-google-analytics:
         specifier: ^1.0.6
         version: 1.0.6(@rsbuild/core@2.2.10)
@@ -2647,7 +2647,7 @@ importers:
         version: '@soonit/rspress-plugin-og@0.1.2(@rspress/core@packages+core)'
       rspress-plugin-third-parties:
         specifier: ^2.1.2
-        version: 2.1.2(@rspress/core@packages+core)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 2.1.2(@rspress/core@packages+core)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       tm-themes:
         specifier: 1.12.12
         version: 1.12.12
@@ -4833,6 +4833,11 @@ packages:
     resolution: {integrity: sha512-I8bPpDLcHBv1qiIiXDCy71Rt8eQDKJP0sMSWJphDdAcdqiJ1sGpZamavoEIRZmYzjia9LuEb2HlYdDpmoENpvQ==}
     peerDependencies:
       '@types/react': ^19.2.0
+
+  '@types/react-dom@19.3.0':
+    resolution: {integrity: sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q==}
+    peerDependencies:
+      '@types/react': ^19.3.0
 
   '@types/react@18.3.31':
     resolution: {integrity: sha512-vfEqpXTvwT91yhmwdfouStN2hSKwTvyRs8qpLfADyrq/kxDw0hZM7Wk9Ug1FELj8hIby+S/+kQCSRFF32nv2Qw==}
@@ -7185,6 +7190,11 @@ packages:
     peerDependencies:
       react: ^19.2.8
 
+  react-dom@19.3.0:
+    resolution: {integrity: sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==}
+    peerDependencies:
+      react: ^19.3.0
+
   react-lazy-with-preload@2.2.1:
     resolution: {integrity: sha512-ONSb8gizLE5jFpdHAclZ6EAAKuFX2JydnFXPPPjoUImZlLjGtKzyBS8SJgJq7CpLgsGKh9QCZdugJyEEOVC16Q==}
 
@@ -7262,6 +7272,10 @@ packages:
 
   react@19.2.8:
     resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
+    engines: {node: '>=0.10.0'}
+
+  react@19.3.0:
+    resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
     engines: {node: '>=0.10.0'}
 
   read-pkg-up@9.1.0:
@@ -7672,6 +7686,9 @@ packages:
 
   scheduler@0.27.0:
     resolution: {integrity: sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==}
+
+  scheduler@0.28.0:
+    resolution: {integrity: sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw==}
 
   schema-utils@4.3.3:
     resolution: {integrity: sha512-eflK8wEtyOE6+hsaRVPxvUKYCpRgzLqDTb8krvAsRIwOGlHoSgYLgBXoubGgLd2fT41/OUYdb48v4k4WWHQurA==}
@@ -8822,23 +8839,23 @@ snapshots:
 
   '@cspell/url@9.8.0': {}
 
-  '@docsearch/core@4.7.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@docsearch/core@4.7.0(@types/react@19.2.18)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     optionalDependencies:
       '@types/react': 19.2.18
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
 
   '@docsearch/css@4.7.0': {}
 
-  '@docsearch/react@4.7.0(@algolia/client-search@5.50.0)(@types/react@19.2.18)(algoliasearch@5.50.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(search-insights@2.17.3)':
+  '@docsearch/react@4.7.0(@algolia/client-search@5.50.0)(@types/react@19.2.18)(algoliasearch@5.50.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(search-insights@2.17.3)':
     dependencies:
       '@algolia/autocomplete-core': 1.19.2(@algolia/client-search@5.50.0)(algoliasearch@5.50.0)(search-insights@2.17.3)
-      '@docsearch/core': 4.7.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@docsearch/core': 4.7.0(@types/react@19.2.18)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@docsearch/css': 4.7.0
     optionalDependencies:
       '@types/react': 19.2.18
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
       search-insights: 2.17.3
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -9202,11 +9219,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.2.18)(react@19.2.8)':
+  '@mdx-js/react@3.1.1(@types/react@19.2.18)(react@19.3.0)':
     dependencies:
       '@types/mdx': 2.0.13
       '@types/react': 19.2.18
-      react: 19.2.8
+      react: 19.3.0
 
   '@microsoft/api-extractor-model@7.33.13(@types/node@22.19.15)':
     dependencies:
@@ -9247,12 +9264,12 @@ snapshots:
     dependencies:
       state-local: 1.0.7
 
-  '@monaco-editor/react@4.7.0(monaco-editor@0.55.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@monaco-editor/react@4.7.0(monaco-editor@0.55.1)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@monaco-editor/loader': 1.7.0
       monaco-editor: 0.55.1
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
 
   '@napi-rs/wasm-runtime@0.2.4':
     dependencies:
@@ -10446,6 +10463,10 @@ snapshots:
     dependencies:
       '@types/react': 19.2.18
 
+  '@types/react-dom@19.3.0(@types/react@19.2.18)':
+    dependencies:
+      '@types/react': 19.2.18
+
   '@types/react@18.3.31':
     dependencies:
       '@types/prop-types': 15.7.15
@@ -10543,9 +10564,9 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@unhead/react@2.1.17(react@19.2.8)':
+  '@unhead/react@2.1.17(react@19.3.0)':
     dependencies:
-      react: 19.2.8
+      react: 19.3.0
       unhead: 2.1.17
 
   '@vue/compiler-core@3.5.42':
@@ -13661,9 +13682,9 @@ snapshots:
 
   punycode.js@2.3.1: {}
 
-  qrcode.react@4.2.0(react@19.2.8):
+  qrcode.react@4.2.0(react@19.3.0):
     dependencies:
-      react: 19.2.8
+      react: 19.3.0
 
   quansync@1.0.0: {}
 
@@ -13673,9 +13694,9 @@ snapshots:
     dependencies:
       w-json: 1.3.10
 
-  react-compiler-runtime@0.0.0-experimental-a1856f3-20260507(react@19.2.8):
+  react-compiler-runtime@0.0.0-experimental-a1856f3-20260507(react@19.3.0):
     dependencies:
-      react: 19.2.8
+      react: 19.3.0
 
   react-docgen-typescript@2.4.0(typescript@6.0.3):
     dependencies:
@@ -13692,9 +13713,14 @@ snapshots:
       react: 19.2.8
       scheduler: 0.27.0
 
+  react-dom@19.3.0(react@19.3.0):
+    dependencies:
+      react: 19.3.0
+      scheduler: 0.28.0
+
   react-lazy-with-preload@2.2.1: {}
 
-  react-markdown@10.1.0(@types/react@19.2.18)(react@19.2.8)(supports-color@9.4.0):
+  react-markdown@10.1.0(@types/react@19.2.18)(react@19.3.0)(supports-color@9.4.0):
     dependencies:
       '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
@@ -13703,7 +13729,7 @@ snapshots:
       hast-util-to-jsx-runtime: 2.3.6(supports-color@9.4.0)
       html-url-attributes: 3.0.1
       mdast-util-to-hast: 13.2.1
-      react: 19.2.8
+      react: 19.3.0
       remark-parse: 11.0.0(supports-color@9.4.0)
       remark-rehype: 11.1.2
       unified: 11.0.5
@@ -13718,9 +13744,9 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-reconciler@0.33.0(react@19.2.8):
+  react-reconciler@0.33.0(react@19.3.0):
     dependencies:
-      react: 19.2.8
+      react: 19.3.0
       scheduler: 0.27.0
 
   react-refresh@0.18.0: {}
@@ -13730,10 +13756,10 @@ snapshots:
       react: 18.3.1
       react-reconciler: 0.29.2(react@18.3.1)
 
-  react-render-to-markdown@19.1.0(react@19.2.8):
+  react-render-to-markdown@19.1.0(react@19.3.0):
     dependencies:
-      react: 19.2.8
-      react-reconciler: 0.33.0(react@19.2.8)
+      react: 19.3.0
+      react-reconciler: 0.33.0(react@19.3.0)
 
   react-router-dom@6.30.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:
@@ -13748,11 +13774,11 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-router: 7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  react-router-dom@7.18.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  react-router-dom@7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
-      react-router: 7.18.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+      react-router: 7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
 
   react-router@6.30.6(react@19.2.8):
     dependencies:
@@ -13767,27 +13793,29 @@ snapshots:
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
 
-  react-router@7.18.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  react-router@7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
       cookie: 1.1.1
-      react: 19.2.8
+      react: 19.3.0
       set-cookie-parser: 2.7.2
     optionalDependencies:
-      react-dom: 19.2.8(react@19.2.8)
+      react-dom: 19.3.0(react@19.3.0)
 
-  react-tweet@3.3.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  react-tweet@3.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
       '@swc/helpers': 0.5.23
       clsx: 2.1.1
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
-      swr: 2.5.1(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+      swr: 2.5.1(react@19.3.0)
 
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
 
   react@19.2.8: {}
+
+  react@19.3.0: {}
 
   read-pkg-up@9.1.0:
     dependencies:
@@ -14171,13 +14199,13 @@ snapshots:
     dependencies:
       '@rspress/core': link:packages/core
 
-  rspress-plugin-third-parties@2.1.2(@rspress/core@packages+core)(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  rspress-plugin-third-parties@2.1.2(@rspress/core@packages+core)(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
       '@rspress/core': link:packages/core
-      react: 19.2.8
-      react-compiler-runtime: 0.0.0-experimental-a1856f3-20260507(react@19.2.8)
-      react-dom: 19.2.8(react@19.2.8)
-      react-tweet: 3.3.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react: 19.3.0
+      react-compiler-runtime: 0.0.0-experimental-a1856f3-20260507(react@19.3.0)
+      react-dom: 19.3.0(react@19.3.0)
+      react-tweet: 3.3.1(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       third-party-capital: 3.0.0
 
   rstack@0.8.0(@microsoft/api-extractor@7.59.2(@types/node@22.19.15))(@rspress/core@packages+core)(jiti@2.7.0)(typescript@7.0.2):
@@ -14335,6 +14363,8 @@ snapshots:
       loose-envify: 1.4.0
 
   scheduler@0.27.0: {}
+
+  scheduler@0.28.0: {}
 
   schema-utils@4.3.3:
     dependencies:
@@ -14586,11 +14616,11 @@ snapshots:
       picocolors: 1.1.1
       sax: 1.6.0
 
-  swr@2.5.1(react@19.2.8):
+  swr@2.5.1(react@19.3.0):
     dependencies:
       dequal: 2.0.3
-      react: 19.2.8
-      use-sync-external-store: 1.6.0(react@19.2.8)
+      react: 19.3.0
+      use-sync-external-store: 1.6.0(react@19.3.0)
 
   sync-child-process@1.0.2:
     dependencies:
@@ -14884,9 +14914,9 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  use-sync-external-store@1.6.0(react@19.2.8):
+  use-sync-external-store@1.6.0(react@19.3.0):
     dependencies:
-      react: 19.2.8
+      react: 19.3.0
 
   util-deprecate@1.0.2: {}
 

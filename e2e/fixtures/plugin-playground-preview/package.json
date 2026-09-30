@@ -12,12 +12,12 @@
     "@rspress/core": "workspace:*",
     "@rspress/plugin-playground": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.7"
+    "@types/react-dom": "^19.3.0"
   }
 }

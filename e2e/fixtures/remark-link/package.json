@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "@rspress/core": "workspace:*",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.7",
+    "@types/react-dom": "^19.3.0",
     "picocolors": "^1.1.1",
     "remark": "^15.0.1",
     "unified-lint-rule": "^3.0.1"
