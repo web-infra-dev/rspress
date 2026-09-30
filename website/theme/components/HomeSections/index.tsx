@@ -48,6 +48,7 @@ function Section(props: {
   points: string[];
   linkText: string;
   linkHref: string;
+  secondaryLink?: { text: string; href: string };
   reverse?: boolean;
   visual: ReactNode;
 }) {
@@ -67,10 +68,18 @@ function Section(props: {
             </li>
           ))}
         </ul>
-        <Link className={styles.link} href={props.linkHref}>
-          {props.linkText}
-          <IconArrowRight />
-        </Link>
+        <div className={styles.links}>
+          <Link className={styles.link} href={props.linkHref}>
+            {props.linkText}
+            <IconArrowRight />
+          </Link>
+          {props.secondaryLink ? (
+            <Link className={styles.link} href={props.secondaryLink.href}>
+              {props.secondaryLink.text}
+              <IconArrowRight />
+            </Link>
+          ) : null}
+        </div>
       </div>
       <div className={styles.visual}>{props.visual}</div>
     </section>
@@ -479,7 +488,96 @@ function AutoNavVisual() {
   );
 }
 
-/* ---------- visual 3: plugin ecosystem + layout slots ---------- */
+/* ---------- visual 3: languages and versions as directories ---------- */
+
+function I18nVisual() {
+  const t = useI18n<typeof import('i18n')>();
+  const [versioned, setVersioned] = useState(false);
+  const versions = versioned ? ['v1', 'v2'] : [''];
+
+  return (
+    <div className={styles.card}>
+      <div
+        className={styles.i18nModes}
+        role="group"
+        aria-label={t('homeI18nExample')}
+      >
+        {[false, true].map(mode => (
+          <button
+            key={String(mode)}
+            type="button"
+            aria-pressed={versioned === mode}
+            onClick={() => setVersioned(mode)}
+          >
+            {mode ? t('homeI18nVersioned') : t('homeI18nLanguages')}
+          </button>
+        ))}
+      </div>
+      <div className={styles.cardHeader}>
+        <div className={styles.cardHeaderTitle}>
+          <IconFolder />
+          <span>docs</span>
+        </div>
+        <span>{t('homeI18nDirectory')}</span>
+      </div>
+      <div className={styles.i18nTree}>
+        {versions.map(version => (
+          <div key={version}>
+            {version ? (
+              <TreeRow depth={0} type="folder" name={version} accent />
+            ) : null}
+            {['en', 'zh'].map(language => (
+              <div key={language}>
+                <TreeRow
+                  depth={versioned ? 1 : 0}
+                  type="folder"
+                  name={language}
+                  tag={language === 'en' ? 'English' : '简体中文'}
+                  accent
+                />
+                <TreeRow
+                  depth={versioned ? 2 : 1}
+                  type="file"
+                  name="index.md"
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div className={styles.i18nRoutes}>
+        <span className={styles.i18nRouteLabel}>{t('homeI18nRoutes')}</span>
+        {versions.flatMap(version =>
+          ['en', 'zh'].map(language => {
+            const file = ['docs', version, language, 'index.md']
+              .filter(Boolean)
+              .join('/');
+            const prefix = [
+              version === 'v2' ? version : '',
+              language === 'zh' ? language : '',
+            ]
+              .filter(Boolean)
+              .join('/');
+            return (
+              <div key={file} className={styles.i18nRoute}>
+                <code>{file}</code>
+                <IconArrowRight />
+                <code>{prefix ? `/${prefix}/` : '/'}</code>
+              </div>
+            );
+          }),
+        )}
+        <p>
+          {versioned
+            ? t('homeI18nVersionDefault')
+            : t('homeI18nLanguageDefault')}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- visual 4: plugin ecosystem + layout slots ---------- */
 
 const stroke = (paths: ReactNode) => (
   <svg
@@ -711,6 +809,19 @@ export function HomeSections() {
         visual={<AutoNavVisual />}
       />
       <Section
+        eyebrow={t('homeI18nEyebrow')}
+        title={t('homeI18nTitle')}
+        description={t('homeI18nDesc')}
+        points={[t('homeI18nPoint1'), t('homeI18nPoint2'), t('homeI18nPoint3')]}
+        linkText={t('homeI18nLink')}
+        linkHref={`${prefix}/guide/basic/i18n`}
+        secondaryLink={{
+          text: t('homeI18nVersionLink'),
+          href: `${prefix}/guide/basic/multi-version`,
+        }}
+        visual={<I18nVisual />}
+      />
+      <Section
         eyebrow={t('homeExtendEyebrow')}
         title={t('homeExtendTitle')}
         description={t('homeExtendDesc')}
@@ -721,6 +832,7 @@ export function HomeSections() {
         ]}
         linkText={t('homeExtendLink')}
         linkHref={`${prefix}/guide/basic/custom-theme`}
+        reverse
         visual={
           <ExtendVisual
             langPrefix={prefix}
