@@ -1,0 +1,133 @@
+---
+title: rspress-plugin-third-parties
+description: Embed YouTube videos, tweets, and Google Maps, add Google Analytics or Tag Manager, and control script loading in Rspress.
+---
+
+# rspress-plugin-third-parties <SourceCode href="https://github.com/rstackjs/rspress-plugins/tree/main/packages/rspress-plugin-third-parties" />
+
+import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
+
+This plugin provides components for YouTube, Twitter/X, and Google Maps, integrations for Google Analytics and Google Tag Manager, and a `Script` component for controlling when scripts load.
+
+:::note
+This is a community-maintained integration.
+
+- [Documentation and demos](https://sanjaiyan-dev.github.io/rspress-plugin-third-parties/), maintained by the plugin author.
+- [Plugin README](https://github.com/rstackjs/rspress-plugins/tree/main/packages/rspress-plugin-third-parties#readme) for all component options.
+
+:::
+
+## Installation
+
+<PackageManagerTabs command="add rspress-plugin-third-parties -D" />
+
+## Global analytics
+
+To add Google Analytics to all pages, register the plugin in `rspress.config.ts` and replace `G-XXXXXXXXXX` with your GA4 measurement ID:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginThirdParties } from 'rspress-plugin-third-parties/plugin';
+
+export default defineConfig({
+  plugins: [
+    pluginThirdParties({
+      googleAnalytics: { gaId: 'G-XXXXXXXXXX' },
+    }),
+  ],
+});
+```
+
+For client-side navigation tracking, configure [GA4 single-page application measurement](https://developers.google.com/analytics/devguides/collection/ga4/single-page-applications).
+
+## Components
+
+Import components into an MDX page or custom theme. The YouTube and Tweet examples below include live previews alongside their source code.
+
+### `<YouTubeEmbed />`
+
+<SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/YouTubeEmbed.tsx" />
+
+Shows a video thumbnail and loads the YouTube player when you click play.
+
+```mdx preview
+import { YouTubeEmbed } from 'rspress-plugin-third-parties';
+
+<YouTubeEmbed
+  videoid="sSbDtQTtwBY"
+  playlabel="Digital Tamizh - A Lineage of Logic, A Future of Code (Unreal Engine Showcase)"
+/>
+```
+
+### `<TweetEmbed />`
+
+<SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/TweetEmbed.tsx" />
+
+Embeds a Twitter/X post and follows the site's light or dark theme.
+
+```mdx preview
+import { TweetEmbed } from 'rspress-plugin-third-parties';
+
+<TweetEmbed id="2017178323550605790" />
+```
+
+### `<GoogleMapsEmbed />`
+
+<SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/GoogleMapsEmbed.tsx" />
+
+Embeds a Google Map. Replace the placeholder with your Google Maps Embed API key to use this example.
+
+```mdx
+import { GoogleMapsEmbed } from 'rspress-plugin-third-parties';
+
+<GoogleMapsEmbed
+  apiKey="YOUR_GOOGLE_MAPS_API_KEY"
+  mode="place"
+  q="Point Pedro, Sri Lanka"
+  height={400}
+/>
+```
+
+### `<Script />`
+
+<SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/Script.tsx" />
+
+Loads external or inline scripts and deduplicates external script loads across page transitions. The default strategy is `afterInteractive`; use `lazyOnload` to wait until the page has loaded and the browser is idle.
+
+```mdx
+import { Script } from 'rspress-plugin-third-parties';
+
+<Script src="https://example.com/widget.js" strategy="lazyOnload" />
+```
+
+### `<GoogleTagManager />`
+
+<SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/GoogleTagManager.tsx" />
+
+Add Google Tag Manager to your custom theme layout.
+
+```mdx
+import { GoogleTagManager } from 'rspress-plugin-third-parties';
+
+<GoogleTagManager gtmId="GTM-XXXXXXX" />
+```
+
+### `<GoogleAnalytics />`
+
+<SourceCode href="https://github.com/rstackjs/rspress-plugins/blob/main/packages/rspress-plugin-third-parties/src/components/GoogleAnalytics/index.tsx" />
+
+Add GA4 to your custom theme layout. Skip this component if you already registered the same measurement ID with the global plugin.
+
+```mdx
+import { GoogleAnalytics } from 'rspress-plugin-third-parties';
+
+<GoogleAnalytics gaId="G-XXXXXXXXXX" />
+```
+
+After configuring Google Analytics, use `sendGAEvent` in an event handler to send custom events:
+
+```ts
+import { sendGAEvent } from 'rspress-plugin-third-parties';
+
+sendGAEvent('event', 'documentation_feedback', { sentiment: 'yes' });
+```

@@ -117,7 +117,7 @@ For a normal path, Rspress resolves the icon from the `public` directory. You ca
 - **Type**: `string`
 - **Default**: `"en"`
 
-Default language of the site. See [Internationalization](/guide/basic/i18n) for more details.
+Default language of the site. See [i18n](/guide/basic/i18n) for more details.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -136,6 +136,57 @@ export default defineConfig({
   ],
 });
 ```
+
+## locales
+
+- **Type**: `Locale[]`
+- **Default**: `undefined`
+
+Configures the supported languages and site information for each language.
+
+```ts
+export interface Locale {
+  lang: string;
+  label: string;
+  title?: string;
+  description?: string;
+}
+```
+
+| Field         | Description                                                                     |
+| ------------- | ------------------------------------------------------------------------------- |
+| `lang`        | Language code. Must match the corresponding directory name under the docs root. |
+| `label`       | Display text in the navbar language switcher.                                   |
+| `title`       | Site title for this language.                                                   |
+| `description` | Site description for this language.                                             |
+
+Set the top-level [`lang`](#lang) to one of these language codes to select the default language. Rspress omits the language prefix from the default language's routes.
+
+For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  lang: 'en',
+  locales: [
+    {
+      lang: 'en',
+      label: 'English',
+      title: 'My Site',
+      description: 'My site description',
+    },
+    {
+      lang: 'zh',
+      label: '简体中文',
+      title: '站点标题',
+      description: '站点描述',
+    },
+  ],
+});
+```
+
+For the complete setup, see [i18n](/guide/basic/i18n). For language-specific theme options such as `nav` and `sidebar`, see [`themeConfig.locales`](/api/config/config-theme#locales).
 
 ## i18nSourcePath
 
@@ -318,42 +369,6 @@ export default defineConfig({
 This option supports both relative and absolute paths. Relative paths are resolved from the current working directory.
 
 For more details on custom themes, see [Custom Theme](/guide/basic/custom-theme).
-
-## locales
-
-- **Type**: `Locale[]`
-
-```ts
-export interface Locale {
-  lang: string;
-  label: string;
-  title?: string;
-  description?: string;
-}
-```
-
-Site i18n configuration. For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  locales: [
-    {
-      lang: 'en-US',
-      label: 'English',
-      title: 'My Site',
-      description: 'My site description',
-    },
-    {
-      lang: 'zh-CN',
-      label: '简体中文',
-      title: '站点标题',
-      description: '站点描述',
-    },
-  ],
-});
-```
 
 ## head
 

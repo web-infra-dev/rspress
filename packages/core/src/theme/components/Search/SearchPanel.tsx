@@ -183,6 +183,7 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
             return;
           }
           if (
+            focused &&
             currentSuggestionIndex >= 0 &&
             currentRenderType === RenderType.Default
           ) {
@@ -191,8 +192,10 @@ export function SearchPanel({ focused, setFocused }: SearchPanelProps) {
               normalizeSuggestions(currentSuggestions).values(),
             ).flat();
             const suggestion = flatSuggestions[currentSuggestionIndex];
-            navigate(suggestion.link);
-            clearSearchState();
+            if (suggestion) {
+              navigate(suggestion.link);
+              clearSearchState();
+            }
           }
           break;
         case KEY_CODE.ESC:
