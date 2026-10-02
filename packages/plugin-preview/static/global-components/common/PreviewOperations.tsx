@@ -32,7 +32,7 @@ export default (props: {
   const { url, className = '', refresh } = props;
   const lang = useLang();
   const triggerRef = useRef(null);
-  const t = lang === 'zh' ? locales.zh : locales.en;
+  const t = lang === 'zh' || lang.startsWith('zh-') ? locales.zh : locales.en;
 
   const toggleQRCode: MouseEventHandler<HTMLButtonElement> = e => {
     if (!showQRCode) {

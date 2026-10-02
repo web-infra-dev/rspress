@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { VIRTUAL_DEMO_DIR } from './constants';
-import type { CustomEntry, DemoInfo } from './types';
+import type { CustomEntry, CustomEntryDemo, DemoInfo } from './types';
 import { toValidVarName } from './utils';
 
 function reactEntry({ demoPath }: CustomEntry) {
@@ -11,6 +11,15 @@ function reactEntry({ demoPath }: CustomEntry) {
     const container = document.getElementById('root');
     createRoot(container).render(<Demo />);
     `;
+}
+
+function toCustomEntryDemo(demo: DemoInfo[string][number]): CustomEntryDemo {
+  return {
+    id: demo.id,
+    demoPath: demo.path,
+    sourcePath: demo.sourcePath,
+    title: demo.title,
+  };
 }
 
 export async function generateEntry(
@@ -39,9 +48,14 @@ export async function generateEntry(
         );
 
         const followPromiseList = followDemos.map(async demo => {
-          const { id, path: demoPath } = demo;
+          const { id, path: demoPath, route } = demo;
           const entry = join(VIRTUAL_DEMO_DIR, `${id}.entry.tsx`);
-          const entryContent = generateEntry({ demoPath });
+          const entryContent = generateEntry({
+            previewMode: 'iframe-follow',
+            demoPath,
+            demos: [toCustomEntryDemo(demo)],
+            route,
+          });
           await writeFile(entry, entryContent);
           sourceEntry[id] = entry;
         });
@@ -65,7 +79,7 @@ export async function generateEntry(
         function App() {
           return (
             <div className="rp-preview-container">
-              <div className="rp-preview-nav">{"${fixedDemos[0].title}"}</div>
+              <div className="rp-preview-nav">{${JSON.stringify(fixedDemos[0].title)}}</div>
               ${fixedDemos
                 .map((_demo, index) => {
                   return `<Demo_${index} />`;
@@ -79,7 +93,12 @@ export async function generateEntry(
 
           const id = `_${toValidVarName(pageName)}`;
           const demoPath = join(VIRTUAL_DEMO_DIR, `${id}.app.tsx`);
-          const entryContent = generateEntry({ demoPath });
+          const entryContent = generateEntry({
+            previewMode: 'iframe-fixed',
+            demoPath,
+            demos: fixedDemos.map(toCustomEntryDemo),
+            route: fixedDemos[0].route,
+          });
           const entry = join(VIRTUAL_DEMO_DIR, `${id}.entry.tsx`);
 
           await Promise.all([

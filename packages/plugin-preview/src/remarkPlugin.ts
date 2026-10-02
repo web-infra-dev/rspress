@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { join } from 'node:path';
+import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
 import { normalizePosixPath } from '@rspress/core';
 import type { Code, Root } from 'mdast';
@@ -14,6 +14,17 @@ import { generateId, getLangFileExt } from './utils';
 
 export const globalDemos: DemoInfo = {};
 export const isDirtyRef = { current: false };
+
+function getSourcePath(meta: string | null | undefined, pagePath: string) {
+  const fileMatch = meta?.match(
+    /(?:^|\s)file=(?:"([^"]+)"|'([^']+)'|([^\s]+))/,
+  );
+  const filePath = fileMatch?.[1] || fileMatch?.[2] || fileMatch?.[3];
+  if (!filePath) {
+    return undefined;
+  }
+  return isAbsolute(filePath) ? filePath : resolve(dirname(pagePath), filePath);
+}
 
 /**
  * remark plugin to transform code to demo
@@ -47,9 +58,17 @@ export const remarkWriteCodeFile: Plugin<[RemarkPluginOptions], Root> =
 
       const demoMdxImports: MdxjsEsm[] = [];
       const demosInCurrPage: DemoInfo = { [pageName]: [] };
+      const previewRoute = {
+        pageName: route.pageName,
+        routePath: route.routePath,
+        pureRoutePath: route.pureRoutePath,
+        lang: route.lang,
+        version: route.version,
+      };
       function handleCodeBlockByPreviewMode(
         demoId: string,
         demoPath: string,
+        sourcePath: string | undefined,
         currentNode: Code,
         previewMode: Options['defaultPreviewMode'],
       ) {
@@ -58,7 +77,9 @@ export const remarkWriteCodeFile: Plugin<[RemarkPluginOptions], Root> =
             title,
             id: demoId,
             path: demoPath,
+            sourcePath,
             previewMode,
+            route: previewRoute,
           });
         } else {
           demoMdxImports.push(getASTNodeImport(`Demo${demoId}`, demoPath));
@@ -113,11 +134,13 @@ export const remarkWriteCodeFile: Plugin<[RemarkPluginOptions], Root> =
           return;
         }
         if (node.lang && previewLanguages.includes(node.lang)) {
-          const { isPure, previewMode } = parsePreviewInfoFromMeta({
-            meta: node.meta,
-            defaultPreviewMode,
-            defaultRenderMode,
-          });
+          const { isPure, previewMode, previewOnly } = parsePreviewInfoFromMeta(
+            {
+              meta: node.meta,
+              defaultPreviewMode,
+              defaultRenderMode,
+            },
+          );
 
           if (isPure || !previewMode) {
             return;
@@ -147,9 +170,19 @@ export const remarkWriteCodeFile: Plugin<[RemarkPluginOptions], Root> =
           handleCodeBlockByPreviewMode(
             id,
             virtualModulePath,
+            getSourcePath(node.meta, vfile.path || vfile.history[0]),
             node,
             previewMode,
           );
+
+          if (previewMode === 'iframe-fixed' && previewOnly) {
+            Object.assign(node, {
+              type: 'mdxJsxFlowElement',
+              name: null,
+              attributes: [],
+              children: [],
+            });
+          }
         }
       });
 
