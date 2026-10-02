@@ -83,6 +83,7 @@
     "medium-zoom": "1.1.0",
     "nprogress": "^0.2.0",
     "react": "^19.2.8",
+    "react-compiler-runtime": "^1.0.0",
     "react-dom": "^19.2.8",
     "react-lazy-with-preload": "^2.2.1",
     "react-render-to-markdown": "19.1.0",
