@@ -32,7 +32,7 @@ export const getNodeMeta = (
   }
   const meta = node.meta.split(' ');
   // Match `name` or `name=value` exactly — a bare startsWith would claim
-  // unrelated metas sharing the prefix (e.g. `direction2=`).
+  // unrelated meta entries sharing the prefix (e.g. `direction2=`).
   const item = meta.find(x => x === metaName || x.startsWith(`${metaName}=`));
   if (item?.startsWith(`${metaName}=`)) {
     return item.slice(metaName.length + 1).replace(/['"`]/g, '');
