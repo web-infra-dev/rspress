@@ -52,7 +52,7 @@ function generateLlmsTxt(
     if (pages.length === 0) {
       continue;
     }
-    const title = text;
+    const title = text ?? 'Others';
     lines.push(`\n## ${title}\n`);
 
     for (const page of pages) {

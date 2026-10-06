@@ -8,6 +8,9 @@
  */
 
 import type { NavItem } from '../types';
+import { logger } from '../logger';
+
+const warnedActiveMatches = new Set<string>();
 
 /**
  * Sidebar / grouping semantics: a `/` key matches every pathname,
@@ -62,6 +65,11 @@ export function matchNavItem(navItem: NavItem, routePath: string): boolean {
     try {
       return new RegExp(navItem.activeMatch).test(routePath);
     } catch {
+      // Warn once per pattern so a config typo is not silently swallowed.
+      if (!warnedActiveMatches.has(navItem.activeMatch)) {
+        warnedActiveMatches.add(navItem.activeMatch);
+        logger.warn(`Invalid activeMatch regex: ${navItem.activeMatch}`);
+      }
       return false;
     }
   }
