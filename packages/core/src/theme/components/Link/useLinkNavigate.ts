@@ -60,10 +60,13 @@ export function useLinkNavigate(
             }, 200);
             const data = await initPageData(routePath);
             if (seq !== navigationSeq) {
-              // Superseded by a newer click — drop the stale result.
-              // Leave nprogress alone so the newer navigation keeps its
-              // own progress bar.
+              // Superseded by a newer click — drop the stale result and
+              // close the progress bar: if the newer click detoured
+              // through window.location.assign, nothing else would ever
+              // stop it. nprogress.done() is idempotent and harmless when
+              // the newer navigation is still driving its own bar.
               clearTimeout(timer);
+              nprogress.done();
               return;
             }
             warmPageData(routePath, data);
