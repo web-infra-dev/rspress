@@ -1,7 +1,7 @@
 name: Test (macOS)
 
 concurrency:
-  group: macos-test-${{ github.head_ref || github.ref_name }}
+  group: macos-test-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 # Controls when the action will run.
