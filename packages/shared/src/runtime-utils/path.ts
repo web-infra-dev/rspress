@@ -7,6 +7,8 @@
  * reuse these instead of raw `startsWith`.
  */
 
+import type { NavItem } from '../types';
+
 /**
  * Sidebar / grouping semantics: a `/` key matches every pathname,
  * because a root-level sidebar section contains all pages.
@@ -34,4 +36,40 @@ export function matchNavPath(pathname: string, link: string): boolean {
   return (
     pathname === normalizedLink || pathname.startsWith(`${normalizedLink}/`)
   );
+}
+
+/**
+ * Match a route path against a plain nav link: `.html` suffixes and
+ * `/index` segments (added by link normalization) are stripped, then the
+ * match is segment-bounded. Used to bucket pages into llms.txt sections.
+ */
+export function matchNavLink(link: string, routePath: string): boolean {
+  let base = link.replace(/\.html?$/, '').replace(/\/index$/, '/');
+  if (base !== '/' && base.endsWith('/')) {
+    base = base.slice(0, -1);
+  }
+  return isPathPrefix(routePath, base || '/');
+}
+
+/**
+ * Match a route path against a nav item: `activeMatch` is treated as a
+ * regex (invalid patterns never match instead of crashing the build),
+ * plain links go through `matchNavLink`, and dropdown items match when
+ * any of their children does.
+ */
+export function matchNavItem(navItem: NavItem, routePath: string): boolean {
+  if ('activeMatch' in navItem && navItem.activeMatch) {
+    try {
+      return new RegExp(navItem.activeMatch).test(routePath);
+    } catch {
+      return false;
+    }
+  }
+  if ('link' in navItem && navItem.link) {
+    return matchNavLink(navItem.link, routePath);
+  }
+  if ('items' in navItem) {
+    return navItem.items.some(child => matchNavItem(child, routePath));
+  }
+  return false;
 }
