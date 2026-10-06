@@ -42,6 +42,7 @@ export {
   normalizePosixPath,
   RSPRESS_TEMP_DIR,
   removeTrailingSlash,
+  stripRouteVersionPrefix,
   withBase,
   withSiteOrigin,
 } from '@rspress/shared';

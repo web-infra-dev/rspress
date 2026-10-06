@@ -1,6 +1,6 @@
 import { logger } from '../logger';
 import type { NavItemWithLink, NormalizedSidebar } from '../types';
-import { isPathPrefix, matchNavPath } from './path';
+import { isPathPrefix, matchNavPath, stripRouteVersionPrefix } from './path';
 import { normalizeHref } from './utils';
 
 const warnedActiveMatches = new Set<string>();
@@ -65,6 +65,7 @@ export const getSidebarDataGroup = (
 export const matchNavbar = (
   item: NavItemWithLink,
   currentPathname: string,
+  versions?: string[],
 ): boolean => {
   if (item.activeMatch) {
     try {
@@ -79,5 +80,10 @@ export const matchNavbar = (
       }
     }
   }
-  return matchNavPath(currentPathname, normalizeHref(item.link, true));
+  // multiVersion: pages of non-default versions carry a /{version}/
+  // prefix while version-agnostic nav links carry none.
+  const pathname = versions?.length
+    ? stripRouteVersionPrefix(currentPathname, versions)
+    : currentPathname;
+  return matchNavPath(pathname, normalizeHref(item.link, true));
 };

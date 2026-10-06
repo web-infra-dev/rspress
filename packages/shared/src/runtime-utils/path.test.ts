@@ -1,5 +1,34 @@
 import { describe, expect, test } from '@rstest/core';
-import { isPathPrefix, matchNavLink, matchNavItem, matchNavPath } from './path';
+import {
+  isPathPrefix,
+  matchNavLink,
+  matchNavItem,
+  matchNavPath,
+  stripRouteVersionPrefix,
+} from './path';
+
+describe('stripRouteVersionPrefix', () => {
+  test('strips a leading version segment', () => {
+    expect(stripRouteVersionPrefix('/v2/guide/setup', ['v1', 'v2'])).toBe(
+      '/guide/setup',
+    );
+    expect(stripRouteVersionPrefix('/v2/guide/', ['v1', 'v2'])).toBe('/guide/');
+    expect(stripRouteVersionPrefix('/v2', ['v1', 'v2'])).toBe('/');
+  });
+
+  test('keeps paths without a version segment', () => {
+    expect(stripRouteVersionPrefix('/guide/setup', ['v1', 'v2'])).toBe(
+      '/guide/setup',
+    );
+    expect(stripRouteVersionPrefix('/v2x/guide', ['v1', 'v2'])).toBe(
+      '/v2x/guide',
+    );
+  });
+
+  test('is a no-op without versions', () => {
+    expect(stripRouteVersionPrefix('/v2/guide', [])).toBe('/v2/guide');
+  });
+});
 
 describe('isPathPrefix', () => {
   test('matches the prefix itself and nested segments', () => {

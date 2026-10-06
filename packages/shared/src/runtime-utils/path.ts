@@ -73,3 +73,27 @@ export function matchNavItem(navItem: NavItem, routePath: string): boolean {
   }
   return false;
 }
+
+/**
+ * Strip a leading multi-version segment (e.g. `/v2`) from a pathname so
+ * version-agnostic nav links — which carry no version prefix — match
+ * pages of every version.
+ */
+export function stripRouteVersionPrefix(
+  pathname: string,
+  versions: string[],
+): string {
+  if (versions.length === 0) {
+    return pathname;
+  }
+  const segments = pathname.split('/');
+  const index = segments.findIndex(
+    segment => segment && versions.includes(segment),
+  );
+  if (index === -1) {
+    return pathname;
+  }
+  segments.splice(index, 1);
+  const stripped = segments.join('/');
+  return stripped.startsWith('/') ? stripped : `/${stripped}`;
+}

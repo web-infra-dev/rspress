@@ -60,4 +60,15 @@ describe('matchNavbar', () => {
     expect(() => matchNavbar(item, '/guide/setup')).not.toThrow();
     expect(matchNavbar(item, '/guide/setup')).toBe(true);
   });
+
+  test('version-agnostic links match pages of every version', () => {
+    // regression: multiVersion pages carry a /{version}/ prefix while nav
+    // links carry none, so segment-boundary matching stopped highlighting
+    // version-agnostic nav links where the old loose regex accidentally
+    // matched.
+    const guide: NavItemWithLink = { text: 'Guide', link: '/guide' };
+    expect(matchNavbar(guide, '/v2/guide/setup', ['v1', 'v2'])).toBe(true);
+    expect(matchNavbar(guide, '/guide/setup', ['v1', 'v2'])).toBe(true);
+    expect(matchNavbar(guide, '/v2/guidebook', ['v1', 'v2'])).toBe(false);
+  });
 });

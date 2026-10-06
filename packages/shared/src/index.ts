@@ -8,6 +8,7 @@ export {
   matchNavItem,
   matchNavLink,
   matchNavPath,
+  stripRouteVersionPrefix,
 } from './runtime-utils/path';
 export {
   getDefaultDarkModeValue,
