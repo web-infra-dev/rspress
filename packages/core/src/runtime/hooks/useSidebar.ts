@@ -6,6 +6,7 @@ import {
   type SidebarDivider,
   type SidebarItem,
   type SidebarSectionHeader,
+  safeDecodeURIComponent,
 } from '@rspress/shared';
 import { useLayoutEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -47,7 +48,7 @@ export const getSidebarDataGroup = (
 export function useSidebar(): SidebarData {
   const { sidebar } = useLocaleSiteData();
   const { pathname: rawPathname } = useLocation();
-  const pathname = decodeURIComponent(rawPathname);
+  const pathname = safeDecodeURIComponent(rawPathname);
 
   const sidebarData: SidebarData = useMemo(() => {
     return getSidebarDataGroup(sidebar, pathname);
