@@ -18,7 +18,7 @@ describe('matchSidebar', () => {
 
   test('keeps the api-extractor dot boundary', () => {
     expect(matchSidebar('/api/react', '/api/react.use')).toBe(true);
-    expect(matchSidebar('/api/react', '/api/reactx.use')).toBe(false);
+    expect(matchSidebar('/api/react', '/api/reactive.use')).toBe(false);
   });
 });
 
