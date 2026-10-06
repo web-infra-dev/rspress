@@ -1,7 +1,7 @@
-name: Test (macOS)
+name: Test (Linux)
 
 concurrency:
-  group: macos-test-${{ github.head_ref || github.ref_name }}
+  group: linux-test-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 # Controls when the action will run.
@@ -19,16 +19,12 @@ permissions: {}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  ut-mac:
-    # The type of runner that the job will run on
-    runs-on: ${{ matrix.os }}
+  ut-linux:
+    # The type of runner that the job will run in
+    runs-on: ubuntu-latest
     permissions:
       contents: read
-    strategy:
-      matrix:
-        os: [macos-14] # M1 Mac
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -74,6 +70,11 @@ jobs:
       - name: Build Website # for test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm run build:website
+
+      # Ubuntu runners ship without the browser binaries Playwright needs
+      - name: Install Playwright Browsers
+        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Unit Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
