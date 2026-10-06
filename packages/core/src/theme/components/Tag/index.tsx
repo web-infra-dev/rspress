@@ -58,14 +58,16 @@ const getTagType = (tag: string) => {
  * @param {string} [props.tag] - Supported 1.common tags 2. svg 3. dataUrl 4. externalUrl 4.  5. normal text
  */
 export const Tag = ({ tag }: { tag?: string }) => {
-  if (!tag) {
+  // Hooks must run unconditionally: `tag` may flip between undefined and
+  // defined across renders of the same mounted instance.
+  const tagMeta = useMemo(() => (tag ? getTagType(tag) : undefined), [tag]);
+
+  if (!tagMeta) {
     return null;
   }
 
   const { isPic, isTagsArray, isSvgTagString, normalizedTag, tagsArray } =
-    useMemo(() => {
-      return getTagType(tag);
-    }, [tag]);
+    tagMeta;
 
   if (isTagsArray) {
     return (
