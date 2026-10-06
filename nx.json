@@ -16,7 +16,11 @@
       "{projectRoot}/rstack.config.*"
     ],
     "dev": ["default"],
-    "build": ["default"],
+    "build": [
+      "default",
+      "{projectRoot}/scripts/**/*",
+      "{projectRoot}/template-*/**"
+    ],
     "test": ["default"]
   },
   "targetDefaults": {

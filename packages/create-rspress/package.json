@@ -42,5 +42,16 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "outputs": [
+          "{projectRoot}/dist",
+          "{projectRoot}/template-basic-theme",
+          "{projectRoot}/template-i18n-theme"
+        ]
+      }
+    }
   }
 }
