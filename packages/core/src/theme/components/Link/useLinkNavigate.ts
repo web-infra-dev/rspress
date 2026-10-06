@@ -17,6 +17,11 @@ import { getHref } from './getHref';
 
 nprogress.configure({ showSpinner: false });
 
+// The latest navigation wins: rapid clicks can start overlapping
+// prefetches, and a stale continuation must neither rewind the URL to
+// an abandoned page nor warm the cache with its data.
+let navigationSeq = 0;
+
 /**
  * For import { Link } from '@rspress/core/theme';
  * useNavigate with preload logic
@@ -43,6 +48,7 @@ export function useLinkNavigate(
       }
 
       const isTransitionable = !!(useTransitions && startTransition);
+      const seq = ++navigationSeq;
       const preloadChunkThenNavigate = async () => {
         const inCurrPage = isActive(removeBaseHref, currPagePathname);
 
@@ -53,6 +59,13 @@ export function useLinkNavigate(
               nprogress.start();
             }, 200);
             const data = await initPageData(routePath);
+            if (seq !== navigationSeq) {
+              // Superseded by a newer click — drop the stale result.
+              // Leave nprogress alone so the newer navigation keeps its
+              // own progress bar.
+              clearTimeout(timer);
+              return;
+            }
             warmPageData(routePath, data);
             clearTimeout(timer);
             nprogress.done();
@@ -60,6 +73,9 @@ export function useLinkNavigate(
             window.location.assign(withBaseHref);
             return;
           }
+        }
+        if (seq !== navigationSeq) {
+          return;
         }
         if (isTransitionable) {
           startTransition(() => {
