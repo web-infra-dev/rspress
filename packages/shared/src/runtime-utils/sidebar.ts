@@ -1,6 +1,9 @@
+import { logger } from '../logger';
 import type { NavItemWithLink, NormalizedSidebar } from '../types';
 import { isPathPrefix, matchNavPath } from './path';
 import { normalizeHref } from './utils';
+
+const warnedActiveMatches = new Set<string>();
 
 /**
  * match the sidebar key in user config
@@ -68,7 +71,12 @@ export const matchNavbar = (
       return new RegExp(item.activeMatch).test(currentPathname);
     } catch {
       // An invalid `activeMatch` regex must not break rendering — fall
-      // through to the default link matching below.
+      // through to the default link matching below (warn once per pattern
+      // so a config typo is not silently swallowed).
+      if (!warnedActiveMatches.has(item.activeMatch)) {
+        warnedActiveMatches.add(item.activeMatch);
+        logger.warn(`Invalid activeMatch regex: ${item.activeMatch}`);
+      }
     }
   }
   return matchNavPath(currentPathname, normalizeHref(item.link, true));

@@ -42,3 +42,10 @@ describe('matchNavPath', () => {
     expect(matchNavPath('/guides', '/guide')).toBe(false);
   });
 });
+
+describe('isPathPrefix edge cases', () => {
+  test('handles empty prefixes and case differences', () => {
+    expect(isPathPrefix('/guide/setup', '')).toBe(true);
+    expect(isPathPrefix('/Guide', '/guide')).toBe(false);
+  });
+});
