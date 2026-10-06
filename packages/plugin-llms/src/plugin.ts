@@ -17,6 +17,7 @@ import {
   logger,
   matchNavItem,
   matchPath,
+  stripRouteVersionPrefix,
 } from '@rspress/core';
 import {
   generateLlmsFullTxt,
@@ -137,12 +138,21 @@ const rsbuildPluginLlms = ({
           .map(() => []);
 
         versionPages.forEach(pageData => {
-          const { routePath, lang } = pageData;
+          const { routePath, lang, version } = pageData;
 
           for (let i = 0; i < pageArray.length; i++) {
             const pageArrayItem = pageArray[i];
             const navItem = navList[i];
-            if (lang === navItem.lang && matchNavItem(navItem, routePath)) {
+            // Nav links carry no version prefix while non-default version
+            // routes do — strip it so version-agnostic nav sections keep
+            // bucketing pages of every version.
+            if (
+              lang === navItem.lang &&
+              matchNavItem(
+                navItem,
+                stripRouteVersionPrefix(routePath, version ? [version] : []),
+              )
+            ) {
               pageArrayItem.push(pageData);
               return;
             }

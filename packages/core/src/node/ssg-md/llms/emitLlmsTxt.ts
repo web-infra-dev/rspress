@@ -7,6 +7,7 @@ import {
   type SidebarGroup,
   type SidebarItem,
   type SidebarSectionHeader,
+  stripRouteVersionPrefix,
   type UserConfig,
 } from '@rspress/shared';
 import { matchPath } from 'react-router-dom';
@@ -95,12 +96,24 @@ export async function emitLlmsTxt(
       if (isMultiVersion && routeMeta.version !== version) {
         return;
       }
-      const { routePath } = routeMeta;
+      const { routePath, version: routeVersion } = routeMeta;
 
       for (let i = 0; i < routeGroups.length; i++) {
         const routeGroup = routeGroups[i];
         const navItem = navList[i];
-        if (lang === navItem.lang && matchNavItem(navItem, routePath)) {
+        // Nav links carry no version prefix while non-default version
+        // routes do — strip it so version-agnostic nav sections keep
+        // bucketing pages of every version.
+        if (
+          lang === navItem.lang &&
+          matchNavItem(
+            navItem,
+            stripRouteVersionPrefix(
+              routePath,
+              routeVersion ? [routeVersion] : [],
+            ),
+          )
+        ) {
           routeGroup.push(routePath);
           return;
         }
