@@ -1,3 +1,7 @@
+---
+description: '通过 themeConfig 配置 Rspress 默认主题，包括导航、侧边栏、外观、搜索和 llmsUI。'
+---
+
 import { VersionBadge } from '../../../components/VersionBadge';
 
 # 主题配置
@@ -348,23 +352,6 @@ export default defineConfig({
         content: 'https://github.com/',
       },
     ],
-  },
-});
-```
-
-## nextPageText
-
-- **类型**：`string`
-- **默认值**： `Next Page`
-
-下一页的文本。比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    nextPageText: 'Next Page',
   },
 });
 ```
