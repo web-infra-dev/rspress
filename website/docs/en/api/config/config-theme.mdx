@@ -1,3 +1,7 @@
+---
+description: 'Configure the Rspress default theme with themeConfig, including navigation, sidebars, appearance, search, and llmsUI.'
+---
+
 import { VersionBadge } from '../../../components/VersionBadge';
 
 # Theme config
@@ -360,23 +364,6 @@ export default defineConfig({
         content: 'https://github.com/',
       },
     ],
-  },
-});
-```
-
-## nextPageText
-
-- **Type**: `string`
-- **Default**: `Next Page`
-
-Text for the next page link. For example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    nextPageText: 'Next Page',
   },
 });
 ```

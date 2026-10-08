@@ -43,8 +43,8 @@
     "@docsearch/react": "^4.7.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.59.2",
-    "@rsbuild/plugin-react": "~2.1.0",
+    "@microsoft/api-extractor": "^7.59.3",
+    "@rsbuild/plugin-react": "~2.1.1",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.18",

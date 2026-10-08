@@ -42,4 +42,5 @@ features:
     details: Extend the theme UI and build process through Rspress extension APIs.
     icon: /custom.svg
     link: ./guide/basic/custom-theme
+description: 'Build documentation sites with Rspress, an Rsbuild-based static site generator with MDX, search, internationalization, and AI-friendly output.'
 ---
