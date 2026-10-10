@@ -61,15 +61,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           package-manager-cache: false
 
-      - name: Nx Cache
-        id: nx-cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: .nx/cache
-          key: nx-${{ github.ref_name }}-${{ runner.os }}-${{ github.sha }}
-          restore-keys: |
-            nx-${{ github.ref_name }}-${{ runner.os }}
-
       - name: Install Dependencies
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm install --ignore-scripts
@@ -80,7 +71,7 @@ jobs:
 
       - name: Build Website # for test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: pnpm run build:website
+        run: pnpm --filter @rspress/docs run build
 
       - name: Unit Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}

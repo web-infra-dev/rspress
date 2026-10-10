@@ -172,6 +172,10 @@ define.lib({
   performance: {
     buildCache: false,
   },
+  output: {
+    // Retain dependency outputs while downstream package watchers start.
+    cleanDistPath: process.env.npm_lifecycle_event !== 'dev',
+  },
   source: {
     tsconfigPath: 'tsconfig.build.json',
   },

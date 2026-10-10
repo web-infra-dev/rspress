@@ -8,7 +8,6 @@ packages:
   - '!packages/create-rspress/template-*'
 
 allowBuilds:
-  nx: false
   sharp: true
 
 hoistPattern: []
@@ -30,8 +29,6 @@ minimumReleaseAgeExclude:
   - '@rstackjs/create-toolkit'
   - rstack
   - heading-case
-  # Renovate security update: nx@22.7.2
-  - nx@22.7.2
   # Renovate security update: tinypool@2.1.2
   - tinypool@2.1.2
 
