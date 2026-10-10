@@ -1,6 +1,6 @@
 packages:
   - scripts/config
-  - packages/**
+  - packages/*
   - e2e/**
   - website
   - '!**/compiled/**'
@@ -32,6 +32,8 @@ minimumReleaseAgeExclude:
   - heading-case
   # Renovate security update: nx@22.7.2
   - nx@22.7.2
+  # Renovate security update: tinypool@2.1.2
+  - tinypool@2.1.2
 
 # Prevent un-reviewed build scripts
 strictDepBuilds: true
