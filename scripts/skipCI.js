@@ -19,23 +19,25 @@ async function main() {
     .map(file => file?.trim())
     .filter(Boolean);
 
-  const shouldNotSkipCI =
-    !changedFiles.length ||
-    changedFiles.some(
-      file =>
-        !SKIP_FOLDERS.some(
-          folder =>
-            file.startsWith(`${folder}/`) ||
-            file === folder ||
-            file.endsWith('.md'),
-        ),
+  // Skip CI only when there is something to skip: every changed file is
+  // docs-only or lives in a folder that cannot affect the packages.
+  const shouldSkipCI =
+    changedFiles.length > 0 &&
+    changedFiles.every(file =>
+      SKIP_FOLDERS.some(
+        folder =>
+          file.startsWith(`${folder}/`) ||
+          file === folder ||
+          file.endsWith('.md'),
+      ),
     );
 
-  console.log(shouldNotSkipCI ? 'false' : 'true');
+  console.log(shouldSkipCI ? 'true' : 'false');
 }
 
 main().catch(err => {
-  console.error('Failed to detect CI skip', err);
-  // eslint-disable-next-line no-process-exit
-  process.exit(1);
+  // Fail open: a broken skip detection must not silently skip or fail
+  // the whole test job — running the tests is always the safe answer.
+  console.error('Failed to detect CI skip; running the tests anyway', err);
+  console.log('false');
 });

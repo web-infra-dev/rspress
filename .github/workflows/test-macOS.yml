@@ -1,7 +1,7 @@
 name: Test (macOS)
 
 concurrency:
-  group: macos-test-${{ github.head_ref }}
+  group: macos-test-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 # Controls when the action will run.
@@ -26,7 +26,6 @@ jobs:
       contents: read
     strategy:
       matrix:
-        node-version: [22.x]
         os: [macos-14] # M1 Mac
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -48,11 +47,11 @@ jobs:
       - name: Log skip CI result
         run: echo "${{steps.skip-ci.outputs.RESULT}}"
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version-file: .nvmrc
           package-manager-cache: false
 
       - name: Nx Cache
