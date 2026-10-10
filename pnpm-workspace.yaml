@@ -1,6 +1,6 @@
 packages:
   - scripts/config
-  - packages/**
+  - packages/*
   - e2e/**
   - website
   - '!**/compiled/**'
