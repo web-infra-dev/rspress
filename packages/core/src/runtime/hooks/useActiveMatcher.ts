@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+import { safeDecodeURIComponent } from '@rspress/shared';
 import { isActive } from '../route';
 
 export const useActiveMatcher = () => {
@@ -7,7 +8,7 @@ export const useActiveMatcher = () => {
 
   const activeMatcher = useCallback(
     (link: string) => {
-      const pathname = decodeURIComponent(rawPathname);
+      const pathname = safeDecodeURIComponent(rawPathname);
       return isActive(link, pathname);
     },
     [rawPathname],

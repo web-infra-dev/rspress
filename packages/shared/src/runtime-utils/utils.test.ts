@@ -118,6 +118,15 @@ describe('shared runtime utils', () => {
     );
   });
 
+  test('normalizeHref tolerates malformed percent-encoding', () => {
+    // regression: a raw `%` in user-authored links threw URIError and
+    // failed the whole page compilation.
+    expect(() => normalizeHref('/guide/what-is-100%', true)).not.toThrow();
+    expect(normalizeHref('/guide/what-is-100%', true)).toBe(
+      '/guide/what-is-100%',
+    );
+  });
+
   test('isExternalUrl', () => {
     expect(isExternalUrl('https://example.com/foo')).toBe(true);
     expect(isExternalUrl('mailto:bluth@example.com')).toBe(true);

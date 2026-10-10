@@ -223,7 +223,7 @@ export function normalizeHref(
   }
 
   // eslint-disable-next-line prefer-const
-  let { url: cleanUrl, hash, search } = parseUrl(decodeURIComponent(url));
+  let { url: cleanUrl, hash, search } = parseUrl(safeDecodeURIComponent(url));
 
   // 1. cleanUrls: false
   if (!cleanUrls) {
@@ -254,6 +254,19 @@ export function normalizeHref(
     hash ? `#${hash}` : '',
   ].join('');
   return addLeadingSlash(finalUrl);
+}
+
+/**
+ * Like `decodeURIComponent`, but keeps the original value instead of
+ * throwing when it contains malformed percent-encoding (e.g. a raw `%`
+ * in a user-authored link), which must not break page compilation.
+ */
+export function safeDecodeURIComponent(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
 }
 
 export function withoutLang(path: string, langs: string[]) {
