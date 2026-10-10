@@ -24,16 +24,23 @@ export function App() {
       setPageData?.(cached);
       return;
     }
-    async function refetchData() {
-      try {
-        const pageData = await initPageData(pathname);
+    // A newer navigation must supersede this fetch: a slow chunk preload
+    // must never overwrite the page the user navigated to afterwards.
+    let stale = false;
+    initPageData(pathname)
+      .then(pageData => {
+        if (stale) {
+          return;
+        }
         setCurrentPageData(pathname, pageData);
         setPageData?.(pageData);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    refetchData();
+      })
+      .catch(e => {
+        console.error('Failed to load page data for', pathname, e);
+      });
+    return () => {
+      stale = true;
+    };
   }, [pathname, setPageData]);
 
   // during csr, data can be null because of using useLayoutEffect to update data

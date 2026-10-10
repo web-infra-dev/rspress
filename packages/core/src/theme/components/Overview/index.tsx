@@ -158,57 +158,55 @@ export function Overview(props: {
     };
   }
 
-  const groups =
-    customGroups ??
-    useMemo(() => {
-      const group = overviewSidebarGroups
-        .filter(normalizedSidebarGroup => {
-          const sidebarGroup = normalizedSidebarGroup as NormalizedSidebarGroup;
-          if (Array.isArray(sidebarGroup?.items)) {
-            return (
-              sidebarGroup.items.filter(item => subFilter(getChildLink(item)))
-                .length > 0
-            );
-          }
-          if (
-            isSidebarSingleFile(sidebarGroup) &&
-            subFilter(getChildLink(sidebarGroup))
-          ) {
-            return true;
-          }
-          return false;
-        })
-        .map(normalizedSidebarGroup => {
-          const sidebarGroup = normalizedSidebarGroup as NormalizedSidebarGroup;
-          let items: GroupItem[] = [];
-          if (sidebarGroup?.items) {
-            items = sidebarGroup?.items
-              ?.map(item =>
-                normalizeSidebarItem(item, sidebarGroup, frontmatter),
-              )
-              .filter(Boolean) as GroupItem[];
-          } else if (isSidebarSingleFile(sidebarGroup)) {
-            items = [
-              normalizeSidebarItem(
-                {
-                  link: sidebarGroup.link,
-                  text: sidebarGroup.text || '',
-                  tag: sidebarGroup.tag,
-                  _fileKey: sidebarGroup._fileKey,
-                  overviewHeaders: sidebarGroup.overviewHeaders,
-                } as SidebarItem,
-                undefined,
-                frontmatter,
-              ) as GroupItem,
-            ];
-          }
-          return {
-            name: sidebarGroup.text || '',
-            items,
-          };
-        }) as Group[];
-      return group;
-    }, [overviewSidebarGroups, routePath, frontmatter]);
+  const groups = useMemo(() => {
+    if (customGroups) {
+      return customGroups;
+    }
+    return overviewSidebarGroups
+      .filter(normalizedSidebarGroup => {
+        const sidebarGroup = normalizedSidebarGroup as NormalizedSidebarGroup;
+        if (Array.isArray(sidebarGroup?.items)) {
+          return (
+            sidebarGroup.items.filter(item => subFilter(getChildLink(item)))
+              .length > 0
+          );
+        }
+        if (
+          isSidebarSingleFile(sidebarGroup) &&
+          subFilter(getChildLink(sidebarGroup))
+        ) {
+          return true;
+        }
+        return false;
+      })
+      .map(normalizedSidebarGroup => {
+        const sidebarGroup = normalizedSidebarGroup as NormalizedSidebarGroup;
+        let items: GroupItem[] = [];
+        if (sidebarGroup?.items) {
+          items = sidebarGroup?.items
+            ?.map(item => normalizeSidebarItem(item, sidebarGroup, frontmatter))
+            .filter(Boolean) as GroupItem[];
+        } else if (isSidebarSingleFile(sidebarGroup)) {
+          items = [
+            normalizeSidebarItem(
+              {
+                link: sidebarGroup.link,
+                text: sidebarGroup.text || '',
+                tag: sidebarGroup.tag,
+                _fileKey: sidebarGroup._fileKey,
+                overviewHeaders: sidebarGroup.overviewHeaders,
+              } as SidebarItem,
+              undefined,
+              frontmatter,
+            ) as GroupItem,
+          ];
+        }
+        return {
+          name: sidebarGroup.text || '',
+          items,
+        };
+      }) as Group[];
+  }, [customGroups, overviewSidebarGroups, routePath, frontmatter]);
 
   // Added filtering functionality
   const filtered: Group[] = useMemo(() => {
