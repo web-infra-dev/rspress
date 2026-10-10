@@ -2,8 +2,6 @@ import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type {
   Nav,
-  NavItem,
-  NavItemWithLink,
   PageIndexInfo,
   RouteMeta,
   RouteService,
@@ -14,12 +12,19 @@ import type {
   SidebarItem,
   SidebarSectionHeader,
 } from '@rspress/core';
-import { getSidebarDataGroup, logger, matchPath } from '@rspress/core';
+import {
+  getSidebarDataGroup,
+  logger,
+  matchNavItem,
+  matchPath,
+  stripRouteVersionPrefix,
+} from '@rspress/core';
 import {
   generateLlmsFullTxt,
   generateLlmsTxt,
   routePathToMdPath,
 } from './llmsTxt';
+import { resolveNavForVersion } from './resolveNav';
 import { normalizeMdFile } from './normalizeMdFile';
 import type {
   Options,
@@ -27,28 +32,7 @@ import type {
   rsbuildPluginLlmsOptions,
 } from './types';
 
-function resolveNavForVersion(
-  nav: { nav: Nav; lang: string }[],
-  version: string,
-  defaultVersion: string,
-): (NavItemWithLink & { lang: string })[] {
-  return nav
-    .flatMap(({ nav, lang }) => {
-      let navArray: NavItem[];
-      if (Array.isArray(nav)) {
-        navArray = nav;
-      } else {
-        // nav is { [version]: NavItem[] } or { default: NavItem[] }
-        const navObj = nav as Record<string, NavItem[]>;
-        navArray =
-          navObj[version] ?? navObj[defaultVersion] ?? navObj.default ?? [];
-      }
-      return navArray.map(
-        item => ({ ...item, lang }) as NavItemWithLink & { lang: string },
-      );
-    })
-    .filter(i => i.activeMatch || i.link);
-}
+export { resolveNavForVersion } from './resolveNav';
 
 const rsbuildPluginLlms = ({
   docDirectory,
@@ -154,16 +138,20 @@ const rsbuildPluginLlms = ({
           .map(() => []);
 
         versionPages.forEach(pageData => {
-          const { routePath, lang } = pageData;
+          const { routePath, lang, version } = pageData;
 
           for (let i = 0; i < pageArray.length; i++) {
             const pageArrayItem = pageArray[i];
             const navItem = navList[i];
+            // Nav links carry no version prefix while non-default version
+            // routes do — strip it so version-agnostic nav sections keep
+            // bucketing pages of every version.
             if (
               lang === navItem.lang &&
-              new RegExp(
-                (navItem.activeMatch ?? navItem.link).replace(/\.html$/, ''),
-              ).test(routePath)
+              matchNavItem(
+                navItem,
+                stripRouteVersionPrefix(routePath, version ? [version] : []),
+              )
             ) {
               pageArrayItem.push(pageData);
               return;

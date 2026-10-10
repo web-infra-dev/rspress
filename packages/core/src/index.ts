@@ -34,10 +34,15 @@ export type {
 } from '@rspress/shared';
 export {
   getSidebarDataGroup,
+  isPathPrefix,
+  matchNavItem,
+  matchNavLink,
+  matchNavPath,
   normalizeHref,
   normalizePosixPath,
   RSPRESS_TEMP_DIR,
   removeTrailingSlash,
+  stripRouteVersionPrefix,
   withBase,
   withSiteOrigin,
 } from '@rspress/shared';
