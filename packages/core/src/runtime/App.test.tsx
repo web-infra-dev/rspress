@@ -41,12 +41,6 @@ rs.mock('virtual-global-components', () => ({
   default: [() => 'Global component'],
 }));
 
-rs.mock('./initPageData', () => ({
-  consumeCachedPageData: () => undefined,
-  initPageData: async () => undefined,
-  setCurrentPageData: () => {},
-}));
-
 const originalSsgMd = import.meta.env.SSG_MD;
 const originalEnableLlmsHint = import.meta.env.ENABLE_LLMS_HINT;
 

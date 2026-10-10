@@ -61,6 +61,7 @@ describe('resolveReactRouterDomAlias', () => {
     expect(alias).toMatchInlineSnapshot(`
       {
         "react-router-dom": "<PNPM_INNER>/react-router-dom",
+        "virtual-react-router-server": "<PNPM_INNER>/react-router-dom",
       }
     `);
   });

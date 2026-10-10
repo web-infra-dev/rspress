@@ -16,6 +16,22 @@ test.describe('multi version', async () => {
     }
   });
 
+  test('uses the target locale and version on a missing page', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+    await page.getByRole('button', { name: 'Missing localized page' }).click();
+    await expect(page.getByTestId('page-context')).toHaveText('v2|zh');
+    await expect(page.locator('h1')).toHaveText('页面未找到');
+    await expect(
+      page.getByRole('link', { name: 'go to home' }),
+    ).toHaveAttribute('href', '/base/v2/zh/');
+    await page.getByRole('link', { name: 'go to home' }).click();
+    await expect(page.locator('h1')).toContainText('v2 中文');
+  });
+
   test('Default version and default language', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base`, {
       waitUntil: 'networkidle',
