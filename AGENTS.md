@@ -2,16 +2,16 @@
 
 ## Project structure & module organization
 
-- Monorepo via `pnpm` + `Nx`.
+- Monorepo via `pnpm` workspaces.
 - Packages: `packages/core` (CLI + `@rspress/core`), `packages/theme-default` (Default theme), `packages/plugin-*` (Official plugins), `packages/create-rspress` (scaffolder).
 - Tests: unit tests are generally colocated with their source files; `packages/core/tests` contains CLI integration tests, and `e2e/` contains end-to-end tests. Website examples are in `website/`.
-- Key config: `nx.json`, `rstack.config.mts`, `rstest.e2e.config.mts`, `pnpm-workspace.yaml`.
+- Key config: `rstack.config.mts`, `rstest.e2e.config.mts`, `pnpm-workspace.yaml`.
 
 ## Build, test, and development commands
 
 - Install: `pnpm install` (Node >= 22.12, pnpm >= 11.22).
 - Build: `pnpm build` (all) and `pnpm build:website`.
-- Watch dev: `pnpm dev` (all packages) or `pnpm dev:website` (documentation site).
+- Watch dev: run `pnpm dev` in the package directory, or `pnpm dev:website` at the repository root for the documentation site.
 - Checks: `pnpm check` (lint, type-check, and formatting) and `pnpm check-spell`; lint only: `pnpm lint`; auto-format: `pnpm format`.
 - Tests: `pnpm test`; targeted: `pnpm test:unit` or `pnpm test:e2e`; update snapshots: `pnpm testu`.
 
@@ -68,4 +68,4 @@ Examples:
 ## Security & configuration tips
 
 - Do not commit build artifacts (`dist/`, `compiled/`).
-- Nx caching is enabled; scripts use `NX_DAEMON=false` for reproducible CI.
+- Package builds use pnpm in dependency order with up to three concurrent builds. After `pnpm build`, CI builds the website with `pnpm --filter @rspress/docs run build` to reuse package outputs.

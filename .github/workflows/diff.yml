@@ -40,10 +40,7 @@ jobs:
           pnpm install
 
       - name: Build Demo Project
-        run: |
-          cd website
-          pnpm install
-          RSDOCTOR=1 pnpm run build
+        run: RSDOCTOR=1 pnpm --filter @rspress/docs run build
 
       - name: Build auto-nav-sidebar Project
         run: RSDOCTOR=1 pnpm --filter @rspress-fixture/auto-nav-sidebar run build

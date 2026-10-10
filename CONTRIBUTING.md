@@ -101,6 +101,22 @@ Build all packages:
 pnpm run build
 ```
 
+Package builds run in dependency order, with up to three packages building concurrently. A failed build stops the command with a nonzero exit code.
+
+To build the documentation website and its workspace dependencies:
+
+```sh
+pnpm run build:website
+```
+
+If the packages are already built (as in CI), reuse their outputs:
+
+```sh
+pnpm --filter @rspress/docs run build
+```
+
+To watch a package, run `pnpm dev` in that package's directory in a separate terminal. Run `pnpm build` first to build its workspace dependencies. `pnpm dev:website` builds the website's workspace dependencies before starting the documentation dev server.
+
 If you need to clean all `node_modules/*` in the project, run the `reset` command:
 
 ```sh
