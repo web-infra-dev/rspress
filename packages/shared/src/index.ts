@@ -4,6 +4,12 @@ export {
   matchSidebar,
 } from './runtime-utils/sidebar';
 export {
+  isPathPrefix,
+  matchNavItem,
+  matchNavLink,
+  matchNavPath,
+} from './runtime-utils/path';
+export {
   getDefaultDarkModeValue,
   isDarkModeSwitchEnabled,
   normalizeDarkMode,
