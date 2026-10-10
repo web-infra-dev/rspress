@@ -115,7 +115,7 @@ If the packages are already built (as in CI), reuse their outputs:
 pnpm --filter @rspress/docs run build
 ```
 
-To watch all packages, run `pnpm dev`. It builds the packages first, then starts their watchers in parallel. The shared and core watchers retain the initial build outputs so dependent watchers can resolve them; `pnpm build` still cleans these outputs. `pnpm dev:website` builds the website's workspace dependencies before starting the documentation dev server; use `pnpm dev` in another terminal when editing packages too.
+To watch a package, run `pnpm dev` in that package's directory in a separate terminal. Run `pnpm build` first to build its workspace dependencies. `pnpm dev:website` builds the website's workspace dependencies before starting the documentation dev server.
 
 If you need to clean all `node_modules/*` in the project, run the `reset` command:
 

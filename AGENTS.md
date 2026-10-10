@@ -11,7 +11,7 @@
 
 - Install: `pnpm install` (Node >= 22.12, pnpm >= 11.22).
 - Build: `pnpm build` (all) and `pnpm build:website`.
-- Watch dev: `pnpm dev` (all packages) or `pnpm dev:website` (documentation site).
+- Watch dev: run `pnpm dev` in the package directory, or `pnpm dev:website` at the repository root for the documentation site.
 - Checks: `pnpm check` (lint, type-check, and formatting) and `pnpm check-spell`; lint only: `pnpm lint`; auto-format: `pnpm format`.
 - Tests: `pnpm test`; targeted: `pnpm test:unit` or `pnpm test:e2e`; update snapshots: `pnpm testu`.
 

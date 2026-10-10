@@ -8,7 +8,6 @@
     "check": "rs check --type-check",
     "check-dependency-version": "check-dependency-version-consistency . --ignore-package @rspress-fixture/react-18 --ignore-package @rspress-fixture/react-router-dom-6 --ignore-package @rspress-fixture/tailwind-v4 && echo 0",
     "check-spell": "pnpm cspell",
-    "dev": "pnpm run build && pnpm --filter \"./packages/*\" --parallel -r run dev",
     "dev:website": "pnpm --filter \"@rspress/docs^...\" --workspace-concurrency=3 -r run build && pnpm --filter @rspress/docs run dev",
     "format": "rs fmt",
     "generate-release-pr": "zx scripts/generateReleasePr.mjs",

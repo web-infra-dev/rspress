@@ -30,10 +30,6 @@ define.lib({
   },
   plugins: [pluginPublint()],
   output: {
-    // Retain dependency outputs while downstream package watchers start.
-    cleanDistPath: !['dev', 'build:watch'].includes(
-      process.env.npm_lifecycle_event ?? '',
-    ),
     externals: ['mdast-util-mdx-jsx'],
   },
 });
