@@ -375,7 +375,7 @@ export interface UserConfig {
   /**
    * Expose built-in documentation tools through the browser WebMCP API.
    * Markdown tools require `llms: true` in production.
-   * @default false
+   * @default true
    * @experimental
    */
   webMcp?: boolean | { exposedTo?: string[] };

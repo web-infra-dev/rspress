@@ -1,15 +1,16 @@
 # WebMCP
 
-Rspress can expose documentation tools to browser agents through the native [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api). Enable it in core without installing a plugin:
+Rspress can expose documentation tools to browser agents through the native [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api). It is built into core and enabled by default. Enable Markdown generation to make all six tools available:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   llms: true,
-  webMcp: true,
 });
 ```
+
+Set `webMcp: false` to disable the built-in tools.
 
 WebMCP is experimental and requires a browser with `document.modelContext` enabled in a secure context, such as HTTPS or localhost. Unsupported browsers continue to render the site normally. Rspress does not install a browser polyfill or an MCP server.
 
@@ -30,7 +31,7 @@ Paths are absolute within the documentation site, excluding the configured `base
 
 ## Markdown and search availability
 
-Production builds require `llms: true` to generate page Markdown through [SSG-MD](/guide/basic/ssg-md). Run `rspress build` followed by `rspress preview` to try all six tools. The development server does not generate SSG-MD output, so it omits `rspress_get_page` and `rspress_get_current_page`.
+The two page-reading tools require `llms: true` in production to generate page Markdown through [SSG-MD](/guide/basic/ssg-md). Run `rspress build` followed by `rspress preview` to try all six tools. Without `llms: true`, or when using the development server, no SSG-MD output is generated, so Rspress omits `rspress_get_page` and `rspress_get_current_page`.
 
 The search tool shares the default search panel's provider and configured `beforeSearch`, `onSearch`, and `afterSearch` hooks. The index is initialized when the panel opens or an agent first searches. Closing the popup keeps the tool available; unmounting or replacing the default search panel removes it. Custom search components can register their own tool with `useWebMcp`. Switching language or version selects the corresponding index; `search.versioned: false` searches across versions. The search tool is omitted when local search is disabled or the active group has no index. Algolia integration is not supported yet: sites using `@rspress/plugin-algolia` retain their existing DocSearch UI, but do not expose a WebMCP search tool. Page listing and reading remain available.
 

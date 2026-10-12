@@ -1,15 +1,16 @@
 # WebMCP
 
-Rspress 可以通过浏览器原生 [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api) 向浏览器智能体提供文档工具。该功能内置于 core，无需安装插件：
+Rspress 可以通过浏览器原生 [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api) 向浏览器智能体提供文档工具。该功能内置于 core，默认开启。启用 Markdown 生成后即可使用全部六个工具：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   llms: true,
-  webMcp: true,
 });
 ```
+
+设置 `webMcp: false` 可以关闭内置工具。
 
 WebMCP 是实验性功能，需要浏览器在 HTTPS 或 localhost 等安全上下文中启用 `document.modelContext`。不支持的浏览器仍可正常访问站点。Rspress 不会安装浏览器 polyfill 或 MCP 服务器。
 
@@ -30,7 +31,7 @@ WebMCP 是实验性功能，需要浏览器在 HTTPS 或 localhost 等安全上�
 
 ## Markdown 和搜索可用性
 
-生产构建需要开启 `llms: true`，通过 [SSG-MD](/guide/basic/ssg-md) 生成页面 Markdown。运行 `rspress build` 和 `rspress preview` 后可以体验全部六个工具。开发服务器不生成 SSG-MD 产物，因此不注册 `rspress_get_page` 和 `rspress_get_current_page`。
+两个页面读取工具需要在生产构建中开启 `llms: true`，通过 [SSG-MD](/guide/basic/ssg-md) 生成页面 Markdown。运行 `rspress build` 和 `rspress preview` 后可以体验全部六个工具。未开启 `llms: true` 或使用开发服务器时，不生成 SSG-MD 产物，因此不注册 `rspress_get_page` 和 `rspress_get_current_page`。
 
 搜索工具与默认搜索面板共用搜索实例及配置的 `beforeSearch`、`onSearch`、`afterSearch` hooks，在打开面板或智能体首次搜索时初始化索引。关闭弹窗不会移除工具；卸载或替换默认搜索面板会移除工具。自定义搜索组件可以通过 `useWebMcp` 注册自己的工具。切换语言或版本后会使用对应索引；设置 `search.versioned: false` 时跨版本搜索。关闭本地搜索或当前分组没有索引时，不注册搜索工具。暂不支持 Algolia 集成：使用 `@rspress/plugin-algolia` 的站点保留现有 DocSearch 界面，但不会提供 WebMCP 搜索工具。页面列表和读取工具仍可使用。
 

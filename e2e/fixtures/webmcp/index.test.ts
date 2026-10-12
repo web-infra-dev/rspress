@@ -549,6 +549,36 @@ test.describe('WebMCP capability detection', () => {
   });
 });
 
+test('enables available tools by default in production without llms', async ({
+  page,
+}) => {
+  const config = 'rspress.default.config.ts';
+  await runBuildCommand(import.meta.dirname, config);
+  const port = await getPort();
+  const app = await runPreviewCommand(import.meta.dirname, port, [
+    '-c',
+    config,
+  ]);
+  try {
+    await installModelContext(page);
+    await page.goto(`http://localhost:${port}/docs/`);
+    await expect
+      .poll(() => page.evaluate(() => window.webMcpTest.list()))
+      .toEqual(
+        allTools.filter(
+          name =>
+            !['rspress_get_page', 'rspress_get_current_page'].includes(name),
+        ),
+      );
+    expect(await run(page, 'list_pages')).toMatchObject({ total: 3 });
+    expect(
+      JSON.stringify(await run(page, 'search_docs', { query: 'cobalt' })),
+    ).toContain('v1 en home');
+  } finally {
+    await killProcess(app);
+  }
+});
+
 test('disabled WebMCP is absent from production JavaScript', async () => {
   await runBuildCommand(import.meta.dirname, 'rspress.disabled.config.ts');
   const dir = path.join(import.meta.dirname, 'dist-disabled');

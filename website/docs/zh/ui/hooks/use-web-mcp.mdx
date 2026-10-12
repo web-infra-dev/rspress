@@ -25,7 +25,7 @@ export function PageTitleTool() {
 
 在能力所属的位置挂载组件：全站工具放在常驻组件中，页面专属工具随页面挂载。工具名称在整个文档中必须唯一，也不能与[内置工具](/guide/basic/webmcp)重名。
 
-自定义工具不需要配置 `webMcp: true`，该选项只启用内置文档工具。此 hook 需要安全上下文中的原生 `document.modelContext`，不会安装 polyfill，可以安全地参与 SSR。如果使用外部提供的运行时，请在挂载工具组件之前初始化它。
+自定义工具独立于 `webMcp` 配置项，该选项只控制内置文档工具，默认值为 `true`。此 hook 需要安全上下文中的原生 `document.modelContext`，不会安装 polyfill，可以安全地参与 SSR。如果使用外部提供的运行时，请在挂载工具组件之前初始化它。
 
 ## 参数
 

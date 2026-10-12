@@ -25,7 +25,7 @@ export function PageTitleTool() {
 
 Mount the component where the capability belongs. Keep site-wide tools in a persistent component; mount tools specific to a page with that page. Tool names must be unique across the document, including the [built-in tools](/guide/basic/webmcp).
 
-Custom tools do not require `webMcp: true` in the Rspress config. That option only enables the built-in documentation tools. The hook requires native `document.modelContext` support in a secure context, does not install a polyfill, and is safe to render during SSR. Initialize any externally supplied runtime before mounting tool components.
+Custom tools work independently of the `webMcp` config option, which controls the built-in documentation tools and defaults to `true`. The hook requires native `document.modelContext` support in a secure context, does not install a polyfill, and is safe to render during SSR. Initialize any externally supplied runtime before mounting tool components.
 
 ## Options
 
