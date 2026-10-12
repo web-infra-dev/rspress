@@ -269,7 +269,7 @@ npx afdocs check https://docs.example.com --format scorecard
 
 即使网站已经提供 Markdown，Agent 从深层文档进入时，也不一定知道当前页面的 Markdown 版本和 `/llms.txt` 的存在。因此，每个页面都需要主动暴露这些入口。
 
-Rspress 默认启用 [`injectLlmsHint`](/zh/api/config/config-theme#injectllmshint) 配置。在启用 SSG-MD 的同时，生成的 HTML 会在正文靠前的位置注入一段视觉隐藏的纯文本：
+Rspress 默认启用 [`injectLlmsHint`](/zh/api/config/config-agent#injectllmshint) 配置。在启用 SSG-MD 的同时，生成的 HTML 会在正文靠前的位置注入一段视觉隐藏的纯文本：
 
 {/* prettier-ignore */}
 ```html

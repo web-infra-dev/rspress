@@ -269,7 +269,7 @@ Notably, AFDocs does not evaluate writing quality or the correctness of Agent an
 
 Even when a website provides Markdown, an Agent entering through a deeply nested page may not know that the current page has a Markdown version or that `/llms.txt` exists. Each page therefore needs to expose these entry points explicitly.
 
-Rspress enables [`injectLlmsHint`](/api/config/config-theme#injectllmshint) by default. When SSG-MD is enabled, Rspress injects visually hidden plain text near the beginning of the main content in generated HTML:
+Rspress enables [`injectLlmsHint`](/api/config/config-agent#injectllmshint) by default. When SSG-MD is enabled, Rspress injects visually hidden plain text near the beginning of the main content in generated HTML:
 
 {/* prettier-ignore */}
 ```html

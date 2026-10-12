@@ -6,6 +6,8 @@ import { VersionBadge } from '../../../components/VersionBadge';
 
 # 基础配置
 
+`llms`、`webMcp` 和 `themeConfig.llmsUI` 等选项请参阅 [AI 配置](/api/config/config-agent)。
+
 ## root
 
 - **类型**： `string`
@@ -424,53 +426,6 @@ export default defineConfig({
 :root {
   --rp-c-brand: #f00;
 }
-```
-
-## llms
-
-- **类型**：
-
-```ts
-boolean | {
-  llmsTxt?: (context: LlmsTxtContext) => string | Promise<string>;
-  remarkSplitMdxOptions?: RemarkSplitMdxOptions;
-}
-```
-
-- **默认值**：`false`
-
-是否开启 [SSG-MD](/guide/basic/ssg-md) 来生成 `llms.txt`、`llms-full.txt` 以及每个页面对应的 Markdown 文件，使你的文档更容易被大语言模型理解。
-
-可通过 `llmsTxt` 基于站点信息和页面分组编排完整的 `llms.txt` 内容。详见[自定义 llms.txt](/guide/basic/ssg-md#自定义-llmstxt)。
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  llms: true,
-});
-```
-
-:::warning
-
-`llms` 为实验性功能。如果由于代码不兼容 SSR 而无法开启 SSG-MD，请使用 [@rspress/plugin-llms](/plugin/official-plugins/llms) 作为备选方案。
-
-:::
-
-详细用法、配置选项和实现原理请参阅 [llms.txt（SSG-MD）](/guide/basic/ssg-md)。
-
-## webMcp
-
-- **类型**：`boolean | { exposedTo?: string[] }`
-- **默认值**：`false`
-
-通过浏览器原生 WebMCP API 提供内置文档工具。生产构建需要开启 [`llms`](#llms)，为页面读取工具生成 Markdown。可用工具、浏览器支持和本地搜索行为详见 [WebMCP](/guide/basic/webmcp)。
-
-```ts
-export default defineConfig({
-  llms: true,
-  webMcp: true,
-});
 ```
 
 ## mediumZoom

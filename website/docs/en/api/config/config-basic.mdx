@@ -6,6 +6,8 @@ import { VersionBadge } from '../../../components/VersionBadge';
 
 # Basic config
 
+For `llms`, `webMcp`, and `themeConfig.llmsUI`, see [AI config](/api/config/config-agent).
+
 ## root
 
 - **Type**: `string`
@@ -424,53 +426,6 @@ export default defineConfig({
 :root {
   --rp-c-brand: #f00;
 }
-```
-
-## llms
-
-- **Type**:
-
-```ts
-boolean | {
-  llmsTxt?: (context: LlmsTxtContext) => string | Promise<string>;
-  remarkSplitMdxOptions?: RemarkSplitMdxOptions;
-}
-```
-
-- **Default**: `false`
-
-Whether to enable [SSG-MD](/guide/basic/ssg-md) to generate `llms.txt`, `llms-full.txt`, and Markdown files for each page, making your documentation easier for large language models to understand.
-
-Use `llmsTxt` to compose the complete `llms.txt` content from site metadata and page sections. See [Customize llms.txt](/guide/basic/ssg-md#customize-llmstxt) for details.
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  llms: true,
-});
-```
-
-:::warning
-
-`llms` is an experimental feature. If SSG-MD cannot be enabled due to SSR incompatibility, use [@rspress/plugin-llms](/plugin/official-plugins/llms) as a fallback.
-
-:::
-
-For detailed usage, configuration options, and implementation principles, see [llms.txt (SSG-MD)](/guide/basic/ssg-md).
-
-## webMcp
-
-- **Type**: `boolean | { exposedTo?: string[] }`
-- **Default**: `false`
-
-Expose built-in documentation tools through the browser's native WebMCP API. Production builds require [`llms`](#llms) to generate Markdown for the page-reading tools. See [WebMCP](/guide/basic/webmcp) for available tools, browser support, and local search behavior.
-
-```ts
-export default defineConfig({
-  llms: true,
-  webMcp: true,
-});
 ```
 
 ## mediumZoom
