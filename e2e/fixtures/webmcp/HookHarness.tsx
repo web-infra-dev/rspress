@@ -23,6 +23,12 @@ function ToolOwner({
     enabled,
     description: 'Read the counter',
     inputSchema: { ...inputSchema },
+    annotations: {
+      readOnlyHint: true,
+      untrustedContentHint: false,
+      consequentialHint: false,
+      debugging: true,
+    },
     execute: (input, { signal }) => ({
       value: count + (input.add ?? 0),
       cancellable: Boolean(signal),

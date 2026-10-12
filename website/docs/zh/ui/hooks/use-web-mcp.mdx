@@ -37,7 +37,7 @@ export function PageTitleTool() {
 | `inputSchema`             | 描述输入的 JSON Schema，不需要额外的 schema 库。                                             |
 | `execute(input, options)` | 必填，返回可 JSON 序列化的结果或 Promise。调用方提供取消信号时，通过 `options.signal` 传入。 |
 | `enabled`                 | 是否注册，默认为 `true`，改为 `false` 时注销工具。                                           |
-| `annotations`             | 可选的 `readOnlyHint` 和 `untrustedContentHint` 提示。                                       |
+| `annotations`             | 可选的布尔提示：`readOnlyHint`、`untrustedContentHint`、`consequentialHint` 和 `debugging`。 |
 | `exposedTo`               | 可选，允许发现工具的其他安全来源。                                                           |
 
 通过 `WebMcpOptions<TInput, TResult>` 或执行函数的参数注解声明类型。此 hook 不从 JSON Schema 推导参数类型，也不自行验证参数；请在执行函数中校验不可信输入。结果直接返回，不包装成 MCP 响应格式，执行错误传递给调用方。

@@ -27,7 +27,7 @@ WebMCP 是实验性功能，需要浏览器在 HTTPS 或 localhost 等安全上�
 | `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引。                                      |
 | `rspress_navigate`         | 跳转到已知站内路由，等待页面提交后返回元信息、章节路由和前后页。        |
 
-路径采用不含配置项 `base` 的站内绝对路径。站点部署在 `/docs/` 时，传入 `/guide` 即可跳转到 `/docs/guide`。导航保留查询参数和锚点，拒绝未知路由和外部路由。导航被其他路由覆盖或被页面错误中断时会报错，不会返回过期的页面信息。取消工具调用会停止等待结果，不会撤销已经开始的导航。
+路径采用不含配置项 `base` 的站内绝对路径。站点部署在 `/docs/` 时，传入 `/guide` 即可跳转到 `/docs/guide.html`（开启 `route.cleanUrls: true` 时为 `/docs/guide`）。导航保留查询参数和锚点，拒绝未知路由和外部路由。导航被其他路由覆盖或被页面错误中断时会报错，不会返回过期的页面信息。取消工具调用会停止等待结果，不会撤销已经开始的导航。
 
 `rspress_list_pages` 接受 `query`、`lang`、`version`、`limit`（1–100，默认 50）和 `offset`（默认 0）。其中 `query` 匹配页面标题、描述、路由和章节标题。`rspress_search_docs` 接受 `query` 和 `limit`（1–20，默认 10）。
 
@@ -43,15 +43,17 @@ WebMCP 复用现有开发环境的页面数据和搜索索引生命周期，不�
 
 ## 试用工具
 
-在支持的浏览器中，使用对象参数调用发现的工具：
+在支持的浏览器中，发现并调用工具。部分实验性浏览器实现返回序列化的 schema，并要求 JSON 编码的参数；以下示例兼容两种形式。请将 `/guide` 替换为实际存在的页面路由：
 
 ```js
 const tools = await document.modelContext.getTools();
 const tool = tools.find(tool => tool.name === 'rspress_get_page');
-const result = await document.modelContext.executeTool(tool, {
-  routePath: '/guide',
-});
-console.log(result);
+if (!tool) throw new Error('Page-reading tool is unavailable');
+const input = { routePath: '/guide' };
+const args =
+  typeof tool.inputSchema === 'string' ? JSON.stringify(input) : input;
+const result = await document.modelContext.executeTool(tool, args);
+console.log(typeof result === 'string' ? JSON.parse(result) : result);
 ```
 
 ## 跨源智能体

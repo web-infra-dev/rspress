@@ -27,7 +27,7 @@ See [AI config](/api/config/config-agent#webmcp) for the configuration reference
 | `rspress_search_docs`      | Search the local documentation index for the active language and version.                                         |
 | `rspress_navigate`         | Navigate to a known internal route, then return committed page metadata, section routes, and previous/next pages. |
 
-Paths are absolute within the documentation site, excluding the configured `base`. For a site hosted at `/docs/`, pass `/guide` to navigate to `/docs/guide`. Navigation preserves query strings and hashes and rejects unknown or external routes. A navigation superseded by another route or interrupted by a page error rejects instead of returning stale page metadata. Cancelling a tool call stops waiting for its result; it does not undo an already started navigation.
+Paths are absolute within the documentation site, excluding the configured `base`. For a site hosted at `/docs/`, pass `/guide` to navigate to `/docs/guide.html` (or `/docs/guide` with `route.cleanUrls: true`). Navigation preserves query strings and hashes and rejects unknown or external routes. A navigation superseded by another route or interrupted by a page error rejects instead of returning stale page metadata. Cancelling a tool call stops waiting for its result; it does not undo an already started navigation.
 
 `rspress_list_pages` accepts `query`, `lang`, `version`, `limit` (1–100, default 50), and `offset` (default 0). Its query matches page titles, descriptions, routes, and headings. `rspress_search_docs` accepts `query` and `limit` (1–20, default 10).
 
@@ -43,15 +43,17 @@ WebMCP uses the existing development page-data and search-index lifecycle. It do
 
 ## Try a tool
 
-In a supported browser, use object arguments when invoking a discovered tool:
+In a supported browser, discover a tool and invoke it. Experimental browser implementations may expose a serialized schema and expect JSON-encoded arguments; the example handles both forms. Replace `/guide` with an existing page route:
 
 ```js
 const tools = await document.modelContext.getTools();
 const tool = tools.find(tool => tool.name === 'rspress_get_page');
-const result = await document.modelContext.executeTool(tool, {
-  routePath: '/guide',
-});
-console.log(result);
+if (!tool) throw new Error('Page-reading tool is unavailable');
+const input = { routePath: '/guide' };
+const args =
+  typeof tool.inputSchema === 'string' ? JSON.stringify(input) : input;
+const result = await document.modelContext.executeTool(tool, args);
+console.log(typeof result === 'string' ? JSON.parse(result) : result);
 ```
 
 ## Cross-origin agents

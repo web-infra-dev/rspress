@@ -11,7 +11,12 @@ export interface WebMcpOptions<TInput = unknown, TResult = unknown> {
   description: string;
   /** JSON Schema describing the input. Validate untrusted inputs in execute. */
   inputSchema?: Record<string, unknown>;
-  annotations?: { readOnlyHint?: boolean; untrustedContentHint?: boolean };
+  annotations?: {
+    readOnlyHint?: boolean;
+    untrustedContentHint?: boolean;
+    consequentialHint?: boolean;
+    debugging?: boolean;
+  };
   execute(
     input: TInput,
     options: WebMcpExecuteOptions,

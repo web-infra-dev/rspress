@@ -37,7 +37,7 @@ Custom tools work independently of the `webMcp` config option, which controls th
 | `inputSchema`             | JSON Schema describing the input. No schema library is required.                                                                           |
 | `execute(input, options)` | Required function returning a JSON-serializable value or a promise. `options.signal`, when provided, carries cancellation from the caller. |
 | `enabled`                 | Whether to register the tool. Defaults to `true`; setting it to `false` unregisters the tool.                                              |
-| `annotations`             | Optional `readOnlyHint` and `untrustedContentHint` hints.                                                                                  |
+| `annotations`             | Optional boolean hints: `readOnlyHint`, `untrustedContentHint`, `consequentialHint`, and `debugging`.                                      |
 | `exposedTo`               | Optional array of additional secure origins allowed to discover the tool.                                                                  |
 
 Use `WebMcpOptions<TInput, TResult>` or annotate the input parameter to type your handler. The hook does not infer argument types from JSON Schema or validate arguments itself; validate untrusted input in the handler. Results pass through without MCP response wrapping, and execution errors propagate to the caller.

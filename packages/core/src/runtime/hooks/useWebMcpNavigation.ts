@@ -2,6 +2,7 @@ import { useCallback, useLayoutEffect, useRef } from 'react';
 import { useLocation, useNavigate, useNavigation } from 'react-router-dom';
 import type { NavigationResult } from '../webMcp/types';
 import {
+  normalizeHrefInRuntime,
   pathnameToRouteService,
   usePage,
   useWebMcp,
@@ -101,7 +102,8 @@ function useAwaitedNavigation(result: NavigationResult) {
         signal?.addEventListener('abort', cancel, { once: true });
         void Promise.resolve()
           .then(() => {
-            if (pending.current === request) return navigate(target);
+            if (pending.current === request)
+              return navigate(normalizeHrefInRuntime(target));
           })
           .then(() => {
             if (pending.current !== request) return;

@@ -230,6 +230,8 @@ export function useSearchPanel({
     try {
       const result = await searchDocs(value);
       if (searchInputRef.current?.value === newQuery) {
+        setSearchError(undefined);
+        setInitStatus('inited');
         setCurrentSuggestionIndex(0);
         setSearchResult(result || DEFAULT_RESULT);
         setIsSearching(false);

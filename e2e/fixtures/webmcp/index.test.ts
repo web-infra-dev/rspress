@@ -12,12 +12,14 @@ import {
 
 type Tool = {
   name: string;
+  annotations?: Record<string, boolean>;
   execute: (input: unknown, options: { signal?: AbortSignal }) => unknown;
 };
 declare global {
   interface Window {
     webMcpTest: {
       list(): string[];
+      annotations(name: string): Tool['annotations'];
       run(name: string, input?: unknown, signal?: AbortSignal): Promise<any>;
       registrations: string[][];
       registrationNames: string[];
@@ -61,6 +63,7 @@ async function installModelContext(page: Page, failure?: 'sync' | 'async') {
       });
       window.webMcpTest = {
         list: () => [...tools.keys()].sort(),
+        annotations: name => tools.get(name)?.annotations,
         async run(name, input = {}, signal) {
           const tool = tools.get(`rspress_${name}`);
           if (!tool) throw new Error(`Missing tool: ${name}`);
@@ -597,6 +600,50 @@ test('disabled WebMCP is absent from production JavaScript', async () => {
   ).toBe(false);
 });
 
+test.describe('WebMCP HTML navigation', () => {
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
+  let port: number;
+  test.beforeAll(async () => {
+    port = await getPort();
+    const config = 'rspress.html.config.ts';
+    await runBuildCommand(import.meta.dirname, config);
+    app = await runPreviewCommand(import.meta.dirname, port, ['-c', config]);
+  });
+  test.afterAll(async () => {
+    await killProcess(app);
+  });
+  test('preserves canonical results and supports reloading HTML URLs', async ({
+    page,
+  }) => {
+    await installModelContext(page);
+    await page.goto(`http://localhost:${port}/docs/`);
+    await expect
+      .poll(() => page.evaluate(() => window.webMcpTest.list()))
+      .toContain('rspress_navigate');
+    for (const [route, title] of [
+      ['/guide', 'v1 en guide'],
+      ['/docs/深入', 'Nested page'],
+      ['/', 'v1 en home'],
+    ]) {
+      const routePath = `${route}?from=agent#install`;
+      expect(await run(page, 'navigate', { routePath })).toMatchObject({
+        routePath,
+        page: { title },
+      });
+      const htmlPath = route === '/' ? '/index' : route;
+      await expect(page).toHaveURL(
+        `http://localhost:${port}/docs${encodeURI(htmlPath)}.html?from=agent#install`,
+      );
+      const response = await page.reload();
+      expect(response?.status()).toBe(200);
+      await expect(page.locator('h1').first()).toContainText(title);
+      await expect
+        .poll(() => page.evaluate(() => window.webMcpTest.list()))
+        .toContain('rspress_navigate');
+    }
+  });
+});
+
 test.describe('WebMCP React Router 6 compatibility', () => {
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   let port: number;
@@ -672,6 +719,16 @@ for (const mode of ['dev', 'build'] as const) {
       const registrations = await page.evaluate(
         () => window.webMcpTest.registrationNames.length,
       );
+      expect(
+        await page.evaluate(() =>
+          window.webMcpTest.annotations('rspress_test_value'),
+        ),
+      ).toEqual({
+        readOnlyHint: true,
+        untrustedContentHint: false,
+        consequentialHint: false,
+        debugging: true,
+      });
       await page.getByRole('button', { name: 'Increment tool count' }).click();
       await expect.poll(() => state(page)).toMatchObject({ count: 1 });
       expect(await run(page, 'test_value', { add: 3 })).toMatchObject({
@@ -781,6 +838,20 @@ test.describe('WebMCP search component ownership', () => {
   });
   test.afterAll(async () => {
     await killProcess(app);
+  });
+
+  test('shows results after a failed search hook recovers', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${port}/docs/`);
+    await page.locator('.rp-search-button').click();
+    await page.locator('.rp-search-panel__input').fill('fail');
+    await expect(page.getByText('Error: Search hook failed')).toBeVisible();
+    await page.locator('.rp-search-panel__input').fill('alias');
+    await expect(page.locator('.rp-suggest-item').first()).toContainText(
+      'v1 en home',
+    );
+    await expect(page.getByText('Error: Search hook failed')).not.toBeVisible();
   });
 
   test('uses search hooks and unregisters only search when its component unmounts', async ({
