@@ -34,6 +34,7 @@ jobs:
   validate:
     name: Validate AI E2E definitions
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -124,6 +125,7 @@ jobs:
     needs: midscene
     if: always() && !cancelled() && needs.midscene.result != 'skipped'
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     permissions:
       contents: read
       actions: read
@@ -195,6 +197,7 @@ jobs:
     needs: prepare-report
     if: always() && !cancelled() && needs.prepare-report.outputs.pages-artifact != ''
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     permissions:
       pages: write
       id-token: write
@@ -217,6 +220,7 @@ jobs:
     needs: [midscene, prepare-report, deploy-report]
     if: always() && !cancelled() && needs.midscene.result != 'skipped'
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:

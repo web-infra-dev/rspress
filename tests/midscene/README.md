@@ -97,3 +97,12 @@ The top report entry uses Midscene's native merged report, not a custom HTML ind
 
 Publication retains the latest three trusted runs within a 900 MiB budget.
 Older Summary links expire when their run is pruned; artifacts expire after 14 days.
+
+## Dependency audit
+
+`npm audit` reports advisories in the current Midscene 1.15.1 dependency tree,
+including image processing and Puppeteer archive dependencies. These packages
+stay in this isolated test harness, not the product's runtime dependencies.
+Use synthetic local fixtures and a dedicated quota-limited model key. Do not run
+`npm audit fix --force`: its suggested framework downgrades are incompatible with
+this integration.
