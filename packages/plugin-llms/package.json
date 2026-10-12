@@ -40,7 +40,7 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.59.3",
+    "@microsoft/api-extractor": "^7.59.4",
     "@rsbuild/core": "^2.2.12",
     "@rsbuild/plugin-react": "~2.1.1",
     "@rspress/config": "workspace:*",
