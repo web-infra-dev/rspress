@@ -111,12 +111,22 @@ for (const mode of ['dev', 'build'] as const) {
       await page.goto(`http://localhost:${port}/docs/`);
       await expect
         .poll(() => page.evaluate(() => window.webMcpTest.list()))
-        .toContain('rspress_navigate');
+        .toEqual(
+          mode === 'build'
+            ? allTools
+            : allTools.filter(
+                name =>
+                  !['rspress_get_page', 'rspress_get_current_page'].includes(
+                    name,
+                  ),
+              ),
+        );
     });
 
-    test('discovers tools and site context without downloading the search index', async ({
+    test('discovers tools and site context without initializing search', async ({
       page,
     }) => {
+      await page.waitForLoadState('networkidle');
       const names = await page.evaluate(() => window.webMcpTest.list());
       expect(names).toEqual(
         mode === 'build'
@@ -139,11 +149,16 @@ for (const mode of ['dev', 'build'] as const) {
       expect((await run(page, 'get_site_info')).sidebar.length).toBeGreaterThan(
         0,
       );
+      // The theme may prefetch the index through a link before any search.
       expect(
         await page.evaluate(() =>
           performance
             .getEntriesByType('resource')
-            .some(entry => entry.name.includes('search-index')),
+            .some(
+              entry =>
+                entry.name.includes('search_index') &&
+                (entry as PerformanceResourceTiming).initiatorType === 'fetch',
+            ),
         ),
       ).toBe(false);
       expect(
@@ -197,6 +212,33 @@ for (const mode of ['dev', 'build'] as const) {
         total: 2,
         pages: [{ version: 'v2' }, { version: 'v2' }],
       });
+    });
+
+    test('shares the search provider with the UI while the popup is closed', async ({
+      page,
+    }) => {
+      const requests: string[] = [];
+      page.on('request', request => {
+        if (
+          request.url().includes('search_index') &&
+          request.resourceType() === 'fetch'
+        )
+          requests.push(request.url());
+      });
+      expect(
+        JSON.stringify(await run(page, 'search_docs', { query: 'cobalt' })),
+      ).toContain('v1 en home');
+      await page.locator('.rp-search-button').click();
+      await page.locator('.rp-search-panel__input').fill('cobalt');
+      await expect(page.locator('.rp-suggest-item').first()).toContainText(
+        'v1 en home',
+      );
+      await page.keyboard.press('Escape');
+      await expect(page.locator('.rp-search-panel__input')).not.toBeVisible();
+      expect(
+        JSON.stringify(await run(page, 'search_docs', { query: 'cobalt' })),
+      ).toContain('v1 en home');
+      expect(requests).toHaveLength(1);
     });
 
     test('returns committed page context, sections and adjacent links with query/hash', async ({
@@ -695,3 +737,53 @@ for (const mode of ['dev', 'build'] as const) {
     });
   });
 }
+
+test.describe('WebMCP search component ownership', () => {
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
+  let port: number;
+  test.beforeAll(async () => {
+    port = await getPort();
+    app = await runDevCommand(
+      import.meta.dirname,
+      port,
+      'rspress.search-component.config.ts',
+    );
+  });
+  test.afterAll(async () => {
+    await killProcess(app);
+  });
+
+  test('uses search hooks and unregisters only search when its component unmounts', async ({
+    page,
+  }) => {
+    await installModelContext(page);
+    await page.goto(`http://localhost:${port}/docs/`);
+    await expect
+      .poll(() => page.evaluate(() => window.webMcpTest.list()))
+      .toContain('rspress_search_docs');
+    expect(
+      JSON.stringify(await run(page, 'search_docs', { query: 'alias' })),
+    ).toContain('v1 en home');
+    await page.locator('.rp-search-button').click();
+    await page.locator('.rp-search-panel__input').fill('alias');
+    await expect(page.locator('.rp-suggest-item').first()).toContainText(
+      'v1 en home',
+    );
+    await page.keyboard.press('Escape');
+    const others = (await page.evaluate(() => window.webMcpTest.list())).filter(
+      name => name !== 'rspress_search_docs',
+    );
+    await page.getByRole('button', { name: 'Toggle search component' }).click();
+    await expect
+      .poll(() => page.evaluate(() => window.webMcpTest.list()))
+      .toEqual(others);
+    expect(await run(page, 'list_pages')).toMatchObject({ total: 3 });
+    await page.getByRole('button', { name: 'Toggle search component' }).click();
+    await expect
+      .poll(() => page.evaluate(() => window.webMcpTest.list()))
+      .toContain('rspress_search_docs');
+    expect(
+      JSON.stringify(await run(page, 'search_docs', { query: 'alias' })),
+    ).toContain('v1 en home');
+  });
+});

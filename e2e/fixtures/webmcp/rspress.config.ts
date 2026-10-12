@@ -3,6 +3,8 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
+  // Each scenario uses different virtual modules with the same source files.
+  builderConfig: { performance: { buildCache: false } },
   title: 'WebMCP docs',
   description: 'Documentation tools',
   base: '/docs/',

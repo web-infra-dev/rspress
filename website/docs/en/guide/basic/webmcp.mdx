@@ -32,7 +32,7 @@ Paths are absolute within the documentation site, excluding the configured `base
 
 Production builds require `llms: true` to generate page Markdown through [SSG-MD](/guide/basic/ssg-md). Run `rspress build` followed by `rspress preview` to try all six tools. The development server does not generate SSG-MD output, so it omits `rspress_get_page` and `rspress_get_current_page`.
 
-Local search loads its implementation and index on the first search call. Switching language or version selects the corresponding index; `search.versioned: false` searches across versions. The search tool is omitted when local search is disabled or the active group has no index. Algolia integration is not supported yet: sites using `@rspress/plugin-algolia` retain their existing DocSearch UI, but do not expose a WebMCP search tool. Page listing and reading remain available.
+The search tool shares the default search panel's provider and configured `beforeSearch`, `onSearch`, and `afterSearch` hooks. The index is initialized when the panel opens or an agent first searches. Closing the popup keeps the tool available; unmounting or replacing the default search panel removes it. Custom search components can register their own tool with `useWebMcp`. Switching language or version selects the corresponding index; `search.versioned: false` searches across versions. The search tool is omitted when local search is disabled or the active group has no index. Algolia integration is not supported yet: sites using `@rspress/plugin-algolia` retain their existing DocSearch UI, but do not expose a WebMCP search tool. Page listing and reading remain available.
 
 WebMCP uses the existing development page-data and search-index lifecycle. It does not add full-site recomputation on edits; metadata and index updates remain subject to the existing HMR behavior.
 
@@ -66,4 +66,4 @@ The browser also applies its WebMCP permissions policy and discovery rules. See 
 
 ## Custom tools
 
-Use [`useWebMcp`](/ui/hooks/use-web-mcp) from `@rspress/core/runtime` to register tools in your own components. The built-in site, page, navigation, and search tools use the same hook.
+Use [`useWebMcp`](/ui/hooks/use-web-mcp) from `@rspress/core/runtime` to register tools in your own components. The built-in tools use the same hook directly in the existing app, page route, and search panel implementations.

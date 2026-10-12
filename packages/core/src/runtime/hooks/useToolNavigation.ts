@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useRef } from 'react';
 import { useLocation, useNavigate, useNavigation } from 'react-router-dom';
-import type { NavigationResult } from './types';
+import type { NavigationResult } from '../webMcp/types';
 
 // Native navigation prepares the page. A layout effect acknowledges that React
 // has committed the corresponding page context before returning it to an agent.
