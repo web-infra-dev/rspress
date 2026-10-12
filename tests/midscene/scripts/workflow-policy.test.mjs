@@ -2,6 +2,11 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
+const workflow = await readFile(
+  new URL('../../../.github/workflows/midscene.yml', import.meta.url),
+  'utf8',
+);
+
 test('report artifacts share the harness root instead of a runner-wide common ancestor', () => {
   const upload = workflow.slice(
     workflow.indexOf('      - name: Save native reports even after failure'),
@@ -13,10 +18,6 @@ test('report artifacts share the harness root instead of a runner-wide common an
   assert(!upload.includes('runner.temp'));
 });
 
-const workflow = await readFile(
-  new URL('../../../.github/workflows/midscene.yml', import.meta.url),
-  'utf8',
-);
 test('PR validation does not receive credentials or call the model', () => {
   assert(!workflow.includes('pull_request_target'));
   const validation = workflow.slice(
