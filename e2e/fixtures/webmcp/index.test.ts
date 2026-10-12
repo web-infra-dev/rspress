@@ -20,6 +20,7 @@ declare global {
       list(): string[];
       run(name: string, input?: unknown, signal?: AbortSignal): Promise<any>;
       registrations: string[][];
+      registrationNames: string[];
     };
     navigationResult?: any;
     navigationError?: string;
@@ -28,40 +29,49 @@ declare global {
 
 // Only the browser API is substituted. The real runtime, router, network,
 // generated Markdown and local search run in the browser without a polyfill.
-async function installModelContext(page: Page) {
-  await page.addInitScript(() => {
-    const tools = new Map<string, Tool>();
-    const registrations: string[][] = [];
-    Object.defineProperty(document, 'modelContext', {
-      configurable: true,
-      value: {
-        async registerTool(
-          tool: Tool,
-          options: { signal: AbortSignal; exposedTo?: string[] },
-        ) {
-          if (options.signal.aborted) return;
-          if (tools.has(tool.name))
-            throw new Error(`Duplicate tool: ${tool.name}`);
-          tools.set(tool.name, tool);
-          registrations.push(options.exposedTo ?? []);
-          options.signal.addEventListener(
-            'abort',
-            () => tools.delete(tool.name),
-            { once: true },
-          );
+async function installModelContext(page: Page, failure?: 'sync' | 'async') {
+  await page.addInitScript(
+    ({ failure }) => {
+      const tools = new Map<string, Tool>();
+      const registrations: string[][] = [];
+      const registrationNames: string[] = [];
+      Object.defineProperty(document, 'modelContext', {
+        configurable: true,
+        value: {
+          registerTool(
+            tool: Tool,
+            options: { signal: AbortSignal; exposedTo?: string[] },
+          ) {
+            if (failure === 'sync') throw new Error('registration denied');
+            if (failure === 'async')
+              return Promise.reject(new Error('registration denied'));
+            if (options.signal.aborted) return;
+            if (tools.has(tool.name))
+              throw new Error(`Duplicate tool: ${tool.name}`);
+            tools.set(tool.name, tool);
+            registrations.push(options.exposedTo ?? []);
+            registrationNames.push(tool.name);
+            options.signal.addEventListener(
+              'abort',
+              () => tools.delete(tool.name),
+              { once: true },
+            );
+          },
         },
-      },
-    });
-    window.webMcpTest = {
-      list: () => [...tools.keys()].sort(),
-      async run(name, input = {}, signal) {
-        const tool = tools.get(`rspress_${name}`);
-        if (!tool) throw new Error(`Missing tool: ${name}`);
-        return tool.execute(input, { signal });
-      },
-      registrations,
-    };
-  });
+      });
+      window.webMcpTest = {
+        list: () => [...tools.keys()].sort(),
+        async run(name, input = {}, signal) {
+          const tool = tools.get(`rspress_${name}`);
+          if (!tool) throw new Error(`Missing tool: ${name}`);
+          return tool.execute(input, { signal });
+        },
+        registrations,
+        registrationNames,
+      };
+    },
+    { failure },
+  );
 }
 
 function run(page: Page, name: string, input: unknown = {}) {
@@ -550,3 +560,138 @@ test.describe('WebMCP React Router 6 compatibility', () => {
     });
   });
 });
+
+for (const mode of ['dev', 'build'] as const) {
+  test.describe(`public useWebMcp hook (${mode})`, () => {
+    let app: Awaited<ReturnType<typeof runDevCommand>>;
+    let port: number;
+    test.beforeAll(async () => {
+      port = await getPort();
+      if (mode === 'dev') {
+        app = await runDevCommand(
+          import.meta.dirname,
+          port,
+          'rspress.hook.config.ts',
+        );
+      } else {
+        await runBuildCommand(import.meta.dirname, 'rspress.hook.config.ts');
+        app = await runPreviewCommand(import.meta.dirname, port, [
+          '-c',
+          'rspress.hook.config.ts',
+        ]);
+      }
+    });
+    test.afterAll(async () => {
+      await killProcess(app);
+    });
+    const state = async (page: Page) =>
+      JSON.parse((await page.getByTestId('hook-state').textContent())!);
+    const open = async (page: Page) =>
+      page.goto(`http://localhost:${port}/docs/`);
+
+    test('exports a typed hook and updates callbacks without registration churn', async ({
+      page,
+    }) => {
+      await installModelContext(page);
+      await open(page);
+      await expect
+        .poll(() => state(page))
+        .toMatchObject({ supported: true, registered: true, count: 0 });
+      const registrations = await page.evaluate(
+        () => window.webMcpTest.registrationNames.length,
+      );
+      await page.getByRole('button', { name: 'Increment tool count' }).click();
+      await expect.poll(() => state(page)).toMatchObject({ count: 1 });
+      expect(await run(page, 'test_value', { add: 3 })).toMatchObject({
+        value: 4,
+      });
+      expect(
+        await page.evaluate(() => window.webMcpTest.registrationNames.length),
+      ).toBe(registrations);
+      expect(
+        await page.evaluate(() =>
+          window.webMcpTest.run('test_value', {}, new AbortController().signal),
+        ),
+      ).toMatchObject({ cancellable: true });
+      await expect(
+        page.evaluate(() =>
+          window.webMcpTest.run('test_value', {}, AbortSignal.abort()),
+        ),
+      ).rejects.toThrow();
+      await page.getByRole('button', { name: 'Rename tool' }).click();
+      await expect
+        .poll(() => page.evaluate(() => window.webMcpTest.list()))
+        .toEqual(['rspress_test_renamed']);
+      expect(await run(page, 'test_renamed')).toMatchObject({ value: 1 });
+    });
+
+    test('cleans up on disable and unmount and does not remove another owner', async ({
+      page,
+    }) => {
+      await installModelContext(page);
+      await open(page);
+      await expect.poll(() => state(page)).toMatchObject({ registered: true });
+      await page.getByRole('button', { name: 'Toggle duplicate tool' }).click();
+      await expect(page.getByTestId('duplicate-state')).toContainText(
+        'Duplicate tool',
+      );
+      await page.getByRole('button', { name: 'Toggle duplicate tool' }).click();
+      expect(await run(page, 'test_value')).toMatchObject({ value: 0 });
+      await page.getByRole('button', { name: 'Toggle tool enabled' }).click();
+      await expect
+        .poll(() => state(page))
+        .toMatchObject({ supported: true, registered: false });
+      expect(await page.evaluate(() => window.webMcpTest.list())).toEqual([]);
+      await page.getByRole('button', { name: 'Toggle tool enabled' }).click();
+      await expect.poll(() => state(page)).toMatchObject({ registered: true });
+      await page.getByRole('button', { name: 'Toggle tool mounted' }).click();
+      await expect
+        .poll(() => page.evaluate(() => window.webMcpTest.list()))
+        .toEqual([]);
+      await page.getByRole('button', { name: 'Toggle tool mounted' }).click();
+      await expect.poll(() => state(page)).toMatchObject({ registered: true });
+    });
+
+    test('reads committed state while a newer render is suspended', async ({
+      page,
+    }) => {
+      await installModelContext(page);
+      await open(page);
+      await expect.poll(() => state(page)).toMatchObject({ registered: true });
+      await page.getByRole('button', { name: 'Suspend tool render' }).click();
+      expect(await run(page, 'test_value')).toMatchObject({ value: 0 });
+      await page.getByRole('button', { name: 'Recover tool render' }).click();
+      await expect.poll(() => state(page)).toMatchObject({ count: 2 });
+      expect(await run(page, 'test_value')).toMatchObject({ value: 2 });
+    });
+
+    for (const failure of ['sync', 'async'] as const) {
+      test(`reports ${failure} registration errors`, async ({ page }) => {
+        await installModelContext(page, failure);
+        await open(page);
+        await expect
+          .poll(() => state(page))
+          .toMatchObject({
+            supported: true,
+            registered: false,
+            error: 'registration denied',
+          });
+      });
+    }
+
+    test('is a no-op when the browser API is unavailable', async ({ page }) => {
+      await page.addInitScript(() =>
+        Object.defineProperty(document, 'modelContext', {
+          configurable: true,
+          value: undefined,
+        }),
+      );
+      await open(page);
+      await expect
+        .poll(() => state(page))
+        .toMatchObject({ supported: false, registered: false, error: null });
+      await page.getByRole('button', { name: 'Increment tool count' }).click();
+      await expect.poll(() => state(page)).toMatchObject({ count: 1 });
+    });
+  });
+}

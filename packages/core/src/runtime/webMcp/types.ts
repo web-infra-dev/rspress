@@ -36,34 +36,3 @@ export interface NavigationResult {
   previousPage: { title: string; routePath: string } | null;
   nextPage: { title: string; routePath: string } | null;
 }
-
-export interface Tool {
-  name: string;
-  description: string;
-  inputSchema: Record<string, unknown>;
-  annotations: { readOnlyHint: boolean; untrustedContentHint: boolean };
-  execute(
-    input: unknown,
-    options?: { signal?: AbortSignal },
-  ): unknown | Promise<unknown>;
-}
-
-export interface ModelContext {
-  registerTool(
-    tool: Tool,
-    options: { signal: AbortSignal; exposedTo?: string[] },
-  ): Promise<void>;
-}
-
-export interface ToolContext {
-  site: SiteInfo;
-  page: PageInfo;
-  pages: PageInfo[];
-  resolveRoute(pathname: string): string | undefined;
-  origin: string;
-  markdownUrl(routePath: string): string;
-  markdown: boolean;
-  fetch: typeof fetch;
-  search?: (query: string, limit: number) => Promise<unknown>;
-  navigate: (target: string, signal?: AbortSignal) => Promise<NavigationResult>;
-}

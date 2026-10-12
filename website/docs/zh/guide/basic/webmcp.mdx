@@ -63,3 +63,7 @@ export default defineConfig({
 ```
 
 浏览器还会应用 WebMCP 权限策略和工具发现规则，详见[跨源 API 文档](https://developer.chrome.com/docs/ai/webmcp/imperative-api#cross-origin-iframes)。
+
+## 自定义工具
+
+通过 `@rspress/core/runtime` 导出的 [`useWebMcp`](/ui/hooks/use-web-mcp)，可以在自定义组件中注册工具。内置的站点、页面、导航和搜索工具也使用同一个 hook。

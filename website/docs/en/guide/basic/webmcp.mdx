@@ -63,3 +63,7 @@ export default defineConfig({
 ```
 
 The browser also applies its WebMCP permissions policy and discovery rules. See the [cross-origin API documentation](https://developer.chrome.com/docs/ai/webmcp/imperative-api#cross-origin-iframes).
+
+## Custom tools
+
+Use [`useWebMcp`](/ui/hooks/use-web-mcp) from `@rspress/core/runtime` to register tools in your own components. The built-in site, page, navigation, and search tools use the same hook.

@@ -1,10 +1,12 @@
-import type { PageInfo, Tool, ToolContext } from './types';
+import { normalizeHref, removeTrailingSlash } from '@rspress/shared';
+import type { WebMcpOptions } from '../hooks/useWebMcp';
+import type { PageInfo } from './types';
 
 type Field =
   | { type: 'string'; minLength?: number }
   | { type: 'integer'; minimum: number; maximum?: number };
-const query: Field = { type: 'string', minLength: 1 };
-const routePath: Field = { type: 'string', minLength: 1 };
+export const queryField: Field = { type: 'string', minLength: 1 };
+export const routePathField: Field = { type: 'string', minLength: 1 };
 
 function argumentsObject(
   input: unknown,
@@ -46,7 +48,10 @@ function argumentsObject(
 
 export function resolveInternalRoute(
   value: string,
-  context: Pick<ToolContext, 'origin' | 'resolveRoute'>,
+  context: {
+    origin: string;
+    resolveRoute(pathname: string): string | undefined;
+  },
 ) {
   if (!value.startsWith('/') || value.startsWith('//')) {
     throw new TypeError('routePath must be an absolute internal path.');
@@ -59,7 +64,7 @@ export function resolveInternalRoute(
   return `${path}${url.search}${url.hash}`;
 }
 
-function metadata(page: PageInfo) {
+export function metadata(page: PageInfo) {
   return {
     title: page.title,
     description: page.description,
@@ -69,14 +74,15 @@ function metadata(page: PageInfo) {
   };
 }
 
-async function readPage(
+export async function readPage(
   page: PageInfo,
-  context: ToolContext,
+  base: string,
   signal?: AbortSignal,
+  fetcher: typeof fetch = fetch,
 ) {
-  const response = await context.fetch(context.markdownUrl(page.routePath), {
-    signal,
-  });
+  // Tool paths exclude base even when a route shares its prefix.
+  const url = `${removeTrailingSlash(base)}${normalizeHref(page.routePath, false).replace(/\.html$/, '.md')}`;
+  const response = await fetcher(url, { signal });
   if (!response.ok)
     throw new Error(
       `Failed to read Markdown for ${page.routePath}: ${response.status}`,
@@ -98,18 +104,51 @@ async function readPage(
   };
 }
 
-export function createTools(getContext: () => ToolContext): Tool[] {
-  const tool = (
-    name: string,
-    description: string,
-    fields: Record<string, Field>,
-    required: string[],
-    execute: (
-      args: Record<string, unknown>,
-      context: ToolContext,
-      signal?: AbortSignal,
-    ) => unknown,
-  ): Tool => ({
+export function listPages(
+  pages: PageInfo[],
+  current: Pick<PageInfo, 'lang' | 'version'>,
+  args: Record<string, unknown>,
+) {
+  const lang = args.lang ?? current.lang;
+  const version = args.version ?? current.version;
+  const terms =
+    (args.query as string | undefined)?.trim().toLowerCase().split(/\s+/) ?? [];
+  const matches = pages.filter(page => {
+    const text = [
+      page.title,
+      page.description,
+      page.routePath,
+      ...page.toc.map(item => item.text),
+    ]
+      .join(' ')
+      .toLowerCase();
+    return (
+      page.lang === lang &&
+      page.version === version &&
+      terms.every(term => text.includes(term))
+    );
+  });
+  const limit = (args.limit as number | undefined) ?? 50;
+  const offset = (args.offset as number | undefined) ?? 0;
+  return {
+    pages: matches
+      .slice(offset, offset + limit)
+      .map(page => ({ ...metadata(page), toc: page.toc })),
+    total: matches.length,
+    offset,
+    limit,
+  };
+}
+
+/** Shared validation and defaults for Rspress's built-in tools. */
+export function defineTool(
+  name: string,
+  description: string,
+  fields: Record<string, Field>,
+  required: string[],
+  execute: (args: Record<string, unknown>, signal?: AbortSignal) => unknown,
+): WebMcpOptions {
+  return {
     name: `rspress_${name}`,
     description,
     inputSchema: {
@@ -122,122 +161,8 @@ export function createTools(getContext: () => ToolContext): Tool[] {
       readOnlyHint: name !== 'navigate',
       untrustedContentHint: true,
     },
-    execute(input, options) {
-      options?.signal?.throwIfAborted();
-      return execute(
-        argumentsObject(input, fields, required),
-        getContext(),
-        options?.signal,
-      );
-    },
-  });
-  const tools = [
-    tool(
-      'get_site_info',
-      'Get documentation site metadata, languages, versions, navigation and the active sidebar.',
-      {},
-      [],
-      (_args, ctx) => ctx.site,
-    ),
-    tool(
-      'list_pages',
-      'List documentation pages, optionally filtering titles, descriptions and headings. Defaults to the active language and version.',
-      {
-        query,
-        lang: { type: 'string' },
-        version: { type: 'string' },
-        limit: { type: 'integer', minimum: 1, maximum: 100 },
-        offset: { type: 'integer', minimum: 0 },
-      },
-      [],
-      (args, ctx) => {
-        const lang = args.lang ?? ctx.page.lang;
-        const version = args.version ?? ctx.page.version;
-        const terms =
-          (args.query as string | undefined)
-            ?.trim()
-            .toLowerCase()
-            .split(/\s+/) ?? [];
-        const pages = ctx.pages.filter(page => {
-          const text = [
-            page.title,
-            page.description,
-            page.routePath,
-            ...page.toc.map(item => item.text),
-          ]
-            .join(' ')
-            .toLowerCase();
-          return (
-            page.lang === lang &&
-            page.version === version &&
-            terms.every(term => text.includes(term))
-          );
-        });
-        const limit = (args.limit as number | undefined) ?? 50;
-        const offset = (args.offset as number | undefined) ?? 0;
-        return {
-          pages: pages
-            .slice(offset, offset + limit)
-            .map(page => ({ ...metadata(page), toc: page.toc })),
-          total: pages.length,
-          offset,
-          limit,
-        };
-      },
-    ),
-    tool(
-      'navigate',
-      'Navigate to a known internal documentation route and return the rendered page metadata, section routes and adjacent pages. Paths are relative to the site base and may include a query or hash.',
-      { routePath },
-      ['routePath'],
-      (args, ctx, signal) =>
-        ctx.navigate(
-          resolveInternalRoute(args.routePath as string, ctx),
-          signal,
-        ),
-    ),
-  ];
-  if (getContext().markdown) {
-    tools.push(
-      tool(
-        'get_page',
-        'Read metadata and generated Markdown for a known documentation route without navigating. Paths are relative to the site base.',
-        { routePath },
-        ['routePath'],
-        (args, ctx, signal) => {
-          const target = resolveInternalRoute(args.routePath as string, ctx);
-          const path = ctx.resolveRoute(new URL(target, ctx.origin).pathname);
-          const page = ctx.pages.find(page => page.routePath === path);
-          if (!page) throw new TypeError(`Unknown internal route: ${path}`);
-          return readPage(page, ctx, signal);
-        },
-      ),
-      tool(
-        'get_current_page',
-        'Read metadata, frontmatter, table of contents and generated Markdown for the current documentation page.',
-        {},
-        [],
-        (_args, ctx, signal) => readPage(ctx.page, ctx, signal),
-      ),
-    );
-  }
-  if (getContext().search) {
-    tools.push(
-      tool(
-        'search_docs',
-        'Search the local documentation index for the active language and version.',
-        {
-          query,
-          limit: { type: 'integer', minimum: 1, maximum: 20 },
-        },
-        ['query'],
-        (args, ctx) =>
-          ctx.search!(
-            args.query as string,
-            (args.limit as number | undefined) ?? 10,
-          ),
-      ),
-    );
-  }
-  return tools;
+    exposedTo: import.meta.env.WEBMCP_OPTIONS?.exposedTo,
+    execute: (input, options) =>
+      execute(argumentsObject(input, fields, required), options.signal),
+  };
 }

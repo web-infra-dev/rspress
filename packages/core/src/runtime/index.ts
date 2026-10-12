@@ -28,6 +28,12 @@ export {
 } from './hooks/useSidebar';
 export { useSite } from './hooks/useSite';
 export { useVersion } from './hooks/useVersion';
+export {
+  useWebMcp,
+  type WebMcpOptions,
+  type WebMcpState,
+  type WebMcpExecuteOptions,
+} from './hooks/useWebMcp';
 export { useWindowSize } from './hooks/useWindowSize';
 export { initPageData } from './initPageData';
 export { NoSSR } from './NoSSR';
