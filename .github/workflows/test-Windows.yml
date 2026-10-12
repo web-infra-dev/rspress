@@ -36,7 +36,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 1
+          # Skip detection needs the merge base with origin/main.
+          fetch-depth: 0
 
       - name: Install Pnpm
         run: |
@@ -45,7 +46,9 @@ jobs:
 
       - name: Check skip CI
         shell: bash
-        run: echo "RESULT=$(node ./scripts/skipCI.js)" >> "$GITHUB_OUTPUT"
+        run: |
+          result=$(node ./scripts/skipCI.js)
+          echo "RESULT=$result" >> "$GITHUB_OUTPUT"
         id: skip-ci
 
       - name: Log skip CI result

@@ -3,7 +3,7 @@ const { execSync } = require('node:child_process');
 // CI configuration and skip detection changes must also run the tests.
 const SKIP_FOLDERS = ['.vscode', 'apps'];
 
-async function main() {
+function main() {
   execSync('git fetch origin main');
 
   const changedFilesOutput = execSync('git diff origin/main... --name-only', {
@@ -29,9 +29,4 @@ async function main() {
   console.log(shouldSkipCI ? 'true' : 'false');
 }
 
-main().catch(err => {
-  // Fail open: a broken skip detection must not silently skip or fail
-  // the whole test job — running the tests is always the safe answer.
-  console.error('Failed to detect CI skip; running the tests anyway', err);
-  console.log('false');
-});
+main();
