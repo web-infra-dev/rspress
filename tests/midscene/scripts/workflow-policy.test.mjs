@@ -2,6 +2,17 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
+test('report artifacts share the harness root instead of a runner-wide common ancestor', () => {
+  const upload = workflow.slice(
+    workflow.indexOf('      - name: Save native reports even after failure'),
+    workflow.indexOf('  prepare-report:'),
+  );
+  assert(upload.includes('tests/midscene/.midscene/'));
+  assert(upload.includes('tests/midscene/midscene_run/'));
+  assert(upload.includes('tests/midscene/fixture.log'));
+  assert(!upload.includes('runner.temp'));
+});
+
 const workflow = await readFile(
   new URL('../../../.github/workflows/midscene.yml', import.meta.url),
   'utf8',

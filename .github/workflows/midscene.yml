@@ -109,6 +109,13 @@ jobs:
         run: |
           node --input-type=module -e 'import fs from "node:fs"; fs.writeFileSync("model.json", JSON.stringify({name: process.env.MIDSCENE_MODEL_NAME, family: process.env.MIDSCENE_MODEL_FAMILY}));'
           npm test
+      - name: Collect fixture startup log
+        if: always()
+        working-directory: tests/midscene
+        run: |
+          if [ -f "$RUNNER_TEMP/midscene-fixture.log" ]; then
+            cp "$RUNNER_TEMP/midscene-fixture.log" fixture.log
+          fi
       - name: Save native reports even after failure
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
@@ -121,7 +128,7 @@ jobs:
             tests/midscene/.midscene/
             tests/midscene/midscene_run/
             tests/midscene/model.json
-            ${{ runner.temp }}/midscene-fixture.log
+            tests/midscene/fixture.log
 
   prepare-report:
     name: Prepare native report
