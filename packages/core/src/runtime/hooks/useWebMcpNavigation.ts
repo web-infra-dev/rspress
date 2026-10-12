@@ -1,10 +1,21 @@
 import { useCallback, useLayoutEffect, useRef } from 'react';
 import { useLocation, useNavigate, useNavigation } from 'react-router-dom';
 import type { NavigationResult } from '../webMcp/types';
+import {
+  pathnameToRouteService,
+  usePage,
+  useWebMcp,
+} from '@rspress/core/runtime';
+import { usePrevNextPage } from '../../theme/logic/usePrevNextPage';
+import {
+  defineTool,
+  resolveInternalRoute,
+  routePathField,
+} from '../webMcp/tools';
 
 // Native navigation prepares the page. A layout effect acknowledges that React
 // has committed the corresponding page context before returning it to an agent.
-export function useToolNavigation(result: NavigationResult) {
+function useNavigateWithResult(result: NavigationResult) {
   const location = useLocation();
   const navigation = useNavigation();
   const navigate = useNavigate();
@@ -105,5 +116,60 @@ export function useToolNavigation(result: NavigationResult) {
       });
     },
     [navigate, settle],
+  );
+}
+
+export function useWebMcpNavigation() {
+  const { page } = usePage();
+  const location = useLocation();
+  const resolveRoute = (pathname: string) =>
+    pathnameToRouteService(pathname)?.path;
+  const { prevPage, nextPage } = usePrevNextPage();
+  const toLink = (item: typeof prevPage) => {
+    if (!item?.link) return null;
+    try {
+      return {
+        title: item.text,
+        routePath: resolveInternalRoute(item.link, {
+          origin: window.location.origin,
+          resolveRoute,
+        }),
+      };
+    } catch {
+      return null;
+    }
+  };
+  const result: NavigationResult = {
+    routePath: `${page.routePath}${location.search}${location.hash}`,
+    page: {
+      title: page.title,
+      description: page.description,
+      lang: page.lang,
+      version: page.version,
+    },
+    sections: page.toc.map(section => ({
+      title: section.text,
+      depth: section.depth,
+      routePath: `${page.routePath}${location.search}#${section.id}`,
+    })),
+    previousPage: toLink(prevPage),
+    nextPage: toLink(nextPage),
+  };
+  const navigate = useNavigateWithResult(result);
+  useWebMcp(
+    defineTool(
+      'navigate',
+      'Navigate to a known internal documentation route and return the rendered page metadata, section routes and adjacent pages. Paths are relative to the site base and may include a query or hash.',
+      { routePath: routePathField },
+      ['routePath'],
+      (args, signal) =>
+        navigate(
+          resolveInternalRoute(args.routePath as string, {
+            origin: window.location.origin,
+            resolveRoute,
+          }),
+          signal,
+        ),
+    ),
   );
 }
