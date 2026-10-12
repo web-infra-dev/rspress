@@ -1,0 +1,8 @@
+.env
+model.json
+.midscene/
+midscene_run/
+reports/
+site/
+fixture/doc_build/
+fixture/.rspress/

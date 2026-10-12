@@ -1,0 +1,278 @@
+name: Midscene E2E
+
+on:
+  pull_request:
+    paths:
+      [
+        'packages/**',
+        'tests/midscene/**',
+        '.github/workflows/midscene.yml',
+        'pnpm-lock.yaml',
+      ]
+  push:
+    branches: [main]
+    paths:
+      [
+        'packages/**',
+        'tests/midscene/**',
+        '.github/workflows/midscene.yml',
+        'pnpm-lock.yaml',
+      ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  MIDSCENE_UPSTREAM_REPOSITORY: web-infra-dev/rspress
+
+concurrency:
+  group: midscene-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate AI E2E definitions
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tests/midscene/package-lock.json
+      - run: npm ci
+        working-directory: tests/midscene
+      - run: npm run collect && npm run typecheck && npm run test:summary
+        working-directory: tests/midscene
+      - name: Explain pull request coverage
+        if: github.event_name == 'pull_request'
+        run: |
+          echo '## Midscene E2E definitions validated' >> "$GITHUB_STEP_SUMMARY"
+          echo 'This PR check does not call a model. AI E2E runs on relevant upstream main pushes or manual dispatch. Fork PR code never receives model credentials.' >> "$GITHUB_STEP_SUMMARY"
+
+  midscene:
+    name: AI E2E · core flows
+    needs: validate
+    if: >-
+      (github.event_name == 'workflow_dispatch' &&
+       (github.repository != 'web-infra-dev/rspress' || github.ref == 'refs/heads/main')) ||
+      (github.event_name == 'push' && github.repository == 'web-infra-dev/rspress')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+      - name: Install workspace and build checked-out packages
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+      - run: npm ci
+        working-directory: tests/midscene
+      - run: npx playwright install --with-deps chromium
+        working-directory: tests/midscene
+      - name: Verify model configuration and vision
+        working-directory: tests/midscene
+        env:
+          MIDSCENE_MODEL_BASE_URL: ${{ secrets.MIDSCENE_MODEL_BASE_URL }}
+          MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
+          MIDSCENE_MODEL_NAME: ${{ secrets.MIDSCENE_MODEL_NAME }}
+          MIDSCENE_MODEL_FAMILY: ${{ secrets.MIDSCENE_MODEL_FAMILY }}
+        run: npm run check:model-vision
+      - name: Start the local product fixture
+        working-directory: tests/midscene
+        run: |
+          npm run serve > "$RUNNER_TEMP/midscene-fixture.log" 2>&1 &
+          for _ in $(seq 1 90); do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat "$RUNNER_TEMP/midscene-fixture.log"
+          exit 1
+      - name: Run AI-native cases
+        working-directory: tests/midscene
+        env:
+          MIDSCENE_MODEL_BASE_URL: ${{ secrets.MIDSCENE_MODEL_BASE_URL }}
+          MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
+          MIDSCENE_MODEL_NAME: ${{ secrets.MIDSCENE_MODEL_NAME }}
+          MIDSCENE_MODEL_FAMILY: ${{ secrets.MIDSCENE_MODEL_FAMILY }}
+        run: |
+          node --input-type=module -e 'import fs from "node:fs"; fs.writeFileSync("model.json", JSON.stringify({name: process.env.MIDSCENE_MODEL_NAME, family: process.env.MIDSCENE_MODEL_FAMILY}));'
+          npm test
+      - name: Save native reports even after failure
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: midscene-shard-1
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            tests/midscene/.midscene/
+            tests/midscene/midscene_run/
+            tests/midscene/model.json
+            ${{ runner.temp }}/midscene-fixture.log
+
+  prepare-report:
+    name: Prepare native report
+    needs: midscene
+    if: always() && !cancelled() && needs.midscene.result != 'skipped'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      pages-artifact: ${{ steps.pages-artifact.outputs.name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+      - run: npm ci
+        working-directory: tests/midscene
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          pattern: midscene-shard-*
+          path: ${{ runner.temp }}/midscene-report-shards
+      - name: Merge with the native Midscene Test reporter
+        run: node tests/midscene/scripts/merge-native-reports.mjs "$RUNNER_TEMP/midscene-report-shards" web-shard-1 tests/midscene/case-manifest.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: midscene-combined-report
+          include-hidden-files: true
+          path: ${{ runner.temp }}/midscene-report-shards
+          retention-days: 14
+      # Explicit opt-in avoids replacing an existing documentation Pages site.
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+        id: pages
+        if: vars.MIDSCENE_PUBLISH_REPO == github.repository
+        continue-on-error: true
+      - name: Find previous trusted Pages report
+        id: previous
+        if: steps.pages.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tests/midscene/scripts/trusted-report-runs.mjs find-previous
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        if: steps.pages.outcome == 'success' && steps.previous.outputs.run_id != ''
+        with:
+          name: ${{ steps.previous.outputs.name }}
+          run-id: ${{ steps.previous.outputs.run_id }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/previous-pages-artifact
+      - name: Prepare recent report history
+        if: steps.pages.outcome == 'success'
+        run: |
+          mkdir -p "$RUNNER_TEMP/previous-pages"
+          if [ -f "$RUNNER_TEMP/previous-pages-artifact/artifact.tar" ]; then
+            tar -xf "$RUNNER_TEMP/previous-pages-artifact/artifact.tar" -C "$RUNNER_TEMP/previous-pages"
+          fi
+          node tests/midscene/scripts/prepare-pages-site.mjs \
+            --site "$RUNNER_TEMP/midscene-pages" \
+            --reports "$RUNNER_TEMP/midscene-report-shards" \
+            --run-id "$GITHUB_RUN_ID" --previous "$RUNNER_TEMP/previous-pages"
+      - name: Name Pages artifact
+        id: pages-artifact
+        if: steps.pages.outcome == 'success'
+        run: echo "name=midscene-e2e-report-pages-$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        if: steps.pages.outcome == 'success'
+        with:
+          name: ${{ steps.pages-artifact.outputs.name }}
+          path: ${{ runner.temp }}/midscene-pages
+          retention-days: 14
+
+  deploy-report:
+    name: Publish native report
+    needs: prepare-report
+    if: always() && !cancelled() && needs.prepare-report.outputs.pages-artifact != ''
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: midscene-pages-report
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page-url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+        id: deployment
+        with:
+          artifact_name: ${{ needs.prepare-report.outputs.pages-artifact }}
+
+  report-results:
+    name: Midscene results
+    needs: [midscene, prepare-report, deploy-report]
+    if: always() && !cancelled() && needs.midscene.result != 'skipped'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        id: combined
+        continue-on-error: true
+        with:
+          name: midscene-combined-report
+          path: ${{ runner.temp }}/midscene-report-shards
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        if: steps.combined.outcome != 'success'
+        continue-on-error: true
+        with:
+          pattern: midscene-shard-*
+          path: ${{ runner.temp }}/midscene-report-shards
+      - name: Write the consolidated run Summary
+        if: always()
+        env:
+          PAGE_URL: ${{ needs.deploy-report.result == 'success' && needs.deploy-report.outputs.page-url || '' }}
+          REPORT_SOURCE_RUN_ID: ''
+          REPORTS_DIR: midscene-report-shards
+          EXPECTED_PROJECTS: web-shard-1
+          CASE_MANIFEST: tests/midscene/case-manifest.json
+          PRODUCER_RESULT: ${{ needs.midscene.result }}
+          REPORT_RESULT: ${{ needs.prepare-report.result }}
+          PUBLICATION_RESULT: ${{ needs.prepare-report.result == 'failure' && 'failure' || needs.deploy-report.result }}
+        run: |
+          run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          pages_url=""
+          if [ -n "$PAGE_URL" ]; then
+            pages_url="${PAGE_URL%/}/runs/$GITHUB_RUN_ID/"
+          fi
+          if node tests/midscene/scripts/render-ci-summary.mjs \
+            --reports-dir "$RUNNER_TEMP/$REPORTS_DIR" \
+            --expected-projects "${EXPECTED_PROJECTS:-web-shard-1}" \
+            --case-manifest "$CASE_MANIFEST" \
+            --run-url "$run_url" --pages-url "$pages_url" \
+            --source-run-id "$REPORT_SOURCE_RUN_ID" \
+            --producer-result "$PRODUCER_RESULT" --report-result "$REPORT_RESULT" \
+            --publication-result "$PUBLICATION_RESULT" \
+            --output "$RUNNER_TEMP/midscene-summary.md"; then
+            cat "$RUNNER_TEMP/midscene-summary.md" >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "## Rspress × Midscene · Summary unavailable"
+              echo
+              echo "Case counts could not be read. Aggregation: $REPORT_RESULT. Pages: $PUBLICATION_RESULT."
+              echo
+              echo "[Inspect this run and available artifacts]($run_url#artifacts)."
+              if [[ "$REPORT_SOURCE_RUN_ID" =~ ^[0-9]+$ ]]; then
+                echo "[Inspect source-run artifacts]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$REPORT_SOURCE_RUN_ID#artifacts)."
+              fi
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
