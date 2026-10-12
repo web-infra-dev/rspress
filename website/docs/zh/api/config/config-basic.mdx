@@ -459,6 +459,20 @@ export default defineConfig({
 
 详细用法、配置选项和实现原理请参阅 [llms.txt（SSG-MD）](/guide/basic/ssg-md)。
 
+## webMcp
+
+- **类型**：`boolean | { exposedTo?: string[] }`
+- **默认值**：`false`
+
+通过浏览器原生 WebMCP API 提供内置文档工具。生产构建需要开启 [`llms`](#llms)，为页面读取工具生成 Markdown。可用工具、浏览器支持和本地搜索行为详见 [WebMCP](/guide/basic/webmcp)。
+
+```ts
+export default defineConfig({
+  llms: true,
+  webMcp: true,
+});
+```
+
 ## mediumZoom
 
 - **类型**： `boolean` | `{ selector?: string }`

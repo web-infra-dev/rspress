@@ -373,6 +373,13 @@ export interface UserConfig {
         remarkSplitMdxOptions?: RemarkSplitMdxOptions;
       };
   /**
+   * Expose built-in documentation tools through the browser WebMCP API.
+   * Markdown tools require `llms: true` in production.
+   * @default false
+   * @experimental
+   */
+  webMcp?: boolean | { exposedTo?: string[] };
+  /**
    * Whether to enable medium-zoom
    * @default true
    */

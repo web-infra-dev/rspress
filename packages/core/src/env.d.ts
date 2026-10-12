@@ -1,4 +1,10 @@
 interface ImportMetaEnv {
+  readonly ENABLE_WEBMCP: boolean;
+  readonly WEBMCP_OPTIONS: {
+    exposedTo?: string[];
+    markdown: boolean;
+    search: boolean;
+  };
   readonly ENABLE_LLMS_HINT: boolean;
   readonly ENABLE_LLMS_UI: boolean;
   readonly SSG_MD: boolean;

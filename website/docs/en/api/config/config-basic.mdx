@@ -459,6 +459,20 @@ export default defineConfig({
 
 For detailed usage, configuration options, and implementation principles, see [llms.txt (SSG-MD)](/guide/basic/ssg-md).
 
+## webMcp
+
+- **Type**: `boolean | { exposedTo?: string[] }`
+- **Default**: `false`
+
+Expose built-in documentation tools through the browser's native WebMCP API. Production builds require [`llms`](#llms) to generate Markdown for the page-reading tools. See [WebMCP](/guide/basic/webmcp) for available tools, browser support, and local search behavior.
+
+```ts
+export default defineConfig({
+  llms: true,
+  webMcp: true,
+});
+```
+
 ## mediumZoom
 
 - **Type**: `boolean` | `{ selector?: string }`

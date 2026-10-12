@@ -6,11 +6,13 @@ import { createPageRoutes } from './PageRoute';
 import { removeTrailingSlash, withBase } from './utils';
 
 export async function createServerRouter(routePath: string) {
+  const basename = removeTrailingSlash(withBase('/'));
   const { query, dataRoutes } = createStaticHandler(createPageRoutes(), {
-    basename: removeTrailingSlash(withBase('/')),
+    basename,
   });
   const context = await query(
-    new Request(new URL(withBase(routePath), 'http://rspress.local')),
+    // routePath excludes base, including routes that share its prefix.
+    new Request(new URL(`${basename}${routePath}`, 'http://rspress.local')),
   );
   if (context instanceof Response) {
     throw new Error(

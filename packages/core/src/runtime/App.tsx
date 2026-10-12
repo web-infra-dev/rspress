@@ -3,6 +3,7 @@ import { Layout, Root } from '@rspress/core/theme';
 import { LlmsHint } from '@rspress/core/theme-original';
 import React, { useContext } from 'react';
 import { useGlobalComponents } from './hooks/useGlobalComponents';
+import { WebMcp } from './WebMcp';
 
 enum QueryStatus {
   Show = '1',
@@ -34,6 +35,7 @@ export function App() {
 
   return (
     <Root>
+      {import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR && <WebMcp />}
       {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
       <Layout />
       {
