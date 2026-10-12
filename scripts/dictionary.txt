@@ -197,3 +197,4 @@ opencode
 blockedbyclient
 doubao
 quanru
+autoselection
