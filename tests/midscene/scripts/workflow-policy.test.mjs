@@ -18,6 +18,14 @@ test('report artifacts share the harness root instead of a runner-wide common an
   assert(!upload.includes('runner.temp'));
 });
 
+test('single-shard downloads explicitly preserve the published shard directory', () => {
+  const downloads = workflow.match(
+    /name: midscene-shard-1\n {10}path: \$\{\{ runner\.temp \}\}\/midscene-report-shards\/midscene-shard-1/g,
+  );
+  assert.equal(downloads?.length, 2);
+  assert(!workflow.includes('pattern: midscene-shard-*'));
+});
+
 test('PR validation does not receive credentials or call the model', () => {
   assert(!workflow.includes('pull_request_target'));
   const validation = workflow.slice(

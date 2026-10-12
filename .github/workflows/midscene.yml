@@ -152,8 +152,8 @@ jobs:
         working-directory: tests/midscene
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
-          pattern: midscene-shard-*
-          path: ${{ runner.temp }}/midscene-report-shards
+          name: midscene-shard-1
+          path: ${{ runner.temp }}/midscene-report-shards/midscene-shard-1
       - name: Merge with the native Midscene Test reporter
         run: node tests/midscene/scripts/merge-native-reports.mjs "$RUNNER_TEMP/midscene-report-shards" web-shard-1 tests/midscene/case-manifest.json
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
@@ -248,8 +248,8 @@ jobs:
         if: steps.combined.outcome != 'success'
         continue-on-error: true
         with:
-          pattern: midscene-shard-*
-          path: ${{ runner.temp }}/midscene-report-shards
+          name: midscene-shard-1
+          path: ${{ runner.temp }}/midscene-report-shards/midscene-shard-1
       - name: Write the consolidated run Summary
         if: always()
         env:
