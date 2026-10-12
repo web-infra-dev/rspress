@@ -81,6 +81,8 @@ jobs:
       - name: Verify model configuration and vision
         working-directory: tests/midscene
         env:
+          # Cross-region IPv4 connections can outlive Node's 250 ms family attempt window.
+          NODE_OPTIONS: --network-family-autoselection-attempt-timeout=2000
           MIDSCENE_MODEL_BASE_URL: ${{ secrets.MIDSCENE_MODEL_BASE_URL }}
           MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
           MIDSCENE_MODEL_NAME: ${{ secrets.MIDSCENE_MODEL_NAME }}
@@ -99,6 +101,7 @@ jobs:
       - name: Run AI-native cases
         working-directory: tests/midscene
         env:
+          NODE_OPTIONS: --network-family-autoselection-attempt-timeout=2000
           MIDSCENE_MODEL_BASE_URL: ${{ secrets.MIDSCENE_MODEL_BASE_URL }}
           MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
           MIDSCENE_MODEL_NAME: ${{ secrets.MIDSCENE_MODEL_NAME }}
