@@ -1,9 +1,6 @@
 import {
   routePathToMdPath,
   usePage,
-  usePages,
-  useWebMcp,
-  pathnameToRouteService,
   useSite,
   withBase,
   withSiteOrigin,
@@ -11,12 +8,7 @@ import {
 } from '@rspress/core/runtime';
 
 import type React from 'react';
-import {
-  defineTool,
-  readPage,
-  resolveInternalRoute,
-  routePathField,
-} from '../../../runtime/webMcp/tools';
+import { useWebMcpPageReading } from '../../../runtime/hooks/useWebMcpPageReading';
 
 const visuallyHiddenStyle: React.CSSProperties = {
   position: 'absolute',
@@ -52,37 +44,7 @@ export function LlmsHint() {
   // Expose page-reading tools while this component declares Markdown access.
   // This build-time condition never changes while the component is mounted.
   if (import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR) {
-    const { pages } = usePages();
-    useWebMcp(
-      defineTool(
-        'get_page',
-        'Read metadata and generated Markdown for a known documentation route without navigating. Paths are relative to the site base.',
-        { routePath: routePathField },
-        ['routePath'],
-        (args, signal) => {
-          const target = resolveInternalRoute(args.routePath as string, {
-            origin: window.location.origin,
-            resolveRoute: pathname => pathnameToRouteService(pathname)?.path,
-          });
-          const path = pathnameToRouteService(
-            new URL(target, window.location.origin).pathname,
-          )?.path;
-          const targetPage = pages.find(page => page.routePath === path);
-          if (!targetPage)
-            throw new TypeError(`Unknown internal route: ${path}`);
-          return readPage(targetPage, site.base, signal);
-        },
-      ),
-    );
-    useWebMcp(
-      defineTool(
-        'get_current_page',
-        'Read metadata, frontmatter, table of contents and generated Markdown for the current documentation page.',
-        {},
-        [],
-        (_args, signal) => readPage(page, site.base, signal),
-      ),
-    );
+    useWebMcpPageReading();
   }
 
   if (!page?.routePath) {
