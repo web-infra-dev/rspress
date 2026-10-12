@@ -161,7 +161,7 @@ export function defineTool(
       readOnlyHint: name !== 'navigate',
       untrustedContentHint: true,
     },
-    exposedTo: import.meta.env.WEBMCP_OPTIONS?.exposedTo,
+    exposedTo: import.meta.env.WEBMCP_EXPOSED_TO,
     execute: (input, options) =>
       execute(argumentsObject(input, fields, required), options.signal),
   };

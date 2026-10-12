@@ -43,7 +43,6 @@ import {
   hintThemeBreakingChange,
 } from './logger/hint';
 import { isLlmsHintEnabled, isLlmsUIEnabled } from './llms';
-import { resolveWebMcpOptions } from './webMcp';
 import type { PluginDriver } from './PluginDriver';
 import type { RouteService } from './route/RouteService';
 import { RouteChunkAssetsPlugin } from './route/routeChunkAssets';
@@ -116,7 +115,6 @@ async function createInternalBuildConfig(
   const base = config?.base ?? '/';
   const enableLlmsUI = isLlmsUIEnabled(config);
   const enableLlmsHint = isLlmsHintEnabled(config, enableSSG);
-  const webMcpOptions = resolveWebMcpOptions(config, enableSSG);
   const localeRedirectScript = getInlineLocaleRedirectScript(config);
 
   // In production, we need to add assetPrefix in asset path
@@ -317,8 +315,14 @@ async function createInternalBuildConfig(
       ],
       include: [PACKAGE_ROOT],
       define: {
-        'import.meta.env.ENABLE_WEBMCP': JSON.stringify(Boolean(webMcpOptions)),
-        'import.meta.env.WEBMCP_OPTIONS': JSON.stringify(webMcpOptions ?? {}),
+        'import.meta.env.ENABLE_WEBMCP': JSON.stringify(
+          config.webMcp !== false,
+        ),
+        'import.meta.env.WEBMCP_EXPOSED_TO': JSON.stringify(
+          typeof config.webMcp === 'object'
+            ? (config.webMcp.exposedTo ?? [])
+            : [],
+        ),
         'import.meta.env.ENABLE_LLMS_UI': JSON.stringify(enableLlmsUI),
         'import.meta.env.ENABLE_LLMS_HINT': JSON.stringify(enableLlmsHint),
       },

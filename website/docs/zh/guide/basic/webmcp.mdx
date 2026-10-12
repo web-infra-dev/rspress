@@ -33,6 +33,8 @@ WebMCP 是实验性功能，需要浏览器在 HTTPS 或 localhost 等安全上�
 
 两个页面读取工具需要在生产构建中开启 `llms: true`，通过 [SSG-MD](/guide/basic/ssg-md) 生成页面 Markdown。运行 `rspress build` 和 `rspress preview` 后可以体验全部六个工具。未开启 `llms: true` 或使用开发服务器时，不生成 SSG-MD 产物，因此不注册 `rspress_get_page` 和 `rspress_get_current_page`。
 
+页面读取工具由声明 Markdown 入口的 `LlmsHint` 组件注册。卸载该组件、关闭 `themeConfig.llmsUI`，或设置 `themeConfig.llmsUI.injectLlmsHint: false` 都会移除这两个工具。
+
 搜索工具与默认搜索面板共用搜索实例及配置的 `beforeSearch`、`onSearch`、`afterSearch` hooks，在打开面板或智能体首次搜索时初始化索引。关闭弹窗不会移除工具；卸载或替换默认搜索面板会移除工具。自定义搜索组件可以通过 `useWebMcp` 注册自己的工具。切换语言或版本后会使用对应索引；设置 `search.versioned: false` 时跨版本搜索。关闭本地搜索或当前分组没有索引时，不注册搜索工具。暂不支持 Algolia 集成：使用 `@rspress/plugin-algolia` 的站点保留现有 DocSearch 界面，但不会提供 WebMCP 搜索工具。页面列表和读取工具仍可使用。
 
 WebMCP 复用现有开发环境的页面数据和搜索索引生命周期，不会在文件编辑时额外触发全站重算；元信息和索引更新仍受现有 HMR 行为限制。
@@ -67,4 +69,4 @@ export default defineConfig({
 
 ## 自定义工具
 
-通过 `@rspress/core/runtime` 导出的 [`useWebMcp`](/ui/hooks/use-web-mcp)，可以在自定义组件中注册工具。内置工具也通过同一个 hook，直接在已有的应用、页面路由和搜索面板实现中注册。
+通过 `@rspress/core/runtime` 导出的 [`useWebMcp`](/ui/hooks/use-web-mcp)，可以在自定义组件中注册工具。内置工具也通过同一个 hook，直接在 `App`、`LlmsHint` 和搜索面板中注册。工具可用性跟随所属组件，`webMcp` 不提供独立的搜索或 Markdown 开关。

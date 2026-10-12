@@ -1,5 +1,8 @@
 export * from '@rspress/core/theme-original';
-import { Search as DefaultSearch } from '@rspress/core/theme-original';
+import {
+  Search as DefaultSearch,
+  LlmsHint as DefaultLlmsHint,
+} from '@rspress/core/theme-original';
 import { useState } from 'react';
 
 export function Search() {
@@ -10,6 +13,18 @@ export function Search() {
         Toggle search component
       </button>
       {visible && <DefaultSearch />}
+    </>
+  );
+}
+
+export function LlmsHint() {
+  const [visible, setVisible] = useState(true);
+  return (
+    <>
+      <button onClick={() => setVisible(!visible)}>
+        Toggle Markdown component
+      </button>
+      {visible && <DefaultLlmsHint />}
     </>
   );
 }

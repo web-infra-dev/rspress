@@ -8,8 +8,7 @@ import {
   useWebMcp,
   pathnameToRouteService,
 } from '@rspress/core/runtime';
-import { Layout, Root } from '@rspress/core/theme';
-import { LlmsHint } from '@rspress/core/theme-original';
+import { Layout, LlmsHint, Root } from '@rspress/core/theme';
 import React, { useContext } from 'react';
 import { useGlobalComponents } from './hooks/useGlobalComponents';
 import { usePrevNextPage } from '../theme/logic/usePrevNextPage';

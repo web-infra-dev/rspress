@@ -817,3 +817,55 @@ test.describe('WebMCP search component ownership', () => {
     ).toContain('v1 en home');
   });
 });
+
+test.describe('WebMCP Markdown component ownership', () => {
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
+  let port: number;
+  test.beforeAll(async () => {
+    const config = 'rspress.search-component.config.ts';
+    await runBuildCommand(import.meta.dirname, config);
+    port = await getPort();
+    app = await runPreviewCommand(import.meta.dirname, port, ['-c', config]);
+  });
+  test.afterAll(async () => {
+    await killProcess(app);
+  });
+
+  test('unregisters page-reading tools when the Markdown component unmounts', async ({
+    page,
+  }) => {
+    await installModelContext(page);
+    await page.goto(`http://localhost:${port}/docs/`);
+    await expect
+      .poll(() => page.evaluate(() => window.webMcpTest.list()))
+      .toEqual(allTools);
+    expect(await run(page, 'get_current_page')).toMatchObject({
+      title: 'v1 en home',
+    });
+    await page
+      .getByRole('button', { name: 'Toggle Markdown component' })
+      .click();
+    await expect
+      .poll(() => page.evaluate(() => window.webMcpTest.list()))
+      .toEqual(
+        allTools.filter(
+          name =>
+            !['rspress_get_page', 'rspress_get_current_page'].includes(name),
+        ),
+      );
+    expect(await run(page, 'list_pages')).toMatchObject({ total: 3 });
+    await run(page, 'navigate', { routePath: '/guide' });
+    await page
+      .getByRole('button', { name: 'Toggle Markdown component' })
+      .click();
+    await expect
+      .poll(() => page.evaluate(() => window.webMcpTest.list()))
+      .toEqual(allTools);
+    expect(await run(page, 'get_current_page')).toMatchObject({
+      title: 'v1 en guide',
+    });
+    expect(await run(page, 'get_page', { routePath: '/' })).toMatchObject({
+      title: 'v1 en home',
+    });
+  });
+});
