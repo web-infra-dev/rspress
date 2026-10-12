@@ -1,7 +1,7 @@
 name: Test (macOS)
 
 concurrency:
-  group: macos-test-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
+  group: macos-test-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 # Controls when the action will run.
@@ -20,14 +20,12 @@ permissions: {}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   ut-mac:
+    # Keep the required check name stable; the runtime version comes from .nvmrc.
+    name: ut-mac (22.x, macos-14)
     # The type of runner that the job will run on
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-14
     permissions:
       contents: read
-    strategy:
-      matrix:
-        os: [macos-14] # M1 Mac
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout
