@@ -1,14 +1,9 @@
 const { execSync } = require('node:child_process');
 
-const SKIP_FOLDERS = [
-  '.github',
-  '.vscode',
-  'apps',
-  'scripts/skipCI.js',
-  'scripts/skipDocsChange.js',
-];
+// CI configuration and skip detection changes must also run the tests.
+const SKIP_FOLDERS = ['.vscode', 'apps'];
 
-async function main() {
+function main() {
   execSync('git fetch origin main');
 
   const changedFilesOutput = execSync('git diff origin/main... --name-only', {
@@ -19,23 +14,19 @@ async function main() {
     .map(file => file?.trim())
     .filter(Boolean);
 
-  const shouldNotSkipCI =
-    !changedFiles.length ||
-    changedFiles.some(
+  // Skip CI only when there is something to skip: every changed file is
+  // docs-only or lives in a folder that cannot affect the packages.
+  const shouldSkipCI =
+    changedFiles.length > 0 &&
+    changedFiles.every(
       file =>
-        !SKIP_FOLDERS.some(
-          folder =>
-            file.startsWith(`${folder}/`) ||
-            file === folder ||
-            file.endsWith('.md'),
+        file.endsWith('.md') ||
+        SKIP_FOLDERS.some(
+          folder => file.startsWith(`${folder}/`) || file === folder,
         ),
     );
 
-  console.log(shouldNotSkipCI ? 'false' : 'true');
+  console.log(shouldSkipCI ? 'true' : 'false');
 }
 
-main().catch(err => {
-  console.error('Failed to detect CI skip', err);
-  // eslint-disable-next-line no-process-exit
-  process.exit(1);
-});
+main();

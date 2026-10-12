@@ -1,7 +1,7 @@
 name: Test (macOS)
 
 concurrency:
-  group: macos-test-${{ github.head_ref }}
+  group: macos-test-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 # Controls when the action will run.
@@ -20,21 +20,19 @@ permissions: {}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   ut-mac:
+    # Keep the required check name stable; the runtime version comes from .nvmrc.
+    name: ut-mac (22.x, macos-14)
     # The type of runner that the job will run on
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-14
     permissions:
       contents: read
-    strategy:
-      matrix:
-        node-version: [22.x]
-        os: [macos-14] # M1 Mac
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 1
+          # Skip detection needs the merge base with origin/main.
+          fetch-depth: 0
 
       - name: Install Pnpm
         run: |
@@ -42,17 +40,19 @@ jobs:
           corepack enable
 
       - name: Check skip CI
-        run: echo "RESULT=$(node ./scripts/skipCI.js)" >> "$GITHUB_OUTPUT"
+        run: |
+          result=$(node ./scripts/skipCI.js)
+          echo "RESULT=$result" >> "$GITHUB_OUTPUT"
         id: skip-ci
 
       - name: Log skip CI result
         run: echo "${{steps.skip-ci.outputs.RESULT}}"
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version-file: .nvmrc
           package-manager-cache: false
 
       - name: Install Dependencies
