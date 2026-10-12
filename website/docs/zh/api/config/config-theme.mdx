@@ -571,4 +571,119 @@ title: 文档标题
 
 ## llmsUI
 
-`themeConfig.llmsUI` 及其子选项请参阅 [AI 配置](/api/config/config-agent#llmsui)。
+- **类型**：
+
+```ts
+type LlmsUI =
+  | boolean
+  | {
+      injectLlmsHint?: boolean;
+      viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
+      placement?: 'title' | 'outline';
+    };
+```
+
+- **默认值**：`false`（当配置 `llms: true` 时自动设置为 `true`）
+
+通过 `themeConfig.llmsUI` 配置 LLMS UI 组件。启用后，会自动在所有 H1 标题下方（默认）或右侧大纲面板中添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件。
+
+这在使用 [llms](/guide/basic/ssg-md) 功能生成 llms.txt 文件时非常有用，允许用户轻松复制或在 AI 工具中打开 markdown 内容。
+
+:::warning
+ssg-md 仅在构建过程中生效，因此在 `dev` 模式下复制 Markdown 内容无法正常工作。请使用 `rspress build` 构建后，通过 `rspress preview` 进行调试。详见 [dev 和 build 下的区别](/guide/basic/ssg#dev-和-build-下的区别)。
+:::
+
+示例：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      injectLlmsHint: true,
+      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+      placement: 'outline',
+    },
+  },
+});
+```
+
+### injectLlmsHint
+
+<VersionBadge version="2.0.18" />
+
+- **类型**：`boolean`
+- **默认值**：`true`
+
+此选项用于控制是否在生成的页面中注入面向 LLM 的 directive hint。同一个 `LlmsHint` 组件有两种输出形态：
+
+- 在 SSG HTML 输出中，它会在页面顶部附近渲染一个 visually hidden 的纯文本 DOM 元素。它不会使用 `display: none`、`hidden` 属性、`aria-hidden` 或嵌套链接，这样 agent 在进行 HTML 到 Markdown 转换时可以将该 directive 保留为文本。
+- 在 SSG-MD Markdown 输出中，它会在 Markdown 页面顶部附近渲染为 blockquote 字符串。
+
+假设 [`siteOrigin`](/api/config/config-basic#siteorigin) 是 `https://example.com`，会在 `/guide/` 页面中注入以下 HTML directive：
+
+{/* prettier-ignore */}
+```html
+<div class="rp-llms-hint" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0">For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.</div>
+```
+
+同一页面的 SSG-MD Markdown 输出会以以下内容开头：
+
+```md
+> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt.
+```
+
+其中的 URL 会自动包含配置的 `siteOrigin`、[`base`](/api/config/config-basic#base)、语言和版本前缀。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
+
+将 `injectLlmsHint` 设置为 `false`，可以禁用这一行为。这也会卸载 `LlmsHint`，并注销其 WebMCP 页面读取工具：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      injectLlmsHint: false,
+    },
+  },
+});
+```
+
+### viewOptions
+
+- **类型**：`false | Array<'markdownLink' | 'chatgpt' | 'claude'>`
+- **默认值**：`['markdownLink', 'chatgpt', 'claude']`
+
+LlmsViewOptions 下拉菜单的选项。内置选项包括：
+
+- `'markdownLink'`: 复制 markdown 文件链接
+- `'chatgpt'`: 在 ChatGPT 中打开
+- `'claude'`: 在 Claude 中打开
+
+将 `viewOptions` 设置为 `false` 或 `[]` 可以隐藏 view options UI。
+
+### placement
+
+- **类型**：`'title' | 'outline'`
+- **默认值**：`'title'`
+
+控制 LLMS UI 组件的显示位置。
+
+- `'title'`：在 H1 标题下方以按钮形式显示（默认行为）
+- `'outline'`：在右侧大纲面板中以独立行形式显示
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      placement: 'outline',
+    },
+  },
+});
+```

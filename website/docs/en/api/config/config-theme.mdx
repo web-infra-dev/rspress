@@ -583,4 +583,119 @@ title: Document Title
 
 ## llmsUI
 
-See [AI config](/api/config/config-agent#llmsui) for `themeConfig.llmsUI` and its nested options.
+- **Type**:
+
+```ts
+type LlmsUI =
+  | boolean
+  | {
+      injectLlmsHint?: boolean;
+      viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
+      placement?: 'title' | 'outline';
+    };
+```
+
+- **Default**: `false` (automatically set to `true` when `llms: true` is configured)
+
+Configure the llms UI components through `themeConfig.llmsUI`. When enabled, `LlmsCopyButton` and `LlmsViewOptions` are automatically added below all H1 headings by default, or as rows in the outline panel.
+
+This is useful when using the [llms](/guide/basic/ssg-md) feature to generate llms.txt files, because users can copy or open Markdown content in AI tools.
+
+:::warning
+SSG-MD only runs during builds, so copying Markdown content does not work in `dev` mode. Run `rspress build` first, then debug with `rspress preview`. See [Differences between dev and build](/guide/basic/ssg#differences-between-dev-and-build) for details.
+:::
+
+For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      injectLlmsHint: true,
+      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+      placement: 'outline',
+    },
+  },
+});
+```
+
+### injectLlmsHint
+
+<VersionBadge version="2.0.18" />
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+This option controls whether an LLM directive hint is injected into generated pages. The same `LlmsHint` component has two output forms:
+
+- In SSG HTML output, it renders a visually hidden plain-text DOM element near the top of the page. It does not use `display: none`, the `hidden` attribute, `aria-hidden`, or nested links, so agent-side HTML-to-Markdown conversion can preserve the directive as text.
+- In SSG-MD Markdown output, it renders a blockquote string near the top of the Markdown page.
+
+Assuming [`siteOrigin`](/api/config/config-basic#siteorigin) is `https://example.com`, the following HTML directive is injected into the `/guide/` page:
+
+{/* prettier-ignore */}
+```html
+<div class="rp-llms-hint" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0">For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.</div>
+```
+
+The SSG-MD Markdown output for the same page starts with:
+
+```md
+> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt.
+```
+
+The URLs automatically include the configured `siteOrigin`, [`base`](/api/config/config-basic#base), locale, and version prefixes. Without `siteOrigin`, the URLs remain base-aware paths.
+
+Set `injectLlmsHint` to `false` to disable this behavior. This also unmounts `LlmsHint` and unregisters its WebMCP page-reading tools:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      injectLlmsHint: false,
+    },
+  },
+});
+```
+
+### viewOptions
+
+- **Type**: `false | Array<'markdownLink' | 'chatgpt' | 'claude'>`
+- **Default**: `['markdownLink', 'chatgpt', 'claude']`
+
+Options for the LlmsViewOptions dropdown menu. Built-in options include:
+
+- `'markdownLink'`: Copy markdown file link
+- `'chatgpt'`: Open in ChatGPT
+- `'claude'`: Open in Claude
+
+Set `viewOptions` to `false` or `[]` to hide the view options UI.
+
+### placement
+
+- **Type**: `'title' | 'outline'`
+- **Default**: `'title'`
+
+Controls where the LLMS UI components are displayed.
+
+- `'title'`: Show as buttons below the H1 title (default behavior)
+- `'outline'`: Show as separate rows in the right-side outline panel
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      placement: 'outline',
+    },
+  },
+});
+```
