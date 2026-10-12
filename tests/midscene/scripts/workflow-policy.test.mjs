@@ -37,6 +37,8 @@ test('PR validation does not receive credentials or call the model', () => {
   assert(validation.includes('does not call a model'));
 });
 test('model credentials are scoped to preflight and AI tests', () => {
+  assert(workflow.includes('modelName: process.env.MIDSCENE_MODEL_NAME'));
+  assert(workflow.includes('modelFamily: process.env.MIDSCENE_MODEL_FAMILY'));
   const steps = workflow
     .split(/\n {6}- /)
     .filter(step => step.includes('secrets.'));

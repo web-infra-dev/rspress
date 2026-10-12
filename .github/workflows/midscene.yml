@@ -107,7 +107,7 @@ jobs:
           MIDSCENE_MODEL_NAME: ${{ secrets.MIDSCENE_MODEL_NAME }}
           MIDSCENE_MODEL_FAMILY: ${{ secrets.MIDSCENE_MODEL_FAMILY }}
         run: |
-          node --input-type=module -e 'import fs from "node:fs"; fs.writeFileSync("model.json", JSON.stringify({name: process.env.MIDSCENE_MODEL_NAME, family: process.env.MIDSCENE_MODEL_FAMILY}));'
+          node --input-type=module -e 'import fs from "node:fs"; fs.writeFileSync("model.json", JSON.stringify({modelName: process.env.MIDSCENE_MODEL_NAME, modelFamily: process.env.MIDSCENE_MODEL_FAMILY}));'
           npm test
       - name: Collect fixture startup log
         if: always()
