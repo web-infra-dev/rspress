@@ -15,7 +15,7 @@ import {
 
 // Native navigation prepares the page. A layout effect acknowledges that React
 // has committed the corresponding page context before returning it to an agent.
-function useNavigateWithResult(result: NavigationResult) {
+function useAwaitedNavigation(result: NavigationResult) {
   const location = useLocation();
   const navigation = useNavigation();
   const navigate = useNavigate();
@@ -155,7 +155,7 @@ export function useWebMcpNavigation() {
     previousPage: toLink(prevPage),
     nextPage: toLink(nextPage),
   };
-  const navigate = useNavigateWithResult(result);
+  const navigate = useAwaitedNavigation(result);
   useWebMcp(
     defineTool(
       'navigate',
