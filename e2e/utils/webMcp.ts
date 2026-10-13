@@ -1,26 +1,57 @@
-import type { Page } from '@e2e/test';
+import { test as baseTest, type Page } from '@e2e/test';
 
-export type Tool = {
+// Use the Chromium bundled with Playwright for this experimental browser API,
+// including in CI, where other tests may use the installed Chrome channel.
+export const test = baseTest.extend({
+  playwright: async ({ task }, use) => {
+    await use({
+      launchOptions: { args: ['--enable-features=WebMCP'] },
+      contextOptions: { viewport: { width: 1440, height: 900 } },
+      trace: process.env.CI ? (task.retryCount === 1 ? 'on' : 'off') : 'on',
+    });
+  },
+});
+
+export async function listTools(page: Page) {
+  return (await page.webmcp.tools()).map(tool => tool.name).sort();
+}
+
+// Observe registration options and churn without replacing native registration.
+export async function trackToolRegistrations(page: Page) {
+  await page.addInitScript(() => {
+    const context = (
+      document as Document & {
+        modelContext: { registerTool(...args: unknown[]): unknown };
+      }
+    ).modelContext;
+    const register = context.registerTool.bind(context);
+    window.webMcpRegistrations = [];
+    context.registerTool = (tool, options) => {
+      window.webMcpRegistrations.push({
+        name: (tool as Tool).name,
+        exposedTo: (options as { exposedTo?: string[] }).exposedTo,
+      });
+      return register(tool, options);
+    };
+  });
+}
+
+type Tool = {
   name: string;
-  annotations?: Record<string, boolean>;
   execute: (input: unknown, options: { signal?: AbortSignal }) => unknown;
 };
 declare global {
   interface Window {
+    webMcpRegistrations: { name: string; exposedTo?: string[] }[];
     webMcpTest: {
       list(): string[];
-      annotations(name: string): Tool['annotations'];
       run(name: string, input?: unknown, signal?: AbortSignal): Promise<any>;
-      registrations: string[][];
-      registrationNames: string[];
     };
-    navigationResult?: any;
-    navigationError?: string;
   }
 }
 
-// Only the browser API is substituted. The real runtime, router, network,
-// generated Markdown and local search run in the browser without a polyfill.
+// Fault injection only: Playwright cannot inject registration failures or pass
+// an AbortSignal to callTool. All other cases use the native browser API.
 export async function installModelContext(
   page: Page,
   failure?: 'sync' | 'async',
@@ -28,8 +59,6 @@ export async function installModelContext(
   await page.addInitScript(
     ({ failure }) => {
       const tools = new Map<string, Tool>();
-      const registrations: string[][] = [];
-      const registrationNames: string[] = [];
       Object.defineProperty(document, 'modelContext', {
         configurable: true,
         value: {
@@ -44,8 +73,6 @@ export async function installModelContext(
             if (tools.has(tool.name))
               throw new Error(`Duplicate tool: ${tool.name}`);
             tools.set(tool.name, tool);
-            registrations.push(options.exposedTo ?? []);
-            registrationNames.push(tool.name);
             options.signal.addEventListener(
               'abort',
               () => tools.delete(tool.name),
@@ -56,14 +83,11 @@ export async function installModelContext(
       });
       window.webMcpTest = {
         list: () => [...tools.keys()].sort(),
-        annotations: name => tools.get(name)?.annotations,
         async run(name, input = {}, signal) {
           const tool = tools.get(`rspress_${name}`);
           if (!tool) throw new Error(`Missing tool: ${name}`);
           return tool.execute(input, { signal });
         },
-        registrations,
-        registrationNames,
       };
     },
     { failure },

@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/test';
-import { installModelContext } from '../../utils/webMcp';
+import { test as webMcpTest, listTools } from '../../utils/webMcp';
 import {
   getPort,
   killProcess,
@@ -108,10 +108,10 @@ for (const mode of ['dev', 'build'] as const) {
   });
 }
 
-test.describe('WebMCP React Router 6 compatibility', () => {
+webMcpTest.describe('WebMCP React Router 6 compatibility', () => {
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   let port: number;
-  test.beforeAll(async () => {
+  webMcpTest.beforeAll(async () => {
     port = await getPort();
     app = await runDevCommand(
       import.meta.dirname,
@@ -119,27 +119,22 @@ test.describe('WebMCP React Router 6 compatibility', () => {
       'rspress.webmcp.config.ts',
     );
   });
-  test.afterAll(async () => {
+  webMcpTest.afterAll(async () => {
     await killProcess(app);
   });
-  test('waits for committed context even when useNavigate returns void', async ({
-    page,
-  }) => {
-    await installModelContext(page);
-    await page.goto(`http://localhost:${port}/docs/`);
-    await expect
-      .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toContain('rspress_navigate');
-    const result = await page.evaluate(async () => {
-      const result = await window.webMcpTest.run('navigate', {
+  webMcpTest(
+    'waits for committed context even when useNavigate returns void',
+    async ({ page }) => {
+      await page.goto(`http://localhost:${port}/docs/`);
+      await expect.poll(() => listTools(page)).toContain('rspress_navigate');
+      const result = await page.webmcp.callTool('rspress_navigate', {
         routePath: '/guide#install',
       });
-      return { result, heading: document.querySelector('h1')?.textContent };
-    });
-    expect(result.heading).toContain('v1 en guide');
-    expect(result.result).toMatchObject({
-      routePath: '/guide#install',
-      page: { title: 'v1 en guide' },
-    });
-  });
+      expect(await page.locator('h1').textContent()).toContain('v1 en guide');
+      expect(result).toMatchObject({
+        routePath: '/guide#install',
+        page: { title: 'v1 en guide' },
+      });
+    },
+  );
 });

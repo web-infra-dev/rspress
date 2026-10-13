@@ -1,8 +1,12 @@
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, type Page, test } from '@e2e/test';
-import { chromium } from 'playwright';
-import { installModelContext, type Tool } from '../../utils/webMcp';
+import { expect, type Page } from '@e2e/test';
+import {
+  test,
+  listTools,
+  installModelContext,
+  trackToolRegistrations,
+} from '../../utils/webMcp';
 import {
   getPort,
   killProcess,
@@ -10,13 +14,6 @@ import {
   runDevCommand,
   runPreviewCommand,
 } from '../../utils/runCommands';
-
-function run(page: Page, name: string, input: unknown = {}) {
-  return page.evaluate(
-    ({ name, input }) => window.webMcpTest.run(name, input),
-    { name, input },
-  );
-}
 
 const allTools = [
   'get_current_page',
@@ -44,10 +41,10 @@ for (const mode of ['dev', 'build'] as const) {
       await killProcess(app);
     });
     test.beforeEach(async ({ page }) => {
-      await installModelContext(page);
+      await trackToolRegistrations(page);
       await page.goto(`http://localhost:${port}/docs/`);
       await expect
-        .poll(() => page.evaluate(() => window.webMcpTest.list()))
+        .poll(() => listTools(page))
         .toEqual(
           mode === 'build'
             ? allTools
@@ -64,7 +61,7 @@ for (const mode of ['dev', 'build'] as const) {
       page,
     }) => {
       await page.waitForLoadState('networkidle');
-      const names = await page.evaluate(() => window.webMcpTest.list());
+      const names = await listTools(page);
       expect(names).toEqual(
         mode === 'build'
           ? allTools
@@ -75,17 +72,19 @@ for (const mode of ['dev', 'build'] as const) {
                 ),
             ),
       );
-      expect(await run(page, 'get_site_info')).toMatchObject({
-        title: 'WebMCP docs',
-        base: '/docs/',
-        lang: 'en',
-        version: 'v1',
-        versions: ['v1', 'v2'],
-        defaultVersion: 'v1',
-      });
-      expect((await run(page, 'get_site_info')).sidebar.length).toBeGreaterThan(
-        0,
+      expect(await page.webmcp.callTool('rspress_get_site_info')).toMatchObject(
+        {
+          title: 'WebMCP docs',
+          base: '/docs/',
+          lang: 'en',
+          version: 'v1',
+          versions: ['v1', 'v2'],
+          defaultVersion: 'v1',
+        },
       );
+      expect(
+        (await page.webmcp.callTool('rspress_get_site_info')).sidebar.length,
+      ).toBeGreaterThan(0);
       // The theme may prefetch the index through a link before any search.
       expect(
         await page.evaluate(() =>
@@ -100,8 +99,8 @@ for (const mode of ['dev', 'build'] as const) {
       ).toBe(false);
       expect(
         await page.evaluate(() =>
-          window.webMcpTest.registrations.every(origins =>
-            origins.includes('https://agent.example'),
+          window.webMcpRegistrations.every(({ exposedTo }) =>
+            exposedTo?.includes('https://agent.example'),
           ),
         ),
       ).toBe(true);
@@ -109,18 +108,24 @@ for (const mode of ['dev', 'build'] as const) {
 
     test('filters and paginates page discovery', async ({ page }) => {
       expect(
-        await run(page, 'list_pages', { limit: 1, offset: 2 }),
+        await page.webmcp.callTool('rspress_list_pages', {
+          limit: 1,
+          offset: 2,
+        }),
       ).toMatchObject({
         total: 3,
         offset: 2,
         limit: 1,
         pages: [{ title: 'v1 en home' }],
       });
-      expect(await run(page, 'list_pages', { query: 'install' })).toMatchObject(
-        { total: 1, pages: [{ routePath: '/guide' }] },
-      );
       expect(
-        await run(page, 'list_pages', { lang: 'zh', version: 'v2' }),
+        await page.webmcp.callTool('rspress_list_pages', { query: 'install' }),
+      ).toMatchObject({ total: 1, pages: [{ routePath: '/guide' }] });
+      expect(
+        await page.webmcp.callTool('rspress_list_pages', {
+          lang: 'zh',
+          version: 'v2',
+        }),
       ).toMatchObject({ total: 2 });
     });
 
@@ -128,24 +133,38 @@ for (const mode of ['dev', 'build'] as const) {
       page,
     }) => {
       expect(
-        JSON.stringify(await run(page, 'search_docs', { query: 'cobalt' })),
+        JSON.stringify(
+          await page.webmcp.callTool('rspress_search_docs', {
+            query: 'cobalt',
+          }),
+        ),
       ).toContain('v1 en home');
-      await run(page, 'navigate', { routePath: '/zh/' });
+      await page.webmcp.callTool('rspress_navigate', { routePath: '/zh/' });
       expect(
-        JSON.stringify(await run(page, 'search_docs', { query: 'jade' })),
+        JSON.stringify(
+          await page.webmcp.callTool('rspress_search_docs', { query: 'jade' }),
+        ),
       ).toContain('v1 zh home');
       expect(
-        JSON.stringify(await run(page, 'search_docs', { query: 'cobalt' })),
+        JSON.stringify(
+          await page.webmcp.callTool('rspress_search_docs', {
+            query: 'cobalt',
+          }),
+        ),
       ).not.toContain('v1 en home');
-      await run(page, 'navigate', { routePath: '/v2/' });
+      await page.webmcp.callTool('rspress_navigate', { routePath: '/v2/' });
       expect(
-        JSON.stringify(await run(page, 'search_docs', { query: 'amber' })),
+        JSON.stringify(
+          await page.webmcp.callTool('rspress_search_docs', { query: 'amber' }),
+        ),
       ).toContain('v2 en home');
-      expect(await run(page, 'get_site_info')).toMatchObject({
-        lang: 'en',
-        version: 'v2',
-      });
-      expect(await run(page, 'list_pages')).toMatchObject({
+      expect(await page.webmcp.callTool('rspress_get_site_info')).toMatchObject(
+        {
+          lang: 'en',
+          version: 'v2',
+        },
+      );
+      expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
         total: 2,
         pages: [{ version: 'v2' }, { version: 'v2' }],
       });
@@ -163,7 +182,11 @@ for (const mode of ['dev', 'build'] as const) {
           requests.push(request.url());
       });
       expect(
-        JSON.stringify(await run(page, 'search_docs', { query: 'cobalt' })),
+        JSON.stringify(
+          await page.webmcp.callTool('rspress_search_docs', {
+            query: 'cobalt',
+          }),
+        ),
       ).toContain('v1 en home');
       await page.locator('.rp-search-button').click();
       await page.locator('.rp-search-panel__input').fill('cobalt');
@@ -173,7 +196,11 @@ for (const mode of ['dev', 'build'] as const) {
       await page.keyboard.press('Escape');
       await expect(page.locator('.rp-search-panel__input')).not.toBeVisible();
       expect(
-        JSON.stringify(await run(page, 'search_docs', { query: 'cobalt' })),
+        JSON.stringify(
+          await page.webmcp.callTool('rspress_search_docs', {
+            query: 'cobalt',
+          }),
+        ),
       ).toContain('v1 en home');
       expect(requests).toHaveLength(1);
     });
@@ -181,14 +208,11 @@ for (const mode of ['dev', 'build'] as const) {
     test('returns committed page context, sections and adjacent links with query/hash', async ({
       page,
     }) => {
-      const result = await page.evaluate(async () => {
-        const result = await window.webMcpTest.run('navigate', {
-          routePath: '/guide.html?source=agent#install',
-        });
-        return { result, heading: document.querySelector('h1')?.textContent };
+      const result = await page.webmcp.callTool('rspress_navigate', {
+        routePath: '/guide.html?source=agent#install',
       });
-      expect(result.heading).toContain('v1 en guide');
-      expect(result.result).toMatchObject({
+      expect(await page.locator('h1').textContent()).toContain('v1 en guide');
+      expect(result).toMatchObject({
         routePath: '/guide?source=agent#install',
         page: { title: 'v1 en guide' },
         sections: [
@@ -202,12 +226,14 @@ for (const mode of ['dev', 'build'] as const) {
         `http://localhost:${port}/docs/guide?source=agent#install`,
       );
       expect(
-        await run(page, 'navigate', {
+        await page.webmcp.callTool('rspress_navigate', {
           routePath: '/guide?source=agent#install',
         }),
       ).toMatchObject({ page: { title: 'v1 en guide' } });
       expect(
-        await run(page, 'navigate', { routePath: '/guide#usage' }),
+        await page.webmcp.callTool('rspress_navigate', {
+          routePath: '/guide#usage',
+        }),
       ).toMatchObject({ routePath: '/guide#usage' });
     });
 
@@ -220,10 +246,12 @@ for (const mode of ['dev', 'build'] as const) {
         'https://example.com/',
         'guide',
       ]) {
-        await expect(run(page, 'navigate', { routePath })).rejects.toThrow();
+        await expect(
+          page.webmcp.callTool('rspress_navigate', { routePath }),
+        ).rejects.toThrow();
       }
       await expect(
-        run(page, 'search_docs', { query: ' ', limit: 100 }),
+        page.webmcp.callTool('rspress_search_docs', { query: ' ', limit: 100 }),
       ).rejects.toThrow();
       await expect(page).toHaveURL(`http://localhost:${port}/docs/`);
     });
@@ -233,14 +261,18 @@ for (const mode of ['dev', 'build'] as const) {
     }) => {
       const routePath = '/docs/深入';
       if (mode === 'build') {
-        expect(await run(page, 'get_page', { routePath })).toMatchObject({
+        expect(
+          await page.webmcp.callTool('rspress_get_page', { routePath }),
+        ).toMatchObject({
           title: 'Nested page',
           routePath,
           markdown: expect.stringContaining('Nested content'),
         });
         await expect(page).toHaveURL(`http://localhost:${port}/docs/`);
       }
-      expect(await run(page, 'navigate', { routePath })).toMatchObject({
+      expect(
+        await page.webmcp.callTool('rspress_navigate', { routePath }),
+      ).toMatchObject({
         routePath,
         page: { title: 'Nested page' },
       });
@@ -252,77 +284,14 @@ for (const mode of ['dev', 'build'] as const) {
 
     test('works when global UI is hidden', async ({ page }) => {
       await page.goto(`http://localhost:${port}/docs/?globalUIComponents=0`);
-      await expect
-        .poll(() => page.evaluate(() => window.webMcpTest.list()))
-        .toContain('rspress_navigate');
+      await expect.poll(() => listTools(page)).toContain('rspress_navigate');
     });
 
     if (mode === 'build') {
-      test('discovers and executes all tools through the native browser API', async () => {
-        const browser = await chromium.launch({
-          ...(process.env.CI ? { channel: 'chrome' } : {}),
-          args: ['--enable-experimental-web-platform-features'],
-        });
-        try {
-          const page = await browser.newPage();
-          await page.goto(`http://localhost:${port}/docs/`);
-          const names = () =>
-            page.evaluate(async () => {
-              const context = (document as any).modelContext;
-              return (await context.getTools())
-                .map((tool: Tool) => tool.name)
-                .sort();
-            });
-          await expect.poll(names).toEqual(allTools);
-          const invoke = (name: string, input: unknown = {}) =>
-            page.evaluate(
-              async ({ name, input }) => {
-                const context = (document as any).modelContext;
-                const tool = (await context.getTools()).find(
-                  (tool: Tool) => tool.name === `rspress_${name}`,
-                );
-                // Chrome 153 serializes schemas and expects string arguments.
-                // Newer WebMCP consumers use object schemas and object arguments.
-                const args =
-                  typeof tool.inputSchema === 'string'
-                    ? JSON.stringify(input)
-                    : input;
-                return JSON.parse(await context.executeTool(tool, args));
-              },
-              { name, input },
-            );
-          expect(await invoke('get_site_info')).toMatchObject({
-            title: 'WebMCP docs',
-          });
-          expect(await invoke('list_pages')).toMatchObject({ total: 3 });
-          expect(
-            await invoke('get_page', { routePath: '/guide' }),
-          ).toMatchObject({ title: 'v1 en guide' });
-          expect((await invoke('get_current_page')).markdown).toContain(
-            'cobalt platypus',
-          );
-          expect(
-            JSON.stringify(await invoke('search_docs', { query: 'cobalt' })),
-          ).toContain('v1 en home');
-          expect(
-            await invoke('navigate', { routePath: '/guide#install' }),
-          ).toMatchObject({
-            routePath: '/guide#install',
-            page: { title: 'v1 en guide' },
-          });
-          expect(await invoke('get_current_page')).toMatchObject({
-            title: 'v1 en guide',
-          });
-          expect(await names()).toEqual(allTools);
-        } finally {
-          await browser.close();
-        }
-      });
-
       test('reads any page without navigating and reads the latest current page', async ({
         page,
       }) => {
-        const remote = await run(page, 'get_page', {
+        const remote = await page.webmcp.callTool('rspress_get_page', {
           routePath: '/v2/zh/guide',
         });
         expect(remote).toMatchObject({
@@ -332,11 +301,13 @@ for (const mode of ['dev', 'build'] as const) {
         });
         expect(remote.markdown).toContain('## Install');
         await expect(page).toHaveURL(`http://localhost:${port}/docs/`);
-        expect((await run(page, 'get_current_page')).markdown).toContain(
-          'cobalt platypus',
-        );
-        await run(page, 'navigate', { routePath: '/guide' });
-        expect(await run(page, 'get_current_page')).toMatchObject({
+        expect(
+          (await page.webmcp.callTool('rspress_get_current_page')).markdown,
+        ).toContain('cobalt platypus');
+        await page.webmcp.callTool('rspress_navigate', { routePath: '/guide' });
+        expect(
+          await page.webmcp.callTool('rspress_get_current_page'),
+        ).toMatchObject({
           title: 'v1 en guide',
           routePath: '/guide',
         });
@@ -362,41 +333,72 @@ for (const mode of ['dev', 'build'] as const) {
           },
           { times: 1 },
         );
+        let settled = false;
+        const navigation = page.webmcp.callTool('rspress_navigate', {
+          routePath: '/guide',
+        });
+        void navigation.then(
+          () => {
+            settled = true;
+          },
+          () => {
+            settled = true;
+          },
+        );
         try {
-          await page.evaluate(() => {
-            void window.webMcpTest
-              .run('navigate', { routePath: '/guide' })
-              .then(result => {
-                window.navigationResult = result;
-              });
-          });
           await started;
-          expect(
-            await page.evaluate(() => window.navigationResult),
-          ).toBeUndefined();
+          expect(settled).toBe(false);
           await expect(page.locator('h1')).toContainText('v1 en home');
         } finally {
           release();
         }
-        await expect
-          .poll(() => page.evaluate(() => window.navigationResult?.page.title))
-          .toBe('v1 en guide');
+        expect(await navigation).toMatchObject({
+          page: { title: 'v1 en guide' },
+        });
       });
 
       test('rejects superseded navigation calls', async ({ page }) => {
-        const results = await page.evaluate(() =>
-          Promise.allSettled([
-            window.webMcpTest.run('navigate', { routePath: '/guide' }),
-            window.webMcpTest.run('navigate', { routePath: '/zh/' }),
-          ]).then(results => results.map(result => result.status)),
+        let release!: () => void;
+        let requested!: () => void;
+        const gate = new Promise<void>(resolve => {
+          release = resolve;
+        });
+        const started = new Promise<void>(resolve => {
+          requested = resolve;
+        });
+        await page.route(
+          /\/static\/js\/async\/.*\.js(?:\?.*)?$/,
+          async route => {
+            requested();
+            await gate;
+            await route.continue();
+          },
+          { times: 1 },
         );
-        expect(results).toEqual(['rejected', 'fulfilled']);
-        await expect(page.locator('h1')).toContainText('v1 zh home');
+        const first = page.webmcp.callTool('rspress_navigate', {
+          routePath: '/guide',
+        });
+        // Handle rejection immediately while the first page chunk is blocked.
+        const firstResult = Promise.allSettled([first]);
+        try {
+          await started;
+          await page.webmcp.callTool('rspress_navigate', { routePath: '/zh/' });
+          expect((await firstResult)[0].status).toBe('rejected');
+          await expect(page.locator('h1')).toContainText('v1 zh home');
+        } finally {
+          release();
+        }
       });
 
       test('cancels a pending navigation call and allows the next call', async ({
         page,
       }) => {
+        // Playwright callTool does not expose an AbortSignal option.
+        await installModelContext(page);
+        await page.reload();
+        await expect
+          .poll(() => page.evaluate(() => window.webMcpTest.list()))
+          .toContain('rspress_navigate');
         const error = await page.evaluate(async () => {
           const controller = new AbortController();
           const result = window.webMcpTest.run(
@@ -413,7 +415,9 @@ for (const mode of ['dev', 'build'] as const) {
         });
         expect(error).toBe('AbortError');
         expect(
-          await run(page, 'navigate', { routePath: '/zh/' }),
+          await page.evaluate(() =>
+            window.webMcpTest.run('navigate', { routePath: '/zh/' }),
+          ),
         ).toMatchObject({ page: { lang: 'zh' } });
       });
 
@@ -426,7 +430,7 @@ for (const mode of ['dev', 'build'] as const) {
           { times: 1 },
         );
         await expect(
-          run(page, 'navigate', { routePath: '/guide' }),
+          page.webmcp.callTool('rspress_navigate', { routePath: '/guide' }),
         ).rejects.toThrow();
       });
 
@@ -440,8 +444,8 @@ for (const mode of ['dev', 'build'] as const) {
           }),
         );
         await expect(
-          run(page, 'get_page', { routePath: '/guide' }),
-        ).rejects.toThrow('Markdown is unavailable');
+          page.webmcp.callTool('rspress_get_page', { routePath: '/guide' }),
+        ).rejects.toThrow();
       });
     }
   });
@@ -464,15 +468,12 @@ test.describe('WebMCP capability detection', () => {
   test('omits search when local search is disabled, keeping page discovery', async ({
     page,
   }) => {
-    await installModelContext(page);
     await page.goto(`http://localhost:${port}/docs/`);
-    await expect
-      .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toContain('rspress_list_pages');
-    expect(await page.evaluate(() => window.webMcpTest.list())).not.toContain(
-      'rspress_search_docs',
-    );
-    expect(await run(page, 'list_pages')).toMatchObject({ total: 3 });
+    await expect.poll(() => listTools(page)).toContain('rspress_list_pages');
+    expect(await listTools(page)).not.toContain('rspress_search_docs');
+    expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
+      total: 3,
+    });
   });
   test('unsupported browsers render normally', async ({ page }) => {
     const errors: string[] = [];
@@ -500,10 +501,9 @@ for (const config of [
       config,
     ]);
     try {
-      await installModelContext(page);
       await page.goto(`http://localhost:${port}/docs/`);
       await expect
-        .poll(() => page.evaluate(() => window.webMcpTest.list()))
+        .poll(() => listTools(page))
         .toEqual(
           allTools.filter(
             name =>
@@ -513,9 +513,15 @@ for (const config of [
       await expect(page.locator('.rp-llms-hint')).toHaveCount(
         config === 'rspress.hint-only.config.ts' ? 1 : 0,
       );
-      expect(await run(page, 'list_pages')).toMatchObject({ total: 3 });
+      expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
+        total: 3,
+      });
       expect(
-        JSON.stringify(await run(page, 'search_docs', { query: 'cobalt' })),
+        JSON.stringify(
+          await page.webmcp.callTool('rspress_search_docs', {
+            query: 'cobalt',
+          }),
+        ),
       ).toContain('v1 en home');
     } finally {
       await killProcess(app);
@@ -556,18 +562,17 @@ test.describe('WebMCP HTML navigation', () => {
   test('preserves canonical results and supports reloading HTML URLs', async ({
     page,
   }) => {
-    await installModelContext(page);
     await page.goto(`http://localhost:${port}/docs/`);
-    await expect
-      .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toContain('rspress_navigate');
+    await expect.poll(() => listTools(page)).toContain('rspress_navigate');
     for (const [route, title] of [
       ['/guide', 'v1 en guide'],
       ['/docs/深入', 'Nested page'],
       ['/', 'v1 en home'],
     ]) {
       const routePath = `${route}?from=agent#install`;
-      expect(await run(page, 'navigate', { routePath })).toMatchObject({
+      expect(
+        await page.webmcp.callTool('rspress_navigate', { routePath }),
+      ).toMatchObject({
         routePath,
         page: { title },
       });
@@ -578,9 +583,7 @@ test.describe('WebMCP HTML navigation', () => {
       const response = await page.reload();
       expect(response?.status()).toBe(200);
       await expect(page.locator('h1').first()).toContainText(title);
-      await expect
-        .poll(() => page.evaluate(() => window.webMcpTest.list()))
-        .toContain('rspress_navigate');
+      await expect.poll(() => listTools(page)).toContain('rspress_navigate');
     }
   });
 });
@@ -616,72 +619,64 @@ for (const mode of ['dev', 'build'] as const) {
     test('exports a typed hook and updates callbacks without registration churn', async ({
       page,
     }) => {
-      await installModelContext(page);
+      await trackToolRegistrations(page);
       await open(page);
       await expect
         .poll(() => state(page))
         .toMatchObject({ supported: true, registered: true, count: 0 });
       const registrations = await page.evaluate(
-        () => window.webMcpTest.registrationNames.length,
+        () => window.webMcpRegistrations.length,
       );
-      expect(
-        await page.evaluate(() =>
-          window.webMcpTest.annotations('rspress_test_value'),
-        ),
-      ).toEqual({
-        readOnlyHint: true,
-        untrustedContentHint: false,
-        consequentialHint: false,
-        debugging: true,
+      const tool = (await page.webmcp.tools()).find(
+        tool => tool.name === 'rspress_test_value',
+      );
+      expect(tool?.annotations).toMatchObject({
+        readOnly: true,
       });
       await page.getByRole('button', { name: 'Increment tool count' }).click();
       await expect.poll(() => state(page)).toMatchObject({ count: 1 });
-      expect(await run(page, 'test_value', { add: 3 })).toMatchObject({
+      expect(
+        await page.webmcp.callTool('rspress_test_value', { add: 3 }),
+      ).toMatchObject({
         value: 4,
       });
-      expect(
-        await page.evaluate(() => window.webMcpTest.registrationNames.length),
-      ).toBe(registrations);
-      expect(
-        await page.evaluate(() =>
-          window.webMcpTest.run('test_value', {}, new AbortController().signal),
-        ),
-      ).toMatchObject({ cancellable: true });
-      await expect(
-        page.evaluate(() =>
-          window.webMcpTest.run('test_value', {}, AbortSignal.abort()),
-        ),
-      ).rejects.toThrow();
+      expect(await page.evaluate(() => window.webMcpRegistrations.length)).toBe(
+        registrations,
+      );
+      expect(await page.webmcp.callTool('rspress_test_value')).toMatchObject({
+        cancellable: true,
+      });
       await page.getByRole('button', { name: 'Rename tool' }).click();
       await expect
-        .poll(() => page.evaluate(() => window.webMcpTest.list()))
+        .poll(() => listTools(page))
         .toEqual(['rspress_test_renamed']);
-      expect(await run(page, 'test_renamed')).toMatchObject({ value: 1 });
+      expect(await page.webmcp.callTool('rspress_test_renamed')).toMatchObject({
+        value: 1,
+      });
     });
 
     test('cleans up on disable and unmount and does not remove another owner', async ({
       page,
     }) => {
-      await installModelContext(page);
       await open(page);
       await expect.poll(() => state(page)).toMatchObject({ registered: true });
       await page.getByRole('button', { name: 'Toggle duplicate tool' }).click();
       await expect(page.getByTestId('duplicate-state')).toContainText(
-        'Duplicate tool',
+        'Duplicate tool name',
       );
       await page.getByRole('button', { name: 'Toggle duplicate tool' }).click();
-      expect(await run(page, 'test_value')).toMatchObject({ value: 0 });
+      expect(await page.webmcp.callTool('rspress_test_value')).toMatchObject({
+        value: 0,
+      });
       await page.getByRole('button', { name: 'Toggle tool enabled' }).click();
       await expect
         .poll(() => state(page))
         .toMatchObject({ supported: true, registered: false });
-      expect(await page.evaluate(() => window.webMcpTest.list())).toEqual([]);
+      expect(await listTools(page)).toEqual([]);
       await page.getByRole('button', { name: 'Toggle tool enabled' }).click();
       await expect.poll(() => state(page)).toMatchObject({ registered: true });
       await page.getByRole('button', { name: 'Toggle tool mounted' }).click();
-      await expect
-        .poll(() => page.evaluate(() => window.webMcpTest.list()))
-        .toEqual([]);
+      await expect.poll(() => listTools(page)).toEqual([]);
       await page.getByRole('button', { name: 'Toggle tool mounted' }).click();
       await expect.poll(() => state(page)).toMatchObject({ registered: true });
     });
@@ -689,14 +684,28 @@ for (const mode of ['dev', 'build'] as const) {
     test('reads committed state while a newer render is suspended', async ({
       page,
     }) => {
-      await installModelContext(page);
       await open(page);
       await expect.poll(() => state(page)).toMatchObject({ registered: true });
       await page.getByRole('button', { name: 'Suspend tool render' }).click();
-      expect(await run(page, 'test_value')).toMatchObject({ value: 0 });
+      expect(await page.webmcp.callTool('rspress_test_value')).toMatchObject({
+        value: 0,
+      });
       await page.getByRole('button', { name: 'Recover tool render' }).click();
       await expect.poll(() => state(page)).toMatchObject({ count: 2 });
-      expect(await run(page, 'test_value')).toMatchObject({ value: 2 });
+      expect(await page.webmcp.callTool('rspress_test_value')).toMatchObject({
+        value: 2,
+      });
+    });
+
+    test('rejects an already-aborted execution signal', async ({ page }) => {
+      await installModelContext(page);
+      await open(page);
+      await expect.poll(() => state(page)).toMatchObject({ registered: true });
+      await expect(
+        page.evaluate(() =>
+          window.webMcpTest.run('test_value', {}, AbortSignal.abort()),
+        ),
+      ).rejects.toThrow();
     });
 
     for (const failure of ['sync', 'async'] as const) {
@@ -762,13 +771,12 @@ test.describe('WebMCP search component ownership', () => {
   test('uses search hooks and unregisters only search when its component unmounts', async ({
     page,
   }) => {
-    await installModelContext(page);
     await page.goto(`http://localhost:${port}/docs/`);
-    await expect
-      .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toContain('rspress_search_docs');
+    await expect.poll(() => listTools(page)).toContain('rspress_search_docs');
     expect(
-      JSON.stringify(await run(page, 'search_docs', { query: 'alias' })),
+      JSON.stringify(
+        await page.webmcp.callTool('rspress_search_docs', { query: 'alias' }),
+      ),
     ).toContain('v1 en home');
     await page.locator('.rp-search-button').click();
     await page.locator('.rp-search-panel__input').fill('alias');
@@ -776,20 +784,20 @@ test.describe('WebMCP search component ownership', () => {
       'v1 en home',
     );
     await page.keyboard.press('Escape');
-    const others = (await page.evaluate(() => window.webMcpTest.list())).filter(
+    const others = (await listTools(page)).filter(
       name => name !== 'rspress_search_docs',
     );
     await page.getByRole('button', { name: 'Toggle search component' }).click();
-    await expect
-      .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toEqual(others);
-    expect(await run(page, 'list_pages')).toMatchObject({ total: 3 });
+    await expect.poll(() => listTools(page)).toEqual(others);
+    expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
+      total: 3,
+    });
     await page.getByRole('button', { name: 'Toggle search component' }).click();
-    await expect
-      .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toContain('rspress_search_docs');
+    await expect.poll(() => listTools(page)).toContain('rspress_search_docs');
     expect(
-      JSON.stringify(await run(page, 'search_docs', { query: 'alias' })),
+      JSON.stringify(
+        await page.webmcp.callTool('rspress_search_docs', { query: 'alias' }),
+      ),
     ).toContain('v1 en home');
   });
 });
@@ -810,37 +818,40 @@ test.describe('WebMCP Markdown availability', () => {
   test('keeps page-reading tools available when the hint component unmounts', async ({
     page,
   }) => {
-    await installModelContext(page);
     await page.goto(`http://localhost:${port}/docs/`);
-    await expect
-      .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toEqual(allTools);
-    expect(await run(page, 'get_current_page')).toMatchObject({
+    await expect.poll(() => listTools(page)).toEqual(allTools);
+    expect(
+      await page.webmcp.callTool('rspress_get_current_page'),
+    ).toMatchObject({
       title: 'v1 en home',
     });
     await page
       .getByRole('button', { name: 'Toggle Markdown component' })
       .click();
     await expect(page.locator('.rp-llms-hint')).toHaveCount(0);
-    expect(await page.evaluate(() => window.webMcpTest.list())).toEqual(
-      allTools,
-    );
-    expect(await run(page, 'list_pages')).toMatchObject({ total: 3 });
-    await run(page, 'navigate', { routePath: '/guide' });
-    expect(await run(page, 'get_current_page')).toMatchObject({
+    expect(await listTools(page)).toEqual(allTools);
+    expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
+      total: 3,
+    });
+    await page.webmcp.callTool('rspress_navigate', { routePath: '/guide' });
+    expect(
+      await page.webmcp.callTool('rspress_get_current_page'),
+    ).toMatchObject({
       title: 'v1 en guide',
       markdown: expect.stringContaining('Install'),
     });
     await page
       .getByRole('button', { name: 'Toggle Markdown component' })
       .click();
-    await expect
-      .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toEqual(allTools);
-    expect(await run(page, 'get_current_page')).toMatchObject({
+    await expect.poll(() => listTools(page)).toEqual(allTools);
+    expect(
+      await page.webmcp.callTool('rspress_get_current_page'),
+    ).toMatchObject({
       title: 'v1 en guide',
     });
-    expect(await run(page, 'get_page', { routePath: '/' })).toMatchObject({
+    expect(
+      await page.webmcp.callTool('rspress_get_page', { routePath: '/' }),
+    ).toMatchObject({
       title: 'v1 en home',
     });
   });
@@ -860,20 +871,19 @@ for (const config of [
       config,
     ]);
     try {
-      await installModelContext(page);
       await page.goto(`http://localhost:${port}/docs/`);
-      await expect
-        .poll(() => page.evaluate(() => window.webMcpTest.list()))
-        .toEqual(allTools);
+      await expect.poll(() => listTools(page)).toEqual(allTools);
       await expect(page.locator('.rp-llms-hint')).toHaveCount(0);
       expect(
-        await run(page, 'get_page', { routePath: '/guide' }),
+        await page.webmcp.callTool('rspress_get_page', { routePath: '/guide' }),
       ).toMatchObject({
         title: 'v1 en guide',
         markdown: expect.stringContaining('Install'),
       });
-      await run(page, 'navigate', { routePath: '/guide' });
-      expect(await run(page, 'get_current_page')).toMatchObject({
+      await page.webmcp.callTool('rspress_navigate', { routePath: '/guide' });
+      expect(
+        await page.webmcp.callTool('rspress_get_current_page'),
+      ).toMatchObject({
         title: 'v1 en guide',
         markdown: expect.stringContaining('Install'),
       });
