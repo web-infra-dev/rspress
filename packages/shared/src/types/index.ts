@@ -243,6 +243,7 @@ export interface UserConfig {
   /**
    * Generate sitemap.xml during production builds.
    * @default true
+   * @since 2.1.0
    */
   sitemap?: boolean | SitemapOptions;
   /**
