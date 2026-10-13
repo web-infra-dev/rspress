@@ -841,7 +841,7 @@ export default defineConfig({
 - **类型**： `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
 - **默认值**： `true`
 
-是否在构建时将页面内容预渲染为 HTML。Rspress 默认开启 HTML SSG。
+是否在构建时将页面内容预渲染为 HTML。Rspress 默认开启 SSG。
 
 设置 `ssg: false` 后会生成用于客户端渲染的 HTML 空壳。
 
@@ -857,16 +857,20 @@ export default defineConfig({
 
 设置 `ssg: false` 并不会禁用 [`llms`](/api/config/config-agent#llms)。只要 `llms` 处于开启状态，SSG-MD 仍会将页面渲染为 Markdown，并生成 `llms.txt` 和 `llms-full.txt`。
 
-HTML SSG 和 SSG-MD 都要求代码兼容 SSR。如果代码不支持 SSR，需要同时设置 `ssg: false` 和 `llms: false`：
+如果构建遇到 SSR 兼容性问题，你可以：
 
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
+1. 修复不兼容 SSR 的代码。具体方法请参阅 SSG 指南中的[常见问题与解决方案](/guide/basic/ssg#常见问题与解决方案)。
 
-export default defineConfig({
-  ssg: false,
-  llms: false,
-});
-```
+2. SSG 和 SSG-MD 都要求代码兼容 SSR。如果代码不支持 SSR，需要同时设置 `ssg: false` 和 `llms: false`：
+
+   ```ts title="rspress.config.ts"
+   import { defineConfig } from '@rspress/core';
+
+   export default defineConfig({
+     ssg: false,
+     llms: false,
+   });
+   ```
 
 :::
 
