@@ -649,7 +649,7 @@ The SSG-MD Markdown output for the same page starts with:
 
 The URLs automatically include the configured `siteOrigin`, [`base`](/api/config/config-basic#base), locale, and version prefixes. Without `siteOrigin`, the URLs remain base-aware paths.
 
-Set `injectLlmsHint` to `false` to disable this behavior:
+Set `injectLlmsHint` to `false` to disable this behavior. This also unmounts `LlmsHint` and unregisters its WebMCP page-reading tools:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
