@@ -9,6 +9,11 @@ export default defineConfig({
   description: 'Documentation tools',
   base: '/docs/',
   llms: true,
+  themeConfig: { llmsUI: false },
+  themeDir: path.join(import.meta.dirname, 'custom-theme'),
+  search: {
+    searchHooks: path.join(import.meta.dirname, 'custom-theme/searchHooks.ts'),
+  },
   webMcp: { exposedTo: ['https://agent.example'] },
   route: { cleanUrls: true, localeRedirect: 'never' },
   lang: 'en',
