@@ -2,8 +2,6 @@
 description: SSG-MD 将页面渲染为 Markdown 文件并生成 llms.txt 索引，便于大语言模型理解和使用技术文档，提升 GEO 优化效果。
 ---
 
-import { VersionBadge } from '../../../components/VersionBadge';
-
 # llms.txt （SSG-MD）
 
 > 想快速上手？跳转到[快速开始](#快速开始)。
@@ -180,19 +178,9 @@ deno init --npm rspress@latest
 
 ## 快速开始
 
-<VersionBadge version="2.1.0" />
+自 v2.1.0 起，`llms` 默认开启（此前默认为 `false`）。
 
-自 v2.1.0 起，`llms` 默认开启（此前默认为 `false`）。如需关闭，可在 `rspress.config.ts` 中设置 `llms: false`：
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  llms: false,
-});
-```
-
-启用 `llms` 时，执行 `rspress build` 后，输出目录（默认 `doc_build`）会额外生成以下文件：
+执行 `rspress build` 后，输出目录（默认 `doc_build`）会额外生成以下文件：
 
 ```tree
 doc_build

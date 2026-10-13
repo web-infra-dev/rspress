@@ -2,8 +2,6 @@
 description: Generate llms.txt and Markdown files for AI-native documentation using SSG-MD, enabling better understanding by large language models.
 ---
 
-import { VersionBadge } from '../../../components/VersionBadge';
-
 # llms.txt (SSG-MD)
 
 > Want to get started quickly? Jump to [Quick Start](#quick-start).
@@ -180,19 +178,9 @@ deno init --npm rspress@latest
 
 ## Quick start
 
-<VersionBadge version="2.1.0" />
+Starting in v2.1.0, `llms` is enabled by default (previously `false`).
 
-Starting in v2.1.0, `llms` is enabled by default (previously `false`). To disable it, set `llms: false` in `rspress.config.ts`:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  llms: false,
-});
-```
-
-With `llms` enabled, after running `rspress build`, the output directory (default `doc_build`) will additionally contain the following files:
+After running `rspress build`, the output directory (default `doc_build`) will additionally contain the following files:
 
 ```tree
 doc_build
