@@ -892,6 +892,8 @@ When enabled, Rspress uses workers to accelerate SSG and reduce memory usage. Th
 
 Excludes selected pages from SSG so they use CSR HTML directly. This can help large documentation sites bypass SSG errors on a small number of pages, but it is not recommended as a default choice.
 
+This option only affects SSG; it does not exclude pages from SSG-MD. If excluded pages are incompatible with SSR, make them SSR-compatible or set `llms: false` to disable SSG-MD.
+
 ## replaceRules
 
 - **Type**: `{ search: string | RegExp; replace: string; }[]`

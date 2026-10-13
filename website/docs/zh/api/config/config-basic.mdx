@@ -886,6 +886,8 @@ export default defineConfig({
 
 开启后一部分页面将不进行 SSG 渲染，直接使用 CSR 下的 html，适合用于大型文档站点绕过一小部分页面的 SSG 错误，不建议主动开启。
 
+此选项仅影响 SSG，不会将页面排除在 SSG-MD 之外。如果被排除的页面不兼容 SSR，需要修复兼容性问题，或设置 `llms: false` 关闭 SSG-MD。
+
 ## replaceRules
 
 - **类型**： `{ search: string | RegExp; replace: string; }[]`

@@ -45,6 +45,7 @@ export async function renderPage(route: RouteMeta, ssrBundlePath: string) {
           `Page "${picocolors.yellow(routePath)}" SSG-MD rendering failed.
 ${absolutePath ? picocolors.gray(`    File: ${absolutePath}\n`) : ''}    ${picocolors.gray(e.toString())}`,
         );
+        hintSSGFailed();
         throw e;
       }
     }

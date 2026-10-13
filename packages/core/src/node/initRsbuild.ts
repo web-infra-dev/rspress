@@ -571,6 +571,9 @@ async function createInternalBuildConfig(
                   'process.env.__SSR__': JSON.stringify(true),
                   'process.env.__SSR_MD__': JSON.stringify(true),
                   'import.meta.env.SSG_MD': JSON.stringify(true),
+                  'import.meta.env.ENABLE_LLMS_HINT': JSON.stringify(
+                    isLlmsHintEnabled(config, enableSSG, 'markdown'),
+                  ),
                 },
               },
               output: {

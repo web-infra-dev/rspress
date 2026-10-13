@@ -144,6 +144,7 @@ for (const { ssg, llms, config } of [
         'utf-8',
       );
       expect(markdown).toContain('Rspress uses');
+      expect(markdown.trimStart()).toMatch(/^> For AI agents:/);
     }
 
     const errors: string[] = [];

@@ -83,7 +83,7 @@ ${picocolors.greenBright(`  builderConfig: {
 }
 
 /**
- * Possible reasons for printing "ssg: false" and some troubleshooting guidelines for users.
+ * Explain SSR compatibility failures and how to disable SSG and SSG-MD.
  */
 let isSSGFailedLogged = false;
 export function hintSSGFailed() {
@@ -91,9 +91,9 @@ export function hintSSGFailed() {
     return;
   }
   isSSGFailedLogged = true;
-  logger.info(`[Rspress v2] \`ssg: true\` requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
+  logger.info(`[Rspress v2] SSG and SSG-MD require the source code to support SSR. If the code is not compatible with SSR, the build process will fail. You can try:
     1. Fix code to make it SSR-compatible.
-    2. Set \`ssg: false\` if the code in node_modules may be difficult to fix, but the SSG feature will be lost.`);
+    2. Set both \`ssg: false\` and \`llms: false\` to disable SSG and SSG-MD if the code is difficult to fix.`);
 }
 
 /**

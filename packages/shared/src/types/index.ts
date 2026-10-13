@@ -352,6 +352,8 @@ export interface UserConfig {
         experimentalWorker?: boolean;
         /**
          * After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
+         * Only affects SSG, not SSG-MD. If excluded pages are not SSR-compatible,
+         * fix their SSR compatibility or set `llms: false` to disable SSG-MD.
          * @default []
          */
         experimentalExcludeRoutePaths?: (string | RegExp)[];
