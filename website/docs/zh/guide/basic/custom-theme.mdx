@@ -108,6 +108,14 @@ export * from '@rspress/core/theme-original'; //[!code highlight]
 
 通过 **ESM 重导出** 覆写内置的组件，所有 Rspress 内部引用的内置组件都会优先使用你重导出的版本。
 
+`LlmsHint` 也遵循这一约定，上面的重导出已包含它。如果你的主题没有重导出默认主题，需要自行导出 `LlmsHint`；不需要提示内容时，可以返回 `null`：
+
+```tsx
+export function LlmsHint() {
+  return null;
+}
+```
+
 :::note 关于 @rspress/core/theme-original
 
 `@rspress/core/theme-original` 用于避免循环引用，仅在自定义主题的时候使用。

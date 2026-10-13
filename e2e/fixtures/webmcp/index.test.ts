@@ -882,10 +882,11 @@ for (const config of [
         );
       if (config === 'rspress.custom-theme.config.ts') {
         await expect(page.getByTestId('standalone-theme')).toBeVisible();
+        await expect(page.getByTestId('custom-llms-hint')).toHaveText(
+          'Custom LLM hint',
+        );
       }
-      await expect(page.locator('.rp-llms-hint')).toHaveCount(
-        config === 'rspress.custom-theme.config.ts' ? 1 : 0,
-      );
+      await expect(page.locator('.rp-llms-hint')).toHaveCount(0);
       expect(
         await page.webmcp.callTool('rspress_get_page', { routePath: '/guide' }),
       ).toMatchObject({

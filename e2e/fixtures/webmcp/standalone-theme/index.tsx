@@ -16,3 +16,7 @@ export function Root({ children }: PropsWithChildren) {
 export function Layout() {
   return <Content />;
 }
+
+export function LlmsHint() {
+  return <div data-testid="custom-llms-hint">Custom LLM hint</div>;
+}
