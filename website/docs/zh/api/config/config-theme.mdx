@@ -637,7 +637,7 @@ export default defineConfig({
 
 其中的 URL 会自动包含配置的 `siteOrigin`、[`base`](/api/config/config-basic#base)、语言和版本前缀。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
 
-将 `injectLlmsHint` 设置为 `false`，可以禁用这一行为。这也会卸载 `LlmsHint`，并注销其 WebMCP 页面读取工具：
+将 `injectLlmsHint` 设置为 `false`，可以禁用这一行为：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

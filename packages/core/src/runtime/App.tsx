@@ -4,6 +4,7 @@ import {
   useWebMcpSiteInfo,
   useWebMcpPageList,
   useWebMcpNavigation,
+  useWebMcpPageReading,
 } from '@rspress/core/runtime';
 import { Layout, LlmsHint, Root } from '@rspress/core/theme';
 import React, { useContext } from 'react';
@@ -26,6 +27,9 @@ export function App() {
     useWebMcpSiteInfo();
     useWebMcpPageList();
     useWebMcpNavigation();
+    if (import.meta.env.ENABLE_SSG_MD) {
+      useWebMcpPageReading();
+    }
   }
 
   const frontmatter = data.frontmatter || {};

@@ -14,8 +14,8 @@ import {
 
 /**
  * Registers `rspress_get_page` and `rspress_get_current_page` to read page
- * metadata and generated SSG-MD without navigating. Mount in the component
- * that provides Markdown access; unmounting removes both tools.
+ * metadata and generated SSG-MD without navigating. The app registers these
+ * tools when Markdown generation is enabled, independently of the theme UI.
  * @unstable
  */
 export function useWebMcpPageReading() {

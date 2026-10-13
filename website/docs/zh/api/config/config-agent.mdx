@@ -44,7 +44,7 @@ export default defineConfig({
 
 通过浏览器原生 WebMCP API 提供内置文档工具，设置 `webMcp: false` 仅关闭 Rspress 内置工具，仍可使用 [`useWebMcp`](/ui/hooks/use-web-mcp) hook 注册自定义工具。不支持 WebMCP 的浏览器仍可正常访问站点。
 
-工具可用性跟随所属组件。页面读取工具由 `LlmsHint` 注册，需要通过启用 [`llms`](#llms) 的生产构建生成 Markdown。本地搜索工具由默认搜索面板注册，暂不支持 Algolia 集成。
+页面读取工具需要通过启用 [`llms`](#llms) 的生产构建生成 Markdown，不依赖 `themeConfig.llmsUI` 或 `LlmsHint`。本地搜索工具由默认搜索面板注册，暂不支持 Algolia 集成。
 
 通过 `exposedTo` 允许指定的安全来源发现工具：
 

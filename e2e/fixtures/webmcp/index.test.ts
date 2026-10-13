@@ -794,7 +794,7 @@ test.describe('WebMCP search component ownership', () => {
   });
 });
 
-test.describe('WebMCP Markdown component ownership', () => {
+test.describe('WebMCP Markdown availability', () => {
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   let port: number;
   test.beforeAll(async () => {
@@ -807,7 +807,7 @@ test.describe('WebMCP Markdown component ownership', () => {
     await killProcess(app);
   });
 
-  test('unregisters page-reading tools when the Markdown component unmounts', async ({
+  test('keeps page-reading tools available when the hint component unmounts', async ({
     page,
   }) => {
     await installModelContext(page);
@@ -821,16 +821,16 @@ test.describe('WebMCP Markdown component ownership', () => {
     await page
       .getByRole('button', { name: 'Toggle Markdown component' })
       .click();
-    await expect
-      .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toEqual(
-        allTools.filter(
-          name =>
-            !['rspress_get_page', 'rspress_get_current_page'].includes(name),
-        ),
-      );
+    await expect(page.locator('.rp-llms-hint')).toHaveCount(0);
+    expect(await page.evaluate(() => window.webMcpTest.list())).toEqual(
+      allTools,
+    );
     expect(await run(page, 'list_pages')).toMatchObject({ total: 3 });
     await run(page, 'navigate', { routePath: '/guide' });
+    expect(await run(page, 'get_current_page')).toMatchObject({
+      title: 'v1 en guide',
+      markdown: expect.stringContaining('Install'),
+    });
     await page
       .getByRole('button', { name: 'Toggle Markdown component' })
       .click();
@@ -845,3 +845,40 @@ test.describe('WebMCP Markdown component ownership', () => {
     });
   });
 });
+
+for (const config of [
+  'rspress.no-llms-ui.config.ts',
+  'rspress.no-llms-hint.config.ts',
+]) {
+  test(`registers page-reading tools independently of the theme UI (${config})`, async ({
+    page,
+  }) => {
+    await runBuildCommand(import.meta.dirname, config);
+    const port = await getPort();
+    const app = await runPreviewCommand(import.meta.dirname, port, [
+      '-c',
+      config,
+    ]);
+    try {
+      await installModelContext(page);
+      await page.goto(`http://localhost:${port}/docs/`);
+      await expect
+        .poll(() => page.evaluate(() => window.webMcpTest.list()))
+        .toEqual(allTools);
+      await expect(page.locator('.rp-llms-hint')).toHaveCount(0);
+      expect(
+        await run(page, 'get_page', { routePath: '/guide' }),
+      ).toMatchObject({
+        title: 'v1 en guide',
+        markdown: expect.stringContaining('Install'),
+      });
+      await run(page, 'navigate', { routePath: '/guide' });
+      expect(await run(page, 'get_current_page')).toMatchObject({
+        title: 'v1 en guide',
+        markdown: expect.stringContaining('Install'),
+      });
+    } finally {
+      await killProcess(app);
+    }
+  });
+}
