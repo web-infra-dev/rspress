@@ -855,8 +855,6 @@ export default defineConfig({
 
 :::tip
 
-设置 `ssg: false` 并不会禁用 [`llms`](/api/config/config-agent#llms)。只要 `llms` 处于开启状态，SSG-MD 仍会将页面渲染为 Markdown，并生成 `llms.txt` 和 `llms-full.txt`。
-
 [SSG](/guide/basic/ssg) 和 [SSG-MD](/guide/basic/ssg-md) 均要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下的代码，会导致编译失败。你可以尝试：
 
 1. 修复不兼容 SSR 的代码。具体方法请参阅 SSG 指南中的[常见问题与解决方案](/guide/basic/ssg#常见问题与解决方案)。

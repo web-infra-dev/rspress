@@ -861,8 +861,6 @@ export default defineConfig({
 
 :::tip
 
-Setting `ssg: false` does not disable [`llms`](/api/config/config-agent#llms). SSG-MD still renders pages to Markdown and generates `llms.txt` and `llms-full.txt` when `llms` is enabled.
-
 Both [SSG](/guide/basic/ssg) and [SSG-MD](/guide/basic/ssg-md) require source code to compile under SSR. Code that is incompatible with SSR will cause the build to fail. You can try:
 
 1. Make your code SSR-compatible. See [Common issues and solutions](/guide/basic/ssg#common-issues-and-solutions) in the SSG guide.
