@@ -863,11 +863,11 @@ export default defineConfig({
 
 Setting `ssg: false` does not disable [`llms`](/api/config/config-agent#llms). SSG-MD still renders pages to Markdown and generates `llms.txt` and `llms-full.txt` when `llms` is enabled.
 
-If the build encounters SSR compatibility issues, you can:
+Both [SSG](/guide/basic/ssg) and [SSG-MD](/guide/basic/ssg-md) require source code to compile under SSR. Code that is incompatible with SSR will cause the build to fail. You can try:
 
 1. Make your code SSR-compatible. See [Common issues and solutions](/guide/basic/ssg#common-issues-and-solutions) in the SSG guide.
 
-2. Both SSG and SSG-MD require SSR-compatible code. If your code does not support SSR, set both `ssg: false` and `llms: false`:
+2. If your code does not support SSR, set both `ssg: false` and `llms: false`:
 
    ```ts title="rspress.config.ts"
    import { defineConfig } from '@rspress/core';
