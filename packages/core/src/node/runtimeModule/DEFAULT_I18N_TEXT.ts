@@ -185,6 +185,35 @@ export const DEFAULT_I18N_TEXT = {
     ru: 'Вернуться на главную',
   },
 
+  errorTitleText: {
+    en: 'Something went wrong',
+    zh: '页面出了点问题',
+    ja: 'エラーが発生しました',
+    ko: '문제가 발생했습니다',
+    ru: 'Что-то пошло не так',
+  },
+  errorDescriptionText: {
+    en: 'This page could not be loaded. Try reloading it or return to the home page.',
+    zh: '页面未能正常加载，请尝试重新加载，或返回首页。',
+    ja: 'ページを読み込めませんでした。再読み込みするか、ホームに戻ってください。',
+    ko: '페이지를 불러올 수 없습니다. 새로고침하거나 홈으로 돌아가세요.',
+    ru: 'Не удалось загрузить страницу. Попробуйте обновить её или вернуться на главную.',
+  },
+  reloadPageText: {
+    en: 'Reload page',
+    zh: '重新加载',
+    ja: '再読み込み',
+    ko: '새로고침',
+    ru: 'Обновить страницу',
+  },
+  errorDetailsText: {
+    en: 'Error details',
+    zh: '错误详情',
+    ja: 'エラーの詳細',
+    ko: '오류 세부 정보',
+    ru: 'Подробности ошибки',
+  },
+
   promptCopyText: {
     en: 'Copy Prompt',
     zh: '复制 Prompt',

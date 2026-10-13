@@ -122,6 +122,7 @@ export { DocLayout, type DocLayoutProps } from './layout/DocLayout';
 export { HomeLayout, type HomeLayoutProps } from './layout/HomeLayout/index';
 export { Layout, type LayoutProps } from './layout/Layout/index';
 export { NotFoundLayout } from './layout/NotFountLayout/index';
+export { ErrorLayout, type ErrorLayoutProps } from './layout/ErrorLayout/index';
 export { copyToClipboard } from './logic/copyToClipboard';
 export { getCopyableText } from './logic/getCopyableText';
 // logic

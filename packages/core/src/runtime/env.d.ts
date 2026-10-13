@@ -1,3 +1,11 @@
+declare module 'virtual-react-router-server' {
+  export {
+    createStaticHandler,
+    createStaticRouter,
+    StaticRouterProvider,
+  } from 'react-router-dom';
+}
+
 declare module 'virtual-routes' {
   import type { Route } from '@rspress/shared';
 
