@@ -485,8 +485,11 @@ async function createInternalBuildConfig(
         },
         source: {
           entry: {
+            // Markdown-only rendering still emits CSR HTML without content to hydrate.
             index:
-              enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
+              enableSSG && config.ssg && isProduction()
+                ? SSR_CLIENT_ENTRY
+                : CSR_CLIENT_ENTRY,
           },
           define: {
             // import.meta.env.SSR is built in Rsbuild v2.0.7
