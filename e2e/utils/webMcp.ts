@@ -1,11 +1,15 @@
 import { test as baseTest, type Page } from '@e2e/test';
 
-// Use the Chromium bundled with Playwright for this experimental browser API,
-// including in CI, where other tests may use the installed Chrome channel.
 export const test = baseTest.extend({
   playwright: async ({ task }, use) => {
     await use({
-      launchOptions: { args: ['--enable-features=WebMCP'] },
+      launchOptions: {
+        // Windows CI has a recent Chrome; other platforms use bundled Chromium.
+        ...(process.env.CI && process.platform === 'win32'
+          ? { channel: 'chrome' }
+          : {}),
+        args: ['--enable-features=WebMCP'],
+      },
       contextOptions: { viewport: { width: 1440, height: 900 } },
       trace: process.env.CI ? (task.retryCount === 1 ? 'on' : 'off') : 'on',
     });
