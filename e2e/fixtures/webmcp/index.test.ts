@@ -657,9 +657,10 @@ test.describe('WebMCP React Router 6 compatibility', () => {
   test.beforeAll(async () => {
     port = await getPort();
     app = await runDevCommand(
+      // Resolve React Router 6 from this fixture, reusing the WebMCP config.
       path.join(import.meta.dirname, '../react-router-dom-6'),
       port,
-      'rspress.webmcp.config.ts',
+      path.join(import.meta.dirname, 'rspress.config.ts'),
     );
   });
   test.afterAll(async () => {
