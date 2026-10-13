@@ -13,7 +13,7 @@ boolean | {
 }
 ```
 
-- **默认值**：`false`
+- **默认值**：`true`
 
 是否开启 [SSG-MD](/guide/basic/ssg-md) 来生成 `llms.txt`、`llms-full.txt` 以及每个页面对应的 Markdown 文件，使你的文档更容易被大语言模型理解。
 
@@ -21,17 +21,19 @@ boolean | {
 
 可通过 `llmsTxt` 基于站点信息和页面分组编排完整的 `llms.txt` 内容。详见[自定义 llms.txt](/guide/basic/ssg-md#自定义-llmstxt)。
 
+自 v2.1.0 起默认开启（此前默认为 `false`），可设置 `llms: false` 关闭。
+
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  llms: true,
+  llms: false,
 });
 ```
 
 :::warning
 
-`llms` 为实验性功能。如果由于代码不兼容 SSR 而无法开启 SSG-MD，请使用 [@rspress/plugin-llms](/plugin/official-plugins/llms) 作为备选方案。
+如果代码不兼容 SSR，请设置 `llms: false` 并使用 [@rspress/plugin-llms](/plugin/official-plugins/llms) 作为备选方案。
 
 :::
 

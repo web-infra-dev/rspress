@@ -355,9 +355,8 @@ export interface UserConfig {
       };
 
   /**
-   * Whether to enable llms and ssg-md
-   * @default false
-   * @experimental
+   * Whether to enable llms and ssg-md. Enabled by default since v2.1.0.
+   * @default true
    */
   llms?:
     | boolean

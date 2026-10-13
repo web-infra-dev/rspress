@@ -3,7 +3,7 @@ import path from 'node:path';
 import { expect, test } from '@e2e/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
-test('llms should be successful', async () => {
+test('llms should be enabled by default', async () => {
   const appDir = import.meta.dirname;
   await runBuildCommand(appDir);
 
@@ -104,6 +104,11 @@ test('custom llms.txt renderer should be successful', async () => {
 test('csr should be successful', async () => {
   const appDir = import.meta.dirname;
   await runBuildCommand(appDir, 'rspress-csr.config.ts');
+
+  const files = await fs.readdir(path.join(appDir, 'doc_build'));
+  expect(files).not.toContain('llms.txt');
+  expect(files).not.toContain('llms-full.txt');
+  expect(files).not.toContain('index.md');
 });
 
 test('llms directive hint should be configurable', async () => {
