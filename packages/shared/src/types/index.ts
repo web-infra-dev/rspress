@@ -336,7 +336,10 @@ export interface UserConfig {
    */
   search?: SearchOptions;
   /**
-   * Whether to enable ssg
+   * Whether to prerender page content into HTML at build time (SSG).
+   * Set to `false` to generate HTML shells for client-side rendering instead.
+   * This does not disable SSG-MD or llms.txt generation, which are controlled
+   * independently by `llms`.
    * @default true
    */
   ssg?:
@@ -355,7 +358,11 @@ export interface UserConfig {
       };
 
   /**
-   * Whether to enable llms and ssg-md. Enabled by default since v2.1.0.
+   * Whether to render pages to Markdown (SSG-MD) and generate llms.txt and
+   * llms-full.txt at build time.
+   * Independent of `ssg`: these files are still generated when `ssg: false`.
+   * Set to `false` to disable these outputs without affecting HTML SSG.
+   * Enabled by default since v2.1.0.
    * @default true
    */
   llms?:
