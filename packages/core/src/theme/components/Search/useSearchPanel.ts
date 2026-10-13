@@ -18,7 +18,7 @@ import type {
   PageSearcherConfig,
 } from './logic/types';
 import { RenderType } from './logic/types';
-import { defineTool, queryField } from '../../../runtime/webMcp/tools';
+import { defineTool, queryField } from '../../webMcp/tools';
 
 const useDebounce = <T extends (...args: any[]) => any>(cb: T) => {
   const cbRef = useRef(cb);

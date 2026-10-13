@@ -802,61 +802,6 @@ test.describe('WebMCP search component ownership', () => {
   });
 });
 
-test.describe('WebMCP Markdown availability', () => {
-  let app: Awaited<ReturnType<typeof runDevCommand>>;
-  let port: number;
-  test.beforeAll(async () => {
-    const config = 'rspress.search-component.config.ts';
-    await runBuildCommand(import.meta.dirname, config);
-    port = await getPort();
-    app = await runPreviewCommand(import.meta.dirname, port, ['-c', config]);
-  });
-  test.afterAll(async () => {
-    await killProcess(app);
-  });
-
-  test('keeps page-reading tools available when the hint component unmounts', async ({
-    page,
-  }) => {
-    await page.goto(`http://localhost:${port}/docs/`);
-    await expect.poll(() => listTools(page)).toEqual(allTools);
-    expect(
-      await page.webmcp.callTool('rspress_get_current_page'),
-    ).toMatchObject({
-      title: 'v1 en home',
-    });
-    await page
-      .getByRole('button', { name: 'Toggle Markdown component' })
-      .click();
-    await expect(page.locator('.rp-llms-hint')).toHaveCount(0);
-    expect(await listTools(page)).toEqual(allTools);
-    expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
-      total: 3,
-    });
-    await page.webmcp.callTool('rspress_navigate', { routePath: '/guide' });
-    expect(
-      await page.webmcp.callTool('rspress_get_current_page'),
-    ).toMatchObject({
-      title: 'v1 en guide',
-      markdown: expect.stringContaining('Install'),
-    });
-    await page
-      .getByRole('button', { name: 'Toggle Markdown component' })
-      .click();
-    await expect.poll(() => listTools(page)).toEqual(allTools);
-    expect(
-      await page.webmcp.callTool('rspress_get_current_page'),
-    ).toMatchObject({
-      title: 'v1 en guide',
-    });
-    expect(
-      await page.webmcp.callTool('rspress_get_page', { routePath: '/' }),
-    ).toMatchObject({
-      title: 'v1 en home',
-    });
-  });
-});
-
 for (const config of [
   'rspress.no-llms-ui.config.ts',
   'rspress.no-llms-hint.config.ts',

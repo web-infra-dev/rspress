@@ -7,7 +7,7 @@ import {
   usePage,
   useWebMcp,
 } from '@rspress/core/runtime';
-import { usePrevNextPage } from '../../theme/logic/usePrevNextPage';
+import { usePrevNextPage } from '../logic/usePrevNextPage';
 import {
   defineTool,
   resolveInternalRoute,

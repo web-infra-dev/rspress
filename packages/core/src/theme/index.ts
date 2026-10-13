@@ -115,6 +115,10 @@ export { Tag } from './components/Tag/index';
 export { Toc } from './components/Toc';
 export { useActiveAnchor } from './hooks/useActiveAnchor';
 export { useDynamicToc, useWatchToc } from './hooks/useDynamicToc';
+export { useWebMcpNavigation } from './hooks/useWebMcpNavigation';
+export { useWebMcpPageList } from './hooks/useWebMcpPageList';
+export { useWebMcpPageReading } from './hooks/useWebMcpPageReading';
+export { useWebMcpSiteInfo } from './hooks/useWebMcpSiteInfo';
 // icons
 export * from './icons';
 // layout

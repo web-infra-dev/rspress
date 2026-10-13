@@ -1,12 +1,13 @@
+import { PageContext, useLocation } from '@rspress/core/runtime';
 import {
-  PageContext,
-  useLocation,
+  Layout,
+  LlmsHint,
+  Root,
   useWebMcpSiteInfo,
   useWebMcpPageList,
   useWebMcpNavigation,
   useWebMcpPageReading,
-} from '@rspress/core/runtime';
-import { Layout, LlmsHint, Root } from '@rspress/core/theme';
+} from '@rspress/core/theme';
 import React, { useContext } from 'react';
 import { useGlobalComponents } from './hooks/useGlobalComponents';
 

@@ -1,5 +1,5 @@
 import { normalizeHref, removeTrailingSlash } from '@rspress/shared';
-import type { WebMcpOptions } from '../hooks/useWebMcp';
+import type { WebMcpOptions } from '@rspress/core/runtime';
 import type { PageInfo } from './types';
 
 type Field =
