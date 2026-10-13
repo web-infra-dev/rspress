@@ -39,11 +39,9 @@ Paths are absolute within the documentation site, excluding the configured `base
 
 The two page-reading tools require `llms: true` in production to generate page Markdown through [SSG-MD](/guide/basic/ssg-md). Run `rspress build` followed by `rspress preview` to try all six tools. Without `llms: true`, or when using the development server, no SSG-MD output is generated, so Rspress omits `rspress_get_page` and `rspress_get_current_page`.
 
-Page-reading tools are independent of the theme UI. With Markdown generation enabled, they remain available when `LlmsHint` is unmounted, `themeConfig.llmsUI` is disabled, or `themeConfig.llmsUI.injectLlmsHint` is set to `false`.
+Page-reading tools are independent of the `themeConfig.llmsUI` settings.
 
-The search tool shares the default search panel's provider and configured `beforeSearch`, `onSearch`, and `afterSearch` hooks. The index is initialized when the panel opens or an agent first searches. Closing the popup keeps the tool available; unmounting or replacing the default search panel removes it. Custom search components can register their own tool with `useWebMcp`. Switching language or version selects the corresponding index; `search.versioned: false` searches across versions. The search tool is omitted when local search is disabled or the active group has no index. Algolia integration is not supported yet: sites using `@rspress/plugin-algolia` retain their existing DocSearch UI, but do not expose a WebMCP search tool. Page listing and reading remain available.
-
-WebMCP uses the existing development page-data and search-index lifecycle. It does not add full-site recomputation on edits; metadata and index updates remain subject to the existing HMR behavior.
+`rspress_search_docs` is available with the default theme's local search. Integration with `@rspress/plugin-algolia` is not supported yet. Other tools work independently of the search provider.
 
 ## Try a tool
 
@@ -77,4 +75,4 @@ The browser also applies its WebMCP permissions policy and discovery rules. See 
 
 ## Custom tools
 
-Use [`useWebMcp`](/ui/hooks/use-web-mcp) from `@rspress/core/runtime` to register tools in your own components. The built-in tools use the same hook in `App` and the search panel. Tool availability follows the owning component; there are no separate search or Markdown switches in `webMcp`.
+Use [`useWebMcp`](/ui/hooks/use-web-mcp) from `@rspress/core/runtime` to register tools in your own components. Tools are automatically removed when the component unmounts.
