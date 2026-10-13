@@ -2,6 +2,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, type Page, test } from '@e2e/test';
 import { chromium } from 'playwright';
+import { installModelContext, type Tool } from '../../utils/webMcp';
 import {
   getPort,
   killProcess,
@@ -9,73 +10,6 @@ import {
   runDevCommand,
   runPreviewCommand,
 } from '../../utils/runCommands';
-
-type Tool = {
-  name: string;
-  annotations?: Record<string, boolean>;
-  execute: (input: unknown, options: { signal?: AbortSignal }) => unknown;
-};
-declare global {
-  interface Window {
-    webMcpTest: {
-      list(): string[];
-      annotations(name: string): Tool['annotations'];
-      run(name: string, input?: unknown, signal?: AbortSignal): Promise<any>;
-      registrations: string[][];
-      registrationNames: string[];
-    };
-    navigationResult?: any;
-    navigationError?: string;
-  }
-}
-
-// Only the browser API is substituted. The real runtime, router, network,
-// generated Markdown and local search run in the browser without a polyfill.
-async function installModelContext(page: Page, failure?: 'sync' | 'async') {
-  await page.addInitScript(
-    ({ failure }) => {
-      const tools = new Map<string, Tool>();
-      const registrations: string[][] = [];
-      const registrationNames: string[] = [];
-      Object.defineProperty(document, 'modelContext', {
-        configurable: true,
-        value: {
-          registerTool(
-            tool: Tool,
-            options: { signal: AbortSignal; exposedTo?: string[] },
-          ) {
-            if (failure === 'sync') throw new Error('registration denied');
-            if (failure === 'async')
-              return Promise.reject(new Error('registration denied'));
-            if (options.signal.aborted) return;
-            if (tools.has(tool.name))
-              throw new Error(`Duplicate tool: ${tool.name}`);
-            tools.set(tool.name, tool);
-            registrations.push(options.exposedTo ?? []);
-            registrationNames.push(tool.name);
-            options.signal.addEventListener(
-              'abort',
-              () => tools.delete(tool.name),
-              { once: true },
-            );
-          },
-        },
-      });
-      window.webMcpTest = {
-        list: () => [...tools.keys()].sort(),
-        annotations: name => tools.get(name)?.annotations,
-        async run(name, input = {}, signal) {
-          const tool = tools.get(`rspress_${name}`);
-          if (!tool) throw new Error(`Missing tool: ${name}`);
-          return tool.execute(input, { signal });
-        },
-        registrations,
-        registrationNames,
-      };
-    },
-    { failure },
-  );
-}
 
 function run(page: Page, name: string, input: unknown = {}) {
   return page.evaluate(
@@ -648,43 +582,6 @@ test.describe('WebMCP HTML navigation', () => {
         .poll(() => page.evaluate(() => window.webMcpTest.list()))
         .toContain('rspress_navigate');
     }
-  });
-});
-
-test.describe('WebMCP React Router 6 compatibility', () => {
-  let app: Awaited<ReturnType<typeof runDevCommand>>;
-  let port: number;
-  test.beforeAll(async () => {
-    port = await getPort();
-    app = await runDevCommand(
-      // Resolve React Router 6 from this fixture, reusing the WebMCP config.
-      path.join(import.meta.dirname, '../react-router-dom-6'),
-      port,
-      path.join(import.meta.dirname, 'rspress.config.ts'),
-    );
-  });
-  test.afterAll(async () => {
-    await killProcess(app);
-  });
-  test('waits for committed context even when useNavigate returns void', async ({
-    page,
-  }) => {
-    await installModelContext(page);
-    await page.goto(`http://localhost:${port}/docs/`);
-    await expect
-      .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toContain('rspress_navigate');
-    const result = await page.evaluate(async () => {
-      const result = await window.webMcpTest.run('navigate', {
-        routePath: '/guide#install',
-      });
-      return { result, heading: document.querySelector('h1')?.textContent };
-    });
-    expect(result.heading).toContain('v1 en guide');
-    expect(result.result).toMatchObject({
-      routePath: '/guide#install',
-      page: { title: 'v1 en guide' },
-    });
   });
 });
 
