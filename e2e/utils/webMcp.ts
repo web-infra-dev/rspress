@@ -55,7 +55,8 @@ declare global {
 }
 
 // Fault injection only: Playwright cannot inject registration failures or pass
-// an AbortSignal to callTool. All other cases use the native browser API.
+// an AbortSignal to callTool, or run two handlers in the same browser task.
+// All other cases use the native browser API.
 export async function installModelContext(
   page: Page,
   failure?: 'sync' | 'async',

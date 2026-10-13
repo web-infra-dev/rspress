@@ -5,7 +5,7 @@ export const searchHookVMPlugin: VirtualModulePlugin = context => {
   return {
     [`${RuntimeModuleID.SearchHooks}`]: () => {
       const { config } = context;
-      let content = 'export const onSearch = () => {};';
+      let content = 'export {};';
 
       const searchHooks =
         typeof config.search === 'object' && config.search?.searchHooks;

@@ -1,10 +1,12 @@
 import { describe, expect, rs, test } from '@rstest/core';
+import { createElement } from 'react';
 import {
   defineTool,
   listPages,
   queryField,
   readPage,
   resolveInternalRoute,
+  toWebMcpSearchResults,
 } from './tools';
 import type { PageInfo } from './types';
 
@@ -25,6 +27,25 @@ const guide: PageInfo = {
 };
 
 describe('WebMCP tools', () => {
+  test('keeps JSON search data and omits unsupported custom groups', () => {
+    const cyclic: { self?: unknown } = {};
+    cyclic.self = cyclic;
+    const valid = [{ title: 'Guide', link: '/guide' }];
+    expect(
+      toWebMcpSearchResults([
+        { group: 'Local', result: valid },
+        { group: 'Custom', result: { answer: 42 } },
+        { group: 'Cyclic', result: cyclic },
+        { group: 'UI', result: createElement('span', null, 'Result') },
+        { group: 'Callback', result: { action: () => {} } },
+        { group: 'BigInt', result: 1n },
+        { group: 'Empty', result: undefined },
+      ]),
+    ).toEqual([
+      { group: 'Local', results: valid },
+      { group: 'Custom', results: { answer: 42 } },
+    ]);
+  });
   test('filters active locale/version and paginates independently of search', () => {
     const pages = [
       home,

@@ -353,6 +353,32 @@ test.describe('WebMCP production tools', () => {
     }
   });
 
+  test('supersedes a started navigation when returning to the current route', async ({
+    page,
+  }) => {
+    // Invoke both handlers in one browser task, before React commits loading state.
+    await installModelContext(page);
+    await page.reload();
+    await expect
+      .poll(() => page.evaluate(() => window.webMcpTest.list()))
+      .toContain('rspress_navigate');
+    const result = await page.evaluate(async () => {
+      const first = window.webMcpTest
+        .run('navigate', { routePath: '/guide' })
+        .catch(error => error.message);
+      await Promise.resolve();
+      const current = await window.webMcpTest.run('navigate', {
+        routePath: '/',
+      });
+      return { current, first: await first };
+    });
+    expect(result.current).toMatchObject({ page: { title: 'v1 en home' } });
+    expect(result.first).toContain('superseded');
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL(`http://localhost:${port}/docs`);
+    await expect(page.locator('h1')).toContainText('v1 en home');
+  });
+
   test('cancels a pending navigation call and allows the next call', async ({
     page,
   }) => {
@@ -410,6 +436,50 @@ test.describe('WebMCP production tools', () => {
       page.webmcp.callTool('rspress_get_page', { routePath: '/guide' }),
     ).rejects.toThrow();
   });
+  test('retries a failed index request for agents and the search UI', async ({
+    page,
+  }) => {
+    let requests = 0;
+    await page.route('**/static/search_index*.json', async route => {
+      if (route.request().resourceType() !== 'fetch') return route.continue();
+      requests++;
+      if (requests === 1)
+        return route.fulfill({ status: 503, body: 'Unavailable' });
+      return route.continue();
+    });
+    await expect(
+      page.webmcp.callTool('rspress_search_docs', { query: 'cobalt' }),
+    ).rejects.toThrow();
+    await page.locator('.rp-search-button').click();
+    await page.locator('.rp-search-panel__input').fill('cobalt');
+    await expect(page.locator('.rp-suggest-item').first()).toContainText(
+      'v1 en home',
+    );
+    expect(
+      JSON.stringify(
+        await page.webmcp.callTool('rspress_search_docs', { query: 'cobalt' }),
+      ),
+    ).toContain('v1 en home');
+    expect(requests).toBe(2);
+  });
+
+  test('returns serializable custom search results without a local index', async ({
+    page,
+  }) => {
+    await page.webmcp.callTool('rspress_navigate', { routePath: '/v2/zh/' });
+    await expect.poll(() => listTools(page)).toContain('rspress_search_docs');
+    const result = await page.webmcp.callTool('rspress_search_docs', {
+      query: 'custom',
+    });
+    expect(result).toContainEqual({
+      group: 'Custom',
+      results: [{ title: 'Custom result', link: '/guide' }],
+    });
+    expect(result.map((item: { group: string }) => item.group)).not.toContain(
+      'Cyclic',
+    );
+  });
+
   test('shows results after a failed search hook recovers', async ({
     page,
   }) => {

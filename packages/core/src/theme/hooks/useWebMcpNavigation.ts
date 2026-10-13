@@ -81,12 +81,7 @@ function useAwaitedNavigation(result: NavigationResult) {
         new Error('Navigation was superseded by another tool call.'),
       );
       pending.current = undefined;
-      if (
-        snapshot.current.result.routePath === target &&
-        snapshot.current.state === 'idle'
-      ) {
-        return Promise.resolve(snapshot.current.result);
-      }
+      // Even the current route must supersede a transition not yet committed by React.
       return new Promise((resolve, reject) => {
         const cancel = () => {
           if (pending.current === request) pending.current = undefined;

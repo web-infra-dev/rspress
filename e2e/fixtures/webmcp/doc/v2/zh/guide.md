@@ -1,3 +1,7 @@
+---
+search: false
+---
+
 # v2 zh guide
 
 Read this guide.

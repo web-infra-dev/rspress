@@ -18,7 +18,11 @@ import type {
   PageSearcherConfig,
 } from './logic/types';
 import { RenderType } from './logic/types';
-import { defineTool, queryField } from '../../webMcp/tools';
+import {
+  defineTool,
+  queryField,
+  toWebMcpSearchResults,
+} from '../../webMcp/tools';
 
 const useDebounce = <T extends (...args: any[]) => any>(cb: T) => {
   const cbRef = useRef(cb);
@@ -145,14 +149,15 @@ export function useSearchPanel({
         },
         ['query'],
         async args =>
-          (
+          toWebMcpSearchResults(
             await searchDocs(
               args.query as string,
               (args.limit as number | undefined) ?? 10,
-            )
-          ).map(({ group, result }) => ({ group, results: result })),
+            ),
+          ),
       ),
-      enabled: searchEnabled && Boolean(searchIndexURL),
+      enabled:
+        searchEnabled && Boolean(searchIndexURL || userSearchHooks.onSearch),
     });
   }
 

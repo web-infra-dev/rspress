@@ -8,6 +8,25 @@ type Field =
 export const queryField: Field = { type: 'string', minLength: 1 };
 export const routePathField: Field = { type: 'string', minLength: 1 };
 
+export function toWebMcpSearchResults(
+  groups: { group: string; result: unknown }[],
+): { group: string; results: unknown }[] {
+  return groups.flatMap(({ group, result }) => {
+    try {
+      const json = JSON.stringify(result, (_key, value) => {
+        if (['function', 'symbol', 'bigint'].includes(typeof value)) {
+          throw new TypeError('Search result is not JSON-serializable.');
+        }
+        return value;
+      });
+      return json === undefined ? [] : [{ group, results: JSON.parse(json) }];
+    } catch {
+      // Custom renderers may consume React elements or cyclic, UI-only data.
+      return [];
+    }
+  });
+}
+
 function argumentsObject(
   input: unknown,
   fields: Record<string, Field>,
