@@ -14,7 +14,7 @@ export default defineConfig({
 });
 ```
 
-设置 `webMcp: false` 可以关闭内置工具。
+设置 `webMcp: false` 可以关闭 Rspress 内置工具，仍可使用 [`useWebMcp`](/ui/hooks/use-web-mcp) hook 注册自定义工具。
 
 WebMCP 是实验性功能，需要浏览器在 HTTPS 或 localhost 等安全上下文中启用 `document.modelContext`。不支持的浏览器仍可正常访问站点。Rspress 不会安装浏览器 polyfill 或 MCP 服务器。
 

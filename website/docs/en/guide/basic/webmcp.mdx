@@ -14,7 +14,7 @@ export default defineConfig({
 });
 ```
 
-Set `webMcp: false` to disable the built-in tools.
+Set `webMcp: false` to disable the Rspress built-in tools. The [`useWebMcp`](/ui/hooks/use-web-mcp) hook remains available for registering custom tools.
 
 WebMCP is experimental and requires a browser with `document.modelContext` enabled in a secure context, such as HTTPS or localhost. Unsupported browsers continue to render the site normally. Rspress does not install a browser polyfill or an MCP server.
 
