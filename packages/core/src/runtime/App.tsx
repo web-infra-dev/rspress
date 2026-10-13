@@ -6,8 +6,9 @@ import {
   useWebMcpNavigation,
   useWebMcpPageReading,
 } from '@rspress/core/runtime';
-import { Layout, LlmsHint, Root } from '@rspress/core/theme';
+import { Layout, Root } from '@rspress/core/theme';
 import React, { useContext } from 'react';
+import { LlmsHint } from '../theme/components/Llms/LlmsHint';
 import { useGlobalComponents } from './hooks/useGlobalComponents';
 
 enum QueryStatus {

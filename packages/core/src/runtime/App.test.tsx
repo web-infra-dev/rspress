@@ -27,14 +27,11 @@ rs.mock('@rspress/core/runtime', () => ({
 
 rs.mock('@rspress/core/theme', () => ({
   Layout: () => 'Layout content',
-  LlmsHint: () => 'LLMS hint',
   Root: ({ children }: { children: ReactNode }) => children,
 }));
 
-rs.mock('@rspress/core/theme-original', () => ({
-  Layout: () => 'Layout content',
+rs.mock('../theme/components/Llms/LlmsHint', () => ({
   LlmsHint: () => 'LLMS hint',
-  Root: ({ children }: { children: ReactNode }) => children,
 }));
 
 rs.mock('virtual-global-components', () => ({

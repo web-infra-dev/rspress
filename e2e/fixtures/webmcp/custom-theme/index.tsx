@@ -2,6 +2,7 @@ export * from '@rspress/core/theme-original';
 import {
   Search as DefaultSearch,
   LlmsHint as DefaultLlmsHint,
+  Layout as DefaultLayout,
 } from '@rspress/core/theme-original';
 import { useState } from 'react';
 
@@ -17,7 +18,7 @@ export function Search() {
   );
 }
 
-export function LlmsHint() {
+export function Layout() {
   const [visible, setVisible] = useState(true);
   return (
     <>
@@ -25,6 +26,7 @@ export function LlmsHint() {
         Toggle Markdown component
       </button>
       {visible && <DefaultLlmsHint />}
+      <DefaultLayout />
     </>
   );
 }

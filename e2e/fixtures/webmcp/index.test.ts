@@ -860,6 +860,7 @@ test.describe('WebMCP Markdown availability', () => {
 for (const config of [
   'rspress.no-llms-ui.config.ts',
   'rspress.no-llms-hint.config.ts',
+  'rspress.custom-theme.config.ts',
 ]) {
   test(`registers page-reading tools independently of the theme UI (${config})`, async ({
     page,
@@ -872,8 +873,19 @@ for (const config of [
     ]);
     try {
       await page.goto(`http://localhost:${port}/docs/`);
-      await expect.poll(() => listTools(page)).toEqual(allTools);
-      await expect(page.locator('.rp-llms-hint')).toHaveCount(0);
+      await expect
+        .poll(() => listTools(page))
+        .toEqual(
+          config === 'rspress.custom-theme.config.ts'
+            ? allTools.filter(name => name !== 'rspress_search_docs')
+            : allTools,
+        );
+      if (config === 'rspress.custom-theme.config.ts') {
+        await expect(page.getByTestId('standalone-theme')).toBeVisible();
+      }
+      await expect(page.locator('.rp-llms-hint')).toHaveCount(
+        config === 'rspress.custom-theme.config.ts' ? 1 : 0,
+      );
       expect(
         await page.webmcp.callTool('rspress_get_page', { routePath: '/guide' }),
       ).toMatchObject({
