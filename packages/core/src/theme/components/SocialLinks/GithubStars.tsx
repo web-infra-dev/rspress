@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useState } from 'react';
+// eslint-disable-next-line no-restricted-imports -- Existing cross-directory dependency; retained until this component is eject-safe.
 import { useStorageValue } from '../../logic/useStorageValue';
 
 const TTL_MS = 60 * 60 * 1000;

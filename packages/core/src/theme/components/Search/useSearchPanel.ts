@@ -18,6 +18,7 @@ import type {
   PageSearcherConfig,
 } from './logic/types';
 import { RenderType } from './logic/types';
+// eslint-disable-next-line no-restricted-imports -- Existing cross-directory dependency; retained until this component is eject-safe.
 import {
   defineTool,
   queryField,
