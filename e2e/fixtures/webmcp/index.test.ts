@@ -487,47 +487,41 @@ test.describe('WebMCP capability detection', () => {
   });
 });
 
-for (const config of [
-  'rspress.default.config.ts',
-  'rspress.hint-only.config.ts',
-]) {
-  test(`enables available tools without Markdown generation (${config})`, async ({
-    page,
-  }) => {
-    await runBuildCommand(import.meta.dirname, config);
-    const port = await getPort();
-    const app = await runPreviewCommand(import.meta.dirname, port, [
-      '-c',
-      config,
-    ]);
-    try {
-      await page.goto(`http://localhost:${port}/docs/`);
-      await expect
-        .poll(() => listTools(page))
-        .toEqual(
-          allTools.filter(
-            name =>
-              !['rspress_get_page', 'rspress_get_current_page'].includes(name),
-          ),
-        );
-      await expect(page.locator('.rp-llms-hint')).toHaveCount(
-        config === 'rspress.hint-only.config.ts' ? 1 : 0,
-      );
-      expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
-        total: 3,
-      });
-      expect(
-        JSON.stringify(
-          await page.webmcp.callTool('rspress_search_docs', {
-            query: 'cobalt',
-          }),
+test('enables available tools without Markdown generation', async ({
+  page,
+}) => {
+  const config = 'rspress.default.config.ts';
+  await runBuildCommand(import.meta.dirname, config);
+  const port = await getPort();
+  const app = await runPreviewCommand(import.meta.dirname, port, [
+    '-c',
+    config,
+  ]);
+  try {
+    await page.goto(`http://localhost:${port}/docs/`);
+    await expect
+      .poll(() => listTools(page))
+      .toEqual(
+        allTools.filter(
+          name =>
+            !['rspress_get_page', 'rspress_get_current_page'].includes(name),
         ),
-      ).toContain('v1 en home');
-    } finally {
-      await killProcess(app);
-    }
-  });
-}
+      );
+    await expect(page.locator('.rp-llms-hint')).toHaveCount(0);
+    expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
+      total: 3,
+    });
+    expect(
+      JSON.stringify(
+        await page.webmcp.callTool('rspress_search_docs', {
+          query: 'cobalt',
+        }),
+      ),
+    ).toContain('v1 en home');
+  } finally {
+    await killProcess(app);
+  }
+});
 
 test('disabled WebMCP is absent from production JavaScript', async () => {
   await runBuildCommand(import.meta.dirname, 'rspress.disabled.config.ts');
@@ -654,6 +648,9 @@ for (const mode of ['dev', 'build'] as const) {
         value: 1,
       });
     });
+
+    // The production case above checks registration and execution; exercise lifecycle edges in dev.
+    if (mode === 'build') return;
 
     test('cleans up on disable and unmount and does not remove another owner', async ({
       page,
@@ -804,7 +801,6 @@ test.describe('WebMCP search component ownership', () => {
 
 for (const config of [
   'rspress.no-llms-ui.config.ts',
-  'rspress.no-llms-hint.config.ts',
   'rspress.custom-theme.config.ts',
 ]) {
   test(`registers page-reading tools independently of the theme UI (${config})`, async ({

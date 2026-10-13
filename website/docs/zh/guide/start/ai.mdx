@@ -78,11 +78,7 @@ https://rspress.rs/guide/start/introduction.md
 
 <VersionBadge version="2.1.0" />
 
-Rspress 内置了 [WebMCP](/guide/basic/webmcp) 支持，让浏览器智能体能够发现并调用文档工具，获取站点信息、列出页面、搜索本地文档、读取页面 Markdown，以及跳转到已知站内路由。
-
-WebMCP 默认开启，无需额外安装插件。在支持 `document.modelContext` 的浏览器中，工具随所属组件挂载而可用。页面读取工具需要通过启用 `llms: true` 的生产构建生成 Markdown。设置 `webMcp: false` 可以关闭内置工具。
-
-工具可用性、浏览器要求和跨域访问配置请参阅 [WebMCP 指南](/guide/basic/webmcp)。如果需要向智能体提供自定义组件的能力，可以使用 `@rspress/core/runtime` 导出的 [`useWebMcp`](/ui/hooks/use-web-mcp)。
+Rspress 默认通过 [WebMCP](/guide/basic/webmcp) 向浏览器智能体提供文档读取、搜索和导航工具。
 
 ## AGENTS.md
 

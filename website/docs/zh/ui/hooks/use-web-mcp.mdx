@@ -29,7 +29,7 @@ export function PageTitleTool() {
 
 在能力所属的位置挂载组件：全站工具放在常驻组件中，页面专属工具随页面挂载。工具名称在整个文档中必须唯一，也不能与[内置工具](/guide/basic/webmcp)重名。
 
-自定义工具独立于 `webMcp` 配置项，该选项只控制内置文档工具，默认值为 `true`。此 hook 需要安全上下文中的原生 `document.modelContext`，不会安装 polyfill，可以安全地参与 SSR。如果使用外部提供的运行时，请在挂载工具组件之前初始化它。
+自定义工具不受 `webMcp` 配置项影响。浏览器要求参阅 [WebMCP 指南](/guide/basic/webmcp)。
 
 ## 参数
 
@@ -38,13 +38,13 @@ export function PageTitleTool() {
 | `name`                    | 必填，唯一的工具名称。                                                                       |
 | `description`             | 必填，供智能体理解工具用途的描述。                                                           |
 | `title`                   | 可选的展示标题。                                                                             |
-| `inputSchema`             | 描述输入的 JSON Schema，不需要额外的 schema 库。                                             |
+| `inputSchema`             | 描述输入的 JSON Schema。                                                                     |
 | `execute(input, options)` | 必填，返回可 JSON 序列化的结果或 Promise。调用方提供取消信号时，通过 `options.signal` 传入。 |
 | `enabled`                 | 是否注册，默认为 `true`，改为 `false` 时注销工具。                                           |
 | `annotations`             | 可选的布尔提示：`readOnlyHint`、`untrustedContentHint`、`consequentialHint` 和 `debugging`。 |
 | `exposedTo`               | 可选，允许发现工具的其他安全来源。                                                           |
 
-通过 `WebMcpOptions<TInput, TResult>` 或执行函数的参数注解声明类型。此 hook 不从 JSON Schema 推导参数类型，也不自行验证参数；请在执行函数中校验不可信输入。结果直接返回，不包装成 MCP 响应格式，执行错误传递给调用方。
+通过 `WebMcpOptions<TInput, TResult>` 或参数注解声明类型，并在 `execute` 中校验输入、处理取消信号。
 
 ```tsx
 useWebMcp({
@@ -72,8 +72,10 @@ useWebMcp({
 
 ## 返回值与生命周期
 
-返回 `{ supported, registered, error }`，类型为 `WebMcpState`。`supported` 表示浏览器是否支持该 API；注册成功后 `registered` 变为 `true`；`error` 包含名称冲突等注册错误，注册错误也会输出到控制台。SSR 期间三个值分别为 `false`、`false` 和 `null`。
+返回 `WebMcpState`：
 
-每次调用都使用最近一次**已提交渲染**中的执行函数及其 props、state。执行函数更新不会触发重新注册；序列化后的工具元数据（名称、schema、描述、注解或可访问来源）变化时，才清理并重新注册。属性顺序相同、内容相同的内联对象不会触发重复注册。
+- `supported`：浏览器是否支持 WebMCP。
+- `registered`：工具是否注册成功。
+- `error`：注册错误，成功时为 `null`。
 
-禁用或卸载组件会移除注册。已开始的执行需要在执行函数中处理取消与清理，移除工具不会撤销已经发生的操作。
+工具调用使用最新已提交的 props 和 state；更新执行函数不会重新注册。禁用或卸载组件会注销工具。

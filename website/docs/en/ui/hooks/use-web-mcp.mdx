@@ -29,7 +29,7 @@ export function PageTitleTool() {
 
 Mount the component where the capability belongs. Keep site-wide tools in a persistent component; mount tools specific to a page with that page. Tool names must be unique across the document, including the [built-in tools](/guide/basic/webmcp).
 
-Custom tools work independently of the `webMcp` config option, which controls the built-in documentation tools and defaults to `true`. The hook requires native `document.modelContext` support in a secure context, does not install a polyfill, and is safe to render during SSR. Initialize any externally supplied runtime before mounting tool components.
+Custom tools work independently of the `webMcp` config option. See the [WebMCP guide](/guide/basic/webmcp) for browser requirements.
 
 ## Options
 
@@ -38,13 +38,13 @@ Custom tools work independently of the `webMcp` config option, which controls th
 | `name`                    | Required unique tool name.                                                                                                                 |
 | `description`             | Required description for agents.                                                                                                           |
 | `title`                   | Optional display title.                                                                                                                    |
-| `inputSchema`             | JSON Schema describing the input. No schema library is required.                                                                           |
+| `inputSchema`             | JSON Schema describing the input.                                                                                                          |
 | `execute(input, options)` | Required function returning a JSON-serializable value or a promise. `options.signal`, when provided, carries cancellation from the caller. |
 | `enabled`                 | Whether to register the tool. Defaults to `true`; setting it to `false` unregisters the tool.                                              |
 | `annotations`             | Optional boolean hints: `readOnlyHint`, `untrustedContentHint`, `consequentialHint`, and `debugging`.                                      |
 | `exposedTo`               | Optional array of additional secure origins allowed to discover the tool.                                                                  |
 
-Use `WebMcpOptions<TInput, TResult>` or annotate the input parameter to type your handler. The hook does not infer argument types from JSON Schema or validate arguments itself; validate untrusted input in the handler. Results pass through without MCP response wrapping, and execution errors propagate to the caller.
+Use `WebMcpOptions<TInput, TResult>` or parameter annotations for types, and validate inputs and handle cancellation in `execute`.
 
 ```tsx
 useWebMcp({
@@ -72,8 +72,10 @@ useWebMcp({
 
 ## Return value and lifecycle
 
-The hook returns `{ supported, registered, error }`, typed as `WebMcpState`. `supported` reports browser API availability; `registered` becomes `true` after registration succeeds; `error` contains a registration error, such as a duplicate name. Registration errors are also logged to the console. During SSR, the values are `false`, `false`, and `null`.
+Returns `WebMcpState`:
 
-Each call uses the latest **committed** handler, including its props and state. Updating the handler does not re-register the tool. Changes to the serialized tool metadata (name, schema, description, annotations, or exposed origins) trigger cleanup and re-registration. Equivalent inline objects with the same property order keep the existing registration.
+- `supported`: whether the browser supports WebMCP.
+- `registered`: whether registration succeeded.
+- `error`: the registration error, or `null` on success.
 
-Disabling or unmounting removes the registration. An already started execution must handle cancellation and cleanup in its own handler; removing the tool does not undo its effects.
+Tool calls use the latest committed props and state. Updating the handler does not re-register the tool. Disabling or unmounting the component unregisters it.

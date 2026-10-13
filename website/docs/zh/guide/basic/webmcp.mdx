@@ -16,62 +16,28 @@ export default defineConfig({
 
 设置 `webMcp: false` 可以关闭 Rspress 内置工具，仍可使用 [`useWebMcp`](/ui/hooks/use-web-mcp) hook 注册自定义工具。
 
-WebMCP 是实验性功能，需要浏览器在 HTTPS 或 localhost 等安全上下文中启用 `document.modelContext`。不支持的浏览器仍可正常访问站点。Rspress 不会安装浏览器 polyfill 或 MCP 服务器。
+WebMCP 是实验性功能，需要浏览器在 HTTPS 或 localhost 等安全上下文中启用 `document.modelContext`。不支持的浏览器仍可正常访问站点。
 
 完整配置项请参阅 [AI 配置](/api/config/config-agent#webmcp)。
 
 ## 内置工具
 
-| 工具                       | 用途                                                                    |
-| -------------------------- | ----------------------------------------------------------------------- |
-| `rspress_get_site_info`    | 返回站点元信息、语言、版本、导航和当前侧边栏。                          |
-| `rspress_list_pages`       | 筛选和分页读取页面元信息，默认使用当前语言和版本，不依赖搜索。          |
-| `rspress_get_page`         | 无需跳转即可读取已知路由的元信息、frontmatter、目录和 SSG-MD Markdown。 |
-| `rspress_get_current_page` | 读取当前页面的元信息、frontmatter、目录和 SSG-MD Markdown。             |
-| `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引。                                      |
-| `rspress_navigate`         | 跳转到已知站内路由，等待页面提交后返回元信息、章节路由和前后页。        |
+| 工具                       | 用途                                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------------------- |
+| `rspress_get_site_info`    | 返回站点元信息、语言、版本、导航和当前侧边栏。                                                    |
+| `rspress_list_pages`       | 筛选和分页读取页面元信息，默认使用当前语言和版本，不依赖搜索。                                    |
+| `rspress_get_page`         | 无需跳转即可读取已知路由的元信息、frontmatter、目录和 SSG-MD Markdown（在 `llms: true` 时开启）。 |
+| `rspress_get_current_page` | 读取当前页面的元信息、frontmatter、目录和 SSG-MD Markdown（在 `llms: true` 时开启）。             |
+| `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引（仅支持默认主题的本地搜索）。                                    |
+| `rspress_navigate`         | 跳转到已知站内路由，等待页面提交后返回元信息、章节路由和前后页。                                  |
 
-路径采用不含配置项 `base` 的站内绝对路径。站点部署在 `/docs/` 时，传入 `/guide` 即可跳转到 `/docs/guide.html`（开启 `route.cleanUrls: true` 时为 `/docs/guide`）。导航保留查询参数和锚点，拒绝未知路由和外部路由。导航被其他路由覆盖或被页面错误中断时会报错，不会返回过期的页面信息。取消工具调用会停止等待结果，不会撤销已经开始的导航。
+路由路径不包含配置项 `base`，支持查询参数和锚点。
 
 `rspress_list_pages` 接受 `query`、`lang`、`version`、`limit`（1–100，默认 50）和 `offset`（默认 0）。其中 `query` 匹配页面标题、描述、路由和章节标题。`rspress_search_docs` 接受 `query` 和 `limit`（1–20，默认 10）。
 
-## Markdown 和搜索可用性
-
-两个页面读取工具需要在生产构建中开启 `llms: true`，通过 [SSG-MD](/guide/basic/ssg-md) 生成页面 Markdown。运行 `rspress build` 和 `rspress preview` 后可以体验全部六个工具。未开启 `llms: true` 或使用开发服务器时，不生成 SSG-MD 产物，因此不注册 `rspress_get_page` 和 `rspress_get_current_page`。
-
-页面读取工具不依赖 `themeConfig.llmsUI` 的设置。
-
-`rspress_search_docs` 随默认主题的本地搜索启用，暂不支持 `@rspress/plugin-algolia`。其他工具不受搜索服务影响。
-
-## 试用工具
-
-在支持的浏览器中，发现并调用工具。部分实验性浏览器实现返回序列化的 schema，并要求 JSON 编码的参数；以下示例兼容两种形式。请将 `/guide` 替换为实际存在的页面路由：
-
-```js
-const tools = await document.modelContext.getTools();
-const tool = tools.find(tool => tool.name === 'rspress_get_page');
-if (!tool) throw new Error('Page-reading tool is unavailable');
-const input = { routePath: '/guide' };
-const args =
-  typeof tool.inputSchema === 'string' ? JSON.stringify(input) : input;
-const result = await document.modelContext.executeTool(tool, args);
-console.log(typeof result === 'string' ? JSON.parse(result) : result);
-```
-
 ## 跨源智能体
 
-同源和浏览器内置智能体无需额外配置。若要向指定安全来源开放内置工具：
-
-```ts
-export default defineConfig({
-  llms: true,
-  webMcp: {
-    exposedTo: ['https://agent.example'],
-  },
-});
-```
-
-浏览器还会应用 WebMCP 权限策略和工具发现规则，详见[跨源 API 文档](https://developer.chrome.com/docs/ai/webmcp/imperative-api#cross-origin-iframes)。
+通过 [`webMcp.exposedTo`](/api/config/config-agent#webmcp) 允许指定的安全来源发现工具。
 
 ## 自定义工具
 

@@ -16,62 +16,28 @@ export default defineConfig({
 
 Set `webMcp: false` to disable the Rspress built-in tools. The [`useWebMcp`](/ui/hooks/use-web-mcp) hook remains available for registering custom tools.
 
-WebMCP is experimental and requires a browser with `document.modelContext` enabled in a secure context, such as HTTPS or localhost. Unsupported browsers continue to render the site normally. Rspress does not install a browser polyfill or an MCP server.
+WebMCP is experimental and requires a browser with `document.modelContext` enabled in a secure context, such as HTTPS or localhost. Unsupported browsers continue to render the site normally.
 
 See [AI config](/api/config/config-agent#webmcp) for the configuration reference.
 
 ## Built-in tools
 
-| Tool                       | Purpose                                                                                                           |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `rspress_get_site_info`    | Site metadata, locales, versions, navigation, and the active sidebar.                                             |
-| `rspress_list_pages`       | Filter and paginate page metadata, defaulting to the active language and version. Works independently of search.  |
-| `rspress_get_page`         | Read metadata, frontmatter, TOC, and SSG-MD Markdown for a known route without navigating.                        |
-| `rspress_get_current_page` | Read metadata, frontmatter, TOC, and SSG-MD Markdown for the current page.                                        |
-| `rspress_search_docs`      | Search the local documentation index for the active language and version.                                         |
-| `rspress_navigate`         | Navigate to a known internal route, then return committed page metadata, section routes, and previous/next pages. |
+| Tool                       | Purpose                                                                                                                |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `rspress_get_site_info`    | Site metadata, locales, versions, navigation, and the active sidebar.                                                  |
+| `rspress_list_pages`       | Filter and paginate page metadata, defaulting to the active language and version. Works independently of search.       |
+| `rspress_get_page`         | Read metadata, frontmatter, TOC, and SSG-MD Markdown for a known route without navigating (enabled with `llms: true`). |
+| `rspress_get_current_page` | Read metadata, frontmatter, TOC, and SSG-MD Markdown for the current page (enabled with `llms: true`).                 |
+| `rspress_search_docs`      | Search the local documentation index for the active language and version (default theme local search only).            |
+| `rspress_navigate`         | Navigate to a known internal route, then return committed page metadata, section routes, and previous/next pages.      |
 
-Paths are absolute within the documentation site, excluding the configured `base`. For a site hosted at `/docs/`, pass `/guide` to navigate to `/docs/guide.html` (or `/docs/guide` with `route.cleanUrls: true`). Navigation preserves query strings and hashes and rejects unknown or external routes. A navigation superseded by another route or interrupted by a page error rejects instead of returning stale page metadata. Cancelling a tool call stops waiting for its result; it does not undo an already started navigation.
+Route paths exclude the configured `base` and support query strings and hashes.
 
 `rspress_list_pages` accepts `query`, `lang`, `version`, `limit` (1–100, default 50), and `offset` (default 0). Its query matches page titles, descriptions, routes, and headings. `rspress_search_docs` accepts `query` and `limit` (1–20, default 10).
 
-## Markdown and search availability
-
-The two page-reading tools require `llms: true` in production to generate page Markdown through [SSG-MD](/guide/basic/ssg-md). Run `rspress build` followed by `rspress preview` to try all six tools. Without `llms: true`, or when using the development server, no SSG-MD output is generated, so Rspress omits `rspress_get_page` and `rspress_get_current_page`.
-
-Page-reading tools are independent of the `themeConfig.llmsUI` settings.
-
-`rspress_search_docs` is available with the default theme's local search. Integration with `@rspress/plugin-algolia` is not supported yet. Other tools work independently of the search provider.
-
-## Try a tool
-
-In a supported browser, discover a tool and invoke it. Experimental browser implementations may expose a serialized schema and expect JSON-encoded arguments; the example handles both forms. Replace `/guide` with an existing page route:
-
-```js
-const tools = await document.modelContext.getTools();
-const tool = tools.find(tool => tool.name === 'rspress_get_page');
-if (!tool) throw new Error('Page-reading tool is unavailable');
-const input = { routePath: '/guide' };
-const args =
-  typeof tool.inputSchema === 'string' ? JSON.stringify(input) : input;
-const result = await document.modelContext.executeTool(tool, args);
-console.log(typeof result === 'string' ? JSON.parse(result) : result);
-```
-
 ## Cross-origin agents
 
-Same-origin and browser-integrated agents need no extra configuration. To expose the built-in tools to specific secure origins:
-
-```ts
-export default defineConfig({
-  llms: true,
-  webMcp: {
-    exposedTo: ['https://agent.example'],
-  },
-});
-```
-
-The browser also applies its WebMCP permissions policy and discovery rules. See the [cross-origin API documentation](https://developer.chrome.com/docs/ai/webmcp/imperative-api#cross-origin-iframes).
+Use [`webMcp.exposedTo`](/api/config/config-agent#webmcp) to allow specific secure origins to discover tools.
 
 ## Custom tools
 
