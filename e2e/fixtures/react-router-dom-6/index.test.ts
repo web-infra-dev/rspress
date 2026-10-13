@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/test';
+import { test as webMcpTest, listTools } from '../../utils/webMcp';
 import {
   getPort,
   killProcess,
@@ -106,3 +107,34 @@ for (const mode of ['dev', 'build'] as const) {
     });
   });
 }
+
+webMcpTest.describe('WebMCP React Router 6 compatibility', () => {
+  let app: Awaited<ReturnType<typeof runDevCommand>>;
+  let port: number;
+  webMcpTest.beforeAll(async () => {
+    port = await getPort();
+    app = await runDevCommand(
+      import.meta.dirname,
+      port,
+      'rspress.webmcp.config.ts',
+    );
+  });
+  webMcpTest.afterAll(async () => {
+    await killProcess(app);
+  });
+  webMcpTest(
+    'waits for committed context even when useNavigate returns void',
+    async ({ page }) => {
+      await page.goto(`http://localhost:${port}/docs/`);
+      await expect.poll(() => listTools(page)).toContain('rspress_navigate');
+      const result = await page.webmcp.callTool('rspress_navigate', {
+        routePath: '/guide#install',
+      });
+      expect(await page.locator('h1').textContent()).toContain('v1 en guide');
+      expect(result).toMatchObject({
+        routePath: '/guide#install',
+        page: { title: 'v1 en guide' },
+      });
+    },
+  );
+});

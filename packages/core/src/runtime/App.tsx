@@ -1,6 +1,13 @@
 import { PageContext, useLocation } from '@rspress/core/runtime';
-import { Layout, Root } from '@rspress/core/theme';
-import { LlmsHint } from '@rspress/core/theme-original';
+import {
+  Layout,
+  LlmsHint,
+  Root,
+  useWebMcpSiteInfo,
+  useWebMcpPageList,
+  useWebMcpNavigation,
+  useWebMcpPageReading,
+} from '@rspress/core/theme';
 import React, { useContext } from 'react';
 import { useGlobalComponents } from './hooks/useGlobalComponents';
 
@@ -12,7 +19,19 @@ enum QueryStatus {
 export function App() {
   const globalComponents = useGlobalComponents();
   const { data } = useContext(PageContext);
-  const { search } = useLocation();
+  const location = useLocation();
+  const { search } = location;
+
+  // This build-time condition is constant for the lifetime of the app.
+  // Keep site-wide tools alongside the app's page, navigation and sidebar context.
+  if (import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR) {
+    useWebMcpSiteInfo();
+    useWebMcpPageList();
+    useWebMcpNavigation();
+    if (import.meta.env.ENABLE_SSG_MD) {
+      useWebMcpPageReading();
+    }
+  }
 
   const frontmatter = data.frontmatter || {};
   const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';

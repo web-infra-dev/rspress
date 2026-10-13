@@ -315,8 +315,19 @@ async function createInternalBuildConfig(
       ],
       include: [PACKAGE_ROOT],
       define: {
+        'import.meta.env.ENABLE_WEBMCP': JSON.stringify(
+          config.webMcp !== false,
+        ),
+        'import.meta.env.WEBMCP_EXPOSED_TO': JSON.stringify(
+          typeof config.webMcp === 'object'
+            ? (config.webMcp.exposedTo ?? [])
+            : [],
+        ),
         'import.meta.env.ENABLE_LLMS_UI': JSON.stringify(enableLlmsUI),
         'import.meta.env.ENABLE_LLMS_HINT': JSON.stringify(enableLlmsHint),
+        'import.meta.env.ENABLE_SSG_MD': JSON.stringify(
+          Boolean(enableSSG && config.llms),
+        ),
       },
     },
     performance: {

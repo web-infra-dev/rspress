@@ -59,6 +59,10 @@ jobs:
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm install --ignore-scripts
 
+      - name: Install Playwright Browsers
+        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        run: pnpm exec playwright install chromium
+
       - name: Build Packages
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
         run: pnpm run build
