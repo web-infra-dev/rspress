@@ -17,6 +17,8 @@ boolean | {
 
 是否开启 [SSG-MD](/guide/basic/ssg-md) 来生成 `llms.txt`、`llms-full.txt` 以及每个页面对应的 Markdown 文件，使你的文档更容易被大语言模型理解。
 
+该配置与 [`ssg`](/api/config/config-basic#ssg) 相互独立：`ssg: false` 时，`llms: true` 仍会生成上述文件；`llms: false` 也不会关闭 HTML SSG。
+
 开启 `llms` 后，默认也会启用 Markdown 复制和 AI 工具入口。可以通过 [`themeConfig.llmsUI`](/api/config/config-theme#llmsui) 自定义或关闭这些界面。
 
 可通过 `llmsTxt` 基于站点信息和页面分组编排完整的 `llms.txt` 内容。详见[自定义 llms.txt](/guide/basic/ssg-md#自定义-llmstxt)。
