@@ -5,7 +5,6 @@ export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
   base: '/docs/',
   siteOrigin: 'https://example.com',
-  ssg: true,
   title: 'Rspress SSG MDX Test',
   description: 'Rspress SSG MDX Test Description',
   markdown: {
