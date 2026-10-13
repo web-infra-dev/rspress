@@ -362,7 +362,6 @@ export interface UserConfig {
    * llms-full.txt at build time.
    * Independent of `ssg`: these files are still generated when `ssg: false`.
    * Set to `false` to disable these outputs without affecting SSG.
-   * Enabled by default since v2.1.0.
    * @default true
    */
   llms?:
