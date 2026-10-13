@@ -17,8 +17,6 @@ boolean | {
 
 Whether to enable [SSG-MD](/guide/basic/ssg-md) to generate `llms.txt`, `llms-full.txt`, and Markdown files for each page, making your documentation easier for large language models to understand.
 
-This option is independent of [`ssg`](/api/config/config-basic#ssg): `llms: true` still generates these files when `ssg: false`, and `llms: false` does not disable HTML SSG.
-
 Enabling `llms` also enables the Markdown copy and AI tool UI by default. Use [`themeConfig.llmsUI`](/api/config/config-theme#llmsui) to customize or disable these controls.
 
 Use `llmsTxt` to compose the complete `llms.txt` content from site metadata and page sections. See [Customize llms.txt](/guide/basic/ssg-md#customize-llmstxt) for details.

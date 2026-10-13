@@ -849,7 +849,7 @@ export default defineConfig({
 
 Controls whether page content is rendered into HTML at build time. Rspress enables HTML SSG by default.
 
-Set `ssg: false` to generate HTML shells for client-side rendering. This does not disable Markdown, `llms.txt`, or `llms-full.txt` generation, which are controlled independently by [`llms`](/api/config/config-agent#llms).
+Set `ssg: false` to generate HTML shells for client-side rendering.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -861,11 +861,18 @@ export default defineConfig({
 
 :::tip
 
-SSG requires source code to be SSR-compatible. If the code is not compatible with SSR, the build will fail. You can try:
+Setting `ssg: false` does not disable [`llms`](/api/config/config-agent#llms). SSG-MD still renders pages to Markdown and generates `llms.txt` and `llms-full.txt` when `llms` is enabled.
 
-1. Fix the code to make it SSR-compatible.
+Both HTML SSG and SSG-MD require SSR-compatible code. If your code does not support SSR, set both `ssg: false` and `llms: false`:
 
-2. Set `ssg: false` to disable HTML SSG. If the incompatibility also affects SSG-MD, disable it separately with `llms: false`.
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  ssg: false,
+  llms: false,
+});
+```
 
 :::
 
