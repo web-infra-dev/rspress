@@ -46,7 +46,13 @@ const useCommittedEffect =
 const toError = (error: unknown) =>
   error instanceof Error ? error : new Error(String(error));
 
-/** Register a component-owned tool with the native browser WebMCP API. */
+/**
+ * Registers a component-owned tool with the native browser WebMCP API.
+ * Calls use the latest committed handler; disabling or unmounting unregisters
+ * the tool. Safe during SSR and in browsers without WebMCP support.
+ * @returns Browser support, registration status, and any registration error.
+ * @unstable
+ */
 export function useWebMcp<TInput = unknown, TResult = unknown>(
   options: WebMcpOptions<TInput, TResult>,
 ): WebMcpState {

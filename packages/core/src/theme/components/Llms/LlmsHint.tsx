@@ -2,13 +2,13 @@ import {
   routePathToMdPath,
   usePage,
   useSite,
+  useWebMcpPageReading,
   withBase,
   withSiteOrigin,
   Head,
 } from '@rspress/core/runtime';
 
 import type React from 'react';
-import { useWebMcpPageReading } from '../../../runtime/hooks/useWebMcpPageReading';
 
 const visuallyHiddenStyle: React.CSSProperties = {
   position: 'absolute',

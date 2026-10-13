@@ -14,8 +14,14 @@ import {
   routePathField,
 } from '../webMcp/tools';
 
-// Native navigation prepares the page. A layout effect acknowledges that React
-// has committed the corresponding page context before returning it to an agent.
+/**
+ * Creates an awaitable navigation callback that resolves after React commits
+ * the destination page context. Rejects superseded or cancelled requests;
+ * cancellation stops waiting without undoing an already started navigation.
+ * @param result Metadata for the currently rendered page.
+ * @returns A callback accepting a canonical route and optional abort signal.
+ * @unstable
+ */
 function useAwaitedNavigation(result: NavigationResult) {
   const location = useLocation();
   const navigation = useNavigation();
@@ -121,6 +127,11 @@ function useAwaitedNavigation(result: NavigationResult) {
   );
 }
 
+/**
+ * Registers `rspress_navigate` for known internal routes. Waits for committed
+ * page context before returning metadata, section routes, and adjacent pages.
+ * @unstable
+ */
 export function useWebMcpNavigation() {
   const { page } = usePage();
   const location = useLocation();

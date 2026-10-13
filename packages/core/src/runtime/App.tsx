@@ -1,10 +1,13 @@
-import { PageContext, useLocation } from '@rspress/core/runtime';
+import {
+  PageContext,
+  useLocation,
+  useWebMcpSiteInfo,
+  useWebMcpPageList,
+  useWebMcpNavigation,
+} from '@rspress/core/runtime';
 import { Layout, LlmsHint, Root } from '@rspress/core/theme';
 import React, { useContext } from 'react';
 import { useGlobalComponents } from './hooks/useGlobalComponents';
-import { useWebMcpSiteInfo } from './hooks/useWebMcpSiteInfo';
-import { useWebMcpPageList } from './hooks/useWebMcpPageList';
-import { useWebMcpNavigation } from './hooks/useWebMcpNavigation';
 
 enum QueryStatus {
   Show = '1',

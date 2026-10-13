@@ -1,6 +1,11 @@
 import { usePage, usePages, useWebMcp } from '@rspress/core/runtime';
 import { defineTool, listPages, queryField } from '../webMcp/tools';
 
+/**
+ * Registers `rspress_list_pages` for filtered, paginated page discovery,
+ * defaulting to the active language and version without requiring search.
+ * @unstable
+ */
 export function useWebMcpPageList() {
   const { page } = usePage();
   const { pages } = usePages();

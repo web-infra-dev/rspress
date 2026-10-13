@@ -12,6 +12,12 @@ import {
   routePathField,
 } from '../webMcp/tools';
 
+/**
+ * Registers `rspress_get_page` and `rspress_get_current_page` to read page
+ * metadata and generated SSG-MD without navigating. Mount in the component
+ * that provides Markdown access; unmounting removes both tools.
+ * @unstable
+ */
 export function useWebMcpPageReading() {
   const { page } = usePage();
   const { site } = useSite();
