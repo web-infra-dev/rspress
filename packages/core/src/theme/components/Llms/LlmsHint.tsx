@@ -41,9 +41,13 @@ function createLlmsHintText({
 export function LlmsHint() {
   const { page } = usePage();
   const { site } = useSite();
-  // Expose page-reading tools while this component declares Markdown access.
+  // Expose page-reading tools only when SSG-MD output is generated.
   // This build-time condition never changes while the component is mounted.
-  if (import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR) {
+  if (
+    import.meta.env.ENABLE_WEBMCP &&
+    import.meta.env.ENABLE_SSG_MD &&
+    !import.meta.env.SSR
+  ) {
     useWebMcpPageReading();
   }
 

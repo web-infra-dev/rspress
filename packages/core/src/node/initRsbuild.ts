@@ -325,6 +325,9 @@ async function createInternalBuildConfig(
         ),
         'import.meta.env.ENABLE_LLMS_UI': JSON.stringify(enableLlmsUI),
         'import.meta.env.ENABLE_LLMS_HINT': JSON.stringify(enableLlmsHint),
+        'import.meta.env.ENABLE_SSG_MD': JSON.stringify(
+          Boolean(enableSSG && config.llms),
+        ),
       },
     },
     performance: {
