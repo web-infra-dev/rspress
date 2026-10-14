@@ -15,6 +15,7 @@ export { useActiveMatcher } from './hooks/useActiveMatcher';
 export { ThemeContext, useDark } from './hooks/useDark';
 export { useFrontmatter } from './hooks/useFrontmatter';
 export { useI18n } from './hooks/useI18n';
+export { useI18nText } from './hooks/useI18nText';
 export { useLang } from './hooks/useLang';
 export { useLocaleSiteData } from './hooks/useLocaleSiteData';
 export { useNav } from './hooks/useNav';
