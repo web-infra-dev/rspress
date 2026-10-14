@@ -847,9 +847,9 @@ export default defineConfig({
 - **Type**: `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
 - **Default**: `true`
 
-Controls whether static site generation is enabled. Rspress enables it by default and generates both CSR and SSG outputs.
+Controls whether page content is rendered into HTML at build time. Rspress enables SSG by default.
 
-If your documentation site only needs CSR output, set `ssg` to `false`.
+Set `ssg: false` to generate HTML shells for client-side rendering.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -861,11 +861,20 @@ export default defineConfig({
 
 :::tip
 
-SSG requires source code to be SSR-compatible. If the code is not compatible with SSR, the build will fail. You can try:
+Both [SSG](/guide/basic/ssg) and [SSG-MD](/guide/basic/ssg-md) require source code to compile under SSR. Code that is incompatible with SSR will cause the build to fail. You can try:
 
-1. Fix the code to make it SSR-compatible.
+1. Make your code SSR-compatible. See [Common issues and solutions](/guide/basic/ssg#common-issues-and-solutions) in the SSG guide.
 
-2. Set `ssg: false`, but the SSG feature will be lost.
+2. If your code does not support SSR, set both `ssg: false` and `llms: false`:
+
+   ```ts title="rspress.config.ts"
+   import { defineConfig } from '@rspress/core';
+
+   export default defineConfig({
+     ssg: false,
+     llms: false,
+   });
+   ```
 
 :::
 
@@ -882,6 +891,8 @@ When enabled, Rspress uses workers to accelerate SSG and reduce memory usage. Th
 - **Default**: `[]`
 
 Excludes selected pages from SSG so they use CSR HTML directly. This can help large documentation sites bypass SSG errors on a small number of pages, but it is not recommended as a default choice.
+
+This option only affects SSG; it does not exclude pages from SSG-MD. If excluded pages are incompatible with SSR, make them SSR-compatible or set `llms: false` to disable SSG-MD.
 
 ## replaceRules
 

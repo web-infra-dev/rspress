@@ -485,8 +485,11 @@ async function createInternalBuildConfig(
         },
         source: {
           entry: {
+            // Markdown-only rendering still emits CSR HTML without content to hydrate.
             index:
-              enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
+              enableSSG && config.ssg && isProduction()
+                ? SSR_CLIENT_ENTRY
+                : CSR_CLIENT_ENTRY,
           },
           define: {
             // import.meta.env.SSR is built in Rsbuild v2.0.7
@@ -568,6 +571,9 @@ async function createInternalBuildConfig(
                   'process.env.__SSR__': JSON.stringify(true),
                   'process.env.__SSR_MD__': JSON.stringify(true),
                   'import.meta.env.SSG_MD': JSON.stringify(true),
+                  'import.meta.env.ENABLE_LLMS_HINT': JSON.stringify(
+                    isLlmsHintEnabled(config, enableSSG, 'markdown'),
+                  ),
                 },
               },
               output: {

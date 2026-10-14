@@ -841,9 +841,9 @@ export default defineConfig({
 - **类型**： `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
 - **默认值**： `true`
 
-是否开启静态站点生成。Rspress 默认开启该功能，生成 SSG 产物。
+是否在构建时将页面内容预渲染为 HTML。Rspress 默认开启 SSG。
 
-如果你的文档站只要求在 CSR 场景下使用，你可以设置 `ssg` 为 `false`，此时 Rspress 会生成 CSR 产物。
+设置 `ssg: false` 后会生成用于客户端渲染的 HTML 空壳。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -855,11 +855,20 @@ export default defineConfig({
 
 :::tip
 
-SSG 要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下的代码，会导致编译失败。你可以尝试：
+[SSG](/guide/basic/ssg) 和 [SSG-MD](/guide/basic/ssg-md) 均要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下的代码，会导致编译失败。你可以尝试：
 
-1. 修复不兼容 SSR 场景下的代码，使其兼容 SSR。
+1. 修复不兼容 SSR 的代码。具体方法请参阅 SSG 指南中的[常见问题与解决方案](/guide/basic/ssg#常见问题与解决方案)。
 
-2. 设置 `ssg` 为 `false`，但是会失去 SSG 功能。
+2. 如果代码不支持 SSR，需要同时设置 `ssg: false` 和 `llms: false`：
+
+   ```ts title="rspress.config.ts"
+   import { defineConfig } from '@rspress/core';
+
+   export default defineConfig({
+     ssg: false,
+     llms: false,
+   });
+   ```
 
 :::
 
@@ -876,6 +885,8 @@ SSG 要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下
 - **默认值**： `[]`
 
 开启后一部分页面将不进行 SSG 渲染，直接使用 CSR 下的 html，适合用于大型文档站点绕过一小部分页面的 SSG 错误，不建议主动开启。
+
+此选项仅影响 SSG，不会将页面排除在 SSG-MD 之外。如果被排除的页面不兼容 SSR，需要修复兼容性问题，或设置 `llms: false` 关闭 SSG-MD。
 
 ## replaceRules
 

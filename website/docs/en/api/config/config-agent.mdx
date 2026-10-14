@@ -13,7 +13,7 @@ boolean | {
 }
 ```
 
-- **Default**: `false`
+- **Default**: `true` (`false` before v2.1.0)
 
 Whether to enable [SSG-MD](/guide/basic/ssg-md) to generate `llms.txt`, `llms-full.txt`, and Markdown files for each page, making your documentation easier for large language models to understand.
 
@@ -21,17 +21,19 @@ Enabling `llms` also enables the Markdown copy and AI tool UI by default. Use [`
 
 Use `llmsTxt` to compose the complete `llms.txt` content from site metadata and page sections. See [Customize llms.txt](/guide/basic/ssg-md#customize-llmstxt) for details.
 
+Set `llms: false` to disable it.
+
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  llms: true,
+  llms: false,
 });
 ```
 
 :::warning
 
-`llms` is an experimental feature. If SSG-MD cannot be enabled due to SSR incompatibility, use [@rspress/plugin-llms](/plugin/official-plugins/llms) as a fallback.
+If your code is incompatible with SSR, set `llms: false` and use [@rspress/plugin-llms](/plugin/official-plugins/llms) as a fallback.
 
 :::
 

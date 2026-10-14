@@ -30,7 +30,7 @@ describe('LLMS UI build config', () => {
     ).toBe(false);
   });
 
-  it('only enables the LLM directive hint for SSG builds', () => {
+  it('only enables the HTML directive hint for SSG builds', () => {
     const config = {
       llms: true,
       themeConfig: {
@@ -47,6 +47,29 @@ describe('LLMS UI build config', () => {
           ssg: false,
         },
         true,
+      ),
+    ).toBe(false);
+  });
+
+  it('enables the Markdown hint independently of SSG', () => {
+    const config = { ssg: false, llms: true };
+    expect(isLlmsHintEnabled(config, true, 'markdown')).toBe(true);
+    expect(isLlmsHintEnabled(config, false, 'markdown')).toBe(false);
+    expect(
+      isLlmsHintEnabled({ ...config, llms: false }, true, 'markdown'),
+    ).toBe(false);
+    expect(
+      isLlmsHintEnabled(
+        { ...config, themeConfig: { llmsUI: false } },
+        true,
+        'markdown',
+      ),
+    ).toBe(false);
+    expect(
+      isLlmsHintEnabled(
+        { ...config, themeConfig: { llmsUI: { injectLlmsHint: false } } },
+        true,
+        'markdown',
       ),
     ).toBe(false);
   });
