@@ -30,17 +30,27 @@ test.describe('RSS plugin', async () => {
   test('`link-rss` should add rss <link> to this page', async ({ page }) => {
     await page.goto(`${prefix}`, { waitUntil: 'networkidle' });
 
-    const link = page.locator('link[rel="alternate"]', {});
+    const link = page.locator(
+      'link[rel="alternate"][type="application/rss+xml"]',
+    );
 
-    await expect(link.getAttribute('href')).resolves.toBe(feedUrl);
+    await expect(link).toHaveAttribute('href', feedUrl);
+    await expect(
+      page.locator('link[rel="alternate"][type="text/markdown"]'),
+    ).toHaveAttribute('href', `${fixture.base}index.md`);
   });
 
   test('should add rss <link> to pages matched', async ({ page }) => {
     await page.goto(`${prefix}blog/foo`, { waitUntil: 'networkidle' });
 
-    const link = page.locator('link[rel="alternate"]', {});
+    const link = page.locator(
+      'link[rel="alternate"][type="application/rss+xml"]',
+    );
 
-    await expect(link.getAttribute('href')).resolves.toBe(feedUrl);
+    await expect(link).toHaveAttribute('href', feedUrl);
+    await expect(
+      page.locator('link[rel="alternate"][type="text/markdown"]'),
+    ).toHaveAttribute('href', `${fixture.base}blog/foo.md`);
   });
 
   test('should change output dir if dir is given', async ({ page }) => {
