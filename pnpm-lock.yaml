@@ -1323,9 +1323,6 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      react-render-to-markdown:
-        specifier: 18.3.2
-        version: 18.3.2(react@18.3.1)
       react-router-dom:
         specifier: ^7.18.4
         version: 7.18.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1968,6 +1965,9 @@ importers:
       react-render-to-markdown:
         specifier: 19.1.0
         version: 19.1.0(react@19.2.8)
+      react-render-to-markdown-18:
+        specifier: npm:react-render-to-markdown@18.3.2
+        version: react-render-to-markdown@18.3.2(react@19.2.8)
       react-router-dom:
         specifier: ^7.18.4
         version: 7.18.4(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -12601,10 +12601,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  react-reconciler@0.29.2(react@18.3.1):
+  react-reconciler@0.29.2(react@19.2.8):
     dependencies:
       loose-envify: 1.4.0
-      react: 18.3.1
+      react: 19.2.8
       scheduler: 0.23.2
 
   react-reconciler@0.33.0(react@19.2.8):
@@ -12614,10 +12614,10 @@ snapshots:
 
   react-refresh@0.19.0: {}
 
-  react-render-to-markdown@18.3.2(react@18.3.1):
+  react-render-to-markdown@18.3.2(react@19.2.8):
     dependencies:
-      react: 18.3.1
-      react-reconciler: 0.29.2(react@18.3.1)
+      react: 19.2.8
+      react-reconciler: 0.29.2(react@19.2.8)
 
   react-render-to-markdown@19.1.0(react@19.2.8):
     dependencies:

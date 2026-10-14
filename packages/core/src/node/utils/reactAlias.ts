@@ -117,24 +117,21 @@ export async function resolveReactRenderToMarkdownAlias(): Promise<
   const hasInstalled = await detectPackageMajorVersion(
     'react-render-to-markdown',
   );
+  let basedir = process.cwd();
+  let packageName = 'react-render-to-markdown';
 
   if (!hasInstalled) {
-    // No alias needed — rspack will resolve from @rspress/core's dependencies
     const reactMajorVersion = await detectPackageMajorVersion('react');
-    if (reactMajorVersion && reactMajorVersion < 19) {
-      logger.warn(
-        `You are using React ${reactMajorVersion} with \`llms: true\`. Please install \`react-render-to-markdown\` to ensure compatibility.\n\n` +
-          `Add the following to your ${picocolors.greenBright('package.json')}:\n\n` +
-          picocolors.greenBright(
-            `  "dependencies": {\n    "react": "^18.3.1",\n    "react-dom": "^18.3.1",\n    "react-render-to-markdown": "^18.3.1"\n  }\n`,
-          ),
-      );
+    if (reactMajorVersion !== 18) {
+      // React 19 uses @rspress/core's default renderer dependency.
+      return {};
     }
-    return {};
+    basedir = PACKAGE_ROOT;
+    packageName = 'react-render-to-markdown-18';
   }
 
-  // User has installed react-render-to-markdown in their project,
-  // use user's version (e.g., react-render-to-markdown@18 for React 18 compatibility)
+  // Prefer a project-installed renderer, otherwise select the bundled
+  // React 18 renderer to match the application's React aliases.
   const alias: Record<string, string> = {};
   const resolver = new Resolver({
     extensions: ['.js'],
@@ -144,10 +141,7 @@ export async function resolveReactRenderToMarkdownAlias(): Promise<
   });
 
   try {
-    const resolved = await resolver.async(
-      process.cwd(),
-      'react-render-to-markdown',
-    );
+    const resolved = await resolver.async(basedir, packageName);
     if (resolved.error) {
       throw Error(resolved.error);
     }
