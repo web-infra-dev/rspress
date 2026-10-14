@@ -31,6 +31,7 @@ export {
   removeTrailingSlash,
   replaceLang,
   replaceVersion,
+  safeDecodeURIComponent,
   SEARCH_INDEX_NAME,
   slash,
   withBase,
