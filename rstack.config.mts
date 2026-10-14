@@ -33,7 +33,7 @@ define.lint(({ globals, js, rstestPlugin, ts }) => [
           patterns: [
             restrictedVirtualImports,
             {
-              group: ['../../*'],
+              group: ['../..', '../../*'],
               message:
                 'Theme components are ejected as standalone units. Import shared code through @rspress/core/theme or @rspress/core/runtime instead of traversing two or more parent directories.',
             },
