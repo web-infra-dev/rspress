@@ -137,8 +137,7 @@ export function pluginRss(
       }
 
       // RSS plugin requires SSG to be enabled
-      const enableSSG = Boolean((config.ssg || config.llms) ?? true);
-      if (!enableSSG) {
+      if (config.ssg === false) {
         throw new Error(
           '[plugin-rss] RSS plugin requires SSG to be enabled. ' +
             'Please set `ssg: true` in your rspress.config.ts or remove the RSS plugin.',
