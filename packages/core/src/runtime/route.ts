@@ -1,5 +1,9 @@
 import type { Route } from '@rspress/shared';
-import { cleanUrl, normalizeHref } from '@rspress/shared';
+import {
+  cleanUrl,
+  normalizeHref,
+  safeDecodeURIComponent,
+} from '@rspress/shared';
 import { routes } from 'virtual-routes';
 import { siteData } from './hooks/useSite';
 import { removeBase, removeTrailingSlash } from './utils';
@@ -20,7 +24,7 @@ import { removeBase, removeTrailingSlash } from './utils';
  * - /API/CONFIG → /api/config (case-insensitive)
  */
 function normalizeRoutePath(routePath: string) {
-  return cleanUrl(decodeURIComponent(routePath))
+  return cleanUrl(safeDecodeURIComponent(routePath))
     .replace(/\.html$/, '')
     .replace(/\/index$/, '/')
     .toLowerCase();

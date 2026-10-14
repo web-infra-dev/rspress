@@ -1,3 +1,4 @@
+import { safeDecodeURIComponent } from '@rspress/shared';
 import { useLocation } from '@rspress/core/runtime';
 import { useLayoutEffect } from 'react';
 
@@ -53,7 +54,7 @@ export function useScrollAfterNav() {
     if (typeof window === 'undefined') {
       return;
     }
-    const decodedHash = decodeURIComponent(window.location.hash);
+    const decodedHash = safeDecodeURIComponent(window.location.hash);
     if (decodedHash.length > 0) {
       const target = document.getElementById(decodedHash.slice(1));
       if (target) {

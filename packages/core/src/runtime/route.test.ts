@@ -432,3 +432,14 @@ describe('preloadLink', () => {
     expect(route?.preload).not.toHaveBeenCalled();
   });
 });
+
+describe('pathnameToRouteService with malformed percent-encoding', () => {
+  it('does not throw on a raw % in the pathname', () => {
+    // regression: normalizeRoutePath decoded the pathname unguarded, so a
+    // URL like /100%-coverage threw URIError during client-side routing
+    // (runtime layer of the decode guard; the build layer is covered by
+    // RouteService.specialChars.test.ts).
+    expect(() => pathnameToRouteService('/100%-coverage')).not.toThrow();
+    expect(pathnameToRouteService('/100%-coverage')).toBeUndefined();
+  });
+});
