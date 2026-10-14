@@ -202,7 +202,19 @@ doc_build
 
 :::info React 18 支持
 
-SSG-MD 会自动为 React 18 和 React 19 选择兼容的 Markdown 渲染器，无需额外安装依赖。如果项目中安装了 `react-render-to-markdown`，Rspress 会优先使用该版本。
+SSG-MD 默认使用 `react-render-to-markdown@19`，仅支持 React 19。如果你使用的是 React 18，需要在 `package.json` 中额外安装 `react-render-to-markdown@18`：
+
+```json title="package.json"
+{
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-render-to-markdown": "18.3.2"
+  }
+}
+```
+
+安装后，Rspress 会自动检测并使用你项目中的 `react-render-to-markdown@18` 版本。
 
 :::
 

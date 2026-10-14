@@ -81,7 +81,7 @@ describe('resolveReactRenderToMarkdownAlias', () => {
     expect(alias).toMatchInlineSnapshot(`{}`);
   });
 
-  it('should select the bundled React 18 renderer without a project-installed renderer', async () => {
+  it('should use the project-installed React 18 renderer', async () => {
     rs.spyOn(process, 'cwd').mockReturnValue(
       path.resolve(PACKAGE_ROOT, '../../e2e/fixtures/react-18'),
     );
