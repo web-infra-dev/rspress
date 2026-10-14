@@ -1,0 +1,32 @@
+cases:
+  - name: STATIC-01 Follow custom navigation without JavaScript
+    tags: [shard-1, original-static]
+    steps:
+      - app.open:
+          { fixture: nav-slots, mode: production, javascript: false, path: / }
+      - aiAct: Hover over More in the top navigation and follow its Target link.
+      - aiAssert: The Target article is visible.
+  - name: STATIC-02 Open a navigation dropdown without JavaScript
+    tags: [shard-1, original-static]
+    steps:
+      - app.open:
+          {
+            fixture: nav-link-items,
+            mode: production,
+            javascript: false,
+            path: /,
+          }
+      - aiAct: Hover over ItemsAndLink in the top navigation.
+      - aiAssert: The dropdown displays Child1 and Child2.
+  - name: STATIC-03 Read runtime code from static HTML
+    tags: [shard-1, original-static]
+    steps:
+      - app.open:
+          {
+            fixture: code-block-runtime,
+            mode: production,
+            javascript: false,
+            path: /,
+          }
+      - aiAct: Bring the first test.js code panel into view.
+      - aiAssert: The test.js title and console.log with Hello CodeBlock content are rendered.

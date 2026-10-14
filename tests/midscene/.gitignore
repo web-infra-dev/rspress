@@ -6,3 +6,4 @@ reports/
 site/
 fixture/doc_build/
 fixture/.rspress/
+.fixture/

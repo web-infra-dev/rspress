@@ -1,0 +1,46 @@
+cases:
+  - name: COMPONENT-01 Switch code tabs
+    tags: [shard-1, original-tabs]
+    steps:
+      - app.open: { fixture: tabs-component, path: / }
+      - aiAct: Find Tab d, select its index.js tab, and bring the entire active code panel into view.
+      - aiAssert: Tab d displays content subscribe in the active code panel.
+      - aiAct: Select the index.markup tab in Tab d and bring the entire active code panel into view.
+      - aiAssert: Tab d displays content markup in the active code panel.
+  - name: COMPONENT-02 Switch tabs with explicit values
+    tags: [shard-1, original-tabs]
+    steps:
+      - app.open: { fixture: tabs-component, path: / }
+      - aiAct: Find Tab e and select Banana.
+      - aiAssert: Tab e displays This is a banana.
+      - aiAct: Select Apple in Tab e.
+      - aiAssert: Tab e displays This is an apple.
+  - name: COMPONENT-03 Package manager selection updates commands
+    tags: [shard-1, original-package-tabs]
+    steps:
+      - app.open: { fixture: package-manager-tabs, path: / }
+      - aiAct: In PackageManagerTabs create select pnpm.
+      - aiAssert: The create command shown is pnpm create rspress@latest.
+      - aiAct: In PackageManagerTabs create select yarn, then inspect PackageManagerTabs install.
+      - aiAssert: The install command shown is yarn add -D @rspress/core.
+  - name: COMPONENT-04 Change the reading theme
+    tags: [shard-1, original-theme]
+    steps:
+      - app.open: { fixture: basic, path: / }
+      - aiAct: Use the appearance switch in the top navigation to set the documentation to dark mode.
+      - aiAssert: The documentation article and navigation use a dark background with readable light text.
+      - aiAct: Use the appearance switch to set the documentation to light mode.
+      - aiAssert: The documentation article uses a light background with readable dark text.
+  - name: COMPONENT-05 Open a custom outline on a phone
+    tags: [shard-1, original-outline]
+    steps:
+      - app.open:
+          { fixture: custom-layout, path: /no-headings, viewport: mobile }
+      - aiAct: Open the mobile On this page outline.
+      - aiAssert: The opened outline displays Before custom outline content and After custom outline content.
+  - name: COMPONENT-06 Dismiss the announcement banner
+    tags: [shard-1, original-banner]
+    steps:
+      - app.open: { fixture: banner, path: / }
+      - aiAct: Close the announcement banner using its close button.
+      - aiAssert: The announcement about Rspress 2.0 document development is no longer visible and the article remains visible.

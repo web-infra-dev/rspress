@@ -1,0 +1,47 @@
+cases:
+  - name: OVERVIEW-01 Navigate from a configuration overview to its basic article
+    tags: [shard-1, original-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/config.html }
+      - aiAct: Follow Basic config in the overview article, not the sidebar or search.
+      - aiAssert: The Basic config article displays the root and logoText sections.
+  - name: OVERVIEW-02 Navigate an index-based client API overview
+    tags: [shard-1, original-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/client-api.html }
+      - aiAct: Follow Runtime API in the overview article, not the sidebar or search.
+      - aiAssert: The Runtime API article displays usePageData and useLang sections.
+  - name: OVERVIEW-03 Follow an anchor from a nested configuration overview
+    tags: [shard-1, original-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/config/nested.html }
+      - aiAct: Follow Nested H2 in the overview article, not the sidebar or search.
+      - aiAssert: The Nested H2 article heading is visible.
+  - name: OVERVIEW-04 Navigate second and third overview levels
+    tags: [shard-1, original-overviews, migration-regression]
+    steps:
+      - app.open:
+          { fixture: nested-overview, path: /base-url/basic-level-1/level-2/ }
+      - aiAct: Follow the Level 3 link in the overview content, not the sidebar or On this page.
+      - aiAssert: The Level 3 overview displays an article entry titled "three" with Feature a and Feature b sections.
+      - aiAct: Follow the Feature a link inside the overview card titled "three", below the "three" section heading. Do not click the section heading, sidebar, or On this page.
+      - aiAssert: The article displays Feature a with Description of feature A and Feature b with Description of feature B.
+  - name: OVERVIEW-05 Read sidebar directory names without numeric prefixes
+    tags: [shard-1, original-overviews]
+    steps:
+      - app.open:
+          { fixture: auto-nav-sidebar-issue-1682, path: /010.sub-directory/ }
+      - aiAct: Bring the sidebar into view and expand its directory groups if needed.
+      - aiAssert: The sidebar displays First sub-directory, Second sub-directory, and test without numeric filename prefixes.
+  - name: OVERVIEW-06 Open a content-defined plugin route
+    tags: [shard-1, original-overviews]
+    steps:
+      - app.open: { fixture: custom-plugin, path: / }
+      - aiAct: Open documentation search, search for Demo2, and open the matching result.
+      - aiAssert: The content-defined plugin article displays Demo2.
+  - name: OVERVIEW-07 Expand a sidebar group without leaving the guide
+    tags: [shard-1, original-overviews, migration-regression]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /guide/index.html }
+      - aiAct: Expand the Advanced directory group in the left sidebar. Do not click a child article or use search.
+      - aiAssert: The Guide article remains open, and the sidebar displays Guide, Advanced, and Plugin.

@@ -1,12 +1,31 @@
 # Midscene AI E2E
 
-Search for a deployment page, follow guide links, and navigate the documentation on a phone-sized viewport. The fixture runs the checked-out Rspress CLI and default theme.
+Exercise search, translated and versioned navigation, documentation components,
+generated API pages, previews, playgrounds, HMR, and production/static rendering.
+The fixture launcher runs the checked-out CLI against original `e2e/fixtures`;
+the initial documentation examples remain separate smoke cases.
+
+`migration-inventory.json` records the original E2E cases and their migration
+decisions. Original exact DOM, CSS, timing, build-output, and browser-event
+assertions remain unchanged. A visible AI flow does not replace those contracts.
+The 112 AI cases include counterparts for visible behavior in 129 of the 237
+original tests; 108 tests remain deterministic-only. Multiple original tests can
+map to one AI flow. Inventory evidence identifies local runs, not remote CI passes.
 
 Existing Rstest and Playwright suites are unchanged. This isolated npm package uses
 `@midscene/test` 1.15.1, not Vitest. Each case starts in a fresh browser context.
 `app.open` only prepares the browser; all product interactions use `aiAct`.
 Separate `aiAssert` steps check outcomes instead of treating an AI action's completion
-as proof of success. Browser requests stay on the local fixture origin.
+as proof of success. Browser requests stay on the local fixture origin; preview
+fixtures may additionally load loopback origins declared by their iframe sources.
+Public network requests remain blocked.
+The original Playground's pinned Monaco 0.43.0 and Babel 7.22.20 CDN URLs are
+fulfilled from matching local npm packages. This preserves its editor/compiler
+runtime without allowing public requests or substituting a newer runtime version.
+
+`fixture.update` changes only allowlisted source text in an isolated temporary
+fixture copy for HMR checks. It does not operate the UI or modify original sources.
+Temporary copies and their owned CLI processes are cleaned up after the run.
 
 ## Run locally
 
@@ -40,9 +59,9 @@ npm run check:model-vision
 npm test
 ```
 
-The fixture listens on `http://127.0.0.1:4173`. Set
-`MIDSCENE_INCLUDE_TAGS=search` (Rspress) or `MIDSCENE_INCLUDE_TAGS=assets`
-(Rsdoctor) to run one flow. Retries are disabled so the first failure remains visible.
+The smoke fixture listens on `http://127.0.0.1:4173`; original fixtures use owned
+dynamic ports. Set `MIDSCENE_INCLUDE_TAGS=original-search` to run the original
+search flows. Retries are disabled so the first failure remains visible.
 
 Native reports live under `midscene_run/report/`; structured results live under
 `.midscene/test-results/`. Reports contain screenshots and test data, so use only

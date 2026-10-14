@@ -1,0 +1,2118 @@
+{
+  "sourceCommit": "bce9de9e45c5d02098d00fa859e2abb1e4b30c4c",
+  "policy": "Original deterministic assertions remain unchanged. AI counterparts verify visible workflows only; mappings do not imply equivalent DOM, timing, browser-event, URL, build-output, or data contracts. Local evidence is not remote CI evidence.",
+  "allOriginalAssertionsPreserved": true,
+  "cases": [
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar-issue-1682/index.test.ts",
+      "name": "Auto nav and sidebar dir issue-1682 > Should render sidebar with index convention correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41"],
+      "candidateCaseIds": ["OVERVIEW-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
+      "name": "auto nav and sidebar > Should render nav and sidebar correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["OVERVIEW-07"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
+      "name": "auto nav and sidebar > Should render sidebar icons and tags correctly",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact icon dimensions, source URLs, DOM order, and data-context attributes."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
+      "name": "auto nav and sidebar > Should load total API Overview correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["OVERVIEW-07"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
+      "name": "auto nav and sidebar > Should load subpage API Overview correctly - same name",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["OVERVIEW-07"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
+      "name": "auto nav and sidebar > Should load subpage API Overview correctly - index.md",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["OVERVIEW-07"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
+      "name": "auto nav and sidebar > Sidebar not have same name md/mdx will not navigate",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["OVERVIEW-07"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
+      "name": "auto nav and sidebar > Should load nested subpage API Overview correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["OVERVIEW-07"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
+      "name": "auto nav and sidebar > Should generate data-context in sidebar group dom",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact icon dimensions, source URLs, DOM order, and data-context attributes."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "basic site > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41"],
+      "candidateCaseIds": ["FALLBACK-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "basic site > 404 page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41"],
+      "candidateCaseIds": ["FALLBACK-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "basic site > dark mode",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["COMPONENT-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "basic site > Hover over social links",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "basic site > globalStyles should work",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "basic site > importing markdown with raw query should return source text",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41"],
+      "candidateCaseIds": ["EXTRA-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "themeConfig.darkMode > true follows the system preference and keeps the switch visible",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["THEME-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "themeConfig.darkMode > dark defaults to dark mode when there is no saved preference",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["THEME-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "themeConfig.darkMode > force-dark ignores saved preferences and hides the switch",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["THEME-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "CLI base option > should serve dev pages from the CLI base path",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "CLI base option > should serve preview pages from the CLI base path",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "SSG dark mode no flash > dark mode should be applied before hydration (no flash)",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+    },
+    {
+      "source": "e2e/fixtures/basic/index.test.ts",
+      "name": "SSG dark mode no flash > light mode should be applied before hydration (no flash)",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+    },
+    {
+      "source": "e2e/fixtures/banner/index.test.ts",
+      "name": "banner > Banner close hides banner and persists state",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1"],
+      "candidateCaseIds": ["COMPONENT-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/banner/index.test.ts",
+      "name": "banner > Banner does not flash when previously dismissed",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/banner/index.test.ts",
+      "name": "banner > Banner message stays single line on narrow viewport",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar-dir-convention/index.test.ts",
+      "name": "Auto nav and sidebar dir convention > Should render sidebar with index convention correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1"],
+      "candidateCaseIds": ["READ-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar-dir-convention/index.test.ts",
+      "name": "Auto nav and sidebar dir convention > Should click the directory and navigate to the index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1"],
+      "candidateCaseIds": ["READ-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar-dir-convention/index.test.ts",
+      "name": "Auto nav and sidebar dir convention > Should generate data-context in dir convention",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar-dir-convention/index.test.ts",
+      "name": "Auto nav and sidebar dir convention > /api/config/index.html /api/config/index /api/config should be the same page",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact URL alias and sidebar-count comparisons."
+    },
+    {
+      "source": "e2e/fixtures/check-dead-link/index.test.ts",
+      "name": "check dead links > should link the correct page",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/check-dead-link/index.test.ts",
+      "name": "check dead links > should link the correct page - autoPrefix: false",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/check-dead-link/index.test.ts",
+      "name": "check dead links > should link the correct page - cleanUrl",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/check-dead-link/index.test.ts",
+      "name": "check dead links > should fail build for dead anchors",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/clean-urls-redirect/index.test.ts",
+      "name": "route.cleanUrlsRedirect > normalizes matched routes when cleanUrls is false",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/clean-urls-redirect/index.test.ts",
+      "name": "route.cleanUrlsRedirect > normalizes matched routes when cleanUrls is true",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/clean-urls-redirect/index.test.ts",
+      "name": "route.cleanUrlsRedirect > does not normalize matched routes when disabled",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar-no-meta/index.test.ts",
+      "name": "auto nav and sidebar without metadata > Should render sidebar correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["NAV-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/auto-nav-sidebar-no-meta/index.test.ts",
+      "name": "auto nav and sidebar without metadata > Should click the directory and navigate to the index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["NAV-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/code-block/index.test.ts",
+      "name": "Shiki code blocks > should render shiki code block successfully",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact Shiki counts, language aliases, white-space CSS, and class tokens. Short lines do not visibly reflow when wrapping toggles."
+    },
+    {
+      "source": "e2e/fixtures/code-block/index.test.ts",
+      "name": "Shiki code blocks > langAlias",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact Shiki counts, language aliases, white-space CSS, and class tokens. Short lines do not visibly reflow when wrapping toggles."
+    },
+    {
+      "source": "e2e/fixtures/code-block/index.test.ts",
+      "name": "Shiki code blocks > should support lineNumbers and wrapCode meta attributes",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact Shiki counts, language aliases, white-space CSS, and class tokens. Short lines do not visibly reflow when wrapping toggles."
+    },
+    {
+      "source": "e2e/fixtures/code-block-runtime/index.test.ts",
+      "name": "<CodeBlockRuntime /> > <CodeBlockRuntime /> should render title and code with correct language",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["STYLE-05", "STATIC-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/code-block-runtime/index.test.ts",
+      "name": "<CodeBlockRuntime /> > shiki transformerNotationHighlight should work",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact Shiki transformer classes and markup."
+    },
+    {
+      "source": "e2e/fixtures/code-block-runtime/index.test.ts",
+      "name": "<CodeBlockRuntime /> SSG > should render code from static HTML when JavaScript is disabled",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["STYLE-05", "STATIC-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/client-redirects/index.test.ts",
+      "name": "client redirects > Should redirect correctly - normal",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/client-redirects/index.test.ts",
+      "name": "client redirects > Should redirect correctly - array",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/client-redirects/index.test.ts",
+      "name": "client redirects > Should redirect correctly - reg1",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/client-redirects/index.test.ts",
+      "name": "client redirects > Should redirect correctly - reg2",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/client-redirects/index.test.ts",
+      "name": "client redirects > Should redirect correctly - external",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/custom-home-footer/index.test.ts",
+      "name": "custom home footer > custom home footer",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014150350-3b31dcf3"],
+      "candidateCaseIds": ["READ-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/custom-icon/index.test.ts",
+      "name": "custom icon > Index page",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/custom-layout/index.test.ts",
+      "name": "custom layout > should hide doc chrome when disabled via frontmatter",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": [
+        "20261014152600-00831e41",
+        "20261014141340-d2160af0",
+        "20261014143602-8b78a8f1"
+      ],
+      "candidateCaseIds": [
+        "LAYOUT-01",
+        "LAYOUT-02",
+        "LAYOUT-03",
+        "COMPONENT-05",
+        "READ-10"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/custom-layout/index.test.ts",
+      "name": "custom layout > should render home layout when pageType is home",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": [
+        "20261014152600-00831e41",
+        "20261014141340-d2160af0",
+        "20261014143602-8b78a8f1"
+      ],
+      "candidateCaseIds": [
+        "LAYOUT-01",
+        "LAYOUT-02",
+        "LAYOUT-03",
+        "COMPONENT-05",
+        "READ-10"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/custom-layout/index.test.ts",
+      "name": "custom layout > should render custom layout when pageType is custom",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": [
+        "20261014152600-00831e41",
+        "20261014141340-d2160af0",
+        "20261014143602-8b78a8f1"
+      ],
+      "candidateCaseIds": [
+        "LAYOUT-01",
+        "LAYOUT-02",
+        "LAYOUT-03",
+        "COMPONENT-05",
+        "READ-10"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/custom-layout/index.test.ts",
+      "name": "custom layout > should render custom outline slots without toc headings",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": [
+        "20261014152600-00831e41",
+        "20261014141340-d2160af0",
+        "20261014143602-8b78a8f1"
+      ],
+      "candidateCaseIds": [
+        "LAYOUT-01",
+        "LAYOUT-02",
+        "LAYOUT-03",
+        "COMPONENT-05",
+        "READ-10"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/custom-layout/index.test.ts",
+      "name": "custom layout > should allow opening mobile outline with custom slots only",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": [
+        "20261014152600-00831e41",
+        "20261014141340-d2160af0",
+        "20261014143602-8b78a8f1"
+      ],
+      "candidateCaseIds": [
+        "LAYOUT-01",
+        "LAYOUT-02",
+        "LAYOUT-03",
+        "COMPONENT-05",
+        "READ-10"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/custom-headers/index.test.ts",
+      "name": "custom headers > should render only one title tag during ssg",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/custom-headers/index.test.ts",
+      "name": "custom headers > config headers should be injected",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/custom-headers/index.test.ts",
+      "name": "custom headers > frontmatter headers should be injected",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/custom-headers/index.test.ts",
+      "name": "custom headers > frontmatter property headers should override auto-injected OG tags",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/custom-plugin/index.test.ts",
+      "name": "custom plugin routes > Should add route by filepath",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
+      "candidateCaseIds": ["CONTENT-06", "OVERVIEW-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/custom-plugin/index.test.ts",
+      "name": "custom plugin routes > Should add route by content",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
+      "candidateCaseIds": ["CONTENT-06", "OVERVIEW-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/dynamic-toc/index.test.ts",
+      "name": "dynamic toc > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1"],
+      "candidateCaseIds": ["READ-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/dynamic-toc/index.test.ts",
+      "name": "dynamic toc > Should omit browser-serialized void elements from TOC tooltips",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/dynamic-toc/index.test.ts",
+      "name": "dynamic toc > Data depth attribute",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/github-alert-mdxjs/index.test.ts",
+      "name": "github alert syntax in mdx-js > should transform github alert syntax to contain syntax",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["STYLE-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/heading-title/index.test.ts",
+      "name": "heading titles > Guide page",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/hmr/index.test.ts",
+      "name": "HMR > update page content without restarting",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41"],
+      "candidateCaseIds": ["HMR-01", "HMR-02", "HMR-03", "HMR-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/hmr/index.test.ts",
+      "name": "HMR > restart when routes or config dependencies change",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Server restart counts and a window sentinel require deterministic observation."
+    },
+    {
+      "source": "e2e/fixtures/hmr/index.test.ts",
+      "name": "HMR with lazy compilation > updates site data without a full reload",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41"],
+      "candidateCaseIds": ["VIRTUAL-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/hmr/index.test.ts",
+      "name": "virtual module HMR > updates translations, search hooks, global components and styles without reloading",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["VIRTUAL-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/hmr/index.test.ts",
+      "name": "virtual modules in production > preserves virtual data and global styles in the production build",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41"],
+      "candidateCaseIds": ["VIRTUAL-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Language switch button",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Should localize code wrap button title",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Add language prefix in route automatically when current language is not default language",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-10", "NAV-11", "NAV-12"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Should not add language prefix when current language is default language",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-10", "NAV-11", "NAV-12"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Should render sidebar correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Should not render appearance switch button when darkMode is false",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Should not 404 after redirecting in first visit",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Should render i18n sidebar - cn",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Should render i18n sidebar - en",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Should add routePrefix when type is custom-link",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-10", "NAV-11", "NAV-12"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Should not crash when switch language in api page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Language switch should only render non-active languages as links in HoverGroup",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > Language switch link to default language should keep lang and hrefLang attributes in HoverGroup",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n > NavScreen language links should have lang, hrefLang and rel attributes",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+    },
+    {
+      "source": "e2e/fixtures/i18n/index.test.ts",
+      "name": "i18n SEO > generates reciprocal alternate language links",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+    },
+    {
+      "source": "e2e/fixtures/hash-anchor-scroll/index.test.ts",
+      "name": "hash anchor scrolling > scrolls after the target layout is ready",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1"],
+      "candidateCaseIds": ["READ-03"],
+      "reason": "Extract user-visible actions and outcomes; preserve exact DOM, CSS, timing, and data assertions."
+    },
+    {
+      "source": "e2e/fixtures/i18n-source-text/index.test.ts",
+      "name": "i18n source text > Language i18n.json text",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41"],
+      "candidateCaseIds": ["LAYOUT-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/icon-file-url/index.test.ts",
+      "name": "icon file url > should use specified file URL icon path",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/inline-markdown/index.test.ts",
+      "name": "inline Markdown > Should render inline markdown of sidebar correctly",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact escaped HTML, heading IDs, code/strong elements, and sidebar/overview markup."
+    },
+    {
+      "source": "e2e/fixtures/inline-markdown/index.test.ts",
+      "name": "inline Markdown > Should render inline markdown of overview page correctly",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact escaped HTML, heading IDs, code/strong elements, and sidebar/overview markup."
+    },
+    {
+      "source": "e2e/fixtures/inline-markdown/index.test.ts",
+      "name": "inline Markdown > Should render inline markdown of aside correctly",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact escaped HTML, heading IDs, code/strong elements, and sidebar/overview markup."
+    },
+    {
+      "source": "e2e/fixtures/inline-markdown/index.test.ts",
+      "name": "inline Markdown > Should generate header anchor and id with inline markdown syntax correctly",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact escaped HTML, heading IDs, code/strong elements, and sidebar/overview markup."
+    },
+    {
+      "source": "e2e/fixtures/inline-markdown/index.test.ts",
+      "name": "inline Markdown > Should preserve escaped headings in previous and next page links",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["CONTENT-07"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/inline-markdown/index.test.ts",
+      "name": "inline Markdown > Should render html like <img> with inline markdown syntax correctly",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact escaped HTML, heading IDs, code/strong elements, and sidebar/overview markup."
+    },
+    {
+      "source": "e2e/fixtures/issue-1309/index.test.ts",
+      "name": "issue-1309 > should not generate the sidebar in homePage",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["READ-07"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/issue-1309/index.test.ts",
+      "name": "issue-1309 > should render the sidebar correctly in guide page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["READ-07"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/markdown-link/index.test.ts",
+      "name": "Markdown links > all links should be normalized",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
+      "name": "Markdown asset links > should support asset link",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
+      "name": "Markdown asset links > should support asset link - i18n",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
+      "name": "Markdown asset links > should support asset link - cleanUrls: false",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
+      "name": "Markdown asset links > should support asset link - cleanUrls: false - i18n",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/multi-version-global-sidebar/index.test.ts",
+      "name": "multi version global sidebar > Should keep global sidebar isolated by version",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["NAV-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/multi-version-llms/index.test.ts",
+      "name": "multi-version + multi-lang llms (SSG-MD) > should generate llms files for all version+lang combinations",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/multi-version-llms/index.test.ts",
+      "name": "multi-version + multi-lang llms (plugin-llms) > should generate llms files for all version+lang combinations",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/nav-link/index.test.ts",
+      "name": "Navigation with <Link> > it should navigate correctly",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/nav-link/index.test.ts",
+      "name": "Navigation with <Link> > it should open new window/tab with modifier keys hold > {\"button\":\"middle\"}",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/nav-link/index.test.ts",
+      "name": "Navigation with <Link> > it should open new window/tab with modifier keys hold > {\"modifiers\":[\"Shift\"]}",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/nav-link/index.test.ts",
+      "name": "Navigation with <Link> > it should open new window/tab with modifier keys hold > {\"modifiers\":[\"Meta\"]}",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/nav-link/index.test.ts",
+      "name": "Navigation with <Link> > it should open new window/tab with modifier keys hold > target=_blank",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/multi-version/index.test.ts",
+      "name": "multi version > Default version and default language",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-04", "NAV-13"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/multi-version/index.test.ts",
+      "name": "multi version > Not Default version default language",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-04", "NAV-13"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/multi-version/index.test.ts",
+      "name": "multi version > Default version not default language",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-04", "NAV-13"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/multi-version/index.test.ts",
+      "name": "multi version > Not default version not default language",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-04", "NAV-13"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/multi-version/index.test.ts",
+      "name": "multi version > Home feature icon should include base with multi-version and i18n",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve the exact image src prefix assertion."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-item-with-hash/index.test.ts",
+      "name": "navigation links with hashes > Navigate with an hash as link",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The desktop contract is the exact URL fragment; the original page has no contentB label and can fit entirely in the viewport."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-item-with-hash/index.test.ts",
+      "name": "navigation links with hashes > Close the hamburger menu when clicking on an item in mobile view",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014150350-3b31dcf3"],
+      "candidateCaseIds": ["READ-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well > it should render correct visibility",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-01", "NAV-02", "NAV-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well > items should be visible when button is hovered",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-01", "NAV-02", "NAV-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well > it should render correct number of nav",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well > it should render correct type of nav",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well > it should navigate to the correct page when a link is clicked",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-01", "NAV-02", "NAV-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well > it should navigate to the correct page when a link is clicked - navScreen",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-01", "NAV-02", "NAV-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well > it should render nested items with correct depth attributes",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well > it should navigate to deeply nested items - navScreen",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-01", "NAV-02", "NAV-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well with clean urls > it should render correct visibility",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-07", "NAV-08", "NAV-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well with clean urls > items should be visible when button is hovered",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-07", "NAV-08", "NAV-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well with clean urls > it should render correct number of nav",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well with clean urls > it should render correct type of nav",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well with clean urls > it should navigate to the correct page when a link is clicked",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-07", "NAV-08", "NAV-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well with clean urls > it should navigate to the correct page when a link is clicked - navScreen",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-07", "NAV-08", "NAV-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well with clean urls > it should render nested items with correct depth attributes",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav should functions well with clean urls > it should navigate to deeply nested items - navScreen",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["NAV-07", "NAV-08", "NAV-09"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-link-items/index.test.ts",
+      "name": "Nav SSG > items should be visible on hover when JavaScript is disabled",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["STATIC-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-slots/index.test.ts",
+      "name": "Navigation slots > renders all four slots in desktop navigation and supports dropdown links",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["CONTENT-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-slots/index.test.ts",
+      "name": "Navigation slots > reuses the slots in the mobile menu and preserves configured order",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["CONTENT-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nav-slots/index.test.ts",
+      "name": "Navigation slots > server-renders custom navigation without JavaScript",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["STATIC-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/no-config-root/index.test.ts",
+      "name": "development without config.root > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
+      "candidateCaseIds": ["READ-11", "FALLBACK-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/no-config-root/index.test.ts",
+      "name": "build and preview without config.root > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
+      "candidateCaseIds": ["READ-11", "FALLBACK-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/package-manager-tabs/index.test.ts",
+      "name": "package manager tabs > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["COMPONENT-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nested-overview/index.test.ts",
+      "name": "Nested overview page > Should load nested overview page correctly - level 1",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014150350-3b31dcf3", "20261014162358-96521382"],
+      "candidateCaseIds": ["CONTENT-02", "OVERVIEW-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nested-overview/index.test.ts",
+      "name": "Nested overview page > Should load nested overview page correctly - level 2",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014150350-3b31dcf3", "20261014162358-96521382"],
+      "candidateCaseIds": ["CONTENT-02", "OVERVIEW-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/nested-overview/index.test.ts",
+      "name": "Nested overview page > Should load nested overview page correctly - level 3",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014150350-3b31dcf3", "20261014162358-96521382"],
+      "candidateCaseIds": ["CONTENT-02", "OVERVIEW-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/page-type-home/index.test.ts",
+      "name": "home pageType > Hero",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
+      "candidateCaseIds": ["CONTENT-05", "LAYOUT-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/page-type-home/index.test.ts",
+      "name": "home pageType > Hero - zh",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
+      "candidateCaseIds": ["CONTENT-05", "LAYOUT-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/page-type-home/index.test.ts",
+      "name": "home pageType > Features",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact external URL and no-navigation browser-event assertions; public navigation stays outside the model fixture."
+    },
+    {
+      "source": "e2e/fixtures/page-head-tags/index.test.ts",
+      "name": "page head tags > should render <title> tag by default",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/page-head-tags/index.test.ts",
+      "name": "page head tags > should render basic Open Graph meta tags by default",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/plugin-llms/index.test.ts",
+      "name": "plugin-llms > should generate llms.txt llms-full.txt mdFiles",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/plugin-llms/index.test.ts",
+      "name": "plugin-llms > should order llms.txt entries according to _meta.json",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/plugin-llms/index.test.ts",
+      "name": "plugin-llms > multiple configuration - should generate llms.txt llms-full.txt mdFiles",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/plugin-playground/index.test.ts",
+      "name": "Should only preload Monaco on pages containing playgrounds",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/plugin-playground/index.test.ts",
+      "name": "plugin playground rendering and HMR > Should render the element",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014180715-f81c6d18"],
+      "candidateCaseIds": ["PLAYGROUND-01", "PLAYGROUND-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-playground/index.test.ts",
+      "name": "plugin playground rendering and HMR > Should update the rendered code through HMR",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014180715-f81c6d18"],
+      "candidateCaseIds": ["PLAYGROUND-01", "PLAYGROUND-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-playground-preview/index.test.ts",
+      "name": "plugin playground and preview integration > Both plugins work together with explicit meta",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014180401-019f320a"],
+      "candidateCaseIds": ["PLAYGROUND-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-preview-custom-entry/index.test.ts",
+      "name": "plugin preview with custom entries > Should render the element",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014174306-a5550d38"],
+      "candidateCaseIds": ["PREVIEW-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-preview-custom-entry/index.test.ts",
+      "name": "plugin preview with custom entries > should render vue",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014174306-a5550d38"],
+      "candidateCaseIds": ["PLUGIN-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-rss/index.test.ts",
+      "name": "RSS plugin > `link-rss` should add rss <link> to this page",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/plugin-rss/index.test.ts",
+      "name": "RSS plugin > should add rss <link> to pages matched",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/plugin-rss/index.test.ts",
+      "name": "RSS plugin > should change output dir if dir is given",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/plugin-rss/index.test.ts",
+      "name": "RSS plugin > should sort by pubDate by default",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/plugin-rss/index.test.ts",
+      "name": "RSS plugin > rss content > should has expected content",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/plugin-twoslash/index.test.ts",
+      "name": "Twoslash plugin > should render twoslash popup elements",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["PLUGIN-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-twoslash/index.test.ts",
+      "name": "Twoslash plugin > should clone twoslash popup elements",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact popup cloning, generated markup, highlight/error classes, and non-Twoslash exclusions."
+    },
+    {
+      "source": "e2e/fixtures/plugin-twoslash/index.test.ts",
+      "name": "Twoslash plugin > should highlight code blocks with twoslash",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact popup cloning, generated markup, highlight/error classes, and non-Twoslash exclusions."
+    },
+    {
+      "source": "e2e/fixtures/plugin-twoslash/index.test.ts",
+      "name": "Twoslash plugin > should show errors in code blocks with twoslash",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact popup cloning, generated markup, highlight/error classes, and non-Twoslash exclusions."
+    },
+    {
+      "source": "e2e/fixtures/plugin-twoslash/index.test.ts",
+      "name": "Twoslash plugin > should not apply twoslash to code blocks without twoslash",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact popup cloning, generated markup, highlight/error classes, and non-Twoslash exclusions."
+    },
+    {
+      "source": "e2e/fixtures/plugin-typedoc/index.test.ts",
+      "name": "plugin-typedoc single entry > Should render nav and sidebar correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41", "20261014162358-96521382"],
+      "candidateCaseIds": ["TYPEDOC-01", "TYPEDOC-02", "TYPEDOC-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-typedoc/index.test.ts",
+      "name": "plugin-typedoc multi entries > Should render nav and sidebar correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41", "20261014162358-96521382"],
+      "candidateCaseIds": ["TYPEDOC-01", "TYPEDOC-02", "TYPEDOC-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-typedoc/index.test.ts",
+      "name": "plugin-typedoc multi entries > Should render raw link correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41", "20261014162358-96521382"],
+      "candidateCaseIds": ["TYPEDOC-01", "TYPEDOC-02", "TYPEDOC-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/public-dir/index.test.ts",
+      "name": "public directory > should not generate the routes for html/js/mdx files in publicDir",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/public-dir/index.test.ts",
+      "name": "public directory > should load public dir img successfully under \"rspress build && rspress preview\"",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014150350-3b31dcf3", "20261014152600-00831e41"],
+      "candidateCaseIds": ["READ-08", "FALLBACK-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/public-dir/index.test.ts",
+      "name": "public directory > should load public dir img successfully under \"rspress dev\"",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014150350-3b31dcf3", "20261014152600-00831e41"],
+      "candidateCaseIds": ["READ-08", "FALLBACK-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/production/index.test.ts",
+      "name": "production build > check whether the page can be interacted",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["PROD-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/react-18/index.test.ts",
+      "name": "React 18 development > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1"],
+      "candidateCaseIds": ["COMPAT-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/react-18/index.test.ts",
+      "name": "React 18 development > 404 page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["COMPAT-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/react-18/index.test.ts",
+      "name": "React 18 build should be successful",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve generated SSG Markdown and exact installed-version assertions."
+    },
+    {
+      "source": "e2e/fixtures/remark-image/index.test.mjs",
+      "name": "check dead images > should not throw on unknown MDX nodes and report dead images via remark message",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/react-router-dom-6/index.test.ts",
+      "name": "React Router DOM 6 compatibility > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1"],
+      "candidateCaseIds": ["COMPAT-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/react-router-dom-6/index.test.ts",
+      "name": "React Router DOM 6 compatibility > 404 page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["COMPAT-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/react-19/index.test.ts",
+      "name": "React 19 > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1"],
+      "candidateCaseIds": ["COMPAT-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/react-19/index.test.ts",
+      "name": "React 19 > 404 page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["COMPAT-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-preview/index.test.ts",
+      "name": "plugin preview development > Should render the element",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014174306-a5550d38"],
+      "candidateCaseIds": ["PREVIEW-04"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-preview/index.test.ts",
+      "name": "plugin preview development > mixed page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014174306-a5550d38"],
+      "candidateCaseIds": ["PREVIEW-07"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-preview/index.test.ts",
+      "name": "plugin preview development > iframe dark mode",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve iframe html.dark class propagation checks. PLUGIN-03 checks document appearance, not that hidden class contract."
+    },
+    {
+      "source": "e2e/fixtures/plugin-preview/index.test.ts",
+      "name": "plugin preview build > build should work",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014174306-a5550d38"],
+      "candidateCaseIds": ["PREVIEW-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-preview/index.test.ts",
+      "name": "plugin preview build > build should skip demo output without iframe previews",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/plugin-preview/index.test.ts",
+      "name": "plugin preview HMR > HMR for preview=\"internal\"",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014171430-61b45c50"],
+      "candidateCaseIds": ["PREVIEW-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-preview/index.test.ts",
+      "name": "plugin preview HMR > HMR for preview=\"iframe-follow\"",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014171430-61b45c50"],
+      "candidateCaseIds": ["PREVIEW-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-preview/index.test.ts",
+      "name": "plugin preview HMR > HMR for preview=\"iframe-fixed\"",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014171430-61b45c50"],
+      "candidateCaseIds": ["PREVIEW-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/remark-link/index.test.mjs",
+      "name": "check dead links > should report dead links via remark message",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/remark-link/index.test.mjs",
+      "name": "check dead links > should report dead anchors via remark message",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/remark-link/index.test.mjs",
+      "name": "check dead links > should support disabling anchor checks",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/remark-link/index.test.mjs",
+      "name": "check dead links > should disable anchor checks by default",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/replace-rules/index.test.ts",
+      "name": "replace rules > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
+      "candidateCaseIds": ["READ-05", "EXTRA-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/replace-rules/index.test.ts",
+      "name": "replace rules > Foo page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
+      "candidateCaseIds": ["READ-05", "EXTRA-03"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search/index.test.ts",
+      "name": "search keyboard > keyboard navigation should work",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
+      "candidateCaseIds": [
+        "SEARCH-01",
+        "SEARCH-02",
+        "SEARCH-03",
+        "SEARCH-04",
+        "SEARCH-05"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search/index.test.ts",
+      "name": "search keyboard > page with search: false should be excluded from the index",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
+      "candidateCaseIds": [
+        "SEARCH-01",
+        "SEARCH-02",
+        "SEARCH-03",
+        "SEARCH-04",
+        "SEARCH-05"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search/index.test.ts",
+      "name": "search keyboard > Enter should do nothing while the search panel is closed",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
+      "candidateCaseIds": [
+        "SEARCH-01",
+        "SEARCH-02",
+        "SEARCH-03",
+        "SEARCH-04",
+        "SEARCH-05"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search/index.test.ts",
+      "name": "search keyboard > ESC key should close search panel",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
+      "candidateCaseIds": [
+        "SEARCH-01",
+        "SEARCH-02",
+        "SEARCH-03",
+        "SEARCH-04",
+        "SEARCH-05"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search/index.test.ts",
+      "name": "search keyboard > keyboard shortcut (Cmd+K / Ctrl+K) should toggle search panel",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
+      "candidateCaseIds": [
+        "SEARCH-01",
+        "SEARCH-02",
+        "SEARCH-03",
+        "SEARCH-04",
+        "SEARCH-05"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search/index.test.ts",
+      "name": "search keyboard > should reset to first suggestion when search query changes",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
+      "candidateCaseIds": [
+        "SEARCH-01",
+        "SEARCH-02",
+        "SEARCH-03",
+        "SEARCH-04",
+        "SEARCH-05"
+      ],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search-algolia/index.test.ts",
+      "name": "Algolia search > should search by algolia",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41"],
+      "candidateCaseIds": ["EXTRA-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search-algolia/index.test.ts",
+      "name": "Algolia search > should have correct crawler selectors for Algolia",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/search-hooks/index.test.ts",
+      "name": "search hooks > search-hooks should work",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014152600-00831e41"],
+      "candidateCaseIds": ["EXTRA-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search-code-blocks/index.test.ts",
+      "name": "code block search > search index should include content of code blocks",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["SEARCH-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search-i18n/index.test.ts",
+      "name": "localized search > should update search index when language changed",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["SEARCH-07", "SEARCH-08"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search-i18n/index.test.ts",
+      "name": "localized search > should return search results for voiced katakana content correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["SEARCH-07", "SEARCH-08"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/search-i18n/index.test.ts",
+      "name": "localized search > ignores an old locale index failure after switching language",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/search-i18n/index.test.ts",
+      "name": "localized search > public full-text search handles an index load failure",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/ssg-fail-strict/index.test.ts",
+      "name": "fails the build in strict SSG mode",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/ssg-fail-strict/index.test.ts",
+      "name": "csr should be successful",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/ssg-missing-public/index.test.ts",
+      "name": "should reject when template public assets are missing",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/ssg-md/index.test.ts",
+      "name": "llms should be successful",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/ssg-md/index.test.ts",
+      "name": "custom llms.txt renderer should be successful",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/ssg-md/index.test.ts",
+      "name": "csr should be successful",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/ssg-md/index.test.ts",
+      "name": "llms directive hint should be configurable",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/tabs-component/index.test.ts",
+      "name": "tabs component > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1"],
+      "candidateCaseIds": ["COMPONENT-01", "COMPONENT-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/tailwind-v4/index.test.ts",
+      "name": "tailwind-v4 > tailwind utility classes should work",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["STYLE-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/tailwind-v4/index.test.ts",
+      "name": "tailwind-v4 > shadcn/ui button should render with correct styles",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["STYLE-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/tailwind-v4/index.test.ts",
+      "name": "tailwind-v4 > dark mode classes should work",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["STYLE-01"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/theme-css/index.test.ts",
+      "name": "theme-css-order > globalStyles should work",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014145508-fc77705e"],
+      "candidateCaseIds": ["STYLE-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/title-number/index.test.ts",
+      "name": "title numbering > Index page",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+    },
+    {
+      "source": "e2e/fixtures/ssg-worker/index.test.ts",
+      "name": "build with experimental SSG worker",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/title-suffix/index.test.ts",
+      "name": "title suffix",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+    },
+    {
+      "source": "e2e/fixtures/with-base/index.test.ts",
+      "name": "site with base path > Should render sidebar correctly",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014162358-96521382"],
+      "candidateCaseIds": ["READ-01", "EXTRA-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/with-base/index.test.ts",
+      "name": "site with base path > Should goto correct link",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014162358-96521382"],
+      "candidateCaseIds": ["READ-01", "EXTRA-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/with-base/index.test.ts",
+      "name": "site with base path > Should render the homepage - \"/base\"",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014162358-96521382"],
+      "candidateCaseIds": ["READ-01", "EXTRA-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/with-base/index.test.ts",
+      "name": "site with base path > Should render the homepage - \"/base/\"",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014162358-96521382"],
+      "candidateCaseIds": ["READ-01", "EXTRA-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/with-base/index.test.ts",
+      "name": "site with base path > BrowserOnly should render fallback and update client content",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014143602-8b78a8f1", "20261014162358-96521382"],
+      "candidateCaseIds": ["READ-01", "EXTRA-05"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/with-base/index.test.ts",
+      "name": "Should resolve an auto asset prefix for route preload",
+      "decision": "retain-deterministic",
+      "status": "retained",
+      "candidateCaseIds": [],
+      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+    },
+    {
+      "source": "e2e/fixtures/plugin-api-docgen/locales/index.test.ts",
+      "name": "API docgen locales > Index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["PLUGIN-01", "PLUGIN-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-api-docgen/locales/index.test.ts",
+      "name": "API docgen locales > search index should include api-docgen result",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["PLUGIN-01", "PLUGIN-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-api-docgen/locales/index.test.ts",
+      "name": "API docgen locales > zh/index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014141340-d2160af0"],
+      "candidateCaseIds": ["PLUGIN-01", "PLUGIN-02"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-api-docgen/single/index.test.ts",
+      "name": "API docgen > zh/index page",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["PLUGIN-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    },
+    {
+      "source": "e2e/fixtures/plugin-api-docgen/single/index.test.ts",
+      "name": "API docgen > search index should include api-docgen result",
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "evidenceRuns": ["20261014162358-96521382"],
+      "candidateCaseIds": ["PLUGIN-06"],
+      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+    }
+  ]
+}

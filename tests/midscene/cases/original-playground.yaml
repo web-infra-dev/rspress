@@ -1,0 +1,28 @@
+cases:
+  - name: PLAYGROUND-01 Read internal and external playground output
+    tags: [shard-1, original-playground, migration-regression]
+    steps:
+      - app.open: { fixture: plugin-playground, path: / }
+      - aiAct: Bring the first playground's rendered output into view, not merely its source code.
+      - aiAssert: The first playground output displays Hello World Internal (default).
+      - aiAct: Bring the external component playground's rendered output into view.
+      - aiAssert: The external playground output displays Hello World External.
+      - aiAct: Stay on Guide and scroll the whole document below the second playground to the third playground. Scroll outside the Monaco code editors and On this page panel, using the outer page scrollbar if needed. The existing third playground renders Hello World Internal (vertical) above its editor. Bring that black output text into view without navigating, searching, editing code, or changing layouts.
+      - aiAssert: Plain black text Hello World Internal (vertical) is visible inside the third playground card, outside its line-numbered source editor. The phrase is not confined to the colored JSX source code.
+  - name: PLAYGROUND-02 Hot-update rendered playground output
+    tags: [shard-1, original-playground]
+    steps:
+      - app.open: { fixture: plugin-playground, path: / }
+      - aiAct: Bring the first playground's rendered output into view.
+      - aiAssert: The first playground output displays Hello World Internal (default).
+      - fixture.update: { part: playground }
+      - aiAct: Wait for the rendered first playground output to display Hello World Internal (updated). Do not reload or navigate elsewhere; stop if it has not changed within 30 seconds.
+      - aiAssert: The rendered first playground output displays Hello World Internal (updated).
+  - name: PLAYGROUND-03 Read playground and preview on the same page
+    tags: [shard-1, original-playground]
+    steps:
+      - app.open: { fixture: plugin-playground-preview, path: / }
+      - aiAct: Bring the rendered playground output into view, not merely its source code.
+      - aiAssert: The rendered playground displays Hello World Playground.
+      - aiAct: Bring the rendered component preview into view, not merely its source code.
+      - aiAssert: The rendered preview displays Hello World Preview.

@@ -5,6 +5,7 @@ on:
     paths:
       [
         'packages/**',
+        'e2e/fixtures/**',
         'tests/midscene/**',
         '.github/workflows/midscene.yml',
         'pnpm-lock.yaml',
@@ -14,6 +15,7 @@ on:
     paths:
       [
         'packages/**',
+        'e2e/fixtures/**',
         'tests/midscene/**',
         '.github/workflows/midscene.yml',
         'pnpm-lock.yaml',
@@ -62,7 +64,7 @@ jobs:
        (github.repository != 'web-infra-dev/rspress' || github.ref == 'refs/heads/main')) ||
       (github.event_name == 'push' && github.repository == 'web-infra-dev/rspress')
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:

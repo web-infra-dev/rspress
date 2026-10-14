@@ -1,0 +1,43 @@
+cases:
+  - name: NAV-01 Follow a desktop dropdown link
+    tags: [shard-1, original-nav]
+    steps:
+      - app.open: { fixture: nav-link-items, path: / }
+      - aiAct: Hover over NestedItems, then open Level1, Level2Nested, and Level3Item1 through the nested navigation. Do not use search or enter a URL.
+      - aiAssert: The article heading is Level 3 item 1.
+  - name: NAV-02 Follow a deeply nested link on a phone
+    tags: [shard-1, original-nav]
+    steps:
+      - app.open: { fixture: nav-link-items, path: /, viewport: mobile }
+      - aiAct: Open the mobile navigation menu and follow NestedItems, Level1, Level2Nested, and Level3Item2. Do not use search or enter a URL.
+      - aiAssert: The article heading is Level 3 item 2 and the navigation menu is no longer covering it.
+  - name: NAV-03 Switch language on an API overview
+    tags: [shard-1, original-i18n]
+    steps:
+      - app.open: { fixture: i18n, path: /api }
+      - aiAct: In the top navigation, hover over the current language 简体中文 and choose English from its language menu. Do not type into the API filter.
+      - aiAssert: The Overview heading and the introductory text en are visible, and the top navigation language is English.
+      - aiAct: In the top navigation, hover over English and choose 简体中文 from its language menu. Do not type into the API filter.
+      - aiAssert: The Overview heading and the introductory text zh are visible, and the top navigation language is 简体中文.
+  - name: NAV-04 Switch documentation versions
+    tags: [shard-1, original-versions, migration-regression]
+    steps:
+      - app.open: { fixture: multi-version, path: /base/ }
+      - aiAct: Use the documentation version selector to switch to v2.
+      - aiAssert: The article heading is v2.
+      - aiAct: Use the documentation version selector to switch back to v1.
+      - aiAssert: The article heading is v1.
+      - aiAct: Keep version v1 selected and switch the documentation language to 简体中文.
+      - aiAssert: The article heading is v1 中文.
+  - name: NAV-05 Version-specific sidebars remain isolated
+    tags: [shard-1, original-version-sidebar]
+    steps:
+      - app.open: { fixture: multi-version-global-sidebar, path: / }
+      - aiAct: Switch to v2 using the version selector, then open Version two guide from the sidebar.
+      - aiAssert: Version two guide is open, the sidebar contains Version two entries, and no Version one guide entry is shown.
+  - name: NAV-06 Navigate auto-generated sidebar directories
+    tags: [shard-1, original-sidebar]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar-no-meta, path: / }
+      - aiAct: Use the sidebar to open Basic config inside Rspress config. Do not use search or enter a URL.
+      - aiAssert: The Basic config article is open with root and logoText sections.

@@ -1,0 +1,33 @@
+cases:
+  - name: PREVIEW-04 Read iframe previews in development
+    tags: [shard-1, original-preview-render]
+    steps:
+      - app.open: { fixture: plugin-preview, path: / }
+      - aiAct: Stay on Guide and read the fixed device preview on the right. It renders three short lines of static demo output, not navigation links. Bring those rendered lines into view without clicking their text, navigating, or reading only the source code.
+      - aiAssert: Below Guide in the right-hand device frame, black text includes Hello World Internal, Hello World External, and Render from JSON. These three lines are in the preview, not in the colored source code on the left.
+  - name: PREVIEW-05 Read iframe previews in a production build
+    tags: [shard-1, original-preview-render]
+    steps:
+      - app.open: { fixture: plugin-preview, mode: production, path: / }
+      - aiAct: Stay on Guide and read the fixed device preview on the right. It renders three short lines of static demo output, not navigation links. Bring those rendered lines into view without clicking their text, navigating, or reading only the source code.
+      - aiAssert: Below Guide in the right-hand device frame, black text includes Hello World Internal, Hello World External, and Render from JSON. These three lines are in the preview, not in the colored source code on the left.
+  - name: PREVIEW-06 Read custom JSX and TSX entry previews
+    tags: [shard-1, original-preview-render]
+    steps:
+      - app.open: { fixture: plugin-preview-custom-entry, path: /guide/ }
+      - aiAct: Stay on Guide and bring the entire first example's right-hand preview pane into view. Its demo is a single line of plain black text at the top of the pane; it has no additional controls below. Do not click the static text or preview toolbar, open a new tab, or navigate elsewhere.
+      - aiAssert: In the first example, plain black Hello World JSX text is visible at the top-left of the right pane, separate from the colored source code in the left pane. Documentation navigation is still visible.
+      - aiAct: Bring the second example's entire right-hand preview pane into view. Read its single line of black TSX demo text without clicking the static text, toolbar, or navigation.
+      - aiAssert: In the second example, plain black Hello World TSX text is visible at the top-left of the right pane, separate from the colored source code in the left pane. Documentation navigation is still visible.
+      - aiAct: Bring the third example's entire right-hand preview pane into view. Read its single line of black External demo text without clicking the static text, toolbar, or navigation.
+      - aiAssert: In the third example, plain black Hello World External text is visible at the top-left of the right pane, separate from the colored source code in the left pane. Documentation navigation is still visible.
+  - name: PREVIEW-07 Read mixed internal and iframe previews
+    tags: [shard-1, original-preview-render]
+    steps:
+      - app.open: { fixture: plugin-preview, path: /mixed }
+      - aiAct: Stay on Mixed and bring the first rendered inline component preview into view, not merely its source code.
+      - aiAssert: The rendered internal preview displays This is a component.
+      - aiAct: Stay on Mixed and scroll the outer document, not inside code blocks or the floating phone. Bring the main article's inline preview pane beside its colored source code into view, left of the floating phone. Its demo is one line of black This is a component text at the top; there are no additional controls to activate. Do not click the text, toolbar, or navigation.
+      - aiAssert: In the main article, black This is a component text is visible in a preview pane beside colored source code. This pane is separate from the floating phone on the far right.
+      - aiAct: Read the static demo text in the floating phone on the far right. Bring its black This is a component and Hello World External lines into view. Do not treat the text as links or activate its toolbar.
+      - aiAssert: In the floating phone on the far right, black text below Mixed includes This is a component and Hello World External, separate from source code in the main article.

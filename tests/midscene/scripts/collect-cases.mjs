@@ -34,9 +34,19 @@ for (const project of loaded.projects) {
         'Actions and independent assertions required',
       );
       assert(
-        nodes.every(node => ['app.open', 'aiAct', 'aiAssert'].includes(node)),
+        nodes.every(node =>
+          ['app.open', 'aiAct', 'aiAssert', 'fixture.update'].includes(node),
+        ),
         'No UI-operation helpers or atomic actions',
       );
+      if (nodes.includes('fixture.update')) {
+        assert(
+          ['hmr', 'hmr-lazy', 'plugin-preview', 'plugin-playground'].includes(
+            definition.steps[0].input.fixture,
+          ),
+          'Fixture updates require an isolated source copy',
+        );
+      }
       actual[definition.name] = 'shard-1';
     }
   }
