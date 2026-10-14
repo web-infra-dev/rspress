@@ -433,7 +433,7 @@ export default defineConfig({
 - **类型**：`boolean | SitemapOptions`
 - **默认值**：`true`
 
-在生产构建时向输出目录生成 `sitemap.xml`。此功能已内置于 Rspress，无需安装插件，在 `ssg: false` 时也可使用。
+在生产构建时向输出目录生成 `sitemap.xml`。此功能已内置于 Rspress，无需安装插件，在 `ssg: false` 时也可使用。从 public 目录复制的已有 sitemap 文件会保留。生成的 URL 遵循 `route.cleanUrls`。
 
 配置 [`siteOrigin`](#siteorigin) 可让 sitemap 包含绝对 URL。Rspress 会将 `siteOrigin`、[`base`](#base) 和每个页面的路由路径拼接起来：
 
@@ -505,7 +505,7 @@ export interface SitemapOptions {
 - **类型**：`string`
 - **默认值**：[`siteOrigin`](#siteorigin) + [`base`](#base)，未配置 `siteOrigin` 时使用 `base`
 
-覆盖 sitemap 条目使用的部署 URL。请使用包含基础路径的绝对 URL，例如 `https://example.com/docs/`。此值优先于 `siteOrigin` 和 `base`。
+覆盖 sitemap 条目使用的部署 URL。请使用包含基础路径的绝对 URL，例如 `https://example.com/docs/`。此值优先于 `siteOrigin` 和 `base`。仅支持不含查询参数和片段的 HTTP(S) URL。
 
 如果既没有配置 `sitemap.siteUrl`，也没有配置 `siteOrigin`，条目会使用 `base + routePath`，保留为相对路径。配置其中任意一项即可生成绝对 sitemap URL。
 

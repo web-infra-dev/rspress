@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process';
-import { access, readFile, rm } from 'node:fs/promises';
+import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { afterAll, expect, test } from '@rstest/core';
@@ -37,11 +37,11 @@ afterAll(async () => {
 test('core and legacy configurations emit the same sitemap in SSG and CSR builds', async () => {
   await build('rspress.config.ts');
   const xml = await readSitemap('doc_build');
-  expect(xml.match(/<url>/g)).toHaveLength(2);
+  expect(xml.match(/<url>/g)).toHaveLength(4);
   expect(xml).toContain(
     '<loc>https://example.com/docs/</loc><lastmod>2026-01-01</lastmod><priority>1.0</priority><changefreq>weekly</changefreq>',
   );
-  expect(xml).toContain('<loc>https://example.com/docs/guide</loc>');
+  expect(xml).toContain('<loc>https://example.com/docs/guide.html</loc>');
   expect(xml).toContain('<priority>0.7</priority>');
 
   const { stdout, stderr } = await build('rspress-legacy.config.ts');
@@ -64,7 +64,27 @@ test('sitemap false suppresses generation even with the legacy plugin', async ()
 test('production builds generate a sitemap by default', async () => {
   await build('rspress-default.config.ts');
   const xml = await readSitemap('default-build');
-  expect(xml).toContain('<loc>https://example.com/docs/guide</loc>');
+  expect(xml).toContain('<loc>https://example.com/docs/guide.html</loc>');
+  expect(xml).toContain(
+    '<loc>https://example.com/docs/folder/index.html</loc>',
+  );
+  expect(xml).toContain('<loc>https://example.com/docs/My%20Guide.html</loc>');
+  await access(path.join(appDir, 'default-build', 'folder', 'index.html'));
+  await access(path.join(appDir, 'default-build', 'My Guide.html'));
   expect(xml).toContain('<priority>0.5</priority>');
   expect(xml).toContain('<changefreq>monthly</changefreq>');
+});
+
+test('preserves a user-provided public sitemap', async () => {
+  const publicDir = path.join(appDir, 'doc', 'public');
+  const content =
+    '<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://custom.example/</loc></url></urlset>';
+  await mkdir(publicDir, { recursive: true });
+  await writeFile(path.join(publicDir, 'sitemap.xml'), content);
+  try {
+    await build('rspress-default.config.ts');
+    expect(await readSitemap('default-build')).toBe(content);
+  } finally {
+    await rm(path.join(publicDir, 'sitemap.xml'), { force: true });
+  }
 });

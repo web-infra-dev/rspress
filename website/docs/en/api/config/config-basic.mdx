@@ -433,7 +433,7 @@ export default defineConfig({
 - **Type**: `boolean | SitemapOptions`
 - **Default**: `true`
 
-Generate `sitemap.xml` in the output directory during production builds. This feature is built into Rspress and does not require a plugin. It also works when `ssg` is `false`.
+Generate `sitemap.xml` in the output directory during production builds. This feature is built into Rspress and does not require a plugin. It also works when `ssg` is `false`. Existing sitemap files copied from the public directory are preserved. Generated URLs follow `route.cleanUrls`.
 
 Configure [`siteOrigin`](#siteorigin) so the sitemap contains absolute URLs. Rspress combines `siteOrigin`, [`base`](#base), and each page's route path:
 
@@ -505,7 +505,7 @@ export interface SitemapOptions {
 - **Type**: `string`
 - **Default**: [`siteOrigin`](#siteorigin) + [`base`](#base), or `base` when `siteOrigin` is not configured
 
-Override the deployment URL used in sitemap entries. Use an absolute URL that includes the base path, such as `https://example.com/docs/`. This value takes precedence over `siteOrigin` and `base`.
+Override the deployment URL used in sitemap entries. Use an absolute URL that includes the base path, such as `https://example.com/docs/`. This value takes precedence over `siteOrigin` and `base`. Only HTTP(S) URLs without query strings or fragments are accepted.
 
 If neither `sitemap.siteUrl` nor `siteOrigin` is configured, entries use `base + routePath` and remain relative paths. Configure either value to generate absolute sitemap URLs.
 

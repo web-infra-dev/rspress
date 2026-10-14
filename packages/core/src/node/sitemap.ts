@@ -1,6 +1,7 @@
-import { mkdir, stat, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { dirname, isAbsolute } from 'node:path';
 import {
+  normalizeHref,
   type RspressPlugin,
   type SitemapOptions,
   type UserConfig,
@@ -16,11 +17,18 @@ function ensureTrailingSlash(url: string) {
 function normalizeSiteUrl(siteUrl: string): string {
   try {
     const url = new URL(siteUrl);
+    if (
+      !['http:', 'https:'].includes(url.protocol) ||
+      url.href.includes('?') ||
+      url.href.includes('#')
+    ) {
+      throw new Error('Expected an HTTP(S) URL without a query or fragment.');
+    }
     url.pathname = ensureTrailingSlash(url.pathname);
     return url.href;
   } catch {
     throw new Error(
-      '[sitemap] `sitemap.siteUrl` must be a valid absolute URL with protocol, such as `https://example.com/base/`.',
+      '[sitemap] `sitemap.siteUrl` must be an absolute HTTP(S) URL without a query or fragment, such as `https://example.com/base/`.',
     );
   }
 }
@@ -31,7 +39,9 @@ function getSiteUrl(siteUrl: string | undefined, config: UserConfig) {
   }
   const base = withBase('/', config.base ?? '/');
   try {
-    return config.siteOrigin ? withSiteOrigin(base, config.siteOrigin) : base;
+    return config.siteOrigin
+      ? withSiteOrigin(base, config.siteOrigin)
+      : encodeURI(base);
   } catch {
     throw new Error(
       '[sitemap] `siteOrigin` in rspress.config.ts must be a valid absolute URL origin with protocol, such as `https://example.com`.',
@@ -44,7 +54,13 @@ type Sitemap = NonNullable<SitemapOptions['customMaps']>[string];
 const generateNode = (sitemap: Sitemap): string => {
   let result = '<url>';
   for (const [tag, value] of Object.entries(sitemap)) {
-    result += `<${tag}>${value}</${tag}>`;
+    const escaped = String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+    result += `<${tag}>${escaped}</${tag}>`;
   }
   result += '</url>';
   return result;
@@ -63,6 +79,8 @@ export function pluginSitemap(): RspressPlugin {
   const sitemaps: Sitemap[] = [];
   const set = new Set<string>();
   let resolvedSiteUrl = '';
+  let cleanUrls = false;
+  let previousOutput: { path: string; xml: string } | undefined;
   return {
     name: 'rspress:sitemap',
     beforeBuild(config, isProd) {
@@ -76,6 +94,7 @@ export function pluginSitemap(): RspressPlugin {
           : undefined;
       if (options) {
         resolvedSiteUrl = getSiteUrl(options.siteUrl, config);
+        cleanUrls = config.route?.cleanUrls ?? false;
       }
     },
     async extendPageData(pageData, isProd) {
@@ -83,7 +102,7 @@ export function pluginSitemap(): RspressPlugin {
         if (!set.has(pageData.routePath)) {
           set.add(pageData.routePath);
           sitemaps.push({
-            loc: `${resolvedSiteUrl.replace(/\/$/, '')}${pageData.routePath}`,
+            loc: `${resolvedSiteUrl.replace(/\/$/, '')}${encodeURI(normalizeHref(pageData.routePath, cleanUrls))}`,
             lastmod: (await stat(pageData._filepath)).mtime.toISOString(),
             priority:
               pageData.routePath === '/'
@@ -107,7 +126,24 @@ export function pluginSitemap(): RspressPlugin {
           outputPath = `${configPath}/sitemap.xml`;
         }
         await mkdir(dirname(outputPath), { recursive: true });
-        await writeFile(outputPath, generateXml(sitemaps));
+        const existing = await readFile(outputPath, 'utf8').catch(error => {
+          if (error.code === 'ENOENT') return undefined;
+          throw error;
+        });
+        // Preserve copied public assets, while allowing this instance to rebuild its own output.
+        if (
+          existing !== undefined &&
+          (previousOutput?.path !== outputPath ||
+            previousOutput.xml !== existing)
+        ) {
+          logger.warn(
+            `[sitemap] Preserving existing sitemap at ${outputPath}.`,
+          );
+          return;
+        }
+        const xml = generateXml(sitemaps);
+        await writeFile(outputPath, xml);
+        previousOutput = { path: outputPath, xml };
       }
     },
   };
