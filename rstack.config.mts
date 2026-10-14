@@ -26,6 +26,7 @@ define.lint(({ globals, js, rstestPlugin, ts }) => [
   },
   {
     files: ['packages/core/src/theme/**/*.{ts,tsx}'],
+    ignores: ['**/*.test.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
         'error',

@@ -1,6 +1,5 @@
 import { afterEach, describe, expect, it, rs } from '@rstest/core';
 import { renderToStaticMarkup } from 'react-dom/server';
-// eslint-disable-next-line no-restricted-imports -- Test the real hook without loading theme virtual modules.
 import { useStorageValue } from '../../logic/useStorageValue';
 import { GithubStars } from './GithubStars';
 
