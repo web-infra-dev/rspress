@@ -1,8 +1,7 @@
+import { useI18nText } from '@rspress/core/runtime';
 import { useHead } from '@unhead/react';
 import { useEffect, useRef } from 'react';
 import { isRouteErrorResponse } from 'react-router-dom';
-// eslint-disable-next-line no-restricted-imports -- Existing cross-directory dependency; retained until this component is eject-safe.
-import { useI18nText } from '../../../runtime/hooks/useI18nText';
 import '../NotFountLayout/index.scss';
 import './index.scss';
 
