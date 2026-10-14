@@ -126,7 +126,7 @@ export async function resolveReactRenderToMarkdownAlias(): Promise<
         `You are using React ${reactMajorVersion} with \`llms: true\`. Please install \`react-render-to-markdown\` to ensure compatibility.\n\n` +
           `Add the following to your ${picocolors.greenBright('package.json')}:\n\n` +
           picocolors.greenBright(
-            `  "dependencies": {\n    "react": "^18.3.1",\n    "react-dom": "^18.3.1",\n    "react-render-to-markdown": "18.3.2"\n  }\n`,
+            `  "dependencies": {\n    "react": "^18.3.1",\n    "react-dom": "^18.3.1",\n    "react-render-to-markdown": "^18.3.1"\n  }\n`,
           ),
       );
     }
