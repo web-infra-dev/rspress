@@ -274,7 +274,7 @@ describe('getInlineLocaleRedirectScript', () => {
       `"{;var defaultLang = "zh", langs = ["zh","en","fr"];if (!/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, pathSegments = pathname.split('/').filter(Boolean), currentLang = langs.includes(pathSegments[0]) ? pathSegments[0] : defaultLang;if (currentLang === defaultLang && langs.includes(targetLang) && targetLang !== defaultLang) {;var newPathSegments = pathSegments.slice();newPathSegments.splice(0, 0, targetLang);;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && pathname.endsWith('/') ? '/' : '';window.location['replace'](newPathname + trailingSlash + search);};};};}"`,
     );
     expect(versionedBaseScript).toMatchInlineSnapshot(
-      `"{;var defaultLang = "zh", langs = ["zh","en","fr"];if (!/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, base = "/docs", cleanPathname = pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname, pathSegments = cleanPathname.split('/').filter(Boolean), versions = ["v1","v2"], langIndex = versions.includes(pathSegments[0]) ? 1 : 0, currentLang = langs.includes(pathSegments[langIndex]) ? pathSegments[langIndex] : defaultLang;if (langs.includes(targetLang) && targetLang !== currentLang) {;var newPathSegments = pathSegments.slice();if (targetLang === defaultLang) {;newPathSegments.splice(langIndex, 1);} else if (currentLang === defaultLang) {;newPathSegments.splice(langIndex, 0, targetLang);} else {;newPathSegments[langIndex] = targetLang;};;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && cleanPathname.endsWith('/') ? '/' : '';window.location['replace'](base + newPathname + trailingSlash + search);};};};}"`,
+      `"{;var defaultLang = "zh", langs = ["zh","en","fr"];if (!/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, base = "/docs", underBase = pathname === base || pathname.startsWith(base + '/'), cleanPathname = underBase ? pathname.slice(base.length) || '/' : pathname, pathSegments = cleanPathname.split('/').filter(Boolean), versions = ["v1","v2"], langIndex = versions.includes(pathSegments[0]) ? 1 : 0, currentLang = langs.includes(pathSegments[langIndex]) ? pathSegments[langIndex] : defaultLang;if (underBase && langs.includes(targetLang) && targetLang !== currentLang) {;var newPathSegments = pathSegments.slice();if (targetLang === defaultLang) {;newPathSegments.splice(langIndex, 1);} else if (currentLang === defaultLang) {;newPathSegments.splice(langIndex, 0, targetLang);} else {;newPathSegments[langIndex] = targetLang;};;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && cleanPathname.endsWith('/') ? '/' : '';window.location['replace'](base + newPathname + trailingSlash + search);};};};}"`,
     );
   });
 
@@ -286,5 +286,27 @@ describe('getInlineLocaleRedirectScript', () => {
       }),
     ).toBe('');
     expect(getInlineLocaleRedirectScript({ locales: config.locales })).toBe('');
+  });
+
+  test('does not redirect or mangle paths outside the base', () => {
+    const basedConfig = { ...config, base: '/docs/' };
+
+    // regression: `/docs-admin/foo` merely shares a string prefix with
+    // the base and used to be "stripped" into `-admin/foo`, producing a
+    // redirect to `/docs/en/-admin/foo`. Foreign paths must be untouched.
+    expect(
+      runLocaleRedirectScript(basedConfig, {
+        language: 'en-US',
+        pathname: '/docs-admin/foo',
+      }).redirectedTo,
+    ).toBeUndefined();
+
+    // Paths inside the base still get the locale redirect.
+    expect(
+      runLocaleRedirectScript(basedConfig, {
+        language: 'en-US',
+        pathname: '/docs/guide/',
+      }).redirectedTo,
+    ).toBe('/docs/en/guide/');
   });
 });

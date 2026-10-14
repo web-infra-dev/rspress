@@ -4,7 +4,7 @@ import type {
   NavItemWithLink,
   NavItemWithLinkAndChildren,
 } from '@rspress/core';
-import { matchNavbar, useLocation } from '@rspress/core/runtime';
+import { matchNavbar, useLocation, useSite } from '@rspress/core/runtime';
 import type { HoverGroupProps } from '@rspress/core/theme';
 import {
   IconArrowDown,
@@ -103,9 +103,11 @@ export function NavMenuItemWithLink({
   menuItem: NavItemWithLink;
 }) {
   const { pathname } = useLocation();
+  const { site } = useSite();
+  const versions = site.multiVersion?.versions ?? [];
   const isActive = useMemo(() => {
-    return matchNavbar(menuItem, pathname);
-  }, [menuItem, pathname]);
+    return matchNavbar(menuItem, pathname, versions);
+  }, [menuItem, pathname, versions]);
 
   return (
     <li

@@ -39,7 +39,8 @@ export async function normalizeThemeConfig(
     if (
       !currentLang ||
       !link ||
-      normalizedLink.startsWith(`/${currentLang}`) ||
+      normalizedLink === `/${currentLang}` ||
+      normalizedLink.startsWith(`/${currentLang}/`) ||
       isExternalUrl(normalizedLink) ||
       hasMultiVersion
     ) {
