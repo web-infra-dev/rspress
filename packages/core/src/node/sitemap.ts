@@ -1,6 +1,5 @@
-import { mkdir, stat, writeFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
-import type { NormalizedConfig, RsbuildPluginAPI } from '@rsbuild/core';
+import { stat } from 'node:fs/promises';
+import type { RsbuildPluginAPI } from '@rsbuild/core';
 import {
   type RspressPlugin,
   type SitemapOptions,
@@ -82,8 +81,6 @@ export function pluginSitemap(): RspressPlugin {
   const set = new Set<string>();
   let resolvedSiteUrl = '';
   let cleanUrls = false;
-  let outputPath: string;
-  let publicDirs: NormalizedConfig['server']['publicDir'] = [];
   return {
     name: 'rspress:sitemap',
     builderConfig: {
@@ -91,12 +88,28 @@ export function pluginSitemap(): RspressPlugin {
         {
           name: 'rspress:sitemap-output',
           setup(api: RsbuildPluginAPI) {
-            api.modifyRspackConfig((_config, { environment }) => {
-              if (environment.name === 'web') {
-                outputPath = join(environment.distPath, 'sitemap.xml');
-                publicDirs = api.getNormalizedConfig().server.publicDir;
-              }
-            });
+            api.processAssets(
+              { stage: 'additional', environments: ['web'] },
+              async ({ compilation, sources }) => {
+                if (!options || compilation.errors.length) return;
+                for (const publicDir of api.getNormalizedConfig().server
+                  .publicDir) {
+                  if (publicDir.copyOnBuild === false) continue;
+                  const files = await glob('sitemap.xml', {
+                    cwd: publicDir.name,
+                    ignore: publicDir.ignore,
+                  });
+                  if (files.length) {
+                    logger.warn('[sitemap] Preserving public sitemap.xml.');
+                    return;
+                  }
+                }
+                compilation.emitAsset(
+                  'sitemap.xml',
+                  new sources.RawSource(generateXml(sitemaps)),
+                );
+              },
+            );
           },
         },
       ],
@@ -138,25 +151,6 @@ export function pluginSitemap(): RspressPlugin {
             ...(options.customMaps?.[pageData.routePath] ?? {}),
           });
         }
-      }
-    },
-    async afterBuild(_config, isProd) {
-      if (isProd && options) {
-        for (const publicDir of publicDirs) {
-          if (publicDir.copyOnBuild === false) continue;
-          const files = await glob('sitemap.xml', {
-            cwd: publicDir.name,
-            ignore: publicDir.ignore,
-          });
-          if (files.length) {
-            logger.warn(
-              `[sitemap] Preserving public sitemap at ${outputPath}.`,
-            );
-            return;
-          }
-        }
-        await mkdir(dirname(outputPath), { recursive: true });
-        await writeFile(outputPath, generateXml(sitemaps));
       }
     },
   };

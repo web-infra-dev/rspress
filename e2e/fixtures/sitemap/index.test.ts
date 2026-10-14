@@ -24,8 +24,13 @@ async function build(config: string) {
   );
 }
 
-const readSitemap = (dir: string) =>
-  readFile(path.join(appDir, dir, 'sitemap.xml'), 'utf8');
+const readSitemap = async (dir: string) => {
+  const xml = await readFile(path.join(appDir, dir, 'sitemap.xml'), 'utf8');
+  expect(
+    await readFile(path.join(appDir, dir, 'sitemap-observed.xml'), 'utf8'),
+  ).toBe(xml);
+  return xml;
+};
 
 afterAll(async () => {
   await Promise.all(

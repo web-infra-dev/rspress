@@ -22,6 +22,7 @@ beforeEach(async () => {
   filepath = path.join(directory, 'index.md');
   outDir = path.join(directory, 'output');
   await writeFile(filepath, '# Home');
+  await writeFile(path.join(directory, 'entry.js'), '');
 });
 
 afterEach(async () => {
@@ -46,6 +47,8 @@ async function generate(
   const rsbuild = await createRsbuild({
     rsbuildConfig: mergeRsbuildConfig(
       {
+        logLevel: 'silent',
+        source: { entry: { index: path.join(directory, 'entry.js') } },
         server: { publicDir: { name: path.join(directory, 'public') } },
         environments: { web: { output: { distPath: resolved.outDir } } },
       },
@@ -53,10 +56,9 @@ async function generate(
       resolved.builderConfig ?? {},
     ),
   });
-  await rsbuild.initConfigs();
   await Promise.all(routes.map(route => driver.extendPageData(page(route))));
-  await driver.afterBuild();
-  return driver;
+  await rsbuild.build();
+  return { driver, rsbuild };
 }
 
 const readSitemap = () => readFile(path.join(outDir, 'sitemap.xml'), 'utf8');
@@ -180,10 +182,10 @@ describe('built-in sitemap', () => {
   });
 
   it('clears collected pages before the next build', async () => {
-    const driver = await generate({ sitemap: true });
+    const { driver, rsbuild } = await generate({ sitemap: true });
     await driver.beforeBuild();
     await driver.extendPageData(page('/next'));
-    await driver.afterBuild();
+    await rsbuild.build();
     const xml = await readSitemap();
     expect(xml).toContain('<loc>/next.html</loc>');
     expect(xml).not.toContain('<loc>/guide.html</loc>');
@@ -275,7 +277,7 @@ describe('built-in sitemap', () => {
   });
 
   it('preserves public output that replaces a previously generated sitemap', async () => {
-    const driver = await generate();
+    const { driver, rsbuild } = await generate();
     await driver.beforeBuild();
     await driver.extendPageData(page('/next'));
     await mkdir(path.join(directory, 'public'), { recursive: true });
@@ -284,7 +286,7 @@ describe('built-in sitemap', () => {
       '<manual-sitemap />',
     );
     await writeFile(path.join(outDir, 'sitemap.xml'), '<manual-sitemap />');
-    await driver.afterBuild();
+    await rsbuild.build();
     expect(await readSitemap()).toBe('<manual-sitemap />');
   });
 
