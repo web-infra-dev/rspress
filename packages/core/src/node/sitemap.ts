@@ -1,7 +1,7 @@
-import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
-import { dirname, isAbsolute } from 'node:path';
+import { mkdir, stat, writeFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import type { NormalizedConfig, RsbuildPluginAPI } from '@rsbuild/core';
 import {
-  normalizeHref,
   type RspressPlugin,
   type SitemapOptions,
   type UserConfig,
@@ -9,6 +9,8 @@ import {
   withSiteOrigin,
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
+import { glob } from 'tinyglobby';
+import { routePath2HtmlFileName } from './ssg/htmlFile';
 
 function ensureTrailingSlash(url: string) {
   return url.endsWith('/') ? url : `${url}/`;
@@ -80,9 +82,25 @@ export function pluginSitemap(): RspressPlugin {
   const set = new Set<string>();
   let resolvedSiteUrl = '';
   let cleanUrls = false;
-  let previousOutput: { path: string; xml: string } | undefined;
+  let outputPath: string;
+  let publicDirs: NormalizedConfig['server']['publicDir'] = [];
   return {
     name: 'rspress:sitemap',
+    builderConfig: {
+      plugins: [
+        {
+          name: 'rspress:sitemap-output',
+          setup(api: RsbuildPluginAPI) {
+            api.modifyRspackConfig((_config, { environment }) => {
+              if (environment.name === 'web') {
+                outputPath = join(environment.distPath, 'sitemap.xml');
+                publicDirs = api.getNormalizedConfig().server.publicDir;
+              }
+            });
+          },
+        },
+      ],
+    },
     beforeBuild(config, isProd) {
       sitemaps.length = 0;
       set.clear();
@@ -101,8 +119,16 @@ export function pluginSitemap(): RspressPlugin {
       if (isProd && options) {
         if (!set.has(pageData.routePath)) {
           set.add(pageData.routePath);
+          // Routes are file paths, not URLs: encode reserved characters as data.
+          const pathname = cleanUrls
+            ? pageData.routePath
+            : `/${routePath2HtmlFileName(pageData.routePath)}`;
+          const encodedPath = pathname
+            .split('/')
+            .map(encodeURIComponent)
+            .join('/');
           sitemaps.push({
-            loc: `${resolvedSiteUrl.replace(/\/$/, '')}${encodeURI(normalizeHref(pageData.routePath, cleanUrls))}`,
+            loc: `${resolvedSiteUrl.replace(/\/$/, '')}${encodedPath}`,
             lastmod: (await stat(pageData._filepath)).mtime.toISOString(),
             priority:
               pageData.routePath === '/'
@@ -114,36 +140,23 @@ export function pluginSitemap(): RspressPlugin {
         }
       }
     },
-    async afterBuild(config, isProd) {
+    async afterBuild(_config, isProd) {
       if (isProd && options) {
-        const distPathRoot =
-          typeof config.builderConfig?.output?.distPath === 'string'
-            ? config.builderConfig?.output?.distPath
-            : config.builderConfig?.output?.distPath?.root;
-        const configPath = config.outDir || distPathRoot;
-        let outputPath = `./${configPath || 'doc_build'}/sitemap.xml`;
-        if (isAbsolute(configPath || '')) {
-          outputPath = `${configPath}/sitemap.xml`;
+        for (const publicDir of publicDirs) {
+          if (publicDir.copyOnBuild === false) continue;
+          const files = await glob('sitemap.xml', {
+            cwd: publicDir.name,
+            ignore: publicDir.ignore,
+          });
+          if (files.length) {
+            logger.warn(
+              `[sitemap] Preserving public sitemap at ${outputPath}.`,
+            );
+            return;
+          }
         }
         await mkdir(dirname(outputPath), { recursive: true });
-        const existing = await readFile(outputPath, 'utf8').catch(error => {
-          if (error.code === 'ENOENT') return undefined;
-          throw error;
-        });
-        // Preserve copied public assets, while allowing this instance to rebuild its own output.
-        if (
-          existing !== undefined &&
-          (previousOutput?.path !== outputPath ||
-            previousOutput.xml !== existing)
-        ) {
-          logger.warn(
-            `[sitemap] Preserving existing sitemap at ${outputPath}.`,
-          );
-          return;
-        }
-        const xml = generateXml(sitemaps);
-        await writeFile(outputPath, xml);
-        previousOutput = { path: outputPath, xml };
+        await writeFile(outputPath, generateXml(sitemaps));
       }
     },
   };

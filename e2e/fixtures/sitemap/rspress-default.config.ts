@@ -3,6 +3,10 @@ import config from './rspress.config';
 
 export default defineConfig({
   ...config,
-  outDir: 'default-build',
+  outDir: 'unused-build',
+  builderConfig: {
+    output: { distPath: 'default-build', cleanDistPath: false },
+    environments: { web: { output: { distPath: 'default-build' } } },
+  },
   sitemap: undefined,
 });

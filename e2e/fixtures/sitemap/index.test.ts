@@ -10,6 +10,7 @@ const outputDirs = [
   'legacy-build',
   'disabled-build',
   'default-build',
+  'unused-build',
 ];
 
 async function build(config: string) {
@@ -37,7 +38,7 @@ afterAll(async () => {
 test('core and legacy configurations emit the same sitemap in SSG and CSR builds', async () => {
   await build('rspress.config.ts');
   const xml = await readSitemap('doc_build');
-  expect(xml.match(/<url>/g)).toHaveLength(4);
+  expect(xml.match(/<url>/g)).toHaveLength(5);
   expect(xml).toContain(
     '<loc>https://example.com/docs/</loc><lastmod>2026-01-01</lastmod><priority>1.0</priority><changefreq>weekly</changefreq>',
   );
@@ -71,8 +72,27 @@ test('production builds generate a sitemap by default', async () => {
   expect(xml).toContain('<loc>https://example.com/docs/My%20Guide.html</loc>');
   await access(path.join(appDir, 'default-build', 'folder', 'index.html'));
   await access(path.join(appDir, 'default-build', 'My Guide.html'));
+  expect(xml).toContain('<loc>https://example.com/docs/FAQ%231.html</loc>');
+  await access(path.join(appDir, 'default-build', 'FAQ#1.html'));
+  await expect(
+    access(path.join(appDir, 'unused-build', 'sitemap.xml')),
+  ).rejects.toThrow('ENOENT');
   expect(xml).toContain('<priority>0.5</priority>');
   expect(xml).toContain('<changefreq>monthly</changefreq>');
+});
+
+test('updates retained output in separate production builds', async () => {
+  await build('rspress-default.config.ts');
+  const pagePath = path.join(appDir, 'doc', 'next.md');
+  await writeFile(pagePath, '# Next');
+  try {
+    await build('rspress-default.config.ts');
+    expect(await readSitemap('default-build')).toContain(
+      '<loc>https://example.com/docs/next.html</loc>',
+    );
+  } finally {
+    await rm(pagePath, { force: true });
+  }
 });
 
 test('preserves a user-provided public sitemap', async () => {

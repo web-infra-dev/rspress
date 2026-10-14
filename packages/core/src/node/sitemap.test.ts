@@ -8,6 +8,7 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { createRsbuild, mergeRsbuildConfig } from '@rsbuild/core';
 import type { PageIndexInfo, UserConfig } from '@rspress/shared';
 import { afterEach, beforeEach, describe, expect, it } from '@rstest/core';
 import { PluginDriver } from './PluginDriver';
@@ -37,11 +38,22 @@ async function generate(
   routes = ['/', '/guide', '/guide'],
 ) {
   const driver = await PluginDriver.create(
-    { mediumZoom: false, outDir, ...config },
+    { mediumZoom: false, root: directory, outDir, ...config },
     isProd,
   );
-  await driver.modifyConfig();
+  const resolved = await driver.modifyConfig();
   await driver.beforeBuild();
+  const rsbuild = await createRsbuild({
+    rsbuildConfig: mergeRsbuildConfig(
+      {
+        server: { publicDir: { name: path.join(directory, 'public') } },
+        environments: { web: { output: { distPath: resolved.outDir } } },
+      },
+      ...driver.getPlugins().map(plugin => plugin.builderConfig ?? {}),
+      resolved.builderConfig ?? {},
+    ),
+  });
+  await rsbuild.initConfigs();
   await Promise.all(routes.map(route => driver.extendPageData(page(route))));
   await driver.afterBuild();
   return driver;
@@ -137,11 +149,15 @@ describe('built-in sitemap', () => {
     },
   );
 
-  it('gives outDir precedence and supports relative paths', async () => {
+  it('uses the resolved web output directory and supports relative paths', async () => {
     await generate({
       sitemap: true,
-      outDir: path.relative(process.cwd(), outDir),
-      builderConfig: { output: { distPath: path.join(directory, 'unused') } },
+      outDir: path.join(directory, 'unused'),
+      builderConfig: {
+        environments: {
+          web: { output: { distPath: path.relative(process.cwd(), outDir) } },
+        },
+      },
     });
     expect(await readSitemap()).toContain('<loc>/guide.html</loc>');
   });
@@ -191,23 +207,47 @@ describe('built-in sitemap', () => {
     },
   );
 
-  it('encodes paths without double-encoding the site URL', async () => {
-    await generate(
-      { sitemap: { siteUrl: 'https://example.com/my%20docs/' } },
-      true,
-      ['/My Guide', '/指南', '/already%20encoded'],
-    );
-    const xml = await readSitemap();
-    expect(xml).toContain(
-      '<loc>https://example.com/my%20docs/My%20Guide.html</loc>',
-    );
-    expect(xml).toContain(
-      '<loc>https://example.com/my%20docs/%E6%8C%87%E5%8D%97.html</loc>',
-    );
-    expect(xml).toContain(
-      '<loc>https://example.com/my%20docs/already%20encoded.html</loc>',
-    );
-  });
+  it.each([false, true])(
+    'encodes file paths with cleanUrls=%s',
+    async cleanUrls => {
+      await generate(
+        {
+          sitemap: { siteUrl: 'https://example.com/my%20docs/' },
+          route: { cleanUrls },
+        },
+        true,
+        [
+          '/My Guide',
+          '/指南',
+          '/literal%20text',
+          '/FAQ#1',
+          '/what?1',
+          '/100%',
+          '/folder#1/',
+        ],
+      );
+      const xml = await readSitemap();
+      const paths = [
+        'My%20Guide',
+        '%E6%8C%87%E5%8D%97',
+        'literal%2520text',
+        'FAQ%231',
+        'what%3F1',
+        '100%25',
+        'folder%231/',
+      ];
+      for (const route of paths) {
+        const suffix = cleanUrls
+          ? ''
+          : route.endsWith('/')
+            ? 'index.html'
+            : '.html';
+        expect(xml).toContain(
+          `<loc>https://example.com/my%20docs/${route}${suffix}</loc>`,
+        );
+      }
+    },
+  );
 
   it('escapes XML text while preserving custom URLs', async () => {
     await generate({
@@ -222,7 +262,12 @@ describe('built-in sitemap', () => {
     );
   });
 
-  it('preserves a sitemap copied into the output directory', async () => {
+  it('preserves a sitemap copied from public', async () => {
+    await mkdir(path.join(directory, 'public'), { recursive: true });
+    await writeFile(
+      path.join(directory, 'public/sitemap.xml'),
+      '<manual-sitemap />',
+    );
     await mkdir(outDir, { recursive: true });
     await writeFile(path.join(outDir, 'sitemap.xml'), '<manual-sitemap />');
     await generate();
@@ -233,9 +278,40 @@ describe('built-in sitemap', () => {
     const driver = await generate();
     await driver.beforeBuild();
     await driver.extendPageData(page('/next'));
+    await mkdir(path.join(directory, 'public'), { recursive: true });
+    await writeFile(
+      path.join(directory, 'public/sitemap.xml'),
+      '<manual-sitemap />',
+    );
     await writeFile(path.join(outDir, 'sitemap.xml'), '<manual-sitemap />');
     await driver.afterBuild();
     expect(await readSitemap()).toBe('<manual-sitemap />');
+  });
+
+  it.each([{ copyOnBuild: false }, { ignore: ['*.xml'] }])(
+    'generates when the public sitemap is not copied: %j',
+    async publicOptions => {
+      const publicDir = path.join(directory, 'custom-public');
+      await mkdir(publicDir);
+      await writeFile(
+        path.join(publicDir, 'sitemap.xml'),
+        '<manual-sitemap />',
+      );
+      await generate({
+        builderConfig: {
+          server: { publicDir: { name: publicDir, ...publicOptions } },
+        },
+      });
+      expect(await readSitemap()).toContain('/guide.html');
+    },
+  );
+
+  it('regenerates retained output across separate builds', async () => {
+    await generate();
+    await generate({}, true, ['/next']);
+    const xml = await readSitemap();
+    expect(xml).toContain('<loc>/next.html</loc>');
+    expect(xml).not.toContain('/guide.html');
   });
 
   it.each([
