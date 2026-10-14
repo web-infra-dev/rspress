@@ -83,7 +83,7 @@ ${picocolors.greenBright(`  builderConfig: {
 }
 
 /**
- * Explain SSR compatibility failures and how to disable SSG and SSG-MD.
+ * Explain SSR compatibility failures during SSG.
  */
 let isSSGFailedLogged = false;
 export function hintSSGFailed() {
@@ -91,9 +91,20 @@ export function hintSSGFailed() {
     return;
   }
   isSSGFailedLogged = true;
-  logger.info(`[Rspress v2] SSG and SSG-MD require the source code to support SSR. If the code is not compatible with SSR, the build process will fail. You can try:
+  logger.info(`[Rspress v2] SSG requires the source code to support SSR. If the code is not compatible with SSR, the build process will fail. You can try:
     1. Fix code to make it SSR-compatible.
-    2. Set both \`ssg: false\` and \`llms: false\` to disable SSG and SSG-MD if the code is difficult to fix.`);
+    2. Set \`ssg: false\` to disable SSG if the code is difficult to fix.`);
+}
+
+let isSSGMDFailedLogged = false;
+export function hintSSGMDFailed() {
+  if (isSSGMDFailedLogged) {
+    return;
+  }
+  isSSGMDFailedLogged = true;
+  logger.info(`[Rspress v2] SSG-MD requires the source code to support SSR. If the code is not compatible with SSR, Markdown rendering will fail. You can try:
+    1. Fix code to make it SSR-compatible.
+    2. Set \`llms: false\` and use @rspress/plugin-llms to generate Markdown, llms.txt, and llms-full.txt without SSR: https://rspress.rs/plugin/official-plugins/llms`);
 }
 
 /**
