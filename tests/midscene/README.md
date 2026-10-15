@@ -78,6 +78,26 @@ independent local runs on 2026-10-16 with no retries:
 `20261016001537-8c860a86`, `20261016001928-a8b102b0` and
 `20261016002019-cecc0dd3`. Full remote validation is still required.
 
+Remote run [38768414212](https://github.com/quanru/rspress/actions/runs/38768414212)
+on `df7d1b4` passed 151/153 cases with no retries, including NAV-04.
+PREVIEW-06's screenshot contained the expected rendered text, but the model
+misread the line at the preview's upper edge as a title above an empty preview.
+Its assertions now describe the visible line at that edge, distinct from the
+colored source code. VIRTUAL-03's GitHub icon was already visible; the plural
+"social icons" instruction made the model search for nonexistent extra icons.
+The redundant action is removed; its independent icon assertion and actual
+counter interaction remain. The counter action now identifies the bottom status
+row explicitly. Both corrected cases passed three independent local runs:
+`20261016021850-5b53d0de`, `20261016022001-bf219da4` and
+`20261016022105-6306a45b` (2/2 each, no retries). These are focused checks,
+not a successful full remote run.
+
+A separate local negative control on 2026-10-16 first passed the corrected JSX
+assertion against the real fixture, then hid only the first iframe body's rendered
+output while retaining the matching source code. The same assertion correctly
+failed for the blank preview. This fault injection changed only the temporary
+browser session, not fixture source files.
+
 This isolated npm package uses
 `@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.
 `app.open` only prepares the browser; all product interactions use `aiAct`.

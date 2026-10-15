@@ -815,7 +815,12 @@
       "reason": "VIRTUAL-03 verifies the production translations, search hook, social icon and counter interaction. Exact RGB and the SVG node under the original GitHub href remain deterministic.",
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "preserves production virtual-component RGB and social-link SVG markup",
-      "replacementEvidenceRuns": ["20261015175519-35748856"]
+      "replacementEvidenceRuns": [
+        "20261015175519-35748856",
+        "20261016021850-5b53d0de",
+        "20261016022001-bf219da4",
+        "20261016022105-6306a45b"
+      ]
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -1765,7 +1770,10 @@
       "name": "plugin preview with custom entries > Should render the element",
       "replacementEvidenceRuns": [
         "20261015131327-c98dcc54",
-        "20261015133057-b8c87912"
+        "20261015133057-b8c87912",
+        "20261016021850-5b53d0de",
+        "20261016022001-bf219da4",
+        "20261016022105-6306a45b"
       ],
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "preserves three custom-entry preview containers",

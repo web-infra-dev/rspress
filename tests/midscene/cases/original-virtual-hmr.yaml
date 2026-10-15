@@ -32,11 +32,11 @@ cases:
         original-virtual-hmr,
         replacement-final-existing,
         replacement-final-followup,
+        remote-preview-virtual-regression,
       ]
     steps:
       - app.open:
           { fixture: hmr-lazy, mode: production, path: /guide/test.html }
-      - aiAct: Bring the top navigation social icons into view without following any external link.
       - aiAssert: The GitHub social icon is visible in the navigation.
-      - aiAct: Find the global component showing Translation before and Search hook before, then click its Count button once.
+      - aiAct: Scroll to the bottom of the Test article and find the status row showing Translation before, Search hook before, and Count 0. Click its Count button once. Stay on this page; do not use search or the top navigation.
       - aiAssert: The production page displays Translation before, Search hook before, and Count 1.
