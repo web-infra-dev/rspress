@@ -289,7 +289,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain exact generated href arrays across locale, base-path, auto-prefix and clean-URL configurations, plus the failing build exit code for dead anchors. These tests do not assert visible page content.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should link the correct page"
     },
     {
       "source": "e2e/fixtures/check-dead-link/index.test.ts",
@@ -297,7 +299,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain exact generated href arrays across locale, base-path, auto-prefix and clean-URL configurations, plus the failing build exit code for dead anchors. These tests do not assert visible page content.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should link the correct page - autoPrefix: false"
     },
     {
       "source": "e2e/fixtures/check-dead-link/index.test.ts",
@@ -305,7 +309,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain exact generated href arrays across locale, base-path, auto-prefix and clean-URL configurations, plus the failing build exit code for dead anchors. These tests do not assert visible page content.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should link the correct page - cleanUrl"
     },
     {
       "source": "e2e/fixtures/check-dead-link/index.test.ts",
@@ -313,7 +319,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain exact generated href arrays across locale, base-path, auto-prefix and clean-URL configurations, plus the failing build exit code for dead anchors. These tests do not assert visible page content.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should fail build for dead anchors"
     },
     {
       "source": "e2e/fixtures/clean-urls-redirect/index.test.ts",
@@ -321,7 +329,7 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Pending mixed-scope review: retain exact URL normalization contracts, but migrate the visible document landing check for each incoming route before removing its UI assertion."
     },
     {
       "source": "e2e/fixtures/clean-urls-redirect/index.test.ts",
@@ -329,7 +337,7 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Pending mixed-scope review: retain exact URL normalization contracts, but migrate the visible document landing check for each incoming route before removing its UI assertion."
     },
     {
       "source": "e2e/fixtures/clean-urls-redirect/index.test.ts",
@@ -337,7 +345,7 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Pending mixed-scope review: retain exact URL normalization contracts, but migrate the visible document landing check for each incoming route before removing its UI assertion."
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar-no-meta/index.test.ts",
@@ -429,7 +437,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Retain exact redirect destination URLs, including array rules, regular-expression prefix/suffix preservation and the mocked external destination. These tests do not assert visible page content.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should redirect correctly - normal"
     },
     {
       "source": "e2e/fixtures/client-redirects/index.test.ts",
@@ -437,7 +447,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Retain exact redirect destination URLs, including array rules, regular-expression prefix/suffix preservation and the mocked external destination. These tests do not assert visible page content.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should redirect correctly - array"
     },
     {
       "source": "e2e/fixtures/client-redirects/index.test.ts",
@@ -445,7 +457,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Retain exact redirect destination URLs, including array rules, regular-expression prefix/suffix preservation and the mocked external destination. These tests do not assert visible page content.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should redirect correctly - reg1"
     },
     {
       "source": "e2e/fixtures/client-redirects/index.test.ts",
@@ -453,7 +467,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Retain exact redirect destination URLs, including array rules, regular-expression prefix/suffix preservation and the mocked external destination. These tests do not assert visible page content.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should redirect correctly - reg2"
     },
     {
       "source": "e2e/fixtures/client-redirects/index.test.ts",
@@ -461,7 +477,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Retain exact redirect destination URLs, including array rules, regular-expression prefix/suffix preservation and the mocked external destination. These tests do not assert visible page content.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should redirect correctly - external"
     },
     {
       "source": "e2e/fixtures/custom-home-footer/index.test.ts",
@@ -969,7 +987,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain the complete ordered array of 28 normalized href values, including extension and folder/index distinctions that screenshots cannot prove.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "all links should be normalized"
     },
     {
       "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
@@ -977,7 +997,7 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Pending mixed-scope review: asset link navigation and readable text/HTML content need AI coverage; retain exact destination URLs, SVG title and serialized HTML contracts. No original assertion has been removed."
     },
     {
       "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
@@ -985,7 +1005,7 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Pending mixed-scope review: asset link navigation and readable text/HTML content need AI coverage; retain exact destination URLs, SVG title and serialized HTML contracts. No original assertion has been removed."
     },
     {
       "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
@@ -993,7 +1013,7 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Pending mixed-scope review: asset link navigation and readable text/HTML content need AI coverage; retain exact destination URLs, SVG title and serialized HTML contracts. No original assertion has been removed."
     },
     {
       "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
@@ -1001,7 +1021,7 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Pending mixed-scope review: asset link navigation and readable text/HTML content need AI coverage; retain exact destination URLs, SVG title and serialized HTML contracts. No original assertion has been removed."
     },
     {
       "source": "e2e/fixtures/multi-version-global-sidebar/index.test.ts",

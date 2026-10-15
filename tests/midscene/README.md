@@ -37,10 +37,13 @@ unchanged, explicitly marked `retained-technical`. Examples include exact URL,
 href, RGB, DOM-index/count, browser-error and one-pixel scroll-offset contracts.
 They are not counted as removed or split. There are 32 mapped originals still
 awaiting assertion-level review. Of the initial 108 deterministic-only
-classifications, fourteen have been reviewed and retained: Shiki DOM/CSS,
+classifications, twenty-four have been reviewed and retained: Shiki DOM/CSS,
 heading font-size/anchor, feature-card URL events, generated head metadata,
-TOC serialization/depth attributes, and icon build output.
-The other 94 still need review for mixed UI scope. The icon output test now
+TOC serialization/depth attributes, icon build output, generated link arrays,
+dead-anchor build failures, and exact client redirect destinations.
+The other 84 still need review for mixed UI scope. This includes clean-URL
+landing visibility and asset navigation: their technical assertions do not
+make the entire test ineligible for UI replacement. The icon output test now
 awaits its filesystem check; a truthy Promise previously allowed missing files
 to pass.
 The latest replacements cover complete nested overview groups and article lists,
