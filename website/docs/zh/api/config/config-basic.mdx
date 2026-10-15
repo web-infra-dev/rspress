@@ -280,7 +280,7 @@ export default defineConfig({
 
 ## logo \{#logo-1}
 
-- **类型**： `string | { dark: string; light: string }`
+- **类型**： `string | URL | { dark: string | URL; light: string | URL }`
 - **默认值**： `""`
 
 站点 logo。这个路径将用作导航栏左上角的 logo 路径。例如：
@@ -295,6 +295,16 @@ export default defineConfig({
 
 Rspress 会在 `public` 目录中找到你的图标，当然你也可以设置成一个 CDN 地址。
 
+你可以使用 `file://` URL 字符串或 `URL` 对象加载 `public` 目录之外的本地图片。Rspress 会打包图片并生成可访问的资源地址：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: new URL('./assets/logo.png', import.meta.url),
+});
+```
+
 当然你可以针对浅色/暗黑模式设置不同的 logo：
 
 ```ts title="rspress.config.ts"
@@ -307,6 +317,8 @@ export default defineConfig({
   },
 });
 ```
+
+`dark` 和 `light` 同样支持 `URL` 对象或 `file://` URL 字符串。
 
 ## logoHref
 

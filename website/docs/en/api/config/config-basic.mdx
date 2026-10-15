@@ -280,7 +280,7 @@ Here are the built-in i18n texts in Rspress:
 
 ## logo \{#logo-1}
 
-- **Type**: `string | { dark: string; light: string }`
+- **Type**: `string | URL | { dark: string | URL; light: string | URL }`
 - **Default**: `""`
 
 Site logo. Rspress uses this path for the logo in the upper-left corner of the navbar. For example:
@@ -295,6 +295,16 @@ export default defineConfig({
 
 Rspress resolves the logo from the `public` directory. You can also use a CDN URL.
 
+You can use a `file://` URL string or a `URL` object to load a local image outside the `public` directory. Rspress bundles the image and generates its public URL:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  logo: new URL('./assets/logo.png', import.meta.url),
+});
+```
+
 You can also set different logos for dark and light mode:
 
 ```ts title="rspress.config.ts"
@@ -307,6 +317,8 @@ export default defineConfig({
   },
 });
 ```
+
+Both `dark` and `light` also accept `URL` objects or `file://` URL strings.
 
 ## logoHref
 

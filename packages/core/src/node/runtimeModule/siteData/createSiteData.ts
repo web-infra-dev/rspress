@@ -13,6 +13,7 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
     tempSearchObj.searchHooks = undefined;
   }
 
+  const logo = userConfig.logo;
   const siteData: Omit<SiteData, 'root' | 'pages'> = {
     base: userConfig.base ?? '/',
     siteOrigin: userConfig.siteOrigin ?? '',
@@ -26,7 +27,12 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
     themeConfig: await normalizeThemeConfig(userConfig),
     lang: userConfig?.lang || '',
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
-    logo: userConfig?.logo || '',
+    logo:
+      typeof logo === 'string' || logo instanceof URL
+        ? logo.toString()
+        : logo
+          ? { dark: logo.dark.toString(), light: logo.light.toString() }
+          : '',
     logoText: userConfig?.logoText || '',
     logoHref: userConfig?.logoHref || '',
     multiVersion: {
