@@ -17,20 +17,12 @@ test.describe('dynamic toc', async () => {
     }
   });
 
-  test('Index page', async ({ page }) => {
+  test('preserves TOC tooltip entities and literal code markup', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-
-    const heading = page.locator('h2').first();
-    await expect(heading).toContainText('Term');
-
-    const tocItem = page.locator('.rp-toc-item .rp-toc-item__text').first();
-    await expect(tocItem).toHaveText('Term');
-
-    await expect(heading).toContainText('Term dynamic & content');
-
-    await expect(tocItem).toHaveText('Term dynamic & content');
 
     // The header text collected from the DOM is HTML, its entities should not be shown in the tooltip
     await expect(page.locator('.rp-toc-item').first()).toHaveAttribute(

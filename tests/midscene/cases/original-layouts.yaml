@@ -1,22 +1,22 @@
 cases:
   - name: LAYOUT-01 Read an article with documentation chrome disabled
-    tags: [original-layouts]
+    tags: [original-layouts, replacement-batch-3]
     steps:
       - app.open: { fixture: custom-layout, path: /frontmatter }
       - aiAct: Bring the existing Frontmatter heading into view. This fixture contains only that heading; do not search for more text or navigate elsewhere.
-      - aiAssert: Frontmatter is visible without a top navigation bar, documentation sidebar, or table of contents.
+      - aiAssert: Frontmatter is visible without a top navigation bar, documentation sidebar, table of contents, or document footer.
   - name: LAYOUT-02 Read the custom home layout
-    tags: [original-layouts]
+    tags: [original-layouts, replacement-batch-3]
     steps:
       - app.open: { fixture: custom-layout, path: / }
       - aiAct: Bring the home hero and its navigation into view.
       - aiAssert: The page uses a home hero layout with top navigation rather than an article sidebar and table of contents.
   - name: LAYOUT-03 Read custom outline slots on desktop
-    tags: [original-layouts]
+    tags: [original-layouts, replacement-batch-3]
     steps:
       - app.open: { fixture: custom-layout, path: /no-headings }
       - aiAct: Bring the right-hand outline panel into view.
-      - aiAssert: The outline displays Before custom outline content and After custom outline content even though there are no article heading entries.
+      - aiAssert: The On this page outline title, Before custom outline content, and After custom outline content are visible even though there are no article heading entries.
   - name: LAYOUT-04 Read a localized home hero and follow its action
     tags: [original-layouts, replacement-batch-2-navigation]
     steps:

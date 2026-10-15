@@ -1,8 +1,15 @@
+# cspell:words Extname
 cases:
   - name: CONTENT-01 Follow a generated API overview link
-    tags: [original-overview]
+    tags: [original-overview, replacement-batch-3-overviews]
     steps:
       - app.open: { fixture: auto-nav-sidebar, path: /api/index.html }
+      - aiAct: Bring the Config group in the API overview into view. Stay in the overview article.
+      - aiAssert: Config lists Basic config, Theme config, Build config, Front matter config, Extname config, and Nested article entries in that order. Its section links include root, logoText, nav, sidebar, builderConfig, Default config, markdown, and markdown.remarkPlugins.
+      - aiAct: Bring the Client API group in the main overview article into view. Do not follow any link yet.
+      - aiAssert: Client API lists Components and Runtime API article entries with Usage and Example links.
+      - aiAct: Bring the Commands, Single, Section a, and Section b sections of the main overview into view, scrolling as needed. Do not follow links yet.
+      - aiAssert: Commands, Single, Section a, and Section b appear as overview sections with corresponding article entries; the Commands entry offers rspress dev and rspress build.
       - aiAct: In the API overview article, follow the Commands link. Do not use the sidebar or search.
       - aiAssert: The Commands article is open with rspress dev and rspress build sections.
   - name: CONTENT-02 Navigate nested overview levels
@@ -12,16 +19,21 @@ cases:
       - aiAct: Click the two article link in the overview content, not an On this page anchor or a sidebar item. Wait for the article containing Section a and Section b to open.
       - aiAssert: The article displays Section a with Content for section 1 and Section b with Content for section 2.
   - name: CONTENT-03 Custom navigation slots work on desktop
-    tags: [original-slots]
+    tags: [original-slots, replacement-batch-3-slots]
     steps:
-      - app.open: { fixture: nav-slots, path: / }
-      - aiAct: Hover over More in the top navigation and follow its Target link.
+      - app.open: { fixture: nav-slots, mode: production, path: / }
+      - aiAssert: The desktop navigation displays BL, L1, L2, AL on the left and BR, R1, R2, AR, More on the right.
+      - aiAct: Hover over More in the top navigation, expand Nested if needed, and follow its Target link.
       - aiAssert: The Target article is open.
   - name: CONTENT-04 Custom navigation slots work on mobile
-    tags: [original-slots]
+    tags: [original-slots, replacement-batch-3-slots]
     steps:
-      - app.open: { fixture: nav-slots, path: /, viewport: mobile }
-      - aiAct: Open the mobile navigation menu, expand More, and follow Target.
+      - app.open:
+          { fixture: nav-slots, mode: production, path: /, viewport: mobile }
+      - aiAssert: The mobile page offers a navigation menu button without expanded desktop navigation lists.
+      - aiAct: Open the mobile navigation menu.
+      - aiAssert: The menu displays BR, R1, BL, L1, R2, AR, More, L2, and AL.
+      - aiAct: Expand More, then Nested, and follow Target.
       - aiAssert: The Target article is visible and the mobile menu is closed.
   - name: CONTENT-05 Home page action opens a guide
     tags: [original-home, replacement-batch-2-navigation]

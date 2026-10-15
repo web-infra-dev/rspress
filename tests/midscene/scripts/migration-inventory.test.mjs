@@ -53,6 +53,9 @@ test('migration inventory accounts for every original test exactly once', async 
     assert(!originals.has(key), 'Duplicate original test: ' + key);
     originals.add(key);
     assert(entry.reason.trim().length > 0);
+    if (entry.replacementStatus) {
+      assert(!entry.reason.includes('All original exact assertions remain'));
+    }
     if (entry.decision === 'migrate-visible-behavior') {
       assert(entry.candidateCaseIds.length > 0, 'Missing AI mapping: ' + key);
       for (const id of entry.candidateCaseIds) {
@@ -83,9 +86,14 @@ test('the remaining tab contract test does not replay the migrated user flow', a
   assert(!source.includes('.click('));
 });
 
-test('split originals retain their named technical tests', async () => {
+test('reviewed originals retain their named technical tests', async () => {
   for (const entry of inventory.cases) {
-    if (entry.replacementStatus !== 'ui-replaced-technical-retained') continue;
+    if (
+      !['ui-replaced-technical-retained', 'retained-technical'].includes(
+        entry.replacementStatus,
+      )
+    )
+      continue;
     assert(entry.remainingTestName, 'Missing retained test: ' + entry.name);
     const text = await readFile(
       new URL('../../../' + entry.source, import.meta.url),
@@ -109,7 +117,9 @@ test('split originals retain their named technical tests', async () => {
     };
     visit(syntax);
     assert(titles.includes(entry.remainingTestName), entry.name);
-    assert(!titles.includes(entry.name.split(' > ').at(-1)), entry.name);
+    if (entry.replacementStatus === 'ui-replaced-technical-retained') {
+      assert(!titles.includes(entry.name.split(' > ').at(-1)), entry.name);
+    }
   }
 });
 
@@ -137,4 +147,69 @@ test('replacement retains exact metadata and storage contracts', async () => {
   );
   assert(banner.includes("getItem('rp-banner-closed')"));
   assert(banner.includes(".toBe('true')"));
+});
+
+test('layout and content splits preserve structural and callback contracts', async () => {
+  const fixture = name =>
+    readFile(
+      new URL(
+        '../../../e2e/fixtures/' + name + '/index.test.ts',
+        import.meta.url,
+      ),
+      'utf8',
+    );
+  const layout = await fixture('custom-layout');
+  for (const selector of [
+    'header.rp-nav',
+    '.rp-doc-layout__sidebar',
+    '.rp-doc-layout__outline',
+    '.rp-doc-footer',
+    '.rp-doc-layout__container',
+    '.rp-toc-item',
+  ]) {
+    assert(layout.includes(selector), selector);
+  }
+  assert(layout.includes('rp-doc-layout__outline--open'));
+  const callout = await fixture('github-alert-mdxjs');
+  for (const count of [9, 2])
+    assert(callout.includes('toHaveCount(' + count + ')'));
+  assert(callout.includes('expect(containerTypes).toEqual('));
+  const hooks = await fixture('search-hooks');
+  assert(hooks.includes("['beforeSearch', 'Foo', 'onSearch', 'Foo']"));
+  const runtime = await fixture('code-block-runtime');
+  assert(runtime.includes("'div.language-js'"));
+  assert(runtime.includes("toHaveJSProperty('tagName', 'PRE')"));
+  const toc = await fixture('dynamic-toc');
+  assert(toc.includes("'title',"));
+  assert(toc.includes("toHaveText('**literal** &lt;')"));
+  assert(toc.includes("literalItem.locator('strong')"));
+  const slots = await fixture('nav-slots');
+  assert(slots.includes("'findLastIndex'"));
+  assert(slots.includes('expect(errors).toEqual([])'));
+  assert(
+    slots.includes('document.documentElement.scrollWidth <= window.innerWidth'),
+  );
+});
+
+test('preview splits retain explicit iframe and container counts', async () => {
+  const preview = await readFile(
+    new URL(
+      '../../../e2e/fixtures/plugin-preview/index.test.ts',
+      import.meta.url,
+    ),
+    'utf8',
+  );
+  assert(preview.includes('.rp-preview--iframe-follow__device iframe'));
+  assert(preview.includes('.rp-fixed-device__iframe'));
+  assert(preview.includes("page.locator('iframe')).toHaveCount(1)"));
+  assert(preview.includes("page.locator('.rp-preview--internal__card')"));
+  const custom = await readFile(
+    new URL(
+      '../../../e2e/fixtures/plugin-preview-custom-entry/index.test.ts',
+      import.meta.url,
+    ),
+    'utf8',
+  );
+  assert(custom.includes("page.locator('iframe')).toHaveCount(3)"));
+  assert(custom.includes('codeBlockElements).toHaveCount(3)'));
 });

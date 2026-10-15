@@ -16,23 +16,12 @@ test.describe('replace rules', async () => {
     }
   });
 
-  test('Foo page', async ({ page }) => {
+  test('replaces text in the document title metadata', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/foo`, {
       waitUntil: 'networkidle',
     });
-    const doc = page.locator('.rspress-doc');
-    await expect(doc).toBeVisible();
-
     // text in string frontmatter
     const title = await page.$('title');
     expect(await title?.textContent()).toBe('bar-title');
-
-    // replace text in shared mdx content
-    const h2 = page.locator('h2');
-    await expect(h2).toHaveText('#bar-h2');
-
-    // replace text in mdx content
-    const text = page.locator('.rspress-doc p');
-    await expect(text).toHaveText('bar-content');
   });
 });

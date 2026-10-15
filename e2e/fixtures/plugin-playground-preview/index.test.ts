@@ -16,7 +16,9 @@ test.describe('plugin playground and preview integration', async () => {
     }
   });
 
-  test('Both plugins work together with explicit meta', async ({ page }) => {
+  test('preserves separate code, playground and preview containers', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
@@ -31,18 +33,8 @@ test.describe('plugin playground and preview integration', async () => {
     const playgroundElements = page.locator('.rp-playground'); // TODO: upgrade className
     await expect(playgroundElements).toHaveCount(1);
 
-    const playgroundContent = page
-      .locator('.rp-playground .rp-playground-runner') // TODO: upgrade className
-      .getByText('Hello World Playground');
-    await expect(playgroundContent).toBeVisible();
-
     // Preview element - should render with preview meta
     const previewElements = page.locator('.rp-preview');
     await expect(previewElements).toHaveCount(1);
-
-    const previewContent = page
-      .locator('.rp-preview .rp-preview--internal__card__content')
-      .getByText('Hello World Preview');
-    await expect(previewContent).toBeVisible();
   });
 });

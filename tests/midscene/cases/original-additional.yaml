@@ -6,11 +6,11 @@ cases:
       - aiAct: Open the documentation search dialog. Do not submit a query or navigate to a public site.
       - aiAssert: The search dialog displays its search input.
   - name: EXTRA-02 Search through a custom search hook
-    tags: [original-additional]
+    tags: [original-additional, replacement-batch-3]
     steps:
       - app.open: { fixture: search-hooks, path: /base/ }
       - aiAct: Open documentation search and search for Foo. Stay in the search dialog.
-      - aiAssert: The search results display the Foo article.
+      - aiAssert: Exactly one search result is listed, the Foo article.
   - name: EXTRA-03 Read replaced home and navigation text
     tags: [original-additional]
     steps:

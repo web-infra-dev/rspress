@@ -27,7 +27,7 @@ cases:
       - aiAct: Open index md convention through the sidebar directory link.
       - aiAssert: The Index md convention article is visible.
   - name: READ-05 Read a replaced Markdown article
-    tags: [original-replacement]
+    tags: [original-replacement, replacement-batch-3]
     steps:
       - app.open: { fixture: replace-rules, path: / }
       - aiAct: Use documentation search to find bar-content and open the matching article.
@@ -52,17 +52,17 @@ cases:
       - aiAct: Bring the large illustrated mascot image below Hello world into view. Stay on this article and do not use search.
       - aiAssert: The article image is rendered, not a broken-image placeholder.
   - name: READ-09 Read a heading through the table of contents
-    tags: [original-toc]
+    tags: [original-toc, replacement-batch-3]
     steps:
       - app.open: { fixture: dynamic-toc, path: / }
-      - aiAct: Use On this page to open Term dynamic and content.
-      - aiAssert: The article heading Term dynamic & content is visible.
+      - aiAct: Wait for the Term heading and its On this page entry to update to Term dynamic & content. Then use that On this page entry to open the heading.
+      - aiAssert: The article heading and its On this page entry both display Term dynamic & content, with a readable ampersand rather than an encoded ampersand entity.
   - name: READ-10 Open custom layout pages from search
-    tags: [original-custom-layout]
+    tags: [original-custom-layout, replacement-batch-3]
     steps:
       - app.open: { fixture: custom-layout, path: / }
       - aiAct: Open search, find Page type, and open that result.
-      - aiAssert: The Page type heading and Custom page should work text are visible without a documentation sidebar or a home hero.
+      - aiAssert: The Page type heading and Custom page should work text are visible with top navigation, without a documentation sidebar or a home hero.
   - name: READ-11 Navigate a site without an explicit root setting
     tags: [original-no-config]
     steps:

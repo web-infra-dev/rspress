@@ -2,25 +2,29 @@
   "sourceCommit": "bce9de9e45c5d02098d00fa859e2abb1e4b30c4c",
   "policy": "This is an inventory of the original sourceCommit, not the current legacy test count. Pure UI cases explicitly marked replaced-by-midscene are removed. Other mappings need assertion-level review before replacement; exact technical contracts remain deterministic. Local evidence is not remote CI evidence.",
   "allOriginalAssertionsPreserved": false,
-  "replacementPolicy": "Pure UI originals marked replaced-by-midscene are removed. All other originals require assertion-level replacement review. Candidate mappings alone are not complete coverage evidence. Technical contracts remain deterministic.",
+  "replacementPolicy": "Pure UI originals marked replaced-by-midscene are removed. Reviewed mixed tests retain their technical contracts; reviewed technical-only originals are explicitly retained-technical. Unreviewed mappings still require assertion-level review. Candidate mappings alone are not complete coverage evidence.",
   "cases": [
     {
       "source": "e2e/fixtures/auto-nav-sidebar-issue-1682/index.test.ts",
       "name": "Auto nav and sidebar dir issue-1682 > Should render sidebar with index convention correctly",
+      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
       "candidateCaseIds": ["OVERVIEW-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "OVERVIEW-05 checks the complete three-entry sidebar in order, without numeric prefixes."
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
       "name": "auto nav and sidebar > Should render nav and sidebar correctly",
+      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["OVERVIEW-07"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "OVERVIEW-07 checks the original visible overview/navigation content in focused sections before following links. Exact icon, context and URL contracts remain in the legacy file."
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
@@ -33,47 +37,57 @@
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
       "name": "auto nav and sidebar > Should load total API Overview correctly",
+      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
-      "candidateCaseIds": ["OVERVIEW-07"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["CONTENT-01"],
+      "reason": "CONTENT-01 checks the original visible overview/navigation content in focused sections before following links. Exact icon, context and URL contracts remain in the legacy file."
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
       "name": "auto nav and sidebar > Should load subpage API Overview correctly - same name",
+      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
-      "candidateCaseIds": ["OVERVIEW-07"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["OVERVIEW-01"],
+      "reason": "OVERVIEW-01 checks the original visible overview/navigation content in focused sections before following links. Exact icon, context and URL contracts remain in the legacy file."
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
       "name": "auto nav and sidebar > Should load subpage API Overview correctly - index.md",
+      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
-      "candidateCaseIds": ["OVERVIEW-07"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["OVERVIEW-02"],
+      "reason": "OVERVIEW-02 checks the original visible overview/navigation content in focused sections before following links. Exact icon, context and URL contracts remain in the legacy file."
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
       "name": "auto nav and sidebar > Sidebar not have same name md/mdx will not navigate",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Sidebar not have same name md/mdx will not navigate",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["OVERVIEW-07"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact browser URL invariance after a directory toggle; OVERVIEW-07 separately verifies visible guide/sidebar behavior."
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
       "name": "auto nav and sidebar > Should load nested subpage API Overview correctly",
+      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
-      "candidateCaseIds": ["OVERVIEW-07"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["OVERVIEW-03"],
+      "reason": "OVERVIEW-03 checks the original visible overview/navigation content in focused sections before following links. Exact icon, context and URL contracts remain in the legacy file."
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
@@ -89,7 +103,6 @@
       "replacementEvidenceRuns": ["20261015120743-964b4825"],
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "generates the Hello world header anchor href",
-      "replacementReview": "Midscene checks the Hello world article after home recovery; the legacy test retains the exact #hello-world href.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
@@ -104,16 +117,18 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
       "candidateCaseIds": ["FALLBACK-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by FALLBACK-01. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
       "name": "basic site > dark mode",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "dark mode",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
       "candidateCaseIds": ["COMPONENT-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact rp-dark class toggle/restoration contract; COMPONENT-04 separately checks the user-visible dark and light reading themes."
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -139,7 +154,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
       "candidateCaseIds": ["EXTRA-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by EXTRA-04. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -162,11 +177,13 @@
     {
       "source": "e2e/fixtures/basic/index.test.ts",
       "name": "themeConfig.darkMode > force-dark ignores saved preferences and hides the switch",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "force-dark ignores saved preferences and hides the switch",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["THEME-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact rp-dark class and zero appearance-switch DOM nodes with a pre-seeded light preference; THEME-02 separately checks visible forced-dark behavior."
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -206,7 +223,6 @@
       "replacementEvidenceRuns": ["20261015120743-964b4825"],
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "dismissal writes the banner storage key",
-      "replacementReview": "Midscene checks visible banner dismissal; the legacy test retains the exact rp-banner-closed localStorage key and true value.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
@@ -241,11 +257,13 @@
     {
       "source": "e2e/fixtures/auto-nav-sidebar-dir-convention/index.test.ts",
       "name": "Auto nav and sidebar dir convention > Should click the directory and navigate to the index page",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should click the directory and navigate to the index page",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
       "candidateCaseIds": ["READ-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact /guide/index-md-convention/index.html navigation target; READ-04 separately checks visible directory navigation."
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar-dir-convention/index.test.ts",
@@ -331,11 +349,13 @@
     {
       "source": "e2e/fixtures/auto-nav-sidebar-no-meta/index.test.ts",
       "name": "auto nav and sidebar without metadata > Should click the directory and navigate to the index page",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should click the directory and navigate to the index page",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
       "candidateCaseIds": ["NAV-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact sidebar node count and /api/rspress-config/index.html navigation target; NAV-06 separately checks the visible article."
     },
     {
       "source": "e2e/fixtures/code-block/index.test.ts",
@@ -364,11 +384,14 @@
     {
       "source": "e2e/fixtures/code-block-runtime/index.test.ts",
       "name": "<CodeBlockRuntime /> > <CodeBlockRuntime /> should render title and code with correct language",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "renders three JavaScript containers with PRE markup",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e", "20261015110636-408026b7"],
-      "candidateCaseIds": ["STYLE-05", "STATIC-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["STYLE-05"],
+      "reason": "STYLE-05 checks titles and rendered content in all three code panels; exact language-js container count and PRE tags stay deterministic."
     },
     {
       "source": "e2e/fixtures/code-block-runtime/index.test.ts",
@@ -381,11 +404,14 @@
     {
       "source": "e2e/fixtures/code-block-runtime/index.test.ts",
       "name": "<CodeBlockRuntime /> SSG > should render code from static HTML when JavaScript is disabled",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "renders three JavaScript containers without JavaScript",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e", "20261015110636-408026b7"],
-      "candidateCaseIds": ["STYLE-05", "STATIC-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["STATIC-03"],
+      "reason": "STATIC-03 checks visible pre-rendered code with scripts disabled; the exact language-js container count remains deterministic."
     },
     {
       "source": "e2e/fixtures/client-redirects/index.test.ts",
@@ -433,7 +459,6 @@
       "replacementEvidenceRuns": ["20261015120743-964b4825"],
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "preserves the custom footer anchor element",
-      "replacementReview": "Midscene checks visible Custom footer text; the legacy test retains the embedded anchor element contract without claiming that its href-less anchor is clickable.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014150350-3b31dcf3"],
@@ -451,6 +476,9 @@
     {
       "source": "e2e/fixtures/custom-layout/index.test.ts",
       "name": "custom layout > should hide doc chrome when disabled via frontmatter",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "omits disabled frontmatter chrome from the DOM",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": [
@@ -458,18 +486,15 @@
         "20261014141340-d2160af0",
         "20261014143602-8b78a8f1"
       ],
-      "candidateCaseIds": [
-        "LAYOUT-01",
-        "LAYOUT-02",
-        "LAYOUT-03",
-        "COMPONENT-05",
-        "READ-10"
-      ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["LAYOUT-01"],
+      "reason": "LAYOUT-01 checks visible heading and missing chrome; exact DOM absence stays deterministic."
     },
     {
       "source": "e2e/fixtures/custom-layout/index.test.ts",
       "name": "custom layout > should render home layout when pageType is home",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "omits the document container for a home page",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": [
@@ -477,18 +502,15 @@
         "20261014141340-d2160af0",
         "20261014143602-8b78a8f1"
       ],
-      "candidateCaseIds": [
-        "LAYOUT-01",
-        "LAYOUT-02",
-        "LAYOUT-03",
-        "COMPONENT-05",
-        "READ-10"
-      ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["LAYOUT-02"],
+      "reason": "LAYOUT-02 checks the hero and top navigation; exact document-container absence stays deterministic."
     },
     {
       "source": "e2e/fixtures/custom-layout/index.test.ts",
       "name": "custom layout > should render custom layout when pageType is custom",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "omits hero and document containers for a custom page",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": [
@@ -496,18 +518,15 @@
         "20261014141340-d2160af0",
         "20261014143602-8b78a8f1"
       ],
-      "candidateCaseIds": [
-        "LAYOUT-01",
-        "LAYOUT-02",
-        "LAYOUT-03",
-        "COMPONENT-05",
-        "READ-10"
-      ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["READ-10"],
+      "reason": "READ-10 checks custom content and navigation; exact DOM container absence stays deterministic."
     },
     {
       "source": "e2e/fixtures/custom-layout/index.test.ts",
       "name": "custom layout > should render custom outline slots without toc headings",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "does not generate TOC entries for custom outline slots",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": [
@@ -515,18 +534,15 @@
         "20261014141340-d2160af0",
         "20261014143602-8b78a8f1"
       ],
-      "candidateCaseIds": [
-        "LAYOUT-01",
-        "LAYOUT-02",
-        "LAYOUT-03",
-        "COMPONENT-05",
-        "READ-10"
-      ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["LAYOUT-03"],
+      "reason": "LAYOUT-03 checks outline title and both custom slots; zero generated TOC nodes stays deterministic."
     },
     {
       "source": "e2e/fixtures/custom-layout/index.test.ts",
       "name": "custom layout > should allow opening mobile outline with custom slots only",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "sets the mobile outline open class for custom slots",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": [
@@ -534,14 +550,8 @@
         "20261014141340-d2160af0",
         "20261014143602-8b78a8f1"
       ],
-      "candidateCaseIds": [
-        "LAYOUT-01",
-        "LAYOUT-02",
-        "LAYOUT-03",
-        "COMPONENT-05",
-        "READ-10"
-      ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["COMPONENT-05"],
+      "reason": "COMPONENT-05 checks both visible custom slots after opening; enabled state and exact open CSS class stay deterministic."
     },
     {
       "source": "e2e/fixtures/custom-headers/index.test.ts",
@@ -583,7 +593,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
       "candidateCaseIds": ["CONTENT-06", "OVERVIEW-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by CONTENT-06, OVERVIEW-06. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/custom-plugin/index.test.ts",
@@ -593,16 +603,19 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
       "candidateCaseIds": ["CONTENT-06", "OVERVIEW-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by CONTENT-06, OVERVIEW-06. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/dynamic-toc/index.test.ts",
       "name": "dynamic toc > Index page",
+      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves TOC tooltip entities and literal code markup",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
       "candidateCaseIds": ["READ-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "READ-09 checks visible dynamic heading and outline text; exact tooltip title, literal code markup and absence of strong tags stay deterministic."
     },
     {
       "source": "e2e/fixtures/dynamic-toc/index.test.ts",
@@ -623,11 +636,14 @@
     {
       "source": "e2e/fixtures/github-alert-mdxjs/index.test.ts",
       "name": "github alert syntax in mdx-js > should transform github alert syntax to contain syntax",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves callout DOM placement and type modifiers",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["STYLE-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "STYLE-04 checks warning appearance and all three multi-line Note strings; 9/2/2 callout counts and all 13 type modifiers stay deterministic."
     },
     {
       "source": "e2e/fixtures/heading-title/index.test.ts",
@@ -719,11 +735,13 @@
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
       "name": "i18n > Should render sidebar correctly",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should render sidebar correctly",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact count of one sidebar group, not translated visible content; NAV-10 and NAV-12 check translated sidebar labels."
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -747,7 +765,6 @@
       "name": "i18n > Should render i18n sidebar - cn",
       "replacementEvidenceRuns": ["20261015121150-47600222"],
       "replacementStatus": "replaced-by-midscene",
-      "replacementReview": "NAV-12: Chinese sidebar labels 基本 and 成长 are checked before following the article link.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
@@ -759,7 +776,6 @@
       "name": "i18n > Should render i18n sidebar - en",
       "replacementEvidenceRuns": ["20261015121150-47600222"],
       "replacementStatus": "replaced-by-midscene",
-      "replacementReview": "NAV-10: English sidebar labels Basic and Growth are checked before following the article link.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
@@ -769,18 +785,19 @@
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
       "name": "i18n > Should add routePrefix when type is custom-link",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should add routePrefix when type is custom-link",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-10", "NAV-11", "NAV-12"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact Chinese and English href generation for the My Link custom sidebar entry; retain the attribute contract."
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
       "name": "i18n > Should not crash when switch language in api page",
       "replacementEvidenceRuns": ["20261015121150-47600222"],
       "replacementStatus": "replaced-by-midscene",
-      "replacementReview": "NAV-03: Checks initial zh overview, switches to English and checks en without zh, then switches back and checks zh without en.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
@@ -822,18 +839,19 @@
     {
       "source": "e2e/fixtures/hash-anchor-scroll/index.test.ts",
       "name": "hash anchor scrolling > scrolls after the target layout is ready",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "scrolls after the target layout is ready",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
       "candidateCaseIds": ["READ-03"],
-      "reason": "Extract user-visible actions and outcomes; preserve exact DOM, CSS, timing, and data assertions."
+      "reason": "Exact query/hash navigation URL and heading offset within one pixel of scrollPaddingTop; READ-03 separately checks visible unobscured scrolling."
     },
     {
       "source": "e2e/fixtures/i18n-source-text/index.test.ts",
       "name": "i18n source text > Language i18n.json text",
       "replacementEvidenceRuns": ["20261015120743-964b4825"],
       "replacementStatus": "replaced-by-midscene",
-      "replacementReview": "LAYOUT-05 checks all five visible strings in each of Chinese, English and EN_US, including English fallback.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
@@ -900,20 +918,24 @@
     {
       "source": "e2e/fixtures/issue-1309/index.test.ts",
       "name": "issue-1309 > should not generate the sidebar in homePage",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should not generate the sidebar in homePage",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["READ-07"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact DOM counts of one navbar item and zero sidebar nodes; READ-07 separately checks visible home-to-guide behavior."
     },
     {
       "source": "e2e/fixtures/issue-1309/index.test.ts",
       "name": "issue-1309 > should render the sidebar correctly in guide page",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should render the sidebar correctly in guide page",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["READ-07"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact DOM counts of one navbar item and four sidebar nodes; READ-07 separately checks visible home-to-guide behavior."
     },
     {
       "source": "e2e/fixtures/markdown-link/index.test.ts",
@@ -958,11 +980,13 @@
     {
       "source": "e2e/fixtures/multi-version-global-sidebar/index.test.ts",
       "name": "multi version global sidebar > Should keep global sidebar isolated by version",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
       "candidateCaseIds": ["NAV-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "NAV-05 checks both initial v1 and switched v2 headings and complete version-isolated sidebar entries before opening a guide."
     },
     {
       "source": "e2e/fixtures/multi-version-llms/index.test.ts",
@@ -1029,7 +1053,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-04", "NAV-13"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by NAV-04, NAV-13. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/multi-version/index.test.ts",
@@ -1039,7 +1063,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-04", "NAV-13"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by NAV-04, NAV-13. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/multi-version/index.test.ts",
@@ -1049,7 +1073,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-04", "NAV-13"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by NAV-04, NAV-13. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/multi-version/index.test.ts",
@@ -1059,7 +1083,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-04", "NAV-13"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by NAV-04, NAV-13. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/multi-version/index.test.ts",
@@ -1236,29 +1260,37 @@
     {
       "source": "e2e/fixtures/nav-slots/index.test.ts",
       "name": "Navigation slots > renders all four slots in desktop navigation and supports dropdown links",
+      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves desktop slot markup, active class and browser errors",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
       "candidateCaseIds": ["CONTENT-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "CONTENT-03 checks production desktop slot labels and Target navigation. Exact slot order, DOM structure, URL, active class and pageerror capture stay deterministic."
     },
     {
       "source": "e2e/fixtures/nav-slots/index.test.ts",
       "name": "Navigation slots > reuses the slots in the mobile menu and preserves configured order",
+      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves mobile order, active class and legacy Array compatibility",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
       "candidateCaseIds": ["CONTENT-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "CONTENT-04 checks production mobile menu labels, nested navigation and menu closure. Exact order, absence of desktop list markup, URL, active class, scroll width and missing findLastIndex compatibility stay deterministic."
     },
     {
       "source": "e2e/fixtures/nav-slots/index.test.ts",
       "name": "Navigation slots > server-renders custom navigation without JavaScript",
+      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["STATIC-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "STATIC-01 checks all four custom slot links and dropdown Target visibility with scripts disabled, then follows Target."
     },
     {
       "source": "e2e/fixtures/no-config-root/index.test.ts",
@@ -1268,7 +1300,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
       "candidateCaseIds": ["READ-11", "FALLBACK-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by READ-11, FALLBACK-04. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/no-config-root/index.test.ts",
@@ -1278,7 +1310,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
       "candidateCaseIds": ["READ-11", "FALLBACK-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by READ-11, FALLBACK-04. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/package-manager-tabs/index.test.ts",
@@ -1334,7 +1366,6 @@
       "replacementEvidenceRuns": ["20261015121150-47600222"],
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "preserves English hero image attributes and resolved action links",
-      "replacementReview": "Midscene checks localized hero text, all three action labels and Action 1 navigation. Legacy retains image src, alt, srcset, sizes, action count and the exact localized action href without clicking.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
@@ -1347,7 +1378,6 @@
       "replacementEvidenceRuns": ["20261015121150-47600222"],
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "preserves Chinese hero image attributes and resolved action links",
-      "replacementReview": "Midscene checks localized hero text, all three action labels and Action 1 navigation. Legacy retains image src, alt, srcset, sizes, action count and the exact localized action href without clicking.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
@@ -1431,20 +1461,29 @@
     {
       "source": "e2e/fixtures/plugin-playground-preview/index.test.ts",
       "name": "plugin playground and preview integration > Both plugins work together with explicit meta",
+      "replacementEvidenceRuns": ["20261015131327-c98dcc54"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves separate code, playground and preview containers",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014180401-019f320a"],
       "candidateCaseIds": ["PLAYGROUND-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "PLAYGROUND-03 checks both rendered outputs; exact pure-code, playground and preview container counts stay deterministic."
     },
     {
       "source": "e2e/fixtures/plugin-preview-custom-entry/index.test.ts",
       "name": "plugin preview with custom entries > Should render the element",
+      "replacementEvidenceRuns": [
+        "20261015131327-c98dcc54",
+        "20261015133057-b8c87912"
+      ],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves three custom-entry preview containers",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014174306-a5550d38"],
       "candidateCaseIds": ["PREVIEW-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "PREVIEW-06 checks each rendered JSX, TSX and External output separately; exact preview and iframe counts stay deterministic."
     },
     {
       "source": "e2e/fixtures/plugin-preview-custom-entry/index.test.ts",
@@ -1455,7 +1494,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014174306-a5550d38"],
       "candidateCaseIds": ["PLUGIN-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by PLUGIN-04. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/plugin-rss/index.test.ts",
@@ -1576,20 +1615,24 @@
     {
       "source": "e2e/fixtures/public-dir/index.test.ts",
       "name": "public directory > should load public dir img successfully under \"rspress build && rspress preview\"",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should load public dir img successfully under \"rspress build && rspress preview\"",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014150350-3b31dcf3", "20261014152600-00831e41"],
       "candidateCaseIds": ["READ-08", "FALLBACK-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Only asserts the exact /base/rspress-icon.png src attribute in production; FALLBACK-03 separately verifies that the image actually renders."
     },
     {
       "source": "e2e/fixtures/public-dir/index.test.ts",
       "name": "public directory > should load public dir img successfully under \"rspress dev\"",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should load public dir img successfully under \"rspress dev\"",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014150350-3b31dcf3", "20261014152600-00831e41"],
       "candidateCaseIds": ["READ-08", "FALLBACK-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Only asserts the exact /base/rspress-icon.png src attribute in development; READ-08 separately verifies that the image actually renders."
     },
     {
       "source": "e2e/fixtures/production/index.test.ts",
@@ -1599,7 +1642,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["PROD-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by PROD-01. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/react-18/index.test.ts",
@@ -1607,7 +1650,6 @@
       "replacementEvidenceRuns": ["20261015120743-964b4825"],
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "renders the installed React and router versions",
-      "replacementReview": "Midscene checks visible Hello world navigation; the legacy test retains exact React and router versions resolved from installed package metadata.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
@@ -1622,7 +1664,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["COMPAT-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by COMPAT-04. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/react-18/index.test.ts",
@@ -1646,7 +1688,6 @@
       "replacementEvidenceRuns": ["20261015120743-964b4825"],
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "renders the installed React and router versions",
-      "replacementReview": "Midscene checks visible Hello world navigation; the legacy test retains exact React and router versions resolved from installed package metadata.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
@@ -1661,7 +1702,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["COMPAT-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by COMPAT-06. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/react-19/index.test.ts",
@@ -1669,7 +1710,6 @@
       "replacementEvidenceRuns": ["20261015120743-964b4825"],
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "renders the installed React and router versions",
-      "replacementReview": "Midscene checks visible Hello world navigation; the legacy test retains exact React and router versions resolved from installed package metadata.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
@@ -1684,25 +1724,31 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["COMPAT-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by COMPAT-05. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
       "name": "plugin preview development > Should render the element",
+      "replacementEvidenceRuns": ["20261015131327-c98dcc54"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves three development code containers",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014174306-a5550d38"],
       "candidateCaseIds": ["PREVIEW-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "PREVIEW-04 checks all three rendered demo strings; exact code-container and iframe counts stay deterministic."
     },
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
       "name": "plugin preview development > mixed page",
+      "replacementEvidenceRuns": ["20261015131327-c98dcc54"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves mixed preview container counts",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014174306-a5550d38"],
       "candidateCaseIds": ["PREVIEW-07"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "PREVIEW-07 checks both internal cards, both iframe-follow outputs and the fixed phone output; exact container and iframe counts stay deterministic."
     },
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
@@ -1715,11 +1761,14 @@
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
       "name": "plugin preview build > build should work",
+      "replacementEvidenceRuns": ["20261015131327-c98dcc54"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves three production code containers",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014174306-a5550d38"],
       "candidateCaseIds": ["PREVIEW-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "PREVIEW-05 checks all three rendered demo strings in production; exact code-container and iframe counts stay deterministic."
     },
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
@@ -1737,7 +1786,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014171430-61b45c50"],
       "candidateCaseIds": ["PREVIEW-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by PREVIEW-01. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
@@ -1747,7 +1796,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014171430-61b45c50"],
       "candidateCaseIds": ["PREVIEW-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by PREVIEW-02. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
@@ -1757,7 +1806,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014171430-61b45c50"],
       "candidateCaseIds": ["PREVIEW-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by PREVIEW-03. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/remark-link/index.test.mjs",
@@ -1799,20 +1848,25 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
       "candidateCaseIds": ["READ-05", "EXTRA-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by READ-05, EXTRA-03. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/replace-rules/index.test.ts",
       "name": "replace rules > Foo page",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "replaces text in the document title metadata",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
-      "candidateCaseIds": ["READ-05", "EXTRA-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["READ-05"],
+      "reason": "READ-05 checks replaced heading and paragraph text; exact browser title remains deterministic."
     },
     {
       "source": "e2e/fixtures/search/index.test.ts",
       "name": "search keyboard > keyboard navigation should work",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "keyboard navigation should work",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
@@ -1823,14 +1877,13 @@
         "SEARCH-04",
         "SEARCH-05"
       ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact current-result DOM indexes, selected href navigation and null search-mask node; SEARCH-01 separately checks visible keyboard-driven navigation."
     },
     {
       "source": "e2e/fixtures/search/index.test.ts",
       "name": "search keyboard > page with search: false should be excluded from the index",
       "replacementEvidenceRuns": ["20261015120743-964b4825"],
       "replacementStatus": "replaced-by-midscene",
-      "replacementReview": "SEARCH-02 checks Quux returns no entries and a no-results message, then verifies normal Foo results recover.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
@@ -1846,6 +1899,8 @@
     {
       "source": "e2e/fixtures/search/index.test.ts",
       "name": "search keyboard > Enter should do nothing while the search panel is closed",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Enter should do nothing while the search panel is closed",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
@@ -1856,7 +1911,7 @@
         "SEARCH-04",
         "SEARCH-05"
       ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Captures pageerror events and checks exact URL invariance after Enter with focus removed; SEARCH-03 separately checks the visible unchanged article."
     },
     {
       "source": "e2e/fixtures/search/index.test.ts",
@@ -1872,7 +1927,7 @@
         "SEARCH-04",
         "SEARCH-05"
       ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by SEARCH-01, SEARCH-02, SEARCH-03, SEARCH-04, SEARCH-05. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/search/index.test.ts",
@@ -1888,11 +1943,13 @@
         "SEARCH-04",
         "SEARCH-05"
       ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by SEARCH-01, SEARCH-02, SEARCH-03, SEARCH-04, SEARCH-05. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/search/index.test.ts",
       "name": "search keyboard > should reset to first suggestion when search query changes",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should reset to first suggestion when search query changes",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
@@ -1903,7 +1960,7 @@
         "SEARCH-04",
         "SEARCH-05"
       ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Checks the exact rp-suggest-item--current DOM index before and after changing a query; SEARCH-05 separately checks the visible selection."
     },
     {
       "source": "e2e/fixtures/search-algolia/index.test.ts",
@@ -1913,7 +1970,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
       "candidateCaseIds": ["EXTRA-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Reviewed pure UI original removed; visible coverage is provided by EXTRA-01. The historical sourceCommit preserves its original assertions."
     },
     {
       "source": "e2e/fixtures/search-algolia/index.test.ts",
@@ -1926,11 +1983,14 @@
     {
       "source": "e2e/fixtures/search-hooks/index.test.ts",
       "name": "search hooks > search-hooks should work",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "invokes beforeSearch and onSearch in order with the query",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
       "candidateCaseIds": ["EXTRA-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "EXTRA-02 checks the single visible Foo result; exact beforeSearch/onSearch callback order and query values stay deterministic."
     },
     {
       "source": "e2e/fixtures/search-code-blocks/index.test.ts",
@@ -1944,20 +2004,24 @@
     {
       "source": "e2e/fixtures/search-i18n/index.test.ts",
       "name": "localized search > should update search index when language changed",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
-      "candidateCaseIds": ["SEARCH-07", "SEARCH-08"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["SEARCH-07"],
+      "reason": "SEARCH-07 checks English to Chinese to English search results without stale-language entries."
     },
     {
       "source": "e2e/fixtures/search-i18n/index.test.ts",
       "name": "localized search > should return search results for voiced katakana content correctly",
+      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
-      "candidateCaseIds": ["SEARCH-07", "SEARCH-08"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["SEARCH-08"],
+      "reason": "SEARCH-08 switches to Japanese and checks all four original queries, result counts and expected text."
     },
     {
       "source": "e2e/fixtures/search-i18n/index.test.ts",
@@ -2041,16 +2105,18 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
       "candidateCaseIds": ["COMPONENT-01", "COMPONENT-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Midscene checks initial selected content and tab switching; the remaining legacy test retains empty tab markup and unselected-content classes."
     },
     {
       "source": "e2e/fixtures/tailwind-v4/index.test.ts",
       "name": "tailwind-v4 > tailwind utility classes should work",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "tailwind utility classes should work",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["STYLE-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact RGB/Lab color, font-weight 700 and padding 16px contracts; STYLE-01 separately checks visible appearance."
     },
     {
       "source": "e2e/fixtures/tailwind-v4/index.test.ts",
@@ -2064,20 +2130,24 @@
     {
       "source": "e2e/fixtures/tailwind-v4/index.test.ts",
       "name": "tailwind-v4 > dark mode classes should work",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "dark mode classes should work",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["STYLE-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Injects a CSS class directly to check exact foreground/background RGB values; it is not a user-operated theme flow."
     },
     {
       "source": "e2e/fixtures/theme-css/index.test.ts",
       "name": "theme-css-order > globalStyles should work",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "globalStyles should work",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["STYLE-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Exact rgb(255, 165, 0) computed color; STYLE-02 separately checks visible orange appearance."
     },
     {
       "source": "e2e/fixtures/title-number/index.test.ts",
@@ -2159,47 +2229,57 @@
     {
       "source": "e2e/fixtures/plugin-api-docgen/locales/index.test.ts",
       "name": "API docgen locales > Index page",
+      "replacementEvidenceRuns": ["20261015131327-c98dcc54"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
-      "candidateCaseIds": ["PLUGIN-01", "PLUGIN-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["PLUGIN-01"],
+      "reason": "PLUGIN-01 checks every original English table column, row description, type, extra description line and default value."
     },
     {
       "source": "e2e/fixtures/plugin-api-docgen/locales/index.test.ts",
       "name": "API docgen locales > search index should include api-docgen result",
+      "replacementEvidenceRuns": ["20261015131327-c98dcc54"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
-      "candidateCaseIds": ["PLUGIN-01", "PLUGIN-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["PLUGIN-01"],
+      "reason": "PLUGIN-01 checks exactly one disabled search result before opening the generated table."
     },
     {
       "source": "e2e/fixtures/plugin-api-docgen/locales/index.test.ts",
       "name": "API docgen locales > zh/index page",
+      "replacementEvidenceRuns": ["20261015131327-c98dcc54"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
-      "candidateCaseIds": ["PLUGIN-01", "PLUGIN-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["PLUGIN-02"],
+      "reason": "PLUGIN-02 checks every original Chinese table column, row description, type, extra description line and default value."
     },
     {
       "source": "e2e/fixtures/plugin-api-docgen/single/index.test.ts",
       "name": "API docgen > zh/index page",
+      "replacementEvidenceRuns": ["20261015131327-c98dcc54"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["PLUGIN-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "PLUGIN-06 checks the Chinese table on entry and full generated table details after search."
     },
     {
       "source": "e2e/fixtures/plugin-api-docgen/single/index.test.ts",
       "name": "API docgen > search index should include api-docgen result",
+      "replacementEvidenceRuns": ["20261015131327-c98dcc54"],
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["PLUGIN-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "PLUGIN-06 returns to the documentation home and checks exactly one disabled search result before opening its table."
     }
   ]
 }

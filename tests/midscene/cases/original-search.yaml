@@ -44,16 +44,24 @@ cases:
       - aiAct: Open search, search for HelloFromJsxCodeBlock, and open the matching result.
       - aiAssert: The article shows a JSX code block containing HelloFromJsxCodeBlock.
   - name: SEARCH-07 Search follows the selected language
-    tags: [original-localized-search]
+    tags: [original-localized-search, replacement-batch-3]
     steps:
       - app.open: { fixture: search-i18n, path: / }
       - aiAct: Open search and enter Button.
       - aiAssert: A search result containing Button en is visible.
       - aiAct: Close search, switch the site language to 简体中文 using the language menu, then open search and enter Button.
       - aiAssert: A search result containing Button 中文 is visible and Button en is not listed.
+      - aiAct: Close search, switch the site language back to English using the language menu, then open search and enter Button.
+      - aiAssert: The first search result contains Button en and no Button 中文 result is listed.
   - name: SEARCH-08 Find Japanese content
-    tags: [original-localized-search]
+    tags: [original-localized-search, replacement-batch-3]
     steps:
-      - app.open: { fixture: search-i18n, path: /ja/ }
-      - aiAct: Open search and enter できます.
-      - aiAssert: A Japanese search result containing できます is visible.
+      - app.open: { fixture: search-i18n, path: / }
+      - aiAct: Switch the site language to 日本語 using the language menu, then open search and enter ご.
+      - aiAssert: Exactly one search result is listed and contains にほんご.
+      - aiAct: Replace the search query with ヘッダー. Stay in the search dialog.
+      - aiAssert: Exactly two search results are listed and the first contains ヘッダー.
+      - aiAct: Replace the search query with す. Stay in the search dialog.
+      - aiAssert: Exactly one search result is listed and contains できます.
+      - aiAct: Replace the search query with さ. Stay in the search dialog.
+      - aiAssert: Exactly one search result is listed and contains さい.

@@ -19,7 +19,7 @@ cases:
       - aiAct: Wait for the rendered first playground output to display Hello World Internal (updated). Do not reload or navigate elsewhere; stop if it has not changed within 30 seconds.
       - aiAssert: The rendered first playground output displays Hello World Internal (updated).
   - name: PLAYGROUND-03 Read playground and preview on the same page
-    tags: [original-playground]
+    tags: [original-playground, replacement-batch-4]
     steps:
       - app.open: { fixture: plugin-playground-preview, path: / }
       - aiAct: Bring the rendered playground output into view, not merely its source code.

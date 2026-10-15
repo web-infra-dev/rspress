@@ -16,7 +16,7 @@ test.describe('github alert syntax in mdx-js', async () => {
     }
   });
 
-  test('should transform github alert syntax to contain syntax', async ({
+  test('preserves callout DOM placement and type modifiers', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}`, {
@@ -33,12 +33,6 @@ test.describe('github alert syntax in mdx-js', async () => {
 
     const stepsCallouts = page.locator('.rp-steps .rp-callout');
     await expect(stepsCallouts).toHaveCount(2);
-
-    const multiLineCallout = topLevelCallouts.nth(8);
-    const multiLineText = await multiLineCallout.innerText();
-    expect(multiLineText).toContain('Multi-line line 1');
-    expect(multiLineText).toContain('Multi-line line 2');
-    expect(multiLineText).toContain('Multi-line line 3');
 
     const allCallouts = [topLevelCallouts, listCallouts, stepsCallouts];
     const containerTypes: string[] = [];

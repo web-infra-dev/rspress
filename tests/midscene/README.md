@@ -8,29 +8,42 @@ the initial documentation examples remain separate smoke cases.
 `migration-inventory.json` records the original E2E cases and their migration
 decisions. Exact DOM, CSS, timing, build-output, and browser-event contracts
 remain deterministic. Candidate mappings alone do not prove full replacement.
-The 112 AI cases include counterparts for visible behavior in 129 of the 237
-original tests; 108 tests remain deterministic-only. Multiple original tests can
-map to one AI flow. Inventory evidence identifies local runs, not remote CI passes.
+The initial assessment mapped 129 of the 237 originals to the 112 AI cases and
+classified 108 as deterministic-only. These historical labels do not prove full
+assertion equivalence or exclude mixed UI scope. Multiple originals can map to
+one AI flow. Inventory evidence identifies local runs, not remote CI passes.
 
-The reviewed replacement batches remove 27 pure UI tests from the legacy
+The reviewed replacement batches remove 42 pure UI tests from the legacy
 suite. Each is marked `replaced-by-midscene` in the baseline inventory, whose
 `sourceCommit` preserves its original source. Other mappings still await
 assertion-level review and splitting; the inventory's 237 is the original count,
-not a claim that 237 legacy tests still execute. There are 210 remaining legacy
+not a claim that 237 legacy tests still execute. There are 195 remaining legacy
 tests after these replacements. Rstest continues to run the
 remaining tests through `pnpm test:e2e`; existing Linux, macOS, and Windows CI
 workflows keep that command. Mixed tests are retained until their technical
 assertions have been separated. No replaced case is disabled with `skip`.
-Nine mixed tests are split. Midscene verifies tab switching, Hello world
-navigation, localized home heroes, visible footer text, and banner dismissal. The legacy tests retain
-empty tab markup/classes, exact installed React/router versions, the heading's
-anchor href, hero image attributes and resolved action links, the footer anchor element,
-and the banner's localStorage key/value.
+Twenty-seven mixed tests are split. Midscene verifies tab switching, navigation,
+localized home heroes and search, custom layouts/outlines, rendered code and
+callouts, footer text, and banner dismissal. The legacy tests retain exact DOM
+structure, CSS classes, callback order, browser errors, installed React/router
+versions, metadata, image attributes, and storage keys/values.
 Deterministic clicks remain only where needed to prepare a technical contract
 check, such as writing localStorage; they are not the visible E2E proof.
 LAYOUT-05 now checks all five translated/fallback strings in all three languages.
-The baseline still has 93 candidate originals awaiting assertion-level review;
-the 108 deterministic-only classifications also need review for mixed UI scope.
+Eighteen mapped originals have been reviewed as technical-only and remain
+unchanged, explicitly marked `retained-technical`. Examples include exact URL,
+href, RGB, DOM-index/count, browser-error and one-pixel scroll-offset contracts.
+They are not counted as removed or split. There are 42 mapped originals still
+awaiting assertion-level review; the initial 108 deterministic-only
+classifications also need review for mixed UI scope.
+Overview content is checked in separate sections before following links. Japanese
+search covers all four original queries and result counts; localized search also
+returns to English. Dynamic TOC checks wait for the heading update before asserting
+both the article heading and its outline entry.
+Generated API tables check every original column, property description, type and
+default value; search checks result counts before opening the table. Preview tests
+read rendered internal/external outputs separately from source code; the legacy
+tests retain explicit preview and iframe counts.
 
 This isolated npm package uses
 `@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.
