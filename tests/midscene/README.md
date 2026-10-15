@@ -112,6 +112,24 @@ The two corrected cases passed three independent local runs with no retries:
 `20261016035600-57a6fa1f`, `20261016035820-646ae396` and
 `20261016040013-61f76e1a` (2/2 each). Full remote validation remains required.
 
+Remote run [38798831268](https://github.com/quanru/rspress/actions/runs/38798831268)
+on `52c4031` passed 151/153 with no retries; SEARCH-08 and STATIC-01 passed.
+INLINE-02 misinterpreted "remaining" as entries after delete, although emphasis
+was correctly above delete in its screenshot. Its assertion now describes that
+explicit spatial relation and retains every expected entry and literal character.
+VIRTUAL-02's translation had updated, but the planner expected the entire joined
+status row to equal Translation after. Its wait now targets only the translation
+portion, preserving the neighboring search label and counter. The final counter
+wait also includes its retained value. Both cases passed three independent local
+runs: `20261016052639-e1651c56`, `20261016052919-97d75574` and
+`20261016053126-5b5e3bb2` (2/2 each, no retries). Full remote validation remains
+required.
+
+A local negative control passed the corrected outline assertion on the original
+page, then swapped emphasis and delete only in the outline. The same assertion
+correctly rejected that reversed order while the article and sidebar stayed intact.
+The fault injection affected only a temporary browser session.
+
 This isolated npm package uses
 `@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.
 `app.open` only prepares the browser; all product interactions use `aiAct`.

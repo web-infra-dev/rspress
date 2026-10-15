@@ -802,7 +802,12 @@
       "reason": "VIRTUAL-02 verifies visible translations, search hooks and counter updates. Exact RGB values and window/React state preservation remain deterministic; attachment waits synchronize completed namespace replacements.",
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "preserves window and React state through virtual-module replacements",
-      "replacementEvidenceRuns": ["20261014162358-96521382"],
+      "replacementEvidenceRuns": [
+        "20261014162358-96521382",
+        "20261016052639-e1651c56",
+        "20261016052919-97d75574",
+        "20261016053126-5b5e3bb2"
+      ],
       "remoteEvidenceRuns": ["38692030397"]
     },
     {
@@ -1052,7 +1057,12 @@
       "reason": "INLINE-02 checks all twelve readable outline entries in order, including literal escape text. Exact counts, serialized Markdown tags and plain-text tooltip attributes remain deterministic.",
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "preserves outline counts serialized markup and plain tooltip attributes",
-      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
+      "replacementEvidenceRuns": [
+        "20261015171335-c8e822b8",
+        "20261016052639-e1651c56",
+        "20261016052919-97d75574",
+        "20261016053126-5b5e3bb2"
+      ]
     },
     {
       "source": "e2e/fixtures/inline-markdown/index.test.ts",
