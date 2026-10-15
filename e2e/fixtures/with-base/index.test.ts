@@ -51,22 +51,6 @@ test.describe('site with base path', async () => {
     expect(href).toBe('/base/en/guide/install.html');
   });
 
-  test('Should render the homepage - "/base"', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base`, {
-      waitUntil: 'networkidle',
-    });
-    const docContent = page.locator('.rspress-doc');
-    await expect(docContent).toContainText('This is the index page');
-  });
-
-  test('Should render the homepage - "/base/"', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/`, {
-      waitUntil: 'networkidle',
-    });
-    const docContent = page.locator('.rspress-doc');
-    await expect(docContent).toContainText('This is the index page');
-  });
-
   test('BrowserOnly should render fallback and update client content', async ({
     page,
   }) => {

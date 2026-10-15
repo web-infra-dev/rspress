@@ -252,7 +252,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
       "candidateCaseIds": ["READ-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "READ-04: Checks all eight sidebar entries in order before directory navigation.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015140840-f52308ac"]
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar-dir-convention/index.test.ts",
@@ -344,7 +346,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
       "candidateCaseIds": ["NAV-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "NAV-06: Checks the complete eleven-entry sidebar in order before Basic config navigation.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015140840-f52308ac"]
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar-no-meta/index.test.ts",
@@ -360,6 +364,8 @@
     {
       "source": "e2e/fixtures/code-block/index.test.ts",
       "name": "Shiki code blocks > should render shiki code block successfully",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should render shiki code block successfully",
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
@@ -368,6 +374,8 @@
     {
       "source": "e2e/fixtures/code-block/index.test.ts",
       "name": "Shiki code blocks > langAlias",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "langAlias",
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
@@ -376,6 +384,8 @@
     {
       "source": "e2e/fixtures/code-block/index.test.ts",
       "name": "Shiki code blocks > should support lineNumbers and wrapCode meta attributes",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should support lineNumbers and wrapCode meta attributes",
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
@@ -648,10 +658,12 @@
     {
       "source": "e2e/fixtures/heading-title/index.test.ts",
       "name": "heading titles > Guide page",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Guide page",
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "The original checks computed heading font-size exactly 32px and the generated anchor href #heading-title; neither is a separate visible user-flow assertion."
     },
     {
       "source": "e2e/fixtures/hmr/index.test.ts",
@@ -1331,8 +1343,10 @@
         "20261014162358-96521382",
         "20261015110636-408026b7"
       ],
-      "candidateCaseIds": ["CONTENT-02", "OVERVIEW-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["CONTENT-02"],
+      "reason": "CONTENT-02: Checks the Level 2 group and all three article entries below the Level 1 page title before opening the two article.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015141616-e6d3f80e"]
     },
     {
       "source": "e2e/fixtures/nested-overview/index.test.ts",
@@ -1344,8 +1358,10 @@
         "20261014162358-96521382",
         "20261015110636-408026b7"
       ],
-      "candidateCaseIds": ["CONTENT-02", "OVERVIEW-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["OVERVIEW-04"],
+      "reason": "OVERVIEW-04: Checks both overview group headings and all three article entries before navigating to Level 3.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015140840-f52308ac"]
     },
     {
       "source": "e2e/fixtures/nested-overview/index.test.ts",
@@ -1357,8 +1373,10 @@
         "20261014162358-96521382",
         "20261015110636-408026b7"
       ],
-      "candidateCaseIds": ["CONTENT-02", "OVERVIEW-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["OVERVIEW-04"],
+      "reason": "OVERVIEW-04: Checks the Level 3 page title, the sole three group and article entry, and both feature links before opening the article.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015140840-f52308ac"]
     },
     {
       "source": "e2e/fixtures/page-type-home/index.test.ts",
@@ -1387,6 +1405,8 @@
     {
       "source": "e2e/fixtures/page-type-home/index.test.ts",
       "name": "home pageType > Features",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Features",
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
@@ -1999,7 +2019,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
       "candidateCaseIds": ["SEARCH-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "SEARCH-06: Checks exactly one result for each of the four original inline, React inline, JavaScript and JSX queries, then opens the JSX result.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015140840-f52308ac"]
     },
     {
       "source": "e2e/fixtures/search-i18n/index.test.ts",
@@ -2176,20 +2198,24 @@
     {
       "source": "e2e/fixtures/with-base/index.test.ts",
       "name": "site with base path > Should render sidebar correctly",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should render sidebar correctly",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014162358-96521382"],
       "candidateCaseIds": ["READ-01", "EXTRA-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "The original checks a route-chunk preload URL including its base prefix and filename hash, plus exactly one sidebar DOM container. These are technical contracts; READ-01 separately covers visible guide navigation."
     },
     {
       "source": "e2e/fixtures/with-base/index.test.ts",
       "name": "site with base path > Should goto correct link",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should goto correct link",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014162358-96521382"],
       "candidateCaseIds": ["READ-01", "EXTRA-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "The original checks the exact generated href /base/en/guide/install.html, without clicking it. Keep this serialization contract; READ-01 separately covers visible navigation to Install."
     },
     {
       "source": "e2e/fixtures/with-base/index.test.ts",
@@ -2197,8 +2223,10 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014162358-96521382"],
-      "candidateCaseIds": ["READ-01", "EXTRA-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["READ-12"],
+      "reason": "READ-12: Opens the production /base entry, checks the original index text, and follows its guide link.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015140840-f52308ac"]
     },
     {
       "source": "e2e/fixtures/with-base/index.test.ts",
@@ -2206,8 +2234,10 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014162358-96521382"],
-      "candidateCaseIds": ["READ-01", "EXTRA-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["READ-13"],
+      "reason": "READ-13: Opens the production /base/ entry, checks the original index text, and follows its guide link.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015140840-f52308ac"]
     },
     {
       "source": "e2e/fixtures/with-base/index.test.ts",

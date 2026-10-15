@@ -1,8 +1,8 @@
 cases:
   - name: READ-01 Navigate a site under a base path
-    tags: [original-base]
+    tags: [original-base, replacement-batch-5]
     steps:
-      - app.open: { fixture: with-base, path: /base/en/ }
+      - app.open: { fixture: with-base, mode: production, path: /base/en/ }
       - aiAct: Follow the click link in the article to the guide.
       - aiAssert: The Quick Start article is visible and its English sidebar contains Guide and Install.
       - aiAct: Open Install from the sidebar.
@@ -21,9 +21,10 @@ cases:
       - aiAct: Follow the Target section link in the article.
       - aiAssert: The Target heading is visible below the navigation without being obscured.
   - name: READ-04 Navigate a sidebar generated from directory convention
-    tags: [original-directory-sidebar]
+    tags: [original-directory-sidebar, replacement-batch-5]
     steps:
       - app.open: { fixture: auto-nav-sidebar-dir-convention, path: /guide/ }
+      - aiAssert: The sidebar contains eight entries in order /guide Page, index md convention, index mdx convention, same name, index in meta, Index in meta, no meta md, and no meta mdx.
       - aiAct: Open index md convention through the sidebar directory link.
       - aiAssert: The Index md convention article is visible.
   - name: READ-05 Read a replaced Markdown article
@@ -69,3 +70,17 @@ cases:
       - app.open: { fixture: no-config-root, path: / }
       - aiAct: Open documentation search, search for Hello world, and open the matching result.
       - aiAssert: The Hello world article is visible and the search dialog is closed.
+  - name: READ-12 Open the base homepage without a trailing slash
+    tags: [original-base, replacement-batch-5]
+    steps:
+      - app.open: { fixture: with-base, mode: production, path: /base }
+      - aiAssert: The article displays This is the index page, not a page-not-found error.
+      - aiAct: Follow the 点击 link in the article to the guide.
+      - aiAssert: The 快速开始 article is visible with an 进入安装 link, not a page-not-found error.
+  - name: READ-13 Open the base homepage with a trailing slash
+    tags: [original-base, replacement-batch-5]
+    steps:
+      - app.open: { fixture: with-base, mode: production, path: /base/ }
+      - aiAssert: The article displays This is the index page, not a page-not-found error.
+      - aiAct: Follow the 点击 link in the article to the guide.
+      - aiAssert: The 快速开始 article is visible with an 进入安装 link, not a page-not-found error.

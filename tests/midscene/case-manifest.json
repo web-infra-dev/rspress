@@ -91,6 +91,8 @@
   "READ-09 Read a heading through the table of contents": "web",
   "READ-10 Open custom layout pages from search": "web",
   "READ-11 Navigate a site without an explicit root setting": "web",
+  "READ-12 Open the base homepage without a trailing slash": "web",
+  "READ-13 Open the base homepage with a trailing slash": "web",
   "SEARCH-01 Select a search result using the keyboard": "web",
   "SEARCH-02 Excluded pages do not appear in search": "web",
   "SEARCH-03 Escape closes the search dialog": "web",

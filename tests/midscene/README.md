@@ -12,12 +12,14 @@ The initial assessment mapped 129 of the 237 originals to the 112 AI cases and
 classified 108 as deterministic-only. These historical labels do not prove full
 assertion equivalence or exclude mixed UI scope. Multiple originals can map to
 one AI flow. Inventory evidence identifies local runs, not remote CI passes.
+The current suite contains 114 AI cases, including separate production checks
+for the `/base` and `/base/` homepage entries.
 
-The reviewed replacement batches remove 42 pure UI tests from the legacy
+The reviewed replacement batches remove 50 pure UI tests from the legacy
 suite. Each is marked `replaced-by-midscene` in the baseline inventory, whose
 `sourceCommit` preserves its original source. Other mappings still await
 assertion-level review and splitting; the inventory's 237 is the original count,
-not a claim that 237 legacy tests still execute. There are 195 remaining legacy
+not a claim that 237 legacy tests still execute. There are 187 remaining legacy
 tests after these replacements. Rstest continues to run the
 remaining tests through `pnpm test:e2e`; existing Linux, macOS, and Windows CI
 workflows keep that command. Mixed tests are retained until their technical
@@ -30,12 +32,20 @@ versions, metadata, image attributes, and storage keys/values.
 Deterministic clicks remain only where needed to prepare a technical contract
 check, such as writing localStorage; they are not the visible E2E proof.
 LAYOUT-05 now checks all five translated/fallback strings in all three languages.
-Eighteen mapped originals have been reviewed as technical-only and remain
+Twenty mapped originals have been reviewed as technical-only and remain
 unchanged, explicitly marked `retained-technical`. Examples include exact URL,
 href, RGB, DOM-index/count, browser-error and one-pixel scroll-offset contracts.
-They are not counted as removed or split. There are 42 mapped originals still
-awaiting assertion-level review; the initial 108 deterministic-only
-classifications also need review for mixed UI scope.
+They are not counted as removed or split. There are 32 mapped originals still
+awaiting assertion-level review. Of the initial 108 deterministic-only
+classifications, five have been reviewed and retained: the three Shiki
+DOM/CSS contracts, exact heading font-size/anchor, and feature-card URL events.
+The other 103 still need review for mixed UI scope.
+The latest replacements cover complete nested overview groups and article lists,
+both production base-path homepage entries, complete generated sidebars, and all
+four original code-search queries. Local run `20261015140840-f52308ac` passed
+seven of eight flows; the Level 1 overview assertion initially confused the page
+title with its group heading. After clarifying those regions without removing
+entries, `20261015141616-e6d3f80e` passed that flow. Case retries remain disabled.
 Overview content is checked in separate sections before following links. Japanese
 search covers all four original queries and result counts; localized search also
 returns to English. Dynamic TOC checks wait for the heading update before asserting

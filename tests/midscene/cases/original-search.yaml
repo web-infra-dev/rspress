@@ -38,10 +38,18 @@ cases:
       - aiAct: Replace the search query with Ba without pressing any arrow keys afterward.
       - aiAssert: The first search result is visibly selected.
   - name: SEARCH-06 Find content inside code blocks
-    tags: [original-code-search]
+    tags: [original-code-search, replacement-batch-5]
     steps:
       - app.open: { fixture: search-code-blocks, path: / }
-      - aiAct: Open search, search for HelloFromJsxCodeBlock, and open the matching result.
+      - aiAct: Open search and enter hello from inline code block.
+      - aiAssert: Exactly one search result is listed.
+      - aiAct: Replace the search query with hello from <React.inline />. Stay in the search dialog.
+      - aiAssert: Exactly one search result is listed.
+      - aiAct: Replace the search query with hello from js code block. Stay in the search dialog.
+      - aiAssert: Exactly one search result is listed.
+      - aiAct: Replace the search query with <HelloFromJsxCodeBlock />. Stay in the search dialog.
+      - aiAssert: Exactly one search result is listed.
+      - aiAct: Open the search result.
       - aiAssert: The article shows a JSX code block containing HelloFromJsxCodeBlock.
   - name: SEARCH-07 Search follows the selected language
     tags: [original-localized-search, replacement-batch-3]
