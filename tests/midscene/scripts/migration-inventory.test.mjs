@@ -13,9 +13,18 @@ const ids = new Set(Object.keys(manifest).map(name => name.split(' ')[0]));
 
 test('migration inventory accounts for every original test exactly once', async () => {
   assert.equal(inventory.cases.length, 237);
+  assert.equal(inventory.assertionReviewComplete, true);
   assert.equal(inventory.allOriginalAssertionsPreserved, false);
   const originals = new Set();
   for (const entry of inventory.cases) {
+    assert(
+      [
+        'replaced-by-midscene',
+        'ui-replaced-technical-retained',
+        'retained-technical',
+      ].includes(entry.replacementStatus),
+      'Unreviewed original: ' + entry.name,
+    );
     assert(entry.source.startsWith('e2e/fixtures/'));
     assert(!entry.source.includes('..'));
     const source = new URL('../../../' + entry.source, import.meta.url);

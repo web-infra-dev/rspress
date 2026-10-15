@@ -27,9 +27,16 @@ cases:
       - aiAct: Wait for the counter button's label to become Updated count. Do not reload or navigate elsewhere; stop if it has not updated within 30 seconds.
       - aiAssert: The global component displays Updated count 1, retaining its previous counter value.
   - name: VIRTUAL-03 Interact with virtual components in a production build
-    tags: [original-virtual-hmr]
+    tags:
+      [
+        original-virtual-hmr,
+        replacement-final-existing,
+        replacement-final-followup,
+      ]
     steps:
       - app.open:
           { fixture: hmr-lazy, mode: production, path: /guide/test.html }
+      - aiAct: Bring the top navigation social icons into view without following any external link.
+      - aiAssert: The GitHub social icon is visible in the navigation.
       - aiAct: Find the global component showing Translation before and Search hook before, then click its Count button once.
       - aiAssert: The production page displays Translation before, Search hook before, and Count 1.

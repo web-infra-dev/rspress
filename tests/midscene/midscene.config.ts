@@ -1,4 +1,5 @@
 import { fileURLToPath } from 'node:url';
+import { readFile } from 'node:fs/promises';
 import { config } from 'dotenv';
 import { defineNode, z } from '@midscene/test';
 import { defineProjectSetup, defineTestProject } from '@midscene/test/config';
@@ -63,9 +64,10 @@ const input = z.strictObject({
   mode: z.enum(['development', 'production']).default('development'),
   javascript: z.boolean().default(true),
   colorScheme: z.enum(['light', 'dark']).default('light'),
+  locale: z.enum(['en-US', 'nl-NL']).default('en-US'),
   savedAppearance: z.enum(['light', 'dark']).optional(),
   path: z.string().startsWith('/').default('/'),
-  viewport: z.enum(['desktop', 'mobile']).default('desktop'),
+  viewport: z.enum(['desktop', 'mobile', 'tablet']).default('desktop'),
 });
 const open = defineNode<typeof input, void, Context>({
   name: 'app.open',
@@ -84,11 +86,13 @@ const open = defineNode<typeof input, void, Context>({
     context.session = await context.browser.newContext({
       javaScriptEnabled: input.javascript,
       colorScheme: input.colorScheme,
-      locale: 'en-US',
+      locale: input.locale,
       viewport:
         input.viewport === 'mobile'
           ? { width: 390, height: 844 }
-          : { width: 1440, height: 900 },
+          : input.viewport === 'tablet'
+            ? { width: 1024, height: 768 }
+            : { width: 1440, height: 900 },
     });
     if (input.savedAppearance) {
       await context.session.addInitScript(
@@ -100,6 +104,17 @@ const open = defineNode<typeof input, void, Context>({
     const allowedOrigins = new Set([url.origin]);
     await context.session.route('**/*', async route => {
       const requestURL = new URL(route.request().url());
+      if (
+        route.request().method() === 'GET' &&
+        requestURL.href === 'https://assets.rspack.rs/rspress/rspress-logo.svg'
+      ) {
+        return route.fulfill({
+          contentType: 'image/svg+xml',
+          body: await readFile(
+            new URL('./assets/rspress-logo.svg', import.meta.url),
+          ),
+        });
+      }
       if (
         input.fixture?.startsWith('plugin-playground') &&
         route.request().method() === 'GET'

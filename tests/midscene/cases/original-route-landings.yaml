@@ -1,0 +1,117 @@
+cases:
+  - name: ROUTE-01 Read clean-urls-redirect entry 1
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: clean-urls-redirect,
+            path: /docs/zh/guide/start/introduction,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Introduction article heading is visible, not a page-not-found message.
+  - name: ROUTE-02 Read clean-urls-redirect entry 2
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: clean-urls-redirect,
+            path: /docs/zh/guide/start/introduction/,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Introduction article heading is visible, not a page-not-found message.
+  - name: ROUTE-03 Read clean-urls-redirect entry 3
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: clean-urls-redirect,
+            path: /docs/zh/guide/start/introduction/index.html,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Introduction article heading is visible, not a page-not-found message.
+  - name: ROUTE-04 Read clean-urls-redirect entry 4
+    tags: [replacement-final-routes]
+    steps:
+      - app.open: { fixture: clean-urls-redirect, path: /docs/zh/folder/ }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Folder article heading is visible, not a page-not-found message.
+  - name: ROUTE-05 Read clean-urls-redirect-clean entry 1
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: clean-urls-redirect-clean,
+            path: /docs/zh/guide/start/introduction.html,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Introduction article heading is visible, not a page-not-found message.
+  - name: ROUTE-06 Read clean-urls-redirect-clean entry 2
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: clean-urls-redirect-clean,
+            path: /docs/zh/guide/start/introduction/,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Introduction article heading is visible, not a page-not-found message.
+  - name: ROUTE-07 Read clean-urls-redirect-clean entry 3
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: clean-urls-redirect-clean,
+            path: /docs/zh/guide/start/introduction/index.html,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Introduction article heading is visible, not a page-not-found message.
+  - name: ROUTE-08 Read clean-urls-redirect-clean entry 4
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: clean-urls-redirect-clean,
+            path: /docs/zh/folder/index.html,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Folder article heading is visible, not a page-not-found message.
+  - name: ROUTE-09 Read clean-urls-redirect-disabled entry 1
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: clean-urls-redirect-disabled,
+            path: /docs/zh/guide/start/introduction.html,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Introduction article heading is visible, not a page-not-found message.
+  - name: ROUTE-10 Read auto-nav-sidebar-dir-convention entry 1
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: auto-nav-sidebar-dir-convention,
+            path: /guide/index-md-convention/index.html,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Index md convention article is visible and the sidebar marks index md convention as the current page.
+  - name: ROUTE-11 Read auto-nav-sidebar-dir-convention entry 2
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: auto-nav-sidebar-dir-convention,
+            path: /guide/index-md-convention/index,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Index md convention article is visible and the sidebar marks index md convention as the current page.
+  - name: ROUTE-12 Read auto-nav-sidebar-dir-convention entry 3
+    tags: [replacement-final-routes]
+    steps:
+      - app.open:
+          {
+            fixture: auto-nav-sidebar-dir-convention,
+            path: /guide/index-md-convention,
+          }
+      - aiAct: Bring the article heading and its documentation navigation into view.
+      - aiAssert: The Index md convention article is visible and the sidebar marks index md convention as the current page.

@@ -1,8 +1,9 @@
 {
   "sourceCommit": "bce9de9e45c5d02098d00fa859e2abb1e4b30c4c",
-  "policy": "This is an inventory of the original sourceCommit, not the current legacy test count. Pure UI cases explicitly marked replaced-by-midscene are removed. Other mappings need assertion-level review before replacement; exact technical contracts remain deterministic. Local evidence is not remote CI evidence.",
+  "policy": "This inventory accounts for all 237 tests at sourceCommit. Assertion-level review is complete: pure UI originals are removed, mixed originals retain only technical contracts, and technical-only originals remain deterministic. Evidence is per case; a run containing a passed case may itself fail or be interrupted. Local evidence is not remote CI evidence.",
+  "assertionReviewComplete": true,
   "allOriginalAssertionsPreserved": false,
-  "replacementPolicy": "Pure UI originals marked replaced-by-midscene are removed. Reviewed mixed tests retain their technical contracts; reviewed technical-only originals are explicitly retained-technical. Unreviewed mappings still require assertion-level review. Candidate mappings alone are not complete coverage evidence.",
+  "replacementPolicy": "All originals have an explicit replacementStatus. allOriginalAssertionsPreserved remains false because AI assertions replace visible-behavior matchers rather than preserve each original assertion literally; exact technical contracts remain deterministic. candidateCaseIds and replacementEvidenceRuns identify the verified visible counterpart, not a promise that every referenced run passed in full.",
   "cases": [
     {
       "source": "e2e/fixtures/auto-nav-sidebar-issue-1682/index.test.ts",
@@ -29,10 +30,13 @@
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
       "name": "auto nav and sidebar > Should render sidebar icons and tags correctly",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact icon dimensions, source URLs, DOM order, and data-context attributes."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-10"],
+      "reason": "AUDIT-10 checks the new badge on the visible Introduction entry. Exact icon sizes, sources, intrinsic width, DOM order, SVG counts and mobile menu class remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves sidebar and navigation icon dimensions sources and DOM order",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
@@ -92,10 +96,13 @@
     {
       "source": "e2e/fixtures/auto-nav-sidebar/index.test.ts",
       "name": "auto nav and sidebar > Should generate data-context in sidebar group dom",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact icon dimensions, source URLs, DOM order, and data-context attributes."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-11"],
+      "reason": "AUDIT-11 verifies both custom sidebar labels. Exact data-context values, depth membership and two matching custom-link nodes remain deterministic.",
+      "remainingTestName": "generates exact sidebar data-context values and custom-link counts",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -133,10 +140,13 @@
     {
       "source": "e2e/fixtures/basic/index.test.ts",
       "name": "basic site > Hover over social links",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-12"],
+      "reason": "AUDIT-12 verifies the preview image appears on hover. The original /zh destination remains an explicit deterministic href check without replaying the hover flow.",
+      "remainingTestName": "preserves the social preview link destination",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -198,18 +208,23 @@
     {
       "source": "e2e/fixtures/basic/index.test.ts",
       "name": "CLI base option > should serve dev pages from the CLI base path",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-06"],
+      "reason": "AUDIT-06 launches the original CLI with --base /bar/ and verifies the development Hello world article.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
       "name": "CLI base option > should serve preview pages from the CLI base path",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-07"],
+      "reason": "AUDIT-07 verifies the production Hello world article at /bar/. The exact stylesheet/script URL prefix checks remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"],
+      "remainingTestName": "prefixes production stylesheet and script URLs with the CLI base"
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -298,10 +313,13 @@
     {
       "source": "e2e/fixtures/auto-nav-sidebar-dir-convention/index.test.ts",
       "name": "Auto nav and sidebar dir convention > /api/config/index.html /api/config/index /api/config should be the same page",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact URL alias and sidebar-count comparisons."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["ROUTE-10", "ROUTE-11", "ROUTE-12"],
+      "reason": "All original assertions concern eight sidebar DOM nodes and the exact active-class/text identity for each alias. They remain deterministic; ROUTE-10 through ROUTE-12 additionally verify the visible article and selected sidebar label.",
+      "remainingTestName": "preserves sidebar cardinality and active DOM identity for route aliases",
+      "replacementStatus": "retained-technical",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/check-dead-link/index.test.ts",
@@ -346,26 +364,35 @@
     {
       "source": "e2e/fixtures/clean-urls-redirect/index.test.ts",
       "name": "route.cleanUrlsRedirect > normalizes matched routes when cleanUrls is false",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Pending mixed-scope review: retain exact URL normalization contracts, but migrate the visible document landing check for each incoming route before removing its UI assertion."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["ROUTE-01", "ROUTE-02", "ROUTE-03", "ROUTE-04"],
+      "reason": "The four corresponding ROUTE cases verify rendered landing pages. Exact normalized destination URLs for each incoming path remain deterministic.",
+      "remainingTestName": "normalizes exact destination URLs when cleanUrls is false",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/clean-urls-redirect/index.test.ts",
       "name": "route.cleanUrlsRedirect > normalizes matched routes when cleanUrls is true",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Pending mixed-scope review: retain exact URL normalization contracts, but migrate the visible document landing check for each incoming route before removing its UI assertion."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["ROUTE-05", "ROUTE-06", "ROUTE-07", "ROUTE-08"],
+      "reason": "The four corresponding ROUTE cases verify rendered landing pages. Exact clean destination URLs for each incoming path remain deterministic.",
+      "remainingTestName": "normalizes exact destination URLs when cleanUrls is true",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/clean-urls-redirect/index.test.ts",
       "name": "route.cleanUrlsRedirect > does not normalize matched routes when disabled",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Pending mixed-scope review: retain exact URL normalization contracts, but migrate the visible document landing check for each incoming route before removing its UI assertion."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["ROUTE-09"],
+      "reason": "ROUTE-09 verifies the rendered page. Exact URL invariance with normalization disabled remains deterministic.",
+      "remainingTestName": "preserves the exact requested URL when normalization is disabled",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar-no-meta/index.test.ts",
@@ -434,10 +461,13 @@
     {
       "source": "e2e/fixtures/code-block-runtime/index.test.ts",
       "name": "<CodeBlockRuntime /> > shiki transformerNotationHighlight should work",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact Shiki transformer classes and markup."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-03"],
+      "reason": "AUDIT-03 checks both highlight.ts titles and all three console.log lines in each panel. The exact TypeScript container count and PRE tag contract remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves two transformed TypeScript containers with PRE markup",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/code-block-runtime/index.test.ts",
@@ -516,10 +546,13 @@
     {
       "source": "e2e/fixtures/custom-icon/index.test.ts",
       "name": "custom icon > Index page",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Still needs a mixed-scope review: the Hello world heading assertion is visible UI, while the search icon data:image/svg+xml;base64 source attribute is an exact serialization contract. No replacement is claimed yet."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-01"],
+      "reason": "AUDIT-01 verifies the visible Hello world article and search control. The exact search icon SVG data URL remains deterministic.",
+      "remainingTestName": "embeds the custom search icon as an SVG data URL",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/custom-layout/index.test.ts",
@@ -771,7 +804,10 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
       "candidateCaseIds": ["VIRTUAL-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "VIRTUAL-03 verifies the production translations, search hook, social icon and counter interaction. Exact RGB and the SVG node under the original GitHub href remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves production virtual-component RGB and social-link SVG markup",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -779,8 +815,10 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
-      "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["NAV-15"],
+      "reason": "NAV-15 verifies the Chinese home heading, visible language selector and English menu choice before actually switching to English.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -798,8 +836,11 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
-      "candidateCaseIds": ["NAV-10", "NAV-11", "NAV-12"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["NAV-10", "NAV-11"],
+      "reason": "NAV-10 and NAV-11 follow the visible English absolute and relative guide links. Their exact compiled href strings remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "prefixes both English guide URLs with the non-default locale",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -807,8 +848,11 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
-      "candidateCaseIds": ["NAV-10", "NAV-11", "NAV-12"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["NAV-12", "NAV-14"],
+      "reason": "NAV-12 and NAV-14 follow the visible Chinese absolute and relative guide links. Their exact unprefixed compiled href strings remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "keeps both Chinese guide URLs unprefixed for the default locale",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -837,8 +881,10 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
-      "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["NAV-15"],
+      "reason": "NAV-15 uses a fresh browser context with locale nl-NL and checks the Chinese home content with no page-not-found message before switching language.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -907,10 +953,13 @@
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
       "name": "i18n > NavScreen language links should have lang, hrefLang and rel attributes",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-08"],
+      "reason": "AUDIT-08 opens the mobile menu and verifies both language labels. Exact active-item tag and lang/hreflang/rel contracts remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "mobile language items preserve tags and locale attributes",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -957,26 +1006,38 @@
     {
       "source": "e2e/fixtures/inline-markdown/index.test.ts",
       "name": "inline Markdown > Should render inline markdown of sidebar correctly",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact escaped HTML, heading IDs, code/strong elements, and sidebar/overview markup."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["INLINE-01"],
+      "reason": "INLINE-01 checks all twelve readable sidebar entries in order. Exact node counts, serialized Markdown tags and scoped code text remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves sidebar counts and serialized inline markup",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/inline-markdown/index.test.ts",
       "name": "inline Markdown > Should render inline markdown of overview page correctly",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact escaped HTML, heading IDs, code/strong elements, and sidebar/overview markup."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["INLINE-03", "INLINE-04"],
+      "reason": "INLINE-03 checks all eleven groups and card labels; INLINE-04 checks all sixteen article links. Exact serialized HTML and explicit title/link counts remain deterministic to prevent empty-loop false positives.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves serialized overview headings card titles and article links",
+      "replacementEvidenceRuns": [
+        "20261015171335-c8e822b8",
+        "20261015175519-35748856"
+      ]
     },
     {
       "source": "e2e/fixtures/inline-markdown/index.test.ts",
       "name": "inline Markdown > Should render inline markdown of aside correctly",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact escaped HTML, heading IDs, code/strong elements, and sidebar/overview markup."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["INLINE-02"],
+      "reason": "INLINE-02 checks all twelve readable outline entries in order, including literal escape text. Exact counts, serialized Markdown tags and plain-text tooltip attributes remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves outline counts serialized markup and plain tooltip attributes",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/inline-markdown/index.test.ts",
@@ -995,15 +1056,21 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
       "candidateCaseIds": ["CONTENT-07"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "CONTENT-07 checks both complete generic headings before following the next article. The deterministic test retains code-element markup and its exact any text in both links.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves code elements in previous and next generic headings",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/inline-markdown/index.test.ts",
       "name": "inline Markdown > Should render html like <img> with inline markdown syntax correctly",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact escaped HTML, heading IDs, code/strong elements, and sidebar/overview markup."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-13"],
+      "reason": "AUDIT-13 checks the rendered feature-card image using a pinned copy of its original asset. The exact image src URL remains deterministic; this is rendering coverage, not CDN availability.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves the inline HTML image source URL",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/issue-1309/index.test.ts",
@@ -1040,34 +1107,46 @@
     {
       "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
       "name": "Markdown asset links > should support asset link",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Pending mixed-scope review: asset link navigation and readable text/HTML content need AI coverage; retain exact destination URLs, SVG title and serialized HTML contracts. No original assertion has been removed."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["ASSET-01"],
+      "reason": "ASSET-01 verifies navigation and readable text, HTML and Markdown content. Exact destination URLs, six source links, four checked assets, SVG title and serialized HTML remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves asset URLs and serialized markup for English HTML routes",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
       "name": "Markdown asset links > should support asset link - i18n",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Pending mixed-scope review: asset link navigation and readable text/HTML content need AI coverage; retain exact destination URLs, SVG title and serialized HTML contracts. No original assertion has been removed."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["ASSET-02"],
+      "reason": "ASSET-02 verifies navigation and readable text, HTML and Markdown content. Exact destination URLs, six source links, four checked assets, SVG title and serialized HTML remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves asset URLs and serialized markup for Chinese HTML routes",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
       "name": "Markdown asset links > should support asset link - cleanUrls: false",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Pending mixed-scope review: asset link navigation and readable text/HTML content need AI coverage; retain exact destination URLs, SVG title and serialized HTML contracts. No original assertion has been removed."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["ASSET-03"],
+      "reason": "ASSET-03 verifies navigation and readable text, HTML and Markdown content. Exact destination URLs, six source links, four checked assets, SVG title and serialized HTML remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves asset URLs and serialized markup for English clean routes",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/markdown-link-asset/index.test.ts",
       "name": "Markdown asset links > should support asset link - cleanUrls: false - i18n",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Pending mixed-scope review: asset link navigation and readable text/HTML content need AI coverage; retain exact destination URLs, SVG title and serialized HTML contracts. No original assertion has been removed."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["ASSET-04"],
+      "reason": "ASSET-04 verifies navigation and readable text, HTML and Markdown content. Exact destination URLs, six source links, four checked assets, SVG title and serialized HTML remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves asset URLs and serialized markup for Chinese clean routes",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/multi-version-global-sidebar/index.test.ts",
@@ -1230,8 +1309,11 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014145508-fc77705e"],
-      "candidateCaseIds": ["NAV-01", "NAV-02", "NAV-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["NAV-01"],
+      "reason": "NAV-01 checks visible top-level navigation and the closed dropdown before using it. Exact dropdown node counts and the initial hidden CSS class remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves dropdown counts and the initial hidden class",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1313,8 +1395,11 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
-      "candidateCaseIds": ["NAV-07", "NAV-08", "NAV-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["NAV-07"],
+      "reason": "NAV-07 checks visible top-level navigation and the closed dropdown before using it. Exact dropdown node counts and the initial hidden CSS class remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves dropdown counts and the initial hidden class",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1396,8 +1481,11 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
-      "candidateCaseIds": ["STATIC-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["STATIC-02", "AUDIT-09"],
+      "reason": "STATIC-02 verifies the desktop dropdown and AUDIT-09 the tablet hamburger dropdown with JavaScript disabled. Exact initial hidden-class contracts remain deterministic without replaying either hover flow.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves hidden dropdown classes in static desktop and tablet markup",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/nav-slots/index.test.ts",
@@ -1460,8 +1548,16 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
-      "candidateCaseIds": ["COMPONENT-03"],
-      "reason": "Replacement is pending: the original verifies all five manager labels across six panels and thirty exact command outputs after synchronized tab changes. COMPONENT-03 currently checks only pnpm create and yarn install, so it is not equivalent coverage. Keep the original until the remaining behavior and command contracts are covered."
+      "candidateCaseIds": [
+        "COMPONENT-03",
+        "COMPONENT-07",
+        "COMPONENT-08",
+        "COMPONENT-09",
+        "COMPONENT-10"
+      ],
+      "reason": "All five package managers are selected through aiAct. Independent assertions check all thirty original commands and the five tab labels in each of the six synchronized panels.",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/nested-overview/index.test.ts",
@@ -1608,8 +1704,11 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014180715-f81c6d18"],
-      "candidateCaseIds": ["PLAYGROUND-01", "PLAYGROUND-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["PLAYGROUND-01"],
+      "reason": "PLAYGROUND-01 verifies all three rendered outputs. The original uses only exact DOM cardinality checks, retained to detect duplicate or hidden extra outputs.",
+      "remainingTestName": "creates exactly three playgrounds with one DOM output each",
+      "replacementStatus": "retained-technical",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/plugin-playground/index.test.ts",
@@ -1617,8 +1716,12 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014180715-f81c6d18"],
-      "candidateCaseIds": ["PLAYGROUND-01", "PLAYGROUND-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["PLAYGROUND-02"],
+      "reason": "PLAYGROUND-02 verifies the visible hot-updated output. The original exact single matching output-node count remains deterministic.",
+      "remainingTestName": "keeps exactly one matching DOM output after a playground hot update",
+      "replacementStatus": "retained-technical",
+      "replacementEvidenceRuns": ["20261014180715-f81c6d18"],
+      "remoteEvidenceRuns": ["38692030397"]
     },
     {
       "source": "e2e/fixtures/plugin-playground-preview/index.test.ts",
@@ -1765,8 +1868,11 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41", "20261014162358-96521382"],
-      "candidateCaseIds": ["TYPEDOC-01", "TYPEDOC-02", "TYPEDOC-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["TYPEDOC-01"],
+      "reason": "TYPEDOC-01 verifies all six sidebar labels in order and follows a generated API article. Exact navigation and sidebar node counts remain deterministic.",
+      "remainingTestName": "preserves single-entry navigation and sidebar node counts",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/plugin-typedoc/index.test.ts",
@@ -1774,8 +1880,11 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41", "20261014162358-96521382"],
-      "candidateCaseIds": ["TYPEDOC-01", "TYPEDOC-02", "TYPEDOC-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["TYPEDOC-02"],
+      "reason": "TYPEDOC-02 verifies all ten sidebar labels in order and generated function/module navigation. Exact navigation and sidebar node counts remain deterministic.",
+      "remainingTestName": "preserves multi-entry navigation and sidebar node counts",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/plugin-typedoc/index.test.ts",
@@ -1783,8 +1892,11 @@
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41", "20261014162358-96521382"],
-      "candidateCaseIds": ["TYPEDOC-01", "TYPEDOC-02", "TYPEDOC-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "candidateCaseIds": ["TYPEDOC-03"],
+      "reason": "TYPEDOC-03 checks the readable Rspress site label. The exact generated https://rspress.rs href remains deterministic.",
+      "remainingTestName": "preserves the generated raw link destination",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015175519-35748856"]
     },
     {
       "source": "e2e/fixtures/public-dir/index.test.ts",
@@ -1963,10 +2075,13 @@
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
       "name": "plugin preview build > build should skip demo output without iframe previews",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-05"],
+      "reason": "AUDIT-05 verifies the production Internal preview only output. The build test retains the filesystem assertion that the demo output directory is absent.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"],
+      "remainingTestName": "omits the demo build directory when no iframe preview is configured"
     },
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
@@ -2173,10 +2288,13 @@
     {
       "source": "e2e/fixtures/search-algolia/index.test.ts",
       "name": "Algolia search > should have correct crawler selectors for Algolia",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-04"],
+      "reason": "AUDIT-04 verifies the article headings, paragraphs, code and list. Exact crawler selector matching and extraction of nonempty DOM text remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"],
+      "remainingTestName": "exposes nonempty DOM content through the Algolia crawler selectors"
     },
     {
       "source": "e2e/fixtures/search-hooks/index.test.ts",
@@ -2343,7 +2461,10 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["STYLE-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "STYLE-01 checks both rendered button variants. Exact display, radius, height and transparent background values remain deterministic.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "shadcn/ui buttons preserve exact dimensions and computed styles",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/tailwind-v4/index.test.ts",
@@ -2370,10 +2491,13 @@
     {
       "source": "e2e/fixtures/title-number/index.test.ts",
       "name": "title numbering > Index page",
-      "decision": "retain-deterministic",
-      "status": "retained",
-      "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "decision": "migrate-visible-behavior",
+      "status": "local-visible-scope-verified",
+      "candidateCaseIds": ["AUDIT-02"],
+      "reason": "AUDIT-02 verifies all three numbered headings in order, including the duplicate. The exact deduplicated anchor href array remains deterministic.",
+      "remainingTestName": "generates distinct anchor URLs for repeated numbered headings",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/ssg-worker/index.test.ts",
@@ -2446,7 +2570,10 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014162358-96521382"],
       "candidateCaseIds": ["READ-01", "EXTRA-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "EXTRA-05 checks Sync 0, Sync 1, Async initial and Async updated. The deterministic test retains the transient initial/updated loading fallback checks, which slow model calls cannot reliably observe, with attachment synchronization before the update action.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "BrowserOnly exposes transient fallback text before asynchronous content resolves",
+      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
     },
     {
       "source": "e2e/fixtures/with-base/index.test.ts",

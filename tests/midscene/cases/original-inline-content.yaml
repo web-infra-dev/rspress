@@ -1,0 +1,39 @@
+cases:
+  - name: INLINE-01 Read formatted sidebar labels
+    tags: [replacement-final-inline]
+    steps:
+      - app.open: { fixture: inline-markdown, path: /inline/index }
+      - aiAct: Bring the upper portion of the left sidebar into view, keeping this overview page open.
+      - aiAssert: The sidebar starts with Overview, two Class Component<P, S> entries, then bold, emphasis, <foo>, and -m <number> in that order. Angle brackets appear as text rather than disappearing.
+      - aiAct: Scroll within the left sidebar to bring its lower entries starting from delete into view. Do not navigate.
+      - aiAssert: The lower sidebar entries are delete, link, Class Component<P = { }, S = { }, SS = any>, Class Foo<T = { }>, and Class Bar<T = any> in order. The generic type text is readable.
+  - name: INLINE-02 Read formatted article outline entries
+    tags: [replacement-final-inline]
+    steps:
+      - app.open: { fixture: inline-markdown, path: /inline/all }
+      - aiAct: Bring the upper entries of the right On this page outline into view. Focus on the outline, not the left sidebar.
+      - aiAssert: The outline starts with two Class Component<P, S> entries, -m <number>, <foo>, foo <bar> baz, and bold in order.
+      - aiAct: Scroll within the right On this page outline if needed to reveal its lower entries without navigating away.
+      - aiAssert: The remaining outline entries are emphasis, delete, This is a long string to test regex performance, Class Bar<T = any>, **literal**, and &lt; in order. The last two preserve literal asterisks and the text &lt;.
+  - name: INLINE-03 Read escaped overview groups and entries
+    tags: [replacement-final-inline]
+    steps:
+      - app.open: { fixture: inline-markdown, path: /inline/index }
+      - aiAct: Bring the beginning of the central overview into view, ignoring duplicate labels in the sidebars.
+      - aiAssert: The overview begins with two groups titled Class Component<P, S>, each with a matching card title.
+      - aiAct: Scroll the central overview to the bold and emphasis groups.
+      - aiAssert: The bold and emphasis groups have matching card titles. The labels are rendered as readable text, not raw HTML tags.
+      - aiAct: Scroll the central overview to the <foo> and -m <number> groups.
+      - aiAssert: Both groups and their matching card titles preserve angle brackets in <foo> and -m <number>.
+      - aiAct: Scroll the central overview to the delete and link groups.
+      - aiAssert: The delete and link groups have matching card titles.
+      - aiAct: Scroll the central overview to its final generic type groups.
+      - aiAssert: The final groups and their matching card titles are Class Component<P = { }, S = { }, SS = any>, Class Foo<T = { }>, and Class Bar<T = any>.
+  - name: INLINE-04 Read all escaped overview article links
+    tags: [replacement-final-inline, replacement-final-followup]
+    steps:
+      - app.open: { fixture: inline-markdown, path: /inline/index }
+      - aiAct: Bring the first central overview group titled Class Component<P, S> into view. Focus on its article links, not sidebar entries or the later overview groups.
+      - aiAssert: The first wide overview card has twelve article links in four rows of three. Reading each row left to right, they are Class Component<P, S>, Class Component<P, S>, -m <number>; then <foo>, foo <bar> baz, bold; then emphasis, delete, This is a long string to test regex performance; finally Class Bar<T = any>, **literal**, &lt;. These are links inside the central card, not the separate sidebar.
+      - aiAct: Scroll the central overview to the group named link and bring its four article links into view.
+      - aiAssert: The group lists this is link rsbuild, this is bold link rsbuild, this is code link rsbuild, and this is bold code link rsbuild in order. Formatting does not remove any words.

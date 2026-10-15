@@ -66,7 +66,7 @@ test.describe('Auto nav and sidebar dir convention', async () => {
     expect(nestedContexts).toEqual(['context-index-in-meta']);
   });
 
-  test('/api/config/index.html /api/config/index /api/config should be the same page', async ({
+  test('preserves sidebar cardinality and active DOM identity for route aliases', async ({
     page,
   }) => {
     async function getSidebarLength(): Promise<number> {

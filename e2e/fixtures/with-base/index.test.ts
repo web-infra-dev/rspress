@@ -51,7 +51,7 @@ test.describe('site with base path', async () => {
     expect(href).toBe('/base/en/guide/install.html');
   });
 
-  test('BrowserOnly should render fallback and update client content', async ({
+  test('BrowserOnly exposes transient fallback text before asynchronous content resolves', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}/base/en/`, {
@@ -61,25 +61,13 @@ test.describe('site with base path', async () => {
     await expect(page.locator('#browser-only-async-fallback')).toHaveText(
       'Async fallback initial',
     );
-    await expect(page.locator('#browser-only-sync-content')).toHaveText(
-      'Sync 0',
-    );
-
-    await page.locator('#browser-only-sync-increment').click();
-    await expect(page.locator('#browser-only-sync-content')).toHaveText(
-      'Sync 1',
-    );
-
-    await expect(page.locator('#browser-only-async-content')).toHaveText(
-      'Async initial',
-    );
+    await page
+      .locator('#browser-only-async-content')
+      .waitFor({ state: 'attached' });
 
     await page.locator('#browser-only-async-update').click();
     await expect(page.locator('#browser-only-async-fallback')).toHaveText(
       'Async fallback updated',
-    );
-    await expect(page.locator('#browser-only-async-content')).toHaveText(
-      'Async updated',
     );
   });
 });

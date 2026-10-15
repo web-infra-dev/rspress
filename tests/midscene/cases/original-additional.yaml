@@ -24,9 +24,12 @@ cases:
       - aiAct: Bring the raw Markdown source block in the Hello world article into view.
       - aiAssert: The source block displays the literal heading marker in # Raw Markdown and the sentence This file should be imported as source text.
   - name: EXTRA-05 Interact with BrowserOnly components after production hydration
-    tags: [original-additional, migration-regression]
+    tags:
+      [original-additional, migration-regression, replacement-final-existing]
     steps:
       - app.open: { fixture: with-base, mode: production, path: /base/en/ }
+      - aiAct: Bring the BrowserOnly demonstration into view and wait for its initial asynchronous output, without clicking either button yet.
+      - aiAssert: The synchronous counter reads Sync 0 beside Increment, and the asynchronous output reads Async initial beside Update.
       - aiAct: Find the BrowserOnly demonstration and click its synchronous increment button once.
       - aiAssert: The BrowserOnly row shows the Increment button followed by Sync 1; its counter value is 1. The button label may touch the output text.
       - aiAct: Click the asynchronous component's update button and wait for its updated output.

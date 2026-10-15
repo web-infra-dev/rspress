@@ -35,7 +35,7 @@ test.describe('tailwind-v4', async () => {
     await expect(blueBox).toHaveCSS('padding', '16px');
   });
 
-  test('shadcn/ui button should render with correct styles', async ({
+  test('shadcn/ui buttons preserve exact dimensions and computed styles', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}`, {
@@ -43,13 +43,11 @@ test.describe('tailwind-v4', async () => {
     });
 
     const defaultButton = page.getByTestId('shadcn-button');
-    await expect(defaultButton).toBeVisible();
     await expect(defaultButton).toHaveCSS('display', 'inline-flex');
     await expect(defaultButton).toHaveCSS('border-radius', '6px');
     await expect(defaultButton).toHaveCSS('height', '40px');
 
     const outlineButton = page.getByTestId('shadcn-button-outline');
-    await expect(outlineButton).toBeVisible();
     await expect(outlineButton).toHaveCSS(
       'background-color',
       /rgba?\(0,\s*0,\s*0,\s*0\)|transparent/,

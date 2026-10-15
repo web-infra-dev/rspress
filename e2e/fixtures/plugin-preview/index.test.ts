@@ -107,30 +107,12 @@ test.describe('plugin preview build', async () => {
     await expect(page.locator('iframe')).toHaveCount(1);
   });
 
-  test('build should skip demo output without iframe previews', async ({
-    page,
-  }) => {
+  test('omits the demo build directory when no iframe preview is configured', async () => {
     const appDir = import.meta.dirname;
-    const noIframePort = await getPort();
     const distDir = path.join(appDir, 'doc_build');
 
     await fs.rm(distDir, { recursive: true, force: true });
     await runBuildCommand(appDir, 'rspress.no-iframe.config.ts');
-    const noIframeApp = await runPreviewCommand(appDir, noIframePort, [
-      '-c',
-      'rspress.no-iframe.config.ts',
-    ]);
-
-    try {
-      await page.goto(`http://localhost:${noIframePort}`, {
-        waitUntil: 'networkidle',
-      });
-      await expect(page.locator('.rp-preview--internal__card')).toContainText(
-        'Internal preview only',
-      );
-      await expect(fs.access(path.join(distDir, '~demo'))).rejects.toThrow();
-    } finally {
-      await killProcess(noIframeApp);
-    }
+    await expect(fs.access(path.join(distDir, '~demo'))).rejects.toThrow();
   });
 });

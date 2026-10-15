@@ -5,69 +5,57 @@ generated API pages, previews, playgrounds, HMR, and production/static rendering
 The fixture launcher runs the checked-out CLI against original `e2e/fixtures`;
 the initial documentation examples remain separate smoke cases.
 
-`migration-inventory.json` records the original E2E cases and their migration
-decisions. Exact DOM, CSS, timing, build-output, and browser-event contracts
-remain deterministic. Candidate mappings alone do not prove full replacement.
-The initial assessment mapped 129 of the 237 originals to the 112 AI cases and
-classified 108 as deterministic-only. These historical labels do not prove full
-assertion equivalence or exclude mixed UI scope. Multiple originals can map to
-one AI flow. Inventory evidence identifies local runs, not remote CI passes.
-The current suite contains 114 AI cases, including separate production checks
-for the `/base` and `/base/` homepage entries.
+`migration-inventory.json` accounts for every test at the recorded baseline
+commit. Assertion-level review is complete; no original is left pending.
 
-The reviewed replacement batches remove 50 pure UI tests from the legacy
-suite. Each is marked `replaced-by-midscene` in the baseline inventory, whose
-`sourceCommit` preserves its original source. Other mappings still await
-assertion-level review and splitting; the inventory's 237 is the original count,
-not a claim that 237 legacy tests still execute. There are 187 remaining legacy
-tests after these replacements. Rstest continues to run the
-remaining tests through `pnpm test:e2e`; existing Linux, macOS, and Windows CI
-workflows keep that command. Mixed tests are retained until their technical
-assertions have been separated. No replaced case is disabled with `skip`.
-Thirty-three mixed tests are split. Midscene verifies tab switching, navigation,
-localized home heroes and search, custom layouts/outlines, rendered code and
-callouts, footer text, and banner dismissal. The legacy tests retain exact DOM
-structure, CSS classes, callback order, browser errors, installed React/router
-versions, metadata, image attributes, and storage keys/values.
-Deterministic clicks remain only where needed to prepare a technical contract
-check, such as writing localStorage; they are not the visible E2E proof.
-LAYOUT-05 now checks all five translated/fallback strings in all three languages.
-Twenty-nine mapped originals have been reviewed as technical-only and remain
-unchanged, explicitly marked `retained-technical`. Examples include exact URL,
-href, RGB, DOM-index/count, browser-error and one-pixel scroll-offset contracts.
-They are not counted as removed or split. There are 17 mapped originals still
-awaiting assertion-level review. Of the initial 108 deterministic-only
-classifications, eighty-five have been reviewed and retained: Shiki DOM/CSS,
-heading font-size/anchor, feature-card URL events, generated head metadata,
-TOC serialization/depth attributes, icon build output, generated link arrays,
-dead-anchor build failures, exact client redirect destinations, generated
-RSS/LLMS data, browser events, controlled search races, and server restart counts.
-The other 23 still need review for mixed UI scope. This includes clean-URL
-landing visibility and asset navigation: their technical assertions do not
-make the entire test ineligible for UI replacement. The icon output test now
-awaits its filesystem check; a truthy Promise previously allowed missing files
-to pass. The same missing-await issue is fixed in LLMS and public-directory
-output checks. Strict SSG failure now requires a rejected build instead of
-silently passing when no exception is thrown.
-HMR visibility checks now belong to Midscene; the deterministic tests synchronize
-completed DOM updates before checking server restart counts, root color classes,
-and preserved window/React state. Mobile hash navigation keeps only its original
-open-class check in the deterministic suite. These AI counterparts passed in
-remote run `38692030397`; that run was not fully green (111/114 passed).
-The latest replacements cover complete nested overview groups and article lists,
-both production base-path homepage entries, complete generated sidebars, and all
-four original code-search queries. Local run `20261015140840-f52308ac` passed
-seven of eight flows; the Level 1 overview assertion initially confused the page
-title with its group heading. After clarifying those regions without removing
-entries, `20261015141616-e6d3f80e` passed that flow. Case retries remain disabled.
-Overview content is checked in separate sections before following links. Japanese
-search covers all four original queries and result counts; localized search also
-returns to English. Dynamic TOC checks wait for the heading update before asserting
-both the article heading and its outline entry.
-Generated API tables check every original column, property description, type and
-default value; search checks result counts before opening the table. Preview tests
-read rendered internal/external outputs separately from source code; the legacy
-tests retain explicit preview and iframe counts.
+| Original test disposition                              | Count |
+| ------------------------------------------------------ | ----: |
+| Pure UI originals removed and replaced by Midscene     |    54 |
+| Mixed originals split; only technical contracts remain |    66 |
+| Technical-only originals retained                      |   117 |
+| Total baseline originals                               |   237 |
+
+The suite contains **153 AI cases** and **183 remaining deterministic tests**.
+This is not a one-to-one translation: one long original may require several
+viewport-sized AI checks, while multiple originals can share a user flow.
+No replaced test is disabled with `skip`; Git history preserves its source.
+The existing Linux, macOS and Windows workflows continue to run the remaining
+technical tests with `pnpm test:e2e`.
+
+AI cases cover visible navigation, search, sidebars, generated API pages, previews,
+playgrounds, code panels, language/version switching, package-manager commands,
+HMR and production/static rendering. All five package managers are checked across
+six synchronized panels (30 original commands). Long pages are checked in focused
+sections; action completion is never used as an assertion.
+
+Exact URL/href/src strings, DOM counts and classes, serialized HTML, CSS values,
+metadata, browser events, controlled search races, transient loading fallbacks,
+filesystem/build output and server restart counts remain deterministic. HMR tests
+wait for an update to attach before measuring retained window/React state and
+restart counts. Those waits are synchronization, not visible E2E proof.
+The inventory deliberately does not claim that AI preserves every original matcher
+literally; it records the replacement scope and per-case evidence instead.
+
+The audit also added missing awaits to filesystem checks in icon, public-directory and
+LLMS tests, made strict SSG failure reject an unexpectedly successful build, and
+closed each asset-test preview process after its test.
+
+Local validation on 2026-10-15:
+
+- `pnpm test:e2e`: 183/183 deterministic tests passed across 62 files.
+- `20261015171335-c8e822b8`: 35 completed cases passed and three failed before
+  the run was deliberately stopped during a fourth incorrect prompt. This is
+  **not** a successful full run; its individual completed result files remain.
+- `20261015175519-35748856`: 21/21 passed, including the four corrected prompts,
+  every unexecuted case and the generated raw-link regression.
+- Together these runs verify 56 distinct cases, including every newly added or
+  strengthened case. Automatic retries remain disabled. Local evidence does not
+  substitute for a full remote run on the final commit.
+
+Prompt corrections describe the actual UI: Nested is a directory card, an empty
+custom home has no configured hero, a vertical Playground preview sits above its
+editor, a tablet hamburger offers Theme, and the sidebar badge belongs to the
+Introduction label rather than its internal overview identifier.
 
 This isolated npm package uses
 `@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.
@@ -79,6 +67,8 @@ Public network requests remain blocked.
 The original Playground's pinned Monaco 0.43.0 and Babel 7.22.20 CDN URLs are
 fulfilled from matching local npm packages. This preserves its editor/compiler
 runtime without allowing public requests or substituting a newer runtime version.
+The exact Rspress logo URL is fulfilled from its original SVG copy in `assets/`.
+Image checks verify rendering, not external CDN availability.
 
 `fixture.update` changes only allowlisted source text in an isolated temporary
 fixture copy for HMR checks. It does not operate the UI or modify original sources.
@@ -118,7 +108,7 @@ search flows. Retries are disabled so the first failure remains visible.
 
 Native reports live under `midscene_run/report/`; structured results live under
 `.midscene/test-results/`. Reports contain screenshots and test data, so use only
-the synthetic local fixture.
+the local repository fixtures and synthetic smoke pages, never private user data.
 
 ## Model-free checks
 

@@ -1,6 +1,6 @@
 name: E2E Testing by Midscene
 
-# AI-native visual E2E against synthetic local fixtures.
+# AI-native visual E2E against original repository fixtures and local smoke pages.
 # Model credentials are scoped to verification and case execution.
 
 on:

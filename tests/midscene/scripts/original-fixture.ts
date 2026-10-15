@@ -87,9 +87,11 @@ export class OriginalFixture {
     }
     await this.close();
     const directoryName = fixtureAliases[fixture]?.directory ?? fixture;
-    const configArgs = fixtureAliases[fixture]
-      ? ['--config', fixtureAliases[fixture].config]
-      : [];
+    const alias = fixtureAliases[fixture];
+    const configArgs = [
+      ...(alias?.config ? ['--config', alias.config] : []),
+      ...(alias?.args ?? []),
+    ];
     const source = path.join(this.repository, 'e2e/fixtures', directoryName);
     let directory = source;
     if (

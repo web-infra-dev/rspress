@@ -49,6 +49,53 @@ test('a missing fixture directory reports a startup error and can be cleaned up'
   await fixture.close();
 });
 
+test('fixture aliases pass CLI base and config arguments to development and production', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'rspress-fixture-args-'));
+  const fixture = new OriginalFixture(root);
+  try {
+    await mkdir(path.join(root, 'packages/core/bin'), { recursive: true });
+    for (const name of ['basic', 'clean-urls-redirect']) {
+      await mkdir(path.join(root, 'e2e/fixtures', name), { recursive: true });
+    }
+    await writeFile(
+      path.join(root, 'packages/core/bin/rspress.js'),
+      `
+      const { createServer } = require('node:http');
+      const { readFileSync, writeFileSync } = require('node:fs');
+      const args = process.argv.slice(2);
+      if (args[0] === 'build') {
+        writeFileSync('build-args.json', JSON.stringify(args));
+      } else {
+        const build = args[0] === 'preview' ? JSON.parse(readFileSync('build-args.json')) : null;
+        const server = createServer((_request, response) => response.end(JSON.stringify({ args, build })));
+        server.listen(Number(args[args.indexOf('--port') + 1]), '127.0.0.1');
+        process.on('SIGTERM', () => server.close(() => process.exit()));
+      }
+    `,
+    );
+    for (const [name, expected] of [
+      ['basic-cli-base', ['--base', '/bar/']],
+      [
+        'clean-urls-redirect-clean',
+        ['--config', 'rspress.clean-urls.config.ts'],
+      ],
+    ]) {
+      for (const mode of ['development', 'production']) {
+        const origin = await fixture.open(name, mode);
+        const { args, build } = await (await fetch(origin)).json();
+        assert.equal(args[0], mode === 'production' ? 'preview' : 'dev');
+        assert.deepEqual(args.slice(-2), expected);
+        if (mode === 'production')
+          assert.deepEqual(build, ['build', ...expected]);
+        else assert.equal(build, null);
+      }
+    }
+  } finally {
+    await fixture.close();
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test('HMR updates affect a temporary copy, reset between cases, and remove that copy', async () => {
   const root = await mkdtemp(path.join(tmpdir(), 'rspress-hmr-copy-'));
   const fixture = new OriginalFixture(root);

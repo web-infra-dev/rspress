@@ -19,14 +19,6 @@ cases:
       - aiAssert: Tab e displays This is a banana.
       - aiAct: Select Apple in Tab e.
       - aiAssert: Tab e displays This is an apple.
-  - name: COMPONENT-03 Package manager selection updates commands
-    tags: [original-package-tabs]
-    steps:
-      - app.open: { fixture: package-manager-tabs, path: / }
-      - aiAct: In PackageManagerTabs create select pnpm.
-      - aiAssert: The create command shown is pnpm create rspress@latest.
-      - aiAct: In PackageManagerTabs create select yarn, then inspect PackageManagerTabs install.
-      - aiAssert: The install command shown is yarn add -D @rspress/core.
   - name: COMPONENT-04 Change the reading theme
     tags: [original-theme]
     steps:

@@ -17,6 +17,15 @@ export const originalFixtures = [
   'basic-dark',
   'basic-force-dark',
   'basic-system',
+  'basic-cli-base',
+  'clean-urls-redirect',
+  'clean-urls-redirect-clean',
+  'clean-urls-redirect-disabled',
+  'custom-icon',
+  'title-number',
+  'markdown-link-asset',
+  'markdown-link-asset-clean',
+  'plugin-preview-no-iframe',
   'custom-layout',
   'nav-slots',
   'inline-markdown',
@@ -60,8 +69,25 @@ export const originalFixtures = [
 
 export const fixtureAliases: Record<
   string,
-  { directory: string; config: string }
+  { directory: string; config?: string; args?: string[] }
 > = {
+  'basic-cli-base': { directory: 'basic', args: ['--base', '/bar/'] },
+  'clean-urls-redirect-clean': {
+    directory: 'clean-urls-redirect',
+    config: 'rspress.clean-urls.config.ts',
+  },
+  'clean-urls-redirect-disabled': {
+    directory: 'clean-urls-redirect',
+    config: 'rspress.disabled.config.ts',
+  },
+  'markdown-link-asset-clean': {
+    directory: 'markdown-link-asset',
+    config: 'rspress-clean.config.ts',
+  },
+  'plugin-preview-no-iframe': {
+    directory: 'plugin-preview',
+    config: 'rspress.no-iframe.config.ts',
+  },
   'nav-link-items-clean': {
     directory: 'nav-link-items',
     config: 'rspress-clean.config.ts',

@@ -1,11 +1,17 @@
 # cspell:words Extname
 cases:
   - name: CONTENT-01 Follow a generated API overview link
-    tags: [original-overview, replacement-batch-3-overviews]
+    tags:
+      [
+        original-overview,
+        replacement-batch-3-overviews,
+        replacement-final-existing,
+        ci-failure-regression,
+      ]
     steps:
       - app.open: { fixture: auto-nav-sidebar, path: /api/index.html }
       - aiAct: Bring the Config group in the API overview into view. Stay in the overview article.
-      - aiAssert: Config lists Basic config, Theme config, Build config, Front matter config, Extname config, and Nested article entries in that order. Its section links include root, logoText, nav, sidebar, builderConfig, Default config, markdown, and markdown.remarkPlugins.
+      - aiAssert: In the main overview content, Config has three wide rows titled Basic config, Theme config, and Build config from top to bottom, followed by cards titled Front matter config, Extname config, and Nested from left to right. The rows include links root, logoText, nav, sidebar, builderConfig, Default config, markdown, and markdown.remarkPlugins. Nested is a directory card, not an article. Ignore the separate sidebar ordering.
       - aiAct: Bring the Client API group in the main overview article into view. Do not follow any link yet.
       - aiAssert: Client API lists Components and Runtime API article entries with Usage and Example links.
       - aiAct: Bring the Commands, Single, Section a, and Section b sections of the main overview into view, scrolling as needed. Do not follow links yet.
@@ -50,8 +56,10 @@ cases:
       - aiAct: Open documentation search, search for Demo1, and open the matching result.
       - aiAssert: The Demo1 article is visible.
   - name: CONTENT-07 Follow previous and next links with generic headings
-    tags: [original-markdown]
+    tags: [original-markdown, replacement-final-existing]
     steps:
       - app.open: { fixture: inline-markdown, path: /inline/generic-braces }
+      - aiAct: Bring the previous and next article links at the bottom into view, without following them yet.
+      - aiAssert: The previous article label reads Class Component<P = { }, S = { }, SS = any> and the next article label reads Class Bar<T = any>. The generic symbols are preserved as readable text.
       - aiAct: Find the next article link at the bottom and follow Class Bar.
       - aiAssert: The article heading is Class Bar with the generic type T and default any displayed as text.
