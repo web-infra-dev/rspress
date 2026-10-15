@@ -1618,6 +1618,21 @@ importers:
         specifier: ^19.2.7
         version: 19.2.7(@types/react@19.2.18)
 
+  e2e/fixtures/sitemap:
+    dependencies:
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@rspress/plugin-sitemap':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-sitemap
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+
   e2e/fixtures/ssg-fail-strict:
     dependencies:
       '@rspress/core':
@@ -2459,10 +2474,6 @@ importers:
         version: 6.0.3
 
   packages/plugin-sitemap:
-    dependencies:
-      '@rspress/core':
-        specifier: workspace:^2.0.10
-        version: link:../core
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.59.4
@@ -2470,6 +2481,9 @@ importers:
       '@rspress/config':
         specifier: workspace:*
         version: link:../../scripts/config
+      '@rspress/core':
+        specifier: workspace:*
+        version: link:../core
       rsbuild-plugin-publint:
         specifier: ^1.0.0
         version: 1.0.0(@rsbuild/core@2.2.12)
@@ -2647,9 +2661,6 @@ importers:
       '@rspress/plugin-preview':
         specifier: workspace:*
         version: link:../packages/plugin-preview
-      '@rspress/plugin-sitemap':
-        specifier: workspace:*
-        version: link:../packages/plugin-sitemap
       '@rspress/plugin-twoslash':
         specifier: workspace:*
         version: link:../packages/plugin-twoslash

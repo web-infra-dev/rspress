@@ -7,7 +7,6 @@ import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transfor
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginPlayground } from '@rspress/plugin-playground';
 import { pluginPreview } from '@rspress/plugin-preview';
-import { pluginSitemap } from '@rspress/plugin-sitemap';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
 import {
   transformerNotationDiff,
@@ -108,9 +107,6 @@ export default defineConfig({
     pluginPlayground(),
     pluginTwoslash(),
     // pluginFontOpenSans(), // removed this line for Rspress preview
-    pluginSitemap({
-      siteUrl: siteOrigin,
-    }),
     pluginAlgolia({
       verificationContent: '8F5BFE50E65777F1',
     }),

@@ -123,6 +123,7 @@ export class PluginDriver {
     this.#config.ssg ??= true;
     this.#config.llms ??= true;
     this.#config.webMcp ??= true;
+    this.#config.sitemap ??= true;
     this.#config.base = addTrailingSlash(
       addLeadingSlash(this.#config.base ?? '/'),
     );
