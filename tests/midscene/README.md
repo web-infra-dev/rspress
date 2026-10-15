@@ -98,6 +98,20 @@ output while retaining the matching source code. The same assertion correctly
 failed for the blank preview. This fault injection changed only the temporary
 browser session, not fixture source files.
 
+Remote run [38785211479](https://github.com/quanru/rspress/actions/runs/38785211479)
+on `324ed0f` passed 151/153 with no retries; PREVIEW-06 and VIRTUAL-03 passed.
+SEARCH-08's planner mistook the existing `す` for `さ` and skipped the replacement;
+its independent result assertion correctly failed. The instruction now requires
+an actual replacement even when the characters look similar. STATIC-01's Target
+link was visible, but the model could not infer JavaScript availability from a
+screenshot. Its visual assertions now check only the visible links; browser setup
+still disables JavaScript. Collection additionally rejects any STATIC case that
+enables JavaScript or does not use a production build. Both negative guard checks
+were verified using in-memory definition mutations, without changing case files.
+The two corrected cases passed three independent local runs with no retries:
+`20261016035600-57a6fa1f`, `20261016035820-646ae396` and
+`20261016040013-61f76e1a` (2/2 each). Full remote validation remains required.
+
 This isolated npm package uses
 `@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.
 `app.open` only prepares the browser; all product interactions use `aiAct`.

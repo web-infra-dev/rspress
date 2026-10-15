@@ -29,6 +29,18 @@ for (const project of loaded.projects) {
       const nodes = definition.steps.map(step => step.node);
       assert.equal(nodes[0], 'app.open');
       assert.equal(nodes.filter(node => node === 'app.open').length, 1);
+      if (definition.name.startsWith('STATIC-')) {
+        assert.equal(
+          definition.steps[0].input.javascript,
+          false,
+          'Static cases must disable JavaScript in browser setup',
+        );
+        assert.equal(
+          definition.steps[0].input.mode,
+          'production',
+          'Static cases must exercise a production build',
+        );
+      }
       assert(
         nodes.includes('aiAct') && nodes.includes('aiAssert'),
         'Actions and independent assertions required',

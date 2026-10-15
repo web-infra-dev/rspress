@@ -1544,7 +1544,12 @@
     {
       "source": "e2e/fixtures/nav-slots/index.test.ts",
       "name": "Navigation slots > server-renders custom navigation without JavaScript",
-      "replacementEvidenceRuns": ["20261015130626-dc997777"],
+      "replacementEvidenceRuns": [
+        "20261015130626-dc997777",
+        "20261016035600-57a6fa1f",
+        "20261016035820-646ae396",
+        "20261016040013-61f76e1a"
+      ],
       "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
@@ -2370,7 +2375,12 @@
     {
       "source": "e2e/fixtures/search-i18n/index.test.ts",
       "name": "localized search > should return search results for voiced katakana content correctly",
-      "replacementEvidenceRuns": ["20261015125810-3c83714a"],
+      "replacementEvidenceRuns": [
+        "20261015125810-3c83714a",
+        "20261016035600-57a6fa1f",
+        "20261016035820-646ae396",
+        "20261016040013-61f76e1a"
+      ],
       "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
