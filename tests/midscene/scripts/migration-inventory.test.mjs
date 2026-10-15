@@ -94,7 +94,10 @@ test('reviewed originals retain their named technical tests', async () => {
       )
     )
       continue;
-    assert(entry.remainingTestName, 'Missing retained test: ' + entry.name);
+    assert(
+      entry.remainingTestName || entry.remainingTestExpression,
+      'Missing retained test: ' + entry.name,
+    );
     const text = await readFile(
       new URL('../../../' + entry.source, import.meta.url),
       'utf8',
@@ -106,17 +109,36 @@ test('reviewed originals retain their named technical tests', async () => {
       true,
     );
     const titles = [];
+    const expressions = [];
     const visit = node => {
       if (
         ts.isCallExpression(node) &&
-        node.expression.getText(syntax) === 'test' &&
-        ts.isStringLiteral(node.arguments[0])
-      )
-        titles.push(node.arguments[0].text);
+        node.expression.getText(syntax) === 'test'
+      ) {
+        if (ts.isStringLiteral(node.arguments[0]))
+          titles.push(node.arguments[0].text);
+        else expressions.push(node.arguments[0].getText(syntax));
+      }
       ts.forEachChild(node, visit);
     };
     visit(syntax);
-    assert(titles.includes(entry.remainingTestName), entry.name);
+    if (entry.remainingTestName)
+      assert(titles.includes(entry.remainingTestName), entry.name);
+    else {
+      assert.equal(entry.source, 'e2e/fixtures/nav-link/index.test.ts');
+      assert.equal(
+        entry.remainingTestExpression,
+        'JSON.stringify(clickOption)',
+      );
+      assert(expressions.includes(entry.remainingTestExpression), entry.name);
+      for (const option of [
+        "button: 'middle'",
+        "['Shift']",
+        "['Meta']",
+        "['Control']",
+      ])
+        assert(text.includes(option), 'Missing modifier case: ' + option);
+    }
     if (entry.replacementStatus === 'ui-replaced-technical-retained') {
       assert(!titles.includes(entry.name.split(' > ').at(-1)), entry.name);
     }

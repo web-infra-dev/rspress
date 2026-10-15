@@ -32,20 +32,23 @@ versions, metadata, image attributes, and storage keys/values.
 Deterministic clicks remain only where needed to prepare a technical contract
 check, such as writing localStorage; they are not the visible E2E proof.
 LAYOUT-05 now checks all five translated/fallback strings in all three languages.
-Twenty mapped originals have been reviewed as technical-only and remain
+Twenty-nine mapped originals have been reviewed as technical-only and remain
 unchanged, explicitly marked `retained-technical`. Examples include exact URL,
 href, RGB, DOM-index/count, browser-error and one-pixel scroll-offset contracts.
-They are not counted as removed or split. There are 32 mapped originals still
+They are not counted as removed or split. There are 23 mapped originals still
 awaiting assertion-level review. Of the initial 108 deterministic-only
-classifications, twenty-four have been reviewed and retained: Shiki DOM/CSS,
+classifications, eighty-five have been reviewed and retained: Shiki DOM/CSS,
 heading font-size/anchor, feature-card URL events, generated head metadata,
 TOC serialization/depth attributes, icon build output, generated link arrays,
-dead-anchor build failures, and exact client redirect destinations.
-The other 84 still need review for mixed UI scope. This includes clean-URL
+dead-anchor build failures, exact client redirect destinations, generated
+RSS/LLMS data, browser events, controlled search races, and server restart counts.
+The other 23 still need review for mixed UI scope. This includes clean-URL
 landing visibility and asset navigation: their technical assertions do not
 make the entire test ineligible for UI replacement. The icon output test now
 awaits its filesystem check; a truthy Promise previously allowed missing files
-to pass.
+to pass. The same missing-await issue is fixed in LLMS and public-directory
+output checks. Strict SSG failure now requires a rejected build instead of
+silently passing when no exception is thrown.
 The latest replacements cover complete nested overview groups and article lists,
 both production base-path homepage entries, complete generated sidebars, and all
 four original code-search queries. Local run `20261015140840-f52308ac` passed

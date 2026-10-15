@@ -144,7 +144,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+      "reason": "Retain the exact computed orange RGB value of the document link.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "globalStyles should work"
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -207,7 +209,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+      "reason": "Retain class state at DOMContentLoaded and after hydration; model latency cannot prove pre-hydration timing.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "dark mode should be applied before hydration (no flash)"
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -215,7 +219,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact CSS, DOM popup-link attributes, CLI base URL normalization, and pre-hydration timing."
+      "reason": "Retain class state at DOMContentLoaded and after hydration; model latency cannot prove pre-hydration timing.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "light mode should be applied before hydration (no flash)"
     },
     {
       "source": "e2e/fixtures/banner/index.test.ts",
@@ -235,7 +241,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain the MutationObserver probe across startup and zero banner DOM count; a later screenshot cannot prove no earlier flash.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Banner does not flash when previously dismissed"
     },
     {
       "source": "e2e/fixtures/banner/index.test.ts",
@@ -243,7 +251,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain exact 36px banner height, link/close geometry and computed nowrap contract.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Banner message stays single line on narrow viewport"
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar-dir-convention/index.test.ts",
@@ -273,7 +283,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain the complete ordered data-context arrays and nested data-depth mapping.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should generate data-context in dir convention"
     },
     {
       "source": "e2e/fixtures/auto-nav-sidebar-dir-convention/index.test.ts",
@@ -710,7 +722,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Server restart counts and a window sentinel require deterministic observation."
+      "reason": "Retain exact process restart counts and order for route creation/removal and config changes. Heading/404 probes synchronize server readiness between mutations; replacing them with model latency would weaken this lifecycle contract.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "restart when routes or config dependencies change"
     },
     {
       "source": "e2e/fixtures/hmr/index.test.ts",
@@ -754,7 +768,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+      "reason": "Retain the exact localized title attributes and matching button counts in both locales.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should localize code wrap button title"
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -791,7 +807,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+      "reason": "Retain the zero DOM count for the appearance switch when disabled; screenshot absence cannot prove no node exists.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should not render appearance switch button when darkMode is false"
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -852,7 +870,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+      "reason": "Retain DIV-versus-anchor semantics and exact lang, hreflang, rel and absent href attributes for active/non-active language entries.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Language switch should only render non-active languages as links in HoverGroup"
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -860,7 +880,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+      "reason": "Retain exact lang, hreflang and rel attributes of the default-language link.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Language switch link to default language should keep lang and hrefLang attributes in HoverGroup"
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -876,7 +898,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve localized title attributes, hidden-switch DOM counts, language-link attributes, and reciprocal SEO links."
+      "reason": "Retain exact reciprocal alternate-link serialization in both generated HTML files.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "generates reciprocal alternate language links"
     },
     {
       "source": "e2e/fixtures/hash-anchor-scroll/index.test.ts",
@@ -940,7 +964,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact escaped HTML, heading IDs, code/strong elements, and sidebar/overview markup."
+      "reason": "Retain generated heading IDs and exact anchor hrefs for escaped inline Markdown.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should generate header anchor and id with inline markdown syntax correctly"
     },
     {
       "source": "e2e/fixtures/inline-markdown/index.test.ts",
@@ -1040,7 +1066,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain nonempty generated files for every version/locale combination and exact lang, version, base and excluded-home metadata.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should generate llms files for all version+lang combinations"
     },
     {
       "source": "e2e/fixtures/multi-version-llms/index.test.ts",
@@ -1048,7 +1076,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain nonempty generated files for every version/locale combination and exact lang, version, base and excluded-home metadata.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should generate llms files for all version+lang combinations"
     },
     {
       "source": "e2e/fixtures/nav-link/index.test.ts",
@@ -1056,7 +1086,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Retain browser URL-change event completion within the specified 2000ms deadline; no visible content assertion exists.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should navigate correctly"
     },
     {
       "source": "e2e/fixtures/nav-link/index.test.ts",
@@ -1064,7 +1096,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Retain real new-page events and exact destination URLs for middle-click and platform-specific Shift/Meta/Control modifiers; these are browser event contracts.",
+      "remainingTestExpression": "JSON.stringify(clickOption)",
+      "replacementStatus": "retained-technical"
     },
     {
       "source": "e2e/fixtures/nav-link/index.test.ts",
@@ -1072,7 +1106,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Retain real new-page events and exact destination URLs for middle-click and platform-specific Shift/Meta/Control modifiers; these are browser event contracts.",
+      "remainingTestExpression": "JSON.stringify(clickOption)",
+      "replacementStatus": "retained-technical"
     },
     {
       "source": "e2e/fixtures/nav-link/index.test.ts",
@@ -1080,7 +1116,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Retain real new-page events and exact destination URLs for middle-click and platform-specific Shift/Meta/Control modifiers; these are browser event contracts.",
+      "remainingTestExpression": "JSON.stringify(clickOption)",
+      "replacementStatus": "retained-technical"
     },
     {
       "source": "e2e/fixtures/nav-link/index.test.ts",
@@ -1088,7 +1126,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Retain the actual new-page event and exact destination URL after setting target=_blank.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "target=_blank"
     },
     {
       "source": "e2e/fixtures/multi-version/index.test.ts",
@@ -1137,7 +1177,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve the exact image src prefix assertion."
+      "reason": "Retain the exact image src prefix under combined version, locale and base-path routing.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Home feature icon should include base with multi-version and i18n"
     },
     {
       "source": "e2e/fixtures/nav-link-item-with-hash/index.test.ts",
@@ -1145,7 +1187,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The desktop contract is the exact URL fragment; the original page has no contentB label and can fit entirely in the viewport."
+      "reason": "Retain exact URL hash updates for both navigation links.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Navigate with an hash as link"
     },
     {
       "source": "e2e/fixtures/nav-link-item-with-hash/index.test.ts",
@@ -1172,7 +1216,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-01", "NAV-02", "NAV-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Retain exact element counts/types, hidden/depth classes or URL destinations for both routing modes. Menu opening is setup for those contracts; visible navigation is independently exercised by the mapped NAV flows.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "items should be visible when button is hovered"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1180,7 +1226,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain exact element counts/types, hidden/depth classes or URL destinations for both routing modes. Menu opening is setup for those contracts; visible navigation is independently exercised by the mapped NAV flows.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should render correct number of nav"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1188,7 +1236,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain exact element counts/types, hidden/depth classes or URL destinations for both routing modes. Menu opening is setup for those contracts; visible navigation is independently exercised by the mapped NAV flows.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should render correct type of nav"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1197,7 +1247,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-01", "NAV-02", "NAV-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Retain exact element counts/types, hidden/depth classes or URL destinations for both routing modes. Menu opening is setup for those contracts; visible navigation is independently exercised by the mapped NAV flows.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should navigate to the correct page when a link is clicked"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1206,7 +1258,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-01", "NAV-02", "NAV-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Retain exact element counts/types, hidden/depth classes or URL destinations for both routing modes. Menu opening is setup for those contracts; visible navigation is independently exercised by the mapped NAV flows.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should navigate to the correct page when a link is clicked - navScreen"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1214,7 +1268,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain exact element counts/types, hidden/depth classes or URL destinations for both routing modes. Menu opening is setup for those contracts; visible navigation is independently exercised by the mapped NAV flows.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should render nested items with correct depth attributes"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1223,7 +1279,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-01", "NAV-02", "NAV-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Retain exact element counts/types, hidden/depth classes or URL destinations for both routing modes. Menu opening is setup for those contracts; visible navigation is independently exercised by the mapped NAV flows.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should navigate to deeply nested items - navScreen"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1241,7 +1299,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-07", "NAV-08", "NAV-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Retain exact element counts/types, hidden/depth classes or URL destinations for both routing modes. Menu opening is setup for those contracts; visible navigation is independently exercised by the mapped NAV flows.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "items should be visible when button is hovered"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1249,7 +1309,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain exact element counts/types, hidden/depth classes or URL destinations for both routing modes. Menu opening is setup for those contracts; visible navigation is independently exercised by the mapped NAV flows.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should render correct number of nav"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1257,7 +1319,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain exact element counts/types, hidden/depth classes or URL destinations for both routing modes. Menu opening is setup for those contracts; visible navigation is independently exercised by the mapped NAV flows.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should render correct type of nav"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1266,7 +1330,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-07", "NAV-08", "NAV-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Retain exact dropdown item counts, class states and navigation destination URLs in clean-URL mode.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should navigate to the correct page when a link is clicked"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1275,7 +1341,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-07", "NAV-08", "NAV-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Retain exact nested depth/count attributes and browser URL destinations in clean-URL mode; menu opening prepares those contracts.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should navigate to the correct page when a link is clicked - navScreen"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1283,7 +1351,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain exact nested depth/count attributes and browser URL destinations in clean-URL mode; menu opening prepares those contracts.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should render nested items with correct depth attributes"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1292,7 +1362,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-07", "NAV-08", "NAV-09"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Retain exact nested depth/count attributes and browser URL destinations in clean-URL mode; menu opening prepares those contracts.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "it should navigate to deeply nested items - navScreen"
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",
@@ -1472,7 +1544,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain filesystem existence, Markdown serialization, absolute link normalization and metadata-defined entry ordering; these tests read generated files rather than the visual UI.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should generate llms.txt llms-full.txt mdFiles"
     },
     {
       "source": "e2e/fixtures/plugin-llms/index.test.ts",
@@ -1480,7 +1554,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain filesystem existence, Markdown serialization, absolute link normalization and metadata-defined entry ordering; these tests read generated files rather than the visual UI.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should order llms.txt entries according to _meta.json"
     },
     {
       "source": "e2e/fixtures/plugin-llms/index.test.ts",
@@ -1488,7 +1564,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain filesystem existence, Markdown serialization, absolute link normalization and metadata-defined entry ordering; these tests read generated files rather than the visual UI.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "multiple configuration - should generate llms.txt llms-full.txt mdFiles"
     },
     {
       "source": "e2e/fixtures/plugin-playground/index.test.ts",
@@ -1496,7 +1574,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain exact Monaco resource occurrence counts in generated playground HTML and absence from plain-page HTML.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should only preload Monaco on pages containing playgrounds"
     },
     {
       "source": "e2e/fixtures/plugin-playground/index.test.ts",
@@ -1560,7 +1640,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain RSS/Atom XML structure, alternate-link hrefs, output paths, publication-date ordering and exact feed metadata. Browser XML parsing here is a serialization check.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "`link-rss` should add rss <link> to this page"
     },
     {
       "source": "e2e/fixtures/plugin-rss/index.test.ts",
@@ -1568,7 +1650,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain RSS/Atom XML structure, alternate-link hrefs, output paths, publication-date ordering and exact feed metadata. Browser XML parsing here is a serialization check.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should add rss <link> to pages matched"
     },
     {
       "source": "e2e/fixtures/plugin-rss/index.test.ts",
@@ -1576,7 +1660,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain RSS/Atom XML structure, alternate-link hrefs, output paths, publication-date ordering and exact feed metadata. Browser XML parsing here is a serialization check.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should change output dir if dir is given"
     },
     {
       "source": "e2e/fixtures/plugin-rss/index.test.ts",
@@ -1584,7 +1670,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain RSS/Atom XML structure, alternate-link hrefs, output paths, publication-date ordering and exact feed metadata. Browser XML parsing here is a serialization check.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should sort by pubDate by default"
     },
     {
       "source": "e2e/fixtures/plugin-rss/index.test.ts",
@@ -1592,7 +1680,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain RSS/Atom XML structure, alternate-link hrefs, output paths, publication-date ordering and exact feed metadata. Browser XML parsing here is a serialization check.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should has expected content"
     },
     {
       "source": "e2e/fixtures/plugin-twoslash/index.test.ts",
@@ -1601,7 +1691,9 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
       "candidateCaseIds": ["PLUGIN-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Retain custom-element attachment, popup counts, initialization/always attributes and generated highlight/error classes. Visible hover behavior is exercised separately by PLUGIN-05.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should render twoslash popup elements"
     },
     {
       "source": "e2e/fixtures/plugin-twoslash/index.test.ts",
@@ -1609,7 +1701,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact popup cloning, generated markup, highlight/error classes, and non-Twoslash exclusions."
+      "reason": "Retain custom-element attachment, popup counts, initialization/always attributes and generated highlight/error classes. Visible hover behavior is exercised separately by PLUGIN-05.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should clone twoslash popup elements"
     },
     {
       "source": "e2e/fixtures/plugin-twoslash/index.test.ts",
@@ -1617,7 +1711,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact popup cloning, generated markup, highlight/error classes, and non-Twoslash exclusions."
+      "reason": "Retain custom-element attachment, popup counts, initialization/always attributes and generated highlight/error classes. Visible hover behavior is exercised separately by PLUGIN-05.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should highlight code blocks with twoslash"
     },
     {
       "source": "e2e/fixtures/plugin-twoslash/index.test.ts",
@@ -1625,7 +1721,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact popup cloning, generated markup, highlight/error classes, and non-Twoslash exclusions."
+      "reason": "Retain custom-element attachment, popup counts, initialization/always attributes and generated highlight/error classes. Visible hover behavior is exercised separately by PLUGIN-05.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should show errors in code blocks with twoslash"
     },
     {
       "source": "e2e/fixtures/plugin-twoslash/index.test.ts",
@@ -1633,7 +1731,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact popup cloning, generated markup, highlight/error classes, and non-Twoslash exclusions."
+      "reason": "Retain custom-element attachment, popup counts, initialization/always attributes and generated highlight/error classes. Visible hover behavior is exercised separately by PLUGIN-05.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should not apply twoslash to code blocks without twoslash"
     },
     {
       "source": "e2e/fixtures/plugin-typedoc/index.test.ts",
@@ -1668,7 +1768,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain output file existence and copied JavaScript contents. The image existence Promise is now awaited.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should not generate the routes for html/js/mdx files in publicDir"
     },
     {
       "source": "e2e/fixtures/public-dir/index.test.ts",
@@ -1730,7 +1832,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve generated SSG Markdown and exact installed-version assertions."
+      "reason": "Retain generated Markdown matching installed React/router versions and rejecting unresolved placeholders.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "React 18 build should be successful"
     },
     {
       "source": "e2e/fixtures/remark-image/index.test.mjs",
@@ -1738,7 +1842,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain remark lint message counts and exact dead-image diagnostics for MDX nodes; no browser UI is exercised.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should not throw on unknown MDX nodes and report dead images via remark message"
     },
     {
       "source": "e2e/fixtures/react-router-dom-6/index.test.ts",
@@ -1814,7 +1920,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve iframe html.dark class propagation checks. PLUGIN-03 checks document appearance, not that hidden class contract."
+      "reason": "Retain propagation and removal of exact dark classes in both iframe modes; these assertions inspect frame DOM state, not screenshot colors.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "iframe dark mode"
     },
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
@@ -1872,7 +1980,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain remark lint message counts and exact dead-link/anchor diagnostics, including disabled/default option behavior.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should report dead links via remark message"
     },
     {
       "source": "e2e/fixtures/remark-link/index.test.mjs",
@@ -1880,7 +1990,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain remark lint message counts and exact dead-link/anchor diagnostics, including disabled/default option behavior.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should report dead anchors via remark message"
     },
     {
       "source": "e2e/fixtures/remark-link/index.test.mjs",
@@ -1888,7 +2000,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain remark lint message counts and exact dead-link/anchor diagnostics, including disabled/default option behavior.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should support disabling anchor checks"
     },
     {
       "source": "e2e/fixtures/remark-link/index.test.mjs",
@@ -1896,7 +2010,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain remark lint message counts and exact dead-link/anchor diagnostics, including disabled/default option behavior.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should disable anchor checks by default"
     },
     {
       "source": "e2e/fixtures/replace-rules/index.test.ts",
@@ -2089,7 +2205,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain the controlled pending-fetch race, explicit console rejection synchronization, animation-frame settling and stale-error suppression. A normal AI search flow cannot prove this ordering contract.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "ignores an old locale index failure after switching language"
     },
     {
       "source": "e2e/fixtures/search-i18n/index.test.ts",
@@ -2097,7 +2215,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain injected HTTP 503, console initialization-failure signal, internal initialized=false probe and absence of uncaught page errors. The probe is an API error-state contract, not user-facing search behavior.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "public full-text search handles an index load failure"
     },
     {
       "source": "e2e/fixtures/ssg-fail-strict/index.test.ts",
@@ -2105,7 +2225,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain strict-mode build rejection and exact CSR route-preload serialization. The rejection assertion now fails if the build unexpectedly succeeds.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "fails the build in strict SSG mode"
     },
     {
       "source": "e2e/fixtures/ssg-fail-strict/index.test.ts",
@@ -2113,7 +2235,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain strict-mode build rejection and exact CSR route-preload serialization. The rejection assertion now fails if the build unexpectedly succeeds.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "csr should be successful"
     },
     {
       "source": "e2e/fixtures/ssg-missing-public/index.test.ts",
@@ -2121,7 +2245,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain build rejection when template public assets are missing.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should reject when template public assets are missing"
     },
     {
       "source": "e2e/fixtures/ssg-md/index.test.ts",
@@ -2129,7 +2255,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain generated Markdown files, exact llms metadata, hidden directive markup and CSR build success; these are build-output contracts.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "llms should be successful"
     },
     {
       "source": "e2e/fixtures/ssg-md/index.test.ts",
@@ -2137,7 +2265,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain generated Markdown files, exact llms metadata, hidden directive markup and CSR build success; these are build-output contracts.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "custom llms.txt renderer should be successful"
     },
     {
       "source": "e2e/fixtures/ssg-md/index.test.ts",
@@ -2145,7 +2275,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain generated Markdown files, exact llms metadata, hidden directive markup and CSR build success; these are build-output contracts.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "csr should be successful"
     },
     {
       "source": "e2e/fixtures/ssg-md/index.test.ts",
@@ -2153,7 +2285,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain generated Markdown files, exact llms metadata, hidden directive markup and CSR build success; these are build-output contracts.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "llms directive hint should be configurable"
     },
     {
       "source": "e2e/fixtures/tabs-component/index.test.ts",
@@ -2223,7 +2357,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain SSG worker HTML, title/id markup, generated search index and removal of temporary build output.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "build with experimental SSG worker"
     },
     {
       "source": "e2e/fixtures/title-suffix/index.test.ts",
@@ -2231,7 +2367,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Retain exact generated HTML title serialization for default and per-page separators/suffixes.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "title suffix"
     },
     {
       "source": "e2e/fixtures/with-base/index.test.ts",
@@ -2292,7 +2430,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Retain serialized relative preload href patterns for root and nested production HTML.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should resolve an auto asset prefix for route preload"
     },
     {
       "source": "e2e/fixtures/plugin-api-docgen/locales/index.test.ts",
