@@ -165,7 +165,11 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["THEME-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "THEME-03 verifies the visible dark page and appearance switch. The deterministic test retains root-class changes driven by OS color-scheme emulation.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "true updates the root theme class when the system preference changes",
+      "replacementEvidenceRuns": ["20261014162358-96521382"],
+      "remoteEvidenceRuns": ["38692030397"]
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -174,7 +178,11 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["THEME-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "THEME-01 verifies the visible dark-default page and appearance switch. The deterministic test retains the exact root class despite a light OS preference.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "dark sets the root theme class despite a light system preference",
+      "replacementEvidenceRuns": ["20261014162358-96521382"],
+      "remoteEvidenceRuns": ["38692030397"]
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -714,7 +722,11 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
       "candidateCaseIds": ["HMR-01", "HMR-02", "HMR-03", "HMR-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "HMR-01 through HMR-04 verify visible before/after states. Deterministic attachment waits synchronize each completed update before checking the exact zero server-restart count.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "does not restart after content fragment nav and meta hot updates",
+      "replacementEvidenceRuns": ["20261014152600-00831e41"],
+      "remoteEvidenceRuns": ["38692030397"]
     },
     {
       "source": "e2e/fixtures/hmr/index.test.ts",
@@ -733,7 +745,11 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
       "candidateCaseIds": ["VIRTUAL-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "VIRTUAL-01 verifies visible navigation changes. The deterministic test synchronizes on the updated DOM before asserting the preserved window marker.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves the window marker through lazy site-data hot updates",
+      "replacementEvidenceRuns": ["20261014152600-00831e41"],
+      "remoteEvidenceRuns": ["38692030397"]
     },
     {
       "source": "e2e/fixtures/hmr/index.test.ts",
@@ -742,7 +758,11 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
       "candidateCaseIds": ["VIRTUAL-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "VIRTUAL-02 verifies visible translations, search hooks and counter updates. Exact RGB values and window/React state preservation remain deterministic; attachment waits synchronize completed namespace replacements.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves window and React state through virtual-module replacements",
+      "replacementEvidenceRuns": ["20261014162358-96521382"],
+      "remoteEvidenceRuns": ["38692030397"]
     },
     {
       "source": "e2e/fixtures/hmr/index.test.ts",
@@ -1198,7 +1218,11 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014150350-3b31dcf3"],
       "candidateCaseIds": ["READ-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "READ-02 verifies hash navigation to contentC and the closed mobile menu. The deterministic test retains the original exact open-class contract without replaying the migrated navigation flow.",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "sets the mobile menu open class",
+      "replacementEvidenceRuns": ["20261014150350-3b31dcf3"],
+      "remoteEvidenceRuns": ["38692030397"]
     },
     {
       "source": "e2e/fixtures/nav-link-items/index.test.ts",

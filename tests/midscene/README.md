@@ -24,7 +24,7 @@ tests after these replacements. Rstest continues to run the
 remaining tests through `pnpm test:e2e`; existing Linux, macOS, and Windows CI
 workflows keep that command. Mixed tests are retained until their technical
 assertions have been separated. No replaced case is disabled with `skip`.
-Twenty-seven mixed tests are split. Midscene verifies tab switching, navigation,
+Thirty-three mixed tests are split. Midscene verifies tab switching, navigation,
 localized home heroes and search, custom layouts/outlines, rendered code and
 callouts, footer text, and banner dismissal. The legacy tests retain exact DOM
 structure, CSS classes, callback order, browser errors, installed React/router
@@ -35,7 +35,7 @@ LAYOUT-05 now checks all five translated/fallback strings in all three languages
 Twenty-nine mapped originals have been reviewed as technical-only and remain
 unchanged, explicitly marked `retained-technical`. Examples include exact URL,
 href, RGB, DOM-index/count, browser-error and one-pixel scroll-offset contracts.
-They are not counted as removed or split. There are 23 mapped originals still
+They are not counted as removed or split. There are 17 mapped originals still
 awaiting assertion-level review. Of the initial 108 deterministic-only
 classifications, eighty-five have been reviewed and retained: Shiki DOM/CSS,
 heading font-size/anchor, feature-card URL events, generated head metadata,
@@ -49,6 +49,11 @@ awaits its filesystem check; a truthy Promise previously allowed missing files
 to pass. The same missing-await issue is fixed in LLMS and public-directory
 output checks. Strict SSG failure now requires a rejected build instead of
 silently passing when no exception is thrown.
+HMR visibility checks now belong to Midscene; the deterministic tests synchronize
+completed DOM updates before checking server restart counts, root color classes,
+and preserved window/React state. Mobile hash navigation keeps only its original
+open-class check in the deterministic suite. These AI counterparts passed in
+remote run `38692030397`; that run was not fully green (111/114 passed).
 The latest replacements cover complete nested overview groups and article lists,
 both production base-path homepage entries, complete generated sidebars, and all
 four original code-search queries. Local run `20261015140840-f52308ac` passed

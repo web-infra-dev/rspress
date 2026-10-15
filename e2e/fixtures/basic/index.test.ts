@@ -84,7 +84,7 @@ test.describe('themeConfig.darkMode', async () => {
     app = await runDevCommand(appDir, appPort, configFile);
   }
 
-  test('true follows the system preference and keeps the switch visible', async ({
+  test('true updates the root theme class when the system preference changes', async ({
     page,
   }) => {
     await startApp('rspress.true.config.ts');
@@ -94,13 +94,12 @@ test.describe('themeConfig.darkMode', async () => {
     });
 
     await expect.poll(() => getIsDark(page)).toBe(true);
-    await expect(page.locator('.rp-switch-appearance').first()).toBeVisible();
 
     await page.emulateMedia({ colorScheme: 'light' });
     await expect.poll(() => getIsDark(page)).toBe(false);
   });
 
-  test('dark defaults to dark mode when there is no saved preference', async ({
+  test('dark sets the root theme class despite a light system preference', async ({
     page,
   }) => {
     await startApp('rspress.dark.config.ts');
@@ -110,7 +109,6 @@ test.describe('themeConfig.darkMode', async () => {
     });
 
     await expect.poll(() => getIsDark(page)).toBe(true);
-    await expect(page.locator('.rp-switch-appearance').first()).toBeVisible();
   });
 
   test('force-dark ignores saved preferences and hides the switch', async ({
