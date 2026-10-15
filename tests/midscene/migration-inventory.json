@@ -481,7 +481,7 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Exact CSS, DOM/link attributes, serialized URLs, and browser URL/new-window events remain deterministic."
+      "reason": "Still needs a mixed-scope review: the Hello world heading assertion is visible UI, while the search icon data:image/svg+xml;base64 source attribute is an exact serialization contract. No replacement is claimed yet."
     },
     {
       "source": "e2e/fixtures/custom-layout/index.test.ts",
@@ -569,7 +569,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Checks exactly one title element in the generated page head, not visible document content.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should render only one title tag during ssg"
     },
     {
       "source": "e2e/fixtures/custom-headers/index.test.ts",
@@ -577,7 +579,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Checks exact meta content for string, tuple and function configuration, including platform-specific source path suffixes.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "config headers should be injected"
     },
     {
       "source": "e2e/fixtures/custom-headers/index.test.ts",
@@ -585,7 +589,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Checks exact meta content, the refresh interval and serialized HTML markup from frontmatter.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "frontmatter headers should be injected"
     },
     {
       "source": "e2e/fixtures/custom-headers/index.test.ts",
@@ -593,7 +599,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Checks unique Open Graph title/description meta elements and exact override values.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "frontmatter property headers should override auto-injected OG tags"
     },
     {
       "source": "e2e/fixtures/custom-plugin/index.test.ts",
@@ -633,7 +641,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Injects a heading with an image to check browser void-element serialization and the exact resulting tooltip title.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Should omit browser-serialized void elements from TOC tooltips"
     },
     {
       "source": "e2e/fixtures/dynamic-toc/index.test.ts",
@@ -641,7 +651,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "Preserve exact DOM attributes, controlled races, generated files, and browser-event assertions."
+      "reason": "Checks exact data-depth attributes for h2, h3 and h4 outline entries, rather than their visual indentation.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "Data depth attribute"
     },
     {
       "source": "e2e/fixtures/github-alert-mdxjs/index.test.ts",
@@ -876,7 +888,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Builds the fixture and checks that the configured icon file exists in its output. Await the filesystem result so a Promise cannot produce a false pass.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should use specified file URL icon path"
     },
     {
       "source": "e2e/fixtures/inline-markdown/index.test.ts",
@@ -1331,7 +1345,7 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0"],
       "candidateCaseIds": ["COMPONENT-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Replacement is pending: the original verifies all five manager labels across six panels and thirty exact command outputs after synchronized tab changes. COMPONENT-03 currently checks only pnpm create and yarn install, so it is not equivalent coverage. Keep the original until the remaining behavior and command contracts are covered."
     },
     {
       "source": "e2e/fixtures/nested-overview/index.test.ts",
@@ -1418,7 +1432,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Checks exact serialized title tags on the index and Jane routes.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should render <title> tag by default"
     },
     {
       "source": "e2e/fixtures/page-head-tags/index.test.ts",
@@ -1426,7 +1442,9 @@
       "decision": "retain-deterministic",
       "status": "retained",
       "candidateCaseIds": [],
-      "reason": "The primary contract is build output, serialized data, hidden attributes, or exact routing/hooks; preserve deterministic checks."
+      "reason": "Checks exact serialized Open Graph type, title and description tags on two routes.",
+      "replacementStatus": "retained-technical",
+      "remainingTestName": "should render basic Open Graph meta tags by default"
     },
     {
       "source": "e2e/fixtures/plugin-llms/index.test.ts",

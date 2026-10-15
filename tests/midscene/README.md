@@ -37,9 +37,12 @@ unchanged, explicitly marked `retained-technical`. Examples include exact URL,
 href, RGB, DOM-index/count, browser-error and one-pixel scroll-offset contracts.
 They are not counted as removed or split. There are 32 mapped originals still
 awaiting assertion-level review. Of the initial 108 deterministic-only
-classifications, five have been reviewed and retained: the three Shiki
-DOM/CSS contracts, exact heading font-size/anchor, and feature-card URL events.
-The other 103 still need review for mixed UI scope.
+classifications, fourteen have been reviewed and retained: Shiki DOM/CSS,
+heading font-size/anchor, feature-card URL events, generated head metadata,
+TOC serialization/depth attributes, and icon build output.
+The other 94 still need review for mixed UI scope. The icon output test now
+awaits its filesystem check; a truthy Promise previously allowed missing files
+to pass.
 The latest replacements cover complete nested overview groups and article lists,
 both production base-path homepage entries, complete generated sidebars, and all
 four original code-search queries. Local run `20261015140840-f52308ac` passed
