@@ -16,12 +16,11 @@ test.describe('custom home footer', async () => {
     }
   });
 
-  test('custom home footer', async ({ page }) => {
+  test('preserves the custom footer anchor element', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
     const footer = page.locator('footer');
-    await expect(footer).toBeVisible();
-    await expect(footer.locator('a')).toBeVisible();
+    await expect(footer.locator('a')).not.toHaveCount(0);
   });
 });

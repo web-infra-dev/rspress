@@ -86,11 +86,15 @@
     {
       "source": "e2e/fixtures/basic/index.test.ts",
       "name": "basic site > Index page",
+      "replacementEvidenceRuns": ["20261015120743-964b4825"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "generates the Hello world header anchor href",
+      "replacementReview": "Midscene checks the Hello world article after home recovery; the legacy test retains the exact #hello-world href.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
       "candidateCaseIds": ["FALLBACK-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Midscene checks the Hello world article after home recovery; the legacy test retains the exact #hello-world href."
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -199,11 +203,15 @@
     {
       "source": "e2e/fixtures/banner/index.test.ts",
       "name": "banner > Banner close hides banner and persists state",
+      "replacementEvidenceRuns": ["20261015120743-964b4825"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "dismissal writes the banner storage key",
+      "replacementReview": "Midscene checks visible banner dismissal; the legacy test retains the exact rp-banner-closed localStorage key and true value.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
       "candidateCaseIds": ["COMPONENT-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Midscene checks visible banner dismissal; the legacy test retains the exact rp-banner-closed localStorage key and true value."
     },
     {
       "source": "e2e/fixtures/banner/index.test.ts",
@@ -422,11 +430,15 @@
     {
       "source": "e2e/fixtures/custom-home-footer/index.test.ts",
       "name": "custom home footer > custom home footer",
+      "replacementEvidenceRuns": ["20261015120743-964b4825"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves the custom footer anchor element",
+      "replacementReview": "Midscene checks visible Custom footer text; the legacy test retains the embedded anchor element contract without claiming that its href-less anchor is clickable.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014150350-3b31dcf3"],
       "candidateCaseIds": ["READ-06"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Midscene checks visible Custom footer text; the legacy test retains the embedded anchor element contract without claiming that its href-less anchor is clickable."
     },
     {
       "source": "e2e/fixtures/custom-icon/index.test.ts",
@@ -733,20 +745,26 @@
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
       "name": "i18n > Should render i18n sidebar - cn",
+      "replacementEvidenceRuns": ["20261015121150-47600222"],
+      "replacementStatus": "replaced-by-midscene",
+      "replacementReview": "NAV-12: Chinese sidebar labels 基本 and 成长 are checked before following the article link.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "NAV-12: Chinese sidebar labels 基本 and 成长 are checked before following the article link."
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
       "name": "i18n > Should render i18n sidebar - en",
+      "replacementEvidenceRuns": ["20261015121150-47600222"],
+      "replacementStatus": "replaced-by-midscene",
+      "replacementReview": "NAV-10: English sidebar labels Basic and Growth are checked before following the article link.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "NAV-10: English sidebar labels Basic and Growth are checked before following the article link."
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -760,11 +778,14 @@
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
       "name": "i18n > Should not crash when switch language in api page",
+      "replacementEvidenceRuns": ["20261015121150-47600222"],
+      "replacementStatus": "replaced-by-midscene",
+      "replacementReview": "NAV-03: Checks initial zh overview, switches to English and checks en without zh, then switches back and checks zh without en.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014145508-fc77705e"],
       "candidateCaseIds": ["NAV-03", "NAV-10", "NAV-12"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "NAV-03: Checks initial zh overview, switches to English and checks en without zh, then switches back and checks zh without en."
     },
     {
       "source": "e2e/fixtures/i18n/index.test.ts",
@@ -810,11 +831,14 @@
     {
       "source": "e2e/fixtures/i18n-source-text/index.test.ts",
       "name": "i18n source text > Language i18n.json text",
+      "replacementEvidenceRuns": ["20261015120743-964b4825"],
+      "replacementStatus": "replaced-by-midscene",
+      "replacementReview": "LAYOUT-05 checks all five visible strings in each of Chinese, English and EN_US, including English fallback.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
       "candidateCaseIds": ["LAYOUT-05"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "LAYOUT-05 checks all five visible strings in each of Chinese, English and EN_US, including English fallback."
     },
     {
       "source": "e2e/fixtures/icon-file-url/index.test.ts",
@@ -1307,20 +1331,28 @@
     {
       "source": "e2e/fixtures/page-type-home/index.test.ts",
       "name": "home pageType > Hero",
+      "replacementEvidenceRuns": ["20261015121150-47600222"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves English hero image attributes and resolved action links",
+      "replacementReview": "Midscene checks localized hero text, all three action labels and Action 1 navigation. Legacy retains image src, alt, srcset, sizes, action count and the exact localized action href without clicking.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
       "candidateCaseIds": ["CONTENT-05", "LAYOUT-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Midscene checks localized hero text, all three action labels and Action 1 navigation. Legacy retains image src, alt, srcset, sizes, action count and the exact localized action href without clicking."
     },
     {
       "source": "e2e/fixtures/page-type-home/index.test.ts",
       "name": "home pageType > Hero - zh",
+      "replacementEvidenceRuns": ["20261015121150-47600222"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves Chinese hero image attributes and resolved action links",
+      "replacementReview": "Midscene checks localized hero text, all three action labels and Action 1 navigation. Legacy retains image src, alt, srcset, sizes, action count and the exact localized action href without clicking.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
       "candidateCaseIds": ["CONTENT-05", "LAYOUT-04"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Midscene checks localized hero text, all three action labels and Action 1 navigation. Legacy retains image src, alt, srcset, sizes, action count and the exact localized action href without clicking."
     },
     {
       "source": "e2e/fixtures/page-type-home/index.test.ts",
@@ -1572,11 +1604,15 @@
     {
       "source": "e2e/fixtures/react-18/index.test.ts",
       "name": "React 18 development > Index page",
+      "replacementEvidenceRuns": ["20261015120743-964b4825"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "renders the installed React and router versions",
+      "replacementReview": "Midscene checks visible Hello world navigation; the legacy test retains exact React and router versions resolved from installed package metadata.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
       "candidateCaseIds": ["COMPAT-01"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Midscene checks visible Hello world navigation; the legacy test retains exact React and router versions resolved from installed package metadata."
     },
     {
       "source": "e2e/fixtures/react-18/index.test.ts",
@@ -1607,11 +1643,15 @@
     {
       "source": "e2e/fixtures/react-router-dom-6/index.test.ts",
       "name": "React Router DOM 6 compatibility > Index page",
+      "replacementEvidenceRuns": ["20261015120743-964b4825"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "renders the installed React and router versions",
+      "replacementReview": "Midscene checks visible Hello world navigation; the legacy test retains exact React and router versions resolved from installed package metadata.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
       "candidateCaseIds": ["COMPAT-03"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Midscene checks visible Hello world navigation; the legacy test retains exact React and router versions resolved from installed package metadata."
     },
     {
       "source": "e2e/fixtures/react-router-dom-6/index.test.ts",
@@ -1626,11 +1666,15 @@
     {
       "source": "e2e/fixtures/react-19/index.test.ts",
       "name": "React 19 > Index page",
+      "replacementEvidenceRuns": ["20261015120743-964b4825"],
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "renders the installed React and router versions",
+      "replacementReview": "Midscene checks visible Hello world navigation; the legacy test retains exact React and router versions resolved from installed package metadata.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],
       "candidateCaseIds": ["COMPAT-02"],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "Midscene checks visible Hello world navigation; the legacy test retains exact React and router versions resolved from installed package metadata."
     },
     {
       "source": "e2e/fixtures/react-19/index.test.ts",
@@ -1784,6 +1828,9 @@
     {
       "source": "e2e/fixtures/search/index.test.ts",
       "name": "search keyboard > page with search: false should be excluded from the index",
+      "replacementEvidenceRuns": ["20261015120743-964b4825"],
+      "replacementStatus": "replaced-by-midscene",
+      "replacementReview": "SEARCH-02 checks Quux returns no entries and a no-results message, then verifies normal Foo results recover.",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
@@ -1794,7 +1841,7 @@
         "SEARCH-04",
         "SEARCH-05"
       ],
-      "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
+      "reason": "SEARCH-02 checks Quux returns no entries and a no-results message, then verifies normal Foo results recover."
     },
     {
       "source": "e2e/fixtures/search/index.test.ts",

@@ -1,3 +1,4 @@
+# cspell:words typedoc
 cases:
   - name: TYPEDOC-01 Navigate generated single-entry API documentation
     tags: [original-typedoc]

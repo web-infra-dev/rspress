@@ -27,11 +27,10 @@ test.describe('basic site', async () => {
     }
   });
 
-  test('Index page', async ({ page }) => {
+  test('generates the Hello world header anchor href', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    await expect(page.locator('h1')).toContainText('Hello world');
     const headerAnchor = page.locator('.rp-header-anchor').first();
     await expect(headerAnchor).toHaveAttribute('href', '#hello-world');
   });

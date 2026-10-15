@@ -82,3 +82,59 @@ test('the remaining tab contract test does not replay the migrated user flow', a
   assert(source.includes('not-selected'));
   assert(!source.includes('.click('));
 });
+
+test('split originals retain their named technical tests', async () => {
+  for (const entry of inventory.cases) {
+    if (entry.replacementStatus !== 'ui-replaced-technical-retained') continue;
+    assert(entry.remainingTestName, 'Missing retained test: ' + entry.name);
+    const text = await readFile(
+      new URL('../../../' + entry.source, import.meta.url),
+      'utf8',
+    );
+    const syntax = ts.createSourceFile(
+      entry.source,
+      text,
+      ts.ScriptTarget.Latest,
+      true,
+    );
+    const titles = [];
+    const visit = node => {
+      if (
+        ts.isCallExpression(node) &&
+        node.expression.getText(syntax) === 'test' &&
+        ts.isStringLiteral(node.arguments[0])
+      )
+        titles.push(node.arguments[0].text);
+      ts.forEachChild(node, visit);
+    };
+    visit(syntax);
+    assert(titles.includes(entry.remainingTestName), entry.name);
+    assert(!titles.includes(entry.name.split(' > ').at(-1)), entry.name);
+  }
+});
+
+test('replacement retains exact metadata and storage contracts', async () => {
+  for (const fixture of ['react-18', 'react-19', 'react-router-dom-6']) {
+    const text = await readFile(
+      new URL(
+        '../../../e2e/fixtures/' + fixture + '/index.test.ts',
+        import.meta.url,
+      ),
+      'utf8',
+    );
+    assert(text.includes("getPackageVersion('react')"));
+    assert(text.includes("getPackageVersion('react-router-dom')"));
+    assert(!text.includes("toContainText('Hello world')"));
+  }
+  const basic = await readFile(
+    new URL('../../../e2e/fixtures/basic/index.test.ts', import.meta.url),
+    'utf8',
+  );
+  assert(basic.includes("toHaveAttribute('href', '#hello-world')"));
+  const banner = await readFile(
+    new URL('../../../e2e/fixtures/banner/index.test.ts', import.meta.url),
+    'utf8',
+  );
+  assert(banner.includes("getItem('rp-banner-closed')"));
+  assert(banner.includes(".toBe('true')"));
+});

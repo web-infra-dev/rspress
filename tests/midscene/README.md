@@ -12,18 +12,25 @@ The 112 AI cases include counterparts for visible behavior in 129 of the 237
 original tests; 108 tests remain deterministic-only. Multiple original tests can
 map to one AI flow. Inventory evidence identifies local runs, not remote CI passes.
 
-The first replacement batch removes 22 reviewed pure UI tests from the legacy
+The reviewed replacement batches remove 27 pure UI tests from the legacy
 suite. Each is marked `replaced-by-midscene` in the baseline inventory, whose
 `sourceCommit` preserves its original source. Other mappings still await
 assertion-level review and splitting; the inventory's 237 is the original count,
-not a claim that 237 legacy tests still execute. There are 215 remaining legacy
+not a claim that 237 legacy tests still execute. There are 210 remaining legacy
 tests after these replacements. Rstest continues to run the
 remaining tests through `pnpm test:e2e`; existing Linux, macOS, and Windows CI
 workflows keep that command. Mixed tests are retained until their technical
 assertions have been separated. No replaced case is disabled with `skip`.
-The Tabs test is split: Midscene verifies initial selected content and tab
-switching, while the legacy test checks empty markup and unselected-content
-classes without replaying those interactions.
+Nine mixed tests are split. Midscene verifies tab switching, Hello world
+navigation, localized home heroes, visible footer text, and banner dismissal. The legacy tests retain
+empty tab markup/classes, exact installed React/router versions, the heading's
+anchor href, hero image attributes and resolved action links, the footer anchor element,
+and the banner's localStorage key/value.
+Deterministic clicks remain only where needed to prepare a technical contract
+check, such as writing localStorage; they are not the visible E2E proof.
+LAYOUT-05 now checks all five translated/fallback strings in all three languages.
+The baseline still has 93 candidate originals awaiting assertion-level review;
+the 108 deterministic-only classifications also need review for mixed UI scope.
 
 This isolated npm package uses
 `@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.

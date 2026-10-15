@@ -37,6 +37,7 @@ export async function startFixtureServer(
   }
 
   // The server serves client assets and must not inherit model credentials.
+  // cspell:words SYSTEMROOT LOCALAPPDATA
   const env: NodeJS.ProcessEnv = {};
   for (const key of [
     'PATH',

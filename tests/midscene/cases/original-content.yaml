@@ -24,9 +24,10 @@ cases:
       - aiAct: Open the mobile navigation menu, expand More, and follow Target.
       - aiAssert: The Target article is visible and the mobile menu is closed.
   - name: CONTENT-05 Home page action opens a guide
-    tags: [original-home]
+    tags: [original-home, replacement-batch-2-navigation]
     steps:
       - app.open: { fixture: page-type-home, path: /base/ }
+      - aiAssert: The home hero displays E2E case title, E2E case subTitle, E2E case tagline, and the actions Action 1, Action 2, and External.
       - aiAct: Follow the Action 1 button in the home page hero.
       - aiAssert: The Action 1 article is open.
   - name: CONTENT-06 Read a custom plugin route

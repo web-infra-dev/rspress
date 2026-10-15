@@ -17,20 +17,12 @@ test.describe('home pageType', async () => {
     }
   });
 
-  test('Hero', async ({ page }) => {
+  test('preserves English hero image attributes and resolved action links', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}/base/index.html`, {
       waitUntil: 'networkidle',
     });
-    await expect(page.locator('.rp-home-hero__title-brand')).toHaveText(
-      'E2E case title',
-    );
-    await expect(page.locator('.rp-home-hero__subtitle')).toHaveText(
-      'E2E case subTitle',
-    );
-    await expect(page.locator('.rp-home-hero__tagline')).toHaveText(
-      'E2E case tagline',
-    );
-
     const img = page.locator('.rp-home-hero__image img').first();
     await expect(img.getAttribute('src')).resolves.toBe('/base/brand.png');
     await expect(img.getAttribute('alt')).resolves.toBe('E2E case brand image');
@@ -43,31 +35,19 @@ test.describe('home pageType', async () => {
 
     const actions = page.locator('.rp-home-hero__actions a');
     await expect(actions).toHaveCount(3);
-    await expect(actions.nth(0)).toHaveText('Action 1');
-    await expect(actions.nth(1)).toHaveText('Action 2');
-    await expect(actions.nth(2)).toHaveText('External');
-    // click the first action
-    await actions.nth(0).click();
-    await page.waitForSelector('.rspress-doc');
-    expect(page.url()).toBe(
-      `http://localhost:${appPort}/base/guide/action-1.html`,
-    );
+    await expect
+      .poll(() =>
+        actions.nth(0).evaluate(node => (node as HTMLAnchorElement).href),
+      )
+      .toBe(`http://localhost:${appPort}/base/guide/action-1.html`);
   });
 
-  test('Hero - zh', async ({ page }) => {
+  test('preserves Chinese hero image attributes and resolved action links', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}/base/zh/index.html`, {
       waitUntil: 'networkidle',
     });
-    await expect(page.locator('.rp-home-hero__title-brand')).toHaveText(
-      'E2E 用例 title',
-    );
-    await expect(page.locator('.rp-home-hero__subtitle')).toHaveText(
-      'E2E 用例 subTitle',
-    );
-    await expect(page.locator('.rp-home-hero__tagline')).toHaveText(
-      'E2E 用例 tagline',
-    );
-
     const img = page.locator('.rp-home-hero__image img').first();
     await expect(img.getAttribute('src')).resolves.toBe('/base/brand.png');
     await expect(img.getAttribute('alt')).resolves.toBe('E2E 用例 brand image');
@@ -80,15 +60,11 @@ test.describe('home pageType', async () => {
 
     const actions = page.locator('.rp-home-hero__actions a');
     await expect(actions).toHaveCount(3);
-    await expect(actions.nth(0)).toHaveText('操作 1');
-    await expect(actions.nth(1)).toHaveText('操作 2');
-    await expect(actions.nth(2)).toHaveText('External');
-    // click the first action
-    await actions.nth(0).click();
-    await page.waitForSelector('.rspress-doc');
-    expect(page.url()).toBe(
-      `http://localhost:${appPort}/base/zh/guide/action-1.html`,
-    );
+    await expect
+      .poll(() =>
+        actions.nth(0).evaluate(node => (node as HTMLAnchorElement).href),
+      )
+      .toBe(`http://localhost:${appPort}/base/zh/guide/action-1.html`);
   });
 
   test('Features', async ({ page }) => {

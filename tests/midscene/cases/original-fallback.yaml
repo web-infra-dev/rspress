@@ -1,6 +1,6 @@
 cases:
   - name: FALLBACK-01 Recover from a missing documentation page
-    tags: [original-fallback]
+    tags: [original-fallback, replacement-batch-2]
     steps:
       - app.open: { fixture: basic, path: /not-a-real-page }
       - aiAct: Bring the page-not-found message and recovery link into view.

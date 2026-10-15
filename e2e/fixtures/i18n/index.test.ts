@@ -151,36 +151,6 @@ test.describe('i18n', async () => {
     expect(content?.includes('PAGE NOT FOUND')).toBe(false);
   });
 
-  test('Should render i18n sidebar - cn', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
-      waitUntil: 'networkidle',
-    });
-    const dirContent = await page
-      .locator('.rp-doc-layout__sidebar')
-      .textContent();
-    expect(dirContent ?? '').toContain('基本');
-
-    const sectionHeaderContent = await page
-      .locator('.rp-sidebar-section-header__left span')
-      .textContent();
-    expect(sectionHeaderContent ?? '').toEqual('成长');
-  });
-
-  test('Should render i18n sidebar - en', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
-      waitUntil: 'networkidle',
-    });
-    const dirContent = await page
-      .locator('.rp-doc-layout__sidebar')
-      .textContent();
-    expect(dirContent ?? '').toContain('Basic');
-
-    const sectionHeaderContent = await page
-      .locator('.rp-sidebar-section-header__left span')
-      .textContent();
-    expect(sectionHeaderContent ?? '').toEqual('Growth');
-  });
-
   test('Should add routePrefix when type is custom-link', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
@@ -209,40 +179,6 @@ test.describe('i18n', async () => {
       'href',
       '/en/guide/basic/install.html',
     );
-  });
-
-  test('Should not crash when switch language in api page', async ({
-    page,
-  }) => {
-    await page.goto(`http://localhost:${appPort}/api`, {
-      waitUntil: 'networkidle',
-    });
-    const overviewContentZh = await page.locator('.rp-overview').textContent();
-    expect(overviewContentZh ?? '').toContain('Overview');
-    expect(overviewContentZh ?? '').toContain('zh');
-    expect(overviewContentZh ?? '').not.toContain('en');
-
-    const languageSwitcher = page
-      .locator('.rp-nav-menu__item')
-      .filter({ hasText: '简体中文' });
-    await languageSwitcher.hover();
-    const englishOption = languageSwitcher.locator('.rp-hover-group__item a', {
-      hasText: 'English',
-    });
-    await englishOption.click();
-    await page.waitForURL(/\/en\//);
-
-    const newLanguageSwitcher = page
-      .locator('.rp-nav-menu__item')
-      .filter({ hasText: 'English' });
-    await expect(newLanguageSwitcher).toBeVisible();
-
-    const content = await page.textContent('#__rspress_root');
-    expect(content ?? '').not.toEqual('');
-    const overviewContentEn = await page.locator('.rp-overview').textContent();
-    expect(overviewContentEn ?? '').toContain('Overview');
-    expect(overviewContentEn ?? '').toContain('en');
-    expect(overviewContentEn ?? '').not.toContain('zh');
   });
 
   test('Language switch should only render non-active languages as links in HoverGroup', async ({

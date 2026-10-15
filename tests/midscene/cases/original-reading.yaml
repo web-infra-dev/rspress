@@ -33,7 +33,7 @@ cases:
       - aiAct: Use documentation search to find bar-content and open the matching article.
       - aiAssert: The article contains bar-content and the heading bar-h2.
   - name: READ-06 Read a custom footer
-    tags: [original-footer]
+    tags: [original-footer, replacement-batch-2]
     steps:
       - app.open: { fixture: custom-home-footer, path: / }
       - aiAct: Scroll to the home page footer.

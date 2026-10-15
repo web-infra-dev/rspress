@@ -43,7 +43,7 @@ cases:
       - aiAct: Open the mobile On this page outline.
       - aiAssert: The opened outline displays Before custom outline content and After custom outline content.
   - name: COMPONENT-06 Dismiss the announcement banner
-    tags: [original-banner]
+    tags: [original-banner, replacement-batch-2]
     steps:
       - app.open: { fixture: banner, path: / }
       - aiAct: Close the announcement banner using its close button.

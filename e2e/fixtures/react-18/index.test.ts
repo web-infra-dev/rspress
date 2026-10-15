@@ -33,12 +33,10 @@ test.describe('React 18 development', async () => {
     }
   });
 
-  test('Index page', async ({ page }) => {
+  test('renders the installed React and router versions', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const h1 = page.locator('h1');
-    await expect(h1).toContainText('Hello world');
     const body = page.locator('body');
     await expect(body).toContainText(
       `react-router-dom ${getPackageVersion('react-router-dom')}`,

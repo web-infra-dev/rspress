@@ -18,9 +18,10 @@ cases:
       - aiAct: Hover over ItemsAndLink in the top navigation.
       - aiAssert: Its dropdown shows Child1 and Child2.
   - name: NAV-10 Follow an absolute link in a translated guide
-    tags: [original-locale-links]
+    tags: [original-locale-links, replacement-batch-2-navigation]
     steps:
       - app.open: { fixture: i18n, path: /en/guide/basic/quick-start }
+      - aiAssert: The English sidebar displays Basic and the section heading Growth.
       - aiAct: Follow click by absolute path inside the article, not a sidebar link.
       - aiAssert: The Install article is visible and the navigation language remains English.
   - name: NAV-11 Follow a relative link in a translated guide
@@ -30,9 +31,10 @@ cases:
       - aiAct: Follow click for relative path inside the article, not a sidebar link.
       - aiAssert: The Install article is visible and the navigation language remains English.
   - name: NAV-12 Follow the default language guide link
-    tags: [original-locale-links]
+    tags: [original-locale-links, replacement-batch-2-navigation]
     steps:
       - app.open: { fixture: i18n, path: /guide/basic/quick-start }
+      - aiAssert: The Chinese sidebar displays 基本 and the section heading 成长.
       - aiAct: Follow the absolute-path installation link inside the Chinese article.
       - aiAssert: The 安装 article is visible and the navigation language remains 简体中文.
   - name: NAV-13 Switch language within a nondefault version

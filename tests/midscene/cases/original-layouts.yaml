@@ -18,15 +18,15 @@ cases:
       - aiAct: Bring the right-hand outline panel into view.
       - aiAssert: The outline displays Before custom outline content and After custom outline content even though there are no article heading entries.
   - name: LAYOUT-04 Read a localized home hero and follow its action
-    tags: [original-layouts]
+    tags: [original-layouts, replacement-batch-2-navigation]
     steps:
       - app.open: { fixture: page-type-home, path: /base/zh/ }
       - aiAct: Bring the Chinese home hero and its actions into view.
-      - aiAssert: The hero displays E2E 用例 title, E2E 用例 subTitle, E2E 用例 tagline, and 操作 1.
+      - aiAssert: The hero displays E2E 用例 title, E2E 用例 subTitle, E2E 用例 tagline, and the actions 操作 1, 操作 2, and External.
       - aiAct: Follow 操作 1 in the hero.
       - aiAssert: The Chinese action article is open rather than a page-not-found error.
   - name: LAYOUT-05 Switch translated source text and its fallback language
-    tags: [original-layouts]
+    tags: [original-layouts, replacement-batch-2]
     steps:
       - app.open: { fixture: i18n-source-text, path: / }
       - aiAct: Switch the page to 简体中文.
@@ -34,4 +34,4 @@ cases:
       - aiAct: Switch the page to English.
       - aiAssert: The page displays Modified by configuration, Configuration-file, Configuration-json, Configuration-plugin, and This text is only in English.
       - aiAct: Switch the page to EN_US.
-      - aiAssert: The EN_US page retains Modified by configuration and This text is only in English.
+      - aiAssert: The EN_US page displays Modified by configuration, Configuration-file, Configuration-json, Configuration-plugin, and This text is only in English.
