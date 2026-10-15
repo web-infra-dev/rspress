@@ -49,10 +49,11 @@ async function generate(
     rsbuildConfig: mergeRsbuildConfig(
       {
         plugins: [
-          isProd && resolved.sitemap
+          resolved.sitemap
             ? rsbuildPluginSitemap({ config: resolved, routeService })
             : null,
         ],
+        mode: isProd ? 'production' : 'development',
         logLevel: 'silent',
         source: { entry: { index: path.join(directory, 'entry.js') } },
         server: { publicDir: { name: path.join(directory, 'public') } },
@@ -99,10 +100,13 @@ describe('built-in sitemap', () => {
     await expect(readSitemap()).rejects.toThrow('ENOENT');
   });
 
-  it('does not emit during development', async () => {
-    await generate({ sitemap: true }, false);
-    await expect(readSitemap()).rejects.toThrow('ENOENT');
-  });
+  it.each([true, { siteUrl: 'invalid' }])(
+    'does not initialize or emit during development: %j',
+    async sitemap => {
+      await generate({ sitemap }, false);
+      await expect(readSitemap()).rejects.toThrow('ENOENT');
+    },
+  );
 
   it('preserves relative URLs when no origin is configured', async () => {
     await generate({ sitemap: {}, base: '/docs/' });

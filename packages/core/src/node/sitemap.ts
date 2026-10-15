@@ -83,54 +83,63 @@ export function rsbuildPluginSitemap({
   routeService: Pick<RouteService, 'getRoutes'>;
 }): RsbuildPlugin {
   const options = typeof config.sitemap === 'object' ? config.sitemap : {};
-  const resolvedSiteUrl = getSiteUrl(options.siteUrl, config);
   const cleanUrls = config.route?.cleanUrls ?? false;
   return {
     name: 'rspress:sitemap',
     setup(api) {
-      api.processAssets(
-        { stage: 'additional', environments: ['web'] },
-        async ({ compilation, sources }) => {
-          if (compilation.errors.length) return;
-          for (const publicDir of api.getNormalizedConfig().server.publicDir) {
-            if (publicDir.copyOnBuild === false) continue;
-            const files = await glob('sitemap.xml', {
-              cwd: publicDir.name,
-              ignore: publicDir.ignore,
-            });
-            if (files.length) {
-              logger.warn('[sitemap] Preserving public sitemap.xml.');
-              return;
+      api.modifyBundlerChain((_chain, { isProd, environment }) => {
+        if (!isProd || environment.name !== 'web') return;
+        const resolvedSiteUrl = getSiteUrl(options.siteUrl, config);
+        api.processAssets(
+          { stage: 'additional', environments: ['web'] },
+          async ({ compilation, sources }) => {
+            if (compilation.errors.length) return;
+            for (const publicDir of api.getNormalizedConfig().server
+              .publicDir) {
+              if (publicDir.copyOnBuild === false) continue;
+              const files = await glob('sitemap.xml', {
+                cwd: publicDir.name,
+                ignore: publicDir.ignore,
+              });
+              if (files.length) {
+                logger.warn('[sitemap] Preserving public sitemap.xml.');
+                return;
+              }
             }
-          }
-          const sitemaps: Sitemap[] = [];
-          const seen = new Set<string>();
-          for (const { routePath, absolutePath } of routeService.getRoutes()) {
-            if (seen.has(routePath)) continue;
-            seen.add(routePath);
-            // Routes are file paths, not URLs: encode reserved characters as data.
-            const pathname = cleanUrls
-              ? routePath
-              : `/${routePath2HtmlFileName(routePath)}`;
-            const encodedPath = pathname
-              .split('/')
-              .map(encodeURIComponent)
-              .join('/');
-            sitemaps.push({
-              loc: `${resolvedSiteUrl.replace(/\/$/, '')}${encodedPath}`,
-              lastmod: (await stat(absolutePath)).mtime.toISOString(),
-              priority:
-                routePath === '/' ? '1.0' : (options.defaultPriority ?? '0.5'),
-              changefreq: options.defaultChangeFreq ?? 'monthly',
-              ...(options.customMaps?.[routePath] ?? {}),
-            });
-          }
-          compilation.emitAsset(
-            'sitemap.xml',
-            new sources.RawSource(generateXml(sitemaps)),
-          );
-        },
-      );
+            const sitemaps: Sitemap[] = [];
+            const seen = new Set<string>();
+            for (const {
+              routePath,
+              absolutePath,
+            } of routeService.getRoutes()) {
+              if (seen.has(routePath)) continue;
+              seen.add(routePath);
+              // Routes are file paths, not URLs: encode reserved characters as data.
+              const pathname = cleanUrls
+                ? routePath
+                : `/${routePath2HtmlFileName(routePath)}`;
+              const encodedPath = pathname
+                .split('/')
+                .map(encodeURIComponent)
+                .join('/');
+              sitemaps.push({
+                loc: `${resolvedSiteUrl.replace(/\/$/, '')}${encodedPath}`,
+                lastmod: (await stat(absolutePath)).mtime.toISOString(),
+                priority:
+                  routePath === '/'
+                    ? '1.0'
+                    : (options.defaultPriority ?? '0.5'),
+                changefreq: options.defaultChangeFreq ?? 'monthly',
+                ...(options.customMaps?.[routePath] ?? {}),
+              });
+            }
+            compilation.emitAsset(
+              'sitemap.xml',
+              new sources.RawSource(generateXml(sitemaps)),
+            );
+          },
+        );
+      });
     },
   };
 }

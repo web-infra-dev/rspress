@@ -208,9 +208,7 @@ async function createInternalBuildConfig(
           ...siteDataVMPlugin(context),
         },
       }),
-      isProduction() && config.sitemap
-        ? rsbuildPluginSitemap({ config, routeService })
-        : null,
+      config.sitemap ? rsbuildPluginSitemap({ config, routeService }) : null,
       enableSSG && config.ssg
         ? rsbuildPluginSSG({
             routeService,
