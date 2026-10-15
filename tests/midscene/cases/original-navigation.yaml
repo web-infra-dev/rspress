@@ -22,7 +22,8 @@ cases:
       - aiAct: In the top navigation, hover over English and choose 简体中文 from its language menu. Do not type into the API filter.
       - aiAssert: The Overview heading and the introductory text zh are visible, en is absent from the overview, and the top navigation language is 简体中文.
   - name: NAV-04 Switch documentation versions
-    tags: [original-versions, migration-regression]
+    tags:
+      [original-versions, migration-regression, remote-navigation-regression]
     steps:
       - app.open: { fixture: multi-version, path: /base/ }
       - aiAssert: The initial article heading is v1, the default version in the default language.
@@ -30,8 +31,8 @@ cases:
       - aiAssert: The article heading is v2.
       - aiAct: Use the documentation version selector to switch back to v1.
       - aiAssert: The article heading is v1.
-      - aiAct: Keep version v1 selected and switch the documentation language to 简体中文.
-      - aiAssert: The article heading is v1 中文.
+      - aiAct: Hover over English in the top navigation and choose 简体中文 from its language menu. The version is already v1; leave the version selector alone. If its hover menu is still open, moving the pointer to English dismisses it. Do not click v1 again or use search.
+      - aiAssert: The article heading is v1 中文, the selected language is 简体中文, and the selected version is v1.
   - name: NAV-05 Version-specific sidebars remain isolated
     tags: [original-version-sidebar, replacement-batch-3]
     steps:

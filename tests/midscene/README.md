@@ -68,6 +68,16 @@ The corrected five cases passed twice locally without retries:
 The social popup additionally checks absence before hover and after moving away.
 These focused runs do not constitute a successful full remote run.
 
+Remote run [38740264126](https://github.com/quanru/rspress/actions/runs/38740264126)
+on `03908bb` passed 152/153 cases with no retries, including all five corrections.
+NAV-04 timed out while the model repeatedly clicked the selected version instead
+of opening the adjacent language menu. Its instruction now targets the English
+language menu directly; the independent assertion checks the Chinese article,
+selected language and unchanged v1 version. The corrected case passed three
+independent local runs on 2026-10-16 with no retries:
+`20261016001537-8c860a86`, `20261016001928-a8b102b0` and
+`20261016002019-cecc0dd3`. Full remote validation is still required.
+
 This isolated npm package uses
 `@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.
 `app.open` only prepares the browser; all product interactions use `aiAct`.

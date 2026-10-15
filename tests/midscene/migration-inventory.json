@@ -1243,7 +1243,12 @@
       "source": "e2e/fixtures/multi-version/index.test.ts",
       "name": "multi version > Default version and default language",
       "replacementStatus": "replaced-by-midscene",
-      "replacementEvidenceRuns": ["20261015114022-1ada2901"],
+      "replacementEvidenceRuns": [
+        "20261015114022-1ada2901",
+        "20261016001537-8c860a86",
+        "20261016001928-a8b102b0",
+        "20261016002019-cecc0dd3"
+      ],
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
@@ -1254,6 +1259,11 @@
       "source": "e2e/fixtures/multi-version/index.test.ts",
       "name": "multi version > Not Default version default language",
       "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": [
+        "20261016001537-8c860a86",
+        "20261016001928-a8b102b0",
+        "20261016002019-cecc0dd3"
+      ],
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
@@ -1264,6 +1274,11 @@
       "source": "e2e/fixtures/multi-version/index.test.ts",
       "name": "multi version > Default version not default language",
       "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": [
+        "20261016001537-8c860a86",
+        "20261016001928-a8b102b0",
+        "20261016002019-cecc0dd3"
+      ],
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
