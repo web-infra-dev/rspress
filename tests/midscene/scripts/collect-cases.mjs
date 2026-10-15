@@ -47,7 +47,7 @@ for (const project of loaded.projects) {
           'Fixture updates require an isolated source copy',
         );
       }
-      actual[definition.name] = 'shard-1';
+      actual[definition.name] = project.name;
     }
   }
 }

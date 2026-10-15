@@ -1,13 +1,13 @@
 cases:
   - name: STATIC-01 Follow custom navigation without JavaScript
-    tags: [shard-1, original-static]
+    tags: [original-static]
     steps:
       - app.open:
           { fixture: nav-slots, mode: production, javascript: false, path: / }
       - aiAct: Hover over More in the top navigation and follow its Target link.
       - aiAssert: The Target article is visible.
   - name: STATIC-02 Open a navigation dropdown without JavaScript
-    tags: [shard-1, original-static]
+    tags: [original-static]
     steps:
       - app.open:
           {
@@ -19,7 +19,7 @@ cases:
       - aiAct: Hover over ItemsAndLink in the top navigation.
       - aiAssert: The dropdown displays Child1 and Child2.
   - name: STATIC-03 Read runtime code from static HTML
-    tags: [shard-1, original-static]
+    tags: [original-static]
     steps:
       - app.open:
           {

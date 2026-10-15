@@ -5,6 +5,7 @@ import { defineProjectSetup, defineTestProject } from '@midscene/test/config';
 import { createMidsceneNodes } from '@midscene/test/midscene';
 import { PlaywrightAgent } from '@midscene/web/playwright/agent';
 import { playgroundAsset } from './scripts/playground-assets.js';
+import { startFixtureServer } from './fixture-server.js';
 import {
   OriginalFixture,
   originalFixtures,
@@ -28,7 +29,13 @@ interface Context {
 }
 const setup = defineProjectSetup<Context>({
   name: 'web',
-  async setup({ onTeardown }) {
+  async setup({ onTeardown, signal }) {
+    const stopServer = await startFixtureServer(
+      baseURL,
+      fileURLToPath(new URL('midscene_run/fixture.log', import.meta.url)),
+      signal,
+    );
+    onTeardown(stopServer);
     const context: Context = {
       fixture: new OriginalFixture(
         fileURLToPath(new URL('../../', import.meta.url)),
@@ -166,7 +173,7 @@ export default defineTestProject<Context>({
   test: { maxConcurrency: 1, testTimeout: 8 * 60_000 },
   projects: [
     {
-      name: 'web-shard-1',
+      name: 'web',
       setup,
       retry: 0,
       files: { include: ['cases/**/*.yaml'] },

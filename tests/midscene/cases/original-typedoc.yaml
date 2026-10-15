@@ -1,12 +1,12 @@
 cases:
   - name: TYPEDOC-01 Navigate generated single-entry API documentation
-    tags: [shard-1, original-typedoc]
+    tags: [original-typedoc]
     steps:
       - app.open: { fixture: plugin-typedoc/single, path: /api/ }
       - aiAct: In the generated API sidebar, expand Functions if needed and open createMiddleware.
       - aiAssert: The generated createMiddleware function article is open and the sidebar offers mergeMiddlewares and the Middleware type.
   - name: TYPEDOC-02 Navigate generated multi-entry API documentation
-    tags: [shard-1, original-typedoc]
+    tags: [original-typedoc]
     steps:
       - app.open: { fixture: plugin-typedoc/multi, path: /api/ }
       - aiAct: In the generated API sidebar, expand Functions if needed and open getRspressUrl.
@@ -14,7 +14,7 @@ cases:
       - aiAct: Expand Modules in the sidebar to inspect its entries. Stay on this function article.
       - aiAssert: The sidebar displays middleware and raw-link module entries.
   - name: TYPEDOC-03 Read a generated raw documentation link
-    tags: [shard-1, original-typedoc, migration-regression]
+    tags: [original-typedoc, migration-regression]
     steps:
       - app.open:
           {

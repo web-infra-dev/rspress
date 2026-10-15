@@ -1,17 +1,11 @@
 #!/usr/bin/env node
 
-import {
-  cp,
-  mkdir,
-  readFile,
-  readdir,
-  rm,
-  stat,
-  writeFile,
-} from 'node:fs/promises';
+import { cp, mkdir, readdir, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+
+import { readNativeResult } from './native-results.mjs';
 
 const MAX_SITE_BYTES = 900 * 1024 * 1024;
 const MAX_RECENT_RUNS = 3;
@@ -45,45 +39,6 @@ const bytesIn = async filename => {
   ).reduce((total, bytes) => total + bytes, 0);
 };
 
-const mergeReports = async (source, destination) => {
-  await mkdir(destination, { recursive: true });
-  for (const entry of await readdir(source, { withFileTypes: true })) {
-    const from = path.join(source, entry.name);
-    const to = path.join(destination, entry.name);
-    if (entry.isDirectory()) {
-      await mergeReports(from, to);
-    } else if (entry.isFile()) {
-      if (await exists(to)) {
-        const [oldBytes, newBytes] = await Promise.all([
-          readFile(to),
-          readFile(from),
-        ]);
-        if (!oldBytes.equals(newBytes))
-          throw new Error(`Conflicting report asset: ${to}`);
-      } else {
-        await cp(from, to);
-      }
-    }
-  }
-};
-
-const copyShardReports = async (source, destination) => {
-  if (!(await exists(source))) return;
-  for (const entry of await readdir(source, { withFileTypes: true })) {
-    if (!entry.isDirectory() || !/^midscene-shard-\d+$/.test(entry.name))
-      continue;
-    const reports = path.join(source, entry.name, 'midscene_run', 'report');
-    if (!(await exists(reports))) continue;
-    const destinationReports = path.join(
-      destination,
-      entry.name,
-      'midscene_run',
-      'report',
-    );
-    await mergeReports(reports, destinationReports);
-  }
-};
-
 export async function preparePagesSite({
   site,
   reports,
@@ -102,23 +57,31 @@ export async function preparePagesSite({
   const current = path.join(site, 'runs', runId);
   await rm(current, { recursive: true, force: true });
   await mkdir(current, { recursive: true });
-  const nativeReport = path.join(reports, 'native-report');
-  if (await exists(path.join(nativeReport, 'index.html'))) {
+  const reportDirectory = path.join(
+    'midscene-results',
+    'midscene_run',
+    'report',
+  );
+  if (await exists(path.join(reports, reportDirectory))) {
     await cp(
-      path.join(nativeReport, 'index.html'),
-      path.join(current, 'index.html'),
-    );
-  }
-  if (await exists(path.join(nativeReport, 'screenshots'))) {
-    await cp(
-      path.join(nativeReport, 'screenshots'),
-      path.join(current, 'screenshots'),
+      path.join(reports, reportDirectory),
+      path.join(current, reportDirectory),
       {
         recursive: true,
       },
     );
   }
-  await copyShardReports(reports, current);
+  const result = await readNativeResult(reports);
+  if (result?.reportPath) {
+    const href = result.reportPath
+      .split(path.sep)
+      .map(encodeURIComponent)
+      .join('/');
+    await writeFile(
+      path.join(current, 'index.html'),
+      `<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${href}"><title>Midscene report</title><a href="${href}">Open the Midscene Test report</a></html>`,
+    );
+  }
 
   const runsDirectory = path.join(site, 'runs');
   const runIds = (await readdir(runsDirectory, { withFileTypes: true }))
@@ -140,7 +103,7 @@ export async function preparePagesSite({
     retainedRunIds.map(async id =>
       (await exists(path.join(runsDirectory, id, 'index.html')))
         ? `<li><a href="runs/${id}/index.html">Run ${id}</a></li>`
-        : `<li>Run ${id}: partial shard reports are linked from its workflow Summary</li>`,
+        : `<li>Run ${id}: partial test reports are linked from its workflow Summary</li>`,
     ),
   );
   await writeFile(

@@ -1,6 +1,6 @@
 cases:
   - name: PREVIEW-01 Hot-update an internal component preview
-    tags: [shard-1, original-preview-hmr]
+    tags: [original-preview-hmr]
     steps:
       - app.open: { fixture: plugin-preview, path: /hmr }
       - aiAct: Bring the rendered HMR Internal Original preview into view, not merely its source code.
@@ -9,7 +9,7 @@ cases:
       - aiAct: Wait for the rendered internal component preview to display HMR Internal Updated. Do not reload or navigate elsewhere; stop if it has not changed within 30 seconds.
       - aiAssert: The rendered internal component preview displays HMR Internal Updated.
   - name: PREVIEW-02 Hot-update an inline iframe preview
-    tags: [shard-1, original-preview-hmr]
+    tags: [original-preview-hmr]
     steps:
       - app.open: { fixture: plugin-preview, path: /hmr }
       - aiAct: Bring the rendered HMR Iframe Follow Original preview into view in the inline device frame, not merely its source code.
@@ -18,7 +18,7 @@ cases:
       - aiAct: Wait for the rendered inline iframe preview to display HMR Iframe Follow Updated. Do not reload or navigate elsewhere; stop if it has not changed within 30 seconds.
       - aiAssert: The rendered inline iframe preview displays HMR Iframe Follow Updated.
   - name: PREVIEW-03 Hot-update the fixed device preview
-    tags: [shard-1, original-preview-hmr]
+    tags: [original-preview-hmr]
     steps:
       - app.open: { fixture: plugin-preview, path: /hmr }
       - aiAct: Bring the fixed device preview displaying HMR Iframe Fixed Original into view, not merely its source code.

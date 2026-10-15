@@ -1,6 +1,6 @@
 cases:
   - name: HMR-01 Update article content without user navigation
-    tags: [shard-1, original-hmr]
+    tags: [original-hmr]
     steps:
       - app.open: { fixture: hmr, path: /guide/test.html }
       - aiAct: Bring the Basic section and its Hello world paragraph into view.
@@ -9,7 +9,7 @@ cases:
       - aiAct: Wait for the Basic paragraph to change to Hello hmr world. Do not reload the page or navigate elsewhere.
       - aiAssert: The Basic section contains Hello hmr world without any user navigation.
   - name: HMR-02 Update an imported Markdown fragment
-    tags: [shard-1, original-hmr]
+    tags: [original-hmr]
     steps:
       - app.open: { fixture: hmr, path: /guide/test.html }
       - aiAct: Bring the FileCodeblock section and its rendered Markdown fragment into view.
@@ -18,7 +18,7 @@ cases:
       - aiAct: Wait for the rendered fragment to change to This is hmr mdx fragment. Do not reload the page or navigate elsewhere.
       - aiAssert: The rendered fragment now contains This is hmr mdx fragment.
   - name: HMR-03 Update the navigation label
-    tags: [shard-1, original-hmr]
+    tags: [original-hmr]
     steps:
       - app.open: { fixture: hmr, path: / }
       - aiAct: Open the Test article through Guide navigation.
@@ -26,7 +26,7 @@ cases:
       - aiAct: Watch the top-right Guide navigation link until its text becomes HMR Guide. The top-left site title HMR fixture should stay unchanged. Do not reload the page or navigate elsewhere; stop if the link has not updated within 30 seconds.
       - aiAssert: The top navigation displays HMR Guide and the Test article remains visible.
   - name: HMR-04 Hot-update sidebar metadata
-    tags: [shard-1, original-hmr]
+    tags: [original-hmr]
     steps:
       - app.open: { fixture: hmr, path: /guide/test.html }
       - aiAct: Bring the left documentation sidebar into view, keeping the Test article open.

@@ -355,7 +355,7 @@
       "name": "<CodeBlockRuntime /> > <CodeBlockRuntime /> should render title and code with correct language",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
-      "evidenceRuns": ["20261014145508-fc77705e"],
+      "evidenceRuns": ["20261014145508-fc77705e", "20261015110636-408026b7"],
       "candidateCaseIds": ["STYLE-05", "STATIC-03"],
       "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
     },
@@ -372,7 +372,7 @@
       "name": "<CodeBlockRuntime /> SSG > should render code from static HTML when JavaScript is disabled",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
-      "evidenceRuns": ["20261014145508-fc77705e"],
+      "evidenceRuns": ["20261014145508-fc77705e", "20261015110636-408026b7"],
       "candidateCaseIds": ["STYLE-05", "STATIC-03"],
       "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
     },
@@ -1258,7 +1258,11 @@
       "name": "Nested overview page > Should load nested overview page correctly - level 1",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
-      "evidenceRuns": ["20261014150350-3b31dcf3", "20261014162358-96521382"],
+      "evidenceRuns": [
+        "20261014150350-3b31dcf3",
+        "20261014162358-96521382",
+        "20261015110636-408026b7"
+      ],
       "candidateCaseIds": ["CONTENT-02", "OVERVIEW-04"],
       "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
     },
@@ -1267,7 +1271,11 @@
       "name": "Nested overview page > Should load nested overview page correctly - level 2",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
-      "evidenceRuns": ["20261014150350-3b31dcf3", "20261014162358-96521382"],
+      "evidenceRuns": [
+        "20261014150350-3b31dcf3",
+        "20261014162358-96521382",
+        "20261015110636-408026b7"
+      ],
       "candidateCaseIds": ["CONTENT-02", "OVERVIEW-04"],
       "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
     },
@@ -1276,7 +1284,11 @@
       "name": "Nested overview page > Should load nested overview page correctly - level 3",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
-      "evidenceRuns": ["20261014150350-3b31dcf3", "20261014162358-96521382"],
+      "evidenceRuns": [
+        "20261014150350-3b31dcf3",
+        "20261014162358-96521382",
+        "20261015110636-408026b7"
+      ],
       "candidateCaseIds": ["CONTENT-02", "OVERVIEW-04"],
       "reason": "Mapped AI flows check visible behavior only. All original exact assertions remain; mapping does not imply full assertion equivalence."
     },

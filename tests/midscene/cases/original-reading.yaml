@@ -1,6 +1,6 @@
 cases:
   - name: READ-01 Navigate a site under a base path
-    tags: [shard-1, original-base]
+    tags: [original-base]
     steps:
       - app.open: { fixture: with-base, path: /base/en/ }
       - aiAct: Follow the click link in the article to the guide.
@@ -8,63 +8,63 @@ cases:
       - aiAct: Open Install from the sidebar.
       - aiAssert: The Install article is visible, not a page-not-found error.
   - name: READ-02 Mobile hash navigation closes its menu
-    tags: [shard-1, original-hash]
+    tags: [original-hash]
     steps:
       - app.open:
           { fixture: nav-link-item-with-hash, path: /, viewport: mobile }
       - aiAct: Open the mobile navigation menu and select PageC.
       - aiAssert: contentC is visible and the mobile menu is closed.
   - name: READ-03 Follow a section link after navigation
-    tags: [shard-1, original-anchor]
+    tags: [original-anchor]
     steps:
       - app.open: { fixture: hash-anchor-scroll, path: /docs/source }
       - aiAct: Follow the Target section link in the article.
       - aiAssert: The Target heading is visible below the navigation without being obscured.
   - name: READ-04 Navigate a sidebar generated from directory convention
-    tags: [shard-1, original-directory-sidebar]
+    tags: [original-directory-sidebar]
     steps:
       - app.open: { fixture: auto-nav-sidebar-dir-convention, path: /guide/ }
       - aiAct: Open index md convention through the sidebar directory link.
       - aiAssert: The Index md convention article is visible.
   - name: READ-05 Read a replaced Markdown article
-    tags: [shard-1, original-replacement]
+    tags: [original-replacement]
     steps:
       - app.open: { fixture: replace-rules, path: / }
       - aiAct: Use documentation search to find bar-content and open the matching article.
       - aiAssert: The article contains bar-content and the heading bar-h2.
   - name: READ-06 Read a custom footer
-    tags: [shard-1, original-footer]
+    tags: [original-footer]
     steps:
       - app.open: { fixture: custom-home-footer, path: / }
       - aiAct: Scroll to the home page footer.
       - aiAssert: Custom footer text is visible at the bottom of the home page.
   - name: READ-07 Expand the restored guide sidebar
-    tags: [shard-1, original-home-sidebar, migration-regression]
+    tags: [original-home-sidebar, migration-regression]
     steps:
       - app.open: { fixture: issue-1309, path: / }
       - aiAssert: The home page has no documentation sidebar.
       - aiAct: Use the top navigation to open Guide.
       - aiAssert: The guide page displays its sidebar instead of the home page layout.
   - name: READ-08 Read public images in documentation
-    tags: [shard-1, original-public-image]
+    tags: [original-public-image]
     steps:
       - app.open: { fixture: public-dir, path: /base/ }
       - aiAct: Bring the large illustrated mascot image below Hello world into view. Stay on this article and do not use search.
       - aiAssert: The article image is rendered, not a broken-image placeholder.
   - name: READ-09 Read a heading through the table of contents
-    tags: [shard-1, original-toc]
+    tags: [original-toc]
     steps:
       - app.open: { fixture: dynamic-toc, path: / }
       - aiAct: Use On this page to open Term dynamic and content.
       - aiAssert: The article heading Term dynamic & content is visible.
   - name: READ-10 Open custom layout pages from search
-    tags: [shard-1, original-custom-layout]
+    tags: [original-custom-layout]
     steps:
       - app.open: { fixture: custom-layout, path: / }
       - aiAct: Open search, find Page type, and open that result.
       - aiAssert: The Page type heading and Custom page should work text are visible without a documentation sidebar or a home hero.
   - name: READ-11 Navigate a site without an explicit root setting
-    tags: [shard-1, original-no-config]
+    tags: [original-no-config]
     steps:
       - app.open: { fixture: no-config-root, path: / }
       - aiAct: Open documentation search, search for Hello world, and open the matching result.

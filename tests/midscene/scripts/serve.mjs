@@ -10,7 +10,7 @@ const child = spawn(
     '--host',
     '127.0.0.1',
     '--port',
-    '4173',
+    process.env.FIXTURE_PORT ?? '4173',
   ],
   {
     cwd: fileURLToPath(new URL('../fixture', import.meta.url)),

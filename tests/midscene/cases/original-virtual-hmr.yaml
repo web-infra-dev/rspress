@@ -1,6 +1,6 @@
 cases:
   - name: VIRTUAL-01 Hot-update navigation with lazy compilation
-    tags: [shard-1, original-virtual-hmr]
+    tags: [original-virtual-hmr]
     steps:
       - app.open: { fixture: hmr-lazy, path: /guide/test.html }
       - aiAct: Find the visible Count button in the global component and click it once.
@@ -9,7 +9,7 @@ cases:
       - aiAct: Watch the top-right Guide link until it becomes HMR Guide. Leave the top-left HMR fixture title unchanged. Do not reload or navigate elsewhere; stop if the link has not updated within 30 seconds.
       - aiAssert: The navigation displays HMR Guide and the global component still displays Count 1.
   - name: VIRTUAL-02 Hot-update translated text and search hooks without losing state
-    tags: [shard-1, original-virtual-hmr, migration-regression]
+    tags: [original-virtual-hmr, migration-regression]
     steps:
       - app.open: { fixture: hmr-lazy, path: /guide/test.html }
       - aiAct: Find the global component showing Translation before and Search hook before, then click its Count button once.
@@ -27,7 +27,7 @@ cases:
       - aiAct: Wait for the counter button's label to become Updated count. Do not reload or navigate elsewhere; stop if it has not updated within 30 seconds.
       - aiAssert: The global component displays Updated count 1, retaining its previous counter value.
   - name: VIRTUAL-03 Interact with virtual components in a production build
-    tags: [shard-1, original-virtual-hmr]
+    tags: [original-virtual-hmr]
     steps:
       - app.open:
           { fixture: hmr-lazy, mode: production, path: /guide/test.html }

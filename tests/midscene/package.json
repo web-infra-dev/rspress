@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check:model-vision": "node scripts/check-model-vision.mjs",
+    "check:model": "midscene-test model verify",
     "collect": "node scripts/collect-cases.mjs",
     "serve": "node scripts/serve.mjs",
     "test": "midscene-test",
@@ -12,9 +12,8 @@
   },
   "devDependencies": {
     "@babel/standalone": "7.22.20",
-    "@midscene/core": "1.15.1",
-    "@midscene/test": "1.15.1",
-    "@midscene/web": "1.15.1",
+    "@midscene/test": "1.15.3",
+    "@midscene/web": "1.15.3",
     "@types/node": "^24.0.0",
     "dotenv": "^16.4.5",
     "monaco-editor": "0.43.0",

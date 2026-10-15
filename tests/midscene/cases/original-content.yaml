@@ -1,42 +1,42 @@
 cases:
   - name: CONTENT-01 Follow a generated API overview link
-    tags: [shard-1, original-overview]
+    tags: [original-overview]
     steps:
       - app.open: { fixture: auto-nav-sidebar, path: /api/index.html }
       - aiAct: In the API overview article, follow the Commands link. Do not use the sidebar or search.
       - aiAssert: The Commands article is open with rspress dev and rspress build sections.
   - name: CONTENT-02 Navigate nested overview levels
-    tags: [shard-1, original-nested-overview]
+    tags: [original-nested-overview]
     steps:
       - app.open: { fixture: nested-overview, path: /base-url/basic-level-1/ }
       - aiAct: Click the two article link in the overview content, not an On this page anchor or a sidebar item. Wait for the article containing Section a and Section b to open.
       - aiAssert: The article displays Section a with Content for section 1 and Section b with Content for section 2.
   - name: CONTENT-03 Custom navigation slots work on desktop
-    tags: [shard-1, original-slots]
+    tags: [original-slots]
     steps:
       - app.open: { fixture: nav-slots, path: / }
       - aiAct: Hover over More in the top navigation and follow its Target link.
       - aiAssert: The Target article is open.
   - name: CONTENT-04 Custom navigation slots work on mobile
-    tags: [shard-1, original-slots]
+    tags: [original-slots]
     steps:
       - app.open: { fixture: nav-slots, path: /, viewport: mobile }
       - aiAct: Open the mobile navigation menu, expand More, and follow Target.
       - aiAssert: The Target article is visible and the mobile menu is closed.
   - name: CONTENT-05 Home page action opens a guide
-    tags: [shard-1, original-home]
+    tags: [original-home]
     steps:
       - app.open: { fixture: page-type-home, path: /base/ }
       - aiAct: Follow the Action 1 button in the home page hero.
       - aiAssert: The Action 1 article is open.
   - name: CONTENT-06 Read a custom plugin route
-    tags: [shard-1, original-plugin-route]
+    tags: [original-plugin-route]
     steps:
       - app.open: { fixture: custom-plugin, path: / }
       - aiAct: Open documentation search, search for Demo1, and open the matching result.
       - aiAssert: The Demo1 article is visible.
   - name: CONTENT-07 Follow previous and next links with generic headings
-    tags: [shard-1, original-markdown]
+    tags: [original-markdown]
     steps:
       - app.open: { fixture: inline-markdown, path: /inline/generic-braces }
       - aiAct: Find the next article link at the bottom and follow Class Bar.

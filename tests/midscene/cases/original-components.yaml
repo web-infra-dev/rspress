@@ -1,6 +1,6 @@
 cases:
   - name: COMPONENT-01 Switch code tabs
-    tags: [shard-1, original-tabs]
+    tags: [original-tabs]
     steps:
       - app.open: { fixture: tabs-component, path: / }
       - aiAct: Find Tab d, select its index.js tab, and bring the entire active code panel into view.
@@ -8,7 +8,7 @@ cases:
       - aiAct: Select the index.markup tab in Tab d and bring the entire active code panel into view.
       - aiAssert: Tab d displays content markup in the active code panel.
   - name: COMPONENT-02 Switch tabs with explicit values
-    tags: [shard-1, original-tabs]
+    tags: [original-tabs]
     steps:
       - app.open: { fixture: tabs-component, path: / }
       - aiAct: Find Tab e and select Banana.
@@ -16,7 +16,7 @@ cases:
       - aiAct: Select Apple in Tab e.
       - aiAssert: Tab e displays This is an apple.
   - name: COMPONENT-03 Package manager selection updates commands
-    tags: [shard-1, original-package-tabs]
+    tags: [original-package-tabs]
     steps:
       - app.open: { fixture: package-manager-tabs, path: / }
       - aiAct: In PackageManagerTabs create select pnpm.
@@ -24,7 +24,7 @@ cases:
       - aiAct: In PackageManagerTabs create select yarn, then inspect PackageManagerTabs install.
       - aiAssert: The install command shown is yarn add -D @rspress/core.
   - name: COMPONENT-04 Change the reading theme
-    tags: [shard-1, original-theme]
+    tags: [original-theme]
     steps:
       - app.open: { fixture: basic, path: / }
       - aiAct: Use the appearance switch in the top navigation to set the documentation to dark mode.
@@ -32,14 +32,14 @@ cases:
       - aiAct: Use the appearance switch to set the documentation to light mode.
       - aiAssert: The documentation article uses a light background with readable dark text.
   - name: COMPONENT-05 Open a custom outline on a phone
-    tags: [shard-1, original-outline]
+    tags: [original-outline]
     steps:
       - app.open:
           { fixture: custom-layout, path: /no-headings, viewport: mobile }
       - aiAct: Open the mobile On this page outline.
       - aiAssert: The opened outline displays Before custom outline content and After custom outline content.
   - name: COMPONENT-06 Dismiss the announcement banner
-    tags: [shard-1, original-banner]
+    tags: [original-banner]
     steps:
       - app.open: { fixture: banner, path: / }
       - aiAct: Close the announcement banner using its close button.

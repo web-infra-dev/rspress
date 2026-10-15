@@ -77,28 +77,12 @@ async function main(mode) {
       throw new Error(`GitHub ${resource}: HTTP ${response.status}`);
     return response.json();
   };
-  const getRun = id => get(`actions/runs/${id}`);
   let mainSha;
   const compareToMain = async sha => {
     mainSha ??= (await get('branches/main')).commit.sha;
     return get(`compare/${sha}...${mainSha}`);
   };
-  if (mode === 'validate-source') {
-    const runId = process.env.REPORT_SOURCE_RUN_ID;
-    if (!/^\d+$/.test(runId ?? ''))
-      throw new Error('Report source run ID must be numeric');
-    if (
-      !(await isTrustedReportRun(
-        await getRun(runId),
-        repository,
-        compareToMain,
-      ))
-    ) {
-      throw new Error(
-        'Report source must be a completed, same-repository Midscene run from a trusted event/ref',
-      );
-    }
-  } else if (mode === 'find-previous') {
+  if (mode === 'find-previous') {
     const filter =
       repository === process.env.MIDSCENE_UPSTREAM_REPOSITORY
         ? 'branch=main'

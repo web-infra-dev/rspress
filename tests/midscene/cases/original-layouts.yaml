@@ -1,24 +1,24 @@
 cases:
   - name: LAYOUT-01 Read an article with documentation chrome disabled
-    tags: [shard-1, original-layouts]
+    tags: [original-layouts]
     steps:
       - app.open: { fixture: custom-layout, path: /frontmatter }
       - aiAct: Bring the existing Frontmatter heading into view. This fixture contains only that heading; do not search for more text or navigate elsewhere.
       - aiAssert: Frontmatter is visible without a top navigation bar, documentation sidebar, or table of contents.
   - name: LAYOUT-02 Read the custom home layout
-    tags: [shard-1, original-layouts]
+    tags: [original-layouts]
     steps:
       - app.open: { fixture: custom-layout, path: / }
       - aiAct: Bring the home hero and its navigation into view.
       - aiAssert: The page uses a home hero layout with top navigation rather than an article sidebar and table of contents.
   - name: LAYOUT-03 Read custom outline slots on desktop
-    tags: [shard-1, original-layouts]
+    tags: [original-layouts]
     steps:
       - app.open: { fixture: custom-layout, path: /no-headings }
       - aiAct: Bring the right-hand outline panel into view.
       - aiAssert: The outline displays Before custom outline content and After custom outline content even though there are no article heading entries.
   - name: LAYOUT-04 Read a localized home hero and follow its action
-    tags: [shard-1, original-layouts]
+    tags: [original-layouts]
     steps:
       - app.open: { fixture: page-type-home, path: /base/zh/ }
       - aiAct: Bring the Chinese home hero and its actions into view.
@@ -26,7 +26,7 @@ cases:
       - aiAct: Follow 操作 1 in the hero.
       - aiAssert: The Chinese action article is open rather than a page-not-found error.
   - name: LAYOUT-05 Switch translated source text and its fallback language
-    tags: [shard-1, original-layouts]
+    tags: [original-layouts]
     steps:
       - app.open: { fixture: i18n-source-text, path: / }
       - aiAct: Switch the page to 简体中文.
