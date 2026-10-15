@@ -43,16 +43,4 @@ test.describe('plugin preview with custom entries', async () => {
     expect(internalIframeTsxDemoCodePreview).toBe('Hello World TSX');
     expect(externalIframeJsxDemoCodePreview).toBe('Hello World External');
   });
-
-  test('should render vue', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/guide/vue`, {
-      waitUntil: 'networkidle',
-    });
-    const transformedCodePreview = await page
-      .frameLocator('iframe')
-      .getByText('VUE')
-      .innerText();
-
-    expect(transformedCodePreview).toBe('Hello World VUE');
-  });
 });

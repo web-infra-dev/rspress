@@ -45,14 +45,6 @@ test.describe('React 18 development', async () => {
     );
     await expect(body).toContainText(`react ${getPackageVersion('react')}`);
   });
-
-  test('404 page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/404`, {
-      waitUntil: 'networkidle',
-    });
-    // find the 404 text in the page
-    await expect(page.locator('body')).toContainText('404');
-  });
 });
 
 test('React 18 build should be successful', async () => {

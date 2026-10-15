@@ -16,20 +16,6 @@ test.describe('replace rules', async () => {
     }
   });
 
-  test('Index page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`, {
-      waitUntil: 'networkidle',
-    });
-
-    // replace text in _meta.json
-    const navItem = page.locator('.rp-nav-menu__item__container').nth(0);
-    await expect(navItem).toHaveText('bar-meta');
-
-    // replace text in object frontmatter
-    const hero = page.locator('.rp-home-hero__title-brand');
-    await expect(hero).toHaveText('bar-hero');
-  });
-
   test('Foo page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/foo`, {
       waitUntil: 'networkidle',

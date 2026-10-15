@@ -17,18 +17,6 @@ test.describe('Algolia search', async () => {
     }
   });
 
-  test('should search by algolia', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`, {
-      waitUntil: 'networkidle',
-    });
-
-    const searchButton = page.locator('.DocSearch.DocSearch-Button');
-    await searchButton.click();
-
-    const searchBar = page.locator('.DocSearch-SearchBar');
-    await expect(searchBar).toBeVisible();
-  });
-
   test('should have correct crawler selectors for Algolia', async ({
     page,
   }) => {

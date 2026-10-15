@@ -36,13 +36,6 @@ test.describe('basic site', async () => {
     await expect(headerAnchor).toHaveAttribute('href', '#hello-world');
   });
 
-  test('404 page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/404`, {
-      waitUntil: 'networkidle',
-    });
-    await expect(page.locator('body')).toContainText('404');
-  });
-
   test('dark mode', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
@@ -72,20 +65,6 @@ test.describe('basic site', async () => {
     });
     const link = page.locator('.rp-doc a').first();
     await expect(link).toHaveCSS('color', 'rgb(255, 165, 0)');
-  });
-
-  test('importing markdown with raw query should return source text', async ({
-    page,
-  }) => {
-    await page.goto(`http://localhost:${appPort}`, {
-      waitUntil: 'networkidle',
-    });
-    await expect(page.getByTestId('raw-markdown-content')).toContainText(
-      '# Raw Markdown',
-    );
-    await expect(page.getByTestId('raw-markdown-content')).toContainText(
-      'This file should be imported as source text.',
-    );
   });
 });
 

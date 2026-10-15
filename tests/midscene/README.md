@@ -6,13 +6,26 @@ The fixture launcher runs the checked-out CLI against original `e2e/fixtures`;
 the initial documentation examples remain separate smoke cases.
 
 `migration-inventory.json` records the original E2E cases and their migration
-decisions. Original exact DOM, CSS, timing, build-output, and browser-event
-assertions remain unchanged. A visible AI flow does not replace those contracts.
+decisions. Exact DOM, CSS, timing, build-output, and browser-event contracts
+remain deterministic. Candidate mappings alone do not prove full replacement.
 The 112 AI cases include counterparts for visible behavior in 129 of the 237
 original tests; 108 tests remain deterministic-only. Multiple original tests can
 map to one AI flow. Inventory evidence identifies local runs, not remote CI passes.
 
-Existing Rstest and Playwright suites are unchanged. This isolated npm package uses
+The first replacement batch removes 22 reviewed pure UI tests from the legacy
+suite. Each is marked `replaced-by-midscene` in the baseline inventory, whose
+`sourceCommit` preserves its original source. Other mappings still await
+assertion-level review and splitting; the inventory's 237 is the original count,
+not a claim that 237 legacy tests still execute. There are 215 remaining legacy
+tests after these replacements. Rstest continues to run the
+remaining tests through `pnpm test:e2e`; existing Linux, macOS, and Windows CI
+workflows keep that command. Mixed tests are retained until their technical
+assertions have been separated. No replaced case is disabled with `skip`.
+The Tabs test is split: Midscene verifies initial selected content and tab
+switching, while the legacy test checks empty markup and unselected-content
+classes without replaying those interactions.
+
+This isolated npm package uses
 `@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.
 `app.open` only prepares the browser; all product interactions use `aiAct`.
 Separate `aiAssert` steps check outcomes instead of treating an AI action's completion

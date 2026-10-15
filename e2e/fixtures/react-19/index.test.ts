@@ -40,12 +40,4 @@ test.describe('React 19', async () => {
     );
     await expect(body).toContainText(`react ${getPackageVersion('react')}`);
   });
-
-  test('404 page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/404`, {
-      waitUntil: 'networkidle',
-    });
-    // find the 404 text in the page
-    await expect(page.locator('body')).toContainText('404');
-  });
 });

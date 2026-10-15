@@ -1,7 +1,8 @@
 {
   "sourceCommit": "bce9de9e45c5d02098d00fa859e2abb1e4b30c4c",
-  "policy": "Original deterministic assertions remain unchanged. AI counterparts verify visible workflows only; mappings do not imply equivalent DOM, timing, browser-event, URL, build-output, or data contracts. Local evidence is not remote CI evidence.",
-  "allOriginalAssertionsPreserved": true,
+  "policy": "This is an inventory of the original sourceCommit, not the current legacy test count. Pure UI cases explicitly marked replaced-by-midscene are removed. Other mappings need assertion-level review before replacement; exact technical contracts remain deterministic. Local evidence is not remote CI evidence.",
+  "allOriginalAssertionsPreserved": false,
+  "replacementPolicy": "Pure UI originals marked replaced-by-midscene are removed. All other originals require assertion-level replacement review. Candidate mappings alone are not complete coverage evidence. Technical contracts remain deterministic.",
   "cases": [
     {
       "source": "e2e/fixtures/auto-nav-sidebar-issue-1682/index.test.ts",
@@ -94,6 +95,7 @@
     {
       "source": "e2e/fixtures/basic/index.test.ts",
       "name": "basic site > 404 page",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
@@ -128,6 +130,7 @@
     {
       "source": "e2e/fixtures/basic/index.test.ts",
       "name": "basic site > importing markdown with raw query should return source text",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
@@ -563,6 +566,7 @@
     {
       "source": "e2e/fixtures/custom-plugin/index.test.ts",
       "name": "custom plugin routes > Should add route by filepath",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
@@ -572,6 +576,7 @@
     {
       "source": "e2e/fixtures/custom-plugin/index.test.ts",
       "name": "custom plugin routes > Should add route by content",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014152600-00831e41"],
@@ -994,6 +999,8 @@
     {
       "source": "e2e/fixtures/multi-version/index.test.ts",
       "name": "multi version > Default version and default language",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015114022-1ada2901"],
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
@@ -1003,6 +1010,7 @@
     {
       "source": "e2e/fixtures/multi-version/index.test.ts",
       "name": "multi version > Not Default version default language",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
@@ -1012,6 +1020,7 @@
     {
       "source": "e2e/fixtures/multi-version/index.test.ts",
       "name": "multi version > Default version not default language",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
@@ -1021,6 +1030,7 @@
     {
       "source": "e2e/fixtures/multi-version/index.test.ts",
       "name": "multi version > Not default version not default language",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382", "20261014145508-fc77705e"],
@@ -1229,6 +1239,7 @@
     {
       "source": "e2e/fixtures/no-config-root/index.test.ts",
       "name": "development without config.root > Index page",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
@@ -1238,6 +1249,7 @@
     {
       "source": "e2e/fixtures/no-config-root/index.test.ts",
       "name": "build and preview without config.root > Index page",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
@@ -1405,6 +1417,8 @@
     {
       "source": "e2e/fixtures/plugin-preview-custom-entry/index.test.ts",
       "name": "plugin preview with custom entries > should render vue",
+      "replacementStatus": "replaced-by-midscene",
+      "replacementEvidenceRuns": ["20261015115625-b60e7174"],
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014174306-a5550d38"],
@@ -1548,6 +1562,7 @@
     {
       "source": "e2e/fixtures/production/index.test.ts",
       "name": "production build > check whether the page can be interacted",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014145508-fc77705e"],
@@ -1566,6 +1581,7 @@
     {
       "source": "e2e/fixtures/react-18/index.test.ts",
       "name": "React 18 development > 404 page",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
@@ -1600,6 +1616,7 @@
     {
       "source": "e2e/fixtures/react-router-dom-6/index.test.ts",
       "name": "React Router DOM 6 compatibility > 404 page",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
@@ -1618,6 +1635,7 @@
     {
       "source": "e2e/fixtures/react-19/index.test.ts",
       "name": "React 19 > 404 page",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014162358-96521382"],
@@ -1670,6 +1688,7 @@
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
       "name": "plugin preview HMR > HMR for preview=\"internal\"",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014171430-61b45c50"],
@@ -1679,6 +1698,7 @@
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
       "name": "plugin preview HMR > HMR for preview=\"iframe-follow\"",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014171430-61b45c50"],
@@ -1688,6 +1708,7 @@
     {
       "source": "e2e/fixtures/plugin-preview/index.test.ts",
       "name": "plugin preview HMR > HMR for preview=\"iframe-fixed\"",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014171430-61b45c50"],
@@ -1729,6 +1750,7 @@
     {
       "source": "e2e/fixtures/replace-rules/index.test.ts",
       "name": "replace rules > Index page",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1", "20261014152600-00831e41"],
@@ -1792,6 +1814,7 @@
     {
       "source": "e2e/fixtures/search/index.test.ts",
       "name": "search keyboard > ESC key should close search panel",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
@@ -1807,6 +1830,7 @@
     {
       "source": "e2e/fixtures/search/index.test.ts",
       "name": "search keyboard > keyboard shortcut (Cmd+K / Ctrl+K) should toggle search panel",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014141340-d2160af0", "20261014162358-96521382"],
@@ -1837,6 +1861,7 @@
     {
       "source": "e2e/fixtures/search-algolia/index.test.ts",
       "name": "Algolia search > should search by algolia",
+      "replacementStatus": "replaced-by-midscene",
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014152600-00831e41"],
@@ -1962,6 +1987,9 @@
     {
       "source": "e2e/fixtures/tabs-component/index.test.ts",
       "name": "tabs component > Index page",
+      "replacementStatus": "ui-replaced-technical-retained",
+      "remainingTestName": "preserves empty tab markup and unselected content classes",
+      "replacementEvidenceRuns": ["20261015114754-c40486bd"],
       "decision": "migrate-visible-behavior",
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014143602-8b78a8f1"],

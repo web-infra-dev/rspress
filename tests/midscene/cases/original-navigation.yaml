@@ -23,6 +23,7 @@ cases:
     tags: [original-versions, migration-regression]
     steps:
       - app.open: { fixture: multi-version, path: /base/ }
+      - aiAssert: The initial article heading is v1, the default version in the default language.
       - aiAct: Use the documentation version selector to switch to v2.
       - aiAssert: The article heading is v2.
       - aiAct: Use the documentation version selector to switch back to v1.
