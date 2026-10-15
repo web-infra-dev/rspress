@@ -146,7 +146,11 @@
       "reason": "AUDIT-12 verifies the preview image appears on hover. The original /zh destination remains an explicit deterministic href check without replaying the hover flow.",
       "remainingTestName": "preserves the social preview link destination",
       "replacementStatus": "ui-replaced-technical-retained",
-      "replacementEvidenceRuns": ["20261015171335-c8e822b8"]
+      "replacementEvidenceRuns": [
+        "20261015171335-c8e822b8",
+        "20261015205824-e76a6c8c",
+        "20261015210312-9771190c"
+      ]
     },
     {
       "source": "e2e/fixtures/basic/index.test.ts",
@@ -781,7 +785,11 @@
       "reason": "VIRTUAL-01 verifies visible navigation changes. The deterministic test synchronizes on the updated DOM before asserting the preserved window marker.",
       "replacementStatus": "ui-replaced-technical-retained",
       "remainingTestName": "preserves the window marker through lazy site-data hot updates",
-      "replacementEvidenceRuns": ["20261014152600-00831e41"],
+      "replacementEvidenceRuns": [
+        "20261014152600-00831e41",
+        "20261015205824-e76a6c8c",
+        "20261015210312-9771190c"
+      ],
       "remoteEvidenceRuns": ["38692030397"]
     },
     {
@@ -1025,7 +1033,9 @@
       "remainingTestName": "preserves serialized overview headings card titles and article links",
       "replacementEvidenceRuns": [
         "20261015171335-c8e822b8",
-        "20261015175519-35748856"
+        "20261015175519-35748856",
+        "20261015205824-e76a6c8c",
+        "20261015210312-9771190c"
       ]
     },
     {
@@ -2101,6 +2111,10 @@
       "status": "local-visible-scope-verified",
       "evidenceRuns": ["20261014171430-61b45c50"],
       "candidateCaseIds": ["PREVIEW-02"],
+      "replacementEvidenceRuns": [
+        "20261015205824-e76a6c8c",
+        "20261015210312-9771190c"
+      ],
       "reason": "Reviewed pure UI original removed; visible coverage is provided by PREVIEW-02. The historical sourceCommit preserves its original assertions."
     },
     {

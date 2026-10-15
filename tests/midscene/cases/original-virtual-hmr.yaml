@@ -1,9 +1,9 @@
 cases:
   - name: VIRTUAL-01 Hot-update navigation with lazy compilation
-    tags: [original-virtual-hmr]
+    tags: [original-virtual-hmr, remote-regression]
     steps:
       - app.open: { fixture: hmr-lazy, path: /guide/test.html }
-      - aiAct: Find the visible Count button in the global component and click it once.
+      - aiAct: Scroll the main document to the bottom to find the status row containing Translation before and Search hook before. Click its Count button once. This row is below the article, not in the top navigation; do not stop at the header or sidebar.
       - aiAssert: The global component displays Count 1 and the top navigation displays Guide.
       - fixture.update: { part: navigation }
       - aiAct: Watch the top-right Guide link until it becomes HMR Guide. Leave the top-left HMR fixture title unchanged. Do not reload or navigate elsewhere; stop if the link has not updated within 30 seconds.

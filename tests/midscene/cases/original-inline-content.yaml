@@ -16,24 +16,25 @@ cases:
       - aiAct: Scroll within the right On this page outline if needed to reveal its lower entries without navigating away.
       - aiAssert: The remaining outline entries are emphasis, delete, This is a long string to test regex performance, Class Bar<T = any>, **literal**, and &lt; in order. The last two preserve literal asterisks and the text &lt;.
   - name: INLINE-03 Read escaped overview groups and entries
-    tags: [replacement-final-inline]
+    tags: [replacement-final-inline, remote-regression]
     steps:
       - app.open: { fixture: inline-markdown, path: /inline/index }
       - aiAct: Bring the beginning of the central overview into view, ignoring duplicate labels in the sidebars.
-      - aiAssert: The overview begins with two groups titled Class Component<P, S>, each with a matching card title.
+      - aiAssert: The overview begins with two groups titled Class Component<P, S>. Each group's own card title reads Class Component<P, S>.
       - aiAct: Scroll the central overview to the bold and emphasis groups.
-      - aiAssert: The bold and emphasis groups have matching card titles. The labels are rendered as readable text, not raw HTML tags.
+      - aiAssert: The group headed bold contains a card titled bold. The separate group headed emphasis contains a card titled emphasis. The labels are readable text, not raw HTML tags.
       - aiAct: Scroll the central overview to the <foo> and -m <number> groups.
-      - aiAssert: Both groups and their matching card titles preserve angle brackets in <foo> and -m <number>.
+      - aiAssert: The group headed <foo> contains a card titled <foo>. The separate group headed -m <number> contains a card titled -m <number>. Both preserve the angle brackets.
       - aiAct: Scroll the central overview to the delete and link groups.
-      - aiAssert: The delete and link groups have matching card titles.
+      - aiAssert: The group headed delete contains a card titled delete. The separate group headed link contains a card titled link.
       - aiAct: Scroll the central overview to its final generic type groups.
-      - aiAssert: The final groups and their matching card titles are Class Component<P = { }, S = { }, SS = any>, Class Foo<T = { }>, and Class Bar<T = any>.
+      - aiAssert: The final three groups are headed Class Component<P = { }, S = { }, SS = any>, Class Foo<T = { }>, and Class Bar<T = any>. Within each group, its own card repeats that group's heading.
   - name: INLINE-04 Read all escaped overview article links
-    tags: [replacement-final-inline, replacement-final-followup]
+    tags:
+      [replacement-final-inline, replacement-final-followup, remote-regression]
     steps:
       - app.open: { fixture: inline-markdown, path: /inline/index }
       - aiAct: Bring the first central overview group titled Class Component<P, S> into view. Focus on its article links, not sidebar entries or the later overview groups.
-      - aiAssert: The first wide overview card has twelve article links in four rows of three. Reading each row left to right, they are Class Component<P, S>, Class Component<P, S>, -m <number>; then <foo>, foo <bar> baz, bold; then emphasis, delete, This is a long string to test regex performance; finally Class Bar<T = any>, **literal**, &lt;. These are links inside the central card, not the separate sidebar.
+      - aiAssert: Within the first wide overview card, ignore its gray title panel on the left and the page sidebar. The white article-link area to the right contains two Class Component<P, S> links and the links -m <number>, <foo>, foo <bar> baz, bold, emphasis, delete, This is a long string to test regex performance, Class Bar<T = any>, **literal**, and &lt;, in that reading order. Wrapped text still belongs to one link.
       - aiAct: Scroll the central overview to the group named link and bring its four article links into view.
       - aiAssert: The group lists this is link rsbuild, this is bold link rsbuild, this is code link rsbuild, and this is bold code link rsbuild in order. Formatting does not remove any words.

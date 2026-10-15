@@ -81,11 +81,14 @@ cases:
       - aiAct: Inspect the left sidebar and expand its groups as needed to reveal Rspack Official Docsite and Inner SideBar Rspack Official Docsite. Do not follow these external links.
       - aiAssert: Both Rspack Official Docsite and Inner SideBar Rspack Official Docsite are readable sidebar entries.
   - name: AUDIT-12 Reveal the social link preview
-    tags: [replacement-final-content]
+    tags: [replacement-final-content, remote-regression]
     steps:
       - app.open: { fixture: basic, path: / }
+      - aiAssert: No illustrated mascot popup is visible beneath the GitHub social icon in the top navigation.
       - aiAct: Hover over the GitHub social icon in the top navigation without following the link.
-      - aiAssert: A dropdown preview containing a large illustrated Rspress mascot image is visible below the social icon.
+      - aiAssert: A small white rounded popup beneath the GitHub social icon contains an illustrated Rspress mascot, separate from the article content.
+      - aiAct: Move the pointer away from the GitHub icon onto the Hello world article heading without clicking.
+      - aiAssert: The mascot popup beneath the GitHub social icon is no longer visible.
   - name: AUDIT-13 Read an inline Markdown image
     tags: [replacement-final-content, replacement-final-followup]
     steps:

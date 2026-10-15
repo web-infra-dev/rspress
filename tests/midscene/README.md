@@ -57,6 +57,17 @@ custom home has no configured hero, a vertical Playground preview sits above its
 editor, a tablet hamburger offers Theme, and the sidebar badge belongs to the
 Introduction label rather than its internal overview identifier.
 
+Remote run [38718473488](https://github.com/quanru/rspress/actions/runs/38718473488)
+on `db99ff7` passed 148/153 cases with no retries. Its five failures exposed
+ambiguous or inaccurate prompts: group labels were compared across groups,
+the overview title panel was mistaken for an article column, an iframe action
+tried to uncover its whole border, the small social popup was called large,
+and a bottom-of-page counter was described only as a global component.
+The corrected five cases passed twice locally without retries:
+`20261015205824-e76a6c8c` and `20261015210312-9771190c` (5/5 each).
+The social popup additionally checks absence before hover and after moving away.
+These focused runs do not constitute a successful full remote run.
+
 This isolated npm package uses
 `@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.
 `app.open` only prepares the browser; all product interactions use `aiAct`.

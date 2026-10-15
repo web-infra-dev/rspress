@@ -9,10 +9,10 @@ cases:
       - aiAct: Wait for the rendered internal component preview to display HMR Internal Updated. Do not reload or navigate elsewhere; stop if it has not changed within 30 seconds.
       - aiAssert: The rendered internal component preview displays HMR Internal Updated.
   - name: PREVIEW-02 Hot-update an inline iframe preview
-    tags: [original-preview-hmr]
+    tags: [original-preview-hmr, remote-regression]
     steps:
       - app.open: { fixture: plugin-preview, path: /hmr }
-      - aiAct: Bring the rendered HMR Iframe Follow Original preview into view in the inline device frame, not merely its source code.
+      - aiAct: Under the iframe-follow section, find the plain rendered text HMR Iframe Follow Original in the preview pane beside the source code. Scroll the main document only if this text is not readable, and stop as soon as it is readable. The fixed preview at the far right may cover part of the inline frame border; leave that panel and its toolbar alone. Do not click, drag, open a new window, or try to expose every frame edge.
       - aiAssert: The inline iframe preview displays HMR Iframe Follow Original.
       - fixture.update: { part: preview-follow }
       - aiAct: Wait for the rendered inline iframe preview to display HMR Iframe Follow Updated. Do not reload or navigate elsewhere; stop if it has not changed within 30 seconds.
