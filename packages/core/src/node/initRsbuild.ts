@@ -55,6 +55,7 @@ import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import { siteDataVMPlugin } from './runtimeModule/siteData/rsbuildPlugin';
 import { socialLinksVMPlugin } from './runtimeModule/socialLinks';
 import type { FactoryContext } from './runtimeModule/types';
+import { rsbuildPluginSitemap } from './sitemap';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import { rsbuildPluginSSGMD } from './ssg-md/rsbuildPluginSSGMD';
@@ -207,6 +208,9 @@ async function createInternalBuildConfig(
           ...siteDataVMPlugin(context),
         },
       }),
+      isProduction() && config.sitemap
+        ? rsbuildPluginSitemap({ config, routeService })
+        : null,
       enableSSG && config.ssg
         ? rsbuildPluginSSG({
             routeService,

@@ -9,9 +9,10 @@ import {
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { createRsbuild, mergeRsbuildConfig } from '@rsbuild/core';
-import type { PageIndexInfo, UserConfig } from '@rspress/shared';
+import type { RouteMeta, UserConfig } from '@rspress/shared';
 import { afterEach, beforeEach, describe, expect, it } from '@rstest/core';
 import { PluginDriver } from './PluginDriver';
+import { rsbuildPluginSitemap } from './sitemap';
 
 let directory: string;
 let filepath: string;
@@ -29,8 +30,8 @@ afterEach(async () => {
   await rm(directory, { recursive: true, force: true });
 });
 
-function page(routePath: string): PageIndexInfo {
-  return { routePath, _filepath: filepath } as PageIndexInfo;
+function route(routePath: string): RouteMeta {
+  return { routePath, absolutePath: filepath } as RouteMeta;
 }
 
 async function generate(
@@ -43,10 +44,15 @@ async function generate(
     isProd,
   );
   const resolved = await driver.modifyConfig();
-  await driver.beforeBuild();
+  const routeService = { getRoutes: () => routes.map(route) };
   const rsbuild = await createRsbuild({
     rsbuildConfig: mergeRsbuildConfig(
       {
+        plugins: [
+          isProd && resolved.sitemap
+            ? rsbuildPluginSitemap({ config: resolved, routeService })
+            : null,
+        ],
         logLevel: 'silent',
         source: { entry: { index: path.join(directory, 'entry.js') } },
         server: { publicDir: { name: path.join(directory, 'public') } },
@@ -56,9 +62,8 @@ async function generate(
       resolved.builderConfig ?? {},
     ),
   });
-  await Promise.all(routes.map(route => driver.extendPageData(page(route))));
   await rsbuild.build();
-  return { driver, rsbuild };
+  return { routeService, rsbuild };
 }
 
 const readSitemap = () => readFile(path.join(outDir, 'sitemap.xml'), 'utf8');
@@ -181,10 +186,9 @@ describe('built-in sitemap', () => {
     );
   });
 
-  it('clears collected pages before the next build', async () => {
-    const { driver, rsbuild } = await generate({ sitemap: true });
-    await driver.beforeBuild();
-    await driver.extendPageData(page('/next'));
+  it('reads the current routes on each build', async () => {
+    const { routeService, rsbuild } = await generate({ sitemap: true });
+    routeService.getRoutes = () => [route('/next')];
     await rsbuild.build();
     const xml = await readSitemap();
     expect(xml).toContain('<loc>/next.html</loc>');
@@ -277,9 +281,7 @@ describe('built-in sitemap', () => {
   });
 
   it('preserves public output that replaces a previously generated sitemap', async () => {
-    const { driver, rsbuild } = await generate();
-    await driver.beforeBuild();
-    await driver.extendPageData(page('/next'));
+    const { rsbuild } = await generate();
     await mkdir(path.join(directory, 'public'), { recursive: true });
     await writeFile(
       path.join(directory, 'public/sitemap.xml'),

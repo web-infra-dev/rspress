@@ -86,11 +86,6 @@ export class PluginDriver {
       );
     }
 
-    if (this.#isProd) {
-      const { pluginSitemap } = await import('./sitemap');
-      this.addPlugin(pluginSitemap());
-    }
-
     (config.plugins || []).forEach(plugin => {
       this.addPlugin(plugin);
     });

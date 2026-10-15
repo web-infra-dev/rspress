@@ -1,7 +1,6 @@
 import { stat } from 'node:fs/promises';
-import type { RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
-  type RspressPlugin,
   type SitemapOptions,
   type UserConfig,
   withBase,
@@ -9,6 +8,7 @@ import {
 } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { glob } from 'tinyglobby';
+import type { RouteService } from './route/RouteService';
 import { routePath2HtmlFileName } from './ssg/htmlFile';
 
 function ensureTrailingSlash(url: string) {
@@ -75,83 +75,62 @@ const generateXml = (sitemaps: Sitemap[]) => {
   )}</urlset>`;
 };
 
-export function pluginSitemap(): RspressPlugin {
-  let options: SitemapOptions | undefined;
-  const sitemaps: Sitemap[] = [];
-  const set = new Set<string>();
-  let resolvedSiteUrl = '';
-  let cleanUrls = false;
+export function rsbuildPluginSitemap({
+  config,
+  routeService,
+}: {
+  config: UserConfig;
+  routeService: Pick<RouteService, 'getRoutes'>;
+}): RsbuildPlugin {
+  const options = typeof config.sitemap === 'object' ? config.sitemap : {};
+  const resolvedSiteUrl = getSiteUrl(options.siteUrl, config);
+  const cleanUrls = config.route?.cleanUrls ?? false;
   return {
     name: 'rspress:sitemap',
-    builderConfig: {
-      plugins: [
-        {
-          name: 'rspress:sitemap-output',
-          setup(api: RsbuildPluginAPI) {
-            api.processAssets(
-              { stage: 'additional', environments: ['web'] },
-              async ({ compilation, sources }) => {
-                if (!options || compilation.errors.length) return;
-                for (const publicDir of api.getNormalizedConfig().server
-                  .publicDir) {
-                  if (publicDir.copyOnBuild === false) continue;
-                  const files = await glob('sitemap.xml', {
-                    cwd: publicDir.name,
-                    ignore: publicDir.ignore,
-                  });
-                  if (files.length) {
-                    logger.warn('[sitemap] Preserving public sitemap.xml.');
-                    return;
-                  }
-                }
-                compilation.emitAsset(
-                  'sitemap.xml',
-                  new sources.RawSource(generateXml(sitemaps)),
-                );
-              },
-            );
-          },
+    setup(api) {
+      api.processAssets(
+        { stage: 'additional', environments: ['web'] },
+        async ({ compilation, sources }) => {
+          if (compilation.errors.length) return;
+          for (const publicDir of api.getNormalizedConfig().server.publicDir) {
+            if (publicDir.copyOnBuild === false) continue;
+            const files = await glob('sitemap.xml', {
+              cwd: publicDir.name,
+              ignore: publicDir.ignore,
+            });
+            if (files.length) {
+              logger.warn('[sitemap] Preserving public sitemap.xml.');
+              return;
+            }
+          }
+          const sitemaps: Sitemap[] = [];
+          const seen = new Set<string>();
+          for (const { routePath, absolutePath } of routeService.getRoutes()) {
+            if (seen.has(routePath)) continue;
+            seen.add(routePath);
+            // Routes are file paths, not URLs: encode reserved characters as data.
+            const pathname = cleanUrls
+              ? routePath
+              : `/${routePath2HtmlFileName(routePath)}`;
+            const encodedPath = pathname
+              .split('/')
+              .map(encodeURIComponent)
+              .join('/');
+            sitemaps.push({
+              loc: `${resolvedSiteUrl.replace(/\/$/, '')}${encodedPath}`,
+              lastmod: (await stat(absolutePath)).mtime.toISOString(),
+              priority:
+                routePath === '/' ? '1.0' : (options.defaultPriority ?? '0.5'),
+              changefreq: options.defaultChangeFreq ?? 'monthly',
+              ...(options.customMaps?.[routePath] ?? {}),
+            });
+          }
+          compilation.emitAsset(
+            'sitemap.xml',
+            new sources.RawSource(generateXml(sitemaps)),
+          );
         },
-      ],
-    },
-    beforeBuild(config, isProd) {
-      sitemaps.length = 0;
-      set.clear();
-      options =
-        isProd && config.sitemap
-          ? typeof config.sitemap === 'object'
-            ? config.sitemap
-            : {}
-          : undefined;
-      if (options) {
-        resolvedSiteUrl = getSiteUrl(options.siteUrl, config);
-        cleanUrls = config.route?.cleanUrls ?? false;
-      }
-    },
-    async extendPageData(pageData, isProd) {
-      if (isProd && options) {
-        if (!set.has(pageData.routePath)) {
-          set.add(pageData.routePath);
-          // Routes are file paths, not URLs: encode reserved characters as data.
-          const pathname = cleanUrls
-            ? pageData.routePath
-            : `/${routePath2HtmlFileName(pageData.routePath)}`;
-          const encodedPath = pathname
-            .split('/')
-            .map(encodeURIComponent)
-            .join('/');
-          sitemaps.push({
-            loc: `${resolvedSiteUrl.replace(/\/$/, '')}${encodedPath}`,
-            lastmod: (await stat(pageData._filepath)).mtime.toISOString(),
-            priority:
-              pageData.routePath === '/'
-                ? '1.0'
-                : (options.defaultPriority ?? '0.5'),
-            changefreq: options.defaultChangeFreq ?? 'monthly',
-            ...(options.customMaps?.[pageData.routePath] ?? {}),
-          });
-        }
-      }
+      );
     },
   };
 }
