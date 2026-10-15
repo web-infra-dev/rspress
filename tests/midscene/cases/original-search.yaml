@@ -67,6 +67,7 @@ cases:
         original-localized-search,
         replacement-batch-3,
         remote-search-static-regression,
+        remote-japanese-regression,
       ]
     steps:
       - app.open: { fixture: search-i18n, path: / }
@@ -75,6 +76,6 @@ cases:
       - aiAct: Replace the search query with ヘッダー. Stay in the search dialog.
       - aiAssert: Exactly two search results are listed and the first contains ヘッダー.
       - aiAct: Replace the search query with す. Stay in the search dialog.
-      - aiAssert: Exactly one search result is listed and contains できます.
+      - aiAssert: The search dialog shows exactly one result row. Its main title reads できます (de-ki-ma-su), with す highlighted at the end. The smaller line beneath the title is its page breadcrumb, not a second result.
       - aiAct: Select all text in the search input and replace it with the literal character さ (hiragana sa, not す which is su). Perform the replacement even if the current character looks similar; do not treat the existing input as already correct. Keep the dialog open and wait for its results to update.
       - aiAssert: Exactly one search result is listed and contains さい.

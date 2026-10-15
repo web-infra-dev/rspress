@@ -130,6 +130,25 @@ page, then swapped emphasis and delete only in the outline. The same assertion
 correctly rejected that reversed order while the article and sidebar stayed intact.
 The fault injection affected only a temporary browser session.
 
+Remote run [38811047337](https://github.com/quanru/rspress/actions/runs/38811047337)
+on `49bf724` passed 151/153 cases; INLINE-02 and VIRTUAL-02 both passed.
+SEARCH-04 failed after two consecutive model requests hit the 180-second hard
+timeout. That is a model-request failure, not a demonstrated keyboard regression;
+its case remains unchanged. Several other requests timed out once and recovered.
+Case retries remain disabled, distinct from the framework's model-request retry.
+SEARCH-08 showed the correct Japanese input and result, but the assertion's reason
+contradictorily rejected text identical to its expected text. Its assertion now
+identifies the result title, pronunciation and highlighted suffix, retaining the
+exactly-one-result requirement. The complete case passed three independent local
+runs: `20261016072016-5eb1edf9`, `20261016072229-a77ef6ba` and
+`20261016072403-5347d110` (1/1 each, no case retries). Full remote validation
+remains required.
+
+A local control passed the corrected Japanese assertion on the real result,
+then rejected both an incorrect Japanese label with the same highlighted suffix
+and two duplicate result rows. These faults changed only the temporary browser
+session; all four query/count/text checks remain in the case.
+
 This isolated npm package uses
 `@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.
 `app.open` only prepares the browser; all product interactions use `aiAct`.
