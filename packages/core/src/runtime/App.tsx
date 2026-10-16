@@ -15,6 +15,18 @@ enum QueryStatus {
   Show = '1',
   Hide = '0',
 }
+const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
+
+const WebMcpPageReading = () => {
+  useWebMcpPageReading();
+  return null;
+};
+const WebMCP = () => {
+  useWebMcpSiteInfo();
+  useWebMcpPageList();
+  useWebMcpNavigation();
+  return import.meta.env.ENABLE_SSG_MD ? <WebMcpPageReading /> : null;
+};
 
 export function App() {
   const globalComponents = useGlobalComponents();
@@ -25,22 +37,14 @@ export function App() {
   // This build-time condition is constant for the lifetime of the app.
   // Keep site-wide tools alongside the app's page, navigation and sidebar context.
   if (import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR) {
-    useWebMcpSiteInfo();
-    useWebMcpPageList();
-    useWebMcpNavigation();
-    if (import.meta.env.ENABLE_SSG_MD) {
-      useWebMcpPageReading();
-    }
+    return <WebMCP />;
   }
 
-  const frontmatter = data.frontmatter || {};
-  const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
-
-  const query = new URLSearchParams(search);
   const hideGlobalUIComponents =
-    // Disable global components in frontmatter or query
-    frontmatter[GLOBAL_COMPONENTS_KEY] === false ||
-    query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
+    data?.frontmatter?.[GLOBAL_COMPONENTS_KEY] === false ||
+    (Boolean(search) &&
+      new URLSearchParams(search).get(GLOBAL_COMPONENTS_KEY) ===
+        QueryStatus.Hide);
 
   if (import.meta.env.SSG_MD) {
     return (
