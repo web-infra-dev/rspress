@@ -311,7 +311,7 @@ export const remarkLink =
   }) =>
   (tree: Root, file: VFile) => {
     const {
-      checkAnchors: shouldCheckAnchors = false,
+      checkAnchors: shouldCheckAnchors = true,
       checkDeadLinks: shouldCheckDeadLinks = true,
       autoPrefix = true,
     } = remarkLinkOptions ?? {};
