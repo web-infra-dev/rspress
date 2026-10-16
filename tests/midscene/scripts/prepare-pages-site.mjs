@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 
-import { cp, mkdir, readdir, rm, stat, writeFile } from 'node:fs/promises';
+import {
+  appendFile,
+  cp,
+  mkdir,
+  readdir,
+  rm,
+  stat,
+  writeFile,
+} from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
@@ -47,6 +55,9 @@ export async function preparePagesSite({
   maxSiteBytes = MAX_SITE_BYTES,
 }) {
   if (!/^\d+$/.test(runId)) throw new Error('run-id must be numeric');
+  const result = await readNativeResult(reports);
+  // Incomplete runs keep their downloadable artifacts, without replacing Pages.
+  if (!result?.reportPath) return { bytes: 0, runIds: [], reportPath: null };
   await mkdir(site, { recursive: true });
 
   if (previous && (await exists(path.join(previous, 'runs')))) {
@@ -71,23 +82,22 @@ export async function preparePagesSite({
       },
     );
   }
-  const result = await readNativeResult(reports);
-  if (result?.reportPath) {
-    const href = result.reportPath
-      .split(path.sep)
-      .map(encodeURIComponent)
-      .join('/');
-    await writeFile(
-      path.join(current, 'index.html'),
-      `<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${href}"><title>Midscene report</title><a href="${href}">Open the Midscene Test report</a></html>`,
-    );
-  }
+  const href = result.reportPath
+    .split(path.sep)
+    .map(encodeURIComponent)
+    .join('/');
+  await writeFile(
+    path.join(current, 'index.html'),
+    `<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${href}"><title>Midscene report</title><a href="${href}">Open the Midscene Test report</a></html>`,
+  );
 
   const runsDirectory = path.join(site, 'runs');
   const runIds = (await readdir(runsDirectory, { withFileTypes: true }))
     .filter(entry => entry.isDirectory() && /^\d+$/.test(entry.name))
     .map(entry => entry.name)
-    .sort((left, right) => Number(left) - Number(right));
+    .filter(id => id !== runId)
+    .sort((left, right) => Number(left) - Number(right))
+    .concat(runId);
   for (const oldRun of runIds.slice(0, -MAX_RECENT_RUNS)) {
     await rm(path.join(runsDirectory, oldRun), { recursive: true });
   }
@@ -116,7 +126,7 @@ export async function preparePagesSite({
       `Pages site is ${bytes} bytes, above the ${maxSiteBytes}-byte safety limit`,
     );
   }
-  return { bytes, runIds: retainedRunIds };
+  return { bytes, runIds: retainedRunIds, reportPath: `runs/${runId}/` };
 }
 
 if (
@@ -131,4 +141,10 @@ if (
     previous: options.previous,
   });
   process.stdout.write(`${JSON.stringify(result)}\n`);
+  if (process.env.GITHUB_OUTPUT) {
+    await appendFile(
+      process.env.GITHUB_OUTPUT,
+      `report_path=${result.reportPath ?? ''}\n`,
+    );
+  }
 }

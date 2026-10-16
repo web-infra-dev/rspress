@@ -165,6 +165,9 @@ Image checks verify rendering, not external CDN availability.
 `fixture.update` changes only allowlisted source text in an isolated temporary
 fixture copy for HMR checks. It does not operate the UI or modify original sources.
 Temporary copies and their owned CLI processes are cleaned up after the run.
+Signal-terminated processes are not reused, and teardown has a bounded wait.
+Fixture isolation, readiness and browser capabilities share one policy in
+`scripts/original-fixture-data.ts`; mutation targets automatically require isolation.
 
 ## Run locally
 
@@ -238,6 +241,11 @@ its Summary, and uploads `midscene-results` even after failures. The
 **Publish Midscene Pages report** job adds the online native HTML report link.
 This follows Rome PR #974 at `d1b3183`: no custom report merger or
 custom screenshot-table renderer is involved.
+
+Pages publication requires an existing native HTML report. Incomplete runs keep
+downloadable artifacts and an explanatory Summary without replacing the existing
+site or publishing a broken report link. Retention always protects the current
+run, including a rerun whose run ID is older than the retained history.
 
 To enable publication:
 

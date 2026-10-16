@@ -6,6 +6,7 @@ import { defineProjectSetup, defineTestProject } from '@midscene/test/config';
 import { createMidsceneNodes } from '@midscene/test/midscene';
 import { PlaywrightAgent } from '@midscene/web/playwright/agent';
 import { playgroundAsset } from './scripts/playground-assets.js';
+import { fixturePolicy } from './scripts/original-fixture-data.js';
 import { startFixtureServer } from './fixture-server.js';
 import {
   OriginalFixture,
@@ -74,6 +75,7 @@ const open = defineNode<typeof input, void, Context>({
   description: 'Open a local fixture in a fresh browser session.',
   inputSchema: input,
   async execute({ context, input }) {
+    const policy = fixturePolicy(input.fixture);
     const origin = input.fixture
       ? await context.fixture.open(input.fixture, input.mode)
       : baseURL;
@@ -115,16 +117,12 @@ const open = defineNode<typeof input, void, Context>({
           ),
         });
       }
-      if (
-        input.fixture?.startsWith('plugin-playground') &&
-        route.request().method() === 'GET'
-      ) {
+      if (policy.playgroundAssets && route.request().method() === 'GET') {
         const asset = await playgroundAsset(requestURL).catch(() => undefined);
         if (asset) return route.fulfill({ status: 200, ...asset });
       }
       if (
-        (input.fixture?.startsWith('plugin-preview') ||
-          input.fixture === 'plugin-playground-preview') &&
+        policy.iframeOrigins &&
         context.page &&
         !allowedOrigins.has(requestURL.origin)
       ) {
@@ -151,14 +149,10 @@ const open = defineNode<typeof input, void, Context>({
     context.page = await context.session.newPage();
     await context.page.goto(url.href, { waitUntil: 'domcontentloaded' });
     await context.page
-      .locator(
-        input.fixture === 'nav-link-item-with-hash'
-          ? '#pageA'
-          : 'h1, .rp-home-hero, .rspress-doc, .rp-overview',
-      )
+      .locator(policy.readySelector)
       .first()
       .waitFor({ state: 'visible' });
-    if (input.fixture?.startsWith('plugin-preview')) {
+    if (policy.waitForFrames) {
       const frames = context.page.locator('iframe');
       for (const iframe of await frames.all()) {
         const src = await iframe.getAttribute('src');

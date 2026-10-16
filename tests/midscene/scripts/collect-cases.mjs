@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { relative, resolve } from 'node:path';
 import { collectWorkflowDocument } from '@midscene/test';
 import { discoverTestFiles, loadTestProject } from '@midscene/test/config';
+import { fixturePolicy } from './original-fixture-data.ts';
 
 const loaded = await loadTestProject(resolve('midscene.config.ts'));
 const actual = {};
@@ -53,9 +54,7 @@ for (const project of loaded.projects) {
       );
       if (nodes.includes('fixture.update')) {
         assert(
-          ['hmr', 'hmr-lazy', 'plugin-preview', 'plugin-playground'].includes(
-            definition.steps[0].input.fixture,
-          ),
+          fixturePolicy(definition.steps[0].input.fixture).isolated,
           'Fixture updates require an isolated source copy',
         );
       }

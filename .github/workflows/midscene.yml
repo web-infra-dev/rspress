@@ -238,6 +238,7 @@ jobs:
           tar -xf "$RUNNER_TEMP/previous-pages-artifact/artifact.tar" -C "$RUNNER_TEMP/previous-pages"
 
       - name: Prepare published report
+        id: prepare-report
         if: steps.pages.outcome == 'success'
         run: |
           node tests/midscene/scripts/prepare-pages-site.mjs \
@@ -248,7 +249,7 @@ jobs:
 
       - name: Upload GitHub Pages report
         id: upload-pages
-        if: steps.pages.outcome == 'success'
+        if: steps.prepare-report.outputs.report_path != ''
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           name: midscene-e2e-report-pages-${{ github.run_attempt }}
@@ -263,8 +264,14 @@ jobs:
           artifact_name: midscene-e2e-report-pages-${{ github.run_attempt }}
 
       - name: Add published report link to Summary
-        if: steps.deployment.outcome == 'success'
+        if: steps.deployment.outcome == 'success' && steps.prepare-report.outputs.report_path != ''
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+          REPORT_PATH: ${{ steps.prepare-report.outputs.report_path }}
         run: |
-          echo "[Open the Midscene Test report ↗](${PAGE_URL%/}/runs/$GITHUB_RUN_ID/)" >> "$GITHUB_STEP_SUMMARY"
+          echo "[Open the Midscene Test report ↗](${PAGE_URL%/}/$REPORT_PATH)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Explain incomplete native report
+        if: steps.prepare-report.outcome == 'success' && steps.prepare-report.outputs.report_path == ''
+        run: |
+          echo "The run did not produce a complete native HTML report. Pages was not replaced. Download the test artifacts from the workflow to inspect partial results." >> "$GITHUB_STEP_SUMMARY"

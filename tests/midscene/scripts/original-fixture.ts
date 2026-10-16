@@ -15,12 +15,17 @@ import {
   originalFixtures,
   fixtureAliases,
   fixtureMutations,
+  fixturePolicy,
   type FixtureUpdatePart,
 } from './original-fixture-data.ts';
+
 export {
   originalFixtures,
   fixtureUpdateParts,
 } from './original-fixture-data.ts';
+
+const isRunning = (child: ChildProcess | undefined): child is ChildProcess =>
+  !!child?.pid && child.exitCode === null && child.signalCode === null;
 
 async function reservePorts(count: number): Promise<number[]> {
   const reservations: ReturnType<typeof createServer>[] = [];
@@ -75,13 +80,12 @@ export class OriginalFixture {
     if (!originalFixtures.some(name => name === fixture)) {
       throw new Error(`Unknown original fixture: ${fixture}`);
     }
+    const policy = fixturePolicy(fixture);
     if (
-      !['hmr', 'hmr-lazy', 'plugin-preview', 'plugin-playground'].includes(
-        fixture,
-      ) &&
+      !policy.isolated &&
       this.fixture === fixture &&
       this.production === production &&
-      this.child?.exitCode === null
+      isRunning(this.child)
     ) {
       return this.origin!;
     }
@@ -94,11 +98,7 @@ export class OriginalFixture {
     ];
     const source = path.join(this.repository, 'e2e/fixtures', directoryName);
     let directory = source;
-    if (
-      ['hmr', 'hmr-lazy', 'plugin-preview', 'plugin-playground'].includes(
-        fixture,
-      )
-    ) {
+    if (policy.isolated) {
       const parent = path.join(this.repository, 'tests/midscene/.fixture');
       await mkdir(parent, { recursive: true });
       this.scratch = await mkdtemp(path.join(parent, `${fixture}-`));
@@ -119,10 +119,7 @@ export class OriginalFixture {
       );
       directory = this.scratch;
     }
-    const preview = ['plugin-preview', 'plugin-preview-custom-entry'].includes(
-      fixture,
-    );
-    const [port, previewPort] = await reservePorts(preview ? 2 : 1);
+    const [port, previewPort] = await reservePorts(policy.previewPort ? 2 : 1);
     const origin = `http://127.0.0.1:${port}`;
     const environment = Object.fromEntries(
       Object.entries(process.env).filter(
@@ -198,21 +195,14 @@ export class OriginalFixture {
     }
     const deadline = Date.now() + 120_000;
     while (Date.now() < deadline) {
-      if (spawnError || child.exitCode !== null) {
+      if (spawnError || child.exitCode !== null || child.signalCode !== null) {
         this.child = undefined;
         throw new Error(
           `Fixture ${fixture} failed to start: ${spawnError?.message ?? log}`,
         );
       }
       try {
-        const readyPath = [
-          'search',
-          'multi-version',
-          'page-type-home',
-        ].includes(fixture)
-          ? '/base/'
-          : '/';
-        const response = await fetch(origin + readyPath, {
+        const response = await fetch(origin + policy.readyPath, {
           signal: AbortSignal.timeout(1000),
         });
         if (response.status < 500) {
@@ -247,13 +237,23 @@ export class OriginalFixture {
     this.child = undefined;
     this.fixture = undefined;
     this.origin = undefined;
-    if (child && child.exitCode === null)
-      await new Promise<void>(resolve => {
-        const timeout = setTimeout(() => child.kill('SIGKILL'), 5000);
-        child.once('exit', () => {
-          clearTimeout(timeout);
+    if (isRunning(child))
+      await new Promise<void>((resolve, reject) => {
+        const forceKill = setTimeout(() => child.kill('SIGKILL'), 5000);
+        const deadline = setTimeout(() => {
+          child.off('exit', onExit);
+          reject(
+            new Error(
+              `Fixture process ${child.pid} did not exit after SIGKILL`,
+            ),
+          );
+        }, 10_000);
+        const onExit = () => {
+          clearTimeout(forceKill);
+          clearTimeout(deadline);
           resolve();
-        });
+        };
+        child.once('exit', onExit);
         child.kill('SIGTERM');
       });
     if (this.scratch) {

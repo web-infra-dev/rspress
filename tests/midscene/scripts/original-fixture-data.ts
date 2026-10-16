@@ -175,3 +175,49 @@ export type FixtureUpdatePart = keyof typeof fixtureMutations;
 export const fixtureUpdateParts = Object.keys(
   fixtureMutations,
 ) as FixtureUpdatePart[];
+
+interface FixturePolicy {
+  isolated: boolean;
+  previewPort: boolean;
+  playgroundAssets: boolean;
+  iframeOrigins: boolean;
+  waitForFrames: boolean;
+  readyPath: string;
+  readySelector: string;
+}
+
+const fixturePolicies: Readonly<Record<string, Partial<FixturePolicy>>> = {
+  search: { readyPath: '/base/' },
+  'multi-version': { readyPath: '/base/' },
+  'page-type-home': { readyPath: '/base/' },
+  'nav-link-item-with-hash': { readySelector: '#pageA' },
+  'plugin-preview': {
+    previewPort: true,
+    iframeOrigins: true,
+    waitForFrames: true,
+  },
+  'plugin-preview-custom-entry': {
+    previewPort: true,
+    iframeOrigins: true,
+    waitForFrames: true,
+  },
+  'plugin-preview-no-iframe': { iframeOrigins: true, waitForFrames: true },
+  'plugin-playground': { playgroundAssets: true },
+  'plugin-playground-preview': { playgroundAssets: true, iframeOrigins: true },
+};
+
+/** Fixture capabilities shared by collection, process setup and browser setup. */
+export function fixturePolicy(name?: string): FixturePolicy {
+  return {
+    isolated: Object.values(fixtureMutations).some(mutation =>
+      mutation.fixtures.some(fixture => fixture === name),
+    ),
+    previewPort: false,
+    playgroundAssets: false,
+    iframeOrigins: false,
+    waitForFrames: false,
+    readyPath: '/',
+    readySelector: 'h1, .rp-home-hero, .rspress-doc, .rp-overview',
+    ...(name ? fixturePolicies[name] : undefined),
+  };
+}

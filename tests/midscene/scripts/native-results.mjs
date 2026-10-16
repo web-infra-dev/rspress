@@ -1,4 +1,4 @@
-import { access, readFile, readdir } from 'node:fs/promises';
+import { stat, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 
 export async function readNativeResult(reportsDirectory) {
@@ -42,8 +42,8 @@ export async function readNativeResult(reportsDirectory) {
       throw new Error('Native report escapes the report directory');
     }
     try {
-      await access(report);
-      reportPath = path.relative(root, report);
+      if ((await stat(report)).isFile())
+        reportPath = path.relative(root, report);
     } catch (error) {
       if (error.code !== 'ENOENT') throw error;
     }
