@@ -1,6 +1,8 @@
 /* Default Rspress brand colors */
 :where(:root) {
   --rp-c-brand: #0095ff;
+  /* Foreground color on solid brand backgrounds. */
+  --rp-c-brand-contrast: #ffffff;
   --rp-c-brand-light: #33adff;
   --rp-c-brand-lighter: #c6e0fd;
   --rp-c-brand-dark: #0077ff;

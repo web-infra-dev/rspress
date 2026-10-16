@@ -68,7 +68,7 @@
     .rp-suggest-item__statement,
     .rp-suggest-item__mark,
     .rp-suggest-item__title {
-      color: #ffffff;
+      color: var(--rp-c-brand-contrast);
     }
 
     .rp-suggest-item__mark {
