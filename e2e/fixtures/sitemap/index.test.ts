@@ -47,7 +47,7 @@ test('core and legacy configurations emit the same sitemap in SSG and CSR builds
   expect(xml).toContain(
     '<loc>https://example.com/docs/</loc><lastmod>2026-01-01</lastmod><priority>1.0</priority><changefreq>weekly</changefreq>',
   );
-  expect(xml).toContain('<loc>https://example.com/docs/guide.html</loc>');
+  expect(xml).toContain('<loc>https://example.com/docs/guide</loc>');
   expect(xml).toContain('<priority>0.7</priority>');
 
   const { stdout, stderr } = await build('rspress-legacy.config.ts');
@@ -70,14 +70,12 @@ test('sitemap false suppresses generation even with the legacy plugin', async ()
 test('production builds generate a sitemap by default', async () => {
   await build('rspress-default.config.ts');
   const xml = await readSitemap('default-build');
-  expect(xml).toContain('<loc>https://example.com/docs/guide.html</loc>');
-  expect(xml).toContain(
-    '<loc>https://example.com/docs/folder/index.html</loc>',
-  );
-  expect(xml).toContain('<loc>https://example.com/docs/My%20Guide.html</loc>');
+  expect(xml).toContain('<loc>https://example.com/docs/guide</loc>');
+  expect(xml).toContain('<loc>https://example.com/docs/folder/</loc>');
+  expect(xml).toContain('<loc>https://example.com/docs/My%20Guide</loc>');
   await access(path.join(appDir, 'default-build', 'folder', 'index.html'));
   await access(path.join(appDir, 'default-build', 'My Guide.html'));
-  expect(xml).toContain('<loc>https://example.com/docs/FAQ%231.html</loc>');
+  expect(xml).toContain('<loc>https://example.com/docs/FAQ%231</loc>');
   await access(path.join(appDir, 'default-build', 'FAQ#1.html'));
   await expect(
     access(path.join(appDir, 'unused-build', 'sitemap.xml')),
@@ -93,7 +91,7 @@ test('updates retained output in separate production builds', async () => {
   try {
     await build('rspress-default.config.ts');
     expect(await readSitemap('default-build')).toContain(
-      '<loc>https://example.com/docs/next.html</loc>',
+      '<loc>https://example.com/docs/next</loc>',
     );
   } finally {
     await rm(pagePath, { force: true });

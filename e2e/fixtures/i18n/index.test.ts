@@ -75,7 +75,7 @@ test.describe('i18n', async () => {
     await expect(absoluteLink).toBeVisible();
     await expect(absoluteLink).toHaveAttribute(
       'href',
-      '/en/guide/basic/install.html',
+      '/en/guide/basic/install',
     );
 
     const relativeLink = page.getByRole('link', {
@@ -84,7 +84,7 @@ test.describe('i18n', async () => {
     await expect(relativeLink).toBeVisible();
     await expect(relativeLink).toHaveAttribute(
       'href',
-      '/en/guide/basic/install.html',
+      '/en/guide/basic/install',
     );
   });
 
@@ -99,19 +99,13 @@ test.describe('i18n', async () => {
       name: /绝对路径/,
     });
     await expect(absoluteLink).toBeVisible();
-    await expect(absoluteLink).toHaveAttribute(
-      'href',
-      '/guide/basic/install.html',
-    );
+    await expect(absoluteLink).toHaveAttribute('href', '/guide/basic/install');
     // check the compile result of relative link in doc content
     const relativeLink = page.getByRole('link', {
       name: /相对路径/,
     });
     await expect(relativeLink).toBeVisible();
-    await expect(relativeLink).toHaveAttribute(
-      'href',
-      '/guide/basic/install.html',
-    );
+    await expect(relativeLink).toHaveAttribute('href', '/guide/basic/install');
   });
 
   test('Should render sidebar correctly', async ({ page }) => {
@@ -191,10 +185,7 @@ test.describe('i18n', async () => {
         hasText: 'My Link',
       },
     );
-    await expect(customLinkZh).toHaveAttribute(
-      'href',
-      '/guide/basic/install.html',
-    );
+    await expect(customLinkZh).toHaveAttribute('href', '/guide/basic/install');
 
     await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
@@ -207,7 +198,7 @@ test.describe('i18n', async () => {
     );
     await expect(customLinkEn).toHaveAttribute(
       'href',
-      '/en/guide/basic/install.html',
+      '/en/guide/basic/install',
     );
   });
 
@@ -368,8 +359,8 @@ test.describe('i18n SEO', () => {
       readFile(path.join(outputDir, 'en/index.html'), 'utf8'),
     ]);
     const alternateLinks = [
-      '<link rel="alternate" hreflang="zh" href="https://example.com/index.html">',
-      '<link rel="alternate" hreflang="en" href="https://example.com/en/index.html">',
+      '<link rel="alternate" hreflang="zh" href="https://example.com/">',
+      '<link rel="alternate" hreflang="en" href="https://example.com/en/">',
     ];
 
     for (const link of alternateLinks) {

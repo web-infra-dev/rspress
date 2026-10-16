@@ -7,7 +7,6 @@ export default defineConfig({
   lang: 'en',
   locales: [{ lang: 'en' }, { lang: 'zh' }],
   route: {
-    cleanUrls: true,
     localeRedirect: 'never',
   },
 });

@@ -44,7 +44,7 @@ test.describe('localized search', async () => {
     // Switch language to English
     await langMenu.click();
     await page.getByRole('link', { name: 'English' }).click();
-    await page.waitForURL(/\/index\.html/);
+    await page.waitForURL(`http://localhost:${appPort}/`);
 
     const suggestItems3 = await searchInPage(page, 'Button');
     expect(await suggestItems3[0].textContent()).toContain('Button en');

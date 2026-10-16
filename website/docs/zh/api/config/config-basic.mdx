@@ -788,9 +788,9 @@ export default defineConfig({
 ### route.cleanUrls
 
 - **类型**： `boolean`
-- **默认值**： `false`
+- **默认值**： `true`
 
-开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁。
+开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁。从 Rspress 2.1.0 开始默认开启。设置为 `false` 可以保留 `.html` 后缀。
 
 :::warning 需要服务器支持
 
@@ -803,7 +803,7 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    cleanUrls: true,
+    cleanUrls: false,
   },
 });
 ```
