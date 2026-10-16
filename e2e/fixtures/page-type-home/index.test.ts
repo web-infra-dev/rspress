@@ -49,9 +49,7 @@ test.describe('home pageType', async () => {
     // click the first action
     await actions.nth(0).click();
     await page.waitForSelector('.rspress-doc');
-    expect(page.url()).toBe(
-      `http://localhost:${appPort}/base/guide/action-1.html`,
-    );
+    expect(page.url()).toBe(`http://localhost:${appPort}/base/guide/action-1`);
   });
 
   test('Hero - zh', async ({ page }) => {

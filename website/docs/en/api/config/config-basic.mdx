@@ -788,9 +788,9 @@ export default defineConfig({
 ### route.cleanUrls
 
 - **Type**: `Boolean`
-- **Default**: `false`
+- **Default**: `true` (`false` before v2.1.0)
 
-Generates URLs without file extensions when `cleanUrls` is `true`.
+Generates URLs without file extensions. Set `cleanUrls` to `false` to keep the `.html` suffix.
 
 :::warning Server Support Required
 
@@ -803,7 +803,7 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    cleanUrls: true,
+    cleanUrls: false,
   },
 });
 ```
