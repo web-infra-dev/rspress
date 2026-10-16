@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+import { RsdoctorRspackPlugin } from '@rsdoctor/core';
 import { defineConfig } from '@rspress/core';
 
 const commonRsdoctorConfig = {
