@@ -232,7 +232,7 @@ test.describe('check dead links', async () => {
     }
   });
 
-  test('should fail build for dead anchors', async () => {
+  test('should fail build for dead anchors by default', async () => {
     const appDir = import.meta.dirname;
     await expect(
       runBuildCommand(appDir, 'rspress-anchor-error.config.ts'),
