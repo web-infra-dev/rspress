@@ -274,3 +274,14 @@ stay in this isolated test harness, not the product's runtime dependencies.
 Use synthetic local fixtures and a dedicated quota-limited model key. Do not run
 `npm audit fix --force`: its suggested framework downgrades are incompatible with
 this integration.
+
+## CI evidence table
+
+After Pages deployment succeeds, the publishing job adds a per-case Markdown
+table to the workflow Summary: project, case, screenshot, status, duration,
+and a link to the selected step in the native Midscene report. Failed cases
+appear first. Successful cases use the last recorded step; failures use the
+first failing step. Screenshots come from that step's execution trace, not a
+different case or a synthetic image. Missing captures are explicitly marked.
+The top-level report link still opens the framework-generated HTML report.
+Without Pages, the test job retains the native text Summary and artifact link.

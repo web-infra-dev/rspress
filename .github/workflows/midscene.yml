@@ -263,13 +263,18 @@ jobs:
         with:
           artifact_name: midscene-e2e-report-pages-${{ github.run_attempt }}
 
-      - name: Add published report link to Summary
+      - name: Add per-case screenshots and report links to Summary
         if: steps.deployment.outcome == 'success' && steps.prepare-report.outputs.report_path != ''
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
-          REPORT_PATH: ${{ steps.prepare-report.outputs.report_path }}
+          PRODUCER_RESULT: ${{ needs.midscene.result }}
         run: |
-          echo "[Open the Midscene Test report ↗](${PAGE_URL%/}/$REPORT_PATH)" >> "$GITHUB_STEP_SUMMARY"
+          node tests/midscene/scripts/render-ci-summary.mjs \
+            --reports "$RUNNER_TEMP/midscene-reports" \
+            --pages-url "$PAGE_URL" \
+            --run-id "$GITHUB_RUN_ID" \
+            --producer-result "$PRODUCER_RESULT" \
+            --output "$GITHUB_STEP_SUMMARY"
 
       - name: Explain incomplete native report
         if: steps.prepare-report.outcome == 'success' && steps.prepare-report.outputs.report_path == ''

@@ -198,13 +198,13 @@ test('workflow gates upload and Summary links on the verified report path', asyn
     .split('- name: Deploy report')[0];
   assert(upload.includes("if: steps.prepare-report.outputs.report_path != ''"));
   const summary = workflow.split(
-    '- name: Add published report link to Summary',
+    '- name: Add per-case screenshots and report links to Summary',
   )[1];
   assert(
     summary.includes(
       "steps.deployment.outcome == 'success' && steps.prepare-report.outputs.report_path != ''",
     ),
   );
-  assert(summary.includes('$REPORT_PATH'));
+  assert(summary.includes('render-ci-summary.mjs'));
   assert(summary.includes('Explain incomplete native report'));
 });
