@@ -69,7 +69,7 @@ const PreviewInternal: React.FC<{ children: React.ReactNode[] }> = ({
       if (!showCode) {
         ev.currentTarget.blur();
       }
-      setShowCode(!showCode);
+      setShowCode(prevShowCode => !prevShowCode);
     },
     [showCode],
   );

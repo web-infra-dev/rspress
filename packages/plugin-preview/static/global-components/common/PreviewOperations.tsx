@@ -21,6 +21,27 @@ const locales = {
     refresh: 'Refresh',
     open: 'Open in new page',
   },
+  ta: {
+    refresh: 'பக்கத்தைப் புதுப்பிக்க',
+    open: 'புதிய பக்கத்தில் பார்க்க',
+  },
+} as const;
+
+const contains = function (root: HTMLElement | null, ele: Node | null) {
+  if (!root) {
+    return false;
+  }
+  if (root.contains) {
+    return root.contains(ele);
+  }
+  let node = ele;
+  while (node) {
+    if (node === root) {
+      return true;
+    }
+    node = node.parentNode;
+  }
+  return false;
 };
 
 export default (props: {
@@ -32,43 +53,32 @@ export default (props: {
   const { url, className = '', refresh } = props;
   const lang = useLang();
   const triggerRef = useRef(null);
-  const t = lang === 'zh' ? locales.zh : locales.en;
+  const resolvedLang = (
+    lang in locales
+      ? lang
+      : lang?.startsWith('zh')
+        ? 'zh'
+        : lang?.startsWith('ta')
+          ? 'ta'
+          : 'en'
+  ) as keyof typeof locales;
+  const t = locales[resolvedLang] ?? locales.en;
 
   const toggleQRCode: MouseEventHandler<HTMLButtonElement> = e => {
     if (!showQRCode) {
       e.currentTarget.blur();
     }
-    setShowQRCode(!showQRCode);
+    setShowQRCode(prevShowQRCode => !prevShowQRCode);
   };
   const openNewPage = () => {
     window.open(url);
   };
 
-  const contains = function (root: HTMLElement | null, ele: Node | null) {
-    if (!root) {
-      return false;
+  const onClickOutside = useCallback((ev: MouseEvent) => {
+    if (!contains(triggerRef.current, ev.target as Node)) {
+      setShowQRCode(false);
     }
-    if (root.contains) {
-      return root.contains(ele);
-    }
-    let node = ele;
-    while (node) {
-      if (node === root) {
-        return true;
-      }
-      node = node.parentNode;
-    }
-    return false;
-  };
-
-  const onClickOutside = useCallback(
-    (ev: MouseEvent) => {
-      if (!contains(triggerRef.current, ev.target as Node)) {
-        setShowQRCode(false);
-      }
-    },
-    [triggerRef],
-  );
+  }, []);
 
   useEffect(() => {
     if (showQRCode) {
@@ -76,6 +86,10 @@ export default (props: {
     } else {
       document.removeEventListener('mousedown', onClickOutside, false);
     }
+
+    return () => {
+      document.removeEventListener('mousedown', onClickOutside, false);
+    };
   }, [showQRCode]);
 
   return (
