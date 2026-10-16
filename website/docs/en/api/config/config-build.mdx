@@ -253,7 +253,7 @@ export default defineConfig({
 #### markdown.link.checkAnchors
 
 - **Type**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
-- **Default**: `true`
+- **Default**: `true` (`false` before v2.1.0)
 
 After enabling this configuration, Rspress will check whether internal link anchors exist in the target Markdown or MDX page. It checks same-page anchors, relative links, and absolute links, but skips external URL anchors.
 
