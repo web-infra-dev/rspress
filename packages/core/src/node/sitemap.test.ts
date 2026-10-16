@@ -33,6 +33,10 @@ afterEach(async () => {
 function route(routePath: string): RouteMeta {
   return { routePath, absolutePath: filepath } as RouteMeta;
 }
+const readRobots = (fileName = 'robots.txt') =>
+  readFile(path.join(outDir, fileName), 'utf8');
+const readHtml = (fileName = 'index.html') =>
+  readFile(path.join(outDir, fileName), 'utf8');
 
 async function generate(
   config: UserConfig = {},
@@ -344,5 +348,165 @@ describe('built-in sitemap', () => {
     await expect(
       generate({ sitemap: true, siteOrigin: 'invalid' }),
     ).rejects.toThrow('`siteOrigin`');
+  });
+
+  it('generates default robots.txt when enabled', async () => {
+    await generate({
+      siteOrigin: 'https://example.com',
+      base: '/docs/',
+      sitemap: {
+        discovery: {
+          robotsTxt: true,
+        },
+      },
+    });
+    const robots = await readRobots();
+    expect(robots).toContain('User-agent: *');
+    expect(robots).toContain('Allow: /');
+    expect(robots).toContain('Sitemap: https://example.com/docs/sitemap.xml');
+  });
+
+  it('supports custom robots policies, host, and additional sitemaps', async () => {
+    await generate({
+      siteOrigin: 'https://example.com',
+      sitemap: {
+        discovery: {
+          robotsTxt: {
+            host: 'example.com',
+            policies: [
+              {
+                userAgent: ['Googlebot', 'Bingbot'],
+                disallow: ['/private/', '/tmp/'],
+                crawlDelay: 10,
+              },
+            ],
+            additionalSitemaps: ['https://example.com/extra-sitemap.xml'],
+          },
+        },
+      },
+    });
+    const robots = await readRobots();
+    expect(robots).toContain('User-agent: Googlebot');
+    expect(robots).toContain('User-agent: Bingbot');
+    expect(robots).toContain('Disallow: /private/');
+    expect(robots).toContain('Disallow: /tmp/');
+    expect(robots).toContain('Crawl-delay: 10');
+    expect(robots).toContain('Host: example.com');
+    expect(robots).toContain('Sitemap: https://example.com/sitemap.xml');
+    expect(robots).toContain('Sitemap: https://example.com/extra-sitemap.xml');
+  });
+
+  it('merges with existing public robots.txt without duplicate sitemaps', async () => {
+    await mkdir(path.join(directory, 'public'), { recursive: true });
+    await writeFile(
+      path.join(directory, 'public/robots.txt'),
+      'User-agent: CustomBot\nDisallow: /admin\nSitemap: https://example.com/sitemap.xml\n',
+    );
+    await generate({
+      siteOrigin: 'https://example.com',
+      sitemap: {
+        discovery: {
+          robotsTxt: {
+            mergeStrategy: 'merge',
+            additionalSitemaps: ['https://example.com/extra.xml'],
+          },
+        },
+      },
+    });
+    const robots = await readRobots();
+    expect(robots).toContain('User-agent: CustomBot');
+    expect(robots).toContain('Disallow: /admin');
+    expect(
+      robots.match(/Sitemap: https:\/\/example\.com\/sitemap\.xml/g),
+    ).toHaveLength(1);
+    expect(robots).toContain('Sitemap: https://example.com/extra.xml');
+  });
+
+  it('preserves existing robots.txt when mergeStrategy is preserve', async () => {
+    await mkdir(path.join(directory, 'public'), { recursive: true });
+    await writeFile(
+      path.join(directory, 'public/robots.txt'),
+      'User-agent: KeepMe\nDisallow: /',
+    );
+    await generate({
+      siteOrigin: 'https://example.com',
+      sitemap: {
+        discovery: {
+          robotsTxt: {
+            mergeStrategy: 'preserve',
+          },
+        },
+      },
+    });
+    expect(await readRobots()).toBe('User-agent: KeepMe\nDisallow: /');
+  });
+
+  it('supports robots.txt transform hook', async () => {
+    await generate({
+      siteOrigin: 'https://example.com',
+      sitemap: {
+        discovery: {
+          robotsTxt: {
+            transform: content => `${content}\n# Custom Footer`,
+          },
+        },
+      },
+    });
+    const robots = await readRobots();
+    expect(robots).toContain('# Custom Footer');
+  });
+
+  it('does not emit robots.txt during development', async () => {
+    await generate(
+      {
+        siteOrigin: 'https://example.com',
+        sitemap: {
+          discovery: {
+            robotsTxt: true,
+          },
+        },
+      },
+      false,
+    );
+    await expect(readRobots()).rejects.toThrow('ENOENT');
+  });
+
+  it('injects sitemap link tag into HTML head in production by default', async () => {
+    await generate({
+      siteOrigin: 'https://example.com',
+    });
+    const html = await readHtml();
+    expect(html).toContain(
+      '<link rel="sitemap" type="application/xml" href="https://example.com/sitemap.xml"',
+    );
+  });
+
+  it('supports custom link tag options and disabling link tag', async () => {
+    await generate({
+      siteOrigin: 'https://example.com',
+      sitemap: {
+        discovery: {
+          linkTag: {
+            rel: 'alternate-sitemap',
+            href: 'https://custom.example/map.xml',
+          },
+        },
+      },
+    });
+    const customHtml = await readHtml();
+    expect(customHtml).toContain(
+      '<link rel="alternate-sitemap" type="application/xml" href="https://custom.example/map.xml"',
+    );
+
+    await generate({
+      siteOrigin: 'https://example.com',
+      sitemap: {
+        discovery: {
+          linkTag: false,
+        },
+      },
+    });
+    const disabledHtml = await readHtml();
+    expect(disabledHtml).not.toContain('rel="sitemap"');
   });
 });
