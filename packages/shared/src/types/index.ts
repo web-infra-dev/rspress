@@ -220,7 +220,7 @@ export interface UserConfig {
    * Path to the logo file in nav bar.
    * @default ''
    */
-  logo?: string | { dark: string; light: string };
+  logo?: string | URL | { dark: string | URL; light: string | URL };
   /**
    * The text of the logo in nav bar.
    * @default ''
