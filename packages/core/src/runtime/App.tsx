@@ -36,9 +36,7 @@ export function App() {
 
   // This build-time condition is constant for the lifetime of the app.
   // Keep site-wide tools alongside the app's page, navigation and sidebar context.
-  if (import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR) {
-    return <WebMCP />;
-  }
+  const renderWebMcp = import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR;
 
   const hideGlobalUIComponents =
     data?.frontmatter?.[GLOBAL_COMPONENTS_KEY] === false ||
@@ -49,6 +47,7 @@ export function App() {
   if (import.meta.env.SSG_MD) {
     return (
       <Root>
+        {renderWebMcp && <WebMCP />}
         {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
         <Layout />
       </Root>
@@ -57,6 +56,7 @@ export function App() {
 
   return (
     <Root>
+      {renderWebMcp && <WebMCP />}
       {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
       <Layout />
       {
