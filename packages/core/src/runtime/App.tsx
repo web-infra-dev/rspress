@@ -17,26 +17,31 @@ enum QueryStatus {
 }
 const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
 
-const WebMcpPageReading = () => {
-  useWebMcpPageReading();
-  return null;
-};
-const WebMCP = () => {
-  useWebMcpSiteInfo();
-  useWebMcpPageList();
-  useWebMcpNavigation();
-  return import.meta.env.ENABLE_SSG_MD ? <WebMcpPageReading /> : null;
-};
+// This build-time condition is constant for the lifetime of the app.
+// Keep site-wide tools alongside the app's page, navigation and sidebar context.
+const WebMcpPageReading =
+  import.meta.env.ENABLE_WEBMCP && import.meta.env.ENABLE_SSG_MD
+    ? () => {
+        useWebMcpPageReading();
+        return null;
+      }
+    : null;
+
+const WebMCP =
+  import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR
+    ? () => {
+        useWebMcpSiteInfo();
+        useWebMcpPageList();
+        useWebMcpNavigation();
+        return WebMcpPageReading ? <WebMcpPageReading /> : null;
+      }
+    : null;
 
 export function App() {
   const globalComponents = useGlobalComponents();
   const { data } = useContext(PageContext);
   const location = useLocation();
   const { search } = location;
-
-  // This build-time condition is constant for the lifetime of the app.
-  // Keep site-wide tools alongside the app's page, navigation and sidebar context.
-  const renderWebMcp = import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR;
 
   const hideGlobalUIComponents =
     data?.frontmatter?.[GLOBAL_COMPONENTS_KEY] === false ||
@@ -47,7 +52,7 @@ export function App() {
   if (import.meta.env.SSG_MD) {
     return (
       <Root>
-        {renderWebMcp && <WebMCP />}
+        {WebMCP && <WebMCP />}
         {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
         <Layout />
       </Root>
@@ -56,7 +61,7 @@ export function App() {
 
   return (
     <Root>
-      {renderWebMcp && <WebMCP />}
+      {WebMCP && <WebMCP />}
       {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
       <Layout />
       {
