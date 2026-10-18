@@ -15,6 +15,27 @@ enum QueryStatus {
   Show = '1',
   Hide = '0',
 }
+const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
+
+// This build-time condition is constant for the lifetime of the app.
+// Keep site-wide tools alongside the app's page, navigation and sidebar context.
+const WebMcpPageReading =
+  import.meta.env.ENABLE_WEBMCP && import.meta.env.ENABLE_SSG_MD
+    ? () => {
+        useWebMcpPageReading();
+        return null;
+      }
+    : null;
+
+const WebMCP =
+  import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR
+    ? () => {
+        useWebMcpSiteInfo();
+        useWebMcpPageList();
+        useWebMcpNavigation();
+        return WebMcpPageReading ? <WebMcpPageReading /> : null;
+      }
+    : null;
 
 export function App() {
   const globalComponents = useGlobalComponents();
@@ -22,29 +43,16 @@ export function App() {
   const location = useLocation();
   const { search } = location;
 
-  // This build-time condition is constant for the lifetime of the app.
-  // Keep site-wide tools alongside the app's page, navigation and sidebar context.
-  if (import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR) {
-    useWebMcpSiteInfo();
-    useWebMcpPageList();
-    useWebMcpNavigation();
-    if (import.meta.env.ENABLE_SSG_MD) {
-      useWebMcpPageReading();
-    }
-  }
-
-  const frontmatter = data.frontmatter || {};
-  const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
-
-  const query = new URLSearchParams(search);
   const hideGlobalUIComponents =
-    // Disable global components in frontmatter or query
-    frontmatter[GLOBAL_COMPONENTS_KEY] === false ||
-    query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
+    data?.frontmatter?.[GLOBAL_COMPONENTS_KEY] === false ||
+    (Boolean(search) &&
+      new URLSearchParams(search).get(GLOBAL_COMPONENTS_KEY) ===
+        QueryStatus.Hide);
 
   if (import.meta.env.SSG_MD) {
     return (
       <Root>
+        {WebMCP && <WebMCP />}
         {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
         <Layout />
       </Root>
@@ -53,6 +61,7 @@ export function App() {
 
   return (
     <Root>
+      {WebMCP && <WebMCP />}
       {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
       <Layout />
       {
