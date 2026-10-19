@@ -615,7 +615,7 @@ export interface RouteOptions {
   excludeConvention?: string[];
   /**
    * use links without .html files
-   * @default false
+   * @default true
    */
   cleanUrls?: boolean;
   /**
