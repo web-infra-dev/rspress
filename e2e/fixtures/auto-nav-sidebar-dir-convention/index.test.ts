@@ -30,7 +30,7 @@ test.describe('Auto nav and sidebar dir convention', async () => {
       .click();
     await page.waitForURL('**/index-md-convention/**');
     expect(page.url()).toBe(
-      `http://localhost:${appPort}/guide/index-md-convention/index.html`,
+      `http://localhost:${appPort}/guide/index-md-convention/`,
     );
   });
 

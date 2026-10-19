@@ -1,0 +1,61 @@
+# AI 配置
+
+这些选项用于配置 Markdown 生成和浏览器智能体工具。`llms` 和 `webMcp` 是 `rspress.config.ts` 的顶层选项。
+
+## llms
+
+- **类型**：
+
+```ts
+boolean | {
+  llmsTxt?: (context: LlmsTxtContext) => string | Promise<string>;
+  remarkSplitMdxOptions?: RemarkSplitMdxOptions;
+}
+```
+
+- **默认值**：`true` (v2.1.0 前为 `false`)
+
+是否开启 [SSG-MD](/guide/basic/ssg-md) 来生成 `llms.txt`、`llms-full.txt` 以及每个页面对应的 Markdown 文件，使你的文档更容易被大语言模型理解。
+
+开启 `llms` 后，默认也会启用 Markdown 复制和 AI 工具入口。可以通过 [`themeConfig.llmsUI`](/api/config/config-theme#llmsui) 自定义或关闭这些界面。
+
+可通过 `llmsTxt` 基于站点信息和页面分组编排完整的 `llms.txt` 内容。详见[自定义 llms.txt](/guide/basic/ssg-md#自定义-llmstxt)。
+
+可设置 `llms: false` 关闭。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: false,
+});
+```
+
+:::warning
+
+如果代码不兼容 SSR，请设置 `llms: false` 并使用 [@rspress/plugin-llms](/plugin/official-plugins/llms) 作为备选方案。
+
+:::
+
+详细用法、配置选项和实现原理请参阅 [llms.txt（SSG-MD）](/guide/basic/ssg-md)。
+
+## webMcp
+
+- **类型**：`boolean | { exposedTo?: string[] }`
+- **默认值**：`true`
+
+通过浏览器原生 WebMCP API 提供内置文档工具，设置 `webMcp: false` 仅关闭 Rspress 内置工具，仍可使用 [`useWebMcp`](/ui/hooks/use-web-mcp) hook 注册自定义工具。不支持 WebMCP 的浏览器仍可正常访问站点。
+
+通过 `exposedTo` 允许指定的安全来源发现工具：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  webMcp: {
+    exposedTo: ['https://agent.example'],
+  },
+});
+```
+
+可用工具、浏览器要求和跨域访问详见 [WebMCP](/guide/basic/webmcp)。

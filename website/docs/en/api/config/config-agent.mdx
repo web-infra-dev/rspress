@@ -1,0 +1,61 @@
+# AI config
+
+These options configure Markdown generation and browser agent tools. `llms` and `webMcp` are top-level options in `rspress.config.ts`.
+
+## llms
+
+- **Type**:
+
+```ts
+boolean | {
+  llmsTxt?: (context: LlmsTxtContext) => string | Promise<string>;
+  remarkSplitMdxOptions?: RemarkSplitMdxOptions;
+}
+```
+
+- **Default**: `true` (`false` before v2.1.0)
+
+Whether to enable [SSG-MD](/guide/basic/ssg-md) to generate `llms.txt`, `llms-full.txt`, and Markdown files for each page, making your documentation easier for large language models to understand.
+
+Enabling `llms` also enables the Markdown copy and AI tool UI by default. Use [`themeConfig.llmsUI`](/api/config/config-theme#llmsui) to customize or disable these controls.
+
+Use `llmsTxt` to compose the complete `llms.txt` content from site metadata and page sections. See [Customize llms.txt](/guide/basic/ssg-md#customize-llmstxt) for details.
+
+Set `llms: false` to disable it.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: false,
+});
+```
+
+:::warning
+
+If your code is incompatible with SSR, set `llms: false` and use [@rspress/plugin-llms](/plugin/official-plugins/llms) as a fallback.
+
+:::
+
+For detailed usage, configuration options, and implementation principles, see [llms.txt (SSG-MD)](/guide/basic/ssg-md).
+
+## webMcp
+
+- **Type**: `boolean | { exposedTo?: string[] }`
+- **Default**: `true`
+
+Expose built-in documentation tools through the browser's native WebMCP API. Set `webMcp: false` to disable only the built-in tools. You can still use the [`useWebMcp`](/ui/hooks/use-web-mcp) hook to register custom tools. Browsers without WebMCP support continue to render the site normally.
+
+Use `exposedTo` to allow specific secure origins to discover the tools:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  webMcp: {
+    exposedTo: ['https://agent.example'],
+  },
+});
+```
+
+See [WebMCP](/guide/basic/webmcp) for available tools, browser requirements, and cross-origin access.

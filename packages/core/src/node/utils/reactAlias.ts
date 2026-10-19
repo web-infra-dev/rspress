@@ -49,8 +49,15 @@ export async function resolveReactRouterDomAlias(): Promise<
     if (!resolved.path) {
       throw Error(`'react-router-dom' resolved to empty path`);
     }
+    const packageRoot = path.dirname(resolved.path);
+    const { version } = await readJson<{ version: string }>(resolved.path);
     return {
-      'react-router-dom': path.dirname(resolved.path),
+      'react-router-dom': packageRoot,
+      // v6 exposes static APIs in a separate server entry; v7 exports them
+      // from the package root. Use the same consumer-installed router for both.
+      'virtual-react-router-server': version.startsWith('6.')
+        ? path.join(packageRoot, 'server.mjs')
+        : packageRoot,
     };
   } catch (e) {
     logger.warn('react-router-dom not found: \n', e);
@@ -116,7 +123,7 @@ export async function resolveReactRenderToMarkdownAlias(): Promise<
     const reactMajorVersion = await detectPackageMajorVersion('react');
     if (reactMajorVersion && reactMajorVersion < 19) {
       logger.warn(
-        `You are using React ${reactMajorVersion} with \`llms: true\`. Please install \`react-render-to-markdown\` to ensure compatibility.\n\n` +
+        `You are using React ${reactMajorVersion} with \`llms: true\`. Please install \`react-render-to-markdown@18\` to ensure compatibility.\n\n` +
           `Add the following to your ${picocolors.greenBright('package.json')}:\n\n` +
           picocolors.greenBright(
             `  "dependencies": {\n    "react": "^18.3.1",\n    "react-dom": "^18.3.1",\n    "react-render-to-markdown": "^18.3.1"\n  }\n`,

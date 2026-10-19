@@ -39,7 +39,7 @@ test.describe('home pageType', async () => {
       .poll(() =>
         actions.nth(0).evaluate(node => (node as HTMLAnchorElement).href),
       )
-      .toBe(`http://localhost:${appPort}/base/guide/action-1.html`);
+      .toBe(`http://localhost:${appPort}/base/guide/action-1`);
   });
 
   test('preserves Chinese hero image attributes and resolved action links', async ({
@@ -64,7 +64,7 @@ test.describe('home pageType', async () => {
       .poll(() =>
         actions.nth(0).evaluate(node => (node as HTMLAnchorElement).href),
       )
-      .toBe(`http://localhost:${appPort}/base/zh/guide/action-1.html`);
+      .toBe(`http://localhost:${appPort}/base/zh/guide/action-1`);
   });
 
   test('Features', async ({ page }) => {

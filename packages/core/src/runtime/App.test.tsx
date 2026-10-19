@@ -31,20 +31,8 @@ rs.mock('@rspress/core/theme', () => ({
   Root: ({ children }: { children: ReactNode }) => children,
 }));
 
-rs.mock('@rspress/core/theme-original', () => ({
-  Layout: () => 'Layout content',
-  LlmsHint: () => 'LLMS hint',
-  Root: ({ children }: { children: ReactNode }) => children,
-}));
-
 rs.mock('virtual-global-components', () => ({
   default: [() => 'Global component'],
-}));
-
-rs.mock('./initPageData', () => ({
-  consumeCachedPageData: () => undefined,
-  initPageData: async () => undefined,
-  setCurrentPageData: () => {},
 }));
 
 const originalSsgMd = import.meta.env.SSG_MD;

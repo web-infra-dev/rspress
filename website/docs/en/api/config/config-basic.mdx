@@ -54,7 +54,7 @@ export default defineConfig({
 
 The optional deployment origin of the site, for example `https://foo.github.io`.
 
-Rspress uses this value together with [`base`](#base) when generated files need absolute URLs, such as `llms.txt` links or plugin outputs. The full URL concatenation order is `siteOrigin + base + routePath`.
+Rspress uses this value together with [`base`](#base) when generated files need absolute URLs, such as `sitemap.xml`, `llms.txt` links, or plugin outputs. The full URL concatenation order is `siteOrigin + base + routePath`.
 
 If `siteOrigin` is not configured, Rspress uses `base + routePath` as the fallback.
 
@@ -426,38 +426,128 @@ export default defineConfig({
 }
 ```
 
-## llms
+## sitemap
 
-- **Type**:
+<VersionBadge version="2.1.0" />
 
-```ts
-boolean | {
-  llmsTxt?: (context: LlmsTxtContext) => string | Promise<string>;
-  remarkSplitMdxOptions?: RemarkSplitMdxOptions;
-}
-```
+- **Type**: `boolean | SitemapOptions`
+- **Default**: `true`
 
-- **Default**: `false`
+Generate `sitemap.xml` in the output directory during production builds. This feature is built into Rspress and does not require a plugin. It also works when `ssg` is `false`. Existing sitemap files copied from the public directory are preserved. Generated URLs follow `route.cleanUrls`.
 
-Whether to enable [SSG-MD](/guide/basic/ssg-md) to generate `llms.txt`, `llms-full.txt`, and Markdown files for each page, making your documentation easier for large language models to understand.
-
-Use `llmsTxt` to compose the complete `llms.txt` content from site metadata and page sections. See [Customize llms.txt](/guide/basic/ssg-md#customize-llmstxt) for details.
+Configure [`siteOrigin`](#siteorigin) so the sitemap contains absolute URLs. Rspress combines `siteOrigin`, [`base`](#base), and each page's route path:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  llms: true,
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+  // sitemap is enabled by default.
 });
 ```
 
-:::warning
+Set `sitemap: false` to disable generation, or pass an options object to customize it:
 
-`llms` is an experimental feature. If SSG-MD cannot be enabled due to SSR incompatibility, use [@rspress/plugin-llms](/plugin/official-plugins/llms) as a fallback.
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
 
-:::
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  sitemap: {
+    defaultChangeFreq: 'weekly',
+    defaultPriority: '0.7',
+  },
+});
+```
 
-For detailed usage, configuration options, and implementation principles, see [llms.txt (SSG-MD)](/guide/basic/ssg-md).
+The options have the following type, exported as `SitemapOptions` from `@rspress/core`:
+
+```ts
+type ChangeFreq =
+  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+
+type Priority =
+  | '0.0'
+  | '0.1'
+  | '0.2'
+  | '0.3'
+  | '0.4'
+  | '0.5'
+  | '0.6'
+  | '0.7'
+  | '0.8'
+  | '0.9'
+  | '1.0';
+
+// https://www.sitemaps.org/protocol.html
+interface Sitemap {
+  loc: string;
+  lastmod?: string;
+  changefreq?: ChangeFreq;
+  priority?: Priority;
+}
+
+interface CustomMaps {
+  [routePath: string]: Sitemap;
+}
+
+export interface SitemapOptions {
+  siteUrl?: string;
+  customMaps?: CustomMaps;
+  defaultPriority?: Priority;
+  defaultChangeFreq?: ChangeFreq;
+}
+```
+
+### sitemap.siteUrl
+
+- **Type**: `string`
+- **Default**: [`siteOrigin`](#siteorigin) + [`base`](#base), or `base` when `siteOrigin` is not configured
+
+Override the deployment URL used in sitemap entries. Use an absolute URL that includes the base path, such as `https://example.com/docs/`. This value takes precedence over `siteOrigin` and `base`. Only HTTP(S) URLs without query strings or fragments are accepted.
+
+If neither `sitemap.siteUrl` nor `siteOrigin` is configured, entries use `base + routePath` and remain relative paths. Configure either value to generate absolute sitemap URLs.
+
+### sitemap.customMaps
+
+- **Type**: `Record<string, Sitemap>`
+- **Default**: `{}`
+
+Override sitemap values for individual pages. Keys are route paths without `base`, and values override the generated `loc`, `lastmod`, `changefreq`, and `priority`. By default, `lastmod` is the source file's modification time. This option customizes existing pages; it does not add routes.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+  sitemap: {
+    customMaps: {
+      '/guide': {
+        loc: 'https://example.com/docs/guide',
+        lastmod: '2026-01-01',
+        changefreq: 'weekly',
+        priority: '0.8',
+      },
+    },
+  },
+});
+```
+
+### sitemap.defaultChangeFreq
+
+- **Type**: `ChangeFreq`
+- **Default**: `'monthly'`
+
+The default `changefreq` value for each page. Available values are `'always'`, `'hourly'`, `'daily'`, `'weekly'`, `'monthly'`, `'yearly'`, and `'never'`. Use `customMaps` to override it for a specific page.
+
+### sitemap.defaultPriority
+
+- **Type**: `Priority`
+- **Default**: `'0.5'`
+
+The default `priority` value for each page, from `'0.0'` to `'1.0'` in increments of `0.1`. The root route `/` uses `'1.0'`. Use `customMaps` to override it for a specific page.
 
 ## mediumZoom
 
@@ -698,9 +788,9 @@ export default defineConfig({
 ### route.cleanUrls
 
 - **Type**: `Boolean`
-- **Default**: `false`
+- **Default**: `true` (`false` before v2.1.0)
 
-Generates URLs without file extensions when `cleanUrls` is `true`.
+Generates URLs without file extensions. Set `cleanUrls` to `false` to keep the `.html` suffix.
 
 :::warning Server Support Required
 
@@ -713,7 +803,7 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    cleanUrls: true,
+    cleanUrls: false,
   },
 });
 ```
@@ -880,9 +970,9 @@ export default defineConfig({
 - **Type**: `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
 - **Default**: `true`
 
-Controls whether static site generation is enabled. Rspress enables it by default and generates both CSR and SSG outputs.
+Controls whether page content is rendered into HTML at build time. Rspress enables SSG by default.
 
-If your documentation site only needs CSR output, set `ssg` to `false`.
+Set `ssg: false` to generate HTML shells for client-side rendering.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -894,11 +984,20 @@ export default defineConfig({
 
 :::tip
 
-SSG requires source code to be SSR-compatible. If the code is not compatible with SSR, the build will fail. You can try:
+Both [SSG](/guide/basic/ssg) and [SSG-MD](/guide/basic/ssg-md) require source code to compile under SSR. Code that is incompatible with SSR will cause the build to fail. You can try:
 
-1. Fix the code to make it SSR-compatible.
+1. Make your code SSR-compatible. See [Common issues and solutions](/guide/basic/ssg#common-issues-and-solutions) in the SSG guide.
 
-2. Set `ssg: false`, but the SSG feature will be lost.
+2. If your code does not support SSR, set both `ssg: false` and `llms: false`:
+
+   ```ts title="rspress.config.ts"
+   import { defineConfig } from '@rspress/core';
+
+   export default defineConfig({
+     ssg: false,
+     llms: false,
+   });
+   ```
 
 :::
 
@@ -915,6 +1014,8 @@ When enabled, Rspress uses workers to accelerate SSG and reduce memory usage. Th
 - **Default**: `[]`
 
 Excludes selected pages from SSG so they use CSR HTML directly. This can help large documentation sites bypass SSG errors on a small number of pages, but it is not recommended as a default choice.
+
+This option only affects SSG; it does not exclude pages from SSG-MD. If excluded pages are incompatible with SSR, make them SSR-compatible or set `llms: false` to disable SSG-MD.
 
 ## replaceRules
 

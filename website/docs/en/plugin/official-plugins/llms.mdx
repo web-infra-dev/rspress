@@ -26,7 +26,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 
 ### 1. Install the plugin
 
-Add the following configuration:
+Set `llms: false` to disable built-in SSG-MD generation when using this plugin:
 
 ```ts
 // rspress.config.ts
@@ -34,6 +34,7 @@ import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
+  llms: false,
   plugins: [pluginLlms()],
 });
 ```
@@ -53,6 +54,7 @@ import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
+  llms: false,
   plugins: [pluginLlms()],
   themeConfig: {
     llmsUI: true,
@@ -427,6 +429,7 @@ In some cases, such as i18n sites, you may need to generate multiple `llms.txt` 
 // rspress.config.ts
 import { defineConfig } from '@rspress/core';
 defineConfig({
+  llms: false,
   lang: 'en',
   plugins: [
     pluginLlms([

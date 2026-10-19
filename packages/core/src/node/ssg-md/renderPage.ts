@@ -4,7 +4,7 @@ import { logger } from '@rspress/shared/logger';
 import { createHead, type Unhead } from '@unhead/react/server';
 import picocolors from 'picocolors';
 
-import { hintSSGFailed } from '../logger/hint';
+import { hintSSGMDFailed } from '../logger/hint';
 
 interface MdSSRBundleExports {
   render: (pagePath: string, head: Unhead) => Promise<{ appMd: string }>;
@@ -26,10 +26,10 @@ export async function renderPage(route: RouteMeta, ssrBundlePath: string) {
   } catch (e) {
     if (e instanceof Error) {
       logger.error(
-        `Failed to load SSG bundle: ${picocolors.yellow(ssrBundlePath)}: ${e.message}`,
+        `Failed to load SSG-MD bundle: ${picocolors.yellow(ssrBundlePath)}: ${e.message}`,
       );
       logger.debug(e);
-      hintSSGFailed();
+      hintSSGMDFailed();
     }
     throw e;
   }
@@ -45,6 +45,7 @@ export async function renderPage(route: RouteMeta, ssrBundlePath: string) {
           `Page "${picocolors.yellow(routePath)}" SSG-MD rendering failed.
 ${absolutePath ? picocolors.gray(`    File: ${absolutePath}\n`) : ''}    ${picocolors.gray(e.toString())}`,
         );
+        hintSSGMDFailed();
         throw e;
       }
     }

@@ -48,7 +48,7 @@ test.describe('site with base path', async () => {
     const a = page.locator('.rspress-doc a:not(.rp-header-anchor)');
     // extract the href of a tag
     const href = await a.getAttribute('href');
-    expect(href).toBe('/base/en/guide/install.html');
+    expect(href).toBe('/base/en/guide/install');
   });
 
   test('BrowserOnly exposes transient fallback text before asynchronous content resolves', async ({

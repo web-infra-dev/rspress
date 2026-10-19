@@ -2018,7 +2018,7 @@
       "candidateCaseIds": [],
       "reason": "Retain generated Markdown matching installed React/router versions and rejecting unresolved placeholders.",
       "replacementStatus": "retained-technical",
-      "remainingTestName": "React 18 build should be successful"
+      "remainingTestName": "React 18 build should generate Markdown by default"
     },
     {
       "source": "e2e/fixtures/remark-image/index.test.mjs",
@@ -2459,7 +2459,7 @@
       "candidateCaseIds": [],
       "reason": "Retain generated Markdown files, exact llms metadata, hidden directive markup and CSR build success; these are build-output contracts.",
       "replacementStatus": "retained-technical",
-      "remainingTestName": "llms should be successful"
+      "remainingTestName": "llms should be enabled by default"
     },
     {
       "source": "e2e/fixtures/ssg-md/index.test.ts",

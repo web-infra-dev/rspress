@@ -115,7 +115,7 @@ test.describe('auto nav and sidebar', async () => {
       waitUntil: 'networkidle',
     });
     await page.click('.rp-doc-layout__sidebar .rp-sidebar-group');
-    expect(page.url()).toBe(`http://localhost:${appPort}/guide/index.html`);
+    expect(page.url()).toBe(`http://localhost:${appPort}/guide/`);
   });
 
   test('generates exact sidebar data-context values and custom-link counts', async ({

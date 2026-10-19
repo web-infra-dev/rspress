@@ -1,5 +1,5 @@
+import { useStorageValue } from '@rspress/core/theme';
 import { type ReactNode, useEffect, useState } from 'react';
-import { useStorageValue } from '../../logic/useStorageValue';
 
 const TTL_MS = 60 * 60 * 1000;
 

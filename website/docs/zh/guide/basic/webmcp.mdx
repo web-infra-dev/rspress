@@ -1,0 +1,44 @@
+import { VersionBadge } from '../../../components/VersionBadge';
+
+# WebMCP
+
+<VersionBadge version="2.1.0" />
+
+Rspress 可以通过浏览器原生 [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api) 向浏览器智能体提供文档工具。该功能内置于 core，默认开启。启用 Markdown 生成后即可使用全部六个工具：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+});
+```
+
+设置 `webMcp: false` 可以关闭 Rspress 内置工具，仍可使用 [`useWebMcp`](/ui/hooks/use-web-mcp) hook 注册自定义工具。
+
+WebMCP 是实验性功能，需要浏览器在 HTTPS 或 localhost 等安全上下文中启用 `document.modelContext`。不支持的浏览器仍可正常访问站点。
+
+完整配置项请参阅 [AI 配置](/api/config/config-agent#webmcp)。
+
+## 内置工具
+
+| 工具                       | 用途                                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------------------- |
+| `rspress_get_site_info`    | 返回站点元信息、语言、版本、导航和当前侧边栏。                                                    |
+| `rspress_list_pages`       | 筛选和分页读取页面元信息，默认使用当前语言和版本，不依赖搜索。                                    |
+| `rspress_get_page`         | 无需跳转即可读取已知路由的元信息、frontmatter、目录和 SSG-MD Markdown（在 `llms: true` 时开启）。 |
+| `rspress_get_current_page` | 读取当前页面的元信息、frontmatter、目录和 SSG-MD Markdown（在 `llms: true` 时开启）。             |
+| `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引（仅支持默认主题的本地搜索）。                                    |
+| `rspress_navigate`         | 跳转到已知站内路由，等待页面提交后返回元信息、章节路由和前后页。                                  |
+
+路由路径不包含配置项 `base`，支持查询参数和锚点。
+
+`rspress_list_pages` 接受 `query`、`lang`、`version`、`limit`（1–100，默认 50）和 `offset`（默认 0）。其中 `query` 匹配页面标题、描述、路由和章节标题。`rspress_search_docs` 接受 `query` 和 `limit`（1–20，默认 10）。
+
+## 跨源智能体
+
+通过 [`webMcp.exposedTo`](/api/config/config-agent#webmcp) 允许指定的安全来源发现工具。
+
+## 自定义工具
+
+通过 `@rspress/core/runtime` 导出的 [`useWebMcp`](/ui/hooks/use-web-mcp)，可以在自定义组件中注册工具，并在组件卸载时自动移除。

@@ -277,13 +277,14 @@ docs/
 
 SSG 现在默认为严格模式，失败时直接退出构建，不再回退到 CSR。`ssg.strict` 配置已移除。
 
-如需跳过 SSG，设置 `ssg: false`：
+如果代码不兼容 SSR，需要同时设置 `ssg: false` 和 `llms: false`，跳过 SSG 和 SSG-MD。自 v2.1.0 起，`llms` 默认开启：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   ssg: false,
+  llms: false,
 });
 ```
 

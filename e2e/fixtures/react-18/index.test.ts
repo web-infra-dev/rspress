@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/test';
 import {
@@ -45,7 +45,7 @@ test.describe('React 18 development', async () => {
   });
 });
 
-test('React 18 build should be successful', async () => {
+test('React 18 build should generate Markdown by default', async () => {
   const appDir = import.meta.dirname;
   await runBuildCommand(appDir);
 
@@ -61,4 +61,8 @@ test('React 18 build should be successful', async () => {
 
   expect(indexHtml).not.toContain('{reactVersion}');
   expect(indexHtml).not.toContain('{version}');
+  expect(existsSync(path.join(docBuildDir, 'llms.txt'))).toBe(true);
+  expect(
+    readFileSync(path.join(docBuildDir, 'llms-full.txt'), 'utf-8'),
+  ).toContain(`react ${reactVersion}`);
 });

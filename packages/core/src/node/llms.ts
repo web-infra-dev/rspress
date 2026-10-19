@@ -7,11 +7,12 @@ export function isLlmsUIEnabled(config: UserConfig): boolean {
 export function isLlmsHintEnabled(
   config: UserConfig,
   enableSSG: boolean,
+  output: 'html' | 'markdown' = 'html',
 ): boolean {
   const llmsUI = config.themeConfig?.llmsUI;
   return (
     enableSSG &&
-    config.ssg !== false &&
+    (output === 'markdown' ? Boolean(config.llms) : config.ssg !== false) &&
     isLlmsUIEnabled(config) &&
     (typeof llmsUI !== 'object' || llmsUI.injectLlmsHint !== false)
   );

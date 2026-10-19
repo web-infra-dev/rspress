@@ -74,7 +74,7 @@ test.describe('Navigation with <Link>', async () => {
       test(JSON.stringify(clickOption), async () => {
         await expect(
           scope.shouldOpenNewPage(() => scope.anchor.click(clickOption)),
-        ).resolves.toBe(gotoPage('/doc-1/index.html'));
+        ).resolves.toBe(gotoPage('/doc-1/'));
       });
     }
 
@@ -82,7 +82,7 @@ test.describe('Navigation with <Link>', async () => {
       await scope.anchor.evaluate(e => e.setAttribute('target', '_blank'));
       await expect(
         scope.shouldOpenNewPage(() => scope.anchor.click()),
-      ).resolves.toBe(gotoPage('/doc-1/index.html'));
+      ).resolves.toBe(gotoPage('/doc-1/'));
     });
   });
 });

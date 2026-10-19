@@ -9,6 +9,9 @@ import type {
   NormalizedThemeConfig as NormalizedDefaultThemeConfig,
 } from './theme';
 import type { I18nText } from './theme/i18nText';
+import type { SitemapOptions } from './sitemap';
+
+export type { SitemapOptions } from './sitemap';
 
 // #region theme
 export type { I18nText } from './theme/i18nText';
@@ -238,6 +241,11 @@ export interface UserConfig {
    */
   siteOrigin?: string;
   /**
+   * Generate sitemap.xml during production builds.
+   * @default true
+   */
+  sitemap?: boolean | SitemapOptions;
+  /**
    * Path to html icon file.
    * @default ''
    */
@@ -336,7 +344,10 @@ export interface UserConfig {
    */
   search?: SearchOptions;
   /**
-   * Whether to enable ssg
+   * Whether to prerender page content into HTML at build time (SSG).
+   * Set to `false` to generate HTML shells for client-side rendering instead.
+   * This does not disable SSG-MD or llms.txt generation, which are controlled
+   * independently by `llms`.
    * @default true
    */
   ssg?:
@@ -349,15 +360,19 @@ export interface UserConfig {
         experimentalWorker?: boolean;
         /**
          * After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
+         * Only affects SSG, not SSG-MD. If excluded pages are not SSR-compatible,
+         * fix their SSR compatibility or set `llms: false` to disable SSG-MD.
          * @default []
          */
         experimentalExcludeRoutePaths?: (string | RegExp)[];
       };
 
   /**
-   * Whether to enable llms and ssg-md
-   * @default false
-   * @experimental
+   * Whether to render pages to Markdown (SSG-MD) and generate llms.txt and
+   * llms-full.txt at build time.
+   * Independent of `ssg`: these files are still generated when `ssg: false`.
+   * Set to `false` to disable these outputs without affecting SSG.
+   * @default true
    */
   llms?:
     | boolean
@@ -372,6 +387,13 @@ export interface UserConfig {
          */
         remarkSplitMdxOptions?: RemarkSplitMdxOptions;
       };
+  /**
+   * Expose built-in documentation tools through the browser WebMCP API.
+   * Markdown tools require `llms: true` in production.
+   * @default true
+   * @experimental
+   */
+  webMcp?: boolean | { exposedTo?: string[] };
   /**
    * Whether to enable medium-zoom
    * @default true
@@ -593,7 +615,7 @@ export interface RouteOptions {
   excludeConvention?: string[];
   /**
    * use links without .html files
-   * @default false
+   * @default true
    */
   cleanUrls?: boolean;
   /**

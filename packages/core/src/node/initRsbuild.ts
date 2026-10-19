@@ -55,6 +55,7 @@ import { searchHookVMPlugin } from './runtimeModule/searchHooks';
 import { siteDataVMPlugin } from './runtimeModule/siteData/rsbuildPlugin';
 import { socialLinksVMPlugin } from './runtimeModule/socialLinks';
 import type { FactoryContext } from './runtimeModule/types';
+import { rsbuildPluginSitemap } from './sitemap';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import { rsbuildPluginSSGMD } from './ssg-md/rsbuildPluginSSGMD';
@@ -207,6 +208,7 @@ async function createInternalBuildConfig(
           ...siteDataVMPlugin(context),
         },
       }),
+      config.sitemap ? rsbuildPluginSitemap({ config, routeService }) : null,
       enableSSG && config.ssg
         ? rsbuildPluginSSG({
             routeService,
@@ -315,8 +317,19 @@ async function createInternalBuildConfig(
       ],
       include: [PACKAGE_ROOT],
       define: {
+        'import.meta.env.ENABLE_WEBMCP': JSON.stringify(
+          config.webMcp !== false,
+        ),
+        'import.meta.env.WEBMCP_EXPOSED_TO': JSON.stringify(
+          typeof config.webMcp === 'object'
+            ? (config.webMcp.exposedTo ?? [])
+            : [],
+        ),
         'import.meta.env.ENABLE_LLMS_UI': JSON.stringify(enableLlmsUI),
         'import.meta.env.ENABLE_LLMS_HINT': JSON.stringify(enableLlmsHint),
+        'import.meta.env.ENABLE_SSG_MD': JSON.stringify(
+          Boolean(enableSSG && config.llms),
+        ),
       },
     },
     performance: {
@@ -474,8 +487,11 @@ async function createInternalBuildConfig(
         },
         source: {
           entry: {
+            // Markdown-only rendering still emits CSR HTML without content to hydrate.
             index:
-              enableSSG && isProduction() ? SSR_CLIENT_ENTRY : CSR_CLIENT_ENTRY,
+              enableSSG && config.ssg && isProduction()
+                ? SSR_CLIENT_ENTRY
+                : CSR_CLIENT_ENTRY,
           },
           define: {
             // import.meta.env.SSR is built in Rsbuild v2.0.7
@@ -557,6 +573,9 @@ async function createInternalBuildConfig(
                   'process.env.__SSR__': JSON.stringify(true),
                   'process.env.__SSR_MD__': JSON.stringify(true),
                   'import.meta.env.SSG_MD': JSON.stringify(true),
+                  'import.meta.env.ENABLE_LLMS_HINT': JSON.stringify(
+                    isLlmsHintEnabled(config, enableSSG, 'markdown'),
+                  ),
                 },
               },
               output: {

@@ -1,6 +1,5 @@
 import { preloadLink } from '@rspress/core/runtime';
 import clsx from 'clsx';
-import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps, TransitionStartFunction } from 'react';
 import { forwardRef } from 'react';
@@ -34,8 +33,6 @@ export interface LinkProps extends ComponentProps<'a'> {
    */
   startTransition?: TransitionStartFunction;
 }
-
-nprogress.configure({ showSpinner: false });
 
 /**
  * What's the difference between <Link> and <a>?

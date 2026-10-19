@@ -583,9 +583,9 @@ type LlmsUI =
     };
 ```
 
-- **默认值**：`false`（当配置 `llms: true` 时自动设置为 `true`）
+- **默认值**：`true`（当配置 `llms: false` 时为 `false`）
 
-LLMS UI 组件配置。启用后，会自动在所有 H1 标题下方（默认）或右侧大纲面板中添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件。
+通过 `themeConfig.llmsUI` 配置 LLMS UI 组件。启用后，会自动在所有 H1 标题下方（默认）或右侧大纲面板中添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件。
 
 这在使用 [llms](/guide/basic/ssg-md) 功能生成 llms.txt 文件时非常有用，允许用户轻松复制或在 AI 工具中打开 markdown 内容。
 
