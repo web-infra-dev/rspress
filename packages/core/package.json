@@ -113,7 +113,7 @@
     "@types/nprogress": "^0.2.3",
     "@types/react-dom": "^19.2.7",
     "@types/web": "^0.0.359",
-    "cac": "^7.0.1",
+    "cac": "^7.1.0",
     "execa": "8.0.1",
     "mdast-util-directive": "^3.1.1",
     "mdast-util-mdx-expression": "^2.0.1",
