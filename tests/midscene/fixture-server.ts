@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { mkdir, open } from 'node:fs/promises';
 import path from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -29,9 +29,14 @@ export async function startFixtureServer(
 ): Promise<() => Promise<void>> {
   const url = new URL(baseUrl);
   if (await isReady(baseUrl, signal)) return async () => {};
+  if (url.hostname === '[::1]') {
+    throw new Error(
+      'Automatic fixture startup supports only IPv4 loopback; start the IPv6 server separately',
+    );
+  }
   if (
     url.protocol !== 'http:' ||
-    !['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)
+    !['localhost', '127.0.0.1'].includes(url.hostname)
   ) {
     throw new Error(`External mock server is unavailable: ${url.origin}`);
   }
@@ -82,8 +87,19 @@ export async function startFixtureServer(
   const signalGroup = (signal: NodeJS.Signals) => {
     if (!child.pid) return;
     try {
-      if (process.platform === 'win32') child.kill(signal);
-      else process.kill(-child.pid, signal);
+      if (process.platform === 'win32') {
+        const result = spawnSync(
+          'taskkill',
+          ['/pid', String(child.pid), '/t', '/f'],
+          { windowsHide: true },
+        );
+        if (result.error) throw result.error;
+        // taskkill uses 128 when the process has already exited.
+        if (result.status !== 0 && result.status !== 128)
+          throw new Error(
+            'Fixture process tree cleanup failed: ' + result.stderr,
+          );
+      } else process.kill(-child.pid, signal);
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== 'ESRCH') throw error;
     }
@@ -94,7 +110,8 @@ export async function startFixtureServer(
     (stopping ??= (async () => {
       signalGroup('SIGTERM');
       await Promise.race([closed, delay(5_000, undefined, { ref: false })]);
-      signalGroup('SIGKILL');
+      if (process.platform !== 'win32') signalGroup('SIGKILL');
+      await closed;
       process.off('exit', onExit);
     })());
   process.once('exit', onExit);

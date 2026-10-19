@@ -239,8 +239,9 @@ or fixture processes. Native reports are uploaded after failures too.
 The **Midscene E2E** job writes the framework-generated `result.md` directly to
 its Summary, and uploads `midscene-results` even after failures. The
 **Publish Midscene Pages report** job adds the online native HTML report link.
-This follows Rome PR #974 at `d1b3183`: no custom report merger or
-custom screenshot-table renderer is involved.
+The HTML overview and case details come directly from Midscene Test. After
+deployment, a separate Markdown renderer adds per-case screenshots and native
+step links to the Pages job Summary.
 
 Pages publication requires an existing native HTML report. Incomplete runs keep
 downloadable artifacts and an explanatory Summary without replacing the existing

@@ -64,7 +64,7 @@ test.describe('home pageType', async () => {
       .poll(() =>
         actions.nth(0).evaluate(node => (node as HTMLAnchorElement).href),
       )
-      .toBe(`http://localhost:${appPort}/base/zh/guide/action-1`);
+      .toBe(`http://localhost:${appPort}/base/zh/guide/action-1.html`);
   });
 
   test('Features', async ({ page }) => {

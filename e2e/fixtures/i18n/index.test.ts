@@ -71,18 +71,12 @@ test.describe('i18n', async () => {
     const absoluteLink = page.getByRole('link', {
       name: /绝对路径/,
     });
-    await expect(absoluteLink).toHaveAttribute(
-      'href',
-      '/guide/basic/install',
-    );
+    await expect(absoluteLink).toHaveAttribute('href', '/guide/basic/install');
     // check the compile result of relative link in doc content
     const relativeLink = page.getByRole('link', {
       name: /相对路径/,
     });
-    await expect(relativeLink).toHaveAttribute(
-      'href',
-      '/guide/basic/install',
-    );
+    await expect(relativeLink).toHaveAttribute('href', '/guide/basic/install');
   });
 
   test('Should render sidebar correctly', async ({ page }) => {
@@ -115,10 +109,7 @@ test.describe('i18n', async () => {
         hasText: 'My Link',
       },
     );
-    await expect(customLinkZh).toHaveAttribute(
-      'href',
-      '/guide/basic/install',
-    );
+    await expect(customLinkZh).toHaveAttribute('href', '/guide/basic/install');
 
     await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
       waitUntil: 'networkidle',

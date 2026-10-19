@@ -124,7 +124,12 @@ test('history paginates workflow runs and artifacts without trusting PRs', async
       downloads.push([id, page]);
       return page === 1
         ? Array.from({ length: 100 }, () => ({ name: 'unrelated' }))
-        : [{ name: 'midscene-e2e-report-pages-2' }];
+        : [
+            {
+              name: 'midscene-e2e-report-pages-2',
+              created_at: '2026-10-16T10:00:00Z',
+            },
+          ];
     },
     '102',
     compareToMain,
@@ -145,7 +150,13 @@ test('history skips current runs, expired artifacts, and unavailable candidates'
     async id => {
       downloads.push(id);
       if (id === 2) throw new Error('HTTP 404');
-      return [{ name: 'midscene-e2e-report-pages-1', expired: id === 3 }];
+      return [
+        {
+          name: 'midscene-e2e-report-pages-1',
+          expired: id === 3,
+          created_at: '2026-10-16T10:00:00Z',
+        },
+      ];
     },
     '1',
     compareToMain,
@@ -162,6 +173,57 @@ test('history skips current runs, expired artifacts, and unavailable candidates'
     ),
     null,
   );
+});
+
+test('history selects the newest snapshot across runs, attempts, and artifact pages', async () => {
+  const result = await findReportHistory(
+    async () => [101, 100, 99].map(id => ({ ...upstream, id })),
+    'web-infra-dev/rspress',
+    async (id, page) => {
+      if (id === 101)
+        return [
+          {
+            id: 1,
+            name: 'midscene-e2e-report-pages-1',
+            created_at: '2026-10-15T10:00:00Z',
+          },
+        ];
+      if (id === 99)
+        return [
+          {
+            id: 9,
+            name: 'midscene-e2e-report-pages-1',
+            created_at: '2026-10-18T10:00:00Z',
+            expired: true,
+          },
+        ];
+      if (page === 1)
+        return [
+          {
+            id: 2,
+            name: 'midscene-e2e-report-pages-1',
+            created_at: '2026-10-15T09:00:00Z',
+          },
+          ...Array.from({ length: 99 }, () => ({ name: 'unrelated' })),
+        ];
+      return [
+        {
+          id: 3,
+          name: 'midscene-e2e-report-pages-3',
+          created_at: '2026-10-17T10:00:00Z',
+        },
+        {
+          id: 4,
+          name: 'midscene-e2e-report-pages-2',
+          created_at: '2026-10-16T10:00:00Z',
+        },
+      ];
+    },
+    '102',
+    compareToMain,
+  );
+  assert.equal(result.workflow_run.id, 100);
+  assert.equal(result.id, 3);
 });
 
 test('explicit source validation propagates a failed trust lookup', async () => {

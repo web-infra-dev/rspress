@@ -74,7 +74,9 @@ for (const mode of ['dev', 'build'] as const) {
       ).toBeVisible();
     });
 
-    test('renders the installed React and router versions', async ({ page }) => {
+    test('renders the installed React and router versions', async ({
+      page,
+    }) => {
       await page.goto(`http://localhost:${appPort}`, {
         waitUntil: 'networkidle',
       });

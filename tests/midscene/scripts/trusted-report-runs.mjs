@@ -31,6 +31,8 @@ export async function findReportHistory(
   currentRunId,
   compareToMain,
 ) {
+  let latest;
+  let latestCreatedAt = -Infinity;
   for (let page = 1; ; page += 1) {
     const runs = await getRuns(page);
     for (const run of runs) {
@@ -40,12 +42,18 @@ export async function findReportHistory(
           continue;
         for (let artifactPage = 1; ; artifactPage += 1) {
           const artifacts = await getArtifacts(run.id, artifactPage);
-          const artifact = artifacts.find(
-            item =>
+          for (const item of artifacts) {
+            const createdAt = Date.parse(item.created_at);
+            if (
               !item.expired &&
-              /^midscene-e2e-report-pages-\d+$/.test(item.name),
-          );
-          if (artifact) return { ...artifact, workflow_run: { id: run.id } };
+              /^midscene-e2e-report-pages-\d+$/.test(item.name) &&
+              Number.isFinite(createdAt) &&
+              createdAt > latestCreatedAt
+            ) {
+              latest = { ...item, workflow_run: { id: run.id } };
+              latestCreatedAt = createdAt;
+            }
+          }
           if (artifacts.length < 100) break;
         }
       } catch (error) {
@@ -54,7 +62,7 @@ export async function findReportHistory(
         );
       }
     }
-    if (runs.length < 100) return null;
+    if (runs.length < 100) return latest ?? null;
   }
 }
 

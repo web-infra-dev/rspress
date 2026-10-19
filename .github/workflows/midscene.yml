@@ -37,15 +37,29 @@ on:
 permissions:
   contents: read
 
-# Serialize history reads through deployment across branches to avoid lost reports.
+# PR checks are independent; model runs serialize history reads through deployment.
 concurrency:
-  group: midscene-e2e
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'pull_request' && format('midscene-e2e-pr-{0}', github.event.pull_request.number) || 'midscene-e2e' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   MIDSCENE_UPSTREAM_REPOSITORY: web-infra-dev/rspress
 
 jobs:
+  fixture-windows:
+    name: Validate fixture cleanup on Windows
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+      - run: node --test scripts/fixture-server.test.mjs
+        working-directory: tests/midscene
+
   validate:
     name: Validate AI E2E definitions
     runs-on: ubuntu-24.04
