@@ -1,7 +1,8 @@
-import type { LoadConfigResult } from '@rsbuild/core';
+import type { LoadConfigResult, RsbuildInstance } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import { normalizeConfigResult } from '../config/loadConfigFile';
 import { modifyConfigWithAutoNavSide } from './auto-nav-sidebar';
+import { createBuildReport } from './buildReport';
 import { initRsbuild } from './initRsbuild';
 import { hintSSGFalse } from './logger/hint';
 import { PluginDriver } from './PluginDriver';
@@ -41,12 +42,13 @@ export async function build(options: BuildOptions) {
   // FIXME: for plugin-llms to obtain the sidebar config in beforeBuild hook
   await modifyConfigWithAutoNavSide(modifiedConfig);
 
+  let rsbuild: RsbuildInstance;
   try {
     // 3. rsbuild build
     await pluginDriver.beforeBuild();
     // if enableSSG, build both client and server bundle
     // else only build client bundle
-    const rsbuild = await initRsbuild(
+    rsbuild = await initRsbuild(
       docDirectory,
       { ...configResult, content: modifiedConfig },
       pluginDriver,
@@ -58,6 +60,19 @@ export async function build(options: BuildOptions) {
     await checkLanguageParity(config);
   }
   await pluginDriver.afterBuild();
+
+  const report = await createBuildReport({
+    rootPath: rsbuild.context.rootPath,
+    environments: rsbuild.getNormalizedConfig().environments,
+    routes: routeService.getRoutes(),
+  }).catch(error => {
+    rsbuild.logger.warn('Failed to print page sizes.');
+    rsbuild.logger.warn(error);
+    return '';
+  });
+  if (report) {
+    rsbuild.logger.log(`\n${report}\n`);
+  }
 
   if (!enableSSG) {
     hintSSGFalse();
