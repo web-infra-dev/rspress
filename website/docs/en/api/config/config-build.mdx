@@ -46,6 +46,56 @@ To modify the output directory, use [outDir](/api/config/config-basic#outdir).
 
 :::
 
+### Build report
+
+By default, `rspress build` prints a page directory tree after the build and Rspress `afterBuild` hooks finish. Rsbuild's total and compressed size summaries for each environment are preserved.
+
+```text
+Page (raw size)     HTML  Markdown
+/                 6.5 kB   0.85 kB
+├─ guide/         4.3 kB   0.73 kB
+│  ├─ api/        1.3 kB   0.20 kB
+│  │  └─ config   1.3 kB   0.20 kB
+│  ├─ index       2.5 kB   0.45 kB
+│  └─ start      0.50 kB   0.08 kB
+├─ index          1.5 kB   0.12 kB
+└─ 404           0.75 kB         -
+```
+
+The HTML and Markdown columns show uncompressed file sizes in decimal kB. Directory rows sum their descendant pages, `/` sums all pages, and `index` represents a directory's home page. A `-` indicates a missing file. When [llms](/api/config/config-agent#llms) is `false`, the Markdown column is omitted.
+
+The tree uses Rspress's default `builderConfig.performance.printFileSize.detail: false`. To disable all file size reporting:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    performance: {
+      printFileSize: false,
+    },
+  },
+});
+```
+
+To display Rsbuild's list of individual output files instead of the page tree:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    performance: {
+      printFileSize: {
+        detail: true,
+      },
+    },
+  },
+});
+```
+
+These settings also respect per-environment overrides in `builderConfig.environments`: an environment using `detail: true` keeps Rsbuild's file list and contributes no column to the tree. `total: false`, a custom `total` function, or `diff: true` also keeps Rsbuild's reporter for that environment. See [Rsbuild - performance.printFileSize](https://rsbuild.rs/config/performance/print-file-size).
+
 ## builderConfig.plugins
 
 - **Type**: `RsbuildPlugin[]`
