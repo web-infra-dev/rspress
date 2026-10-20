@@ -3,17 +3,17 @@
 ## Project structure & module organization
 
 - Monorepo via `pnpm` workspaces.
-- Packages: `packages/core` (CLI + `@rspress/core`), `packages/theme-default` (Default theme), `packages/plugin-*` (Official plugins), `packages/create-rspress` (scaffolder).
+- Packages: `packages/core` (CLI + `@rspress/core`, including the default theme in `src/theme`), `packages/shared` (shared types and utilities), `packages/plugin-*` (Official plugins), `packages/create-rspress` (project generator).
 - Tests: unit tests are generally colocated with their source files; `packages/core/tests` contains CLI integration tests, and `e2e/` contains end-to-end tests. Website examples are in `website/`.
 - Key config: `rstack.config.mts`, `rstest.e2e.config.mts`, `pnpm-workspace.yaml`.
 
 ## Build, test, and development commands
 
-- Install: `pnpm install` (Node >= 22.12, pnpm >= 11.22).
+- Install: `pnpm install` (use the Node version in `.nvmrc` and the pnpm version in `package.json#packageManager`).
 - Build: `pnpm build` (all) and `pnpm build:website`.
 - Watch dev: run `pnpm dev` in the package directory, or `pnpm dev:website` at the repository root for the documentation site.
 - Checks: `pnpm check` (lint, type-check, and formatting) and `pnpm check-spell`; lint only: `pnpm lint`; auto-format: `pnpm format`.
-- Tests: `pnpm test`; targeted: `pnpm test:unit` or `pnpm test:e2e`; update snapshots: `pnpm testu`.
+- Tests: `pnpm test`; targeted: `pnpm test:unit` or `pnpm test:e2e`; update unit test snapshots: `pnpm test:unit --update`.
 
 ## Coding style & naming conventions
 
@@ -56,8 +56,8 @@ Examples:
 
 ## Architecture overview
 
-- `packages/core` (`@rspress/core`): CLI `rspress build/dev` (add `--watch`), config via `rspress.config.ts` using `defineConfig`; programmatic `import { defineConfig, loadConfig } from '@rspress/core'`.
-- `packages/core/theme` (`@rspress/core/theme`): Default theme with components and layouts.
+- `packages/core` (`@rspress/core`): CLI `rspress build/dev/preview`, config via `rspress.config.ts` using `defineConfig`; programmatic `import { defineConfig, build, dev } from '@rspress/core'`.
+- `packages/core/src/theme` (`@rspress/core/theme`): Default theme with components and layouts.
 - `packages/plugin-*` (`@rspress/plugin-*`): Official plugins like `plugin-algolia` (search), `plugin-llms` (LLM optimization), `plugin-typedoc` (API docs), etc.
 - `packages/create-rspress` (`create-rspress`): scaffold new projects/templates with `pnpm dlx create-rspress` (or `npx create-rspress`).
 

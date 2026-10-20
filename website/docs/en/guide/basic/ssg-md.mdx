@@ -1,5 +1,4 @@
 ---
-tag: experimental
 description: Generate llms.txt and Markdown files for AI-native documentation using SSG-MD, enabling better understanding by large language models.
 ---
 
@@ -9,7 +8,7 @@ description: Generate llms.txt and Markdown files for AI-native documentation us
 
 ## What is SSG-MD?
 
-Rspress provides the experimental Static Site Generation to Markdown (SSG-MD) feature. Similar to [Static Site Generation (SSG)](./ssg), SSG-MD renders pages as Markdown files instead of HTML files and generates [`llms.txt`](#llms-txt) and `llms-full.txt`, making technical documentation easier for large language models to understand and use.
+Rspress provides the Static Site Generation to Markdown (SSG-MD) feature. Similar to [Static Site Generation (SSG)](./ssg), SSG-MD renders pages as Markdown files instead of HTML files and generates [`llms.txt`](#llms-txt) and `llms-full.txt`, making technical documentation easier for large language models to understand and use.
 
 The following table compares SSG and SSG-MD:
 
@@ -179,15 +178,7 @@ deno init --npm rspress@latest
 
 ## Quick start
 
-Enable `llms` in `rspress.config.ts`:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  llms: true,
-});
-```
+Starting in v2.1.0, `llms` is enabled by default (previously `false`).
 
 After running `rspress build`, the output directory (default `doc_build`) will additionally contain the following files:
 
@@ -205,7 +196,7 @@ Access pages by replacing the `.html` suffix with `.md`, e.g., `/guide/start/int
 
 :::warning
 
-`llms` is experimental and may have stability or compatibility issues. If SSG-MD cannot be enabled because of SSR incompatibility, use [@rspress/plugin-llms](/plugin/official-plugins/llms).
+If your code is incompatible with SSR, set `llms: false` and use [@rspress/plugin-llms](/plugin/official-plugins/llms).
 
 :::
 

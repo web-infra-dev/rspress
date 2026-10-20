@@ -1,13 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pluginSass } from '@rsbuild/plugin-sass';
-import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+import { RsdoctorRspackPlugin } from '@rsdoctor/core';
 import { defineConfig } from '@rspress/core';
 import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginPlayground } from '@rspress/plugin-playground';
 import { pluginPreview } from '@rspress/plugin-preview';
-import { pluginSitemap } from '@rspress/plugin-sitemap';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
 import {
   transformerNotationDiff,
@@ -108,9 +107,6 @@ export default defineConfig({
     pluginPlayground(),
     pluginTwoslash(),
     // pluginFontOpenSans(), // removed this line for Rspress preview
-    pluginSitemap({
-      siteUrl: siteOrigin,
-    }),
     pluginAlgolia({
       verificationContent: '8F5BFE50E65777F1',
     }),

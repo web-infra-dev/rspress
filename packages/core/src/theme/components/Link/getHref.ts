@@ -1,4 +1,5 @@
 import { cleanUrl, isExternalUrl } from '@rspress/shared';
+// eslint-disable-next-line no-restricted-imports -- Existing cross-directory dependency; retained until this component is eject-safe.
 import { cleanUrlByConfig, removeBase, withBase } from '../../../runtime/utils';
 
 type LinkType = 'external' | 'hashOnly' | 'relative' | 'internal';

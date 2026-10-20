@@ -1,10 +1,7 @@
 .rp-search-panel {
   &__mask {
     position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: #3c3c3c66;
     backdrop-filter: blur(5px);
     // Keep the modal above the sticky banner (z-index: 999).
@@ -12,71 +9,109 @@
   }
 
   &__modal {
+    --rp-search-panel-top: min(80px, 10dvh);
+
     position: relative;
-    background-color: var(--rp-c-bg-soft);
-    border-radius: var(--rp-radius);
-    margin: 80px auto auto;
-    max-width: 560px;
-    padding: 20px;
-    padding-bottom: 20px;
-    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: calc(var(--rp-search-panel-top) + env(safe-area-inset-top, 0px))
+      auto auto;
+    width: calc(100% - 48px);
+    max-width: 640px;
+    max-height: calc(
+      100dvh - var(--rp-search-panel-top) -
+        24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)
+    );
+    overflow: hidden;
+    border: 1px solid var(--rp-c-divider-light);
+    border-radius: 16px;
+    background-color: var(--rp-c-bg);
+    box-shadow: 0 16px 48px #0003;
     animation: rp-search-panel-in 0.18s ease-out;
 
     @media (prefers-reduced-motion: reduce) {
       animation: none;
+    }
+
+    @media (max-width: 768px) {
+      --rp-search-panel-top: 24px;
+
+      width: calc(100% - 24px);
+      max-width: 560px;
     }
   }
 
   &__header {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
+    gap: 8px;
+    padding: 12px 20px;
+
+    @media (max-width: 768px) {
+      padding: 8px 12px;
+    }
   }
 
   &__cancel {
+    display: none;
     color: var(--rp-c-brand);
-    margin-left: 0.5rem;
     cursor: pointer;
-    // CJK cancel text can break between characters and get squeezed
-    // by the 100%-width input form, keep it on one line.
+    // Keep CJK cancel text on one line when the input shrinks.
     white-space: nowrap;
 
-    @media (min-width: 640px) {
-      display: none;
+    @media (max-width: 768px) {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      min-height: 44px;
+      margin: 0;
+      padding: 0 4px;
+      font-size: 14px;
+      font-weight: 500;
     }
   }
 
   &__input-form {
-    width: 100%;
-    height: 55px;
     display: flex;
     align-items: center;
-    padding: 0 12px;
-    background-color: var(--rp-c-bg);
-    border: 1px solid var(--rp-c-brand);
-    border-radius: var(--rp-radius-small);
+    flex: 1;
+    min-width: 0;
+    height: 48px;
+
+    @media (max-width: 768px) {
+      height: 44px;
+    }
   }
 
   &__input {
     flex: 1;
-    padding-left: 8px;
+    min-width: 0;
+    padding-left: 10px;
     height: 100%;
-    width: 80%;
     outline: none;
     background-color: var(--rp-c-bg);
-    font-weight: 500;
-    font-size: 20px;
+    color: var(--rp-c-text-1);
+    font-weight: 400;
+    font-size: 18px;
 
-    .dark & {
-      color: var(--rp-c-text);
+    @media (max-width: 768px) {
+      font-size: 16px;
     }
   }
 
+  &__search-icon,
   &__close {
-    &:hover {
-      cursor: pointer;
-      color: var(--rp-c-brand);
-      transition: color 0.3s;
-    }
+    display: block;
+    width: 20px;
+    height: 20px;
+    color: var(--rp-c-text-2);
+  }
+
+  &__close:hover {
+    cursor: pointer;
+    color: var(--rp-c-brand);
+    transition: color 0.3s;
   }
 
   &__search-icon--loading {
@@ -87,15 +122,12 @@
     }
   }
 
-  &__search-icon {
-    display: inline-block;
-    font-size: 20px;
-  }
-
   &__results {
-    max-height: calc(100vh - 230px);
-    overflow: scroll;
-    padding-right: 2px;
+    min-height: 0;
+    padding: 8px;
+    border-top: 1px solid var(--rp-c-divider-light);
+    overflow: auto;
+    overscroll-behavior: contain;
   }
 
   &__error {
@@ -106,7 +138,7 @@
 
   &__tabs {
     position: sticky;
-    background-color: var(--rp-c-bg-soft);
+    background-color: var(--rp-c-bg);
     padding-bottom: 6px;
 
     &.rp-tabs {
@@ -118,27 +150,7 @@
   }
 
   &__group {
-    padding-bottom: 0.5rem;
-  }
-
-  @media (max-width: 960px) {
-    &__modal {
-      margin-top: calc(32px + env(safe-area-inset-top, 0px));
-    }
-
-    &__input-form {
-      height: 40px;
-    }
-
-    &__search-icon,
-    &__close {
-      width: 16px;
-      height: 16px;
-    }
-
-    &__input {
-      font-size: 16px;
-    }
+    padding-bottom: 4px;
   }
 }
 

@@ -117,27 +117,15 @@ pnpm --filter @rspress/docs run build
 
 To watch a package, run `pnpm dev` in that package's directory in a separate terminal. Run `pnpm build` first to build its workspace dependencies. `pnpm dev:website` builds the website's workspace dependencies before starting the documentation dev server.
 
-If you need to clean all `node_modules/*` in the project, run the `reset` command:
-
-```sh
-pnpm run reset
-```
-
 ### Debug code
 
-After `build`, we need to link this repo to the global, run the link command:
+After building the packages, run the following command in the project you want to debug to link the local `@rspress/core` package. Replace the path with your local Rspress checkout:
 
 ```sh
-pnpm link --global
+pnpm link /absolute/path/to/rspress/packages/core
 ```
 
-At debug repo, replace the version in node_modules with the local version:
-
-```sh
-pnpm link --global rspress
-```
-
-If you want to debug package, first open the package directory, then run the `build` command:
+To watch for source changes, run `pnpm dev` in the corresponding package directory of the Rspress checkout in a separate terminal:
 
 ```sh
 # Replace some-path with the path of the package you want to work on
@@ -157,10 +145,16 @@ Before submitting a pull request, it's important to make sure that the changes h
 pnpm run test:unit
 ```
 
-Alternatively, you can run the unit tests of single package using the `--filter` option:
+To run a single package's unit tests, pass its source directory as a test path filter from the repository root:
 
 ```sh
-pnpm run --filter rspress test
+pnpm test:unit packages/core
+```
+
+To update snapshots for those tests:
+
+```sh
+pnpm test:unit packages/core --update
 ```
 
 ### Run E2E tests

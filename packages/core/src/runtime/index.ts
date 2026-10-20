@@ -15,6 +15,7 @@ export { useActiveMatcher } from './hooks/useActiveMatcher';
 export { ThemeContext, useDark } from './hooks/useDark';
 export { useFrontmatter } from './hooks/useFrontmatter';
 export { useI18n } from './hooks/useI18n';
+export { useI18nText } from './hooks/useI18nText';
 export { useLang } from './hooks/useLang';
 export { useLocaleSiteData } from './hooks/useLocaleSiteData';
 export { useNav } from './hooks/useNav';
@@ -28,8 +29,14 @@ export {
 } from './hooks/useSidebar';
 export { useSite } from './hooks/useSite';
 export { useVersion } from './hooks/useVersion';
+export {
+  useWebMcp,
+  type WebMcpOptions,
+  type WebMcpState,
+  type WebMcpExecuteOptions,
+} from './hooks/useWebMcp';
 export { useWindowSize } from './hooks/useWindowSize';
-export { initPageData, warmPageData } from './initPageData';
+export { initPageData } from './initPageData';
 export { NoSSR } from './NoSSR';
 export { safePreconnect, safePreload } from './reactDom';
 export { isActive, pathnameToRouteService, preloadLink } from './route';

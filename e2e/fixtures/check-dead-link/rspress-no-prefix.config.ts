@@ -11,6 +11,7 @@ export default defineConfig({
     },
   },
   route: {
+    cleanUrls: false,
     localeRedirect: 'never',
   },
   themeConfig: {

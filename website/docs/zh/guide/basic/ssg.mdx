@@ -49,7 +49,7 @@ rspress build
 build 模式默认启用 SSG，你可以通过 [`ssg` 配置项](#配置选项)来控制：
 
 - `ssg: true` （默认）：启用 SSG，构建时，Rspress 会在 Node.js 环境中执行 React 组件的渲染，将每个页面转换为包含完整内容的 HTML 文件。
-- `ssg: false`：禁用 SSG，使用纯 CSR，生成的 HTML 仅包含空容器，等待客户端渲染。
+- `ssg: false`：禁用 SSG，使用 CSR。生成的 HTML 包含空的页面容器，等待客户端渲染。这不影响 SSG-MD，后者由 `llms` 独立控制。
 
 **构建完成后：**
 
@@ -260,7 +260,7 @@ export default defineConfig({
 });
 ```
 
-如果你的站点有特殊需求，可以禁用 SSG：
+如果你的站点有特殊需求，可以禁用 SSG，同时保留 Markdown 生成：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

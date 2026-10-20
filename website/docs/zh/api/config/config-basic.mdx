@@ -54,7 +54,7 @@ export default defineConfig({
 
 站点的可选部署 origin，例如 `https://foo.github.io`。
 
-Rspress 在生成需要绝对 URL 的文件时会结合该值和 [`base`](#base)，例如 `llms.txt` 链接或插件输出。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。
+Rspress 在生成需要绝对 URL 的文件时会结合该值和 [`base`](#base)，例如 `sitemap.xml`、`llms.txt` 链接或插件输出。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。
 
 如果没有配置 `siteOrigin`，Rspress 会回退使用 `base + routePath`。
 
@@ -426,38 +426,128 @@ export default defineConfig({
 }
 ```
 
-## llms
+## sitemap
 
-- **类型**：
+<VersionBadge version="2.1.0" />
 
-```ts
-boolean | {
-  llmsTxt?: (context: LlmsTxtContext) => string | Promise<string>;
-  remarkSplitMdxOptions?: RemarkSplitMdxOptions;
-}
-```
+- **类型**：`boolean | SitemapOptions`
+- **默认值**：`true`
 
-- **默认值**：`false`
+在生产构建时向输出目录生成 `sitemap.xml`。此功能已内置于 Rspress，无需安装插件，在 `ssg: false` 时也可使用。从 public 目录复制的已有 sitemap 文件会保留。生成的 URL 遵循 `route.cleanUrls`。
 
-是否开启 [SSG-MD](/guide/basic/ssg-md) 来生成 `llms.txt`、`llms-full.txt` 以及每个页面对应的 Markdown 文件，使你的文档更容易被大语言模型理解。
-
-可通过 `llmsTxt` 基于站点信息和页面分组编排完整的 `llms.txt` 内容。详见[自定义 llms.txt](/guide/basic/ssg-md#自定义-llmstxt)。
+配置 [`siteOrigin`](#siteorigin) 可让 sitemap 包含绝对 URL。Rspress 会将 `siteOrigin`、[`base`](#base) 和每个页面的路由路径拼接起来：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  llms: true,
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+  // sitemap 默认开启。
 });
 ```
 
-:::warning
+设置 `sitemap: false` 可关闭生成，也可以传入选项对象进行自定义：
 
-`llms` 为实验性功能。如果由于代码不兼容 SSR 而无法开启 SSG-MD，请使用 [@rspress/plugin-llms](/plugin/official-plugins/llms) 作为备选方案。
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
 
-:::
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  sitemap: {
+    defaultChangeFreq: 'weekly',
+    defaultPriority: '0.7',
+  },
+});
+```
 
-详细用法、配置选项和实现原理请参阅 [llms.txt（SSG-MD）](/guide/basic/ssg-md)。
+选项类型如下，可从 `@rspress/core` 导入 `SitemapOptions`：
+
+```ts
+type ChangeFreq =
+  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+
+type Priority =
+  | '0.0'
+  | '0.1'
+  | '0.2'
+  | '0.3'
+  | '0.4'
+  | '0.5'
+  | '0.6'
+  | '0.7'
+  | '0.8'
+  | '0.9'
+  | '1.0';
+
+// https://www.sitemaps.org/protocol.html
+interface Sitemap {
+  loc: string;
+  lastmod?: string;
+  changefreq?: ChangeFreq;
+  priority?: Priority;
+}
+
+interface CustomMaps {
+  [routePath: string]: Sitemap;
+}
+
+export interface SitemapOptions {
+  siteUrl?: string;
+  customMaps?: CustomMaps;
+  defaultPriority?: Priority;
+  defaultChangeFreq?: ChangeFreq;
+}
+```
+
+### sitemap.siteUrl
+
+- **类型**：`string`
+- **默认值**：[`siteOrigin`](#siteorigin) + [`base`](#base)，未配置 `siteOrigin` 时使用 `base`
+
+覆盖 sitemap 条目使用的部署 URL。请使用包含基础路径的绝对 URL，例如 `https://example.com/docs/`。此值优先于 `siteOrigin` 和 `base`。仅支持不含查询参数和片段的 HTTP(S) URL。
+
+如果既没有配置 `sitemap.siteUrl`，也没有配置 `siteOrigin`，条目会使用 `base + routePath`，保留为相对路径。配置其中任意一项即可生成绝对 sitemap URL。
+
+### sitemap.customMaps
+
+- **类型**：`Record<string, Sitemap>`
+- **默认值**：`{}`
+
+覆盖指定页面的 sitemap 值。键为不含 `base` 的路由路径，值会覆盖生成的 `loc`、`lastmod`、`changefreq` 和 `priority`。`lastmod` 默认使用源文件的修改时间。此选项用于自定义已有页面，不会添加路由。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+  sitemap: {
+    customMaps: {
+      '/guide': {
+        loc: 'https://example.com/docs/guide',
+        lastmod: '2026-01-01',
+        changefreq: 'weekly',
+        priority: '0.8',
+      },
+    },
+  },
+});
+```
+
+### sitemap.defaultChangeFreq
+
+- **类型**：`ChangeFreq`
+- **默认值**：`'monthly'`
+
+每个页面默认的 `changefreq` 值。可选值为 `'always'`、`'hourly'`、`'daily'`、`'weekly'`、`'monthly'`、`'yearly'` 和 `'never'`。可通过 `customMaps` 为指定页面覆盖此值。
+
+### sitemap.defaultPriority
+
+- **类型**：`Priority`
+- **默认值**：`'0.5'`
+
+每个页面默认的 `priority` 值，可选值从 `'0.0'` 到 `'1.0'`，间隔为 `0.1`。根路由 `/` 使用 `'1.0'`。可通过 `customMaps` 为指定页面覆盖此值。
 
 ## mediumZoom
 
@@ -698,9 +788,9 @@ export default defineConfig({
 ### route.cleanUrls
 
 - **类型**： `boolean`
-- **默认值**： `false`
+- **默认值**： `true`（在 v2.1.0 之前是 `false`）
 
-开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁。
+开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁。设置为 `false` 可以保留 `.html` 后缀。
 
 :::warning 需要服务器支持
 
@@ -713,7 +803,7 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    cleanUrls: true,
+    cleanUrls: false,
   },
 });
 ```
@@ -874,9 +964,9 @@ export default defineConfig({
 - **类型**： `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
 - **默认值**： `true`
 
-是否开启静态站点生成。Rspress 默认开启该功能，生成 SSG 产物。
+是否在构建时将页面内容预渲染为 HTML。Rspress 默认开启 SSG。
 
-如果你的文档站只要求在 CSR 场景下使用，你可以设置 `ssg` 为 `false`，此时 Rspress 会生成 CSR 产物。
+设置 `ssg: false` 后会生成用于客户端渲染的 HTML 空壳。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -888,11 +978,20 @@ export default defineConfig({
 
 :::tip
 
-SSG 要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下的代码，会导致编译失败。你可以尝试：
+[SSG](/guide/basic/ssg) 和 [SSG-MD](/guide/basic/ssg-md) 均要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下的代码，会导致编译失败。你可以尝试：
 
-1. 修复不兼容 SSR 场景下的代码，使其兼容 SSR。
+1. 修复不兼容 SSR 的代码。具体方法请参阅 SSG 指南中的[常见问题与解决方案](/guide/basic/ssg#常见问题与解决方案)。
 
-2. 设置 `ssg` 为 `false`，但是会失去 SSG 功能。
+2. 如果代码不支持 SSR，需要同时设置 `ssg: false` 和 `llms: false`：
+
+   ```ts title="rspress.config.ts"
+   import { defineConfig } from '@rspress/core';
+
+   export default defineConfig({
+     ssg: false,
+     llms: false,
+   });
+   ```
 
 :::
 
@@ -909,6 +1008,8 @@ SSG 要求源码支持在 SSR 下编译，如果使用了不兼容 SSR 场景下
 - **默认值**： `[]`
 
 开启后一部分页面将不进行 SSG 渲染，直接使用 CSR 下的 html，适合用于大型文档站点绕过一小部分页面的 SSG 错误，不建议主动开启。
+
+此选项仅影响 SSG，不会将页面排除在 SSG-MD 之外。如果被排除的页面不兼容 SSR，需要修复兼容性问题，或设置 `llms: false` 关闭 SSG-MD。
 
 ## replaceRules
 

@@ -121,7 +121,11 @@ export class PluginDriver {
   private async normalizeConfig() {
     this.#config.root ??= 'docs';
     this.#config.ssg ??= true;
-    this.#config.llms ??= false;
+    this.#config.llms ??= true;
+    this.#config.webMcp ??= true;
+    this.#config.sitemap ??= true;
+    this.#config.route ??= {};
+    this.#config.route.cleanUrls ??= true;
     this.#config.base = addTrailingSlash(
       addLeadingSlash(this.#config.base ?? '/'),
     );

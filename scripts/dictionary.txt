@@ -1,4 +1,5 @@
 # Custom Dictionary Words
+webmcp
 afdocs
 algoliasearch
 alinks

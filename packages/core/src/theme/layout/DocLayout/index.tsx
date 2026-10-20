@@ -8,6 +8,7 @@ import {
   useWatchToc,
 } from '@rspress/core/theme';
 import clsx from 'clsx';
+// eslint-disable-next-line no-restricted-imports -- Existing cross-directory dependency; retained until this component is eject-safe.
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
 import './index.scss';
 

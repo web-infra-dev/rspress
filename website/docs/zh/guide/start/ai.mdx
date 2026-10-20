@@ -2,6 +2,8 @@
 description: '使用 Agent Skills、llms.txt、Markdown 文档和 AGENTS.md 帮助编程 Agent 使用 Rspress。'
 ---
 
+import { VersionBadge } from '../../../components/VersionBadge';
+
 import { PackageManagerTabs } from '@rspress/core/theme';
 
 # AI
@@ -11,6 +13,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 - [Agent Skills](#agent-skills)
 - [llms.txt](#llmstxt)
 - [Markdown 文档](#markdown-文档)
+- [WebMCP](#webmcp)
 - [AGENTS.md](#agentsmd)
 
 ## Agent Skills
@@ -59,7 +62,7 @@ https://rspress.rs/llms-full.txt
 - `llms.txt` 体积较小、消耗 token 少，适合让 AI 按需获取具体页面。
 - `llms-full.txt` 包含全量文档内容，无需 AI 逐一跟随链接，适合需要 AI 全面了解 Rspress 的场景，但会消耗更多 token，建议在支持大上下文窗口的 AI 工具中使用。
 
-此外，Rspress 内置了 [SSG-MD](/guide/basic/ssg-md) 能力，可以为你自己的文档站点生成符合 `llms.txt` 规范的文件。只需在配置中启用 `llms: true` 即可使用。
+此外，Rspress 内置了 [SSG-MD](/guide/basic/ssg-md) 能力，可以为你自己的文档站点生成符合 `llms.txt` 规范的文件。自 v2.1.0 起默认开启。
 
 ## Markdown 文档
 
@@ -70,6 +73,12 @@ https://rspress.rs/guide/start/introduction.md
 ```
 
 将 Markdown 链接或内容提供给 AI，即可让其精确了解某一具体章节的内容，适合在针对性问题排查或查阅特定内容时使用。
+
+## WebMCP
+
+<VersionBadge version="2.1.0" />
+
+Rspress 默认通过 [WebMCP](/guide/basic/webmcp) 向浏览器智能体提供文档读取、搜索和导航工具。
 
 ## AGENTS.md
 

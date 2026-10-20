@@ -1,0 +1,82 @@
+---
+icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/><path d="M20 2v4m-2-2h4"/></svg>'
+description: 使用 useWebMcp 为浏览器智能体注册由组件管理的 WebMCP 工具。
+---
+
+import { VersionBadge } from '../../../components/VersionBadge';
+
+# useWebMcp
+
+<VersionBadge version="2.1.0" />
+
+`useWebMcp` 向浏览器实验性的 WebMCP API 注册工具，并在组件卸载时移除。从 `@rspress/core/runtime` 导入：
+
+```tsx
+import { usePage, useWebMcp } from '@rspress/core/runtime';
+
+export function PageTitleTool() {
+  const { page } = usePage();
+
+  useWebMcp({
+    name: 'my_site_page_title',
+    description: 'Get the current page title',
+    annotations: { readOnlyHint: true },
+    execute: () => ({ title: page.title }),
+  });
+
+  return null;
+}
+```
+
+在能力所属的位置挂载组件：全站工具放在常驻组件中，页面专属工具随页面挂载。工具名称在整个文档中必须唯一，也不能与[内置工具](/guide/basic/webmcp)重名。
+
+自定义工具不受 `webMcp` 配置项影响。浏览器要求参阅 [WebMCP 指南](/guide/basic/webmcp)。
+
+## 参数
+
+| 参数                      | 说明                                                                                         |
+| ------------------------- | -------------------------------------------------------------------------------------------- |
+| `name`                    | 必填，唯一的工具名称。                                                                       |
+| `description`             | 必填，供智能体理解工具用途的描述。                                                           |
+| `title`                   | 可选的展示标题。                                                                             |
+| `inputSchema`             | 描述输入的 JSON Schema。                                                                     |
+| `execute(input, options)` | 必填，返回可 JSON 序列化的结果或 Promise。调用方提供取消信号时，通过 `options.signal` 传入。 |
+| `enabled`                 | 是否注册，默认为 `true`，改为 `false` 时注销工具。                                           |
+| `annotations`             | 可选的布尔提示：`readOnlyHint`、`untrustedContentHint`、`consequentialHint` 和 `debugging`。 |
+| `exposedTo`               | 可选，允许发现工具的其他安全来源。                                                           |
+
+通过 `WebMcpOptions<TInput, TResult>` 或参数注解声明类型，并在 `execute` 中校验输入、处理取消信号。
+
+```tsx
+useWebMcp({
+  name: 'my_site_lookup',
+  description: 'Look up a documentation entry',
+  inputSchema: {
+    type: 'object',
+    properties: { query: { type: 'string' } },
+    required: ['query'],
+    additionalProperties: false,
+  },
+  async execute(input: { query: string }, { signal }) {
+    if (typeof input?.query !== 'string' || !input.query.trim()) {
+      throw new TypeError('query must be a non-empty string');
+    }
+    const response = await fetch(
+      `/api/lookup?q=${encodeURIComponent(input.query)}`,
+      { signal },
+    );
+    if (!response.ok) throw new Error(`Lookup failed: ${response.status}`);
+    return response.json();
+  },
+});
+```
+
+## 返回值与生命周期
+
+返回 `WebMcpState`：
+
+- `supported`：浏览器是否支持 WebMCP。
+- `registered`：工具是否注册成功。
+- `error`：注册错误，成功时为 `null`。
+
+工具调用使用最新已提交的 props 和 state；更新执行函数不会重新注册。禁用或卸载组件会注销工具。

@@ -1,6 +1,11 @@
 import { define } from 'rstack';
 import skillsJson from './skills.json' with { type: 'json' };
 
+const restrictedVirtualImports = {
+  group: ['virtual-*'],
+  message: 'Import virtual module values through @rspress/core/runtime.',
+};
+
 define.lint(({ globals, js, rstestPlugin, ts }) => [
   {
     ignores: ['**/*.d.ts'],
@@ -14,11 +19,24 @@ define.lint(({ globals, js, rstestPlugin, ts }) => [
       'no-restricted-imports': [
         'error',
         {
+          patterns: [restrictedVirtualImports],
+        },
+      ],
+    },
+  },
+  {
+    files: ['packages/core/src/theme/**/*.{ts,tsx}'],
+    ignores: ['**/*.test.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
           patterns: [
+            restrictedVirtualImports,
             {
-              group: ['virtual-*'],
+              group: ['../..', '../../*'],
               message:
-                'Import virtual module values through @rspress/core/runtime.',
+                'Theme components are ejected as standalone units. Import shared code through @rspress/core/theme or @rspress/core/runtime instead of traversing two or more parent directories.',
             },
           ],
         },

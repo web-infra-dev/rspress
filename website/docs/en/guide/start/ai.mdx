@@ -2,6 +2,8 @@
 description: 'Use Agent Skills, llms.txt, Markdown documentation, and AGENTS.md to help coding agents work with Rspress.'
 ---
 
+import { VersionBadge } from '../../../components/VersionBadge';
+
 import { PackageManagerTabs } from '@rspress/core/theme';
 
 # AI
@@ -11,6 +13,7 @@ Rspress provides the following capabilities to help AI understand its features, 
 - [Agent Skills](#agent-skills)
 - [llms.txt](#llmstxt)
 - [Markdown docs](#markdown-docs)
+- [WebMCP](#webmcp)
 - [AGENTS.md](#agentsmd)
 
 ## Agent Skills
@@ -59,7 +62,7 @@ You can choose the file that best fits your use case:
 - `llms.txt` is smaller and consumes fewer tokens, making it suitable for AI to fetch specific pages on demand.
 - `llms-full.txt` contains the complete documentation content, so AI doesn't need to follow individual links — ideal when you need AI to have a comprehensive understanding of Rspress, though it consumes more tokens and is best used with AI tools that support large context windows.
 
-Rspress also has built-in [SSG-MD](/guide/basic/ssg-md) support, which can generate `llms.txt`-compliant files for your own documentation sites. Enable `llms: true` in the config to use it.
+Rspress also has built-in [SSG-MD](/guide/basic/ssg-md) support, which can generate `llms.txt`-compliant files for your own documentation sites. This is enabled by default since v2.1.0.
 
 ## Markdown docs
 
@@ -70,6 +73,12 @@ https://rspress.rs/guide/start/introduction.md
 ```
 
 Providing the Markdown link or content allows AI to focus on a specific chapter, which is useful for targeted troubleshooting or looking up a particular topic.
+
+## WebMCP
+
+<VersionBadge version="2.1.0" />
+
+Rspress enables [WebMCP](/guide/basic/webmcp) by default, providing browser agents with tools to read, search, and navigate documentation.
 
 ## AGENTS.md
 

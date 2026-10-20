@@ -1,9 +1,14 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test } from '@e2e/test';
-import { runBuildCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runPreviewCommand,
+} from '../../utils/runCommands';
 
-test('llms should be successful', async () => {
+test('llms should be enabled by default', async () => {
   const appDir = import.meta.dirname;
   await runBuildCommand(appDir);
 
@@ -104,7 +109,80 @@ test('custom llms.txt renderer should be successful', async () => {
 test('csr should be successful', async () => {
   const appDir = import.meta.dirname;
   await runBuildCommand(appDir, 'rspress-csr.config.ts');
+
+  const files = await fs.readdir(path.join(appDir, 'doc_build'));
+  expect(files).not.toContain('llms.txt');
+  expect(files).not.toContain('llms-full.txt');
+  expect(files).not.toContain('index.md');
 });
+
+for (const { ssg, llms, config } of [
+  { ssg: true, llms: false, config: 'rspress-ssg-only.config.ts' },
+  { ssg: false, llms: true, config: 'rspress-llms-only.config.ts' },
+]) {
+  test(`ssg: ${ssg}, llms: ${llms} should render independently`, async ({
+    page,
+  }) => {
+    const appDir = import.meta.dirname;
+    await runBuildCommand(appDir, config);
+
+    const docBuildDir = path.join(appDir, 'doc_build');
+    const html = await fs.readFile(
+      path.join(docBuildDir, 'index.html'),
+      'utf-8',
+    );
+    expect(html.includes('<div id="__rspress_root"></div>')).toBe(!ssg);
+    expect(html.includes('Rspress uses')).toBe(ssg);
+
+    const files = await fs.readdir(docBuildDir);
+    for (const file of ['index.md', 'llms.txt', 'llms-full.txt']) {
+      expect(files.includes(file)).toBe(llms);
+    }
+    if (llms) {
+      const markdown = await fs.readFile(
+        path.join(docBuildDir, 'index.md'),
+        'utf-8',
+      );
+      expect(markdown).toContain('Rspress uses');
+      expect(markdown.trimStart()).toMatch(/^> For AI agents:/);
+    }
+
+    const errors: string[] = [];
+    page.on('pageerror', error => errors.push(error.message));
+    page.on('console', message => {
+      if (/hydrate|hydration|Minified React error/i.test(message.text())) {
+        errors.push(message.text());
+      }
+    });
+
+    const port = await getPort();
+    const app = await runPreviewCommand(appDir, port, ['-c', config]);
+    try {
+      await page.goto(`http://localhost:${port}/docs/`, {
+        waitUntil: 'networkidle',
+      });
+      await expect(
+        page.getByRole('heading', { name: 'Code blocks', exact: true }),
+      ).toBeVisible();
+      await page
+        .locator('.rspress-doc')
+        .getByRole('link', {
+          name: 'MDX and React components',
+          exact: true,
+        })
+        .click();
+      await expect(
+        page.getByRole('heading', {
+          name: 'MDX and React components',
+          exact: true,
+        }),
+      ).toBeVisible();
+      expect(errors).toEqual([]);
+    } finally {
+      await killProcess(app);
+    }
+  });
+}
 
 test('llms directive hint should be configurable', async () => {
   const appDir = import.meta.dirname;

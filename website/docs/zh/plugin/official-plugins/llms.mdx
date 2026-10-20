@@ -26,7 +26,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 
 ### 1. 安装插件
 
-在配置文件中写入以下的配置：
+使用此插件时，在配置中设置 `llms: false`，关闭内置的 SSG-MD 生成：
 
 ```ts
 // rspress.config.ts
@@ -34,6 +34,7 @@ import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
+  llms: false,
   plugins: [pluginLlms()],
 });
 ```
@@ -53,6 +54,7 @@ import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
+  llms: false,
   plugins: [pluginLlms()],
   themeConfig: {
     llmsUI: true,
@@ -426,6 +428,7 @@ type LlmsViewOptionsItem =
 // rspress.config.ts
 import { defineConfig } from '@rspress/core';
 defineConfig({
+  llms: false,
   lang: 'en',
   plugins: [
     pluginLlms([

@@ -1,5 +1,4 @@
 ---
-tag: experimental
 description: SSG-MD 将页面渲染为 Markdown 文件并生成 llms.txt 索引，便于大语言模型理解和使用技术文档，提升 GEO 优化效果。
 ---
 
@@ -9,7 +8,7 @@ description: SSG-MD 将页面渲染为 Markdown 文件并生成 llms.txt 索引�
 
 ## 什么是 SSG-MD？
 
-Rspress 提供实验性的 Static Site Generation to Markdown (SSG-MD) 能力，这是一个全新的功能。与它的名字一样 SSG-MD，与 [静态站点生成（SSG）](./ssg) 过程类似，但不同之处在于它将你的页面渲染为 Markdown 文件，而非 HTML 文件，并生成 [`llms.txt`](#llms-txt) 及 llms-full.txt 相关文件，便于大模型理解和使用你的技术文档。
+Rspress 提供 Static Site Generation to Markdown (SSG-MD) 能力。与它的名字一样 SSG-MD，与 [静态站点生成（SSG）](./ssg) 过程类似，但不同之处在于它将你的页面渲染为 Markdown 文件，而非 HTML 文件，并生成 [`llms.txt`](#llms-txt) 及 llms-full.txt 相关文件，便于大模型理解和使用你的技术文档。
 
 为了便于理解 SSG-MD 概念，下面是一个 SSG 与 SSG-MD 的类比表：
 
@@ -179,15 +178,7 @@ deno init --npm rspress@latest
 
 ## 快速开始
 
-在 `rspress.config.ts` 中开启 `llms` 即可：
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  llms: true,
-});
-```
+自 v2.1.0 起，`llms` 默认开启（此前默认为 `false`）。
 
 执行 `rspress build` 后，输出目录（默认 `doc_build`）会额外生成以下文件：
 
@@ -205,7 +196,7 @@ doc_build
 
 :::warning
 
-`llms` 为实验性功能，可能存在不稳定或兼容性问题。如果由于代码不兼容 SSR，无法开启此功能，请使用 [@rspress/plugin-llms](/plugin/official-plugins/llms)。
+如果代码不兼容 SSR，请设置 `llms: false` 并使用 [@rspress/plugin-llms](/plugin/official-plugins/llms)。
 
 :::
 

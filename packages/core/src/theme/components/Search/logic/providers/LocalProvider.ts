@@ -124,7 +124,10 @@ export class LocalProvider implements Provider {
     this.#fetchPromise = this.#getPages(
       currentLang,
       versioned ? currentVersion : '',
-    );
+    ).catch(error => {
+      this.#fetchPromise = undefined;
+      throw error;
+    });
 
     return this.#fetchPromise;
   }

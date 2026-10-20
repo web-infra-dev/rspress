@@ -1,0 +1,82 @@
+---
+icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/><path d="M20 2v4m-2-2h4"/></svg>'
+description: Register component-owned WebMCP tools for browser agents with useWebMcp.
+---
+
+import { VersionBadge } from '../../../components/VersionBadge';
+
+# useWebMcp
+
+<VersionBadge version="2.1.0" />
+
+`useWebMcp` registers a tool with the browser's experimental WebMCP API and removes it when the component unmounts. Import it from `@rspress/core/runtime`:
+
+```tsx
+import { usePage, useWebMcp } from '@rspress/core/runtime';
+
+export function PageTitleTool() {
+  const { page } = usePage();
+
+  useWebMcp({
+    name: 'my_site_page_title',
+    description: 'Get the current page title',
+    annotations: { readOnlyHint: true },
+    execute: () => ({ title: page.title }),
+  });
+
+  return null;
+}
+```
+
+Mount the component where the capability belongs. Keep site-wide tools in a persistent component; mount tools specific to a page with that page. Tool names must be unique across the document, including the [built-in tools](/guide/basic/webmcp).
+
+Custom tools work independently of the `webMcp` config option. See the [WebMCP guide](/guide/basic/webmcp) for browser requirements.
+
+## Options
+
+| Option                    | Description                                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`                    | Required unique tool name.                                                                                                                 |
+| `description`             | Required description for agents.                                                                                                           |
+| `title`                   | Optional display title.                                                                                                                    |
+| `inputSchema`             | JSON Schema describing the input.                                                                                                          |
+| `execute(input, options)` | Required function returning a JSON-serializable value or a promise. `options.signal`, when provided, carries cancellation from the caller. |
+| `enabled`                 | Whether to register the tool. Defaults to `true`; setting it to `false` unregisters the tool.                                              |
+| `annotations`             | Optional boolean hints: `readOnlyHint`, `untrustedContentHint`, `consequentialHint`, and `debugging`.                                      |
+| `exposedTo`               | Optional array of additional secure origins allowed to discover the tool.                                                                  |
+
+Use `WebMcpOptions<TInput, TResult>` or parameter annotations for types, and validate inputs and handle cancellation in `execute`.
+
+```tsx
+useWebMcp({
+  name: 'my_site_lookup',
+  description: 'Look up a documentation entry',
+  inputSchema: {
+    type: 'object',
+    properties: { query: { type: 'string' } },
+    required: ['query'],
+    additionalProperties: false,
+  },
+  async execute(input: { query: string }, { signal }) {
+    if (typeof input?.query !== 'string' || !input.query.trim()) {
+      throw new TypeError('query must be a non-empty string');
+    }
+    const response = await fetch(
+      `/api/lookup?q=${encodeURIComponent(input.query)}`,
+      { signal },
+    );
+    if (!response.ok) throw new Error(`Lookup failed: ${response.status}`);
+    return response.json();
+  },
+});
+```
+
+## Return value and lifecycle
+
+Returns `WebMcpState`:
+
+- `supported`: whether the browser supports WebMCP.
+- `registered`: whether registration succeeded.
+- `error`: the registration error, or `null` on success.
+
+Tool calls use the latest committed props and state. Updating the handler does not re-register the tool. Disabling or unmounting the component unregisters it.

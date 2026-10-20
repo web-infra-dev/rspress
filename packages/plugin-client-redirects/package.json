@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-client-redirects",
-  "version": "2.0.23",
+  "version": "2.1.0-beta.1",
   "description": "A plugin for rspress to client redirect in docs.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -34,7 +34,7 @@
     "reset": "rimraf ./**/node_modules"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.59.3",
+    "@microsoft/api-extractor": "^7.59.4",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.18",
@@ -44,7 +44,7 @@
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.10"
+    "@rspress/core": "workspace:^2.1.0-beta.1"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

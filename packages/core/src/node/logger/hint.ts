@@ -83,7 +83,7 @@ ${picocolors.greenBright(`  builderConfig: {
 }
 
 /**
- * Possible reasons for printing "ssg: false" and some troubleshooting guidelines for users.
+ * Explain SSR compatibility failures during SSG.
  */
 let isSSGFailedLogged = false;
 export function hintSSGFailed() {
@@ -91,9 +91,20 @@ export function hintSSGFailed() {
     return;
   }
   isSSGFailedLogged = true;
-  logger.info(`[Rspress v2] \`ssg: true\` requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
+  logger.info(`[Rspress v2] SSG requires the source code to support SSR. If the code is not compatible with SSR, the build process will fail. You can try:
     1. Fix code to make it SSR-compatible.
-    2. Set \`ssg: false\` if the code in node_modules may be difficult to fix, but the SSG feature will be lost.`);
+    2. Set \`ssg: false\` to disable SSG if the code is difficult to fix.`);
+}
+
+let isSSGMDFailedLogged = false;
+export function hintSSGMDFailed() {
+  if (isSSGMDFailedLogged) {
+    return;
+  }
+  isSSGMDFailedLogged = true;
+  logger.info(`[Rspress v2] SSG-MD requires the source code to support SSR. If the code is not compatible with SSR, Markdown rendering will fail. You can try:
+    1. Fix code to make it SSR-compatible.
+    2. Set \`llms: false\` and use @rspress/plugin-llms to generate Markdown, llms.txt, and llms-full.txt without SSR: https://rspress.rs/plugin/official-plugins/llms`);
 }
 
 /**

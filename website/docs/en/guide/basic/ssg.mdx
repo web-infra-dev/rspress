@@ -49,7 +49,7 @@ rspress build
 Build mode enables SSG by default. You can control this via the [`ssg` configuration](#configuration):
 
 - `ssg: true` (Default): Enable SSG. During the build, Rspress executes React component rendering in a Node.js environment, converting each page into an HTML file with complete content.
-- `ssg: false`: Disable SSG. Use pure CSR. The generated HTML contains only an empty container, waiting for client-side rendering.
+- `ssg: false`: Disable SSG and use CSR. The generated HTML contains an empty page container, waiting for client-side rendering. This does not affect SSG-MD, which is controlled independently by `llms`.
 
 **After building:**
 
@@ -260,7 +260,7 @@ export default defineConfig({
 });
 ```
 
-If your site has special requirements, you can disable SSG:
+If your site has special requirements, you can disable SSG while keeping Markdown generation enabled:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
