@@ -2108,8 +2108,8 @@ importers:
   packages/create-rspress:
     dependencies:
       '@rstackjs/create-toolkit':
-        specifier: 2.2.7
-        version: 2.2.7
+        specifier: 2.2.11
+        version: 2.2.11
     devDependencies:
       '@microsoft/api-extractor':
         specifier: ^7.59.4
@@ -4215,8 +4215,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rstackjs/create-toolkit@2.2.7':
-    resolution: {integrity: sha512-rxprP/B80f7iFjlCGAKjuR1BFDyXYBNKJU26l2rPdlJVnUqAcZ7Kal/cUHhgMR3QkWiSuxxafh+ckGFAyJl8sA==}
+  '@rstackjs/create-toolkit@2.2.11':
+    resolution: {integrity: sha512-8HpHnU9k+kjQVoxNAtLJE4RLcrIZwkz7skViD41CQNfojoUfY/qEUu0BkVYZEWBu1Lnor1LurqO8JaWiknxaRg==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
   '@rstest/adapter-rslib@0.12.3':
@@ -9226,7 +9226,7 @@ snapshots:
   '@rstackjs/cli-win32-x64-msvc@0.8.4':
     optional: true
 
-  '@rstackjs/create-toolkit@2.2.7': {}
+  '@rstackjs/create-toolkit@2.2.11': {}
 
   '@rstest/adapter-rslib@0.12.3(@rslib/core@1.0.3(@microsoft/api-extractor@7.59.4(@types/node@22.19.15))(typescript@7.0.2))(@rstest/core@0.12.3)(typescript@7.0.2)':
     dependencies:
