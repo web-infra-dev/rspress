@@ -338,6 +338,7 @@ async function createInternalBuildConfig(
       // mergeRsbuildConfig. Environment-level defaults are harder to override
       // from the user's shared builderConfig.
       printFileSize: {
+        detail: false,
         compressed: true,
       },
       ...(process.env.RSPRESS_PERSISTENT_CACHE !== 'false'
