@@ -1,4 +1,4 @@
-import { useLang } from '@rspress/core/runtime';
+import { useI18n } from '@rspress/core/runtime';
 import { QRCodeSVG } from 'qrcode.react';
 import {
   type MouseEventHandler,
@@ -7,25 +7,11 @@ import {
   useRef,
   useState,
 } from 'react';
+import type { previewI18n } from '../../i18n';
 import IconLaunch from '../icons/Launch';
 import IconQrcode from '../icons/Qrcode';
 import IconRefresh from '../icons/Refresh';
 import './PreviewOperations.css';
-
-const locales = {
-  zh: {
-    refresh: '刷新页面',
-    open: '在新页面打开',
-  },
-  en: {
-    refresh: 'Refresh',
-    open: 'Open in new page',
-  },
-  ta: {
-    refresh: 'பக்கத்தைப் புதுப்பிக்க',
-    open: 'புதிய பக்கத்தில் பார்க்க',
-  },
-} as const;
 
 const contains = function (root: HTMLElement | null, ele: Node | null) {
   if (!root) {
@@ -51,18 +37,8 @@ export default (props: {
 }) => {
   const [showQRCode, setShowQRCode] = useState(false);
   const { url, className = '', refresh } = props;
-  const lang = useLang();
+  const t = useI18n<typeof previewI18n>();
   const triggerRef = useRef(null);
-  const resolvedLang = (
-    lang in locales
-      ? lang
-      : lang?.startsWith('zh')
-        ? 'zh'
-        : lang?.startsWith('ta')
-          ? 'ta'
-          : 'en'
-  ) as keyof typeof locales;
-  const t = locales[resolvedLang] ?? locales.en;
 
   const toggleQRCode: MouseEventHandler<HTMLButtonElement> = e => {
     if (!showQRCode) {
@@ -99,7 +75,7 @@ export default (props: {
       <button
         className="rp-preview-operations__button"
         onClick={refresh}
-        aria-label={t.refresh}
+        aria-label={t('previewRefresh')}
       >
         <IconRefresh />
       </button>
@@ -119,7 +95,7 @@ export default (props: {
       <button
         className="rp-preview-operations__button"
         onClick={openNewPage}
-        aria-label={t.open}
+        aria-label={t('previewOpen')}
       >
         <IconLaunch />
       </button>
