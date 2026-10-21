@@ -133,6 +133,7 @@ Qrcode
 rebranded
 rehype
 renderable
+resizer
 resvg
 rsbuild
 rsdoctor

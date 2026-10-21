@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -79,9 +80,15 @@ function mapRslintTemplate(): RslintTemplateName {
   return 'react-ts' as RslintTemplateName;
 }
 
+const root = path.resolve(__dirname, '..');
+const { version } = JSON.parse(
+  fs.readFileSync(path.join(root, 'package.json'), 'utf-8'),
+) as { version: string };
+
 create({
-  root: path.resolve(__dirname, '..'),
+  root,
   name: 'rspress',
+  banner: `create-rspress v${version}`,
   templates: [...templates],
   git: !process.argv.includes('--no-git'),
   getTemplateName,

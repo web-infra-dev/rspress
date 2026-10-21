@@ -7,7 +7,7 @@ let pending: Promise<void> | undefined;
 export default function TransitionProbe() {
   const { pathname } = useLocation();
   const navigate = useLinkNavigate();
-  if (typeof window !== 'undefined' && pathname === '/slow.html' && !ready) {
+  if (typeof window !== 'undefined' && pathname === '/slow' && !ready) {
     pending ||= fetch('/transition-gate').then(() => {
       ready = true;
     });

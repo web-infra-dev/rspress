@@ -142,6 +142,46 @@ test.describe('plugin preview development', async () => {
     await expect(iframeFollowHtml).not.toHaveClass(/dark/);
     await expect(fixedIframeHtml).not.toHaveClass(/dark/);
   });
+
+  test('iframe-follow resizer', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(`http://localhost:${appPort}/mixed`, {
+      waitUntil: 'networkidle',
+    });
+
+    const block = page.locator('.rp-preview--iframe-follow').first();
+    const resizer = block.locator('.rp-preview--iframe-follow__resizer');
+    const device = block.locator('.rp-preview--iframe-follow__device');
+    await expect(resizer).toBeVisible();
+
+    const initial = (await device.boundingBox())!.width;
+    const box = (await resizer.boundingBox())!;
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x - 50, y, { steps: 5 });
+    await page.mouse.move(x - 100, y, { steps: 5 });
+    await page.mouse.up();
+
+    const resized = (await device.boundingBox())!.width;
+    expect(Math.abs(resized - initial - 100)).toBeLessThanOrEqual(2);
+
+    // keyboard
+    await resizer.focus();
+    await page.keyboard.press('ArrowRight');
+    const afterKey = (await device.boundingBox())!.width;
+    expect(Math.abs(resized - afterKey - 16)).toBeLessThanOrEqual(2);
+
+    // double-click resets
+    await resizer.dblclick();
+    const reset = (await device.boundingBox())!.width;
+    expect(Math.abs(reset - initial)).toBeLessThanOrEqual(2);
+
+    // hidden in column layout
+    await page.setViewportSize({ width: 800, height: 900 });
+    await expect(resizer).toBeHidden();
+  });
 });
 
 test.describe('plugin preview build', async () => {
