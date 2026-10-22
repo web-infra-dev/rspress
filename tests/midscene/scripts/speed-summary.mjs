@@ -23,9 +23,9 @@ console.log(
   'Case retries are disabled; model-request retries are recorded separately below. Prompt-merged checks are **not independent assertions**. Compare passing runs with matching versions and retry settings; a faster failed run is not an equivalent passing result.\n',
 );
 console.log(
-  '| Mode | Version | Passed / total | Not run | Time | Relative speed | Peak files | Model calls | Merged assertions |',
+  '| Mode | Version | Passed / total | Not run | Time | Relative speed | Configured files | Peak files | Model calls | Merged assertions |',
 );
-console.log('| --- | --- | --- | --- | --- | --- | --- | --- | --- |');
+console.log('| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |');
 for (const report of reports) {
   const summary = report.summary;
   const metrics = report.metrics;
@@ -33,7 +33,7 @@ for (const report of reports) {
     metrics?.collection?.fields?.modelCallCount === 'complete' ||
     metrics?.collection?.status === 'complete';
   console.log(
-    `| ${report.mode} | ${report.midsceneVersion} | ${summary ? `${summary.passed}/${summary.total}` : 'runner failed'} | ${summary?.notRun ?? 'unknown'} | ${(report.wallMs / 60_000).toFixed(2)} min | ${baseline ? (baseline.wallMs / report.wallMs).toFixed(2) + '×' : 'pending'} | ${report.maxActiveFiles} | ${metrics ? metrics.modelCallCount + (completeCalls ? '' : ' (partial/unknown)') : 'unknown'} | ${report.manifest.reduce((sum, item) => sum + item.mergedAssertions, 0)} |`,
+    `| ${report.mode} | ${report.midsceneVersion} | ${summary ? `${summary.passed}/${summary.total}` : 'runner failed'} | ${summary?.notRun ?? 'unknown'} | ${(report.wallMs / 60_000).toFixed(2)} min | ${baseline ? (baseline.wallMs / report.wallMs).toFixed(2) + '×' : 'pending'} | ${report.concurrency} | ${report.maxActiveFiles} | ${metrics ? metrics.modelCallCount + (completeCalls ? '' : ' (partial/unknown)') : 'unknown'} | ${report.manifest.reduce((sum, item) => sum + item.mergedAssertions, 0)} |`,
   );
 }
 for (const report of reports)

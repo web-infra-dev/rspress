@@ -1,10 +1,14 @@
 import assert from 'node:assert/strict';
 import { loadTestProject } from '@midscene/test/config';
+import { parseFileConcurrency } from './speed-concurrency.ts';
 
 const loaded = await loadTestProject('midscene.config.ts');
 const project = loaded.projects[0];
 const cleanup = [];
-const fileCleanup = Array.from({ length: 5 }, () => []);
+const concurrency = parseFileConcurrency(
+  process.env.MIDSCENE_SPEED_CONCURRENCY ?? '5',
+);
+const fileCleanup = Array.from({ length: concurrency }, () => []);
 try {
   const shared = await project.setup.setup({
     project,
@@ -28,7 +32,7 @@ try {
       }),
     ),
   );
-  assert.equal(new Set(contexts).size, 5);
+  assert.equal(new Set(contexts).size, concurrency);
   const open = loaded.resolveNode('app.open');
   await Promise.all(
     contexts.map(async (context, index) => {
@@ -39,7 +43,10 @@ try {
       );
     }),
   );
-  assert.equal(new Set(contexts.map(context => context.session)).size, 5);
+  assert.equal(
+    new Set(contexts.map(context => context.session)).size,
+    concurrency,
+  );
   for (const [index, context] of contexts.entries())
     assert.equal(
       await context.page.evaluate(() =>
@@ -52,7 +59,7 @@ try {
   for (const context of contexts.slice(1))
     assert.equal(context.page.isClosed(), false);
   console.log(
-    'Five real browser contexts have isolated storage and independent teardown. No model calls.',
+    `${concurrency} real browser contexts have isolated storage and independent teardown. No model calls.`,
   );
 } finally {
   try {

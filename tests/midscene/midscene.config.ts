@@ -11,6 +11,7 @@ import { createMidsceneNodes } from '@midscene/test/midscene';
 import { PlaywrightAgent } from '@midscene/web/playwright/agent';
 import { playgroundAsset } from './scripts/playground-assets.js';
 import { fixturePolicy } from './scripts/original-fixture-data.js';
+import { parseFileConcurrency } from './scripts/speed-concurrency.js';
 import { startFixtureServer } from './fixture-server.js';
 import {
   OriginalFixture,
@@ -36,9 +37,9 @@ interface Context {
 interface ProjectContext {
   browser: Browser;
 }
-const concurrency = Number(process.env.MIDSCENE_SPEED_CONCURRENCY ?? '1');
-if (![1, 5].includes(concurrency))
-  throw new Error('Speed experiment concurrency must be 1 or 5');
+const concurrency = parseFileConcurrency(
+  process.env.MIDSCENE_SPEED_CONCURRENCY,
+);
 const setup = defineProjectSetup<ProjectContext>({
   name: 'web',
   async setup({ onTeardown, signal }) {

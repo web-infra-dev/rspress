@@ -33,6 +33,11 @@ on:
         description: JSON list of baseline, prompt, parallel, combined
         type: string
         default: '["parallel"]'
+      speed_concurrency:
+        description: Concurrent files for parallel and combined experiments
+        type: choice
+        options: ['5', '10', '15']
+        default: '5'
       speed_ids:
         description: Optional comma-separated case IDs (empty runs all cases)
         type: string
@@ -214,6 +219,7 @@ jobs:
         mode: ${{ fromJSON(inputs.speed_modes) }}
     env:
       HEADLESS: 'true'
+      MIDSCENE_SPEED_CONCURRENCY: ${{ (matrix.mode == 'parallel' || matrix.mode == 'combined') && (inputs.speed_concurrency || '5') || '1' }}
       MIDSCENE_MODEL_RETRY_COUNT: '4'
       MIDSCENE_MODEL_RETRY_INTERVAL: '65000'
       NODE_OPTIONS: '--dns-result-order=ipv4first --no-network-family-autoselection'

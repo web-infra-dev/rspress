@@ -1,13 +1,18 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { performance } from 'node:perf_hooks';
+import { availableParallelism, totalmem } from 'node:os';
 import { prepareSpeedCases } from './speed-cases.mjs';
+import { benchmarkConcurrency } from './speed-concurrency.ts';
 
 const mode = process.argv[2];
 if (!['baseline', 'prompt', 'parallel', 'combined'].includes(mode))
   throw new Error('Expected baseline, prompt, parallel, or combined');
 const probe = process.argv.includes('--probe');
-const concurrency = ['parallel', 'combined'].includes(mode) ? 5 : 1;
+const concurrency = benchmarkConcurrency(
+  mode,
+  process.env.MIDSCENE_SPEED_CONCURRENCY,
+);
 const merge = ['prompt', 'combined'].includes(mode);
 const root = process.cwd();
 const prepared = await prepareSpeedCases({
@@ -56,6 +61,11 @@ const report = {
   probe,
   concurrency,
   maxActiveFiles,
+  runnerResources: {
+    logicalCpus: availableParallelism(),
+    totalMemoryBytes: totalmem(),
+    nodeVersion: process.version,
+  },
   midsceneVersion: lock.packages['node_modules/@midscene/test'].version,
   model: process.env.MIDSCENE_MODEL_NAME,
   family: process.env.MIDSCENE_MODEL_FAMILY,

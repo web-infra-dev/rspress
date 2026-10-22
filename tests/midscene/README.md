@@ -280,6 +280,9 @@ this integration.
 
 On the `benchmark/midscene-speed-20261022` fork branch, dispatch this workflow
 with `speed_benchmark=true`. It defaults to the five-file `parallel` variant.
+Set `speed_concurrency` to `10` or `15` to test higher parallelism; the default
+remains `5`. Serial controls always use one file. Locally, use
+`MIDSCENE_SPEED_CONCURRENCY=10 node scripts/speed-run.mjs parallel`.
 Select other variants with `speed_modes`; selected variants run separately on
 Node 24 / Midscene 1.16.5 runners, with case retries disabled:
 
@@ -287,8 +290,8 @@ Node 24 / Midscene 1.16.5 runners, with case retries disabled:
 | -------- | ---------------- | --------------------------------------- |
 | baseline | 1                | Independent `aiAssert` nodes            |
 | prompt   | 1                | Adjacent assertions appended to `aiAct` |
-| parallel | 5                | Independent `aiAssert` nodes            |
-| combined | 5                | Adjacent assertions appended to `aiAct` |
+| parallel | 5, 10, or 15     | Independent `aiAssert` nodes            |
+| combined | 5, 10, or 15     | Adjacent assertions appended to `aiAct` |
 
 Each generated YAML file contains one original case; the original cases are
 unchanged. Native `fileSetup` gives each file its own page and browser context.
@@ -299,7 +302,8 @@ provide the same failure-detection guarantee as an independent assertion.
 All variants use the same file isolation, including the serial baseline.
 Compare against that fresh baseline, not timings from older framework versions.
 The Summary and `speed-metrics-*` artifacts record elapsed time, pass/fail counts,
-actual model calls, per-case timings, and observed file concurrency. Incomplete
+actual model calls, per-case timings, and configured versus observed file
+concurrency. Measurement JSON also records runner CPU count and total memory. Incomplete
 usage metrics are labeled explicitly. `speed-reports-*` contains native reports.
 This experiment never publishes or replaces the normal Pages report.
 
@@ -308,6 +312,8 @@ RPM/TPM quota can recover. This uses Midscene's native request retry, not a case
 rerun or a retry of a failed assertion. The 15-minute case deadline includes
 these bounded waits. Request retry settings are saved in the measurement JSON;
 compare passing runs with the same settings before claiming a speedup.
+Higher concurrency may increase quota waits instead of reducing elapsed time;
+compare full passing runs and their retry logs before changing normal CI defaults.
 
 ## CI evidence table
 
