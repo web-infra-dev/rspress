@@ -16,5 +16,9 @@
   {
     "text": "Long Sidebar",
     "link": "/long-sidebar/"
+  },
+  {
+    "text": "Inline Code Sidebar",
+    "link": "/long-sidebar-inline-code/"
   }
 ]

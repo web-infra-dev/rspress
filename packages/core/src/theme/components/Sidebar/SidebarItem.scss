@@ -75,6 +75,10 @@
     align-items: center;
     gap: 4px;
     overflow-wrap: anywhere;
+
+    > .rp-doc code {
+      overflow-wrap: anywhere;
+    }
   }
 
   &__icon {

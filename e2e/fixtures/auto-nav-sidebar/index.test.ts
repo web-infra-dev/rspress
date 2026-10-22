@@ -50,7 +50,7 @@ async function expectLineCount(item: Locator, wrapped: boolean) {
   const text = item.locator('.rp-sidebar-item__left > .rp-doc');
   const lines = await text.evaluate(element => {
     const range = document.createRange();
-    range.selectNodeContents(element);
+    range.selectNodeContents(element.querySelector('code') ?? element);
     return new Set(Array.from(range.getClientRects(), rect => rect.top)).size;
   });
   if (wrapped) {
@@ -443,12 +443,15 @@ test.describe('auto nav and sidebar', async () => {
     );
   });
 
-  for (const width of [1440, 500]) {
-    test(`wraps labels and preserves sidebar interactions at ${width}px`, async ({
+  for (const { route, width } of [
+    'long-sidebar',
+    'long-sidebar-inline-code',
+  ].flatMap(route => [1440, 500].map(width => ({ route, width })))) {
+    test(`wraps ${route} labels and preserves sidebar interactions at ${width}px`, async ({
       page,
     }) => {
       await page.setViewportSize({ width, height: 800 });
-      await page.goto(`http://localhost:${appPort}/long-sidebar/active`, {
+      await page.goto(`http://localhost:${appPort}/${route}/active`, {
         waitUntil: 'networkidle',
       });
 
@@ -476,6 +479,18 @@ test.describe('auto nav and sidebar', async () => {
           .toBeGreaterThan(0);
       }
 
+      if (route === 'long-sidebar-inline-code') {
+        for (const context of ['root', 'group', 'active']) {
+          await expect(item(context).locator('.rp-doc code')).toHaveText(
+            'MainThreadRuntimeWrapperWebpackPlugin',
+          );
+        }
+        await expect(page.locator('.rspress-doc code')).toHaveCSS(
+          'overflow-wrap',
+          'break-word',
+        );
+      }
+
       await expectContainedLabels(sidebar);
       for (const context of ['root', 'group', 'active', 'words']) {
         await expectLineCount(item(context), true);
@@ -499,14 +514,14 @@ test.describe('auto nav and sidebar', async () => {
       await expectContainedLabels(sidebar);
 
       await item('short').click();
-      await expect(page).toHaveURL(`http://localhost:${appPort}/long-sidebar/`);
+      await expect(page).toHaveURL(`http://localhost:${appPort}/${route}/`);
       if (width === 500) {
         await expect(sidebar).not.toHaveClass(/rp-doc-layout__sidebar--open/);
         await page.locator('.rp-sidebar-menu__left').click();
       }
       await active.click();
       await expect(page).toHaveURL(
-        `http://localhost:${appPort}/long-sidebar/active`,
+        `http://localhost:${appPort}/${route}/active`,
       );
       if (width === 500) {
         await page.locator('.rp-sidebar-menu__left').click();
