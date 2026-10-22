@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, rm, realpath } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -301,7 +301,9 @@ test('fixture updates cannot write before an isolated HMR fixture is opened', as
 });
 
 test('parallel production fixtures have independent build output and teardown', async t => {
-  const root = await mkdtemp(path.join(tmpdir(), 'rspress-parallel-build-'));
+  const root = await realpath(
+    await mkdtemp(path.join(tmpdir(), 'rspress-parallel-build-')),
+  );
   const fixtures = Array.from(
     { length: 5 },
     () => new OriginalFixture(root, true),
