@@ -12,13 +12,5 @@
     "text": "Sidebar Icon",
     "link": "/sidebar-icon/",
     "icon": "/sidebar-panel.svg"
-  },
-  {
-    "text": "Long Sidebar",
-    "link": "/long-sidebar/"
-  },
-  {
-    "text": "Inline Code Sidebar",
-    "link": "/long-sidebar-inline-code/"
   }
 ]
