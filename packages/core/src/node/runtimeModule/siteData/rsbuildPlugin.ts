@@ -3,6 +3,7 @@ import { logger } from '@rspress/shared/logger';
 import { modifyConfigWithAutoNavSide } from '../../auto-nav-sidebar';
 import { RuntimeModuleID, type VirtualModulePlugin } from '../types';
 import { createSiteData } from './createSiteData';
+import { serializeSiteData } from './serializeSiteData';
 
 type SiteDataModule = {
   code: string;
@@ -34,7 +35,7 @@ export const siteDataVMPlugin: VirtualModulePlugin = context => {
 
     const { siteData } = await createSiteData(config);
     return {
-      code: `export default ${JSON.stringify(siteData, null, 2)}`,
+      code: serializeSiteData(siteData),
       metaFileSet,
       mdFileSet,
     };
