@@ -74,6 +74,14 @@
     display: flex;
     align-items: center;
     gap: 4px;
+    // Long unbroken labels can make scrollIntoView on the active entry shift
+    // and clip its group: https://github.com/web-infra-dev/rspress/pull/3777
+    overflow-wrap: anywhere;
+
+    > .rp-doc code {
+      // Override inline code's own wrapping rule, also when nested in bold text.
+      overflow-wrap: anywhere;
+    }
   }
 
   &__icon {
