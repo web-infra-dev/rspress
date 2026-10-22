@@ -31,7 +31,7 @@ cases:
     tags: [original-replacement, replacement-batch-3]
     steps:
       - app.open: { fixture: replace-rules, path: / }
-      - aiAct: Use documentation search to find bar-content and open the matching article.
+      - aiAct: Use documentation search to find bar-content and open its result in the article titled bar-title. Stay on that article when the bar-content paragraph and bar-h2 heading are visible. The sidebar child named content is a different page; do not open it or follow a next-page link.
       - aiAssert: The article contains bar-content and the heading bar-h2.
   - name: READ-06 Read a custom footer
     tags: [original-footer, replacement-batch-2]
