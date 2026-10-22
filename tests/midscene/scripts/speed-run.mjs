@@ -70,7 +70,18 @@ const report = {
     name: item.name,
     status: item.status,
     durationMs: item.run?.durationMs,
-    error: item.run?.error,
+    notRunReason: item.notRunReason,
+    errors: [
+      ...(item.run?.executionErrors ?? []),
+      ...(item.run?.teardownErrors ?? []),
+      ...[
+        ...(item.run?.beforeEach ?? []),
+        ...(item.run?.steps ?? []),
+        ...(item.run?.afterEach ?? []),
+      ]
+        .filter(step => step.error)
+        .map(step => ({ node: step.node, ...step.error })),
+    ],
   })),
   manifest: prepared.manifest,
   concurrencyEvents,
