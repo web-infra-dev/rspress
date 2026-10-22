@@ -6,6 +6,8 @@ import {
   mkdir,
   mkdtemp,
   readFile,
+  readdir,
+  stat,
   writeFile,
   symlink,
   rm,
@@ -116,11 +118,22 @@ export class OriginalFixture {
               ['node_modules', '.rspress', 'doc_build', 'dist'].includes(part),
             ),
       });
-      await symlink(
-        path.join(source, 'node_modules'),
-        path.join(this.scratch, 'node_modules'),
-        'dir',
-      );
+      const dependencies = path.join(source, 'node_modules');
+      const isolatedDependencies = path.join(this.scratch, 'node_modules');
+      await mkdir(isolatedDependencies);
+      const entries = await readdir(dependencies).catch(error => {
+        if (error.code === 'ENOENT') return [];
+        throw error;
+      });
+      for (const entry of entries) {
+        if (entry === '.cache') continue;
+        const target = path.join(dependencies, entry);
+        await symlink(
+          target,
+          path.join(isolatedDependencies, entry),
+          (await stat(target)).isDirectory() ? 'dir' : 'file',
+        );
+      }
       directory = this.scratch;
     }
     const [port, previewPort] = await reservePorts(policy.previewPort ? 2 : 1);

@@ -357,6 +357,65 @@ test('parallel production fixtures have independent build output and teardown', 
     assert.equal((await fetch(origin)).status, 200);
 });
 
+test('parallel aliases never share node_modules build cache', async t => {
+  const root = await realpath(
+    await mkdtemp(path.join(tmpdir(), 'rspress-parallel-cache-')),
+  );
+  const names = [
+    'basic',
+    'basic-cli-base',
+    'basic-dark',
+    'basic-force-dark',
+    'basic-system',
+  ];
+  const fixtures = names.map(() => new OriginalFixture(root, true));
+  t.after(async () => {
+    await Promise.all(fixtures.map(fixture => fixture.close()));
+    await rm(root, { recursive: true, force: true });
+  });
+  await mkdir(path.join(root, 'packages/core/bin'), { recursive: true });
+  const dependencies = path.join(root, 'e2e/fixtures/basic/node_modules');
+  await mkdir(path.join(dependencies, '.cache'), { recursive: true });
+  await mkdir(path.join(dependencies, 'fixture-dependency'));
+  await writeFile(
+    path.join(dependencies, 'fixture-dependency/index.js'),
+    'module.exports = "dependency works";',
+  );
+  await writeFile(
+    path.join(root, 'packages/core/bin/rspress.js'),
+    `
+    const { createServer } = require('node:http');
+    const { mkdirSync, writeFileSync } = require('node:fs');
+    const path = require('node:path');
+    const cache = path.join(process.cwd(), 'node_modules/.cache');
+    mkdirSync(cache, { recursive: true });
+    writeFileSync(path.join(cache, 'exclusive-lock'), 'owned', { flag: 'wx' });
+    const dependency = require(path.join(process.cwd(), 'node_modules/fixture-dependency'));
+    const server = createServer((_request, response) => response.end(JSON.stringify({cache, dependency})));
+    server.listen(Number(process.argv[process.argv.indexOf('--port') + 1]), '127.0.0.1');
+    process.on('SIGTERM', () => server.close(() => process.exit()));
+  `,
+  );
+  const attempts = await Promise.allSettled(
+    fixtures.map((fixture, index) => fixture.open(names[index])),
+  );
+  for (const attempt of attempts)
+    assert.equal(attempt.status, 'fulfilled', attempt.reason?.message);
+  const responses = await Promise.all(
+    attempts.map(async attempt => (await fetch(attempt.value)).json()),
+  );
+  assert.equal(new Set(responses.map(response => response.cache)).size, 5);
+  assert.ok(
+    responses.every(response => response.dependency === 'dependency works'),
+  );
+  assert.deepEqual(
+    await (
+      await import('node:fs/promises')
+    ).readdir(path.join(dependencies, '.cache')),
+    [],
+  );
+});
+
 test('preview and playground updates are isolated and reject mismatched mutations', async () => {
   const root = await mkdtemp(path.join(tmpdir(), 'rspress-plugin-hmr-'));
   const fixture = new OriginalFixture(root);
