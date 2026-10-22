@@ -103,7 +103,9 @@ export class OriginalFixture {
     if (policy.isolated || this.isolateAll) {
       const parent = path.join(this.repository, 'tests/midscene/.fixture');
       await mkdir(parent, { recursive: true });
-      this.scratch = await mkdtemp(path.join(parent, `${fixture}-`));
+      this.scratch = await mkdtemp(
+        path.join(parent, `${fixture.replaceAll('/', '-')}-`),
+      );
       await cp(source, this.scratch, {
         recursive: true,
         filter: filename =>

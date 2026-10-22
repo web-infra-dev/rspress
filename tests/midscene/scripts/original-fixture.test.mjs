@@ -308,14 +308,22 @@ test('parallel production fixtures have independent build output and teardown', 
     { length: 5 },
     () => new OriginalFixture(root, true),
   );
+  const names = [
+    'search',
+    'plugin-typedoc/single',
+    'plugin-typedoc/multi',
+    'plugin-api-docgen/locales',
+    'plugin-api-docgen/single',
+  ];
   t.after(async () => {
     await Promise.all(fixtures.map(fixture => fixture.close()));
     await rm(root, { recursive: true, force: true });
   });
   await mkdir(path.join(root, 'packages/core/bin'), { recursive: true });
-  await mkdir(path.join(root, 'e2e/fixtures/search/node_modules'), {
-    recursive: true,
-  });
+  for (const name of names)
+    await mkdir(path.join(root, 'e2e/fixtures', name, 'node_modules'), {
+      recursive: true,
+    });
   await writeFile(
     path.join(root, 'packages/core/bin/rspress.js'),
     `
@@ -331,7 +339,7 @@ test('parallel production fixtures have independent build output and teardown', 
   `,
   );
   const origins = await Promise.all(
-    fixtures.map(fixture => fixture.open('search', 'production')),
+    fixtures.map((fixture, index) => fixture.open(names[index], 'production')),
   );
   const directories = await Promise.all(
     origins.map(async origin => (await fetch(origin)).text()),
