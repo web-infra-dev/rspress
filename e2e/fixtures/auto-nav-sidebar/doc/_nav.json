@@ -12,5 +12,9 @@
     "text": "Sidebar Icon",
     "link": "/sidebar-icon/",
     "icon": "/sidebar-panel.svg"
+  },
+  {
+    "text": "Long Sidebar",
+    "link": "/long-sidebar/"
   }
 ]
