@@ -6,7 +6,7 @@ cases:
       - aiAct: Bring the upper portion of the left sidebar into view, keeping this overview page open.
       - aiAssert: The sidebar starts with Overview, two Class Component<P, S> entries, then bold, emphasis, <foo>, and -m <number> in that order. Angle brackets appear as text rather than disappearing.
       - aiAct: Scroll within the left sidebar to bring its lower entries starting from delete into view. Do not navigate.
-      - aiAssert: The lower sidebar entries are delete, link, Class Component<P = { }, S = { }, SS = any>, Class Foo<T = { }>, and Class Bar<T = any> in order. The generic type text is readable.
+      - aiAssert: Starting at delete, five consecutive sidebar entries read delete, link, Class Component<P = { }, S = { }, SS = any>, Class Foo<T = { }>, and Class Bar<T = any> in that order. Earlier sidebar entries such as -m <number> may also remain visible above delete. The generic type text is readable.
   - name: INLINE-02 Read formatted article outline entries
     tags: [replacement-final-inline, remote-inline-virtual-regression]
     steps:
