@@ -82,25 +82,6 @@ test.describe('search keyboard', async () => {
     expect(searchPanel).toBeNull();
   });
 
-  test('page with search: false should be excluded from the index', async ({
-    page,
-  }) => {
-    await page.goto(`http://localhost:${appPort}/base/`, {
-      waitUntil: 'networkidle',
-    });
-
-    await page.locator('.rp-search-button').click();
-
-    // The Quux keyword only lives on the excluded page, so searching for it
-    // should not return any suggestions.
-    const searchInput = page.locator('.rp-search-panel__input');
-    await expect(searchInput).toBeVisible();
-    await searchInput.fill('Quux');
-
-    await expect(page.locator('.rp-no-search-result')).toBeVisible();
-    await expect(page.locator('.rp-suggest-item')).toHaveCount(0);
-  });
-
   test('Enter should do nothing while the search panel is closed', async ({
     page,
   }) => {
@@ -117,72 +98,6 @@ test.describe('search keyboard', async () => {
 
     expect(errors).toEqual([]);
     expect(page.url()).toBe(url);
-  });
-
-  test('ESC key should close search panel', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/base/`, {
-      waitUntil: 'networkidle',
-    });
-
-    // Open search panel
-    const searchButton = await page.$('.rp-search-button');
-    await searchButton?.click();
-    await page.waitForSelector('.rp-search-panel__input');
-
-    // Type search query
-    const searchInput = await page.$('.rp-search-panel__input');
-    await searchInput?.focus();
-    await page.keyboard.type('Foo');
-    await page.waitForTimeout(400);
-
-    // Verify search panel is open
-    let searchPanel = await page.$('.rp-search-panel__mask');
-    expect(searchPanel).not.toBeNull();
-
-    // Press ESC
-    await page.keyboard.press('Escape');
-    await page.waitForTimeout(200);
-
-    // Verify search panel is closed
-    searchPanel = await page.$('.rp-search-panel__mask');
-    expect(searchPanel).toBeNull();
-  });
-
-  test('keyboard shortcut (Cmd+K / Ctrl+K) should toggle search panel', async ({
-    page,
-  }) => {
-    await page.goto(`http://localhost:${appPort}/base/`, {
-      waitUntil: 'networkidle',
-    });
-
-    // Verify search panel is closed initially
-    let searchPanel = await page.$('.rp-search-panel__mask');
-    expect(searchPanel).toBeNull();
-
-    // Press Cmd+K (or Ctrl+K on non-Mac)
-    const isMac = process.platform === 'darwin';
-    if (isMac) {
-      await page.keyboard.press('Meta+KeyK');
-    } else {
-      await page.keyboard.press('Control+KeyK');
-    }
-    await page.waitForTimeout(200);
-
-    // Verify search panel is open
-    searchPanel = await page.$('.rp-search-panel__mask');
-    expect(searchPanel).not.toBeNull();
-
-    // Press Cmd+K / Ctrl+K again
-    if (isMac) {
-      await page.keyboard.press('Meta+KeyK');
-    } else {
-      await page.keyboard.press('Control+KeyK');
-    }
-    await page.waitForTimeout(200);
-
-    // Verify search panel is closed
-    searchPanel = await page.$('.rp-search-panel__mask');
-    expect(searchPanel).toBeNull();
   });
 
   test('should reset to first suggestion when search query changes', async ({

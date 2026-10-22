@@ -1,0 +1,51 @@
+cases:
+  - name: NAV-01 Follow a desktop dropdown link
+    tags: [original-nav, replacement-final-existing]
+    steps:
+      - app.open: { fixture: nav-link-items, path: / }
+      - aiAssert: The top navigation displays OnlyLink, OnlyItems, ItemsAndLink, and NestedItems, with dropdown contents initially hidden.
+      - aiAct: Hover over NestedItems, then open Level1, Level2Nested, and Level3Item1 through the nested navigation. Do not use search or enter a URL.
+      - aiAssert: The article heading is Level 3 item 1.
+  - name: NAV-02 Follow a deeply nested link on a phone
+    tags: [original-nav]
+    steps:
+      - app.open: { fixture: nav-link-items, path: /, viewport: mobile }
+      - aiAct: Open the mobile navigation menu and follow NestedItems, Level1, Level2Nested, and Level3Item2. Do not use search or enter a URL.
+      - aiAssert: The article heading is Level 3 item 2 and the navigation menu is no longer covering it.
+  - name: NAV-03 Switch language on an API overview
+    tags: [original-i18n, replacement-batch-2-navigation]
+    steps:
+      - app.open: { fixture: i18n, path: /api }
+      - aiAssert: The API Overview initially shows the introductory text zh, not en, with 简体中文 selected.
+      - aiAct: In the top navigation, hover over the current language 简体中文 and choose English from its language menu. Do not type into the API filter.
+      - aiAssert: The Overview heading and the introductory text en are visible, zh is absent from the overview, and the top navigation language is English.
+      - aiAct: In the top navigation, hover over English and choose 简体中文 from its language menu. Do not type into the API filter.
+      - aiAssert: The Overview heading and the introductory text zh are visible, en is absent from the overview, and the top navigation language is 简体中文.
+  - name: NAV-04 Switch documentation versions
+    tags:
+      [original-versions, migration-regression, remote-navigation-regression]
+    steps:
+      - app.open: { fixture: multi-version, path: /base/ }
+      - aiAssert: The initial article heading is v1, the default version in the default language.
+      - aiAct: Use the documentation version selector to switch to v2.
+      - aiAssert: The article heading is v2.
+      - aiAct: Use the documentation version selector to switch back to v1.
+      - aiAssert: The article heading is v1.
+      - aiAct: Hover over English in the top navigation and choose 简体中文 from its language menu. The version is already v1; leave the version selector alone. If its hover menu is still open, moving the pointer to English dismisses it. Do not click v1 again or use search.
+      - aiAssert: The article heading is v1 中文, the selected language is 简体中文, and the selected version is v1.
+  - name: NAV-05 Version-specific sidebars remain isolated
+    tags: [original-version-sidebar, replacement-batch-3]
+    steps:
+      - app.open: { fixture: multi-version-global-sidebar, path: / }
+      - aiAssert: The initial article heading is Version one. The sidebar has only Version one and Version one guide, with no Version two entries.
+      - aiAct: Switch to v2 using the version selector. Stay on its landing page.
+      - aiAssert: The article heading is Version two. The sidebar has only Version two and Version two guide, with no Version one entries.
+      - aiAct: Open Version two guide from the sidebar.
+      - aiAssert: Version two guide is open, the sidebar contains Version two entries, and no Version one guide entry is shown.
+  - name: NAV-06 Navigate auto-generated sidebar directories
+    tags: [original-sidebar, replacement-batch-5]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar-no-meta, path: / }
+      - aiAssert: The sidebar contains HomePage, API, plugin, Plugin a, Plugin b, Commands, config, Basic config, Build config, Front matter config, and Theme config in that order, with no additional entries.
+      - aiAct: Use the sidebar to open Basic config inside Rspress config. Do not use search or enter a URL.
+      - aiAssert: The Basic config article is open with root and logoText sections.

@@ -1,0 +1,86 @@
+cases:
+  - name: READ-01 Navigate a site under a base path
+    tags: [original-base, replacement-batch-5]
+    steps:
+      - app.open: { fixture: with-base, mode: production, path: /base/en/ }
+      - aiAct: Follow the click link in the article to the guide.
+      - aiAssert: The Quick Start article is visible and its English sidebar contains Guide and Install.
+      - aiAct: Open Install from the sidebar.
+      - aiAssert: The Install article is visible, not a page-not-found error.
+  - name: READ-02 Mobile hash navigation closes its menu
+    tags: [original-hash]
+    steps:
+      - app.open:
+          { fixture: nav-link-item-with-hash, path: /, viewport: mobile }
+      - aiAct: Open the mobile navigation menu and select PageC.
+      - aiAssert: contentC is visible and the mobile menu is closed.
+  - name: READ-03 Follow a section link after navigation
+    tags: [original-anchor]
+    steps:
+      - app.open: { fixture: hash-anchor-scroll, path: /docs/source }
+      - aiAct: Follow the Target section link in the article.
+      - aiAssert: The Target heading is visible below the navigation without being obscured.
+  - name: READ-04 Navigate a sidebar generated from directory convention
+    tags: [original-directory-sidebar, replacement-batch-5]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar-dir-convention, path: /guide/ }
+      - aiAssert: The sidebar contains eight entries in order /guide Page, index md convention, index mdx convention, same name, index in meta, Index in meta, no meta md, and no meta mdx.
+      - aiAct: Open index md convention through the sidebar directory link.
+      - aiAssert: The Index md convention article is visible.
+  - name: READ-05 Read a replaced Markdown article
+    tags: [original-replacement, replacement-batch-3]
+    steps:
+      - app.open: { fixture: replace-rules, path: / }
+      - aiAct: Use documentation search to find bar-content and open the matching article.
+      - aiAssert: The article contains bar-content and the heading bar-h2.
+  - name: READ-06 Read a custom footer
+    tags: [original-footer, replacement-batch-2]
+    steps:
+      - app.open: { fixture: custom-home-footer, path: / }
+      - aiAct: Scroll to the home page footer.
+      - aiAssert: Custom footer text is visible at the bottom of the home page.
+  - name: READ-07 Expand the restored guide sidebar
+    tags: [original-home-sidebar, migration-regression]
+    steps:
+      - app.open: { fixture: issue-1309, path: / }
+      - aiAssert: The home page has no documentation sidebar.
+      - aiAct: Use the top navigation to open Guide.
+      - aiAssert: The guide page displays its sidebar instead of the home page layout.
+  - name: READ-08 Read public images in documentation
+    tags: [original-public-image]
+    steps:
+      - app.open: { fixture: public-dir, path: /base/ }
+      - aiAct: Bring the large illustrated mascot image below Hello world into view. Stay on this article and do not use search.
+      - aiAssert: The article image is rendered, not a broken-image placeholder.
+  - name: READ-09 Read a heading through the table of contents
+    tags: [original-toc, replacement-batch-3]
+    steps:
+      - app.open: { fixture: dynamic-toc, path: / }
+      - aiAct: Wait for the Term heading and its On this page entry to update to Term dynamic & content. Then use that On this page entry to open the heading.
+      - aiAssert: The article heading and its On this page entry both display Term dynamic & content, with a readable ampersand rather than an encoded ampersand entity.
+  - name: READ-10 Open custom layout pages from search
+    tags: [original-custom-layout, replacement-batch-3]
+    steps:
+      - app.open: { fixture: custom-layout, path: / }
+      - aiAct: Open search, find Page type, and open that result.
+      - aiAssert: The Page type heading and Custom page should work text are visible with top navigation, without a documentation sidebar or a home hero.
+  - name: READ-11 Navigate a site without an explicit root setting
+    tags: [original-no-config]
+    steps:
+      - app.open: { fixture: no-config-root, path: / }
+      - aiAct: Open documentation search, search for Hello world, and open the matching result.
+      - aiAssert: The Hello world article is visible and the search dialog is closed.
+  - name: READ-12 Open the base homepage without a trailing slash
+    tags: [original-base, replacement-batch-5]
+    steps:
+      - app.open: { fixture: with-base, mode: production, path: /base }
+      - aiAssert: The article displays This is the index page, not a page-not-found error.
+      - aiAct: Follow the 点击 link in the article to the guide.
+      - aiAssert: The 快速开始 article is visible with an 进入安装 link, not a page-not-found error.
+  - name: READ-13 Open the base homepage with a trailing slash
+    tags: [original-base, replacement-batch-5]
+    steps:
+      - app.open: { fixture: with-base, mode: production, path: /base/ }
+      - aiAssert: The article displays This is the index page, not a page-not-found error.
+      - aiAct: Follow the 点击 link in the article to the guide.
+      - aiAssert: The 快速开始 article is visible with an 进入安装 link, not a page-not-found error.

@@ -1,0 +1,36 @@
+cases:
+  - name: EXTRA-01 Open the Algolia search interface
+    tags: [original-additional]
+    steps:
+      - app.open: { fixture: search-algolia, path: / }
+      - aiAct: Open the documentation search dialog. Do not submit a query or navigate to a public site.
+      - aiAssert: The search dialog displays its search input.
+  - name: EXTRA-02 Search through a custom search hook
+    tags: [original-additional, replacement-batch-3]
+    steps:
+      - app.open: { fixture: search-hooks, path: /base/ }
+      - aiAct: Open documentation search and search for Foo. Stay in the search dialog.
+      - aiAssert: Exactly one search result is listed, the Foo article.
+  - name: EXTRA-03 Read replaced home and navigation text
+    tags: [original-additional]
+    steps:
+      - app.open: { fixture: replace-rules, path: / }
+      - aiAct: Bring the home hero and top navigation into view.
+      - aiAssert: The home hero displays bar-hero and the top navigation displays bar-meta rather than the original foo text.
+  - name: EXTRA-04 Read imported Markdown as source text
+    tags: [original-additional]
+    steps:
+      - app.open: { fixture: basic, path: / }
+      - aiAct: Bring the raw Markdown source block in the Hello world article into view.
+      - aiAssert: The source block displays the literal heading marker in # Raw Markdown and the sentence This file should be imported as source text.
+  - name: EXTRA-05 Interact with BrowserOnly components after production hydration
+    tags:
+      [original-additional, migration-regression, replacement-final-existing]
+    steps:
+      - app.open: { fixture: with-base, mode: production, path: /base/en/ }
+      - aiAct: Bring the BrowserOnly demonstration into view and wait for its initial asynchronous output, without clicking either button yet.
+      - aiAssert: The synchronous counter reads Sync 0 beside Increment, and the asynchronous output reads Async initial beside Update.
+      - aiAct: Find the BrowserOnly demonstration and click its synchronous increment button once.
+      - aiAssert: The BrowserOnly row shows the Increment button followed by Sync 1; its counter value is 1. The button label may touch the output text.
+      - aiAct: Click the asynchronous component's update button and wait for its updated output.
+      - aiAssert: The asynchronous output beside the Update button includes Async updated rather than Async initial.

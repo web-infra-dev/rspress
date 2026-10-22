@@ -1,0 +1,42 @@
+cases:
+  - name: PREVIEW-04 Read iframe previews in development
+    tags: [original-preview-render, replacement-batch-4]
+    steps:
+      - app.open: { fixture: plugin-preview, path: / }
+      - aiAct: Stay on Guide and read the fixed device preview on the right. It renders three short lines of static demo output, not navigation links. Bring those rendered lines into view without clicking their text, navigating, or reading only the source code.
+      - aiAssert: Below Guide in the right-hand device frame, black text includes Hello World Internal, Hello World External, and Render from JSON. These three lines are in the preview, not in the colored source code on the left.
+  - name: PREVIEW-05 Read iframe previews in a production build
+    tags: [original-preview-render, replacement-batch-4]
+    steps:
+      - app.open: { fixture: plugin-preview, mode: production, path: / }
+      - aiAct: Stay on Guide and read the fixed device preview on the right. It renders three short lines of static demo output, not navigation links. Bring those rendered lines into view without clicking their text, navigating, or reading only the source code.
+      - aiAssert: Below Guide in the right-hand device frame, black text includes Hello World Internal, Hello World External, and Render from JSON. These three lines are in the preview, not in the colored source code on the left.
+  - name: PREVIEW-06 Read custom JSX and TSX entry previews
+    tags:
+      [
+        original-preview-render,
+        replacement-batch-4,
+        replacement-preview-prompt,
+        remote-preview-virtual-regression,
+      ]
+    steps:
+      - app.open: { fixture: plugin-preview-custom-entry, path: /guide/ }
+      - aiAssert: The first example's right gray preview pane displays a black Hello World JSX line along its upper edge, to the right of the colored source code. Documentation navigation is still visible.
+      - aiAct: Scroll the Guide article to the second example showing Hello World TSX. Stay on this article.
+      - aiAssert: The second example's right gray preview pane displays a black Hello World TSX line along its upper edge, to the right of the colored source code. Documentation navigation is still visible.
+      - aiAct: Scroll the Guide article to the third example showing Hello World External. Stay on this article.
+      - aiAssert: The third example's right gray preview pane displays a black Hello World External line along its upper edge, to the right of the colored source code. Documentation navigation is still visible.
+  - name: PREVIEW-07 Read mixed internal and iframe previews
+    tags: [original-preview-render, replacement-batch-4]
+    steps:
+      - app.open: { fixture: plugin-preview, path: /mixed }
+      - aiAct: Stay on Mixed and bring the first rendered inline component preview into view, not merely its source code.
+      - aiAssert: The rendered internal preview displays This is a component.
+      - aiAct: Bring the second rendered inline internal preview, sourced from an external file, into view in the main article. Read its output, not its source code or the floating phone.
+      - aiAssert: That rendered internal preview displays Hello World External.
+      - aiAct: Stay on Mixed and scroll the outer document, not inside code blocks or the floating phone. Bring the main article's inline preview pane beside its colored source code into view, left of the floating phone. Its demo is one line of black This is a component text at the top; there are no additional controls to activate. Do not click the text, toolbar, or navigation.
+      - aiAssert: In the main article, black This is a component text is visible in a preview pane beside colored source code. This pane is separate from the floating phone on the far right.
+      - aiAct: Bring the second iframe-follow preview in the main article into view, sourced from an external file. Read its rendered output rather than the floating phone or colored source code.
+      - aiAssert: That main-article iframe preview displays Hello World External.
+      - aiAct: Read the static demo text in the floating phone on the far right. Bring its black This is a component and Hello World External lines into view. Do not treat the text as links or activate its toolbar.
+      - aiAssert: In the floating phone on the far right, black text below Mixed includes This is a component and Hello World External, separate from source code in the main article.

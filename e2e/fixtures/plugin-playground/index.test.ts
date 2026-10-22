@@ -52,7 +52,9 @@ test.describe('plugin playground rendering and HMR', async () => {
     }
   });
 
-  test('Should render the element', async ({ page }) => {
+  test('creates exactly three playgrounds with one DOM output each', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
@@ -77,7 +79,9 @@ test.describe('plugin playground rendering and HMR', async () => {
     await expect(externalDemoCodePreview).toHaveCount(1);
   });
 
-  test('Should update the rendered code through HMR', async ({ page }) => {
+  test('keeps exactly one matching DOM output after a playground hot update', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });

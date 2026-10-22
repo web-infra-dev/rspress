@@ -16,11 +16,10 @@ test.describe('custom icon', async () => {
     }
   });
 
-  test('Index page', async ({ page }) => {
+  test('embeds the custom search icon as an SVG data URL', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    await expect(page.locator('h1')).toContainText('Hello world');
 
     const searchIcon = page.locator('.rp-search-button__content img').first();
     await expect(searchIcon).toHaveAttribute(

@@ -1,0 +1,97 @@
+cases:
+  - name: AUDIT-01 Read the custom search icon article
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: custom-icon, path: / }
+      - aiAct: Bring the main article heading and navigation search control into view.
+      - aiAssert: The article heading reads Hello world and the navigation offers Search.
+  - name: AUDIT-02 Read repeated numbered headings
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: title-number, path: / }
+      - aiAct: Bring the article headings below Hello world into view.
+      - aiAssert: The article has three subheadings in order -22222222, -1111111111, and -1111111111. The repeated heading is not omitted.
+  - name: AUDIT-03 Read transformed runtime code panels
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: code-block-runtime, path: /highlight }
+      - aiAct: Bring the first highlight.ts code panel into view.
+      - aiAssert: The panel is titled highlight.ts and shows three console.log lines, two with Highlighted followed by one with Not highlighted.
+      - aiAct: Bring the second highlight.ts code panel into view.
+      - aiAssert: The second panel is also titled highlight.ts and shows three console.log lines, two with Highlighted followed by one with Not highlighted.
+  - name: AUDIT-04 Read the crawler fixture article
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: search-algolia, path: / }
+      - aiAct: Bring the Search algolia heading, opening paragraph, and Installation section into view without opening search.
+      - aiAssert: The article is titled Search algolia and describes a test page for Algolia search crawler selectors. Installation lists First run the installation command, Then configure your project, and Finally start using it.
+      - aiAct: Scroll the article to Configuration and its code example.
+      - aiAssert: Configuration is readable with the introduction Here is how to configure the search and code export default {}.
+      - aiAct: Bring Advanced options and API keys into view.
+      - aiAssert: Advanced options and API keys are readable headings with You can also configure advanced options and Make sure to set your API keys properly below them.
+  - name: AUDIT-05 Read a production preview without iframe output
+    tags: [replacement-final-content]
+    steps:
+      - app.open:
+          { fixture: plugin-preview-no-iframe, mode: production, path: / }
+      - aiAct: Bring the rendered internal component preview into view, not its source code.
+      - aiAssert: The rendered preview displays Internal preview only.
+  - name: AUDIT-06 Open the CLI base path in development
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: basic-cli-base, path: /bar/ }
+      - aiAct: Bring the main article heading into view.
+      - aiAssert: The article heading reads Hello world, not a page-not-found message.
+  - name: AUDIT-07 Open the CLI base path in production
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: basic-cli-base, mode: production, path: /bar/ }
+      - aiAct: Bring the main article heading into view.
+      - aiAssert: The article heading reads Hello world, not a page-not-found message.
+  - name: AUDIT-08 Open the mobile language menu
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: i18n, path: /, viewport: mobile }
+      - aiAct: Open the mobile navigation menu, then open its language choices.
+      - aiAssert: The mobile menu is visible and its language choices show current language 简体中文 and alternative English.
+  - name: AUDIT-09 Open a tablet navigation menu without JavaScript
+    tags: [replacement-final-content, replacement-final-followup]
+    steps:
+      - app.open:
+          {
+            fixture: nav-link-items,
+            mode: production,
+            javascript: false,
+            viewport: tablet,
+            path: /,
+          }
+      - aiAssert: The tablet top navigation displays its menu control and the navigation dropdown is closed.
+      - aiAct: Hover over the tablet navigation hamburger menu control without clicking any link.
+      - aiAssert: The hamburger dropdown is visibly open below the top-right menu control and shows Theme. OnlyLink, OnlyItems, ItemsAndLink, and NestedItems remain visible in the top navigation outside this dropdown.
+  - name: AUDIT-10 Read sidebar badges and navigation icons
+    tags: [replacement-final-content, replacement-final-followup]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /sidebar-icon/ }
+      - aiAct: Inspect the Introduction entry under Start Here in the left sidebar. Stay on the Sidebar icon article without following any navigation link.
+      - aiAssert: The Introduction entry under Start Here displays a new badge beside its text.
+  - name: AUDIT-11 Read custom sidebar link labels
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/index.html }
+      - aiAct: Inspect the left sidebar and expand its groups as needed to reveal Rspack Official Docsite and Inner SideBar Rspack Official Docsite. Do not follow these external links.
+      - aiAssert: Both Rspack Official Docsite and Inner SideBar Rspack Official Docsite are readable sidebar entries.
+  - name: AUDIT-12 Reveal the social link preview
+    tags: [replacement-final-content, remote-regression]
+    steps:
+      - app.open: { fixture: basic, path: / }
+      - aiAssert: No illustrated mascot popup is visible beneath the GitHub social icon in the top navigation.
+      - aiAct: Hover over the GitHub social icon in the top navigation without following the link.
+      - aiAssert: A small white rounded popup beneath the GitHub social icon contains an illustrated Rspress mascot, separate from the article content.
+      - aiAct: Move the pointer away from the GitHub icon onto the Hello world article heading without clicking.
+      - aiAssert: The mascot popup beneath the GitHub social icon is no longer visible.
+  - name: AUDIT-13 Read an inline Markdown image
+    tags: [replacement-final-content, replacement-final-followup]
+    steps:
+      - app.open: { fixture: inline-markdown, path: / }
+      - aiAct: Stay on the My Site home page. Bring the Blazing fast build speed feature card and its image icon into view without following any link.
+      - aiAssert: The Blazing fast build speed feature card displays its illustrated image icon, not a broken-image placeholder.

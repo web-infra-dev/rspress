@@ -1,0 +1,63 @@
+# cspell:words Extname
+cases:
+  - name: OVERVIEW-01 Navigate from a configuration overview to its basic article
+    tags: [original-overviews, replacement-batch-3-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/config.html }
+      - aiAct: Bring the Basic config, Theme config, Front matter config, and Build config overview sections into view, scrolling as needed. Do not leave this overview.
+      - aiAssert: In reading order these overview sections offer Basic config with root and logoText, Theme config with nav and sidebar, Front matter config, and Build config with builderConfig, Default config, markdown, and markdown.remarkPlugins links.
+      - aiAct: Bring Extname config and Nested sections of this overview into view without leaving the overview.
+      - aiAssert: The Extname config section offers an Extname config article entry; the following Nested section contains a Nested config article entry with a Nested H2 link.
+      - aiAct: Follow Basic config in the overview article, not the sidebar or search.
+      - aiAssert: The Basic config article displays the root and logoText sections.
+  - name: OVERVIEW-02 Navigate an index-based client API overview
+    tags: [original-overviews, replacement-batch-3-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/client-api.html }
+      - aiAssert: The overview has a Client API section with Components and Runtime API article entries, including Usage and Example links.
+      - aiAct: Follow Runtime API in the overview article, not the sidebar or search.
+      - aiAssert: The Runtime API article displays usePageData and useLang sections.
+  - name: OVERVIEW-03 Follow an anchor from a nested configuration overview
+    tags: [original-overviews, replacement-batch-3-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/config/nested.html }
+      - aiAssert: The overview has a Nested section containing the Nested config article entry and its Nested H2 link.
+      - aiAct: Follow Nested H2 in the overview article, not the sidebar or search.
+      - aiAssert: The Nested H2 article heading is visible.
+  - name: OVERVIEW-04 Navigate second and third overview levels
+    tags:
+      [
+        original-overviews,
+        migration-regression,
+        ci-regression,
+        replacement-batch-5,
+      ]
+    steps:
+      - app.open:
+          { fixture: nested-overview, path: /base-url/basic-level-1/level-2/ }
+      - aiAssert: The main overview has section headings two then Level 3. Its article entries are two, three, and Level 3, with no additional article entries.
+      - aiAct: Open the Level 3 overview using the Level 3 link card in the main article, not the sidebar or On this page. Wait for the main article heading to change from Level 2 to Level 3 before continuing; do not open the child article titled three yet.
+      - aiAssert: The main article heading is Level 3, rather than Level 2. Its overview has one section heading, three, and exactly one article entry titled "three" with Feature a and Feature b sections.
+      - aiAct: Follow the Feature a link inside the overview card titled "three", below the "three" section heading. Do not click the section heading, sidebar, or On this page.
+      - aiAssert: The article displays Feature a with Description of feature A and Feature b with Description of feature B.
+  - name: OVERVIEW-05 Read sidebar directory names without numeric prefixes
+    tags: [original-overviews, replacement-batch-3-overviews]
+    steps:
+      - app.open:
+          { fixture: auto-nav-sidebar-issue-1682, path: /010.sub-directory/ }
+      - aiAct: Bring the sidebar into view and expand its directory groups if needed.
+      - aiAssert: The sidebar has exactly three entries in order First sub-directory, Second sub-directory, and test, without numeric filename prefixes.
+  - name: OVERVIEW-06 Open a content-defined plugin route
+    tags: [original-overviews]
+    steps:
+      - app.open: { fixture: custom-plugin, path: / }
+      - aiAct: Open documentation search, search for Demo2, and open the matching result.
+      - aiAssert: The content-defined plugin article displays Demo2.
+  - name: OVERVIEW-07 Expand a sidebar group without leaving the guide
+    tags:
+      [original-overviews, migration-regression, replacement-batch-3-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /guide/index.html }
+      - aiAssert: Top navigation is visible, and Guide and Advanced are top-level entries in the documentation sidebar.
+      - aiAct: Expand the Advanced directory group in the left sidebar. Do not click a child article or use search.
+      - aiAssert: The Guide article remains open, and the sidebar displays Guide, Advanced, and Plugin.

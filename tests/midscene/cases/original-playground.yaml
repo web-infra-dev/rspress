@@ -1,0 +1,34 @@
+cases:
+  - name: PLAYGROUND-01 Read internal and external playground output
+    tags:
+      [
+        original-playground,
+        migration-regression,
+        replacement-final-existing,
+        ci-failure-regression,
+      ]
+    steps:
+      - app.open: { fixture: plugin-playground, path: / }
+      - aiAct: Find the rendered plain text Hello World Internal (default) in the first playground. Stop as soon as this text is visible outside the line-numbered source editor; the whole card and its empty area do not need to fit on screen. If scrolling is needed, use the blank outer page margin, never the code editor. Do not edit code.
+      - aiAssert: The first playground output displays Hello World Internal (default).
+      - aiAct: Find the rendered plain text Hello World External in the external playground. Stop as soon as this text is visible outside the line-numbered source editor. If scrolling is needed, use the blank outer page margin, never the code editor. Do not edit code.
+      - aiAssert: The external playground output displays Hello World External.
+      - aiAct: Scroll the Guide page past Hello World External until the preview text Hello World Internal (vertical) is visible. Use the rightmost page scrollbar or the blank outer margin, not a code editor, to scroll the document. In the target card this exact plain text is a short preview row above its line-numbered source editor. Do not stop at Hello World Internal (default) or Hello World External. Do not edit code, reload, or navigate away.
+      - aiAssert: Plain black text Hello World Internal (vertical) is visible inside the third playground card, outside its line-numbered source editor. The phrase is not confined to the colored JSX source code.
+  - name: PLAYGROUND-02 Hot-update rendered playground output
+    tags: [original-playground]
+    steps:
+      - app.open: { fixture: plugin-playground, path: / }
+      - aiAct: Find the rendered plain text Hello World Internal (default) in the first playground. Stop as soon as this text is visible outside the line-numbered source editor; the whole card and its empty area do not need to fit on screen. If scrolling is needed, use the blank outer page margin, never the code editor. Do not edit code.
+      - aiAssert: The first playground output displays Hello World Internal (default).
+      - fixture.update: { part: playground }
+      - aiAct: Wait for the rendered first playground output to display Hello World Internal (updated). Do not reload or navigate elsewhere; stop if it has not changed within 30 seconds.
+      - aiAssert: The rendered first playground output displays Hello World Internal (updated).
+  - name: PLAYGROUND-03 Read playground and preview on the same page
+    tags: [original-playground, replacement-batch-4]
+    steps:
+      - app.open: { fixture: plugin-playground-preview, path: / }
+      - aiAct: Use the Playground demo link in the right-hand On this page navigation to bring that section into view. Stop when the plain text Hello World Playground is visible in the rendered pane to the right of the line-numbered editor; the entire editor and its empty area do not need to fit on screen. Do not scroll inside or edit the code editor.
+      - aiAssert: The rendered playground displays Hello World Playground.
+      - aiAct: Use the Preview demo link in the right-hand On this page navigation to bring that section into view. Stop when the rendered Hello World Preview text is visible outside the source code. Do not edit code or navigate away from this page.
+      - aiAssert: The rendered preview displays Hello World Preview.

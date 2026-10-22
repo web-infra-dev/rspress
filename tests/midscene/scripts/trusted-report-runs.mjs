@@ -1,0 +1,128 @@
+import { appendFile } from 'node:fs/promises';
+
+export async function isTrustedReportRun(run, repository, compareToMain) {
+  const upstreamRepository = process.env.MIDSCENE_UPSTREAM_REPOSITORY;
+  if (!upstreamRepository)
+    throw new Error('MIDSCENE_UPSTREAM_REPOSITORY is required');
+  if (
+    run.repository?.full_name !== repository ||
+    run.head_repository?.full_name !== repository ||
+    run.path !== '.github/workflows/midscene.yml' ||
+    run.status !== 'completed'
+  )
+    return false;
+  if (repository !== upstreamRepository)
+    return run.event === 'workflow_dispatch';
+  if (
+    run.head_branch !== 'main' ||
+    !['schedule', 'push', 'workflow_dispatch'].includes(run.event) ||
+    !/^[a-f0-9]{40}$/.test(run.head_sha ?? '')
+  )
+    return false;
+  // Dispatch metadata can also name a tag "main". Require commit ancestry.
+  const comparison = await compareToMain(run.head_sha);
+  return ['ahead', 'identical'].includes(comparison.status);
+}
+
+export async function findReportHistory(
+  getRuns,
+  repository,
+  getArtifacts,
+  currentRunId,
+  compareToMain,
+) {
+  let latest;
+  let latestCreatedAt = -Infinity;
+  for (let page = 1; ; page += 1) {
+    const runs = await getRuns(page);
+    for (const run of runs) {
+      if (String(run.id) === String(currentRunId)) continue;
+      try {
+        if (!(await isTrustedReportRun(run, repository, compareToMain)))
+          continue;
+        for (let artifactPage = 1; ; artifactPage += 1) {
+          const artifacts = await getArtifacts(run.id, artifactPage);
+          for (const item of artifacts) {
+            const createdAt = Date.parse(item.created_at);
+            if (
+              !item.expired &&
+              /^midscene-e2e-report-pages-\d+$/.test(item.name) &&
+              Number.isFinite(createdAt) &&
+              createdAt > latestCreatedAt
+            ) {
+              latest = { ...item, workflow_run: { id: run.id } };
+              latestCreatedAt = createdAt;
+            }
+          }
+          if (artifacts.length < 100) break;
+        }
+      } catch (error) {
+        process.stderr.write(
+          `Skipping report history run ${run.id}: ${error.message}\n`,
+        );
+      }
+    }
+    if (runs.length < 100) return latest ?? null;
+  }
+}
+
+async function main(mode) {
+  if (!process.env.MIDSCENE_UPSTREAM_REPOSITORY) {
+    throw new Error('MIDSCENE_UPSTREAM_REPOSITORY is required');
+  }
+  const repository = process.env.GITHUB_REPOSITORY;
+  const get = async resource => {
+    const response = await fetch(
+      `${process.env.GITHUB_API_URL}/repos/${repository}/${resource}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.GH_TOKEN}`,
+          Accept: 'application/vnd.github+json',
+        },
+      },
+    );
+    if (!response.ok)
+      throw new Error(`GitHub ${resource}: HTTP ${response.status}`);
+    return response.json();
+  };
+  let mainSha;
+  const compareToMain = async sha => {
+    mainSha ??= (await get('branches/main')).commit.sha;
+    return get(`compare/${sha}...${mainSha}`);
+  };
+  if (mode === 'find-previous') {
+    const filter =
+      repository === process.env.MIDSCENE_UPSTREAM_REPOSITORY
+        ? 'branch=main'
+        : 'event=workflow_dispatch';
+    const artifact = await findReportHistory(
+      async page =>
+        (
+          await get(
+            `actions/workflows/midscene.yml/runs?status=completed&${filter}&per_page=100&page=${page}`,
+          )
+        ).workflow_runs,
+      repository,
+      async (id, page) =>
+        (await get(`actions/runs/${id}/artifacts?per_page=100&page=${page}`))
+          .artifacts,
+      process.env.GITHUB_RUN_ID,
+      compareToMain,
+    );
+    if (artifact) {
+      await appendFile(
+        process.env.GITHUB_OUTPUT,
+        `name=${artifact.name}\nrun_id=${artifact.workflow_run.id}\n`,
+      );
+    }
+  } else {
+    throw new Error(`Unknown mode: ${mode}`);
+  }
+}
+
+if (import.meta.url === new URL(process.argv[1], 'file:').href) {
+  main(process.argv[2]).catch(error => {
+    process.stderr.write(`${error.message}\n`);
+    process.exitCode = 1;
+  });
+}

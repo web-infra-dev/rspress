@@ -1,5 +1,4 @@
 import { expect, test } from '@e2e/test';
-import { getSidebarTexts } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('auto nav and sidebar without metadata', async () => {
@@ -15,27 +14,6 @@ test.describe('auto nav and sidebar without metadata', async () => {
     if (app) {
       await killProcess(app);
     }
-  });
-
-  test('Should render sidebar correctly', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/`, {
-      waitUntil: 'networkidle',
-    });
-
-    const sidebarTexts = await getSidebarTexts(page);
-    expect(sidebarTexts).toEqual([
-      'HomePage',
-      'API',
-      'plugin',
-      'Plugin a',
-      'Plugin b',
-      'Commands',
-      'config',
-      'Basic config',
-      'Build config',
-      'Front matter config',
-      'Theme config',
-    ]);
   });
 
   test('Should click the directory and navigate to the index page', async ({

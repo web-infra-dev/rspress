@@ -1,0 +1,21 @@
+cases:
+  - name: DOC-01 Find deployment instructions using search
+    tags: [search]
+    steps:
+      - app.open: { path: / }
+      - aiAct: Open documentation search, search for "Deployment", and open the Deployment page from the results.
+      - aiAssert: The Deployment article is open, with "Publish your documentation" and instructions to upload the doc_build directory.
+  - name: DOC-02 Follow the getting-started guide to deployment
+    tags: [navigation]
+    steps:
+      - app.open: { path: / }
+      - aiAct: Open the Getting started article using the sidebar.
+      - aiAssert: The Getting started article contains pnpm install and pnpm dev commands.
+      - aiAct: Follow the Deployment guide link in Next steps.
+      - aiAssert: The Deployment article is open and contains the pnpm build command.
+  - name: DOC-03 Navigate documentation on a phone
+    tags: [mobile]
+    steps:
+      - app.open: { path: /, viewport: mobile }
+      - aiAct: Use the mobile documentation navigation menu to open the Getting started article. Close the menu if it covers the article.
+      - aiAssert: The Getting started heading and pnpm install command are visible in the article, without a navigation menu covering them.

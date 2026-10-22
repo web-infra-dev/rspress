@@ -1,0 +1,21 @@
+cases:
+  - name: FALLBACK-01 Recover from a missing documentation page
+    tags: [original-fallback, replacement-batch-2]
+    steps:
+      - app.open: { fixture: basic, path: /not-a-real-page }
+      - aiAct: Bring the page-not-found message and recovery link into view.
+      - aiAssert: The page displays a 404 or page-not-found message with a way to return home.
+      - aiAct: Follow the home recovery link.
+      - aiAssert: The Hello world home article is visible instead of the page-not-found message.
+  - name: FALLBACK-03 Read public images from a production build
+    tags: [original-fallback]
+    steps:
+      - app.open: { fixture: public-dir, mode: production, path: /base/ }
+      - aiAct: Bring the large illustrated mascot image below Hello world into view. Stay on this article and do not use search.
+      - aiAssert: The article image is rendered, not a broken-image placeholder.
+  - name: FALLBACK-04 Search documentation in a production build without a root setting
+    tags: [original-fallback]
+    steps:
+      - app.open: { fixture: no-config-root, mode: production, path: / }
+      - aiAct: Open documentation search, search for Hello world, and open the matching result.
+      - aiAssert: The Hello world article is visible and the search dialog is closed.

@@ -1,0 +1,30 @@
+# cspell:words typedoc
+cases:
+  - name: TYPEDOC-01 Navigate generated single-entry API documentation
+    tags: [original-typedoc, replacement-final-existing]
+    steps:
+      - app.open: { fixture: plugin-typedoc/single, path: /api/ }
+      - aiAct: Bring the generated API sidebar into view, expanding its Functions and Types groups if needed.
+      - aiAssert: The sidebar contains six entries in order @rspress-fixture/rspress-plugin-typedoc-single, Functions, Function createMiddleware(), Function mergeMiddlewares(), Types, and Type Alias Middleware.
+      - aiAct: In the generated API sidebar, expand Functions if needed and open createMiddleware.
+      - aiAssert: The generated createMiddleware function article is open and the sidebar offers mergeMiddlewares and the Middleware type.
+  - name: TYPEDOC-02 Navigate generated multi-entry API documentation
+    tags: [original-typedoc, replacement-final-existing]
+    steps:
+      - app.open: { fixture: plugin-typedoc/multi, path: /api/ }
+      - aiAct: Bring the generated API sidebar into view, expanding Functions, Modules, and Types if needed.
+      - aiAssert: The sidebar contains ten entries in order @rspress-fixture/rspress-plugin-typedoc-multi, Functions, Function createMiddleware(), Function mergeMiddlewares(), Function getRspressUrl(), Modules, Module middleware, Module raw-link, Types, and Type Alias Middleware.
+      - aiAct: In the generated API sidebar, expand Functions if needed and open getRspressUrl.
+      - aiAssert: The generated getRspressUrl function article is open, with Rspress site displayed in its documentation.
+      - aiAct: Expand Modules in the sidebar to inspect its entries. Stay on this function article.
+      - aiAssert: The sidebar displays middleware and raw-link module entries.
+  - name: TYPEDOC-03 Read a generated raw documentation link
+    tags: [original-typedoc, migration-regression]
+    steps:
+      - app.open:
+          {
+            fixture: plugin-typedoc/multi,
+            path: /api/functions/raw-link.getRspressUrl.html,
+          }
+      - aiAct: Bring the getRspressUrl documentation and its Rspress site link into view without following the external link.
+      - aiAssert: The Returns section displays the external-link label "Rspress site". The visible link text is Rspress site, not a literal URL.

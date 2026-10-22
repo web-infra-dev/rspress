@@ -1,0 +1,65 @@
+# cspell:words Extname
+cases:
+  - name: CONTENT-01 Follow a generated API overview link
+    tags:
+      [
+        original-overview,
+        replacement-batch-3-overviews,
+        replacement-final-existing,
+        ci-failure-regression,
+      ]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/index.html }
+      - aiAct: Bring the Config group in the API overview into view. Stay in the overview article.
+      - aiAssert: In the main overview content, Config has three wide rows titled Basic config, Theme config, and Build config from top to bottom, followed by cards titled Front matter config, Extname config, and Nested from left to right. The rows include links root, logoText, nav, sidebar, builderConfig, Default config, markdown, and markdown.remarkPlugins. Nested is a directory card, not an article. Ignore the separate sidebar ordering.
+      - aiAct: Bring the Client API group in the main overview article into view. Do not follow any link yet.
+      - aiAssert: Client API lists Components and Runtime API article entries with Usage and Example links.
+      - aiAct: Bring the Commands, Single, Section a, and Section b sections of the main overview into view, scrolling as needed. Do not follow links yet.
+      - aiAssert: Commands, Single, Section a, and Section b appear as overview sections with corresponding article entries; the Commands entry offers rspress dev and rspress build.
+      - aiAct: In the API overview article, follow the Commands link. Do not use the sidebar or search.
+      - aiAssert: The Commands article is open with rspress dev and rspress build sections.
+  - name: CONTENT-02 Navigate nested overview levels
+    tags: [original-nested-overview, replacement-batch-5]
+    steps:
+      - app.open: { fixture: nested-overview, path: /base-url/basic-level-1/ }
+      - aiAssert: Below the Level 1 page title and Filter field, the overview has a single group heading Level 2. This group contains exactly three article entries — one wide row titled two with Section a and Section b links, followed by two cards titled Level 2 and Level 3. The left sidebar is not part of this group.
+      - aiAct: Click the two article link in the overview content, not an On this page anchor or a sidebar item. Wait for the article containing Section a and Section b to open.
+      - aiAssert: The article displays Section a with Content for section 1 and Section b with Content for section 2.
+  - name: CONTENT-03 Custom navigation slots work on desktop
+    tags: [original-slots, replacement-batch-3-slots]
+    steps:
+      - app.open: { fixture: nav-slots, mode: production, path: / }
+      - aiAssert: The desktop navigation displays BL, L1, L2, AL on the left and BR, R1, R2, AR, More on the right.
+      - aiAct: Hover over More in the top navigation, expand Nested if needed, and follow its Target link.
+      - aiAssert: The Target article is open.
+  - name: CONTENT-04 Custom navigation slots work on mobile
+    tags: [original-slots, replacement-batch-3-slots]
+    steps:
+      - app.open:
+          { fixture: nav-slots, mode: production, path: /, viewport: mobile }
+      - aiAssert: The mobile page offers a navigation menu button without expanded desktop navigation lists.
+      - aiAct: Open the mobile navigation menu.
+      - aiAssert: The menu displays BR, R1, BL, L1, R2, AR, More, L2, and AL.
+      - aiAct: Expand More, then Nested, and follow Target.
+      - aiAssert: The Target article is visible and the mobile menu is closed.
+  - name: CONTENT-05 Home page action opens a guide
+    tags: [original-home, replacement-batch-2-navigation]
+    steps:
+      - app.open: { fixture: page-type-home, path: /base/ }
+      - aiAssert: The home hero displays E2E case title, E2E case subTitle, E2E case tagline, and the actions Action 1, Action 2, and External.
+      - aiAct: Follow the Action 1 button in the home page hero.
+      - aiAssert: The Action 1 article is open.
+  - name: CONTENT-06 Read a custom plugin route
+    tags: [original-plugin-route]
+    steps:
+      - app.open: { fixture: custom-plugin, path: / }
+      - aiAct: Open documentation search, search for Demo1, and open the matching result.
+      - aiAssert: The Demo1 article is visible.
+  - name: CONTENT-07 Follow previous and next links with generic headings
+    tags: [original-markdown, replacement-final-existing]
+    steps:
+      - app.open: { fixture: inline-markdown, path: /inline/generic-braces }
+      - aiAct: Bring the previous and next article links at the bottom into view, without following them yet.
+      - aiAssert: The previous article label reads Class Component<P = { }, S = { }, SS = any> and the next article label reads Class Bar<T = any>. The generic symbols are preserved as readable text.
+      - aiAct: Find the next article link at the bottom and follow Class Bar.
+      - aiAssert: The article heading is Class Bar with the generic type T and default any displayed as text.

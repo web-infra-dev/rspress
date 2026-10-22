@@ -1,0 +1,47 @@
+cases:
+  - name: VIRTUAL-01 Hot-update navigation with lazy compilation
+    tags: [original-virtual-hmr, remote-regression]
+    steps:
+      - app.open: { fixture: hmr-lazy, path: /guide/test.html }
+      - aiAct: Scroll the main document to the bottom to find the status row containing Translation before and Search hook before. Click its Count button once. This row is below the article, not in the top navigation; do not stop at the header or sidebar.
+      - aiAssert: The global component displays Count 1 and the top navigation displays Guide.
+      - fixture.update: { part: navigation }
+      - aiAct: Watch the top-right Guide link until it becomes HMR Guide. Leave the top-left HMR fixture title unchanged. Do not reload or navigate elsewhere; stop if the link has not updated within 30 seconds.
+      - aiAssert: The navigation displays HMR Guide and the global component still displays Count 1.
+  - name: VIRTUAL-02 Hot-update translated text and search hooks without losing state
+    tags:
+      [
+        original-virtual-hmr,
+        migration-regression,
+        remote-inline-virtual-regression,
+      ]
+    steps:
+      - app.open: { fixture: hmr-lazy, path: /guide/test.html }
+      - aiAct: Find the bottom status row showing Translation before, Search hook before, and Count 0. Click its Count button once. Stay on this article.
+      - aiAssert: Translation before, Search hook before, and Count 1 are visible in the global component.
+      - fixture.update: { part: translation }
+      - aiAct: Watch the Translation before text at the beginning of the bottom status row until that portion reads Translation after. The adjacent Search hook before text and Count 1 button remain in the same row; do not wait for them to disappear. Do not reload or navigate elsewhere; stop if the translation portion has not updated within 30 seconds.
+      - aiAssert: Translation after and Count 1 are visible.
+      - fixture.update: { part: search-hook }
+      - aiAct: Watch the bottom status row beside the Count 1 button, not the top navigation Search control. Wait for this row to display Search hook after alongside Translation after. Do not reload or navigate elsewhere; stop if it has not updated within 30 seconds.
+      - aiAssert: Translation after, Search hook after, and Count 1 are visible.
+      - fixture.update: { part: search-renderer-remove }
+      - aiAct: Watch the bottom status row beside the Count 1 button until its Search hook after text is replaced by No custom renderer. Do not interact with the top Search control, reload, or navigate elsewhere; stop if it has not updated within 30 seconds.
+      - aiAssert: No custom renderer and Count 1 are visible in the global component.
+      - fixture.update: { part: counter-label }
+      - aiAct: Watch the counter button in the bottom status row until it displays Updated count with the retained value 1. Do not click it again, reload, or navigate elsewhere; stop if the label has not updated within 30 seconds.
+      - aiAssert: The global component displays Updated count 1, retaining its previous counter value.
+  - name: VIRTUAL-03 Interact with virtual components in a production build
+    tags:
+      [
+        original-virtual-hmr,
+        replacement-final-existing,
+        replacement-final-followup,
+        remote-preview-virtual-regression,
+      ]
+    steps:
+      - app.open:
+          { fixture: hmr-lazy, mode: production, path: /guide/test.html }
+      - aiAssert: The GitHub social icon is visible in the navigation.
+      - aiAct: Scroll to the bottom of the Test article and find the status row showing Translation before, Search hook before, and Count 0. Click its Count button once. Stay on this page; do not use search or the top navigation.
+      - aiAssert: The production page displays Translation before, Search hook before, and Count 1.

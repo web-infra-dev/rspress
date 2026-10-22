@@ -1,0 +1,40 @@
+# cspell:words shadcn
+cases:
+  - name: STYLE-01 Read styled Tailwind content
+    tags: [original-style, replacement-final-existing]
+    steps:
+      - app.open: { fixture: tailwind-v4, path: / }
+      - aiAct: Bring the Red Text, Bold Text, and Blue Box examples into view.
+      - aiAssert: Red Text is red, Bold Text appears bold, and Blue Box has a blue background with readable white text.
+      - aiAct: Bring the default and outline shadcn buttons into view.
+      - aiAssert: Both the default and outline buttons are visible and readable.
+  - name: STYLE-02 Read the themed documentation link
+    tags: [original-style]
+    steps:
+      - app.open: { fixture: theme-css, path: / }
+      - aiAct: Find the link in the documentation article and bring it into view.
+      - aiAssert: The article link is visibly orange.
+  - name: STYLE-03 Read highlighted code differences
+    tags: [original-code]
+    steps:
+      - app.open: { fixture: code-block, path: / }
+      - aiAct: Bring the first diff-highlighted code example in transformers into view.
+      - aiAssert: The Diff remove line is marked as removed and the Diff add line is marked as added with distinct highlighting.
+  - name: STYLE-04 Read Markdown warning callouts
+    tags: [original-callout, replacement-batch-3]
+    steps:
+      - app.open: { fixture: github-alert-mdxjs, path: / }
+      - aiAct: Find the Warning callout in the article and bring it into view.
+      - aiAssert: A Warning callout is visible with its warning text and distinct warning styling.
+      - aiAct: Find the Note callout containing Multi-line line 1 and bring all three of its text lines into view.
+      - aiAssert: That Note callout displays Multi-line line 1, Multi-line line 2, and Multi-line line 3.
+  - name: STYLE-05 Read the runtime code block title and content
+    tags: [original-runtime-code, ci-regression, replacement-batch-3]
+    steps:
+      - app.open: { fixture: code-block-runtime, path: / }
+      - aiAct: Bring the first code panel titled test.js into view. Read the rendered code inside that panel; do not use search or navigate to another page.
+      - aiAssert: The first test.js panel displays the rendered code console.log('Hello CodeBlock!');, not a blank panel.
+      - aiAct: Bring the second test.js code panel into view.
+      - aiAssert: The second test.js panel displays the rendered code console.log('Hello CodeBlock!');.
+      - aiAct: Bring the code panel titled Code Block into view.
+      - aiAssert: The Code Block panel displays the rendered code console.log('Hello Title!');.

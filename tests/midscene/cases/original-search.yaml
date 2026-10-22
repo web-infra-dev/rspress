@@ -1,0 +1,81 @@
+cases:
+  - name: SEARCH-01 Select a search result using the keyboard
+    tags: [original-search]
+    steps:
+      - app.open: { fixture: search, path: /base/ }
+      - aiAct: Open search, enter Foo, use the down and up arrow keys to select a Foo result, then press Enter to open it. Do not click a result.
+      - aiAssert: The Foo article is open and the search dialog is closed.
+  - name: SEARCH-02 Excluded pages do not appear in search
+    tags: [original-search, replacement-batch-2]
+    steps:
+      - app.open: { fixture: search, path: /base/ }
+      - aiAct: Open search and enter Quux.
+      - aiAssert: Search shows a no-results message and no result entries.
+      - aiAct: Replace the search query with Foo.
+      - aiAssert: Search results for Foo are visible instead of the no-results message.
+  - name: SEARCH-03 Escape closes the search dialog
+    tags: [original-search, migration-regression]
+    steps:
+      - app.open: { fixture: search, path: /base/ }
+      - aiAct: Open search, enter Foo, then close the dialog by pressing Escape.
+      - aiAssert: The Search hooks article is visible without a search dialog covering it.
+      - aiAct: Press Enter once while the search dialog is closed. Do not reopen search or click another link.
+      - aiAssert: The Search hooks article remains visible and no search dialog is open.
+  - name: SEARCH-04 Toggle search with the platform keyboard shortcut
+    tags: [original-search]
+    steps:
+      - app.open: { fixture: search, path: /base/ }
+      - aiAct: Open documentation search using Command+K on macOS or Control+K on Linux. Do not click the search button.
+      - aiAssert: The search dialog and search input are visible.
+      - aiAct: Press the same keyboard shortcut again to close search.
+      - aiAssert: The search dialog is closed.
+  - name: SEARCH-05 Changing a query resets the selected result
+    tags: [original-search]
+    steps:
+      - app.open: { fixture: search, path: /base/ }
+      - aiAct: Open search, enter Bar, then use the down arrow to select the second result.
+      - aiAssert: The second search result is visibly selected.
+      - aiAct: Replace the search query with Ba without pressing any arrow keys afterward.
+      - aiAssert: The first search result is visibly selected.
+  - name: SEARCH-06 Find content inside code blocks
+    tags: [original-code-search, replacement-batch-5]
+    steps:
+      - app.open: { fixture: search-code-blocks, path: / }
+      - aiAct: Open search and enter hello from inline code block.
+      - aiAssert: Exactly one search result is listed.
+      - aiAct: Replace the search query with hello from <React.inline />. Stay in the search dialog.
+      - aiAssert: Exactly one search result is listed.
+      - aiAct: Replace the search query with hello from js code block. Stay in the search dialog.
+      - aiAssert: Exactly one search result is listed.
+      - aiAct: Replace the search query with <HelloFromJsxCodeBlock />. Stay in the search dialog.
+      - aiAssert: Exactly one search result is listed.
+      - aiAct: Open the search result.
+      - aiAssert: The article shows a JSX code block containing HelloFromJsxCodeBlock.
+  - name: SEARCH-07 Search follows the selected language
+    tags: [original-localized-search, replacement-batch-3]
+    steps:
+      - app.open: { fixture: search-i18n, path: / }
+      - aiAct: Open search and enter Button.
+      - aiAssert: A search result containing Button en is visible.
+      - aiAct: Close search, switch the site language to 简体中文 using the language menu, then open search and enter Button.
+      - aiAssert: A search result containing Button 中文 is visible and Button en is not listed.
+      - aiAct: Close search, switch the site language back to English using the language menu, then open search and enter Button.
+      - aiAssert: The first search result contains Button en and no Button 中文 result is listed.
+  - name: SEARCH-08 Find Japanese content
+    tags:
+      [
+        original-localized-search,
+        replacement-batch-3,
+        remote-search-static-regression,
+        remote-japanese-regression,
+      ]
+    steps:
+      - app.open: { fixture: search-i18n, path: / }
+      - aiAct: Switch the site language to 日本語 using the language menu, then open search and enter ご.
+      - aiAssert: Exactly one search result is listed and contains にほんご.
+      - aiAct: Replace the search query with ヘッダー. Stay in the search dialog.
+      - aiAssert: Exactly two search results are listed and the first contains ヘッダー.
+      - aiAct: Replace the search query with す. Stay in the search dialog.
+      - aiAssert: The search dialog shows exactly one result row. Its main title reads できます (de-ki-ma-su), with す highlighted at the end. The smaller line beneath the title is its page breadcrumb, not a second result.
+      - aiAct: Select all text in the search input and replace it with the literal character さ (hiragana sa, not す which is su). Perform the replacement even if the current character looks similar; do not treat the existing input as already correct. Keep the dialog open and wait for its results to update.
+      - aiAssert: Exactly one search result is listed and contains さい.

@@ -66,49 +66,44 @@ test.describe('HMR', async () => {
     await fs.rm(TEST_ADDED_FILE, { force: true });
   });
 
-  test('update page content without restarting', async ({ page }) => {
+  test('does not restart after content fragment nav and meta hot updates', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}/guide/test.html`, {
       waitUntil: 'networkidle',
     });
 
-    // basic
-    const helloParagraph = page.locator('p', { hasText: 'Hello world' });
-    await expect(helloParagraph).toBeVisible();
+    // Wait for each DOM update before measuring server restarts; Midscene owns visibility.
     await fs.writeFile(
       TEST_FILE,
       originalContent.replace('Hello world', 'Hello hmr world'),
     );
-    await expect(
-      page.locator('p', { hasText: 'Hello hmr world' }),
-    ).toBeVisible();
+    await page
+      .locator('p', { hasText: 'Hello hmr world' })
+      .waitFor({ state: 'attached' });
 
     // file code block
-    await expect(page.getByText('This is mdx fragment')).toBeVisible();
     await fs.writeFile(
       TEST_FRAGMENT_FILE,
       originalFragmentContent.replace('This is', 'This is hmr'),
     );
-    await expect(page.getByText('This is hmr mdx fragment')).toBeVisible();
+    await page
+      .getByText('This is hmr mdx fragment')
+      .waitFor({ state: 'attached' });
 
     // _nav.json
-    await expect(
-      page.locator('.rp-nav-menu__item', { hasText: 'Guide' }),
-    ).toBeVisible();
     await fs.writeFile(
       TEST_NAV_FILE,
       originalNavContent.replace('"Guide"', '"HMR Guide"'),
     );
-    await expect(
-      page.locator('.rp-nav-menu__item', { hasText: 'HMR Guide' }),
-    ).toBeVisible();
+    await page
+      .locator('.rp-nav-menu__item', { hasText: 'HMR Guide' })
+      .waitFor({ state: 'attached' });
     // _meta.json
-    await expect(
-      page.locator('.rp-sidebar-item span', { hasText: 'Test' }),
-    ).toBeVisible();
     await fs.writeFile(TEST_META_FILE, '["foo"]');
-    await expect(
-      page.locator('.rp-sidebar-item span', { hasText: 'Foo' }),
-    ).toBeVisible();
+    await page
+      .locator('.rp-sidebar-item span', { hasText: 'Foo' })
+      .waitFor({ state: 'attached' });
     expect(getRestartCount()).toBe(0);
   });
 
@@ -218,14 +213,13 @@ test.describe('HMR with lazy compilation', async () => {
     await fs.writeFile(TEST_NAV_FILE, originalNavContent);
   });
 
-  test('updates site data without a full reload', async ({ page }) => {
+  test('preserves the window marker through lazy site-data hot updates', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}/guide/test.html`, {
       waitUntil: 'networkidle',
     });
 
-    await expect(
-      page.locator('.rp-nav-menu__item', { hasText: 'Guide' }),
-    ).toBeVisible();
     await page.evaluate(() => {
       (window as Window & { __rspressHmrMarker?: string }).__rspressHmrMarker =
         'preserved';
@@ -236,9 +230,9 @@ test.describe('HMR with lazy compilation', async () => {
       originalNavContent.replace('"Guide"', '"HMR Guide"'),
     );
 
-    await expect(
-      page.locator('.rp-nav-menu__item', { hasText: 'HMR Guide' }),
-    ).toBeVisible();
+    await page
+      .locator('.rp-nav-menu__item', { hasText: 'HMR Guide' })
+      .waitFor({ state: 'attached' });
     expect(
       await page.evaluate(
         () =>
@@ -282,15 +276,13 @@ test.describe('virtual module HMR', () => {
     }
   });
 
-  test('updates translations, search hooks, global components and styles without reloading', async ({
+  test('preserves window and React state through virtual-module replacements', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}/guide/test.html`, {
       waitUntil: 'networkidle',
     });
     const probe = page.getByTestId('virtual-probe');
-    await expect(probe.getByText('Translation before')).toBeVisible();
-    await expect(probe.getByText('Search hook before')).toBeVisible();
     await expect(probe).toHaveCSS('color', 'rgb(1, 2, 3)');
     await probe.getByRole('button', { name: 'Count: 0' }).click();
     await page.evaluate(() => {
@@ -305,21 +297,21 @@ test.describe('virtual module HMR', () => {
       );
     };
     await update('i18n.json', 'Translation before', 'Translation after');
-    await expect(probe.getByText('Translation after')).toBeVisible();
+    await probe.getByText('Translation after').waitFor({ state: 'attached' });
     await update('searchHooks.tsx', 'Search hook before', 'Search hook after');
-    await expect(probe.getByText('Search hook after')).toBeVisible();
+    await probe.getByText('Search hook after').waitFor({ state: 'attached' });
     // Export removal must also replace the namespace snapshot.
     await fs.writeFile(
       path.join(import.meta.dirname, 'searchHooks.tsx'),
       'export const onSearch = () => [];',
     );
-    await expect(probe.getByText('No custom renderer')).toBeVisible();
+    await probe.getByText('No custom renderer').waitFor({ state: 'attached' });
     await update('global.css', 'rgb(1, 2, 3)', 'rgb(4, 5, 6)');
     await expect(probe).toHaveCSS('color', 'rgb(4, 5, 6)');
     await update('virtualProbe.tsx', 'Count:', 'Updated count:');
-    await expect(
-      probe.getByRole('button', { name: 'Updated count: 1' }),
-    ).toBeVisible();
+    await probe
+      .getByRole('button', { name: 'Updated count: 1' })
+      .waitFor({ state: 'attached' });
     expect(
       await page.evaluate(
         () =>
@@ -347,20 +339,16 @@ test.describe('virtual modules in production', () => {
     if (app) await killProcess(app);
   });
 
-  test('preserves virtual data and global styles in the production build', async ({
+  test('preserves production virtual-component RGB and social-link SVG markup', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}/guide/test.html`);
     const probe = page.getByTestId('virtual-probe');
-    await expect(probe.getByText('Translation before')).toBeVisible();
-    await expect(probe.getByText('Search hook before')).toBeVisible();
     await expect(probe).toHaveCSS('color', 'rgb(1, 2, 3)');
     await expect(
       page
         .locator('a[href="https://github.com/web-infra-dev/rspress"] svg')
         .first(),
-    ).toBeVisible();
-    await probe.getByRole('button', { name: 'Count: 0' }).click();
-    await expect(probe.getByRole('button', { name: 'Count: 1' })).toBeVisible();
+    ).toBeAttached();
   });
 });

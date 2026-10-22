@@ -1,0 +1,44 @@
+cases:
+  - name: PLUGIN-01 Search generated API documentation
+    tags: [original-api, replacement-batch-4]
+    steps:
+      - app.open: { fixture: plugin-api-docgen/locales, path: / }
+      - aiAct: Open search and enter disabled. Stay in the search dialog.
+      - aiAssert: Exactly one result for the generated API documentation is listed.
+      - aiAct: Open that generated API documentation result and bring its Button table into view.
+      - aiAssert: The Button API table displays Property, Description, Type, and Default Value columns. The disabled row has Whether to disable the button, - This is extra line a, - This is extra line b, boolean, and a dash default. The size row has Type of Button, the type "mini" | "small" | "default" | "large", and the default value 'default'.
+  - name: PLUGIN-02 Switch generated API documentation language
+    tags: [original-api, replacement-batch-4]
+    steps:
+      - app.open: { fixture: plugin-api-docgen/locales, path: / }
+      - aiAct: Switch to 简体中文 using the language selector, then find the API table in the article.
+      - aiAssert: The Button API table displays 属性, 说明, 类型, 默认值 columns. The disabled row has Whether to disable the button, - This is extra line a, - This is extra line b, boolean, and a dash default. The size row has Type of Button, the type "mini" | "small" | "default" | "large", and the default value 'default'.
+  - name: PLUGIN-03 Read component previews while changing the theme
+    tags: [original-preview]
+    steps:
+      - app.open: { fixture: plugin-preview, path: /mixed }
+      - aiAct: Stay on the Mixed article. Set the reading theme to dark using the top appearance switch, then bring the first rendered This is a component preview into view. Do not navigate to another article or use search.
+      - aiAssert: The Mixed article uses a dark reading theme and the rendered preview displays This is a component.
+      - aiAct: Stay on the Mixed article. Set the reading theme to light using the appearance switch, then bring the same rendered This is a component preview into view.
+      - aiAssert: The Mixed article uses a light reading theme and the rendered preview displays This is a component.
+  - name: PLUGIN-04 Read a Vue component preview
+    tags: [original-custom-preview]
+    steps:
+      - app.open: { fixture: plugin-preview-custom-entry, path: / }
+      - aiAct: Use documentation navigation to open the Vue guide.
+      - aiAssert: The rendered Vue preview displays Hello World VUE.
+  - name: PLUGIN-05 Inspect a Twoslash type tooltip
+    tags: [original-twoslash]
+    steps:
+      - app.open: { fixture: plugin-twoslash, path: / }
+      - aiAct: In Extract type, hover over the marked msg variable to open its type information.
+      - aiAssert: A type information popup for msg is visible.
+  - name: PLUGIN-06 Search single-entry generated API documentation
+    tags: [original-single-api, replacement-batch-4]
+    steps:
+      - app.open: { fixture: plugin-api-docgen/single, path: /zh/ }
+      - aiAssert: The Button API table is visible with 属性, 说明, 类型, 默认值, disabled, and size.
+      - aiAct: Return to the documentation home using the site logo, then open documentation search and search for disabled. Stay in the search dialog.
+      - aiAssert: Exactly one result for the generated API documentation is listed.
+      - aiAct: Open that generated API documentation result and bring its Button table into view.
+      - aiAssert: The Button API table displays 属性, 说明, 类型, 默认值 columns. The disabled row has Whether to disable the button, - This is extra line a, - This is extra line b, boolean, and a dash default. The size row has Type of Button, the type "mini" | "small" | "default" | "large", and the default value 'default'.

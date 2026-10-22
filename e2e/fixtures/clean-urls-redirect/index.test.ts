@@ -38,7 +38,7 @@ test.describe('route.cleanUrlsRedirect', () => {
     ]);
   });
 
-  test('normalizes matched routes when cleanUrls is false', async ({
+  test('normalizes exact destination URLs when cleanUrls is false', async ({
     page,
   }) => {
     const cases = [
@@ -64,11 +64,12 @@ test.describe('route.cleanUrlsRedirect', () => {
       await expect(page).toHaveURL(
         `http://localhost:${htmlUrlPort}${expectedUrl}`,
       );
-      await expect(page.locator('.rspress-doc')).toBeVisible();
     }
   });
 
-  test('normalizes matched routes when cleanUrls is true', async ({ page }) => {
+  test('normalizes exact destination URLs when cleanUrls is true', async ({
+    page,
+  }) => {
     const cases = [
       [
         '/docs/zh/guide/start/introduction.html',
@@ -92,11 +93,12 @@ test.describe('route.cleanUrlsRedirect', () => {
       await expect(page).toHaveURL(
         `http://localhost:${cleanUrlPort}${expectedUrl}`,
       );
-      await expect(page.locator('.rspress-doc')).toBeVisible();
     }
   });
 
-  test('does not normalize matched routes when disabled', async ({ page }) => {
+  test('preserves the exact requested URL when normalization is disabled', async ({
+    page,
+  }) => {
     const pathname = '/docs/zh/guide/start/introduction.html';
 
     await page.goto(`http://localhost:${disabledPort}${pathname}`, {
@@ -104,6 +106,5 @@ test.describe('route.cleanUrlsRedirect', () => {
     });
 
     await expect(page).toHaveURL(`http://localhost:${disabledPort}${pathname}`);
-    await expect(page.locator('.rspress-doc')).toBeVisible();
   });
 });

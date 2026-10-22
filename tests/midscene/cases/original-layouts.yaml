@@ -1,0 +1,43 @@
+cases:
+  - name: LAYOUT-01 Read an article with documentation chrome disabled
+    tags: [original-layouts, replacement-batch-3]
+    steps:
+      - app.open: { fixture: custom-layout, path: /frontmatter }
+      - aiAct: Bring the existing Frontmatter heading into view. This fixture contains only that heading; do not search for more text or navigate elsewhere.
+      - aiAssert: Frontmatter is visible without a top navigation bar, documentation sidebar, table of contents, or document footer.
+  - name: LAYOUT-02 Read the custom home layout
+    tags:
+      [
+        original-layouts,
+        replacement-batch-3,
+        replacement-final-existing,
+        ci-failure-regression,
+      ]
+    steps:
+      - app.open: { fixture: custom-layout, path: / }
+      - aiAct: Inspect the top navigation and the wide home-layout area below it. This fixture deliberately has no configured hero title, tagline, or action buttons. Stay on this page; do not search for missing content, reload, or toggle the theme.
+      - aiAssert: The home page shows top navigation with Home, Search, and an appearance control above a wide empty home-layout area. It has no documentation article, sidebar, or table of contents.
+  - name: LAYOUT-03 Read custom outline slots on desktop
+    tags: [original-layouts, replacement-batch-3]
+    steps:
+      - app.open: { fixture: custom-layout, path: /no-headings }
+      - aiAct: Bring the right-hand outline panel into view.
+      - aiAssert: The On this page outline title, Before custom outline content, and After custom outline content are visible even though there are no article heading entries.
+  - name: LAYOUT-04 Read a localized home hero and follow its action
+    tags: [original-layouts, replacement-batch-2-navigation]
+    steps:
+      - app.open: { fixture: page-type-home, path: /base/zh/ }
+      - aiAct: Bring the Chinese home hero and its actions into view.
+      - aiAssert: The hero displays E2E 用例 title, E2E 用例 subTitle, E2E 用例 tagline, and the actions 操作 1, 操作 2, and External.
+      - aiAct: Follow 操作 1 in the hero.
+      - aiAssert: The Chinese action article is open rather than a page-not-found error.
+  - name: LAYOUT-05 Switch translated source text and its fallback language
+    tags: [original-layouts, replacement-batch-2]
+    steps:
+      - app.open: { fixture: i18n-source-text, path: / }
+      - aiAct: Switch the page to 简体中文.
+      - aiAssert: The page displays 被配置修改, 配置-文件, 配置-json, 配置-插件, and This text is only in English.
+      - aiAct: Switch the page to English.
+      - aiAssert: The page displays Modified by configuration, Configuration-file, Configuration-json, Configuration-plugin, and This text is only in English.
+      - aiAct: Switch the page to EN_US.
+      - aiAssert: The EN_US page displays Modified by configuration, Configuration-file, Configuration-json, Configuration-plugin, and This text is only in English.

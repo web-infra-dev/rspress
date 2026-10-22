@@ -1,0 +1,71 @@
+cases:
+  - name: NAV-07 Navigate nested menus with clean URLs
+    tags: [original-clean-nav, replacement-final-existing]
+    steps:
+      - app.open: { fixture: nav-link-items-clean, path: / }
+      - aiAssert: The top navigation displays OnlyLink, OnlyItems, ItemsAndLink, and NestedItems, with dropdown contents initially hidden.
+      - aiAct: Use NestedItems, Level1, and Level2Nested in the top navigation to open Level3Item1.
+      - aiAssert: The Level 3 item 1 article is visible.
+  - name: NAV-08 Navigate clean URLs on mobile
+    tags: [original-clean-nav]
+    steps:
+      - app.open: { fixture: nav-link-items-clean, path: /, viewport: mobile }
+      - aiAct: Open the mobile menu and follow NestedItems, Level1, Level2Nested, and Level3Item2.
+      - aiAssert: The Level 3 item 2 article is visible without the mobile menu covering it.
+  - name: NAV-09 Open a mixed link and dropdown menu
+    tags: [original-mixed-nav]
+    steps:
+      - app.open: { fixture: nav-link-items, path: / }
+      - aiAct: Hover over ItemsAndLink in the top navigation.
+      - aiAssert: Its dropdown shows Child1 and Child2.
+  - name: NAV-10 Follow an absolute link in a translated guide
+    tags:
+      [
+        original-locale-links,
+        replacement-batch-2-navigation,
+        replacement-batch-6,
+      ]
+    steps:
+      - app.open: { fixture: i18n, path: /en/guide/basic/quick-start }
+      - aiAssert: The English sidebar displays Basic and the section heading Growth.
+      - aiAct: Follow click by absolute path inside the article, not a sidebar link.
+      - aiAssert: The Install article is visible and the navigation language remains English.
+  - name: NAV-11 Follow a relative link in a translated guide
+    tags: [original-locale-links, replacement-batch-6]
+    steps:
+      - app.open: { fixture: i18n, path: /en/guide/basic/quick-start }
+      - aiAct: Follow click for relative path inside the article, not a sidebar link.
+      - aiAssert: The Install article is visible and the navigation language remains English.
+  - name: NAV-12 Follow the default language guide link
+    tags:
+      [
+        original-locale-links,
+        replacement-batch-2-navigation,
+        replacement-batch-6,
+      ]
+    steps:
+      - app.open: { fixture: i18n, path: /guide/basic/quick-start }
+      - aiAssert: The Chinese sidebar displays 基本 and the section heading 成长.
+      - aiAct: Follow the absolute-path installation link inside the Chinese article.
+      - aiAssert: The 安装 article is visible and the navigation language remains 简体中文.
+  - name: NAV-13 Switch language within a nondefault version
+    tags: [original-version-language]
+    steps:
+      - app.open: { fixture: multi-version, path: /base/v2/ }
+      - aiAct: Use the language selector to switch to 简体中文 without changing the version.
+      - aiAssert: The article heading is v2 中文 and the version selector still displays v2.
+  - name: NAV-14 Follow a relative link in the default language
+    tags: [original-locale-links, replacement-batch-6]
+    steps:
+      - app.open: { fixture: i18n, path: /guide/basic/quick-start }
+      - aiAct: Follow the 相对路径 installation link inside the Chinese article, not a sidebar link.
+      - aiAssert: The 安装 article is visible and the navigation language remains 简体中文.
+  - name: NAV-15 Switch languages after a first visit with an unsupported browser locale
+    tags: [original-locale-links, replacement-batch-6]
+    steps:
+      - app.open: { fixture: i18n, path: /, locale: nl-NL }
+      - aiAssert: The 首页 article is visible with the code text 你好，Rspress, and the navigation language is 简体中文. No page-not-found message is displayed.
+      - aiAct: Hover over 简体中文 in the top navigation to open its language menu. Do not choose a language yet.
+      - aiAssert: The language menu is open and offers English.
+      - aiAct: Choose English from the open language menu.
+      - aiAssert: The Index article is visible with the code text Hello, Rspress, and the navigation language is English.

@@ -1,0 +1,296 @@
+name: E2E Testing by Midscene
+
+# AI-native visual E2E against original repository fixtures and local smoke pages.
+# Model credentials are scoped to verification and case execution.
+
+on:
+  pull_request:
+    paths:
+      [
+        'packages/**',
+        'e2e/**',
+        'tests/midscene/**',
+        '.github/workflows/midscene.yml',
+        'pnpm-lock.yaml',
+      ]
+  push:
+    branches: [main]
+    paths:
+      [
+        'packages/**',
+        'e2e/**',
+        'tests/midscene/**',
+        '.github/workflows/midscene.yml',
+        'pnpm-lock.yaml',
+      ]
+  workflow_dispatch:
+    inputs:
+      publish_pages:
+        description: Publish reports to GitHub Pages
+        required: false
+        type: boolean
+        default: true
+
+# Model runs use relevant upstream main pushes or manually selected branches.
+# Pages publication defaults on; manual runs can disable it.
+
+permissions:
+  contents: read
+
+# PR checks are independent; model runs serialize history reads through deployment.
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('midscene-e2e-pr-{0}', github.event.pull_request.number) || 'midscene-e2e' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  MIDSCENE_UPSTREAM_REPOSITORY: web-infra-dev/rspress
+
+jobs:
+  fixture-windows:
+    name: Validate fixture cleanup on Windows
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+      - run: node --test scripts/fixture-server.test.mjs
+        working-directory: tests/midscene
+
+  validate:
+    name: Validate AI E2E definitions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tests/midscene/package-lock.json
+      - run: npm ci
+        working-directory: tests/midscene
+      - run: npm run collect && npm run typecheck && npm run test:summary
+        working-directory: tests/midscene
+      - name: Explain pull request coverage
+        if: github.event_name == 'pull_request'
+        run: |
+          echo '## Midscene E2E definitions validated' >> "$GITHUB_STEP_SUMMARY"
+          echo 'This PR check does not call a model. AI E2E runs on relevant upstream main pushes or manual dispatch. Fork PR code never receives model credentials.' >> "$GITHUB_STEP_SUMMARY"
+
+  midscene:
+    needs: validate
+    name: Midscene E2E
+    outputs:
+      report-artifact-name: ${{ steps.upload-results.outputs.artifact-id != '' && 'midscene-results' || '' }}
+    environment:
+      name: Model
+      deployment: false
+    if: >-
+      (github.event_name != 'pull_request') &&
+      (github.repository == 'web-infra-dev/rspress' && github.ref == 'refs/heads/main' ||
+      (github.event_name == 'workflow_dispatch' && github.repository != 'web-infra-dev/rspress'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    env:
+      HEADLESS: 'true'
+      # The model endpoint is reachable over IPv4; avoid family-race timeouts.
+      NODE_OPTIONS: '--dns-result-order=ipv4first --no-network-family-autoselection'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      # pnpm must exist before setup-node resolves the pnpm store for its
+      # cache; without a version it reads the root `packageManager` field.
+      - name: Enable pnpm
+        uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
+
+      - name: Activate Node.js 24 and pnpm
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      - name: Install workspace dependencies and build checked-out packages
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Midscene test dependencies
+        # allowScripts for esbuild/sharp is declared in this package.json, so
+        # npm install runs their (approved) install scripts non-interactively.
+        working-directory: tests/midscene
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Verify Midscene model compatibility
+        working-directory: tests/midscene
+        # Only model verification and case execution receive model credentials.
+        env:
+          MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
+          MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME || secrets.MIDSCENE_MODEL_NAME }}
+          MIDSCENE_MODEL_BASE_URL: ${{ vars.MIDSCENE_MODEL_BASE_URL || secrets.MIDSCENE_MODEL_BASE_URL }}
+          MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY || secrets.MIDSCENE_MODEL_FAMILY }}
+        run: npm run check:model
+
+      - name: Type-check Midscene custom nodes
+        # npm test loads midscene.config.ts via tsx/esbuild without semantic
+        # TS checks, so run the standalone package's tsc before the expensive
+        # browser tests.
+        working-directory: tests/midscene
+        run: npm run typecheck
+
+      - name: Run all Midscene cases
+        working-directory: tests/midscene
+        env:
+          MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
+          MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME || secrets.MIDSCENE_MODEL_NAME }}
+          MIDSCENE_MODEL_BASE_URL: ${{ vars.MIDSCENE_MODEL_BASE_URL || secrets.MIDSCENE_MODEL_BASE_URL }}
+          MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY || secrets.MIDSCENE_MODEL_FAMILY }}
+          MIDSCENE_REPLANNING_CYCLE_LIMIT: '40'
+          MIDSCENE_RETRY: '0'
+        run: timeout --signal=TERM --kill-after=10s 220m npm test
+
+      - name: Upload Midscene test report
+        id: upload-results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: midscene-results
+          path: |
+            tests/midscene/midscene_run/
+            tests/midscene/.midscene/
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Write test results to Summary
+        if: always()
+        run: |
+          {
+            for result in tests/midscene/.midscene/test-results/*/result.md; do
+              [ -f "$result" ] || continue
+              # Pages adds an online link after deployment succeeds.
+              sed '/^\[Open the Midscene Test report ↗\](/d' "$result"
+              echo
+            done
+            echo "[Download test artifacts]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID#artifacts)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  publish-pages:
+    name: Publish Midscene Pages report
+    needs: midscene
+    if: >-
+      always() && !cancelled() &&
+      vars.MIDSCENE_PUBLISH_REPO == github.repository &&
+      (github.event_name != 'workflow_dispatch' || inputs.publish_pages) &&
+      needs.midscene.outputs.report-artifact-name != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Activate Node.js 24
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+
+      - name: Configure GitHub Pages
+        id: pages
+        continue-on-error: true
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+        with:
+          enablement: false
+
+      - name: Explain unavailable Pages configuration
+        if: steps.pages.outcome != 'success'
+        run: |
+          echo "::warning::GitHub Pages is unavailable. A maintainer must select Settings > Pages > Build and deployment > Source > GitHub Actions."
+
+      - name: Download Midscene test reports
+        if: steps.pages.outcome == 'success'
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: ${{ needs.midscene.outputs.report-artifact-name }}
+          path: ${{ runner.temp }}/midscene-reports/midscene-results
+
+      - name: Find the latest published report artifact
+        id: previous-report
+        if: steps.pages.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tests/midscene/scripts/trusted-report-runs.mjs find-previous
+
+      - name: Download the latest published report
+        if: steps.pages.outcome == 'success' && steps.previous-report.outputs.run_id != ''
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: ${{ steps.previous-report.outputs.name }}
+          run-id: ${{ steps.previous-report.outputs.run_id }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/previous-pages-artifact
+
+      - name: Extract the latest published report
+        if: steps.pages.outcome == 'success' && steps.previous-report.outputs.run_id != ''
+        run: |
+          mkdir -p "$RUNNER_TEMP/previous-pages"
+          tar -xf "$RUNNER_TEMP/previous-pages-artifact/artifact.tar" -C "$RUNNER_TEMP/previous-pages"
+
+      - name: Prepare published report
+        id: prepare-report
+        if: steps.pages.outcome == 'success'
+        run: |
+          node tests/midscene/scripts/prepare-pages-site.mjs \
+            --site "$RUNNER_TEMP/midscene-pages" \
+            --reports "$RUNNER_TEMP/midscene-reports" \
+            --run-id "$GITHUB_RUN_ID" \
+            --previous "$RUNNER_TEMP/previous-pages"
+
+      - name: Upload GitHub Pages report
+        id: upload-pages
+        if: steps.prepare-report.outputs.report_path != ''
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          name: midscene-e2e-report-pages-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/midscene-pages
+          retention-days: 90
+
+      - name: Deploy report to GitHub Pages
+        id: deployment
+        if: steps.upload-pages.outcome == 'success'
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        with:
+          artifact_name: midscene-e2e-report-pages-${{ github.run_attempt }}
+
+      - name: Add per-case screenshots and report links to Summary
+        if: steps.deployment.outcome == 'success' && steps.prepare-report.outputs.report_path != ''
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+          PRODUCER_RESULT: ${{ needs.midscene.result }}
+        run: |
+          node tests/midscene/scripts/render-ci-summary.mjs \
+            --reports "$RUNNER_TEMP/midscene-reports" \
+            --pages-url "$PAGE_URL" \
+            --run-id "$GITHUB_RUN_ID" \
+            --producer-result "$PRODUCER_RESULT" \
+            --output "$GITHUB_STEP_SUMMARY"
+
+      - name: Explain incomplete native report
+        if: steps.prepare-report.outcome == 'success' && steps.prepare-report.outputs.report_path == ''
+        run: |
+          echo "The run did not produce a complete native HTML report. Pages was not replaced. Download the test artifacts from the workflow to inspect partial results." >> "$GITHUB_STEP_SUMMARY"

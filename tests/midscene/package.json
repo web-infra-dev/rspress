@@ -1,0 +1,31 @@
+{
+  "name": "rspress-midscene-e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check:model": "midscene-test model verify",
+    "collect": "node scripts/collect-cases.mjs",
+    "serve": "node scripts/serve.mjs",
+    "test": "midscene-test",
+    "test:summary": "node --test scripts/*.test.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@babel/standalone": "7.22.20",
+    "@midscene/test": "1.15.3",
+    "@midscene/web": "1.15.3",
+    "@types/node": "^24.0.0",
+    "dotenv": "^16.4.5",
+    "monaco-editor": "0.43.0",
+    "playwright": "1.63.0",
+    "sharp": "0.34.5",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "allowScripts": {
+    "sharp@0.34.5": true,
+    "esbuild@0.28.2": true
+  }
+}

@@ -28,24 +28,14 @@ test.describe('React 19', async () => {
     }
   });
 
-  test('Index page', async ({ page }) => {
+  test('renders the installed React and router versions', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
-    const h1 = page.locator('h1');
-    await expect(h1).toContainText('Hello world');
     const body = page.locator('body');
     await expect(body).toContainText(
       `react-router-dom ${getPackageVersion('react-router-dom')}`,
     );
     await expect(body).toContainText(`react ${getPackageVersion('react')}`);
-  });
-
-  test('404 page', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/404`, {
-      waitUntil: 'networkidle',
-    });
-    // find the 404 text in the page
-    await expect(page.locator('body')).toContainText('404');
   });
 });

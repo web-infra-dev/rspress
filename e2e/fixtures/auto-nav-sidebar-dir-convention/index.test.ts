@@ -1,5 +1,5 @@
 import { expect, test } from '@e2e/test';
-import { getSidebar, getSidebarTexts } from '../../utils/getSideBar';
+import { getSidebar } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('Auto nav and sidebar dir convention', async () => {
@@ -15,29 +15,6 @@ test.describe('Auto nav and sidebar dir convention', async () => {
     if (app) {
       await killProcess(app);
     }
-  });
-
-  test('Should render sidebar with index convention correctly', async ({
-    page,
-  }) => {
-    await page.goto(`http://localhost:${appPort}/guide/`, {
-      waitUntil: 'networkidle',
-    });
-
-    const sidebarTexts = await getSidebarTexts(page);
-    expect(sidebarTexts.length).toBe(8);
-    expect(sidebarTexts.join(',')).toEqual(
-      [
-        '/guide Page',
-        'index md convention',
-        'index mdx convention',
-        'same name',
-        'index in meta',
-        'Index in meta',
-        'no meta md',
-        'no meta mdx',
-      ].join(','),
-    );
   });
 
   test('Should click the directory and navigate to the index page', async ({
@@ -89,7 +66,7 @@ test.describe('Auto nav and sidebar dir convention', async () => {
     expect(nestedContexts).toEqual(['context-index-in-meta']);
   });
 
-  test('/api/config/index.html /api/config/index /api/config should be the same page', async ({
+  test('preserves sidebar cardinality and active DOM identity for route aliases', async ({
     page,
   }) => {
     async function getSidebarLength(): Promise<number> {
