@@ -202,7 +202,8 @@ export default defineTestProject<Context, ProjectContext>({
   test: {
     maxConcurrentProjects: 1,
     maxConcurrentFiles: concurrency,
-    testTimeout: 8 * 60_000,
+    // Includes bounded model-request cooldowns; assertions and case retries are unchanged.
+    testTimeout: 15 * 60_000,
   },
   projects: [
     {

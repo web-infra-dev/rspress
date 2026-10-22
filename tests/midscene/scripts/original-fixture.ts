@@ -16,6 +16,7 @@ import {
 import {
   originalFixtures,
   fixtureAliases,
+  fixtureSharedDirectories,
   fixtureMutations,
   fixturePolicy,
   type FixtureUpdatePart,
@@ -74,6 +75,7 @@ export class OriginalFixture {
   private fixture?: string;
   private origin?: string;
   private scratch?: string;
+  private scratchRoot?: string;
   private production = false;
 
   async open(
@@ -105,9 +107,18 @@ export class OriginalFixture {
     if (policy.isolated || this.isolateAll) {
       const parent = path.join(this.repository, 'tests/midscene/.fixture');
       await mkdir(parent, { recursive: true });
-      this.scratch = await mkdtemp(
+      this.scratchRoot = await mkdtemp(
         path.join(parent, `${fixture.replaceAll('/', '-')}-`),
       );
+      this.scratch = path.join(this.scratchRoot, directoryName);
+      await mkdir(path.dirname(this.scratch), { recursive: true });
+      for (const sibling of fixtureSharedDirectories[fixture] ?? []) {
+        await symlink(
+          path.join(this.repository, 'e2e/fixtures', sibling),
+          path.join(this.scratchRoot, sibling),
+          'dir',
+        );
+      }
       await cp(source, this.scratch, {
         recursive: true,
         filter: filename =>
@@ -273,10 +284,11 @@ export class OriginalFixture {
         child.once('exit', onExit);
         child.kill('SIGTERM');
       });
-    if (this.scratch) {
-      const scratch = this.scratch;
+    if (this.scratchRoot) {
+      const scratchRoot = this.scratchRoot;
+      this.scratchRoot = undefined;
       this.scratch = undefined;
-      await rm(scratch, { recursive: true, force: true });
+      await rm(scratchRoot, { recursive: true, force: true });
     }
   }
 }

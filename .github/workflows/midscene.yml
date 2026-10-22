@@ -32,7 +32,7 @@ on:
       speed_modes:
         description: JSON list of baseline, prompt, parallel, combined
         type: string
-        default: '["baseline","prompt","parallel","combined"]'
+        default: '["parallel"]'
       speed_ids:
         description: Optional comma-separated case IDs (empty runs all cases)
         type: string
@@ -112,6 +112,9 @@ jobs:
     timeout-minutes: 240
     env:
       HEADLESS: 'true'
+      # Allow the endpoint's minute-based quota to recover; case retries stay off.
+      MIDSCENE_MODEL_RETRY_COUNT: '4'
+      MIDSCENE_MODEL_RETRY_INTERVAL: '65000'
       # The model endpoint is reachable over IPv4; avoid family-race timeouts.
       NODE_OPTIONS: '--dns-result-order=ipv4first --no-network-family-autoselection'
     steps:
@@ -211,6 +214,8 @@ jobs:
         mode: ${{ fromJSON(inputs.speed_modes) }}
     env:
       HEADLESS: 'true'
+      MIDSCENE_MODEL_RETRY_COUNT: '4'
+      MIDSCENE_MODEL_RETRY_INTERVAL: '65000'
       NODE_OPTIONS: '--dns-result-order=ipv4first --no-network-family-autoselection'
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -238,7 +243,7 @@ jobs:
           MIDSCENE_MODEL_BASE_URL: ${{ vars.MIDSCENE_MODEL_BASE_URL || secrets.MIDSCENE_MODEL_BASE_URL }}
           MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY || secrets.MIDSCENE_MODEL_FAMILY }}
         run: npm run check:model
-      - name: Measure all cases with no retries
+      - name: Measure all cases without case retries
         working-directory: tests/midscene
         env:
           SPEED_MODE: ${{ matrix.mode }}

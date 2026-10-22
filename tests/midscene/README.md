@@ -279,8 +279,9 @@ this integration.
 ## Isolated speed experiment
 
 On the `benchmark/midscene-speed-20261022` fork branch, dispatch this workflow
-with `speed_benchmark=true`. It runs four variants sequentially on identical
-Node 24 / Midscene 1.16.5 runners, with retries disabled:
+with `speed_benchmark=true`. It defaults to the five-file `parallel` variant.
+Select other variants with `speed_modes`; selected variants run separately on
+Node 24 / Midscene 1.16.5 runners, with case retries disabled:
 
 | Mode     | Concurrent files | Assertion handling                      |
 | -------- | ---------------- | --------------------------------------- |
@@ -301,6 +302,12 @@ The Summary and `speed-metrics-*` artifacts record elapsed time, pass/fail count
 actual model calls, per-case timings, and observed file concurrency. Incomplete
 usage metrics are labeled explicitly. `speed-reports-*` contains native reports.
 This experiment never publishes or replaces the normal Pages report.
+
+CI allows four model-request retries with a 65-second interval so a minute-based
+RPM/TPM quota can recover. This uses Midscene's native request retry, not a case
+rerun or a retry of a failed assertion. The 15-minute case deadline includes
+these bounded waits. Request retry settings are saved in the measurement JSON;
+compare passing runs with the same settings before claiming a speedup.
 
 ## CI evidence table
 

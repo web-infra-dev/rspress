@@ -300,6 +300,50 @@ test('fixture updates cannot write before an isolated HMR fixture is opened', as
   await assert.rejects(fixture.update('article'), /isolated HMR fixture first/);
 });
 
+test('isolated fixtures preserve relative imports from shared sibling fixtures', async t => {
+  const root = await realpath(
+    await mkdtemp(path.join(tmpdir(), 'rspress-sibling-import-')),
+  );
+  const fixtures = Array.from(
+    { length: 5 },
+    () => new OriginalFixture(root, true),
+  );
+  t.after(async () => {
+    await Promise.all(fixtures.map(fixture => fixture.close()));
+    await rm(root, { recursive: true, force: true });
+  });
+  await mkdir(path.join(root, 'packages/core/bin'), { recursive: true });
+  await mkdir(path.join(root, 'e2e/fixtures/multi-version-global-sidebar'), {
+    recursive: true,
+  });
+  await mkdir(path.join(root, 'e2e/fixtures/multi-version'), {
+    recursive: true,
+  });
+  await writeFile(
+    path.join(root, 'e2e/fixtures/multi-version/Navigation.tsx'),
+    'shared navigation',
+  );
+  await writeFile(
+    path.join(root, 'packages/core/bin/rspress.js'),
+    `
+    const { createServer } = require('node:http');
+    const { readFileSync } = require('node:fs');
+    const component = readFileSync('../multi-version/Navigation.tsx', 'utf8');
+    const server = createServer((_request, response) => response.end(component));
+    server.listen(Number(process.argv.at(-1)), '127.0.0.1');
+    process.on('SIGTERM', () => server.close(() => process.exit()));
+  `,
+  );
+  const origins = await Promise.all(
+    fixtures.map(fixture => fixture.open('multi-version-global-sidebar')),
+  );
+  for (const origin of origins)
+    assert.equal(await (await fetch(origin)).text(), 'shared navigation');
+  await fixtures[0].close();
+  for (const origin of origins.slice(1))
+    assert.equal(await (await fetch(origin)).text(), 'shared navigation');
+});
+
 test('parallel production fixtures have independent build output and teardown', async t => {
   const root = await realpath(
     await mkdtemp(path.join(tmpdir(), 'rspress-parallel-build-')),
@@ -465,6 +509,7 @@ test('preview and playground updates are isolated and reject mismatched mutation
             root,
             'tests/midscene/.fixture',
             copies[0],
+            name,
             'doc',
             filename,
           ),

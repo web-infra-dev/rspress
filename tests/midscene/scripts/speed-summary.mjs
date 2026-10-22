@@ -20,7 +20,7 @@ const baseline = reports.find(
 );
 console.log('## Midscene speed experiment\n');
 console.log(
-  'Same cases and framework version; retries disabled. Prompt-merged checks are **not independent assertions**. A faster failed run is not an equivalent passing result.\n',
+  'Case retries are disabled; model-request retries are recorded separately below. Prompt-merged checks are **not independent assertions**. Compare passing runs with matching versions and retry settings; a faster failed run is not an equivalent passing result.\n',
 );
 console.log(
   '| Mode | Version | Passed / total | Not run | Time | Relative speed | Peak files | Model calls | Merged assertions |',
@@ -36,6 +36,10 @@ for (const report of reports) {
     `| ${report.mode} | ${report.midsceneVersion} | ${summary ? `${summary.passed}/${summary.total}` : 'runner failed'} | ${summary?.notRun ?? 'unknown'} | ${(report.wallMs / 60_000).toFixed(2)} min | ${baseline ? (baseline.wallMs / report.wallMs).toFixed(2) + '×' : 'pending'} | ${report.maxActiveFiles} | ${metrics ? metrics.modelCallCount + (completeCalls ? '' : ' (partial/unknown)') : 'unknown'} | ${report.manifest.reduce((sum, item) => sum + item.mergedAssertions, 0)} |`,
   );
 }
+for (const report of reports)
+  console.log(
+    `\n${report.mode}: model-request retries = ${report.modelRetryCount ?? 'not recorded'}, interval = ${report.modelRetryIntervalMs ?? 'not recorded'} ms.`,
+  );
 if (!reports.length)
   console.log(
     '\nNo completed measurement file. Inspect the failed setup/execution step.',

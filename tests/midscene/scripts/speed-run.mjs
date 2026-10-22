@@ -59,6 +59,10 @@ const report = {
   midsceneVersion: lock.packages['node_modules/@midscene/test'].version,
   model: process.env.MIDSCENE_MODEL_NAME,
   family: process.env.MIDSCENE_MODEL_FAMILY,
+  modelRetryCount: Number(process.env.MIDSCENE_MODEL_RETRY_COUNT ?? '1'),
+  modelRetryIntervalMs: Number(
+    process.env.MIDSCENE_MODEL_RETRY_INTERVAL ?? '2000',
+  ),
   wallMs,
   durationMs: result?.durationMs,
   summary: result?.summary,
@@ -72,15 +76,28 @@ const report = {
     durationMs: item.run?.durationMs,
     notRunReason: item.notRunReason,
     errors: [
-      ...(item.run?.executionErrors ?? []),
-      ...(item.run?.teardownErrors ?? []),
+      ...(item.run?.executionErrors ?? []).map(error => ({
+        ...error,
+        name: error.name,
+        message: error.message,
+      })),
+      ...(item.run?.teardownErrors ?? []).map(error => ({
+        ...error,
+        name: error.name,
+        message: error.message,
+      })),
       ...[
         ...(item.run?.beforeEach ?? []),
         ...(item.run?.steps ?? []),
         ...(item.run?.afterEach ?? []),
       ]
         .filter(step => step.error)
-        .map(step => ({ node: step.node, ...step.error })),
+        .map(step => ({
+          node: step.node,
+          ...step.error,
+          name: step.error.name,
+          message: step.error.message,
+        })),
     ],
   })),
   manifest: prepared.manifest,

@@ -67,6 +67,11 @@ export const originalFixtures = [
   'production',
 ] as const;
 
+// These source-only siblings are imported by a fixture's configuration.
+export const fixtureSharedDirectories: Record<string, readonly string[]> = {
+  'multi-version-global-sidebar': ['multi-version'],
+};
+
 export const fixtureAliases: Record<
   string,
   { directory: string; config?: string; args?: string[] }
