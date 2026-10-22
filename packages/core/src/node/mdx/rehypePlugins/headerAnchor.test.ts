@@ -33,6 +33,7 @@ describe('rehypeHeadAnchor', () => {
       pluginDriver: null,
       routeService: null,
     });
+    expect(result).toContain('tabIndex: "-1"');
     expect(result).toMatchSnapshot();
   });
 

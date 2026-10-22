@@ -65,6 +65,7 @@ function create(node: Element): Element {
     properties: {
       class: 'rp-header-anchor',
       ariaHidden: 'true',
+      tabIndex: -1,
       href: `#${node.properties!.id}`,
     },
     children: [
