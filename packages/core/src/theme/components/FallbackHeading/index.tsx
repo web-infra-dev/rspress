@@ -50,7 +50,12 @@ export function FallbackHeading({
     titleSlug && (
       <Element id={titleSlug}>
         <span {...renderInlineMarkdown(title)}></span>
-        <A className="rp-header-anchor" href={`#${titleSlug}`} aria-hidden>
+        <A
+          className="rp-header-anchor"
+          href={`#${titleSlug}`}
+          aria-hidden
+          tabIndex={-1}
+        >
           #
         </A>
       </Element>
