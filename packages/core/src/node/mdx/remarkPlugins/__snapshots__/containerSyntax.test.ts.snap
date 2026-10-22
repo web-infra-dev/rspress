@@ -1046,6 +1046,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#please-read-this-note",
         children: "#"
       }), "Please read this note!"]

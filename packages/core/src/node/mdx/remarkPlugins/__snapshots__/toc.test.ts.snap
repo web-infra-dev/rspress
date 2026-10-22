@@ -21,6 +21,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#link",
         children: "#"
       }), "link"]
@@ -29,6 +30,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#this-is-link-rsbuild",
         children: "#"
       }), "this is link ", _jsx(_components.a, {
@@ -42,6 +44,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#this-is-link",
         children: "#"
       }), "this is link ", _jsx(Link, {
@@ -52,6 +55,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#this-is-bold-link-rsbuild",
         children: "#"
       }), "this is bold link ", _jsx(_components.a, {
@@ -67,6 +71,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#this-is-code-link-rsbuild",
         children: "#"
       }), "this is code link ", _jsx(_components.a, {
@@ -82,6 +87,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#this-is-bold-code-link-rsbuild",
         children: "#"
       }), "this is bold code link ", _jsx(_components.a, {
