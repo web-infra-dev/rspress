@@ -11,8 +11,8 @@ test('normal runs remain serial and the parallel benchmark defaults to five file
   assert.equal(benchmarkConcurrency('combined'), 5);
 });
 
-test('parallel benchmarks support ten and fifteen files without changing serial controls', () => {
-  for (const value of ['5', '10', '15']) {
+test('parallel benchmarks support higher concurrency without changing serial controls', () => {
+  for (const value of ['5', '10', '15', '20', '30']) {
     for (const mode of ['parallel', 'combined']) {
       assert.equal(benchmarkConcurrency(mode, value), Number(value));
     }
@@ -23,7 +23,17 @@ test('parallel benchmarks support ten and fifteen files without changing serial 
 });
 
 test('invalid concurrency and unknown modes fail before model work', () => {
-  for (const value of ['', '0', '-1', '2', '5.5', '16', 'Infinity', 'NaN']) {
+  for (const value of [
+    '',
+    '0',
+    '-1',
+    '2',
+    '5.5',
+    '16',
+    '31',
+    'Infinity',
+    'NaN',
+  ]) {
     assert.throws(() => parseFileConcurrency(value), /File concurrency/);
   }
   assert.throws(

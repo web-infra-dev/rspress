@@ -280,18 +280,18 @@ this integration.
 
 On the `benchmark/midscene-speed-20261022` fork branch, dispatch this workflow
 with `speed_benchmark=true`. It defaults to the five-file `parallel` variant.
-Set `speed_concurrency` to `10` or `15` to test higher parallelism; the default
+Set `speed_concurrency` to `10`, `15`, `20`, or `30` to test higher parallelism; the default
 remains `5`. Serial controls always use one file. Locally, use
 `MIDSCENE_SPEED_CONCURRENCY=10 node scripts/speed-run.mjs parallel`.
 Select other variants with `speed_modes`; selected variants run separately on
 Node 24 / Midscene 1.16.5 runners, with case retries disabled:
 
-| Mode     | Concurrent files | Assertion handling                      |
-| -------- | ---------------- | --------------------------------------- |
-| baseline | 1                | Independent `aiAssert` nodes            |
-| prompt   | 1                | Adjacent assertions appended to `aiAct` |
-| parallel | 5, 10, or 15     | Independent `aiAssert` nodes            |
-| combined | 5, 10, or 15     | Adjacent assertions appended to `aiAct` |
+| Mode     | Concurrent files     | Assertion handling                      |
+| -------- | -------------------- | --------------------------------------- |
+| baseline | 1                    | Independent `aiAssert` nodes            |
+| prompt   | 1                    | Adjacent assertions appended to `aiAct` |
+| parallel | 5, 10, 15, 20, or 30 | Independent `aiAssert` nodes            |
+| combined | 5, 10, 15, 20, or 30 | Adjacent assertions appended to `aiAct` |
 
 Each generated YAML file contains one original case; the original cases are
 unchanged. Native `fileSetup` gives each file its own page and browser context.

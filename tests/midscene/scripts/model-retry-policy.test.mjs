@@ -29,7 +29,7 @@ test('the benchmark defaults to five-file parallel execution, without serial con
   );
   const concurrency = workflow.on.workflow_dispatch.inputs.speed_concurrency;
   assert.equal(concurrency.default, '5');
-  assert.deepEqual(concurrency.options, ['5', '10', '15']);
+  assert.deepEqual(concurrency.options, ['5', '10', '15', '20', '30']);
   assert.match(
     workflow.jobs['speed-benchmark'].env.MIDSCENE_SPEED_CONCURRENCY,
     /inputs\.speed_concurrency/,

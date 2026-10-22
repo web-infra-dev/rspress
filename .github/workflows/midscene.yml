@@ -36,7 +36,7 @@ on:
       speed_concurrency:
         description: Concurrent files for parallel and combined experiments
         type: choice
-        options: ['5', '10', '15']
+        options: ['5', '10', '15', '20', '30']
         default: '5'
       speed_ids:
         description: Optional comma-separated case IDs (empty runs all cases)
