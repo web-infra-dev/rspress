@@ -16,6 +16,9 @@
     font-size: 14px;
     color: var(--rp-c-text-1);
     font-weight: 600;
+    // Wrap long section headers, including inline code, beside icons and tags.
+    // https://github.com/web-infra-dev/rspress/pull/3777
+    overflow-wrap: anywhere;
   }
 
   &__icon {
