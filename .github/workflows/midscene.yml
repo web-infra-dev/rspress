@@ -38,6 +38,11 @@ on:
         type: choice
         options: ['5', '10', '15', '20', '30']
         default: '5'
+      speed_timeout_minutes:
+        description: Stop an experiment that exceeds this test execution budget
+        type: choice
+        options: ['10', '220']
+        default: '220'
       speed_ids:
         description: Optional comma-separated case IDs (empty runs all cases)
         type: string
@@ -253,6 +258,7 @@ jobs:
         working-directory: tests/midscene
         env:
           SPEED_MODE: ${{ matrix.mode }}
+          SPEED_TIME_LIMIT: ${{ inputs.speed_timeout_minutes || '220' }}
           MIDSCENE_SPEED_IDS: ${{ inputs.speed_ids }}
           MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
           MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME || secrets.MIDSCENE_MODEL_NAME }}
@@ -260,7 +266,9 @@ jobs:
           MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY || secrets.MIDSCENE_MODEL_FAMILY }}
           MIDSCENE_REPLANNING_CYCLE_LIMIT: '40'
           MIDSCENE_RETRY: '0'
-        run: timeout --signal=TERM --kill-after=10s 220m node scripts/speed-run.mjs "$SPEED_MODE"
+        run: |
+          case "$SPEED_TIME_LIMIT" in 10|220) ;; *) echo 'Invalid speed time limit'; exit 1 ;; esac
+          timeout --signal=TERM --kill-after=60s "${SPEED_TIME_LIMIT}m" node scripts/speed-run.mjs "$SPEED_MODE"
       - name: Upload measurements
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

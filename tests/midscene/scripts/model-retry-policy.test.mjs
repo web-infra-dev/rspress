@@ -39,3 +39,17 @@ test('the benchmark defaults to five-file parallel execution, without serial con
     undefined,
   );
 });
+
+test('the ten-minute performance budget interrupts rather than accepting partial coverage', () => {
+  const budget = workflow.on.workflow_dispatch.inputs.speed_timeout_minutes;
+  assert.equal(budget.default, '220');
+  assert.deepEqual(budget.options, ['10', '220']);
+  const step = workflow.jobs['speed-benchmark'].steps.find(
+    step => step.name === 'Measure all cases without case retries',
+  );
+  assert.equal(step['continue-on-error'], undefined);
+  assert.match(step.env.SPEED_TIME_LIMIT, /inputs\.speed_timeout_minutes/);
+  assert.match(step.run, /case "\$SPEED_TIME_LIMIT" in 10\|220\)/);
+  assert.match(step.run, /timeout --signal=TERM --kill-after=60s/);
+  assert.doesNotMatch(step.run, /\|\| true/);
+});

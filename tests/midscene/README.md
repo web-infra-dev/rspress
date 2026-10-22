@@ -314,6 +314,11 @@ these bounded waits. Request retry settings are saved in the measurement JSON;
 compare passing runs with the same settings before claiming a speedup.
 Higher concurrency may increase quota waits instead of reducing elapsed time;
 compare full passing runs and their retry logs before changing normal CI defaults.
+For a bounded performance experiment, set `speed_timeout_minutes=10`. The runner
+receives SIGTERM after ten minutes and has up to sixty seconds to finalize its
+interrupted report before forced termination. A deadline expiry fails the job;
+partially executed cases do not count as a passing result. Installation and report
+upload time are outside this test execution budget. The default remains 220 minutes.
 
 ## CI evidence table
 
