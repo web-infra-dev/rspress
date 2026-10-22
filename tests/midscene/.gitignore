@@ -7,3 +7,5 @@ site/
 fixture/doc_build/
 fixture/.rspress/
 .fixture/
+.speed-cases/
+speed-results/

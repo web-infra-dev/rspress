@@ -63,8 +63,10 @@ async function reservePorts(count: number): Promise<number[]> {
 
 export class OriginalFixture {
   private readonly repository: string;
-  constructor(repository: string) {
+  private readonly isolateAll: boolean;
+  constructor(repository: string, isolateAll = false) {
     this.repository = repository;
+    this.isolateAll = isolateAll;
   }
   private child?: ChildProcess;
   private fixture?: string;
@@ -98,7 +100,7 @@ export class OriginalFixture {
     ];
     const source = path.join(this.repository, 'e2e/fixtures', directoryName);
     let directory = source;
-    if (policy.isolated) {
+    if (policy.isolated || this.isolateAll) {
       const parent = path.join(this.repository, 'tests/midscene/.fixture');
       await mkdir(parent, { recursive: true });
       this.scratch = await mkdtemp(path.join(parent, `${fixture}-`));

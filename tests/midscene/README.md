@@ -150,7 +150,7 @@ and two duplicate result rows. These faults changed only the temporary browser
 session; all four query/count/text checks remain in the case.
 
 This isolated npm package uses
-`@midscene/test` 1.15.3, not Vitest. Each case starts in a fresh browser context.
+`@midscene/test` 1.16.5, not Vitest. Each case starts in a fresh browser context.
 `app.open` only prepares the browser; all product interactions use `aiAct`.
 Separate `aiAssert` steps check outcomes instead of treating an AI action's completion
 as proof of success. Browser requests stay on the local fixture origin; preview
@@ -269,12 +269,38 @@ Older Summary links expire when their run is pruned; artifacts expire after 14 d
 
 ## Dependency audit
 
-`npm audit` reports advisories in the current Midscene 1.15.3 dependency tree,
+`npm audit` previously reported advisories in the Midscene 1.15.3 dependency tree,
 including image processing and Puppeteer archive dependencies. These packages
 stay in this isolated test harness, not the product's runtime dependencies.
 Use synthetic local fixtures and a dedicated quota-limited model key. Do not run
 `npm audit fix --force`: its suggested framework downgrades are incompatible with
 this integration.
+
+## Isolated speed experiment
+
+On the `benchmark/midscene-speed-20261022` fork branch, dispatch this workflow
+with `speed_benchmark=true`. It runs four variants sequentially on identical
+Node 24 / Midscene 1.16.5 runners, with retries disabled:
+
+| Mode     | Concurrent files | Assertion handling                      |
+| -------- | ---------------- | --------------------------------------- |
+| baseline | 1                | Independent `aiAssert` nodes            |
+| prompt   | 1                | Adjacent assertions appended to `aiAct` |
+| parallel | 5                | Independent `aiAssert` nodes            |
+| combined | 5                | Adjacent assertions appended to `aiAct` |
+
+Each generated YAML file contains one original case; the original cases are
+unchanged. Native `fileSetup` gives each file its own page and browser context.
+Assertions before an action or after fixture updates remain independent.
+The merged mode is experimental: asking an action to check a result does not
+provide the same failure-detection guarantee as an independent assertion.
+
+All variants use the same file isolation, including the serial baseline.
+Compare against that fresh baseline, not timings from older framework versions.
+The Summary and `speed-metrics-*` artifacts record elapsed time, pass/fail counts,
+actual model calls, per-case timings, and observed file concurrency. Incomplete
+usage metrics are labeled explicitly. `speed-reports-*` contains native reports.
+This experiment never publishes or replaces the normal Pages report.
 
 ## CI evidence table
 
