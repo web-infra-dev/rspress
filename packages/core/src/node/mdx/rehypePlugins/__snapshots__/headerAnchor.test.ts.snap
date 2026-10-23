@@ -23,6 +23,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#guide",
         children: "#"
       }), "Guide"]
@@ -31,6 +32,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#custom-id",
         children: "#"
       }), "title 1"]
@@ -39,6 +41,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#custom-id",
         children: "#"
       }), "title 1"]
@@ -47,6 +50,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#title-2",
         children: "#"
       }), "title 2"]
@@ -55,6 +59,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#title-2-1",
         children: "#"
       }), "title 2"]
@@ -63,6 +68,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#title-2-2",
         children: "#"
       }), _jsx(_components.code, {
@@ -73,6 +79,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#title-2-3",
         children: "#"
       }), "Title 2"]
@@ -81,6 +88,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#title-2-4",
         children: "#"
       }), _jsx(_components.strong, {
@@ -91,6 +99,7 @@ function _createMdxContent(props) {
       children: [_jsx(_components.a, {
         className: "rp-header-anchor",
         "aria-hidden": "true",
+        tabIndex: "-1",
         href: "#title-2-5",
         children: "#"
       }), _jsx(_components.em, {
@@ -135,6 +144,7 @@ function _createMdxContent(props) {
     children: [_jsx(_components.a, {
       className: "rp-header-anchor",
       "aria-hidden": "true",
+      tabIndex: "-1",
       href: "#this-is-bold-link-rsbuild",
       children: "#"
     }), "this is bold link ", _jsx(_components.a, {
@@ -183,6 +193,7 @@ function _createMdxContent(props) {
     children: [_jsx(_components.a, {
       className: "rp-header-anchor",
       "aria-hidden": "true",
+      tabIndex: "-1",
       href: "#literal-inner-text-suffix",
       children: "#"
     }), _jsx(_components.strong, {
@@ -226,6 +237,7 @@ function _createMdxContent(props) {
     children: [_jsx(_components.a, {
       className: "rp-header-anchor",
       "aria-hidden": "true",
+      tabIndex: "-1",
       href: "#hello-world-inline-code",
       children: "#"
     }), "Hello World ", _jsx(_components.code, {
@@ -269,6 +281,7 @@ function _createMdxContent(props) {
     children: [_jsx(_components.a, {
       className: "rp-header-anchor",
       "aria-hidden": "true",
+      tabIndex: "-1",
       href: "#custom-id",
       children: "#"
     }), "Hello World ", _jsx(_components.code, {
@@ -312,6 +325,7 @@ function _createMdxContent(props) {
     children: [_jsx(_components.a, {
       className: "rp-header-anchor",
       "aria-hidden": "true",
+      tabIndex: "-1",
       href: "#hello-world",
       children: "#"
     }), "Hello World ", _jsx(Badge, {

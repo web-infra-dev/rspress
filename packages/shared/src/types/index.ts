@@ -217,10 +217,18 @@ export interface UserConfig {
    */
   root?: string;
   /**
-   * Path to the logo file in nav bar.
+   * Path to the logo file in nav bar. The object form can also provide the
+   * image's intrinsic dimensions to avoid layout shifts.
    * @default ''
    */
-  logo?: string | { dark: string; light: string };
+  logo?:
+    | string
+    | {
+        dark: string;
+        light: string;
+        width?: number;
+        height?: number;
+      };
   /**
    * The text of the logo in nav bar.
    * @default ''
@@ -475,7 +483,14 @@ export interface SiteData {
   description: string;
   icon: string;
   themeConfig: NormalizedDefaultThemeConfig;
-  logo: string | { dark: string; light: string };
+  logo:
+    | string
+    | {
+        dark: string;
+        light: string;
+        width?: number;
+        height?: number;
+      };
   logoText: string;
   logoHref: string;
   search: SearchOptions;
@@ -615,7 +630,7 @@ export interface RouteOptions {
   excludeConvention?: string[];
   /**
    * use links without .html files
-   * @default false
+   * @default true
    */
   cleanUrls?: boolean;
   /**

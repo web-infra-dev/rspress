@@ -77,8 +77,8 @@ describe('built-in sitemap', () => {
       base: '/docs/',
     });
     const xml = await readSitemap();
-    expect(xml).toContain('<loc>https://example.com/docs/index.html</loc>');
-    expect(xml).toContain('<loc>https://example.com/docs/guide.html</loc>');
+    expect(xml).toContain('<loc>https://example.com/docs/</loc>');
+    expect(xml).toContain('<loc>https://example.com/docs/guide</loc>');
     expect(xml.match(/<url>/g)).toHaveLength(2);
     expect(xml).toContain(
       '<lastmod>' + (await stat(filepath)).mtime.toISOString() + '</lastmod>',
@@ -91,7 +91,7 @@ describe('built-in sitemap', () => {
   it('generates a sitemap by default', async () => {
     await generate({ siteOrigin: 'https://example.com' });
     expect(await readSitemap()).toContain(
-      '<loc>https://example.com/guide.html</loc>',
+      '<loc>https://example.com/guide</loc>',
     );
   });
 
@@ -110,7 +110,7 @@ describe('built-in sitemap', () => {
 
   it('preserves relative URLs when no origin is configured', async () => {
     await generate({ sitemap: {}, base: '/docs/' });
-    expect(await readSitemap()).toContain('<loc>/docs/guide.html</loc>');
+    expect(await readSitemap()).toContain('<loc>/docs/guide</loc>');
   });
 
   it.each(['https://custom.example/base', 'https://custom.example/base/'])(
@@ -134,9 +134,7 @@ describe('built-in sitemap', () => {
         },
       });
       const xml = await readSitemap();
-      expect(xml).toContain(
-        '<loc>https://custom.example/base/guide.html</loc>',
-      );
+      expect(xml).toContain('<loc>https://custom.example/base/guide</loc>');
       expect(xml).toContain(
         '<priority>0.8</priority><changefreq>weekly</changefreq>',
       );
@@ -156,7 +154,7 @@ describe('built-in sitemap', () => {
           output: { distPath: form === 'string' ? outDir : { root: outDir } },
         },
       });
-      expect(await readSitemap()).toContain('<loc>/guide.html</loc>');
+      expect(await readSitemap()).toContain('<loc>/guide</loc>');
     },
   );
 
@@ -170,7 +168,7 @@ describe('built-in sitemap', () => {
         },
       },
     });
-    expect(await readSitemap()).toContain('<loc>/guide.html</loc>');
+    expect(await readSitemap()).toContain('<loc>/guide</loc>');
   });
 
   it('uses sitemap options set by a plugin config hook', async () => {
@@ -186,7 +184,7 @@ describe('built-in sitemap', () => {
       ],
     });
     expect(await readSitemap()).toContain(
-      '<loc>https://plugin.example/guide.html</loc>',
+      '<loc>https://plugin.example/guide</loc>',
     );
   });
 
@@ -195,8 +193,8 @@ describe('built-in sitemap', () => {
     routeService.getRoutes = () => [route('/next')];
     await rsbuild.build();
     const xml = await readSitemap();
-    expect(xml).toContain('<loc>/next.html</loc>');
-    expect(xml).not.toContain('<loc>/guide.html</loc>');
+    expect(xml).toContain('<loc>/next</loc>');
+    expect(xml).not.toContain('<loc>/guide</loc>');
     expect(xml.match(/<url>/g)).toHaveLength(1);
   });
 
@@ -310,7 +308,7 @@ describe('built-in sitemap', () => {
           server: { publicDir: { name: publicDir, ...publicOptions } },
         },
       });
-      expect(await readSitemap()).toContain('/guide.html');
+      expect(await readSitemap()).toContain('/guide');
     },
   );
 
@@ -318,8 +316,8 @@ describe('built-in sitemap', () => {
     await generate();
     await generate({}, true, ['/next']);
     const xml = await readSitemap();
-    expect(xml).toContain('<loc>/next.html</loc>');
-    expect(xml).not.toContain('/guide.html');
+    expect(xml).toContain('<loc>/next</loc>');
+    expect(xml).not.toContain('/guide');
   });
 
   it.each([

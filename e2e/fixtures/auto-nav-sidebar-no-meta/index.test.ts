@@ -55,7 +55,7 @@ test.describe('auto nav and sidebar without metadata', async () => {
     await expect(configLink).toHaveCount(1);
     await configLink.first().click();
     await expect(page).toHaveURL(
-      `http://localhost:${appPort}/api/rspress-config/index.html`,
+      `http://localhost:${appPort}/api/rspress-config/`,
     );
   });
 });
