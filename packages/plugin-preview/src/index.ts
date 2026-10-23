@@ -12,6 +12,7 @@ import {
   removeTrailingSlash,
 } from '@rspress/core';
 import picocolors from 'picocolors';
+import { previewI18n } from '../static/i18n';
 import entryContent from '../static/iframe/entry?raw';
 import { PACKAGE_ROOT, STATIC_DIR } from './constants';
 import { generateEntry } from './generateEntry';
@@ -169,6 +170,12 @@ export function pluginPreview(options?: Options): RspressPlugin {
 
   return {
     name: '@rspress/plugin-preview',
+    i18nSource(source) {
+      return {
+        ...source,
+        ...previewI18n,
+      };
+    },
     config(config) {
       config.markdown = config.markdown || {};
       return config;

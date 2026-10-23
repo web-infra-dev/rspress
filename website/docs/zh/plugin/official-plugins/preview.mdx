@@ -205,6 +205,27 @@ pluginPreview({
 
 :::
 
+## 国际化
+
+刷新和打开按钮内置英文（`en`）、中文（`zh`）、日语（`ja`）、韩语（`ko`）、俄语（`ru`）和泰米尔语（`ta`）文案。你可以通过 [i18nSource](../../api/config/config-basic.mdx#i18nsource) 或 `i18n.json`，使用 `previewRefresh` 和 `previewOpen` 两个键覆盖文案或补充其他语言。语言代码需要与站点的语言配置完全一致，缺少翻译时回退到英文。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { pluginPreview } from '@rspress/plugin-preview';
+
+export default defineConfig({
+  plugins: [pluginPreview()],
+  i18nSource: {
+    previewRefresh: {
+      zh: '重新加载',
+    },
+    previewOpen: {
+      zh: '打开预览',
+    },
+  },
+});
+```
+
 ## 配置
 
 该插件接受一个配置对象，类型定义如下：
