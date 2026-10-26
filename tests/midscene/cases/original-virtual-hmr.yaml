@@ -17,7 +17,7 @@ cases:
       ]
     steps:
       - app.open: { fixture: hmr-lazy, path: /guide/test.html }
-      - aiAct: Find the bottom status row showing Translation before, Search hook before, and Count 0. Click its Count button once. Stay on this article.
+      - aiAct: Find the bottom status row showing Translation before, Search hook before, and the button Count 0. Click the Count 0 button and wait until its label changes to Count 1. Stop as soon as Count 1 is visible; do not click it again. Stay on this article.
       - aiAssert: Translation before, Search hook before, and Count 1 are visible in the global component.
       - fixture.update: { part: translation }
       - aiAct: Watch the Translation before text at the beginning of the bottom status row until that portion reads Translation after. The adjacent Search hook before text and Count 1 button remain in the same row; do not wait for them to disappear. Do not reload or navigate elsewhere; stop if the translation portion has not updated within 30 seconds.

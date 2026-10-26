@@ -3,12 +3,22 @@ import { mkdtemp, mkdir, writeFile, rm, realpath } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { OriginalFixture } from './original-fixture.ts';
+import { OriginalFixture, reservePorts } from './original-fixture.ts';
 import {
   fixtureMutations,
   fixturePolicy,
   originalFixtures,
 } from './original-fixture-data.ts';
+
+test('concurrent fixture starts never reuse released probe ports', async () => {
+  const first = (
+    await Promise.all(Array.from({ length: 60 }, () => reservePorts(2)))
+  ).flat();
+  const second = (
+    await Promise.all(Array.from({ length: 60 }, () => reservePorts(2)))
+  ).flat();
+  assert.equal(new Set([...first, ...second]).size, 240);
+});
 
 async function liveFixture(t, ignoreTerm = false) {
   const root = await mkdtemp(path.join(tmpdir(), 'rspress-signal-exit-'));

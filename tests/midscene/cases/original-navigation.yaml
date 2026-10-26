@@ -10,7 +10,8 @@ cases:
     tags: [original-nav]
     steps:
       - app.open: { fixture: nav-link-items, path: /, viewport: mobile }
-      - aiAct: Open the mobile navigation menu and follow NestedItems, Level1, Level2Nested, and Level3Item2. Do not use search or enter a URL.
+      - aiAct: Open the site navigation using the hamburger icon at the top RIGHT beside search. Do not click the separate Menu button below the header on the left; it opens the article sidebar. Wait until OnlyLink, OnlyItems, ItemsAndLink, and NestedItems are visible in the site navigation.
+      - aiAct: In the open site navigation, expand NestedItems, then Level1, then Level2Nested, and follow Level3Item2. Wait for the Level 3 item 2 article to open and the navigation to close. Do not use search, the article sidebar, or direct URL entry.
       - aiAssert: The article heading is Level 3 item 2 and the navigation menu is no longer covering it.
   - name: NAV-03 Switch language on an API overview
     tags: [original-i18n, replacement-batch-2-navigation]

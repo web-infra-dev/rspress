@@ -12,7 +12,7 @@ test('normal runs remain serial and the parallel benchmark defaults to five file
 });
 
 test('parallel benchmarks support higher concurrency without changing serial controls', () => {
-  for (const value of ['5', '10', '15', '20', '30', '60']) {
+  for (const value of ['5', '10', '15', '20', '30', '40', '60']) {
     for (const mode of ['parallel', 'combined']) {
       assert.equal(benchmarkConcurrency(mode, value), Number(value));
     }

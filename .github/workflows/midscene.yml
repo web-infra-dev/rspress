@@ -28,7 +28,7 @@ on:
       file_concurrency:
         description: Concurrent cases in the regular E2E run (with Pages reports)
         type: choice
-        options: ['1', '5', '10', '15', '20', '30', '60']
+        options: ['1', '5', '10', '15', '20', '30', '40', '60']
         default: '1'
       speed_benchmark:
         description: Run the isolated speed experiment (fork only, no Pages deployment)

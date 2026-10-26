@@ -31,24 +31,29 @@ export {
 const isRunning = (child: ChildProcess | undefined): child is ChildProcess =>
   !!child?.pid && child.exitCode === null && child.signalCode === null;
 
-async function reservePorts(count: number): Promise<number[]> {
+// Released probe ports must not be offered to another concurrently starting fixture.
+const allocatedPorts = new Set<number>();
+
+export async function reservePorts(count: number): Promise<number[]> {
   const reservations: ReturnType<typeof createServer>[] = [];
   const ports: number[] = [];
   try {
-    for (let index = 0; index < count; index++) {
+    while (ports.length < count) {
       const server = createServer();
       reservations.push(server);
-      ports.push(
-        await new Promise<number>((resolve, reject) => {
-          server.once('error', reject);
-          server.listen(0, '127.0.0.1', () => {
-            const address = server.address();
-            if (!address || typeof address === 'string')
-              return reject(new Error('No fixture port'));
-            resolve(address.port);
-          });
-        }),
-      );
+      const port = await new Promise<number>((resolve, reject) => {
+        server.once('error', reject);
+        server.listen(0, '127.0.0.1', () => {
+          const address = server.address();
+          if (!address || typeof address === 'string')
+            return reject(new Error('No fixture port'));
+          resolve(address.port);
+        });
+      });
+      if (!allocatedPorts.has(port)) {
+        allocatedPorts.add(port);
+        ports.push(port);
+      }
     }
     return ports;
   } finally {
