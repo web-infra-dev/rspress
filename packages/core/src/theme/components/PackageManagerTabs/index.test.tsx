@@ -7,6 +7,12 @@ rs.mock('@rspress/core/theme', () => ({
   getCustomMDXComponent: () => ({
     pre: 'pre',
   }),
+  IconBun: 'bun',
+  IconDeno: 'deno',
+  IconNpm: 'npm',
+  IconPnpm: 'pnpm',
+  IconYarn: 'yarn',
+  SvgWrapper: () => null,
   Tab: ({ children }: { children: ReactNode }) => children,
   Tabs: ({ children }: { children: ReactNode }) => children,
 }));

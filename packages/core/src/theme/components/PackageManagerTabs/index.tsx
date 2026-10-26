@@ -1,10 +1,15 @@
-import { getCustomMDXComponent, Tab, Tabs } from '@rspress/core/theme';
+import {
+  getCustomMDXComponent,
+  IconBun,
+  IconDeno,
+  IconNpm,
+  IconPnpm,
+  IconYarn,
+  SvgWrapper,
+  Tab,
+  Tabs,
+} from '@rspress/core/theme';
 import { type ReactNode, useMemo } from 'react';
-import { Bun } from './icons/Bun';
-import { Deno } from './icons/Deno';
-import { Npm } from './icons/Npm';
-import { Pnpm } from './icons/Pnpm';
-import { Yarn } from './icons/Yarn';
 
 export type PackageManagerTabProps = (
   | {
@@ -143,11 +148,11 @@ export function PackageManagerTabs({
   let commandInfo: Record<string, string>;
   // Init Icons
   const packageMangerToIcon: Record<string, ReactNode> = {
-    npm: <Npm />,
-    yarn: <Yarn />,
-    pnpm: <Pnpm />,
-    bun: <Bun />,
-    deno: <Deno />,
+    npm: <SvgWrapper icon={IconNpm} />,
+    yarn: <SvgWrapper icon={IconYarn} />,
+    pnpm: <SvgWrapper icon={IconPnpm} />,
+    bun: <SvgWrapper icon={IconBun} />,
+    deno: <SvgWrapper icon={IconDeno} />,
   };
   additionalTabs.forEach(tab => {
     packageMangerToIcon[tab.tool] = tab.icon;
