@@ -69,6 +69,8 @@ const report = {
   midsceneVersion: lock.packages['node_modules/@midscene/test'].version,
   model: process.env.MIDSCENE_MODEL_NAME,
   family: process.env.MIDSCENE_MODEL_FAMILY,
+  modelReasoningEnabled:
+    process.env.MIDSCENE_MODEL_REASONING_ENABLED || undefined,
   modelRetryCount: Number(process.env.MIDSCENE_MODEL_RETRY_COUNT ?? '1'),
   modelRetryIntervalMs: Number(
     process.env.MIDSCENE_MODEL_RETRY_INTERVAL ?? '2000',

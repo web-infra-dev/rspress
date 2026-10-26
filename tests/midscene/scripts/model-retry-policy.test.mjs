@@ -22,6 +22,21 @@ test('normal and benchmark CI allow minute-quota recovery with bounded request r
   }
 });
 
+test('model verification and execution receive the same optional reasoning setting', () => {
+  for (const name of ['midscene', 'speed-benchmark']) {
+    const modelSteps = workflow.jobs[name].steps.filter(
+      step => step.env?.MIDSCENE_MODEL_API_KEY,
+    );
+    assert.equal(modelSteps.length, 2);
+    for (const step of modelSteps) {
+      assert.equal(
+        step.env.MIDSCENE_MODEL_REASONING_ENABLED,
+        '${{ vars.MIDSCENE_MODEL_REASONING_ENABLED || secrets.MIDSCENE_MODEL_REASONING_ENABLED }}',
+      );
+    }
+  }
+});
+
 test('the benchmark defaults to five-file parallel execution, without serial controls ahead of it', () => {
   assert.deepEqual(
     JSON.parse(workflow.on.workflow_dispatch.inputs.speed_modes.default),
