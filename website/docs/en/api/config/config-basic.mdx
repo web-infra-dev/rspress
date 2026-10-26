@@ -280,10 +280,10 @@ Here are the built-in i18n texts in Rspress:
 
 ## logo \{#logo-1}
 
-- **Type**: `string | { dark: string; light: string }`
+- **Type**: `string | { dark: string; light: string; width?: number; height?: number }`
 - **Default**: `""`
 
-Site logo. Rspress uses this path for the logo in the upper-left corner of the navbar. For example:
+Site logo. Rspress uses this path for the logo in the upper-left corner of the navbar. In the object form, optional `width` and `height` set the intrinsic dimensions (in pixels) for both images; use the source images' dimensions to reserve their aspect ratio and reduce layout shifts. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -304,6 +304,8 @@ export default defineConfig({
   logo: {
     dark: '/logo-dark.png',
     light: '/logo-light.png',
+    width: 120,
+    height: 32,
   },
 });
 ```
@@ -788,9 +790,9 @@ export default defineConfig({
 ### route.cleanUrls
 
 - **Type**: `Boolean`
-- **Default**: `false`
+- **Default**: `true` (`false` before v2.1.0)
 
-Generates URLs without file extensions when `cleanUrls` is `true`.
+Generates URLs without file extensions. Set `cleanUrls` to `false` to keep the `.html` suffix.
 
 :::warning Server Support Required
 
@@ -803,7 +805,7 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    cleanUrls: true,
+    cleanUrls: false,
   },
 });
 ```

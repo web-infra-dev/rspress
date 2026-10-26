@@ -280,10 +280,10 @@ export default defineConfig({
 
 ## logo \{#logo-1}
 
-- **类型**： `string | { dark: string; light: string }`
+- **类型**： `string | { dark: string; light: string; width?: number; height?: number }`
 - **默认值**： `""`
 
-站点 logo。这个路径将用作导航栏左上角的 logo 路径。例如：
+站点 logo。这个路径将用作导航栏左上角的 logo。对象形式可选提供 `width` 和 `height`（单位为像素）作为两张图片的固有尺寸；请填写源图片的实际尺寸，以预留宽高比并减少布局偏移。例如：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -304,6 +304,8 @@ export default defineConfig({
   logo: {
     dark: '/logo-dark.png',
     light: '/logo-light.png',
+    width: 120,
+    height: 32,
   },
 });
 ```
@@ -788,9 +790,9 @@ export default defineConfig({
 ### route.cleanUrls
 
 - **类型**： `boolean`
-- **默认值**： `false`
+- **默认值**： `true`（在 v2.1.0 之前是 `false`）
 
-开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁。
+开启后可以生成无 `.html` 后缀的链接，URL 可以更加简洁。设置为 `false` 可以保留 `.html` 后缀。
 
 :::warning 需要服务器支持
 
@@ -803,7 +805,7 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    cleanUrls: true,
+    cleanUrls: false,
   },
 });
 ```

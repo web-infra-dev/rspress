@@ -6,6 +6,7 @@ export default defineConfig({
   lang: 'zh',
   base: '/base',
   route: {
+    cleanUrls: false,
     localeRedirect: 'never',
   },
   themeConfig: {
