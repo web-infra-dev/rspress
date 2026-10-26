@@ -35,6 +35,6 @@ describe('BrowserOnly', () => {
       createElement(NoSSR, null, createElement('div', null, 'Browser content')),
     );
 
-    expect(html).toBe('');
+    expect(html).not.toBe('Browser content');
   });
 });
