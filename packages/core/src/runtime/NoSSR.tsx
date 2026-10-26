@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useSyncExternalStore } from 'react';
 import { safeBrowserOnly, safeUse } from '@rspress/core/runtime';
 
 export interface NoSSRProps {
@@ -15,12 +15,16 @@ function ModernNoSSR({ children, reason }: NoSSRProps) {
   return <>{children}</>;
 }
 
-export function OldNoSSR({ children, fallback = null }: NoSSRProps) {
-  const [isMounted, setIsMounted] = useState(false);
+const emptySubscribe = () => () => {};
+const getSnapshot = () => true;
+const getServerSnapshot = () => false;
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+export function OldNoSSR({ children, fallback = null }: NoSSRProps) {
+  const isMounted = useSyncExternalStore(
+    emptySubscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
 
   if (!isMounted) {
     return <>{fallback}</>;
