@@ -10,9 +10,9 @@ cases:
       ]
     steps:
       - app.open: { fixture: auto-nav-sidebar, path: /api/index.html }
-      - aiAct: Bring the Config group in the API overview into view. Stay in the overview article.
+      - aiAct: Scroll only the main document to show the Config overview group with its Basic config, Theme config, Build config rows and the three cards below. Stay on the current API Overview page. Do not click Config in the sidebar, any card, any heading, or any link; those navigate to a different overview. Stop once the group is visible.
       - aiAssert: In the main overview content, Config has three wide rows titled Basic config, Theme config, and Build config from top to bottom, followed by cards titled Front matter config, Extname config, and Nested from left to right. The rows include links root, logoText, nav, sidebar, builderConfig, Default config, markdown, and markdown.remarkPlugins. Nested is a directory card, not an article. Ignore the separate sidebar ordering.
-      - aiAct: Bring the Client API group in the main overview article into view. Do not follow any link yet.
+      - aiAct: Scroll only the main document to show both Components and Runtime API entries in the Client API overview group. Do not click any sidebar entry, heading, card, or link. Stay on the current API Overview page.
       - aiAssert: Client API lists Components and Runtime API article entries with Usage and Example links.
       - aiAct: Bring the Commands, Single, Section a, and Section b sections of the main overview into view, scrolling as needed. Do not follow links yet.
       - aiAssert: Commands, Single, Section a, and Section b appear as overview sections with corresponding article entries; the Commands entry offers rspress dev and rspress build.

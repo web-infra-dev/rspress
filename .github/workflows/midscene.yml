@@ -25,6 +25,11 @@ on:
       ]
   workflow_dispatch:
     inputs:
+      file_concurrency:
+        description: Concurrent cases in the regular E2E run (with Pages reports)
+        type: choice
+        options: ['1', '5', '10', '15', '20', '30', '60']
+        default: '1'
       speed_benchmark:
         description: Run the isolated speed experiment (fork only, no Pages deployment)
         type: boolean
@@ -122,6 +127,7 @@ jobs:
     timeout-minutes: 240
     env:
       HEADLESS: 'true'
+      MIDSCENE_SPEED_CONCURRENCY: ${{ inputs.file_concurrency || '1' }}
       # Allow the endpoint's minute-based quota to recover; case retries stay off.
       MIDSCENE_MODEL_RETRY_COUNT: '4'
       MIDSCENE_MODEL_RETRY_INTERVAL: '65000'
@@ -182,7 +188,8 @@ jobs:
           MIDSCENE_MODEL_REASONING_ENABLED: ${{ vars.MIDSCENE_MODEL_REASONING_ENABLED || secrets.MIDSCENE_MODEL_REASONING_ENABLED }}
           MIDSCENE_REPLANNING_CYCLE_LIMIT: '40'
           MIDSCENE_RETRY: '0'
-        run: timeout --signal=TERM --kill-after=10s 220m npm test
+        run: |
+          timeout --signal=TERM --kill-after=10s 220m node scripts/run-ci.mjs
 
       - name: Upload Midscene test report
         id: upload-results
@@ -193,6 +200,7 @@ jobs:
           path: |
             tests/midscene/midscene_run/
             tests/midscene/.midscene/
+            tests/midscene/.speed-cases/
           include-hidden-files: true
           if-no-files-found: warn
           retention-days: 14

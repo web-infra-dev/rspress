@@ -51,8 +51,19 @@ test('the benchmark defaults to five-file parallel execution, without serial con
   );
   assert.equal(
     workflow.jobs.midscene.env.MIDSCENE_SPEED_CONCURRENCY,
-    undefined,
+    "${{ inputs.file_concurrency || '1' }}",
   );
+});
+
+test('regular CI supports sixty concurrent cases and retains native Pages publication', () => {
+  const input = workflow.on.workflow_dispatch.inputs.file_concurrency;
+  assert.equal(input.default, '1');
+  assert.ok(input.options.includes('60'));
+  const run = workflow.jobs.midscene.steps.find(
+    step => step.name === 'Run all Midscene cases',
+  );
+  assert.match(run.run, /node scripts\/run-ci\.mjs/);
+  assert.equal(workflow.jobs['publish-pages'].needs, 'midscene');
 });
 
 test('the ten-minute performance budget interrupts rather than accepting partial coverage', () => {
