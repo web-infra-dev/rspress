@@ -41,14 +41,14 @@ cases:
     tags: [original-code-search, replacement-batch-5]
     steps:
       - app.open: { fixture: search-code-blocks, path: / }
-      - aiAct: Open search and enter hello from inline code block.
-      - aiAssert: Exactly one search result is listed.
-      - aiAct: Replace the search query with hello from <React.inline />. Stay in the search dialog.
-      - aiAssert: Exactly one search result is listed.
-      - aiAct: Replace the search query with hello from js code block. Stay in the search dialog.
-      - aiAssert: Exactly one search result is listed.
-      - aiAct: Replace the search query with <HelloFromJsxCodeBlock />. Stay in the search dialog.
-      - aiAssert: Exactly one search result is listed.
+      - aiAct: 'Open search and fill its input with the complete literal query "hello from inline code block". Enter every word; do not shorten it to "hello" or stop merely because a matching result appears. Keep the dialog open and wait for results to update.'
+      - aiAssert: 'The search input contains the complete query "hello from inline code block", and exactly one search result is listed.'
+      - aiAct: 'Select all text in the search input and replace it with the complete literal query "hello from <React.inline />", including the angle brackets and slash. Stay in the search dialog and wait for results to update.'
+      - aiAssert: 'The search input contains "hello from <React.inline />", and exactly one search result is listed.'
+      - aiAct: 'Select all text in the search input and replace it with the complete literal query "hello from js code block". Stay in the search dialog and wait for results to update.'
+      - aiAssert: 'The search input contains "hello from js code block", and exactly one search result is listed.'
+      - aiAct: 'Select all text in the search input and replace it with the complete literal query "<HelloFromJsxCodeBlock />", including the angle brackets and slash. Stay in the search dialog and wait for results to update.'
+      - aiAssert: 'The search input contains "<HelloFromJsxCodeBlock />", and exactly one search result is listed.'
       - aiAct: Open the search result.
       - aiAssert: The article shows a JSX code block containing HelloFromJsxCodeBlock.
   - name: SEARCH-07 Search follows the selected language
@@ -78,4 +78,4 @@ cases:
       - aiAct: Replace the search query with す. Stay in the search dialog.
       - aiAssert: The search dialog shows exactly one result row. Its main title reads できます (de-ki-ma-su), with す highlighted at the end. The smaller line beneath the title is its page breadcrumb, not a second result.
       - aiAct: Select all text in the search input and replace it with the literal character さ (hiragana sa, not す which is su). Perform the replacement even if the current character looks similar; do not treat the existing input as already correct. Keep the dialog open and wait for its results to update.
-      - aiAssert: Exactly one search result is listed and contains さい.
+      - aiAssert: Exactly one search result row is listed. Its long Japanese title wraps across lines and ends with the two characters さい (hiragana sa followed by i). Check the end of the title above the smaller page breadcrumb.

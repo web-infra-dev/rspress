@@ -23,7 +23,7 @@ cases:
       - app.open: { fixture: react-18, path: /404 }
       - aiAct: Bring the 404 page and its home recovery link into view.
       - aiAssert: The page displays a 404 message.
-      - aiAct: Follow the home recovery link.
+      - aiAct: Click the Take me home recovery button below the 404 message and wait for the Hello world article to replace the error page. Do not click the top-left site title, enter a URL, or use search. Stop when the article is visible.
       - aiAssert: The Hello world article is visible and contains react 18.
   - name: COMPAT-05 Recover from a missing page with React 19
     tags: [original-compatibility-fallback]

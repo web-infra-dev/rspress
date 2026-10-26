@@ -29,7 +29,7 @@ cases:
     tags: [original-hmr]
     steps:
       - app.open: { fixture: hmr, path: /guide/test.html }
-      - aiAct: Bring the left documentation sidebar into view, keeping the Test article open.
+      - aiAct: Look at the left documentation sidebar beside the Test article. If the Test entry is visible, stop immediately. Do not click the site title, Guide navigation, sidebar entries, or any other link; do not reload or navigate away from this article.
       - aiAssert: The sidebar displays Test.
       - fixture.update: { part: sidebar }
       - aiAct: Watch the left sidebar until its Test entry is replaced by Foo. Do not reload or navigate elsewhere; stop if it has not updated within 30 seconds.
