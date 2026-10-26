@@ -55,24 +55,6 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 />
 ```
 
-The extra tab's `command` is rendered as written, without adding a package manager prefix or applying command conversion, `exec`, or `dlx`.
-
-If you omit it, a string `command` uses the existing behavior of prefixing the shared command with `tool` (for example, `custom install -D @rspress/core`). With an object `command`, the tab uses the matching entry if one exists; otherwise, it is not displayed. To add an extra tab with an object `command`, provide its full command in `additionalTabs`:
-
-```mdx preview title="index.mdx"
-import { PackageManagerTabs } from '@rspress/core/theme';
-
-<PackageManagerTabs
-  command={{ npm: 'npm install -D @rspress/core' }}
-  additionalTabs={[
-    {
-      tool: 'custom',
-      command: 'custom add --dev @rspress/core',
-    },
-  ]}
-/>
-```
-
 ## Props
 
 ```ts
