@@ -34,34 +34,70 @@ export * from '@rspress/core/theme-original';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/core/src/theme/icons.ts" />
 
+## 品牌图标
+
+平台、AI 服务和开发工具的标志。
+
 ```tsx preview
 import {
   SvgWrapper,
+  IconGithub,
+  IconGitlab,
   IconAnthropic,
+  IconOpenAI,
+  IconNpm,
+  IconYarn,
+  IconPnpm,
+  IconBun,
+  IconDeno,
+} from '@rspress/core/theme';
+
+export default () => {
+  return (
+    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 12 }}>
+      {[
+        IconGithub,
+        IconGitlab,
+        IconAnthropic,
+        IconOpenAI,
+        IconNpm,
+        IconYarn,
+        IconPnpm,
+        IconBun,
+        IconDeno,
+      ].map((Icon, idx) => (
+        <SvgWrapper icon={Icon} key={idx} width={24} height={24} />
+      ))}
+    </div>
+  );
+};
+```
+
+## 界面图标
+
+用于导航、操作和状态提示的图标。
+
+```tsx preview
+import {
+  SvgWrapper,
   IconArrowDown,
   IconArrowRight,
-  IconBun,
   IconClose,
   IconCopy,
   IconDeprecated,
-  IconDeno,
   IconDown,
   IconEdit,
   IconEmpty,
   IconExperimental,
   IconExternalLink,
   IconFile,
-  IconGithub,
-  IconGitlab,
   IconHeader,
   IconJump,
+  IconLink,
   IconLoading,
   IconMenu,
   IconMoon,
-  IconNpm,
-  IconOpenAI,
   IconOpenInChat,
-  IconPnpm,
   IconScrollToTop,
   IconSearch,
   IconSmallMenu,
@@ -70,39 +106,30 @@ import {
   IconTitle,
   IconWrap,
   IconWrapped,
-  IconYarn,
-  IconLink,
 } from '@rspress/core/theme';
 
 export default () => {
   return (
     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 12 }}>
       {[
-        IconAnthropic,
         IconArrowDown,
         IconArrowRight,
-        IconBun,
         IconClose,
         IconCopy,
         IconDeprecated,
-        IconDeno,
         IconDown,
         IconEdit,
         IconEmpty,
         IconExperimental,
         IconExternalLink,
         IconFile,
-        IconGithub,
-        IconGitlab,
         IconHeader,
         IconJump,
+        IconLink,
         IconLoading,
         IconMenu,
         IconMoon,
-        IconNpm,
-        IconOpenAI,
         IconOpenInChat,
-        IconPnpm,
         IconScrollToTop,
         IconSearch,
         IconSmallMenu,
@@ -111,8 +138,6 @@ export default () => {
         IconTitle,
         IconWrap,
         IconWrapped,
-        IconYarn,
-        IconLink,
       ].map((Icon, idx) => (
         <SvgWrapper icon={Icon} key={idx} width={24} height={24} />
       ))}
