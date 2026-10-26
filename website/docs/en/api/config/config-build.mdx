@@ -223,7 +223,7 @@ export type RemarkLinkOptions = {
 };
 ```
 
-- **Default**: `{ checkDeadLinks: true, checkAnchors: false, autoPrefix: true }`
+- **Default**: `{ checkDeadLinks: true, checkAnchors: true, autoPrefix: true }`
 
 Configure link-related options.
 
@@ -253,13 +253,11 @@ export default defineConfig({
 #### markdown.link.checkAnchors
 
 - **Type**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
-- **Default**: `false`
-
-:::info
-`checkAnchors` is currently disabled by default. It will be enabled by default in a future version.
-:::
+- **Default**: `true` (`false` before v2.1.0)
 
 After enabling this configuration, Rspress will check whether internal link anchors exist in the target Markdown or MDX page. It checks same-page anchors, relative links, and absolute links, but skips external URL anchors.
+
+Set this option to `false` to disable anchor checking.
 
 If an anchor is reported incorrectly, ignore it with `excludes`:
 
