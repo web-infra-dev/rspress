@@ -35,6 +35,8 @@ export type PackageManagerTabProps = (
 ) & {
   additionalTabs?: {
     tool: string;
+    /** Full command for this tab, rendered as written. */
+    command?: string;
     icon?: ReactNode;
   }[];
 };
@@ -215,8 +217,14 @@ export function PackageManagerTabs({
     commandInfo.deno = normalizeCommand(commandInfo.deno);
   } else {
     // When using { "yarn": "", "pnpm": "", "bun": "", "deno": "" } as command we don't normalize anything
-    commandInfo = command;
+    commandInfo = { ...command };
   }
+
+  additionalTabs.forEach(tab => {
+    if (tab.command !== undefined) {
+      commandInfo[tab.tool] = tab.command;
+    }
+  });
 
   if (import.meta.env.SSG_MD) {
     return Object.values(commandInfo).reduce((previous, current) => {
