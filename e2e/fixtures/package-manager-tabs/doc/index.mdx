@@ -2,6 +2,8 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 
 # Hello world
 
+<div data-testid="standard-commands">
+
 ## PackageManagerTabs create
 
 <PackageManagerTabs command="create rspress@latest" />
@@ -36,3 +38,52 @@ import { PackageManagerTabs } from '@rspress/core/theme';
     deno: 'deno init --npm rspress@latest',
   }}
 />
+
+</div>
+
+## PackageManagerTabs with additional commands
+
+<div data-testid="additional-commands">
+
+<PackageManagerTabs
+  command="install -D @rspress/core"
+  additionalTabs={[
+    { tool: 'custom', command: 'custom add --dev @rspress/core' },
+    { tool: 'legacy' },
+  ]}
+/>
+
+</div>
+
+## PackageManagerTabs with additional object commands
+
+<div data-testid="additional-object-commands">
+
+<PackageManagerTabs
+  command={{ npm: 'npm install -D @rspress/core' }}
+  additionalTabs={[
+    {
+      tool: 'custom',
+      command: 'corepack pnpm install --save-dev @rspress/core',
+    },
+  ]}
+/>
+
+</div>
+
+## PackageManagerTabs with additional execution commands
+
+<div data-testid="additional-execution-commands">
+
+<PackageManagerTabs
+  dlx
+  command="example-cli-tool --yes"
+  additionalTabs={[
+    {
+      tool: 'custom',
+      command: 'corepack pnpm exec example-cli-tool --yes',
+    },
+  ]}
+/>
+
+</div>
