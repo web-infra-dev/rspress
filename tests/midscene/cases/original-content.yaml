@@ -13,7 +13,7 @@ cases:
       - aiAct: Scroll only the main document to show the Config overview group with its Basic config, Theme config, Build config rows and the three cards below. Stay on the current API Overview page. Do not click Config in the sidebar, any card, any heading, or any link; those navigate to a different overview. Stop once the group is visible.
       - aiAssert: In the main overview content, Config has three wide rows titled Basic config, Theme config, and Build config from top to bottom, followed by cards titled Front matter config, Extname config, and Nested from left to right. The rows include links root, logoText, nav, sidebar, builderConfig, Default config, markdown, and markdown.remarkPlugins. Nested is a directory card, not an article. Ignore the separate sidebar ordering.
       - aiAct: Scroll only the main document to show both Components and Runtime API entries in the Client API overview group. Do not click any sidebar entry, heading, card, or link. Stay on the current API Overview page.
-      - aiAssert: Client API lists Components and Runtime API article entries with Usage and Example links.
+      - aiAssert: The Client API overview contains a Components row with Usage and Example links, followed by a separate card titled Runtime API. Runtime API is a title-only card in this overview.
       - aiAct: Bring the Commands, Single, Section a, and Section b sections of the main overview into view, scrolling as needed. Do not follow links yet.
       - aiAssert: Commands, Single, Section a, and Section b appear as overview sections with corresponding article entries; the Commands entry offers rspress dev and rspress build.
       - aiAct: In the API overview article, follow the Commands link. Do not use the sidebar or search.
@@ -38,7 +38,7 @@ cases:
       - app.open:
           { fixture: nav-slots, mode: production, path: /, viewport: mobile }
       - aiAssert: The mobile page offers a navigation menu button without expanded desktop navigation lists.
-      - aiAct: Open the mobile navigation menu.
+      - aiAct: Click the hamburger button at the top right to open the mobile navigation menu. Wait until the menu animation has settled and the navigation labels BR, R1, BL, L1, R2, AR, More, L2, and AL are visible. A blank panel or the page table of contents is not the navigation menu. Keep the menu open.
       - aiAssert: The menu displays BR, R1, BL, L1, R2, AR, More, L2, and AL.
       - aiAct: Expand More, then Nested, and follow Target.
       - aiAssert: The Target article is visible and the mobile menu is closed.

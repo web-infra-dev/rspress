@@ -52,7 +52,7 @@ cases:
     tags: [replacement-final-content]
     steps:
       - app.open: { fixture: i18n, path: /, viewport: mobile }
-      - aiAct: Open the mobile navigation menu, then open its language choices.
+      - aiAct: Open the top-right mobile hamburger menu. In the expanded menu, click the current language 简体中文 on the right of the 语言 row to expand its language choices. Wait until both 简体中文 and English are visible as choices. Keep this language submenu open; do not select a language or close the menu.
       - aiAssert: The mobile menu is visible and its language choices show current language 简体中文 and alternative English.
   - name: AUDIT-09 Open a tablet navigation menu without JavaScript
     tags: [replacement-final-content, replacement-final-followup]

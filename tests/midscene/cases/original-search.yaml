@@ -72,7 +72,7 @@ cases:
     steps:
       - app.open: { fixture: search-i18n, path: / }
       - aiAct: Switch the site language to 日本語 using the language menu, then open search and enter ご.
-      - aiAssert: Exactly one search result is listed and contains にほんご.
+      - aiAssert: The query is ご (hiragana go, with dakuten). Exactly one result row is listed. Its title starts with にほんご (ni-hon-go), followed by repeated ご characters and ページ. The matching ご characters have search highlighting; they are part of the title, not blanks or underscores.
       - aiAct: Replace the search query with ヘッダー. Stay in the search dialog.
       - aiAssert: Exactly two search results are listed and the first contains ヘッダー.
       - aiAct: Replace the search query with す. Stay in the search dialog.

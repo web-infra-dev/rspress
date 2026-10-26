@@ -7,6 +7,7 @@ import {
   mkdtemp,
   readFile,
   readdir,
+  rename,
   stat,
   writeFile,
   symlink,
@@ -257,7 +258,14 @@ export class OriginalFixture {
     const content = await readFile(filename, 'utf8');
     if (!content.includes(before))
       throw new Error(`HMR fixture no longer contains ${before}`);
-    await writeFile(filename, content.replace(before, after));
+    // Keep the dev server from compiling a truncated file between write events.
+    const pending = `${filename}.midscene-pending`;
+    try {
+      await writeFile(pending, content.replace(before, after));
+      await rename(pending, filename);
+    } finally {
+      await rm(pending, { force: true });
+    }
   }
 
   async close(): Promise<void> {
