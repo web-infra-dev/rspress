@@ -34,10 +34,6 @@ export * from '@rspress/core/theme-original';
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/core/src/theme/icons.ts" />
 
-## 品牌图标
-
-平台、AI 服务和开发工具的标志。
-
 ```tsx preview
 import {
   SvgWrapper,
@@ -50,36 +46,6 @@ import {
   IconPnpm,
   IconBun,
   IconDeno,
-} from '@rspress/core/theme';
-
-export default () => {
-  return (
-    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 12 }}>
-      {[
-        IconGithub,
-        IconGitlab,
-        IconAnthropic,
-        IconOpenAI,
-        IconNpm,
-        IconYarn,
-        IconPnpm,
-        IconBun,
-        IconDeno,
-      ].map((Icon, idx) => (
-        <SvgWrapper icon={Icon} key={idx} width={24} height={24} />
-      ))}
-    </div>
-  );
-};
-```
-
-## 界面图标
-
-用于导航、操作和状态提示的图标。
-
-```tsx preview
-import {
-  SvgWrapper,
   IconArrowDown,
   IconArrowRight,
   IconClose,
@@ -110,36 +76,64 @@ import {
 
 export default () => {
   return (
-    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 12 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       {[
-        IconArrowDown,
-        IconArrowRight,
-        IconClose,
-        IconCopy,
-        IconDeprecated,
-        IconDown,
-        IconEdit,
-        IconEmpty,
-        IconExperimental,
-        IconExternalLink,
-        IconFile,
-        IconHeader,
-        IconJump,
-        IconLink,
-        IconLoading,
-        IconMenu,
-        IconMoon,
-        IconOpenInChat,
-        IconScrollToTop,
-        IconSearch,
-        IconSmallMenu,
-        IconSuccess,
-        IconSun,
-        IconTitle,
-        IconWrap,
-        IconWrapped,
-      ].map((Icon, idx) => (
-        <SvgWrapper icon={Icon} key={idx} width={24} height={24} />
+        {
+          label: '品牌图标',
+          icons: [
+            IconGithub,
+            IconGitlab,
+            IconAnthropic,
+            IconOpenAI,
+            IconNpm,
+            IconYarn,
+            IconPnpm,
+            IconBun,
+            IconDeno,
+          ],
+        },
+        {
+          label: '界面图标',
+          icons: [
+            IconArrowDown,
+            IconArrowRight,
+            IconClose,
+            IconCopy,
+            IconDeprecated,
+            IconDown,
+            IconEdit,
+            IconEmpty,
+            IconExperimental,
+            IconExternalLink,
+            IconFile,
+            IconHeader,
+            IconJump,
+            IconLink,
+            IconLoading,
+            IconMenu,
+            IconMoon,
+            IconOpenInChat,
+            IconScrollToTop,
+            IconSearch,
+            IconSmallMenu,
+            IconSuccess,
+            IconSun,
+            IconTitle,
+            IconWrap,
+            IconWrapped,
+          ],
+        },
+      ].map(({ label, icons }) => (
+        <div key={label}>
+          <div style={{ fontSize: 12, fontWeight: 500, marginBottom: 8 }}>
+            {label}
+          </div>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {icons.map((Icon, idx) => (
+              <SvgWrapper icon={Icon} key={idx} width={24} height={24} />
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   );
