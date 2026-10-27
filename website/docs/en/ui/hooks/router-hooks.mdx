@@ -16,10 +16,6 @@ Commonly used hooks include `useLocation`, `useNavigate`, `useParams`, `useSearc
 
 Starting with Rspress 2.1.0, routing uses React Router's **Data mode**.
 
-Rspress also handles scroll restoration automatically. Opening a new page scrolls to the top, while going back or forward restores the scroll position for that history entry. Links with a hash scroll to the target heading; when returning to a visited entry, its saved position takes precedence over the hash.
-
-Use `navigate(to, { preventScrollReset: true })` to preserve the current scroll position when navigating, for example when updating query parameters. Custom themes share this behavior and do not need to render an additional `ScrollRestoration` component.
-
 ```tsx
 import { useLocation, useNavigate } from '@rspress/core/runtime';
 
