@@ -8,6 +8,7 @@ cases:
       - fixture.update: { part: navigation }
       - aiAct: Wait for the top-right Guide navigation link to change to HMR Guide while keeping the bottom status row in view. Only observe; do not click, reload, navigate, or change the counter. If the status row goes out of view, scroll the main document to its bottom. Stop if the navigation label has not changed within 30 seconds.
       - aiAssert: The top navigation displays HMR Guide.
+      - aiAct: Bring the bottom status row back into view after the hot update. Scroll the main document downward until Translation before, Search hook before, and the Count button are all visible at the bottom of the page. If they are already visible, stop without acting. Do not click the counter, navigate, or reload; leave its current value unchanged, even if it is 0.
       - aiAssert: The bottom status row contains Translation before, Search hook before, and the Count button with numeric value 1, retaining the value set before the navigation hot update. These labels may run together without spaces or line breaks; the counter does not need to appear as a separate line.
   - name: VIRTUAL-02 Hot-update translated text and search hooks without losing state
     tags:
