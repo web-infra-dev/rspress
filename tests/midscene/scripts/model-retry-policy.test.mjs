@@ -80,3 +80,14 @@ test('the ten-minute performance budget interrupts rather than accepting partial
   assert.match(step.run, /timeout --signal=TERM --kill-after=60s/);
   assert.doesNotMatch(step.run, /\|\| true/);
 });
+
+test('model load stays serialized while publication does not block the next model job', () => {
+  const model = workflow.jobs.midscene.concurrency;
+  assert.equal(model.group, workflow.jobs['speed-benchmark'].concurrency.group);
+  assert.equal(model['cancel-in-progress'], false);
+  const pages = workflow.jobs['publish-pages'].concurrency;
+  assert.notEqual(pages.group, model.group);
+  assert.equal(pages['cancel-in-progress'], false);
+  assert.match(workflow.concurrency.group, /github.run_id/);
+  assert.equal(workflow.jobs.midscene.env.MIDSCENE_MODEL_TIMEOUT, '120000');
+});

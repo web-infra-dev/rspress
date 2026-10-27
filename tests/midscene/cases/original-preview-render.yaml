@@ -30,6 +30,8 @@ cases:
     tags: [original-preview-render, replacement-batch-4]
     steps:
       - app.open: { fixture: plugin-preview, path: /mixed }
+      - aiAct: Inspect the floating phone on the far right while the outer document stays at the top of Mixed. If necessary scroll inside that phone to see its plain This is a component and Hello World External text. Stop when both are visible. Do not click text or toolbar controls.
+      - aiAssert: In the floating phone on the far right, black text below Mixed includes This is a component and Hello World External, separate from source code in the main article.
       - aiAct: Stay on Mixed and bring the first rendered inline component preview into view, not merely its source code.
       - aiAssert: The rendered internal preview displays This is a component.
       - aiAct: Continue down the outer document on Mixed, staying above the External file section. Find the first side-by-side row with colored Component source code on the left and plain This is a component text in its inline pane on the right, immediately left of the floating phone. Stop when that plain text is visible; the whole pane does not need to fit on screen. Do not scroll inside the editor or phone, and do not click text, toolbar, or navigation.
@@ -38,5 +40,3 @@ cases:
       - aiAssert: Under the External file heading in the main article, the rendered preview shows plain Hello World External text outside source code. The earlier This is a component preview belongs to a different section; the floating phone is also a separate preview.
       - aiAct: Scroll only the outer document on Mixed to the row with a colored HelloWorld source editor on the left and plain Hello World External text on the right. The plain text sits at the top of the inline pane, immediately left of the floating phone. Stop as soon as this plain text is visible; the whole pane does not need to fit on screen. Do not click the text, toolbar, or navigation, and do not scroll inside the phone or editor.
       - aiAssert: That main-article iframe preview displays Hello World External.
-      - aiAct: Read the static demo text in the floating phone on the far right. Bring its black This is a component and Hello World External lines into view. Do not treat the text as links or activate its toolbar.
-      - aiAssert: In the floating phone on the far right, black text below Mixed includes This is a component and Hello World External, separate from source code in the main article.

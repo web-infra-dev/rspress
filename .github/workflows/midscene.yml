@@ -64,9 +64,9 @@ on:
 permissions:
   contents: read
 
-# PR checks are independent; model runs serialize history reads through deployment.
+# PR checks are independent. Model execution and Pages publication use separate locks.
 concurrency:
-  group: ${{ github.event_name == 'pull_request' && format('midscene-e2e-pr-{0}', github.event.pull_request.number) || 'midscene-e2e' }}
+  group: ${{ github.event_name == 'pull_request' && format('midscene-e2e-pr-{0}', github.event.pull_request.number) || format('midscene-run-{0}', github.run_id) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
@@ -115,6 +115,9 @@ jobs:
     name: Midscene E2E
     outputs:
       report-artifact-name: ${{ steps.upload-results.outputs.artifact-id != '' && 'midscene-results' || '' }}
+    concurrency:
+      group: midscene-model-execution
+      cancel-in-progress: false
     environment:
       name: Model
       deployment: false
@@ -130,6 +133,7 @@ jobs:
       HEADLESS: 'true'
       MIDSCENE_SPEED_CONCURRENCY: ${{ inputs.file_concurrency || '40' }}
       # Allow the endpoint's minute-based quota to recover; case retries stay off.
+      MIDSCENE_MODEL_TIMEOUT: '120000'
       MIDSCENE_MODEL_RETRY_COUNT: '4'
       MIDSCENE_MODEL_RETRY_INTERVAL: '65000'
       # The model endpoint is reachable over IPv4; avoid family-race timeouts.
@@ -152,6 +156,13 @@ jobs:
 
       - name: Install workspace dependencies and build checked-out packages
         run: pnpm install --frozen-lockfile
+
+      - name: Restore npm download cache
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: tests/midscene/package-lock.json
 
       - name: Install Midscene test dependencies
         # allowScripts for esbuild/sharp is declared in this package.json, so
@@ -198,6 +209,7 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: midscene-results
+          compression-level: 1
           path: |
             tests/midscene/midscene_run/
             tests/midscene/.midscene/
@@ -223,6 +235,9 @@ jobs:
     name: Speed experiment (${{ matrix.mode }})
     needs: validate
     if: github.event_name == 'workflow_dispatch' && inputs.speed_benchmark && github.repository_owner == 'quanru'
+    concurrency:
+      group: midscene-model-execution
+      cancel-in-progress: false
     environment:
       name: Model
       deployment: false
@@ -323,6 +338,9 @@ jobs:
 
   publish-pages:
     name: Publish Midscene Pages report
+    concurrency:
+      group: midscene-pages-publication
+      cancel-in-progress: false
     needs: midscene
     if: >-
       always() && !cancelled() &&

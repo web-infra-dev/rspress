@@ -265,8 +265,11 @@ To enable publication:
 
 Manual dispatch can disable publication with `publish_pages`. Without Pages,
 download the report and screenshots together from the artifact. The stable run
-entry redirects to the native framework index. Runs are serialized across branches
-to preserve recent report history.
+entry redirects to the native framework index. Model runs are serialized across branches to bound endpoint load. Pages publication
+has a separate lock covering history reads through deployment, so the next test
+run can start while the previous report publishes. Regular CI starts historical
+slow cases first, uses a 120-second model-request timeout and retains the
+65-second retry cooldown for quota recovery. Case retries remain disabled.
 
 Publication retains the latest three trusted runs within a 900 MiB budget.
 Older Summary links expire when their run is pruned; artifacts expire after 14 days.

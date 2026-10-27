@@ -8,7 +8,24 @@ const concurrency = parseFileConcurrency(
   process.env.MIDSCENE_SPEED_CONCURRENCY,
 );
 // Keep each case isolated so file concurrency also means case concurrency.
-const prepared = await prepareSpeedCases({ root: process.cwd(), merge: false });
+// Longest cases from run 40449357256 start first to reduce the final tail.
+const priorityIds = [
+  'PREVIEW-07',
+  'INLINE-04',
+  'INLINE-03',
+  'CONTENT-03',
+  'CONTENT-01',
+  'NAV-04',
+  'INLINE-02',
+  'PLAYGROUND-01',
+  'STYLE-04',
+  'EXTRA-05',
+];
+const prepared = await prepareSpeedCases({
+  root: process.cwd(),
+  merge: false,
+  priorityIds,
+});
 process.env.MIDSCENE_SPEED_CASES = prepared.pattern;
 const active = new Set();
 let peak = 0;

@@ -61,9 +61,24 @@ export async function preparePagesSite({
   await mkdir(site, { recursive: true });
 
   if (previous && (await exists(path.join(previous, 'runs')))) {
-    await cp(path.join(previous, 'runs'), path.join(site, 'runs'), {
-      recursive: true,
-    });
+    // Select retained history before copying large screenshot directories.
+    const retained = (
+      await readdir(path.join(previous, 'runs'), { withFileTypes: true })
+    )
+      .filter(
+        entry =>
+          entry.isDirectory() &&
+          /^\d+$/.test(entry.name) &&
+          entry.name !== runId,
+      )
+      .map(entry => entry.name)
+      .sort((left, right) => Number(left) - Number(right))
+      .slice(-(MAX_RECENT_RUNS - 1));
+    for (const id of retained) {
+      await cp(path.join(previous, 'runs', id), path.join(site, 'runs', id), {
+        recursive: true,
+      });
+    }
   }
   const current = path.join(site, 'runs', runId);
   await rm(current, { recursive: true, force: true });

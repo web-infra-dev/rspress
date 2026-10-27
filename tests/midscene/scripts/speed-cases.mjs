@@ -31,6 +31,7 @@ export async function prepareSpeedCases({
   merge,
   ids = [],
   probe = false,
+  priorityIds = [],
 }) {
   const parent = path.join(root, '.speed-cases');
   await mkdir(parent, { recursive: true });
@@ -71,7 +72,10 @@ export async function prepareSpeedCases({
       const transformed = merge
         ? mergeAssertions(original.steps)
         : { steps: original.steps, merged: 0 };
-      const name = `${String(manifest.length + 1).padStart(3, '0')}-${id}.yaml`;
+      const priority = priorityIds.indexOf(id);
+      const order =
+        priority < 0 ? priorityIds.length + manifest.length : priority;
+      const name = `${String(order + 1).padStart(3, '0')}-${id}.yaml`;
       await writeFile(
         path.join(directory, name),
         yaml.dump(
