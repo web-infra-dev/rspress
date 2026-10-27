@@ -165,13 +165,17 @@ async function createInternalBuildConfig(
   return {
     plugins: [
       ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
+      // --- Virtual module plugins: begin ---
+      // i18n text and development cache invalidation.
       rsbuildPluginI18n({ pluginDriver }),
+      // Page data and search index generation.
       rsbuildPluginDocVM({
         config,
         pluginDriver,
         routeService,
         userDocRoot,
       }),
+      // Shared runtime modules and modules contributed by Rspress plugins.
       pluginVirtualModule({
         tempDir: '.rspress/runtime',
         virtualModules: {
@@ -205,6 +209,7 @@ async function createInternalBuildConfig(
           ...siteDataVMPlugin(context),
         },
       }),
+      // --- Virtual module plugins: end ---
       config.sitemap ? rsbuildPluginSitemap({ config, routeService }) : null,
       enableSSG && config.ssg
         ? rsbuildPluginSSG({
