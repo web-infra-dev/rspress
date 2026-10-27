@@ -220,9 +220,9 @@ report rendering and Markdown results.
 
 ## GitHub Actions
 
-The workflow validates definitions on PRs without model credentials. Relevant
-upstream `main` pushes run the AI suite automatically; maintainers can also dispatch
-it manually. The regular CI suite defaults to 40 concurrent cases; manual runs can
+The workflow runs after merging to upstream `main`, on pushes that change the
+configured source or test paths. It does not run on pull requests. Maintainers
+can also dispatch it manually from `main`. The regular CI suite defaults to 40 concurrent cases; manual runs can
 override `file_concurrency`. The owner's `quanru/rspress` benchmark branch
 `benchmark/midscene-speed-20261022` also runs on relevant pushes. Other fork branches
 run AI tests only by manual dispatch. Local runs without a concurrency override
@@ -341,8 +341,7 @@ The top-level report link still opens the framework-generated HTML report.
 Without Pages, the test job retains the native text Summary and artifact link.
 
 Regular model runs validate definitions in the same job before model credentials
-are provided. PRs retain their separate credential-free validation job. Workspace
-installation skips developer hooks and explicitly rebuilds the approved Sharp
+are provided. Workspace installation skips developer hooks and explicitly rebuilds the approved Sharp
 dependency. Package build outputs are cached only for an exact fingerprint of
 committed package sources, shared scripts, root files, runner platform and Node
 version; there is no fallback to a partial cache key. A cache miss builds the

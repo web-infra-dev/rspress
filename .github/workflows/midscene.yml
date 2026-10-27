@@ -4,15 +4,6 @@ name: E2E Testing by Midscene
 # Model credentials are scoped to verification and case execution.
 
 on:
-  pull_request:
-    paths:
-      [
-        'packages/**',
-        'e2e/**',
-        'tests/midscene/**',
-        '.github/workflows/midscene.yml',
-        'pnpm-lock.yaml',
-      ]
   push:
     branches: [main, benchmark/midscene-speed-20261022]
     paths:
@@ -69,10 +60,7 @@ on:
 permissions:
   contents: read
 
-# PR checks are independent. Model execution and Pages publication use separate locks.
-concurrency:
-  group: ${{ github.event_name == 'pull_request' && format('midscene-e2e-pr-{0}', github.event.pull_request.number) || format('midscene-run-{0}', github.run_id) }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+# Model execution and Pages publication use separate job-level locks.
 
 env:
   MIDSCENE_UPSTREAM_REPOSITORY: web-infra-dev/rspress
@@ -93,7 +81,7 @@ jobs:
         working-directory: tests/midscene
 
   validate:
-    if: github.event_name == 'pull_request' || inputs.speed_benchmark
+    if: inputs.speed_benchmark
     name: Validate AI E2E definitions
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -110,11 +98,6 @@ jobs:
         working-directory: tests/midscene
       - run: npm run collect && npm run typecheck && npm run test:summary
         working-directory: tests/midscene
-      - name: Explain pull request coverage
-        if: github.event_name == 'pull_request'
-        run: |
-          echo '## Midscene E2E definitions validated' >> "$GITHUB_STEP_SUMMARY"
-          echo 'This PR check does not call a model. AI E2E runs on relevant upstream main pushes or manual dispatch. Fork PR code never receives model credentials.' >> "$GITHUB_STEP_SUMMARY"
 
   midscene:
     name: Midscene E2E
@@ -128,7 +111,6 @@ jobs:
       deployment: false
     if: >-
       (!inputs.speed_benchmark) &&
-      (github.event_name != 'pull_request') &&
       (github.repository == 'web-infra-dev/rspress' && github.ref == 'refs/heads/main' ||
       (github.event_name == 'push' && github.repository == 'quanru/rspress' && github.ref == 'refs/heads/benchmark/midscene-speed-20261022') ||
       (github.event_name == 'workflow_dispatch' && github.repository != 'web-infra-dev/rspress'))
