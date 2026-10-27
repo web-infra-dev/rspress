@@ -8,45 +8,37 @@ export interface BrowserOnlyProps {
   fallback?: ReactNode;
 }
 
-type BrowserOnlyState =
-  | {
-      status: 'pending';
-      children: BrowserOnlyProps['children'];
-    }
-  | {
-      status: 'resolved';
-      children: BrowserOnlyProps['children'];
-      content: ReactNode;
-    }
-  | {
-      status: 'rejected';
-      children: BrowserOnlyProps['children'];
-      error: unknown;
-    };
+type DeferredSource = BrowserOnlyProps['children'] | Promise<ReactNode>;
 
-function DeferredBrowserOnly(props: BrowserOnlyProps) {
-  const { children, fallback = null } = props;
-  const [state, setState] = useState<BrowserOnlyState>({
-    status: 'pending',
-    children,
-  });
+type DeferredState =
+  | { source: DeferredSource; content: ReactNode }
+  | { source: DeferredSource; error: unknown };
+
+function DeferredBrowserOnly({
+  source,
+  fallback = null,
+}: {
+  source: DeferredSource;
+  fallback?: ReactNode;
+}) {
+  const [state, setState] = useState<DeferredState>();
 
   useEffect(() => {
     let isMounted = true;
 
-    setState({ status: 'pending', children });
+    setState(undefined);
 
     Promise.resolve()
-      .then(() => children())
+      .then(() => (typeof source === 'function' ? source() : source))
       .then(
         content => {
           if (isMounted) {
-            setState({ status: 'resolved', children, content });
+            setState({ source, content });
           }
         },
         error => {
           if (isMounted) {
-            setState({ status: 'rejected', children, error });
+            setState({ source, error });
           }
         },
       );
@@ -54,21 +46,17 @@ function DeferredBrowserOnly(props: BrowserOnlyProps) {
     return () => {
       isMounted = false;
     };
-  }, [children]);
+  }, [source]);
 
-  if (state.children !== children) {
+  if (!state || state.source !== source) {
     return fallback;
   }
 
-  if (state.status === 'rejected') {
+  if ('error' in state) {
     throw state.error;
   }
 
-  if (state.status === 'resolved') {
-    return state.content;
-  }
-
-  return fallback;
+  return state.content;
 }
 
 function ModernBrowserOnly({ children, fallback }: BrowserOnlyProps) {
@@ -87,18 +75,14 @@ function ModernBrowserOnly({ children, fallback }: BrowserOnlyProps) {
       // Handle rejection even if it happens before effects run or this render
       // is discarded. DeferredBrowserOnly still reports the error in render.
       promise.catch(() => {});
-      return { asyncChildren: () => promise };
+      return { promise };
     }
 
     return { content };
   }, [children]);
 
-  if (result.asyncChildren) {
-    return (
-      <DeferredBrowserOnly fallback={fallback}>
-        {result.asyncChildren}
-      </DeferredBrowserOnly>
-    );
+  if (result.promise) {
+    return <DeferredBrowserOnly source={result.promise} fallback={fallback} />;
   }
 
   return <>{result.content}</>;
@@ -112,14 +96,13 @@ export function BrowserOnly(props: BrowserOnlyProps) {
     return <>{fallback}</>;
   }
 
-  const Content =
-    typeof safeBrowserOnly === 'function'
-      ? ModernBrowserOnly
-      : DeferredBrowserOnly;
-
   return (
     <Suspense fallback={fallback}>
-      <Content {...props} />
+      {typeof safeBrowserOnly === 'function' ? (
+        <ModernBrowserOnly {...props} />
+      ) : (
+        <DeferredBrowserOnly source={props.children} fallback={fallback} />
+      )}
     </Suspense>
   );
 }

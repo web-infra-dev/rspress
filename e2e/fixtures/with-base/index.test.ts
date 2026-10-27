@@ -102,6 +102,7 @@ test.describe('site with base path', async () => {
       'Mounted immediately',
     );
 
+    await page.locator('#browser-only-async-resolve').click();
     await expect(page.locator('#browser-only-async-content')).toHaveText(
       'Async initial',
     );
@@ -110,6 +111,7 @@ test.describe('site with base path', async () => {
     await expect(page.locator('#browser-only-async-fallback')).toHaveText(
       'Async fallback updated',
     );
+    await page.locator('#browser-only-async-resolve').click();
     await expect(page.locator('#browser-only-async-content')).toHaveText(
       'Async updated',
     );
@@ -147,13 +149,12 @@ test.describe('site with base path', async () => {
     await expect(page.locator('#browser-only-race-fallback')).toHaveText(
       'Pending second',
     );
-    await page.locator('#browser-only-resolve-first').click();
-    await expect(page.locator('#browser-only-race-fallback')).toHaveText(
-      'Pending second',
-    );
-    await expect(page.locator('#browser-only-race-content')).toHaveCount(0);
-
     await page.locator('#browser-only-resolve-second').click();
+    await expect(page.locator('#browser-only-race-content')).toHaveText(
+      'Second result',
+    );
+
+    await page.locator('#browser-only-resolve-first').click();
     await expect(page.locator('#browser-only-race-content')).toHaveText(
       'Second result',
     );

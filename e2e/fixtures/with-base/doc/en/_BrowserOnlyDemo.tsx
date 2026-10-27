@@ -60,6 +60,7 @@ export function BrowserOnlySyncDemo() {
 
 export function BrowserOnlyAsyncDemo() {
   const [value, setValue] = useState('initial');
+  const pending = useRef(new Map<string, () => void>());
 
   return (
     <div>
@@ -69,13 +70,21 @@ export function BrowserOnlyAsyncDemo() {
       >
         Update
       </button>
+      <button
+        id="browser-only-async-resolve"
+        onClick={() => pending.current.get(value)?.()}
+      >
+        Resolve
+      </button>
       <BrowserOnly
         fallback={
           <span id="browser-only-async-fallback">Async fallback {value}</span>
         }
       >
         {async () => {
-          await new Promise(resolve => setTimeout(resolve, 500));
+          await new Promise<void>(resolve => {
+            pending.current.set(value, resolve);
+          });
           return <span id="browser-only-async-content">Async {value}</span>;
         }}
       </BrowserOnly>

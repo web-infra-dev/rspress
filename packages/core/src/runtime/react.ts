@@ -1,33 +1,7 @@
 import * as React from 'react';
 import type { BrowserUsable } from './reactDom';
 
-export interface UntrackedReactPromise<T> extends PromiseLike<T> {
-  status?: void;
-}
-
-export interface PendingReactPromise<T> extends PromiseLike<T> {
-  status: 'pending';
-}
-
-export interface FulfilledReactPromise<T> extends PromiseLike<T> {
-  status: 'fulfilled';
-  value: T;
-}
-
-export interface RejectedReactPromise<T> extends PromiseLike<T> {
-  status: 'rejected';
-  reason: unknown;
-}
-
-export type ReactPromise<T> =
-  | UntrackedReactPromise<T>
-  | PendingReactPromise<T>
-  | FulfilledReactPromise<T>
-  | RejectedReactPromise<T>;
-
-export type Usable<T> = ReactPromise<T> | React.Context<T> | BrowserUsable;
-
-export type Use = <T>(usable: Usable<T>) => T;
+type Use = <T>(usable: PromiseLike<T> | React.Context<T> | BrowserUsable) => T;
 
 type ReactCompat = {
   use?: Use;

@@ -1,13 +1,13 @@
-import React, { Suspense, useSyncExternalStore } from 'react';
+import { type ReactNode, Suspense, useSyncExternalStore } from 'react';
 import { safeBrowserOnly } from './reactDom';
 import { safeUse } from './react';
 
 export interface NoSSRProps {
-  children: React.ReactNode;
+  children: ReactNode;
 
   reason?: string | (() => unknown);
 
-  fallback?: React.ReactNode;
+  fallback?: ReactNode;
 }
 
 function ModernNoSSR({ children, reason }: NoSSRProps) {
@@ -27,15 +27,11 @@ export function LegacyNoSSR({ children, fallback = null }: NoSSRProps) {
     getServerSnapshot,
   );
 
-  if (!isMounted) {
-    return <>{fallback}</>;
-  }
-
-  return <>{children}</>;
+  return <>{isMounted ? children : fallback}</>;
 }
 
 export function NoSSR(props: NoSSRProps) {
-  const { fallback = null, ...rest } = props;
+  const { fallback = null } = props;
 
   if (import.meta.env.SSG_MD) {
     return <>{fallback}</>;
@@ -44,10 +40,10 @@ export function NoSSR(props: NoSSRProps) {
   if (typeof safeBrowserOnly === 'function') {
     return (
       <Suspense fallback={fallback}>
-        <ModernNoSSR {...rest} />
+        <ModernNoSSR {...props} />
       </Suspense>
     );
   }
 
-  return <LegacyNoSSR fallback={fallback} {...rest} />;
+  return <LegacyNoSSR {...props} />;
 }
