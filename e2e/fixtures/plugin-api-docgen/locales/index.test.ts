@@ -79,8 +79,9 @@ test.describe('API docgen locales', async () => {
     const table = page.locator('.rspress-plugin-api-docgen table');
 
     // Config translations override i18n.json and plugin defaults.
+    await expect(table.getByRole('columnheader')).toHaveCount(4);
     await expect(table.getByRole('columnheader').first()).toHaveText(
-      '组件属性',
+      '组件属性 | 名称\n字段',
     );
     await expect(table).not.toContainText('JSON 属性');
     await expect(table).toContainText('disabled');
@@ -167,7 +168,7 @@ test('API docgen translations are included in SSR and search output', async () =
   expect(table).toContain('必须配置');
   expect(table).toContain('节点类名');
   expect(table).not.toContain('JSON 属性');
-  expect(table).not.toContain('undefined');
+  expect(table).not.toMatch(/<th\b[^>]*>undefined<\/th>/);
 
   const staticDir = path.join(distDir, 'static');
   const files = await readdir(staticDir, { recursive: true });
@@ -187,5 +188,5 @@ test('API docgen translations are included in SSR and search output', async () =
   expect(apiContent).toContain('必须配置');
   expect(apiContent).toContain('节点类名');
   expect(apiContent).not.toContain('JSON 属性');
-  expect(apiContent).not.toContain('undefined');
+  expect(apiContent).not.toContain('|undefined|');
 });

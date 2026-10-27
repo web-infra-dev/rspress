@@ -10,7 +10,7 @@ export default defineConfig({
   lang: 'en',
   i18nSource: {
     apiDocgenProperty: {
-      zh: '组件属性',
+      zh: '组件属性 | 名称\n字段',
     },
     apiDocgenRequired: {
       zh: '必须配置',

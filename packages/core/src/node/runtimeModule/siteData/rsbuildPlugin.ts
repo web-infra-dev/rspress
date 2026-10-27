@@ -32,7 +32,7 @@ export const siteDataVMPlugin: VirtualModulePlugin = context => {
       );
     }
 
-    const { siteData } = await createSiteData(config);
+    const { siteData } = await createSiteData(config, pluginDriver);
     return {
       code: `export default ${JSON.stringify(siteData, null, 2)}`,
       metaFileSet,

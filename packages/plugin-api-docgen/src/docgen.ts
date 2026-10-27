@@ -134,7 +134,7 @@ function generateTable(
 ) {
   const t = (key: keyof typeof apiDocgenI18n) => i18nSource[key][language];
   const escapeTableCell = (text: string) =>
-    text.replace(/(?<!\\)\|/g, '&#124;');
+    text.replace(/(?<!\\)\|/g, '&#124;').replace(/\r?\n/g, '&#10;');
   return componentDoc
     .map(param => {
       const { props } = param;
