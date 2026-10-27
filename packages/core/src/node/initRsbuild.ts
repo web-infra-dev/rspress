@@ -48,7 +48,7 @@ import type { RouteService } from './route/RouteService';
 import { RouteChunkAssetsPlugin } from './route/routeChunkAssets';
 import { globalStylesVMPlugin } from './runtimeModule/globalStyles';
 import { globalUIComponentsVMPlugin } from './runtimeModule/globalUIComponents';
-import { i18nVMPlugin } from './runtimeModule/i18n';
+import { rsbuildPluginI18n } from './runtimeModule/i18n/rsbuildPlugin';
 import { rsbuildPluginDocVM } from './runtimeModule/pageData/rsbuildPlugin';
 import { routeListVMPlugin } from './runtimeModule/routeList';
 import { searchHookVMPlugin } from './runtimeModule/searchHooks';
@@ -165,12 +165,17 @@ async function createInternalBuildConfig(
   return {
     plugins: [
       ...(isPluginIncluded(config, PLUGIN_REACT_NAME) ? [] : [pluginReact()]),
+      // --- Virtual module plugins: begin ---
+      // i18n text and development cache invalidation.
+      rsbuildPluginI18n({ pluginDriver }),
+      // Page data and search index generation.
       rsbuildPluginDocVM({
         config,
         pluginDriver,
         routeService,
         userDocRoot,
       }),
+      // Shared runtime modules and modules contributed by Rspress plugins.
       pluginVirtualModule({
         tempDir: '.rspress/runtime',
         virtualModules: {
@@ -178,10 +183,6 @@ async function createInternalBuildConfig(
            * Load social links in compile time for treeshaking
            */
           ...socialLinksVMPlugin(context),
-          /**
-           * Load i18n.json to runtime
-           */
-          ...i18nVMPlugin(context),
           /**
            * Generate global components from config and plugins
            */
@@ -208,6 +209,7 @@ async function createInternalBuildConfig(
           ...siteDataVMPlugin(context),
         },
       }),
+      // --- Virtual module plugins: end ---
       config.sitemap ? rsbuildPluginSitemap({ config, routeService }) : null,
       enableSSG && config.ssg
         ? rsbuildPluginSSG({

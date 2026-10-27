@@ -15,11 +15,12 @@ import {
   slash,
   type UserConfig,
 } from '@rspress/shared';
+import type { PluginDriver } from '../../PluginDriver';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
-import { getI18nData } from '../i18n';
 
 export async function normalizeThemeConfig(
   docConfig: UserConfig,
+  pluginDriver: PluginDriver,
 ): Promise<NormalizedDefaultThemeConfig> {
   const {
     locales: siteLocales,
@@ -32,7 +33,7 @@ export async function normalizeThemeConfig(
   docConfig.themeConfig = docConfig.themeConfig || {};
   const { themeConfig } = docConfig;
   const locales = siteLocales ?? (themeConfig?.locales || []);
-  const i18nTextData = await getI18nData(docConfig);
+  const i18nTextData = await pluginDriver.getI18nData();
   // In following code, we will normalize the theme config reference to the pages data extracted from mdx files
   const normalizeLinkPrefix = (link: string, currentLang: string) => {
     const normalizedLink = slash(link);

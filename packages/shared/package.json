@@ -51,9 +51,9 @@
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "^2.2.13",
+    "@rsbuild/core": "^2.2.14",
     "@shikijs/rehype": "^4.2.0",
-    "@types/react": "^19.2.18",
+    "@types/react": "^19.3.0",
     "mdast-util-mdx-jsx": "^3.2.0",
     "unified": "^11.0.5"
   },

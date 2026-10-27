@@ -4,6 +4,11 @@ export { Badge, type BadgeProps } from './components/Badge/index';
 export { Banner, type BannerProps } from './components/Banner/index';
 export { Button, type ButtonProps } from './components/Button/index';
 export { Callout, type CalloutProps } from './components/Callout/index';
+export {
+  CdnTabs,
+  type CdnName,
+  type CdnTabsProps,
+} from './components/CdnTabs/index';
 export { CodeBlock, type CodeBlockProps } from './components/CodeBlock/index';
 export {
   CodeBlockRuntime,

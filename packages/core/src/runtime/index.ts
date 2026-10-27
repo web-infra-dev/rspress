@@ -1,5 +1,3 @@
-import virtualSocialLinks from 'virtual-social-links';
-
 export {
   isDataUrl,
   isExternalUrl,
@@ -38,7 +36,8 @@ export {
 export { useWindowSize } from './hooks/useWindowSize';
 export { initPageData } from './initPageData';
 export { NoSSR } from './NoSSR';
-export { safePreconnect, safePreload } from './reactDom';
+export { safeUse } from './react';
+export { safePreconnect, safePreload, safeBrowserOnly } from './reactDom';
 export { isActive, pathnameToRouteService, preloadLink } from './route';
 export {
   addLeadingSlash,
@@ -54,5 +53,5 @@ export {
   withBase,
   withSiteOrigin,
 } from './utils';
-export const socialLinks: Record<string, string> = virtualSocialLinks;
+export { socialLinks } from './socialLinks';
 export { useSearchHooks, type SearchHooks } from './hooks/useSearchHooks';

@@ -17,7 +17,7 @@ import { SlotPreviewToggle } from '../../../components/SlotPreview';
 
 1. 对于 CSS，Rspress 提供了 [CSS 变量](#css-variables) 和 [BEM 类名](#bem-classname)进行定制。
 
-2. 对于 JS / React，Rspress 基于 ESM 重导出覆盖实现了一套运行时接口，支持对内置组件进行修改或替换，实现自己的首页、侧边栏、搜索组件等。
+2. 对于 JS / React，Rspress 基于 ESM 重导出覆盖实现了一套支持 Tree Shaking 的运行时接口，可对内置组件进行修改或替换，实现自己的首页、侧边栏、搜索组件等。
 
    在此之上有两种使用模式：
    - [**wrap**](#wrap)：通过 props / 插槽来对 Rspress 内置的组件进行 **包装** 并增强。

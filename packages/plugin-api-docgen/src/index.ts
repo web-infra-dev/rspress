@@ -3,11 +3,13 @@ import path from 'node:path';
 import type { RspressPlugin } from '@rspress/core';
 import { logger } from '@rspress/core';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
+import { apiDocgenI18n } from '../static/i18n';
 import { apiDocMap, PACKAGE_ROOT } from './constants';
 import { docgen } from './docgen';
-import type { PluginOptions, SupportLanguages } from './types';
+import type { PluginOptions } from './types';
 
 const VIRTUAL_MODULE_NAME = 'rspress-plugin-api-docgen-map';
+type ConfigUtils = Parameters<NonNullable<RspressPlugin['config']>>[1];
 
 /**
  * The plugin is used to generate api doc for files.
@@ -19,30 +21,27 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
     appDir = process.cwd(),
     parseToolOptions = {},
   } = options || {};
+  let getI18nData: ConfigUtils['getI18nData'];
   return {
-    name: '@modern-js/doc-plugin-api-docgen',
-    config(config) {
+    name: '@rspress/plugin-api-docgen',
+    i18nSource(source) {
+      return {
+        ...source,
+        ...structuredClone(apiDocgenI18n),
+      };
+    },
+    config(config, utils) {
+      getI18nData = utils.getI18nData;
       config.markdown = config.markdown || {};
       return config;
     },
     async beforeBuild(config) {
-      // only support zh , en and ru
-      let languages: SupportLanguages[] = (
-        config.themeConfig?.locales?.map(locale => locale.lang) ||
-        config.locales?.map(locale => locale.lang) ||
-        []
-      ).filter((lang): lang is SupportLanguages =>
-        ['zh', 'en', 'ru'].includes(lang),
-      ) as SupportLanguages[];
-
-      const defaultLang = config.lang || 'en';
-      if (languages.length === 0) {
-        languages = [defaultLang as SupportLanguages];
-      }
+      const i18nSource = await getI18nData();
       const docgenOptions = {
         entries,
         apiParseTool,
-        languages,
+        languages: Object.keys(i18nSource.apiDocgenProperty),
+        i18nSource,
         appDir,
         parseToolOptions,
       };
@@ -55,14 +54,15 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
         ...(config.builderConfig.plugins || []),
         pluginVirtualModule({
           virtualModules: {
-            [VIRTUAL_MODULE_NAME]: async ({ addDependency }) => {
+            [VIRTUAL_MODULE_NAME]: async context => {
+              docgenOptions.i18nSource = await getI18nData(context);
               if (isFirstTransform) {
                 isFirstTransform = false;
               } else {
                 await docgen(docgenOptions);
               }
               for (const filePath of sourceFiles) {
-                addDependency(filePath);
+                context.addDependency(filePath);
               }
               return `export default ${JSON.stringify(apiDocMap)};`;
             },

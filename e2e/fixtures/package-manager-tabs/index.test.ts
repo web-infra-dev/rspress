@@ -23,7 +23,8 @@ test.describe('package manager tabs', async () => {
     });
 
     await page.waitForSelector('.rp-tabs__label__item');
-    const tabs = page.locator('.rp-tabs__label__item');
+    const standardCommands = page.getByTestId('standard-commands');
+    const tabs = standardCommands.locator('.rp-tabs__label__item');
     const tabsText = (await tabs.allInnerTexts()).map(text => text.trim());
 
     expect(tabsText).toEqual([
@@ -62,7 +63,7 @@ test.describe('package manager tabs', async () => {
     const clickTabs = tabs;
     const getCommands = async () =>
       (
-        await page
+        await standardCommands
           .locator('.rp-codeblock__content code')
           .filter({ visible: true })
           .allInnerTexts()
@@ -117,5 +118,96 @@ test.describe('package manager tabs', async () => {
       'deno run -A npm:example-cli-tool --yes',
       'deno init --npm rspress@latest',
     ]);
+  });
+
+  test('additional tabs display custom commands and preserve generated commands', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    const fixture = page.getByTestId('additional-commands');
+    const tabs = fixture.locator('.rp-tabs__label__item');
+    const command = fixture
+      .locator('.rp-codeblock__content code')
+      .filter({ visible: true });
+
+    await expect(tabs).toHaveText([
+      'npm',
+      'yarn',
+      'pnpm',
+      'bun',
+      'deno',
+      'custom',
+      'legacy',
+    ]);
+
+    await tabs.getByText('custom', { exact: true }).click();
+    await expect(command).toHaveText('custom add --dev @rspress/core');
+
+    await tabs.getByText('legacy', { exact: true }).click();
+    await expect(command).toHaveText('legacy install -D @rspress/core');
+
+    await tabs.getByText('npm', { exact: true }).click();
+    await expect(command).toHaveText('npm install -D @rspress/core');
+
+    await tabs.getByText('pnpm', { exact: true }).click();
+    await expect(command).toHaveText('pnpm add -D @rspress/core');
+  });
+
+  test('additional tabs work with object commands and preserve literal commands', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    const fixture = page.getByTestId('additional-object-commands');
+    const tabs = fixture.locator('.rp-tabs__label__item');
+    const command = fixture
+      .locator('.rp-codeblock__content code')
+      .filter({ visible: true });
+
+    await expect(tabs).toHaveText(['npm', 'custom']);
+
+    await tabs.getByText('custom', { exact: true }).click();
+    await expect(command).toHaveText(
+      'corepack pnpm install --save-dev @rspress/core',
+    );
+
+    await tabs.getByText('npm', { exact: true }).click();
+    await expect(command).toHaveText('npm install -D @rspress/core');
+  });
+
+  test('additional commands are not transformed by execution mode', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+
+    const fixture = page.getByTestId('additional-execution-commands');
+    const tabs = fixture.locator('.rp-tabs__label__item');
+    const command = fixture
+      .locator('.rp-codeblock__content code')
+      .filter({ visible: true });
+
+    await expect(tabs).toHaveText([
+      'npm',
+      'yarn',
+      'pnpm',
+      'bun',
+      'deno',
+      'custom',
+    ]);
+
+    await tabs.getByText('custom', { exact: true }).click();
+    await expect(command).toHaveText(
+      'corepack pnpm exec example-cli-tool --yes',
+    );
+
+    await tabs.getByText('npm', { exact: true }).click();
+    await expect(command).toHaveText('npx example-cli-tool --yes');
   });
 });

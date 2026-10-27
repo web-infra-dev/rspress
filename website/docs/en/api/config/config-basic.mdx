@@ -272,7 +272,7 @@ Here are the built-in i18n texts in Rspress:
 
 <details>
 
-```ts file="../../../../../packages/core/src/node/runtimeModule/DEFAULT_I18N_TEXT.ts"
+```ts file="../../../../../packages/core/src/node/runtimeModule/i18n/DEFAULT_I18N_TEXT.ts"
 
 ```
 
@@ -280,10 +280,10 @@ Here are the built-in i18n texts in Rspress:
 
 ## logo \{#logo-1}
 
-- **Type**: `string | { dark: string; light: string }`
+- **Type**: `string | { dark: string; light: string; width?: number; height?: number }`
 - **Default**: `""`
 
-Site logo. Rspress uses this path for the logo in the upper-left corner of the navbar. For example:
+Site logo. Rspress uses this path for the logo in the upper-left corner of the navbar. In the object form, optional `width` and `height` set the intrinsic dimensions (in pixels) for both images; use the source images' dimensions to reserve their aspect ratio and reduce layout shifts. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -304,6 +304,8 @@ export default defineConfig({
   logo: {
     dark: '/logo-dark.png',
     light: '/logo-light.png',
+    width: 120,
+    height: 32,
   },
 });
 ```

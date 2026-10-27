@@ -3,7 +3,12 @@
 [click](/guide/quick-start) to go to guide
 
 import { NoSSR } from '@rspress/core/runtime';
-import { BrowserOnlyAsyncDemo, BrowserOnlySyncDemo } from './_BrowserOnlyDemo';
+import {
+  BrowserOnlyAsyncDemo,
+  BrowserOnlyAsyncRaceDemo,
+  BrowserOnlySuspenseDemo,
+  BrowserOnlySyncDemo,
+} from './_BrowserOnlyDemo';
 
 <NoSSR>
   <div id="NoSSR">This is the index page</div>
@@ -14,3 +19,7 @@ import { BrowserOnlyAsyncDemo, BrowserOnlySyncDemo } from './_BrowserOnlyDemo';
 <BrowserOnlySyncDemo />
 
 <BrowserOnlyAsyncDemo />
+
+<BrowserOnlySuspenseDemo />
+
+<BrowserOnlyAsyncRaceDemo />

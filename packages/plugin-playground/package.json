@@ -40,7 +40,7 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
-    "@babel/types": "^7.29.8",
+    "@babel/types": "^7.29.11",
     "@rsbuild/plugin-react": "~2.1.1",
     "@rspress/plugin-playground": "workspace:*",
     "@types/babel__core": "^7.20.5",
@@ -48,11 +48,11 @@
     "@types/babel__traverse": "^7.28.0",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.7",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "mdast-util-mdx-jsx": "^3.2.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "rsbuild-plugin-publint": "^1.0.0",
     "typescript": "^6.0.3",
     "unified": "^11.0.5"
