@@ -1,19 +1,37 @@
-import { describe, expect, it } from '@rstest/core';
-import { createElement } from 'react';
-import { renderToString } from 'react-dom/server';
+import { PassThrough } from 'node:stream';
+import { text } from 'node:stream/consumers';
+import { describe, expect, it, rs } from '@rstest/core';
+import { createElement, type ReactNode } from 'react';
+import { renderToPipeableStream, renderToString } from 'react-dom/server';
 import { BrowserOnly, type BrowserOnlyProps } from './BrowserOnly';
 import { NoSSR } from './NoSSR';
 
+function renderToHtml(app: ReactNode): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const output = new PassThrough();
+    const { pipe } = renderToPipeableStream(app, {
+      onError: reject,
+      onAllReady() {
+        pipe(output);
+        text(output).then(resolve, reject);
+      },
+    });
+  });
+}
+
 describe('BrowserOnly', () => {
-  it('renders fallback during SSR', () => {
+  it('renders fallback without reporting an SSR error', async () => {
     const browserOnlyProps: BrowserOnlyProps = {
       fallback: createElement('div', null, 'Loading...'),
       children: () => createElement('div', null, 'Browser content'),
     };
 
-    const html = renderToString(createElement(BrowserOnly, browserOnlyProps));
+    const html = await renderToHtml(
+      createElement(BrowserOnly, browserOnlyProps),
+    );
 
-    expect(html).toBe('<div>Loading...</div>');
+    expect(html).toContain('<div>Loading...</div>');
+    expect(html).not.toContain('Browser content');
   });
 
   it('does not call children during SSR', () => {
@@ -30,11 +48,15 @@ describe('BrowserOnly', () => {
     expect(called).toBe(false);
   });
 
-  it('keeps NoSSR empty during SSR', () => {
-    const html = renderToString(
-      createElement(NoSSR, null, createElement('div', null, 'Browser content')),
+  it('does not render NoSSR children during SSR', async () => {
+    const Content = rs.fn(() => <div>Browser content</div>);
+    const html = await renderToHtml(
+      <NoSSR>
+        <Content />
+      </NoSSR>,
     );
 
-    expect(html).toBe('');
+    expect(html).not.toContain('Browser content');
+    expect(Content).not.toHaveBeenCalled();
   });
 });

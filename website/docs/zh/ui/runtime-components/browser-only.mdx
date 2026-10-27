@@ -52,4 +52,4 @@ import { BrowserOnly } from '@rspress/core/runtime';
 
 ## 原理
 
-`BrowserOnly` 使用 **useEffect + 动态导入** 实现，从而规避 SSR 兼容问题。
+`BrowserOnly` 使用 [`browser()`](https://react.dev/reference/react-dom/browser)（旧版 React 使用 `useEffect`），规避 SSR 兼容问题。
