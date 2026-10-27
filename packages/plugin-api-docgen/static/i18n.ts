@@ -6,6 +6,7 @@ export const apiDocgenI18n = {
     ja: 'プロパティ',
     ko: '속성',
     ru: 'Свойство',
+    ta: 'பண்பு',
   },
   apiDocgenDescription: {
     en: 'Description',
@@ -13,6 +14,7 @@ export const apiDocgenI18n = {
     ja: '説明',
     ko: '설명',
     ru: 'Описание',
+    ta: 'விளக்கம்',
   },
   apiDocgenType: {
     en: 'Type',
@@ -20,6 +22,7 @@ export const apiDocgenI18n = {
     ja: '型',
     ko: '타입',
     ru: 'Тип',
+    ta: 'வகை',
   },
   apiDocgenDefaultValue: {
     en: 'Default Value',
@@ -27,6 +30,7 @@ export const apiDocgenI18n = {
     ja: 'デフォルト値',
     ko: '기본값',
     ru: 'Значение по умолчанию',
+    ta: 'இயல்புநிலை மதிப்பு',
   },
   apiDocgenRequired: {
     en: 'Required',
@@ -34,6 +38,7 @@ export const apiDocgenI18n = {
     ja: '必須',
     ko: '필수',
     ru: 'Обязательно',
+    ta: 'கட்டாயம்',
   },
   apiDocgenClassName: {
     en: 'Additional css class',
@@ -41,6 +46,7 @@ export const apiDocgenI18n = {
     ja: '追加の CSS クラス',
     ko: '추가 CSS 클래스',
     ru: 'Имя класса узла',
+    ta: 'கூடுதல் CSS வகுப்பு',
   },
   apiDocgenStyle: {
     en: 'Additional style',
@@ -48,6 +54,7 @@ export const apiDocgenI18n = {
     ja: '追加のスタイル',
     ko: '추가 스타일',
     ru: 'Стиль узла',
+    ta: 'கூடுதல் பாணி',
   },
   apiDocgenChildren: {
     en: 'Children',
@@ -55,6 +62,7 @@ export const apiDocgenI18n = {
     ja: '子要素',
     ko: '자식 요소',
     ru: 'Дочерние элементы',
+    ta: 'உள்ளடக்கம்',
   },
   apiDocgenDisabled: {
     en: 'Whether to disable ',
@@ -62,5 +70,6 @@ export const apiDocgenI18n = {
     ja: '無効にするかどうか',
     ko: '비활성화 여부',
     ru: 'Отключено',
+    ta: 'முடக்க வேண்டுமா',
   },
 };

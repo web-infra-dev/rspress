@@ -133,6 +133,12 @@ test.describe('API docgen locales', async () => {
       className: 'Additional css class',
       required: 'Required',
     },
+    {
+      lang: 'ta',
+      headers: ['பண்பு', 'விளக்கம்', 'வகை', 'இயல்புநிலை மதிப்பு'],
+      className: 'கூடுதல் CSS வகுப்பு',
+      required: 'கட்டாயம்',
+    },
   ];
   // cspell:enable
 
@@ -245,4 +251,19 @@ test('API docgen translations are included in SSR and search output', async () =
   expect(apiContent).toContain('节点类名');
   expect(apiContent).not.toContain('JSON 属性');
   expect(apiContent).not.toContain('|undefined|');
+
+  // cspell:disable
+  const tamilHtml = await readFile(
+    path.join(distDir, 'ta/index.html'),
+    'utf-8',
+  );
+  const tamilTable = tamilHtml.match(
+    /<div class="rspress-plugin-api-docgen">[\s\S]*?<\/table>/,
+  )?.[0];
+  expect(tamilTable).toBeDefined();
+  expect(tamilTable).toContain('பண்பு');
+  expect(tamilTable).toContain('கட்டாயம்');
+  expect(tamilTable).not.toMatch(/<th\b[^>]*>undefined<\/th>/);
+  expect(tamilHtml).toContain('தேடுக');
+  // cspell:enable
 });
