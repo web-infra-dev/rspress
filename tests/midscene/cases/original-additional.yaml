@@ -30,7 +30,7 @@ cases:
       - app.open: { fixture: with-base, mode: production, path: /base/en/ }
       - aiAct: Bring the BrowserOnly demonstration into view and wait for its initial asynchronous output, without clicking either button yet.
       - aiAssert: The synchronous counter reads Sync 0 beside Increment, and the asynchronous output reads Async initial beside Update.
-      - aiAct: Find the BrowserOnly demonstration and click its synchronous increment button once.
+      - aiAct: In the BrowserOnly demonstration, click only the word Increment at the left of the Sync 0 output. The clickable button is the word Increment, not the whole IncrementSync 0 row or the Sync 0 output. Wait until this row reads Sync 1, then stop without clicking again. The adjacent labels may touch without spaces. Do not click the Async Update button during this step. A counter still showing Sync 0 means the increment has not completed.
       - aiAssert: The BrowserOnly row shows the Increment button followed by Sync 1; its counter value is 1. The button label may touch the output text.
-      - aiAct: Click the asynchronous component's update button and wait for its updated output.
+      - aiAct: The Increment button retains keyboard focus from the previous click. Press Tab once to focus the next button, Update, then press Space to activate it. Use the keyboard instead of clicking the tightly joined UpdateAsync initial text. Wait until the asynchronous output reads Async updated, then stop. Do not reload or navigate away.
       - aiAssert: The asynchronous output beside the Update button includes Async updated rather than Async initial.
