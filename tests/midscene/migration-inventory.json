@@ -363,7 +363,7 @@
       "candidateCaseIds": [],
       "reason": "Retain exact generated href arrays across locale, base-path, auto-prefix and clean-URL configurations, plus the failing build exit code for dead anchors. These tests do not assert visible page content.",
       "replacementStatus": "retained-technical",
-      "remainingTestName": "should fail build for dead anchors"
+      "remainingTestName": "should fail build for dead anchors by default"
     },
     {
       "source": "e2e/fixtures/clean-urls-redirect/index.test.ts",
@@ -2203,7 +2203,7 @@
       "candidateCaseIds": [],
       "reason": "Retain remark lint message counts and exact dead-link/anchor diagnostics, including disabled/default option behavior.",
       "replacementStatus": "retained-technical",
-      "remainingTestName": "should disable anchor checks by default"
+      "remainingTestName": "should check anchors by default with link options %j"
     },
     {
       "source": "e2e/fixtures/replace-rules/index.test.ts",

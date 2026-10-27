@@ -61,9 +61,9 @@ export * from '@rspress/core/theme-original';
 
 ### logo
 
-- **类型：** `string | { light: string; dark: string }`
+- **类型：** `string | { light: string; dark: string; width?: number; height?: number }`
 
-站点 Logo。可以是单个图片路径，或为浅色/深色模式分别配置图片。
+站点 Logo。可以是单个图片路径，或为浅色/深色模式分别配置图片。对象形式可选设置 `width` 和 `height`（单位为像素）作为两张图片的固有尺寸；请使用源图片的实际尺寸以预留宽高比并减少布局偏移。
 
 ### logoText
 

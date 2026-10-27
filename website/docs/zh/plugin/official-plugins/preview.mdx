@@ -142,7 +142,7 @@ iframe 预览模式中的代码有单独的编译环境和运行环境。
 
 ### `preview="iframe-follow"`
 
-该模式会在代码块右侧显示一个跟随的 iframe 预览区域。
+该模式会在代码块右侧显示一个跟随的 iframe 预览区域。在宽屏下，可拖动代码与预览之间的分隔条调整预览区域宽度（双击可重置）。
 
 语法：
 
@@ -204,6 +204,21 @@ pluginPreview({
 ```
 
 :::
+
+## 国际化
+
+该插件通过[插件 API `i18nSource`](../system/plugin-api.mdx#i18nsource) 注入以下国际化文案：
+
+<details>
+<summary>翻译源码</summary>
+
+```ts title="i18n.ts" file="../../../../../packages/plugin-preview/static/i18n.ts"
+
+```
+
+</details>
+
+可以通过[用户配置 `i18nSource`](../../api/config/config-basic.mdx#i18nsource) 覆盖这些文案。
 
 ## 配置
 

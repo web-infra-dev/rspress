@@ -142,7 +142,7 @@ Rendering result:
 
 ### `preview="iframe-follow"`
 
-This mode displays an iframe preview area on the right side of the code block that follows the content flow.
+This mode displays an iframe preview area on the right side of the code block that follows the content flow. On wide screens, drag the divider between the code and the preview to resize the preview (double-click to reset).
 
 Syntax:
 
@@ -204,6 +204,21 @@ pluginPreview({
 ```
 
 :::
+
+## Internationalization
+
+This plugin uses the [plugin API `i18nSource`](../system/plugin-api.mdx#i18nsource) to add the following translations:
+
+<details>
+<summary>Translation source</summary>
+
+```ts title="i18n.ts" file="../../../../../packages/plugin-preview/static/i18n.ts"
+
+```
+
+</details>
+
+You can override these texts with the [user configuration `i18nSource`](../../api/config/config-basic.mdx#i18nsource).
 
 ## Options
 

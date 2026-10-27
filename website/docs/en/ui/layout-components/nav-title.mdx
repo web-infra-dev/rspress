@@ -61,9 +61,9 @@ For more information about custom themes, see the [Custom Theme](/guide/basic/cu
 
 ### logo
 
-- **Type:** `string | { light: string; dark: string }`
+- **Type:** `string | { light: string; dark: string; width?: number; height?: number }`
 
-Site Logo. Can be a single image path, or separate images for light/dark mode.
+Site Logo. Can be a single image path, or separate images for light/dark mode. In the object form, optional `width` and `height` (in pixels) set the intrinsic dimensions for both images; use their actual dimensions to reserve the correct aspect ratio and reduce layout shifts.
 
 ### logoText
 

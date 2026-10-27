@@ -261,11 +261,7 @@ export default defineConfig({
 
 Rspress can also check whether internal link anchors exist in the target page. It checks same-page anchors, relative links, and absolute links, but skips external URL anchors.
 
-:::info
-Anchor checking is currently disabled by default. It will be enabled by default in a future version.
-:::
-
-Configure through [markdown.link.checkAnchors](/api/config/config-build#markdownlinkcheckanchors) to automatically check for invalid anchors.
+Anchor checking is enabled by default. Set [markdown.link.checkAnchors](/api/config/config-build#markdownlinkcheckanchors) to `false` to disable it:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -273,7 +269,7 @@ import { defineConfig } from '@rspress/core';
 export default defineConfig({
   markdown: {
     link: {
-      checkAnchors: true,
+      checkAnchors: false,
     },
   },
 });

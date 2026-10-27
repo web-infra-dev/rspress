@@ -8,7 +8,12 @@ title: Doc Components
 Rspress provides commonly used components for documentation content writing, which can be directly imported in MDX files. For example:
 
 ```mdx title="docs/index.mdx"
-import { PackageManagerTabs } from '@rspress/core/theme';
+import { CdnTabs, PackageManagerTabs } from '@rspress/core/theme';
 
 <PackageManagerTabs command="create rspress@latest" />
+
+<CdnTabs
+  package="bootstrap@5"
+  files={['dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js']}
+/>
 ```

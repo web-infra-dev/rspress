@@ -43,7 +43,11 @@ test('migration inventory accounts for every original test exactly once', async 
       const visit = node => {
         if (
           ts.isCallExpression(node) &&
-          node.expression.getText(syntax) === 'test' &&
+          (node.expression.getText(syntax) === 'test' ||
+            (ts.isCallExpression(node.expression) &&
+              ['test.for', 'test.each'].includes(
+                node.expression.expression.getText(syntax),
+              ))) &&
           ts.isStringLiteral(node.arguments[0])
         ) {
           assert.notEqual(
@@ -122,7 +126,11 @@ test('reviewed originals retain their named technical tests', async () => {
     const visit = node => {
       if (
         ts.isCallExpression(node) &&
-        node.expression.getText(syntax) === 'test'
+        (node.expression.getText(syntax) === 'test' ||
+          (ts.isCallExpression(node.expression) &&
+            ['test.for', 'test.each'].includes(
+              node.expression.expression.getText(syntax),
+            )))
       ) {
         if (ts.isStringLiteral(node.arguments[0]))
           titles.push(node.arguments[0].text);
