@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Outlet,
   type RouteObject,
+  ScrollRestoration,
   useLoaderData,
   useNavigation,
 } from 'react-router-dom';
@@ -11,7 +12,6 @@ import { ErrorRoute } from './ErrorRoute';
 import { PageContext } from './hooks/usePage';
 import type { Page } from './initPageData';
 import { PAGE_ROUTE_ID, pageDataLoader } from './pageDataLoader';
-import { ScrollRestoration } from './ScrollRestoration';
 
 nprogress.configure({ showSpinner: false });
 
@@ -49,9 +49,7 @@ function PageRoute() {
   );
 }
 
-export function createPageRoutes({
-  restoreOnHydration = false,
-} = {}): RouteObject[] {
+export function createPageRoutes(): RouteObject[] {
   return [
     {
       // Wait for the initial page loader before mounting scroll restoration.
@@ -59,7 +57,7 @@ export function createPageRoutes({
       element: (
         <>
           <Outlet />
-          <ScrollRestoration restoreOnHydration={restoreOnHydration} />
+          <ScrollRestoration storageKey="rspress-scroll-positions" />
         </>
       ),
       children: [

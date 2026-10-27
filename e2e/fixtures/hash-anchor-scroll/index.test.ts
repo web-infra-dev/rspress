@@ -130,6 +130,58 @@ for (const mode of ['dev', 'build'] as const) {
       await expectScroll(page, 600);
     });
 
+    if (mode === 'build') {
+      test('reload keeps the latest reading position while a destination is loading', async ({
+        page,
+      }) => {
+        await page.goto(`http://localhost:${appPort}/docs/source`, {
+          waitUntil: 'networkidle',
+        });
+        await scrollTo(page, 400);
+
+        let release!: () => void;
+        let requested!: () => void;
+        const gate = new Promise<void>(resolve => {
+          release = resolve;
+        });
+        const started = new Promise<void>(resolve => {
+          requested = resolve;
+        });
+        await page.route(
+          /\/static\/js\/async\/.*\.js(?:\?.*)?$/,
+          async route => {
+            requested();
+            await gate;
+            try {
+              await route.continue();
+            } catch (error) {
+              // Reload cancels the request for the pending destination.
+              if (route.request().failure()?.errorText !== 'net::ERR_ABORTED') {
+                throw error;
+              }
+            }
+          },
+          { times: 1 },
+        );
+
+        try {
+          await page
+            .getByRole('button', { name: 'Open target', exact: true })
+            .click();
+          await started;
+          await expect(page.locator('#nprogress .bar')).toBeVisible();
+          await expect(page).toHaveURL(/\/docs\/source$/);
+          await scrollTo(page, 800);
+
+          await page.reload({ waitUntil: 'networkidle' });
+          await expect(page).toHaveURL(/\/docs\/source$/);
+          await expectScroll(page, 800);
+        } finally {
+          release();
+        }
+      });
+    }
+
     test('keeps scroll positions separate during document navigation', async ({
       page,
     }) => {

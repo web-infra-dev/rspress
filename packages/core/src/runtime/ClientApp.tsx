@@ -25,15 +25,12 @@ export function createClientRouter(initialPageData?: Page) {
     );
   }
 
-  return createBrowserRouter(
-    createPageRoutes({ restoreOnHydration: Boolean(initialPageData) }),
-    {
-      basename: removeTrailingSlash(withBase('/')),
-      hydrationData: initialPageData
-        ? { loaderData: { [PAGE_ROUTE_ID]: initialPageData } }
-        : undefined,
-    },
-  );
+  return createBrowserRouter(createPageRoutes(), {
+    basename: removeTrailingSlash(withBase('/')),
+    hydrationData: initialPageData
+      ? { loaderData: { [PAGE_ROUTE_ID]: initialPageData } }
+      : undefined,
+  });
 }
 
 export function ClientApp({
