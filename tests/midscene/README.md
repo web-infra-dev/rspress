@@ -347,3 +347,8 @@ dependency. Package build outputs are cached only for an exact fingerprint of
 committed package sources, shared scripts, root files, runner platform and Node
 version; there is no fallback to a partial cache key. A cache miss builds the
 checked-out source and saves it before model execution, even if later E2E fails.
+
+Pages publishes the framework's native index, execution dumps and screenshots,
+without duplicate standalone `playwright-*.html` Agent reports. Full downloadable
+artifacts still contain those originals. This also prunes duplicate Agent HTML
+from retained Pages history, without rewriting native reports or their images.

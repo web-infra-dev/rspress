@@ -208,3 +208,44 @@ test('workflow gates upload and Summary links on the verified report path', asyn
   assert(summary.includes('render-ci-summary.mjs'));
   assert(summary.includes('Explain incomplete native report'));
 });
+
+test('publishes native reports and evidence without duplicate standalone Agent HTML', async t => {
+  const options = await workspace(t);
+  await nativeReport(options.reports);
+  const root = path.join(
+    options.reports,
+    'midscene-results/midscene_run/report',
+  );
+  await writeFile(path.join(root, 'playwright-example.html'), 'duplicate HTML');
+  await writeFile(path.join(root, 'playwright-example.html.trace.json'), '{}');
+  await mkdir(path.join(root, 'screenshots'));
+  await writeFile(path.join(root, 'screenshots/image.jpeg'), 'image');
+  await history(options.previous, ['1']);
+  await writeFile(
+    path.join(options.previous, 'runs/1/playwright-old.html'),
+    'old duplicate',
+  );
+  await preparePagesSite({ ...options, runId: '2' });
+  const published = path.join(
+    options.site,
+    'runs/2/midscene-results/midscene_run/report',
+  );
+  assert.equal(
+    await exists(path.join(published, 'playwright-example.html')),
+    false,
+  );
+  assert.equal(
+    await exists(path.join(published, 'playwright-example.html.trace.json')),
+    true,
+  );
+  assert.equal(
+    await exists(path.join(published, 'screenshots/image.jpeg')),
+    true,
+  );
+  assert.equal(await exists(path.join(published, 'native/index.html')), true);
+  assert.equal(
+    await exists(path.join(options.site, 'runs/1/playwright-old.html')),
+    false,
+  );
+  assert.equal(await exists(path.join(root, 'playwright-example.html')), true);
+});

@@ -59,6 +59,12 @@ export async function preparePagesSite({
   // Incomplete runs keep their downloadable artifacts, without replacing Pages.
   if (!result?.reportPath) return { bytes: 0, runIds: [], reportPath: null };
   await mkdir(site, { recursive: true });
+  // The native framework index embeds every execution. Standalone Agent HTML
+  // duplicates it; retain dumps/screenshots for Summary and full download artifacts.
+  const nativeReport = path.resolve(reports, result.reportPath);
+  const publishedFile = source =>
+    path.resolve(source) === nativeReport ||
+    !/^playwright-.*\.html$/.test(path.basename(source));
 
   if (previous && (await exists(path.join(previous, 'runs')))) {
     // Select retained history before copying large screenshot directories.
@@ -77,6 +83,7 @@ export async function preparePagesSite({
     for (const id of retained) {
       await cp(path.join(previous, 'runs', id), path.join(site, 'runs', id), {
         recursive: true,
+        filter: publishedFile,
       });
     }
   }
@@ -94,6 +101,7 @@ export async function preparePagesSite({
       path.join(current, reportDirectory),
       {
         recursive: true,
+        filter: publishedFile,
       },
     );
   }

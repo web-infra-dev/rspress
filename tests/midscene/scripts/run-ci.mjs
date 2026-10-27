@@ -33,6 +33,11 @@ const priorityIds = [
   'ASSET-03',
   'COMPONENT-10',
   'OVERVIEW-01',
+  'VIRTUAL-02',
+  'PLUGIN-03',
+  'READ-12',
+  'AUDIT-12',
+  'COMPAT-06',
 ];
 const prepared = await prepareSpeedCases({
   root: process.cwd(),
