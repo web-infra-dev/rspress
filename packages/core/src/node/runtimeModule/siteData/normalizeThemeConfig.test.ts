@@ -68,6 +68,7 @@ describe('normalizeThemeConfig', () => {
   it('should normalize lastUpdated author callback for runtime site data', async () => {
     const author = ({ name }: { name: string }) => name;
     const config: UserConfig = {
+      mediumZoom: false,
       themeConfig: {
         lastUpdated: {
           author,
@@ -75,7 +76,9 @@ describe('normalizeThemeConfig', () => {
       },
     };
 
-    const themeConfig = await normalizeThemeConfig(config);
+    const driver = await PluginDriver.create(config, false);
+    const resolvedConfig = await driver.modifyConfig();
+    const themeConfig = await normalizeThemeConfig(resolvedConfig, driver);
 
     expect(themeConfig.lastUpdated).toEqual({
       author: true,

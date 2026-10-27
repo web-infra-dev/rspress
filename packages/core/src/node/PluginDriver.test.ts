@@ -199,7 +199,7 @@ describe('route.cleanUrls defaults', () => {
         false,
       );
       const config = await driver.modifyConfig();
-      const { siteData } = await createSiteData(config);
+      const { siteData } = await createSiteData(config, driver);
 
       expect(normalizeHref('/guide.html', siteData.route?.cleanUrls)).toBe(
         '/guide',
@@ -221,7 +221,7 @@ describe('route.cleanUrls defaults', () => {
       false,
     );
     const config = await driver.modifyConfig();
-    const { siteData } = await createSiteData(config);
+    const { siteData } = await createSiteData(config, driver);
 
     expect(config.route).toEqual(route);
     expect(normalizeHref('/guide', siteData.route?.cleanUrls)).toBe(

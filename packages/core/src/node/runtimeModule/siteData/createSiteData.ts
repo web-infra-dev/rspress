@@ -5,7 +5,7 @@ import { normalizeThemeConfig } from './normalizeThemeConfig';
 
 export async function createSiteData(
   userConfig: UserConfig,
-  pluginDriver?: PluginDriver,
+  pluginDriver: PluginDriver,
 ): Promise<{
   siteData: Omit<SiteData, 'root' | 'pages'>;
 }> {
