@@ -130,7 +130,7 @@ for (const mode of ['dev', 'build'] as const) {
       await expectScroll(page, 600);
     });
 
-    test('keeps scroll positions separate across document navigations', async ({
+    test('keeps scroll positions separate during document navigation', async ({
       page,
     }) => {
       await page.goto(`http://localhost:${appPort}/docs/target`, {
