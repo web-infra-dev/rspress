@@ -40,7 +40,10 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
     await pluginDriver.routeGenerated(routeService.getRoutes());
     await pluginDriver.routeServiceGenerated(routeService);
 
-    // 3. rsbuild.dev
+    // 3. Resolve i18n once before plugins and the initial compilation.
+    await pluginDriver.getI18nData();
+
+    // 4. rsbuild.dev
     await pluginDriver.beforeBuild();
     const rsbuild = await initRsbuild(
       docDirectory,
@@ -53,6 +56,11 @@ export async function dev(options: DevOptions): Promise<ServerInstance> {
         restart,
       },
     );
+    rsbuild.onBeforeDevCompile(({ isFirstCompile }) => {
+      if (!isFirstCompile) {
+        pluginDriver.invalidateI18nData();
+      }
+    });
     rsbuild.onAfterDevCompile(async () => {
       await pluginDriver.afterBuild();
     });

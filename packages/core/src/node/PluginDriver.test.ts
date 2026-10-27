@@ -1,10 +1,11 @@
 import type { RspressPlugin, UserConfig } from '@rspress/shared';
 import { normalizeHref } from '@rspress/shared';
-import { describe, expect, it } from '@rstest/core';
+import { describe, expect, it, rs } from '@rstest/core';
 import { PluginDriver } from './PluginDriver';
 import { createSiteData } from './runtimeModule/siteData/createSiteData';
 
 type ConfigUtils = Parameters<NonNullable<RspressPlugin['config']>>[1];
+type I18nData = Awaited<ReturnType<ConfigUtils['getI18nData']>>;
 
 describe('config utils.getI18nData', () => {
   it('uses the final config and dynamically added plugins with normal merge and fallback rules', async () => {
@@ -74,17 +75,22 @@ describe('config utils.getI18nData', () => {
     });
   });
 
-  it('applies async user overrides on each read', async () => {
+  it('shares concurrent and sequential reads until the next compilation', async () => {
     let readI18nData!: ConfigUtils['getI18nData'];
     let text = 'Initial override';
+    const userSource = rs.fn(async (source: I18nData) => ({
+      ...source,
+      pluginText: { ...source.pluginText, zh: text },
+    }));
+    const pluginSource = rs.fn((source: I18nData) => ({
+      ...source,
+      pluginText: { en: 'Plugin text' },
+    }));
     const driver = await PluginDriver.create(
       {
         mediumZoom: false,
         lang: 'zh',
-        i18nSource: async source => ({
-          ...source,
-          pluginText: { ...source.pluginText, zh: text },
-        }),
+        i18nSource: userSource,
         plugins: [
           {
             name: 'capture-i18n-utils',
@@ -92,20 +98,95 @@ describe('config utils.getI18nData', () => {
               readI18nData = utils.getI18nData;
               return config;
             },
-            i18nSource(source) {
-              return { ...source, pluginText: { en: 'Plugin text' } };
-            },
+            i18nSource: pluginSource,
           },
         ],
       },
       false,
     );
 
-    await driver.modifyConfig();
+    const config = await driver.modifyConfig();
+    const contexts = Array.from({ length: 2 }, () => ({
+      addDependency: rs.fn(),
+      addMissingDependency: rs.fn(),
+    }));
+    const [first, second] = await Promise.all([
+      readI18nData(contexts[0]),
+      driver.getI18nData(contexts[1]),
+    ]);
+    await createSiteData(config, driver);
+    expect(first).toBe(second);
+    expect((await readI18nData()).pluginText).toEqual({ zh: text });
+    expect(pluginSource).toHaveBeenCalledTimes(1);
+    expect(userSource).toHaveBeenCalledTimes(1);
+    for (const context of contexts) {
+      expect(context.addMissingDependency).toHaveBeenCalledWith(
+        expect.stringMatching(/i18n\.json$/),
+      );
+      expect(context.addMissingDependency).toHaveBeenCalledTimes(1);
+      expect(context.addDependency).not.toHaveBeenCalled();
+    }
 
-    expect((await readI18nData()).pluginText).toEqual({ zh: text });
     text = 'Updated override';
+    expect(await readI18nData()).toBe(first);
+    expect(first.pluginText).toEqual({ zh: 'Initial override' });
+    driver.invalidateI18nData();
     expect((await readI18nData()).pluginText).toEqual({ zh: text });
+    expect(pluginSource).toHaveBeenCalledTimes(2);
+    expect(userSource).toHaveBeenCalledTimes(2);
+  });
+
+  it('keeps different build drivers isolated', async () => {
+    let text = 'First build';
+    const source = rs.fn((data: I18nData) => ({
+      ...data,
+      buildText: { en: text },
+    }));
+    const config = { mediumZoom: false, i18nSource: source };
+    const firstDriver = await PluginDriver.create({ ...config }, true);
+    const secondDriver = await PluginDriver.create({ ...config }, true);
+    await Promise.all([
+      firstDriver.modifyConfig(),
+      secondDriver.modifyConfig(),
+    ]);
+
+    const first = await firstDriver.getI18nData();
+    text = 'Second build';
+    const second = await secondDriver.getI18nData();
+
+    expect(first.buildText.en).toBe('First build');
+    expect(second.buildText.en).toBe('Second build');
+    expect(await firstDriver.getI18nData()).toBe(first);
+    expect(source).toHaveBeenCalledTimes(2);
+  });
+
+  it('shares a failed resolution and retries after invalidation', async () => {
+    const error = new Error('Invalid i18n config');
+    let fail = true;
+    const source = rs.fn(async (data: I18nData) => {
+      if (fail) {
+        throw error;
+      }
+      return data;
+    });
+    const driver = await PluginDriver.create(
+      { mediumZoom: false, i18nSource: source },
+      false,
+    );
+    await driver.modifyConfig();
+    const context = { addDependency: rs.fn(), addMissingDependency: rs.fn() };
+
+    await expect(
+      Promise.all([driver.getI18nData(context), driver.getI18nData()]),
+    ).rejects.toBe(error);
+    expect(context.addMissingDependency).toHaveBeenCalledTimes(1);
+    await expect(driver.getI18nData()).rejects.toBe(error);
+    expect(source).toHaveBeenCalledTimes(1);
+
+    fail = false;
+    driver.invalidateI18nData();
+    expect((await driver.getI18nData()).languagesText.en).toBe('Languages');
+    expect(source).toHaveBeenCalledTimes(2);
   });
 });
 

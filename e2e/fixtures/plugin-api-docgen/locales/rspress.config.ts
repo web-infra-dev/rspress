@@ -1,6 +1,9 @@
+import assert from 'node:assert/strict';
 import path from 'node:path';
 import { defineConfig } from '@rspress/core';
 import { pluginApiDocgen } from '@rspress/plugin-api-docgen';
+
+let i18nSourceCalls = 0;
 
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
@@ -23,6 +26,21 @@ export default defineConfig({
       },
       apiParseTool: 'react-docgen-typescript',
     }),
+    {
+      name: 'i18n-pipeline-probe',
+      i18nSource(source) {
+        i18nSourceCalls++;
+        return source;
+      },
+      beforeBuild() {
+        assert.equal(i18nSourceCalls, 1);
+      },
+      afterBuild(_, isProd) {
+        if (isProd) {
+          assert.equal(i18nSourceCalls, 1);
+        }
+      },
+    },
   ],
   locales: [
     {

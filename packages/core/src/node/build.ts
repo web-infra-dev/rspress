@@ -42,7 +42,10 @@ export async function build(options: BuildOptions) {
   await modifyConfigWithAutoNavSide(modifiedConfig);
 
   try {
-    // 3. rsbuild build
+    // 3. Resolve i18n once for plugins and all compilation targets.
+    await pluginDriver.getI18nData();
+
+    // 4. rsbuild build
     await pluginDriver.beforeBuild();
     // if enableSSG, build both client and server bundle
     // else only build client bundle

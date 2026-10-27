@@ -1,4 +1,4 @@
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test } from '@e2e/test';
 import {
@@ -151,6 +151,62 @@ test.describe('API docgen locales', async () => {
       ).toContainText(`(${required})`);
     });
   }
+
+  test('reloads translations from i18n.json and config in dev', async ({
+    page,
+  }) => {
+    const sourcePath = path.join(import.meta.dirname, 'i18n.json');
+    const configPath = path.join(import.meta.dirname, 'rspress.config.ts');
+    const originalSource = await readFile(sourcePath);
+    const originalConfig = await readFile(configPath);
+    const pageUrl = `http://localhost:${appPort}/zh/`;
+    const headers = page
+      .locator('.rspress-plugin-api-docgen table')
+      .getByRole('columnheader');
+
+    try {
+      await page.goto(pageUrl, { waitUntil: 'networkidle' });
+      await expect(headers.nth(1)).toHaveText('参数说明');
+      await page.evaluate(() => {
+        (window as Window & { __i18nHmrMarker?: string }).__i18nHmrMarker =
+          'preserved';
+      });
+
+      const source = JSON.parse(originalSource.toString());
+      source.apiDocgenDescription.zh = 'Updated JSON description';
+      await writeFile(sourcePath, JSON.stringify(source));
+      await expect(headers.nth(1)).toHaveText('Updated JSON description');
+      expect(
+        await page.evaluate(
+          () =>
+            (window as Window & { __i18nHmrMarker?: string }).__i18nHmrMarker,
+        ),
+      ).toBe('preserved');
+
+      const config = originalConfig
+        .toString()
+        .replace('组件属性 | 名称\\n字段', 'Updated config property');
+      expect(config).not.toBe(originalConfig.toString());
+      await writeFile(configPath, config);
+      await expect
+        .poll(
+          async () => {
+            try {
+              await page.goto(pageUrl, { timeout: 10_000 });
+              return await headers.first().textContent();
+            } catch {
+              return null;
+            }
+          },
+          { timeout: 30_000 },
+        )
+        .toBe('Updated config property');
+      await expect(headers.nth(1)).toHaveText('Updated JSON description');
+    } finally {
+      await writeFile(sourcePath, originalSource);
+      await writeFile(configPath, originalConfig);
+    }
+  });
 });
 
 test('API docgen translations are included in SSR and search output', async () => {

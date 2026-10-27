@@ -16,13 +16,13 @@ describe('getI18nData', () => {
     rs.restoreAllMocks();
   });
 
-  it('tracks a custom i18n file and merges its texts with plugins and config', async () => {
+  it('tracks a custom BOM-prefixed i18n file and refreshes it after invalidation', async () => {
     const tempDir = await mkdtemp(path.join(tmpdir(), 'rspress-i18n-'));
     try {
       const i18nSourcePath = path.join(tempDir, 'custom-translations.json');
       await writeFile(
         i18nSourcePath,
-        JSON.stringify({ pluginKey: { zh: 'JSON 文案' } }),
+        `\uFEFF${JSON.stringify({ pluginKey: { zh: 'JSON 文案' } })}`,
       );
       const config: UserConfig = {
         mediumZoom: false,
@@ -45,15 +45,33 @@ describe('getI18nData', () => {
         ],
       };
       const driver = await PluginDriver.create(config, false);
+      await driver.modifyConfig();
       const context = { addDependency: rs.fn(), addMissingDependency: rs.fn() };
 
-      const result = await getI18nData(config, driver, context);
+      const result = await driver.getI18nData(context);
 
       expect(context.addDependency).toHaveBeenCalledWith(i18nSourcePath);
       expect(context.addDependency).toHaveBeenCalledTimes(1);
       expect(context.addMissingDependency).not.toHaveBeenCalled();
       expect(result.pluginKey).toEqual({ en: 'Config Text', zh: 'JSON 文案' });
       expect(result.languagesText).toEqual({ en: 'Languages', zh: '语言' });
+
+      await writeFile(
+        i18nSourcePath,
+        JSON.stringify({ pluginKey: { zh: '更新后的 JSON 文案' } }),
+      );
+      const nextContext = {
+        addDependency: rs.fn(),
+        addMissingDependency: rs.fn(),
+      };
+      expect(await driver.getI18nData(nextContext)).toBe(result);
+      expect(nextContext.addDependency).toHaveBeenCalledWith(i18nSourcePath);
+
+      driver.invalidateI18nData();
+      expect((await driver.getI18nData()).pluginKey).toEqual({
+        en: 'Config Text',
+        zh: '更新后的 JSON 文案',
+      });
     } finally {
       await rm(tempDir, { recursive: true, force: true });
     }
@@ -102,6 +120,7 @@ describe('getI18nData', () => {
       );
       rs.clearAllMocks();
 
+      driver.invalidateI18nData();
       expect((await readI18nData(context)).pluginKey).toEqual({
         zh: '新建文件文案',
       });

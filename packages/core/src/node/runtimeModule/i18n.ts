@@ -1,4 +1,4 @@
-import { createRequire } from 'node:module';
+import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { TransformContext } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
@@ -9,8 +9,52 @@ import { createError, pathExists } from '../utils';
 import { DEFAULT_I18N_TEXT } from './DEFAULT_I18N_TEXT';
 import { RuntimeModuleID, type VirtualModulePlugin } from './types';
 
-const require = createRequire(import.meta.url);
 const DEFAULT_I18N_SOURCE_PATH = join(process.cwd(), 'i18n.json');
+
+type I18nData = Record<string, Record<string, string>>;
+type I18nDependencyContext = Pick<
+  TransformContext,
+  'addDependency' | 'addMissingDependency'
+>;
+
+export function createI18nDataLoader(
+  getConfig: () => UserConfig,
+  pluginDriver: PluginDriver,
+) {
+  let snapshotPromise:
+    | Promise<{
+        data: Promise<I18nData>;
+        sourcePath: string;
+        sourceExists: boolean;
+      }>
+    | undefined;
+
+  const load = async () => {
+    const config = getConfig();
+    const sourcePath = config.i18nSourcePath ?? DEFAULT_I18N_SOURCE_PATH;
+    const sourceExists = await pathExists(sourcePath);
+    const data = getI18nData(config, pluginDriver);
+    return { data, sourcePath, sourceExists };
+  };
+
+  return {
+    async get(context?: I18nDependencyContext): Promise<I18nData> {
+      snapshotPromise ??= load();
+      const snapshot = await snapshotPromise;
+      if (context) {
+        if (snapshot.sourceExists) {
+          context.addDependency(snapshot.sourcePath);
+        } else {
+          context.addMissingDependency(snapshot.sourcePath);
+        }
+      }
+      return snapshot.data;
+    },
+    invalidate() {
+      snapshotPromise = undefined;
+    },
+  };
+}
 
 function mergeI18nData(
   ...sources: Record<string, Record<string, string>>[]
@@ -33,22 +77,13 @@ let logged = false;
 export async function getI18nData(
   docConfig: UserConfig,
   pluginDriver?: PluginDriver,
-  context?: Pick<TransformContext, 'addDependency' | 'addMissingDependency'>,
-): Promise<Record<string, Record<string, string>>> {
+): Promise<I18nData> {
   const {
     i18nSourcePath = DEFAULT_I18N_SOURCE_PATH,
     i18nSource = {},
     themeConfig,
     locales,
   } = docConfig;
-
-  if (context) {
-    if (await pathExists(i18nSourcePath)) {
-      context.addDependency(i18nSourcePath);
-    } else {
-      context.addMissingDependency(i18nSourcePath);
-    }
-  }
 
   let langs: string[] =
     (locales ?? themeConfig?.locales)?.map(locale => locale.lang) ?? [];
@@ -69,8 +104,8 @@ export async function getI18nData(
   // 2. load i18nSource from i18n.json
   let i18nSourceFromJson: Record<string, Record<string, string>> = {};
   try {
-    delete require.cache[i18nSourcePath];
-    i18nSourceFromJson = require(i18nSourcePath);
+    const content = await readFile(i18nSourcePath, 'utf8');
+    i18nSourceFromJson = JSON.parse(content.replace(/^\uFEFF/, ''));
   } catch (e) {
     logger.debug(
       'getI18nData from i18n.json Failed: \n',
@@ -136,14 +171,10 @@ export async function getI18nData(
  * Generate i18n text for client runtime
  */
 export const i18nVMPlugin: VirtualModulePlugin = context => {
-  const { config, pluginDriver } = context;
+  const { pluginDriver } = context;
   return {
     [RuntimeModuleID.I18nText]: async transformContext => {
-      const i18nData = await getI18nData(
-        config,
-        pluginDriver,
-        transformContext,
-      );
+      const i18nData = await pluginDriver.getI18nData(transformContext);
 
       return `export default ${JSON.stringify(i18nData, null, 2)}`;
     },

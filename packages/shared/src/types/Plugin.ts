@@ -47,7 +47,7 @@ export interface RspressPlugin {
       addPlugin: (plugin: RspressPlugin) => void;
       removePlugin: (pluginName: string) => void;
       /**
-       * Read resolved i18n data after all config hooks have run.
+       * Read the shared i18n data for the current build.
        */
       getI18nData: (
         context?: Pick<
