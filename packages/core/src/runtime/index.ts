@@ -1,5 +1,3 @@
-import virtualSocialLinks from 'virtual-social-links';
-
 export {
   isDataUrl,
   isExternalUrl,
@@ -55,5 +53,5 @@ export {
   withBase,
   withSiteOrigin,
 } from './utils';
-export const socialLinks: Record<string, string> = virtualSocialLinks;
+export { socialLinks } from './socialLinks';
 export { useSearchHooks, type SearchHooks } from './hooks/useSearchHooks';
