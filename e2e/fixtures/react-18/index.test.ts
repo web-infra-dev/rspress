@@ -53,6 +53,32 @@ test.describe('React 18 development', async () => {
     // find the 404 text in the page
     await expect(page.locator('body')).toContainText('404');
   });
+
+  test('BrowserOnly should render and update sync and async children', async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on('pageerror', error => errors.push(error.message));
+
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('#browser-only-sync-content')).toHaveText(
+      'Sync 0 /',
+    );
+    await expect(page.locator('#browser-only-async-content')).toHaveText(
+      'Async 0',
+    );
+
+    await page.locator('#browser-only-increment').click();
+    await expect(page.locator('#browser-only-sync-content')).toHaveText(
+      'Sync 1 /',
+    );
+    await expect(page.locator('#browser-only-async-content')).toHaveText(
+      'Async 1',
+    );
+    expect(errors).toEqual([]);
+  });
 });
 
 test('React 18 build should generate Markdown by default', async () => {
@@ -71,6 +97,10 @@ test('React 18 build should generate Markdown by default', async () => {
 
   expect(indexHtml).not.toContain('{reactVersion}');
   expect(indexHtml).not.toContain('{version}');
+  expect(indexHtml).toContain('Sync fallback');
+  expect(indexHtml).toContain('Async fallback');
+  expect(indexHtml).not.toContain('Sync 0');
+  expect(indexHtml).not.toContain('Async 0');
   expect(existsSync(path.join(docBuildDir, 'llms.txt'))).toBe(true);
   expect(
     readFileSync(path.join(docBuildDir, 'llms-full.txt'), 'utf-8'),

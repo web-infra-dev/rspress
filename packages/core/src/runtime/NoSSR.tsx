@@ -37,6 +37,10 @@ export function OldNoSSR({ children, fallback = null }: NoSSRProps) {
 export function NoSSR(props: NoSSRProps) {
   const { fallback = null, ...rest } = props;
 
+  if (import.meta.env.SSG_MD) {
+    return <>{fallback}</>;
+  }
+
   if (typeof safeBrowserOnly === 'function') {
     return (
       <Suspense fallback={fallback}>
