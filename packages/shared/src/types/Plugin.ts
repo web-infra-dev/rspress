@@ -1,4 +1,4 @@
-import type { RsbuildConfig } from '@rsbuild/core';
+import type { RsbuildConfig, TransformContext } from '@rsbuild/core';
 import type { PluggableList } from 'unified';
 import type { PageIndexInfo, RouteMeta, UserConfig } from '.';
 
@@ -49,7 +49,12 @@ export interface RspressPlugin {
       /**
        * Read resolved i18n data after all config hooks have run.
        */
-      getI18nData: () => Promise<Record<string, Record<string, string>>>;
+      getI18nData: (
+        context?: Pick<
+          TransformContext,
+          'addDependency' | 'addMissingDependency'
+        >,
+      ) => Promise<Record<string, Record<string, string>>>;
     },
     isProd: boolean,
   ) => UserConfig | Promise<UserConfig>;

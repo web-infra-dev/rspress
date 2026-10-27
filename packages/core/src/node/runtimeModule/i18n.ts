@@ -1,5 +1,6 @@
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
+import type { TransformContext } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
@@ -32,6 +33,7 @@ let logged = false;
 export async function getI18nData(
   docConfig: UserConfig,
   pluginDriver?: PluginDriver,
+  context?: Pick<TransformContext, 'addDependency' | 'addMissingDependency'>,
 ): Promise<Record<string, Record<string, string>>> {
   const {
     i18nSourcePath = DEFAULT_I18N_SOURCE_PATH,
@@ -39,6 +41,14 @@ export async function getI18nData(
     themeConfig,
     locales,
   } = docConfig;
+
+  if (context) {
+    if (await pathExists(i18nSourcePath)) {
+      context.addDependency(i18nSourcePath);
+    } else {
+      context.addMissingDependency(i18nSourcePath);
+    }
+  }
 
   let langs: string[] =
     (locales ?? themeConfig?.locales)?.map(locale => locale.lang) ?? [];
@@ -128,19 +138,12 @@ export async function getI18nData(
 export const i18nVMPlugin: VirtualModulePlugin = context => {
   const { config, pluginDriver } = context;
   return {
-    [RuntimeModuleID.I18nText]: async ({
-      addDependency,
-      addMissingDependency,
-    }) => {
-      const configPath = config.i18nSourcePath || DEFAULT_I18N_SOURCE_PATH;
-
-      const isExist = await pathExists(configPath);
-      if (isExist) {
-        addDependency(configPath);
-      } else {
-        addMissingDependency(configPath);
-      }
-      const i18nData = await getI18nData(config, pluginDriver);
+    [RuntimeModuleID.I18nText]: async transformContext => {
+      const i18nData = await getI18nData(
+        config,
+        pluginDriver,
+        transformContext,
+      );
 
       return `export default ${JSON.stringify(i18nData, null, 2)}`;
     },

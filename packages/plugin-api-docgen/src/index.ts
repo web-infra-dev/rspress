@@ -9,6 +9,7 @@ import { docgen } from './docgen';
 import type { PluginOptions } from './types';
 
 const VIRTUAL_MODULE_NAME = 'rspress-plugin-api-docgen-map';
+type ConfigUtils = Parameters<NonNullable<RspressPlugin['config']>>[1];
 
 /**
  * The plugin is used to generate api doc for files.
@@ -20,9 +21,9 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
     appDir = process.cwd(),
     parseToolOptions = {},
   } = options || {};
-  let getI18nData: () => Promise<Record<string, Record<string, string>>>;
+  let getI18nData: ConfigUtils['getI18nData'];
   return {
-    name: '@modern-js/doc-plugin-api-docgen',
+    name: '@rspress/plugin-api-docgen',
     i18nSource(source) {
       return {
         ...source,
@@ -47,31 +48,21 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
       // Initial generation so that modifySearchIndexData has data
       const sourceFiles = await docgen(docgenOptions);
       let isFirstTransform = true;
-      const i18nSourcePath =
-        config.i18nSourcePath || path.join(process.cwd(), 'i18n.json');
 
       config.builderConfig = config.builderConfig || {};
       config.builderConfig.plugins = [
         ...(config.builderConfig.plugins || []),
         pluginVirtualModule({
           virtualModules: {
-            [VIRTUAL_MODULE_NAME]: async ({
-              addDependency,
-              addMissingDependency,
-            }) => {
-              if (fs.existsSync(i18nSourcePath)) {
-                addDependency(i18nSourcePath);
-              } else {
-                addMissingDependency(i18nSourcePath);
-              }
+            [VIRTUAL_MODULE_NAME]: async context => {
+              docgenOptions.i18nSource = await getI18nData(context);
               if (isFirstTransform) {
                 isFirstTransform = false;
               } else {
-                docgenOptions.i18nSource = await getI18nData();
                 await docgen(docgenOptions);
               }
               for (const filePath of sourceFiles) {
-                addDependency(filePath);
+                context.addDependency(filePath);
               }
               return `export default ${JSON.stringify(apiDocMap)};`;
             },

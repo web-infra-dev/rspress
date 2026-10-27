@@ -146,7 +146,7 @@ export class PluginDriver {
           config || {},
           {
             addPlugin: this.addPlugin.bind(this),
-            getI18nData: () => getI18nData(this.#config, this),
+            getI18nData: context => getI18nData(this.#config, this, context),
             removePlugin: (pluginName: string) => {
               const index = this.#plugins.findIndex(
                 item => item.name === pluginName,
