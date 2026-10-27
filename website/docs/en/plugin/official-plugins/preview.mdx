@@ -207,24 +207,18 @@ pluginPreview({
 
 ## Internationalization
 
-The refresh and open buttons include English (`en`), Chinese (`zh`), Japanese (`ja`), Korean (`ko`), Russian (`ru`), and Tamil (`ta`) translations. You can override these texts or add languages through [i18nSource](../../api/config/config-basic.mdx#i18nsource) or `i18n.json`, using the `previewRefresh` and `previewOpen` keys. Language codes must match your site's language configuration exactly; missing translations fall back to English.
+This plugin uses the [plugin API `i18nSource`](../system/plugin-api.mdx#i18nsource) to add the `previewRefresh` and `previewOpen` translation keys.
 
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-import { pluginPreview } from '@rspress/plugin-preview';
+<details>
+<summary>Translation source</summary>
 
-export default defineConfig({
-  plugins: [pluginPreview()],
-  i18nSource: {
-    previewRefresh: {
-      zh: '重新加载',
-    },
-    previewOpen: {
-      zh: '打开预览',
-    },
-  },
-});
+```ts title="i18n.ts" file="../../../../../packages/plugin-preview/static/i18n.ts"
+
 ```
+
+</details>
+
+You can override these texts with the [user configuration `i18nSource`](../../api/config/config-basic.mdx#i18nsource).
 
 ## Options
 
