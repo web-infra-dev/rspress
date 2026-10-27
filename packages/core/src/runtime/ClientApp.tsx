@@ -16,12 +16,24 @@ import { createPageRoutes } from './PageRoute';
 const head = createHead();
 
 export function createClientRouter(initialPageData?: Page) {
-  return createBrowserRouter(createPageRoutes(), {
-    basename: removeTrailingSlash(withBase('/')),
-    hydrationData: initialPageData
-      ? { loaderData: { [PAGE_ROUTE_ID]: initialPageData } }
-      : undefined,
-  });
+  // React Router otherwise uses "default" for every directly loaded document,
+  // causing their saved scroll positions to share the same sessionStorage key.
+  if (!window.history.state?.key) {
+    window.history.replaceState(
+      { ...window.history.state, key: Math.random().toString(36).slice(2, 10) },
+      '',
+    );
+  }
+
+  return createBrowserRouter(
+    createPageRoutes({ restoreOnHydration: Boolean(initialPageData) }),
+    {
+      basename: removeTrailingSlash(withBase('/')),
+      hydrationData: initialPageData
+        ? { loaderData: { [PAGE_ROUTE_ID]: initialPageData } }
+        : undefined,
+    },
+  );
 }
 
 export function ClientApp({

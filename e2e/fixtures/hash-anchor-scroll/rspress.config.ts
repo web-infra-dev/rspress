@@ -4,6 +4,7 @@ import { defineConfig } from '@rspress/core';
 export default defineConfig({
   base: '/docs/',
   root: path.join(import.meta.dirname, 'doc'),
+  globalUIComponents: [path.join(import.meta.dirname, 'Navigation.tsx')],
   route: {
     cleanUrls: true,
   },

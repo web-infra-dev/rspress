@@ -1,6 +1,7 @@
 import nprogress from 'nprogress';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+  Outlet,
   type RouteObject,
   useLoaderData,
   useNavigation,
@@ -10,6 +11,7 @@ import { ErrorRoute } from './ErrorRoute';
 import { PageContext } from './hooks/usePage';
 import type { Page } from './initPageData';
 import { PAGE_ROUTE_ID, pageDataLoader } from './pageDataLoader';
+import { ScrollRestoration } from './ScrollRestoration';
 
 nprogress.configure({ showSpinner: false });
 
@@ -47,16 +49,29 @@ function PageRoute() {
   );
 }
 
-export function createPageRoutes(): RouteObject[] {
+export function createPageRoutes({
+  restoreOnHydration = false,
+} = {}): RouteObject[] {
   return [
     {
-      id: PAGE_ROUTE_ID,
-      // Keep Rspress' matching rules for .html, /index, case, and encoded paths.
-      path: '*',
-      loader: pageDataLoader,
-      element: <PageRoute />,
-      errorElement: <ErrorRoute />,
+      // Wait for the initial page loader before mounting scroll restoration.
       hydrateFallbackElement: <></>,
+      element: (
+        <>
+          <Outlet />
+          <ScrollRestoration restoreOnHydration={restoreOnHydration} />
+        </>
+      ),
+      children: [
+        {
+          id: PAGE_ROUTE_ID,
+          // Keep Rspress' matching rules for .html, /index, case, and encoded paths.
+          path: '*',
+          loader: pageDataLoader,
+          element: <PageRoute />,
+          errorElement: <ErrorRoute />,
+        },
+      ],
     },
   ];
 }

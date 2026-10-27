@@ -14,6 +14,10 @@ Rspress 直接重导出 `react-router-dom` 的路由能力，你可以无需额�
 
 自 Rspress 2.1.0 起，路由使用 React Router 的 **Data 模式**。
 
+Rspress 会自动管理滚动位置。打开新页面时滚动到顶部，前进或后退时恢复对应历史记录的滚动位置。带 hash 的链接会滚动到目标标题；返回已访问的历史记录时，优先恢复保存的位置。
+
+如果希望导航时保留当前滚动位置，例如更新查询参数，可以使用 `navigate(to, { preventScrollReset: true })`。自定义主题同样具有这些行为，无需额外渲染 `ScrollRestoration` 组件。
+
 下面是一个使用示例：
 
 ```tsx preview
