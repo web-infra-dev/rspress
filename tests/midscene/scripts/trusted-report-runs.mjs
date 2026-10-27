@@ -12,7 +12,12 @@ export async function isTrustedReportRun(run, repository, compareToMain) {
   )
     return false;
   if (repository !== upstreamRepository)
-    return run.event === 'workflow_dispatch';
+    return (
+      run.event === 'workflow_dispatch' ||
+      (repository === 'quanru/rspress' &&
+        run.event === 'push' &&
+        run.head_branch === 'benchmark/midscene-speed-20261022')
+    );
   if (
     run.head_branch !== 'main' ||
     !['schedule', 'push', 'workflow_dispatch'].includes(run.event) ||
@@ -94,7 +99,9 @@ async function main(mode) {
     const filter =
       repository === process.env.MIDSCENE_UPSTREAM_REPOSITORY
         ? 'branch=main'
-        : 'event=workflow_dispatch';
+        : repository === 'quanru/rspress'
+          ? ''
+          : 'event=workflow_dispatch';
     const artifact = await findReportHistory(
       async page =>
         (

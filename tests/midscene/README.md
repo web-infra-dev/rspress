@@ -222,7 +222,11 @@ report rendering and Markdown results.
 
 The workflow validates definitions on PRs without model credentials. Relevant
 upstream `main` pushes run the AI suite automatically; maintainers can also dispatch
-it manually. Forks run AI tests only by manual dispatch. Every AI run consumes model
+it manually. The regular CI suite defaults to 40 concurrent cases; manual runs can
+override `file_concurrency`. The owner's `quanru/rspress` benchmark branch
+`benchmark/midscene-speed-20261022` also runs on relevant pushes. Other fork branches
+run AI tests only by manual dispatch. Local runs without a concurrency override
+remain serial. Every AI run consumes model
 tokens; do not configure secrets on an untrusted fork.
 
 Configure these repository Actions secrets before the first AI run:

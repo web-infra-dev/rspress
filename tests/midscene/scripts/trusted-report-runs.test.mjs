@@ -86,6 +86,24 @@ test('fork reports require a same-repository manual dispatch', async () => {
   );
 });
 
+test('only the owner benchmark branch permits fork push reports', async () => {
+  const run = {
+    ...upstream,
+    repository: { full_name: 'quanru/rspress' },
+    head_repository: { full_name: 'quanru/rspress' },
+    head_branch: 'benchmark/midscene-speed-20261022',
+  };
+  assert.equal(await trusted(run, 'quanru/rspress'), true);
+  for (const change of [
+    { head_branch: 'main' },
+    { head_branch: 'feature' },
+    { event: 'pull_request' },
+    { head_repository: { full_name: 'attacker/rspress' } },
+  ]) {
+    assert.equal(await trusted({ ...run, ...change }, 'quanru/rspress'), false);
+  }
+});
+
 test('an upstream tag named main must still point to a protected-main commit', async () => {
   for (const status of ['behind', 'diverged']) {
     assert.equal(
