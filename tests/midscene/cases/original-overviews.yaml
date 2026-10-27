@@ -4,11 +4,13 @@ cases:
     tags: [original-overviews, replacement-batch-3-overviews]
     steps:
       - app.open: { fixture: auto-nav-sidebar, path: /api/config.html }
-      - aiAct: Bring the Basic config, Theme config, Front matter config, and Build config overview sections into view, scrolling as needed. Do not leave this overview.
-      - aiAssert: In reading order these overview sections offer Basic config with root and logoText, Theme config with nav and sidebar, Front matter config, and Build config with builderConfig, Default config, markdown, and markdown.remarkPlugins links.
-      - aiAct: Bring Extname config and Nested sections of this overview into view without leaving the overview.
-      - aiAssert: The Extname config section offers an Extname config article entry; the following Nested section contains a Nested config article entry with a Nested H2 link.
-      - aiAct: Follow Basic config in the overview article, not the sidebar or search.
+      - aiAct: Bring the Basic config and Theme config sections into view in the main overview article using scrolling only. Stop with both sections and their article links visible. Do not click any headings, cards, links, sidebar entries, or On this page entries. Stay on the configuration overview.
+      - aiAssert: In the main overview article, Basic config with root and logoText links is followed by Theme config with nav and sidebar links. Sidebar labels are not evidence.
+      - aiAct: Scroll down in the main overview article to the Front matter config and Build config sections. Stop with both sections and the Build config article links visible. Use scrolling only; do not click any headings, cards, links, sidebar entries, or On this page entries.
+      - aiAssert: In the main overview article, Front matter config is followed by Build config with builderConfig, Default config, markdown, and markdown.remarkPlugins links. Sidebar labels are not evidence.
+      - aiAct: Scroll down within the main overview article until the Extname config and Nested sections are visible. Use scrolling only; do not click Nested or any other heading, card, link, sidebar entry, or On this page entry. Stay on this configuration overview, with the earlier Basic config section still above on the same page.
+      - aiAssert: In the main configuration overview article, the Extname config section offers an Extname config article entry, followed by the Nested section containing a Nested config article entry with a Nested H2 link. Both sections are in the main article; labels in the left sidebar are not evidence. A page showing only the Nested section in its main article does not satisfy this check.
+      - aiAct: Scroll back up within the main overview article to its Basic config section. Click the Basic config article link in that section, beside the root and logoText links. Do not use the sidebar, search, or On this page. Wait for the Basic config article body with root and logoText sections to appear.
       - aiAssert: The Basic config article displays the root and logoText sections.
   - name: OVERVIEW-02 Navigate an index-based client API overview
     tags: [original-overviews, replacement-batch-3-overviews]
