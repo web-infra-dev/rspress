@@ -1,8 +1,11 @@
 // cspell:disable
-import type { UserConfig } from '@rspress/shared';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import type { RspressPlugin, UserConfig } from '@rspress/shared';
 import { afterEach, beforeEach, describe, expect, it, rs } from '@rstest/core';
-import type { PluginDriver } from '../PluginDriver';
-import { getI18nData } from './i18n';
+import { PluginDriver } from '../../PluginDriver';
+import { getI18nData } from './getI18nData';
 
 describe('getI18nData', () => {
   beforeEach(() => {
@@ -11,6 +14,122 @@ describe('getI18nData', () => {
 
   afterEach(() => {
     rs.restoreAllMocks();
+  });
+
+  it('tracks a custom BOM-prefixed i18n file and refreshes it after invalidation', async () => {
+    const tempDir = await mkdtemp(path.join(tmpdir(), 'rspress-i18n-'));
+    try {
+      const i18nSourcePath = path.join(tempDir, 'custom-translations.json');
+      await writeFile(
+        i18nSourcePath,
+        `\uFEFF${JSON.stringify({ pluginKey: { zh: 'JSON 文案' } })}`,
+      );
+      const config: UserConfig = {
+        mediumZoom: false,
+        locales: [
+          { lang: 'en', label: 'English' },
+          { lang: 'zh', label: '中文' },
+        ],
+        i18nSourcePath,
+        i18nSource: { pluginKey: { en: 'Config Text' } },
+        plugins: [
+          {
+            name: 'plugin-i18n',
+            i18nSource(source) {
+              return {
+                ...source,
+                pluginKey: { en: 'Plugin Text', zh: '插件文案' },
+              };
+            },
+          },
+        ],
+      };
+      const driver = await PluginDriver.create(config, false);
+      await driver.modifyConfig();
+      const context = { addDependency: rs.fn(), addMissingDependency: rs.fn() };
+
+      const result = await driver.getI18nData(context);
+
+      expect(context.addDependency).toHaveBeenCalledWith(i18nSourcePath);
+      expect(context.addDependency).toHaveBeenCalledTimes(1);
+      expect(context.addMissingDependency).not.toHaveBeenCalled();
+      expect(result.pluginKey).toEqual({ en: 'Config Text', zh: 'JSON 文案' });
+      expect(result.languagesText).toEqual({ en: 'Languages', zh: '语言' });
+
+      await writeFile(
+        i18nSourcePath,
+        JSON.stringify({ pluginKey: { zh: '更新后的 JSON 文案' } }),
+      );
+      const nextContext = {
+        addDependency: rs.fn(),
+        addMissingDependency: rs.fn(),
+      };
+      expect(await driver.getI18nData(nextContext)).toBe(result);
+      expect(nextContext.addDependency).toHaveBeenCalledWith(i18nSourcePath);
+
+      driver.invalidateI18nData();
+      expect((await driver.getI18nData()).pluginKey).toEqual({
+        en: 'Config Text',
+        zh: '更新后的 JSON 文案',
+      });
+    } finally {
+      await rm(tempDir, { recursive: true, force: true });
+    }
+  });
+
+  it('tracks a missing custom i18n file through config utils and reads it when created', async () => {
+    const tempDir = await mkdtemp(path.join(tmpdir(), 'rspress-i18n-'));
+    try {
+      const i18nSourcePath = path.join(tempDir, 'custom-translations.json');
+      let readI18nData!: Parameters<
+        NonNullable<RspressPlugin['config']>
+      >[1]['getI18nData'];
+      const driver = await PluginDriver.create(
+        {
+          mediumZoom: false,
+          lang: 'zh',
+          i18nSourcePath,
+          plugins: [
+            {
+              name: 'plugin-i18n',
+              config(config, utils) {
+                readI18nData = utils.getI18nData;
+                return config;
+              },
+              i18nSource(source) {
+                return { ...source, pluginKey: { en: 'Plugin Text' } };
+              },
+            },
+          ],
+        },
+        false,
+      );
+      await driver.modifyConfig();
+      const context = { addDependency: rs.fn(), addMissingDependency: rs.fn() };
+
+      expect((await readI18nData(context)).pluginKey).toEqual({
+        zh: 'Plugin Text',
+      });
+      expect(context.addMissingDependency).toHaveBeenCalledWith(i18nSourcePath);
+      expect(context.addMissingDependency).toHaveBeenCalledTimes(1);
+      expect(context.addDependency).not.toHaveBeenCalled();
+
+      await writeFile(
+        i18nSourcePath,
+        JSON.stringify({ pluginKey: { zh: '新建文件文案' } }),
+      );
+      rs.clearAllMocks();
+
+      driver.invalidateI18nData();
+      expect((await readI18nData(context)).pluginKey).toEqual({
+        zh: '新建文件文案',
+      });
+      expect(context.addDependency).toHaveBeenCalledWith(i18nSourcePath);
+      expect(context.addDependency).toHaveBeenCalledTimes(1);
+      expect(context.addMissingDependency).not.toHaveBeenCalled();
+    } finally {
+      await rm(tempDir, { recursive: true, force: true });
+    }
   });
 
   it('no locales and no lang', async () => {

@@ -1,4 +1,5 @@
 import path from 'node:path';
+import type { TransformContext } from '@rsbuild/core';
 import {
   addLeadingSlash,
   addTrailingSlash,
@@ -9,6 +10,7 @@ import {
 } from '@rspress/shared';
 import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
+import { createI18nDataLoader } from './runtimeModule/i18n/getI18nData';
 import { createError } from './utils';
 
 type RspressPluginHookKeys =
@@ -29,6 +31,8 @@ export class PluginDriver {
   #plugins: RspressPlugin[];
 
   #isProd: boolean;
+
+  #i18nData: ReturnType<typeof createI18nDataLoader>;
 
   haveNavSidebarConfig = false;
 
@@ -57,6 +61,7 @@ export class PluginDriver {
     this.#config = config;
     this.#isProd = isProd;
     this.#plugins = [];
+    this.#i18nData = createI18nDataLoader(() => this.#config, this);
   }
 
   // The init function is used to initialize the doc plugins and will execute before the build process.
@@ -134,6 +139,7 @@ export class PluginDriver {
   }
 
   async modifyConfig() {
+    this.invalidateI18nData();
     this.normalizeConfig();
 
     let config = this.#config;
@@ -145,6 +151,7 @@ export class PluginDriver {
           config || {},
           {
             addPlugin: this.addPlugin.bind(this),
+            getI18nData: this.getI18nData.bind(this),
             removePlugin: (pluginName: string) => {
               const index = this.#plugins.findIndex(
                 item => item.name === pluginName,
@@ -162,6 +169,16 @@ export class PluginDriver {
     this.#config = config;
     this.haveNavSidebarConfig = haveNavSidebarConfig(config);
     return this.#config;
+  }
+
+  getI18nData(
+    context?: Pick<TransformContext, 'addDependency' | 'addMissingDependency'>,
+  ) {
+    return this.#i18nData.get(context);
+  }
+
+  invalidateI18nData() {
+    this.#i18nData.invalidate();
   }
 
   async beforeBuild() {

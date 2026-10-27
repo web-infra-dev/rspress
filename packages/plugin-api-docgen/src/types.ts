@@ -61,7 +61,6 @@ export type PluginOptions = {
 };
 
 export type DocGenOptions = Required<PluginOptions> & {
-  languages: ('zh' | 'en' | 'ru')[];
+  languages: string[];
+  i18nSource: Record<string, Record<string, string>>;
 };
-
-export type SupportLanguages = 'zh' | 'en' | 'ru';

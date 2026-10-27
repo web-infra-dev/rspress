@@ -2,7 +2,7 @@
   "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
     "composite": true,
-    "rootDir": "src"
+    "rootDir": "."
   },
   "references": [
     {
@@ -12,5 +12,5 @@
       "path": "../shared"
     }
   ],
-  "include": ["src"]
+  "include": ["src", "static/i18n.ts"]
 }

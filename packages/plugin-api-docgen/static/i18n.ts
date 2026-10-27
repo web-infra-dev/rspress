@@ -1,0 +1,66 @@
+// cspell:disable
+export const apiDocgenI18n = {
+  apiDocgenProperty: {
+    en: 'Property',
+    zh: '属性',
+    ja: 'プロパティ',
+    ko: '속성',
+    ru: 'Свойство',
+  },
+  apiDocgenDescription: {
+    en: 'Description',
+    zh: '说明',
+    ja: '説明',
+    ko: '설명',
+    ru: 'Описание',
+  },
+  apiDocgenType: {
+    en: 'Type',
+    zh: '类型',
+    ja: '型',
+    ko: '타입',
+    ru: 'Тип',
+  },
+  apiDocgenDefaultValue: {
+    en: 'Default Value',
+    zh: '默认值',
+    ja: 'デフォルト値',
+    ko: '기본값',
+    ru: 'Значение по умолчанию',
+  },
+  apiDocgenRequired: {
+    en: 'Required',
+    zh: '必填',
+    ja: '必須',
+    ko: '필수',
+    ru: 'Обязательно',
+  },
+  apiDocgenClassName: {
+    en: 'Additional css class',
+    zh: '节点类名',
+    ja: '追加の CSS クラス',
+    ko: '추가 CSS 클래스',
+    ru: 'Имя класса узла',
+  },
+  apiDocgenStyle: {
+    en: 'Additional style',
+    zh: '节点样式',
+    ja: '追加のスタイル',
+    ko: '추가 스타일',
+    ru: 'Стиль узла',
+  },
+  apiDocgenChildren: {
+    en: 'Children',
+    zh: '子节点',
+    ja: '子要素',
+    ko: '자식 요소',
+    ru: 'Дочерние элементы',
+  },
+  apiDocgenDisabled: {
+    en: 'Whether to disable ',
+    zh: '是否禁用',
+    ja: '無効にするかどうか',
+    ko: '비활성화 여부',
+    ru: 'Отключено',
+  },
+};
