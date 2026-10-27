@@ -39,5 +39,5 @@ cases:
       - app.open: { fixture: react-router-dom-6, path: /404 }
       - aiAct: Bring the 404 page and its home recovery link into view.
       - aiAssert: The page displays a 404 message.
-      - aiAct: Follow the home recovery link.
+      - aiAct: Click the Take me home button in the 404 page body. Wait until the 404 message is replaced by the Hello world article containing react-router-dom 6. Do not use the Open suspended page navigation link or search. A page still showing PAGE NOT FOUND is not the destination.
       - aiAssert: The Hello world article is visible and contains react-router-dom 6.
