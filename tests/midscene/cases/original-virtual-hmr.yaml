@@ -4,10 +4,12 @@ cases:
     steps:
       - app.open: { fixture: hmr-lazy, path: /guide/test.html }
       - aiAct: Scroll the main document to the bottom to find the status row containing Translation before and Search hook before. Click its Count button once. This row is below the article, not in the top navigation; do not stop at the header or sidebar.
-      - aiAssert: 'The text "Count: 1" is visible at the bottom of the page. The top navigation displays Guide.'
+      - aiAssert: The bottom status row contains the Count button with numeric value 1, and the top navigation displays Guide. The counter may directly follow Translation before and Search hook before with no spaces or line breaks between the labels; it does not need to appear as a separate line.
       - fixture.update: { part: navigation }
       - aiAct: Watch the top-right Guide link until it becomes HMR Guide. Leave the top-left HMR fixture title unchanged. Do not reload or navigate elsewhere; stop if the link has not updated within 30 seconds.
-      - aiAssert: 'The top navigation displays HMR Guide. The text "Count: 1" is still visible at the bottom of the page.'
+      - aiAssert: The top navigation displays HMR Guide.
+      - aiAct: Scroll the main document to the bottom status row containing Translation before and Search hook before. Bring its Count button into view without clicking it. Do not reload, navigate elsewhere, or change the counter; only inspect its retained value after the navigation hot update.
+      - aiAssert: The bottom status row contains Translation before, Search hook before, and the Count button with numeric value 1, retaining the value set before the navigation hot update. These labels may run together without spaces or line breaks; the counter does not need to appear as a separate line.
   - name: VIRTUAL-02 Hot-update translated text and search hooks without losing state
     tags:
       [
