@@ -86,7 +86,7 @@ cases:
     steps:
       - app.open: { fixture: basic, path: / }
       - aiAssert: No illustrated mascot popup is visible beneath the GitHub social icon in the top navigation.
-      - aiAct: Hover over the GitHub social icon in the top navigation without following the link.
+      - aiAct: Hover over the center of the GitHub social icon in the top navigation and keep the pointer there until its white mascot preview popup appears beneath it. If no popup appears, correct the pointer position onto the icon itself. Finish with the popup visible and the pointer still on the icon. Do not click or follow the link.
       - aiAssert: A small white rounded popup beneath the GitHub social icon contains an illustrated Rspress mascot, separate from the article content.
       - aiAct: Move the pointer away from the GitHub icon onto the Hello world article heading without clicking.
       - aiAssert: The mascot popup beneath the GitHub social icon is no longer visible.

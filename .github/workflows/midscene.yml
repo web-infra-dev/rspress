@@ -30,6 +30,11 @@ on:
         type: choice
         options: ['1', '5', '10', '15', '20', '30', '40', '60']
         default: '40'
+      request_retry_interval:
+        description: Model retry delay in milliseconds (65000 for minute-based quota limits)
+        type: choice
+        options: ['2000', '65000']
+        default: '2000'
       speed_benchmark:
         description: Run the isolated speed experiment (fork only, no Pages deployment)
         type: boolean
@@ -132,10 +137,10 @@ jobs:
     env:
       HEADLESS: 'true'
       MIDSCENE_SPEED_CONCURRENCY: ${{ inputs.file_concurrency || '40' }}
-      # Allow the endpoint's minute-based quota to recover; case retries stay off.
+      # Request and output-format retries share this delay; case retries stay off.
       MIDSCENE_MODEL_TIMEOUT: '120000'
       MIDSCENE_MODEL_RETRY_COUNT: '4'
-      MIDSCENE_MODEL_RETRY_INTERVAL: '65000'
+      MIDSCENE_MODEL_RETRY_INTERVAL: ${{ inputs.request_retry_interval || '2000' }}
       # The model endpoint is reachable over IPv4; avoid family-race timeouts.
       NODE_OPTIONS: '--dns-result-order=ipv4first --no-network-family-autoselection'
     steps:

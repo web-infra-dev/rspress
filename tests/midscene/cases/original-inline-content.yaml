@@ -25,8 +25,10 @@ cases:
       - aiAssert: The group headed bold contains a card titled bold. Both labels are readable text, not raw HTML tags.
       - aiAct: Scroll only the central overview to show the emphasis group heading and its entire card. Do not follow any link.
       - aiAssert: The group headed emphasis contains a card titled emphasis. Both labels are readable text, not raw HTML tags.
-      - aiAct: Scroll the central overview to the <foo> and -m <number> groups.
-      - aiAssert: The group headed <foo> contains a card titled <foo>. The separate group headed -m <number> contains a card titled -m <number>. Both preserve the angle brackets.
+      - aiAct: Scroll the central overview to the <foo> group. Show its heading and its card title together, then stop without clicking any link.
+      - aiAssert: The group heading and its own card title both read <foo>, preserving the angle brackets.
+      - aiAct: Continue down the central overview to the -m <number> group. Show its heading and its card title together inside the viewport, then stop without clicking any link.
+      - aiAssert: The group heading and its own card title both read -m <number>, preserving the angle brackets.
       - aiAct: Scroll the central overview to the delete and link groups.
       - aiAssert: The group headed delete contains a card titled delete. The separate group headed link contains a card titled link.
       - aiAct: Scroll only the main document to the generic Class Component group below the link group. Show its heading and card together, then stop. Do not click any links or try to fit later groups on screen.

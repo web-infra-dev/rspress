@@ -12,14 +12,20 @@ const workflow = yaml.load(
   ),
 );
 
-test('normal and benchmark CI allow minute-quota recovery with bounded request retries', () => {
-  for (const name of ['midscene', 'speed-benchmark']) {
-    assert.equal(workflow.jobs[name].env.MIDSCENE_MODEL_RETRY_COUNT, '4');
-    assert.equal(
-      workflow.jobs[name].env.MIDSCENE_MODEL_RETRY_INTERVAL,
-      '65000',
-    );
-  }
+test('regular runs avoid minute-long format-retry waits and retain a quota-recovery override', () => {
+  assert.equal(workflow.jobs.midscene.env.MIDSCENE_MODEL_RETRY_COUNT, '4');
+  assert.equal(
+    workflow.jobs.midscene.env.MIDSCENE_MODEL_RETRY_INTERVAL,
+    "${{ inputs.request_retry_interval || '2000' }}",
+  );
+  assert.deepEqual(
+    workflow.on.workflow_dispatch.inputs.request_retry_interval.options,
+    ['2000', '65000'],
+  );
+  assert.equal(
+    workflow.jobs['speed-benchmark'].env.MIDSCENE_MODEL_RETRY_INTERVAL,
+    '65000',
+  );
 });
 
 test('model verification and execution receive the same optional reasoning setting', () => {
