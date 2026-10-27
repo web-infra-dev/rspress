@@ -9,6 +9,7 @@ import {
 } from '@rspress/shared';
 import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
+import { getI18nData } from './runtimeModule/i18n';
 import { createError } from './utils';
 
 type RspressPluginHookKeys =
@@ -145,6 +146,7 @@ export class PluginDriver {
           config || {},
           {
             addPlugin: this.addPlugin.bind(this),
+            getI18nData: () => getI18nData(this.#config, this),
             removePlugin: (pluginName: string) => {
               const index = this.#plugins.findIndex(
                 item => item.name === pluginName,

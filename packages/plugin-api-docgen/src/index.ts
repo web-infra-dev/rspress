@@ -3,9 +3,10 @@ import path from 'node:path';
 import type { RspressPlugin } from '@rspress/core';
 import { logger } from '@rspress/core';
 import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
+import { apiDocgenI18n } from '../static/i18n';
 import { apiDocMap, PACKAGE_ROOT } from './constants';
 import { docgen } from './docgen';
-import type { PluginOptions, SupportLanguages } from './types';
+import type { PluginOptions } from './types';
 
 const VIRTUAL_MODULE_NAME = 'rspress-plugin-api-docgen-map';
 
@@ -19,46 +20,54 @@ export function pluginApiDocgen(options?: PluginOptions): RspressPlugin {
     appDir = process.cwd(),
     parseToolOptions = {},
   } = options || {};
+  let getI18nData: () => Promise<Record<string, Record<string, string>>>;
   return {
     name: '@modern-js/doc-plugin-api-docgen',
-    config(config) {
+    i18nSource(source) {
+      return {
+        ...source,
+        ...structuredClone(apiDocgenI18n),
+      };
+    },
+    config(config, utils) {
+      getI18nData = utils.getI18nData;
       config.markdown = config.markdown || {};
       return config;
     },
     async beforeBuild(config) {
-      // only support zh , en and ru
-      let languages: SupportLanguages[] = (
-        config.themeConfig?.locales?.map(locale => locale.lang) ||
-        config.locales?.map(locale => locale.lang) ||
-        []
-      ).filter((lang): lang is SupportLanguages =>
-        ['zh', 'en', 'ru'].includes(lang),
-      ) as SupportLanguages[];
-
-      const defaultLang = config.lang || 'en';
-      if (languages.length === 0) {
-        languages = [defaultLang as SupportLanguages];
-      }
+      const i18nSource = await getI18nData();
       const docgenOptions = {
         entries,
         apiParseTool,
-        languages,
+        languages: Object.keys(i18nSource.apiDocgenProperty),
+        i18nSource,
         appDir,
         parseToolOptions,
       };
       // Initial generation so that modifySearchIndexData has data
       const sourceFiles = await docgen(docgenOptions);
       let isFirstTransform = true;
+      const i18nSourcePath =
+        config.i18nSourcePath || path.join(process.cwd(), 'i18n.json');
 
       config.builderConfig = config.builderConfig || {};
       config.builderConfig.plugins = [
         ...(config.builderConfig.plugins || []),
         pluginVirtualModule({
           virtualModules: {
-            [VIRTUAL_MODULE_NAME]: async ({ addDependency }) => {
+            [VIRTUAL_MODULE_NAME]: async ({
+              addDependency,
+              addMissingDependency,
+            }) => {
+              if (fs.existsSync(i18nSourcePath)) {
+                addDependency(i18nSourcePath);
+              } else {
+                addMissingDependency(i18nSourcePath);
+              }
               if (isFirstTransform) {
                 isFirstTransform = false;
               } else {
+                docgenOptions.i18nSource = await getI18nData();
                 await docgen(docgenOptions);
               }
               for (const filePath of sourceFiles) {

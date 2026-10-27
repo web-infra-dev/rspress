@@ -131,8 +131,11 @@ The type of `ConfigUtils` is as follows:
 interface ConfigUtils {
   addPlugin: (plugin: RspressPlugin) => void;
   removePlugin: (pluginName: string) => void;
+  getI18nData: () => Promise<Record<string, Record<string, string>>>;
 }
 ```
+
+Save `utils.getI18nData` and call it after all `config` hooks have run, for example in `beforeBuild`, to read resolved internationalized text. It includes plugin defaults and user overrides, with language filtering and English fallback applied.
 
 Modifies or extends the Rspress config itself. For example, use `config` to change the site title:
 

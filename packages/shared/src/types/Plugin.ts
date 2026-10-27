@@ -46,6 +46,10 @@ export interface RspressPlugin {
     utils: {
       addPlugin: (plugin: RspressPlugin) => void;
       removePlugin: (pluginName: string) => void;
+      /**
+       * Read resolved i18n data after all config hooks have run.
+       */
+      getI18nData: () => Promise<Record<string, Record<string, string>>>;
     },
     isProd: boolean,
   ) => UserConfig | Promise<UserConfig>;

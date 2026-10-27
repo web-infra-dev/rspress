@@ -46,6 +46,21 @@ export default defineConfig({
 <API moduleName="button" />
 ```
 
+## 国际化
+
+该插件通过[插件 API `i18nSource`](../system/plugin-api.mdx#i18nsource) 注入以下国际化文案：
+
+<details>
+<summary>翻译源码</summary>
+
+```ts title="i18n.ts" file="../../../../../packages/plugin-api-docgen/static/i18n.ts"
+
+```
+
+</details>
+
+可以通过[用户配置 `i18nSource`](../../api/config/config-basic.mdx#i18nsource) 覆盖这些文案。
+
 ## 配置
 
 这个插件接受一个对象参数，类型如下:

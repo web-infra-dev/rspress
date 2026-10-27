@@ -8,6 +8,14 @@ export default defineConfig({
     localeRedirect: 'never',
   },
   lang: 'en',
+  i18nSource: {
+    apiDocgenProperty: {
+      zh: '组件属性',
+    },
+    apiDocgenRequired: {
+      zh: '必须配置',
+    },
+  },
   plugins: [
     pluginApiDocgen({
       entries: {
@@ -29,5 +37,9 @@ export default defineConfig({
       description: 'A awesome project description',
       label: 'English',
     },
+    { lang: 'ja', label: 'Japanese' },
+    { lang: 'ko', label: 'Korean' },
+    { lang: 'ru', label: 'Russian' },
+    { lang: 'fr', label: 'French' },
   ],
 });

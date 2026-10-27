@@ -133,8 +133,11 @@ export function pluginForDoc(slug: string): RspressPlugin {
 interface ConfigUtils {
   addPlugin: (plugin: RspressPlugin) => void;
   removePlugin: (pluginName: string) => void;
+  getI18nData: () => Promise<Record<string, Record<string, string>>>;
 }
 ```
+
+可以保存 `utils.getI18nData`，在所有 `config` hook 执行完毕后调用，例如在 `beforeBuild` 中读取合并后的国际化文案。结果包含插件默认文案和用户覆盖，并已按站点语言筛选、应用英文回退。
 
 用于修改 Rspress 本身的配置，比如你想要修改文档的标题，可以通过 `config` 来实现：
 
