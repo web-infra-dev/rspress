@@ -20,7 +20,7 @@ const emptySubscribe = () => () => {};
 const getSnapshot = () => true;
 const getServerSnapshot = () => false;
 
-export function OldNoSSR({ children, fallback = null }: NoSSRProps) {
+export function LegacyNoSSR({ children, fallback = null }: NoSSRProps) {
   const isMounted = useSyncExternalStore(
     emptySubscribe,
     getSnapshot,
@@ -49,5 +49,5 @@ export function NoSSR(props: NoSSRProps) {
     );
   }
 
-  return <OldNoSSR fallback={fallback} {...rest} />;
+  return <LegacyNoSSR fallback={fallback} {...rest} />;
 }
