@@ -4,34 +4,25 @@ concurrency:
   group: windows-test-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-# Controls when the action will run.
 on:
-  # Triggers the workflow on pull request events but only for the main branch
   pull_request:
     branches: [main]
-
   merge_group:
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 permissions: {}
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   ut-windows:
-    # Keep the required check name stable; the runtime version comes from .nvmrc.
-    name: ut-windows (22.x, windows-latest)
-    # The type of runner that the job will run on
     runs-on: windows-latest
+    timeout-minutes: 30
     permissions:
       contents: read
-    # Steps represent a sequence of tasks that will be executed as part of the job
+
     steps:
-      - name: Git config
+      - name: Enable Long Paths
         shell: bash
-        run: |
-          git config --system core.longpaths true
+        run: git config --system core.longpaths true
 
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -39,46 +30,45 @@ jobs:
           # Skip detection needs the merge base with origin/main.
           fetch-depth: 0
 
-      - name: Install Pnpm
-        run: |
-          npm install -g corepack@latest --force
-          corepack enable
-
       - name: Check skip CI
+        id: skip-ci
         shell: bash
         run: |
           result=$(node ./scripts/skipCI.js)
-          echo "RESULT=$result" >> "$GITHUB_OUTPUT"
-        id: skip-ci
-
-      - name: Log skip CI result
-        run: echo "${{steps.skip-ci.outputs.RESULT}}"
+          echo "result=$result" >> "$GITHUB_OUTPUT"
+          echo "Skip CI: $result"
 
       - name: Setup Node.js
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.skip-ci.outputs.result != 'true'
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: .nvmrc
           package-manager-cache: false
 
+      - name: Install Pnpm
+        if: steps.skip-ci.outputs.result != 'true'
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          run_install: false
+
       - name: Install Dependencies
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.skip-ci.outputs.result != 'true'
         run: pnpm install --ignore-scripts
 
       - name: Build Packages
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.skip-ci.outputs.result != 'true'
         run: pnpm run build
 
-      - name: Build Website # for test
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+      - name: Build Website
+        if: steps.skip-ci.outputs.result != 'true'
         run: pnpm --filter @rspress/docs run build
 
       - name: Unit Test
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.skip-ci.outputs.result != 'true'
         run: pnpm run test:unit
 
       - name: E2E Test
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.skip-ci.outputs.result != 'true'
         run: pnpm run test:e2e
 
       - name: Upload Playwright Traces
