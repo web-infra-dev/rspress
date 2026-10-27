@@ -128,22 +128,11 @@ export function pluginForDoc(slug: string): RspressPlugin {
 The type of `ConfigUtils` is as follows:
 
 ```ts
-import type { TransformContext } from '@rsbuild/core';
-
 interface ConfigUtils {
   addPlugin: (plugin: RspressPlugin) => void;
   removePlugin: (pluginName: string) => void;
-  getI18nData: (
-    context?: Pick<TransformContext, 'addDependency' | 'addMissingDependency'>,
-  ) => Promise<Record<string, Record<string, string>>>;
 }
 ```
-
-Save `utils.getI18nData` and call it after all `config` hooks have run, for example in `beforeBuild`, to read resolved internationalized text. It includes plugin defaults and user overrides, with language filtering and English fallback applied.
-
-Rspress resolves this data on the first read and shares it across plugins and compilation targets. In development, changing `i18n.json` or the `i18nSource` configuration in `rspress.config.ts` reloads the data.
-
-In a virtual module, pass the transform context to `getI18nData(context)` so Rspress tracks the i18n source file for updates, including when the file does not exist yet.
 
 Modifies or extends the Rspress config itself. For example, use `config` to change the site title:
 
