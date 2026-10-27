@@ -4,8 +4,8 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import type { RspressPlugin, UserConfig } from '@rspress/shared';
 import { afterEach, beforeEach, describe, expect, it, rs } from '@rstest/core';
-import { PluginDriver } from '../PluginDriver';
-import { getI18nData } from './i18n';
+import { PluginDriver } from '../../PluginDriver';
+import { getI18nData } from './getI18nData';
 
 describe('getI18nData', () => {
   beforeEach(() => {

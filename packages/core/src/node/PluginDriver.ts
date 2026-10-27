@@ -10,7 +10,7 @@ import {
 } from '@rspress/shared';
 import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
-import { createI18nDataLoader } from './runtimeModule/i18n';
+import { createI18nDataLoader } from './runtimeModule/i18n/getI18nData';
 import { createError } from './utils';
 
 type RspressPluginHookKeys =

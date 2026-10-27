@@ -4,8 +4,8 @@ import type { TransformContext } from '@rsbuild/core';
 import type { UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import picocolors from 'picocolors';
-import type { PluginDriver } from '../PluginDriver';
-import { createError, pathExists } from '../utils';
+import type { PluginDriver } from '../../PluginDriver';
+import { createError, pathExists } from '../../utils';
 import { DEFAULT_I18N_TEXT } from './DEFAULT_I18N_TEXT';
 
 const DEFAULT_I18N_SOURCE_PATH = join(process.cwd(), 'i18n.json');

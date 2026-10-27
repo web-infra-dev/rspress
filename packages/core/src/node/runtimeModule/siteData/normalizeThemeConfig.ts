@@ -17,7 +17,7 @@ import {
 } from '@rspress/shared';
 import type { PluginDriver } from '../../PluginDriver';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
-import { getI18nData } from '../i18n';
+import { getI18nData } from '../i18n/getI18nData';
 
 export async function normalizeThemeConfig(
   docConfig: UserConfig,
