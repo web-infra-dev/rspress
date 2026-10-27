@@ -186,5 +186,135 @@ for (const mode of ['dev', 'build'] as const) {
       await expect(page).toHaveURL(/\/docs\/target$/);
       await expectScroll(page, 500);
     });
+
+    test('restores actual TOC anchors on backward and forward navigation', async ({
+      page,
+    }) => {
+      const baseUrl = `http://localhost:${appPort}/docs/target?from=toc`;
+      await page.goto(baseUrl, { waitUntil: 'networkidle' });
+      const initialKey = await page.evaluate(() => history.state?.key);
+
+      await page.locator('.rp-toc-item', { hasText: 'Target heading' }).click();
+      await expect(page).toHaveURL(`${baseUrl}#target-heading`);
+      await expectAnchor(page, 'target-heading');
+      const firstTop = await page.evaluate(() => window.scrollY);
+      const historyLength = await page.evaluate(() => history.length);
+      await scrollTo(page, 400);
+      await page.locator('.rp-toc-item', { hasText: 'Target heading' }).click();
+      await expectAnchor(page, 'target-heading');
+      expect(await page.evaluate(() => history.length)).toBe(historyLength);
+      const firstKey = await page.evaluate(() => history.state?.key);
+
+      await page.locator('.rp-toc-item', { hasText: '编码标题' }).click();
+      await expect(page).toHaveURL(
+        `${baseUrl}#${encodeURIComponent('编码标题')}`,
+      );
+      await expectAnchor(page, '编码标题');
+      const secondTop = await page.evaluate(() => window.scrollY);
+      const secondKey = await page.evaluate(() => history.state?.key);
+
+      await page.goBack();
+      await expect(page).toHaveURL(`${baseUrl}#target-heading`);
+      await expectScroll(page, firstTop);
+      await page.goForward();
+      await expect(page).toHaveURL(
+        `${baseUrl}#${encodeURIComponent('编码标题')}`,
+      );
+      await expectScroll(page, secondTop);
+      expect(new Set([initialKey, firstKey, secondKey]).size).toBe(3);
+    });
+
+    test('restores manual scroll for each actual TOC history entry', async ({
+      page,
+    }) => {
+      const baseUrl = `http://localhost:${appPort}/docs/target?from=toc-manual`;
+      await page.goto(baseUrl, { waitUntil: 'networkidle' });
+      await scrollTo(page, 240);
+      await page.locator('.rp-toc-item', { hasText: 'Target heading' }).click();
+      await expectAnchor(page, 'target-heading');
+      await scrollTo(page, 400);
+      await page.locator('.rp-toc-item', { hasText: '编码标题' }).click();
+      await expectAnchor(page, '编码标题');
+      await scrollTo(page, 800);
+
+      await page.goBack();
+      await expect(page).toHaveURL(`${baseUrl}#target-heading`);
+      await expectScroll(page, 400);
+      await page.goBack();
+      await expect(page).toHaveURL(baseUrl);
+      await expectScroll(page, 240);
+      await page.goForward();
+      await expectScroll(page, 400);
+      await page.goForward();
+      await expect(page).toHaveURL(
+        `${baseUrl}#${encodeURIComponent('编码标题')}`,
+      );
+      await expectScroll(page, 800);
+    });
+
+    test('restores independent entries created by the hash navigation helper', async ({
+      page,
+    }) => {
+      const baseUrl = `http://localhost:${appPort}/docs/target?from=helper`;
+      await page.goto(baseUrl, { waitUntil: 'networkidle' });
+      const initialKey = await page.evaluate(() => history.state?.key);
+      await scrollTo(page, 240);
+
+      await page
+        .getByRole('button', { name: 'Navigate to target hash' })
+        .click();
+      await expect(page).toHaveURL(`${baseUrl}#target-heading`);
+      await expectAnchor(page, 'target-heading');
+      const firstKey = await page.evaluate(() => history.state?.key);
+      await scrollTo(page, 400);
+
+      await page
+        .getByRole('button', { name: 'Navigate to encoded hash' })
+        .click();
+      await expect(page).toHaveURL(
+        `${baseUrl}#${encodeURIComponent('编码标题')}`,
+      );
+      await expectAnchor(page, '编码标题');
+      const secondKey = await page.evaluate(() => history.state?.key);
+      await scrollTo(page, 800);
+
+      await page.goBack();
+      await expect(page).toHaveURL(`${baseUrl}#target-heading`);
+      await expectScroll(page, 400);
+      await page.goBack();
+      await expect(page).toHaveURL(baseUrl);
+      await expectScroll(page, 240);
+      await page.goForward();
+      await expectScroll(page, 400);
+      await page.goForward();
+      await expectScroll(page, 800);
+      expect(new Set([initialKey, firstKey, secondKey]).size).toBe(3);
+    });
+
+    test('respects prevented hash links and hash links targeting a new tab', async ({
+      page,
+    }) => {
+      const baseUrl = `http://localhost:${appPort}/docs/target?from=native-link`;
+      await page.goto(baseUrl, { waitUntil: 'networkidle' });
+      await scrollTo(page, 400);
+      const initialKey = await page.evaluate(() => history.state?.key);
+
+      await page.getByRole('link', { name: 'Prevent hash navigation' }).click();
+      await expect(page).toHaveURL(baseUrl);
+      await expectScroll(page, 400);
+      expect(await page.evaluate(() => history.state?.key)).toBe(initialKey);
+
+      const opened = page.waitForEvent('popup');
+      await page.getByRole('link', { name: 'Open hash in new tab' }).click();
+      const popup = await opened;
+      try {
+        await expect(popup).toHaveURL(`${baseUrl}#target-heading`);
+        await expect(page).toHaveURL(baseUrl);
+        await expectScroll(page, 400);
+        expect(await page.evaluate(() => history.state?.key)).toBe(initialKey);
+      } finally {
+        await popup.close();
+      }
+    });
   });
 }

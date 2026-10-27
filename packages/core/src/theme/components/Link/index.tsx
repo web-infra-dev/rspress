@@ -73,22 +73,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
     );
   }
 
-  if (linkType === 'hashOnly') {
-    return (
-      <a
-        ref={ref}
-        href={href}
-        className={clsx(className, 'rp-link')}
-        onClick={onClick}
-        onMouseEnter={onMouseEnter}
-        {...otherProps}
-      >
-        {children}
-      </a>
-    );
-  }
-
-  if (linkType === 'relative') {
+  if (linkType === 'hashOnly' || linkType === 'relative') {
     return (
       <a
         ref={ref}
@@ -96,14 +81,20 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
         className={clsx(className, 'rp-link')}
         onMouseEnter={event => {
           onMouseEnter?.(event);
-          preloadLink(routePath);
+          if (linkType === 'relative') {
+            preloadLink(routePath);
+          }
         }}
         onTouchStart={() => {
-          preloadLink(routePath);
+          if (linkType === 'relative') {
+            preloadLink(routePath);
+          }
         }}
         onClick={e => {
           onClick?.(e);
           if (
+            e.defaultPrevented ||
+            e.currentTarget.hasAttribute('download') ||
             // left click only
             e.button !== 0 ||
             // `target` are usually used for open link in new window/tab
