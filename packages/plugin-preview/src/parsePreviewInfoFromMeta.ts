@@ -4,6 +4,7 @@ import type { Options } from './types';
 interface PreviewInfo {
   isPure: boolean;
   isPreview: boolean;
+  previewOnly: boolean;
   previewMode: Options['defaultPreviewMode'] | null;
 }
 
@@ -14,6 +15,7 @@ interface PreviewInfo {
  * - ```tsx preview="internal"
  * - ```tsx preview="iframe-fixed"
  * - ```tsx preview="iframe-follow"
+ * - ```tsx preview="iframe-fixed" preview-only
  * - ```tsx preview          (use defaultPreviewMode)
  * - ```tsx pure
  *
@@ -31,8 +33,11 @@ export function parsePreviewInfoFromMeta(options: {
   const result: PreviewInfo = {
     isPure: false,
     isPreview: false,
+    previewOnly: false,
     previewMode: null,
   };
+
+  result.previewOnly = /(?:^|\s)preview-only(?:\s|$)/.test(meta ?? '');
 
   // No meta string
   if (!meta) {
