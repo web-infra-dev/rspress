@@ -52,8 +52,4 @@ If you pass JSX directly as children, React evaluates the expressions inside whi
 
 ## How it works
 
-With React 19.3 and newer, `BrowserOnly` uses `use(browser())` inside its own `Suspense` boundary. Synchronous children render directly on the client. If a descendant suspends, for example while a lazy component loads, `BrowserOnly` displays its own fallback without hiding siblings behind a parent Suspense boundary.
-
-The children callback runs during client rendering, so keep it free of side effects, as with other React render callbacks. Promise results remain supported: the fallback is displayed until the result resolves, and results from outdated callbacks are ignored. Older React versions continue to execute the callback after mounting with `useEffect`.
-
-During HTML and Markdown generation, `BrowserOnly` renders only the fallback and does not execute the children callback. This change does not guarantee a reduction in layout shifts; reserve space for the final content when necessary.
+`BrowserOnly` uses `browser()` (`useEffect` in older React versions) to avoid SSR compatibility issues.

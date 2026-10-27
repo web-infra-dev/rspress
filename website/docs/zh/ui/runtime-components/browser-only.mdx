@@ -52,8 +52,4 @@ import { BrowserOnly } from '@rspress/core/runtime';
 
 ## 原理
 
-在 React 19.3 及更新版本中，`BrowserOnly` 在自身的 `Suspense` 边界中使用 `use(browser())`，同步 children 会直接在客户端渲染。如果子组件发生挂起，例如等待 lazy 组件加载，`BrowserOnly` 会显示自己的 fallback，不会让父级 Suspense 隐藏其他兄弟内容。
-
-children 回调会在客户端渲染阶段执行，与其他 React 渲染回调一样，应避免副作用。返回 Promise 的回调仍然受支持：结果解析前会显示 fallback，过期回调的结果会被忽略。较旧的 React 版本仍通过 `useEffect` 在挂载后执行回调。
-
-生成 HTML 和 Markdown 时，`BrowserOnly` 只渲染 fallback，不会执行 children 回调。这项改动不保证减少布局位移；如有需要，应为最终内容预留空间。
+`BrowserOnly` 使用 `browser()`（旧版 React 使用 `useEffect`），规避 SSR 兼容问题。
