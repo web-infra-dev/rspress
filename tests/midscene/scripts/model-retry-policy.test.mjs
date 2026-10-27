@@ -97,3 +97,20 @@ test('model load stays serialized while publication does not block the next mode
   assert.match(workflow.concurrency.group, /github.run_id/);
   assert.equal(workflow.jobs.midscene.env.MIDSCENE_MODEL_TIMEOUT, '120000');
 });
+
+test('regular CI validates locally before credentials and reuses only exact builds', () => {
+  assert.equal(workflow.jobs.midscene.needs, undefined);
+  const steps = workflow.jobs.midscene.steps;
+  const validation = steps.findIndex(
+    step => step.name === 'Validate definitions before model access',
+  );
+  assert.ok(validation > 0);
+  assert.match(steps[validation].run, /collect.*typecheck.*test:summary/);
+  for (const [index, step] of steps.entries()) {
+    if (step.env?.MIDSCENE_MODEL_API_KEY) assert.ok(index > validation);
+  }
+  const restore = steps.find(step => step.id === 'workspace-build');
+  assert.equal(restore.with['restore-keys'], undefined);
+  assert.match(restore.with.key, /build-inputs.outputs.fingerprint/);
+  assert.match(restore.with.key, /node-version/);
+});

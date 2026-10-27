@@ -93,6 +93,7 @@ jobs:
         working-directory: tests/midscene
 
   validate:
+    if: github.event_name == 'pull_request' || inputs.speed_benchmark
     name: Validate AI E2E definitions
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -116,7 +117,6 @@ jobs:
           echo 'This PR check does not call a model. AI E2E runs on relevant upstream main pushes or manual dispatch. Fork PR code never receives model credentials.' >> "$GITHUB_STEP_SUMMARY"
 
   midscene:
-    needs: validate
     name: Midscene E2E
     outputs:
       report-artifact-name: ${{ steps.upload-results.outputs.artifact-id != '' && 'midscene-results' || '' }}
@@ -154,13 +154,44 @@ jobs:
         uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
 
       - name: Activate Node.js 24 and pnpm
+        id: node
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24'
           cache: pnpm
 
-      - name: Install workspace dependencies and build checked-out packages
-        run: pnpm install --frozen-lockfile
+      - name: Install workspace dependencies without developer hooks
+        run: |
+          pnpm install --frozen-lockfile --ignore-scripts
+          pnpm rebuild sharp
+
+      - name: Fingerprint committed build inputs
+        id: build-inputs
+        run: node tests/midscene/scripts/build-fingerprint.mjs
+
+      - name: Restore workspace build
+        id: workspace-build
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          path: |
+            packages/*/dist
+            packages/create-rspress/template-basic-theme
+            packages/create-rspress/template-i18n-theme
+          key: midscene-build-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.node.outputs.node-version }}-${{ steps.build-inputs.outputs.fingerprint }}
+
+      - name: Build checked-out packages on cache miss
+        if: steps.workspace-build.outputs.cache-hit != 'true'
+        run: pnpm run build
+
+      - name: Save workspace build
+        if: steps.workspace-build.outputs.cache-hit != 'true'
+        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          path: |
+            packages/*/dist
+            packages/create-rspress/template-basic-theme
+            packages/create-rspress/template-i18n-theme
+          key: ${{ steps.workspace-build.outputs.cache-primary-key }}
 
       - name: Restore npm download cache
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
@@ -177,6 +208,10 @@ jobs:
           npm ci
           npx playwright install --with-deps chromium
 
+      - name: Validate definitions before model access
+        working-directory: tests/midscene
+        run: npm run collect && npm run typecheck && npm run test:summary
+
       - name: Verify Midscene model compatibility
         working-directory: tests/midscene
         # Only model verification and case execution receive model credentials.
@@ -187,13 +222,6 @@ jobs:
           MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY || secrets.MIDSCENE_MODEL_FAMILY }}
           MIDSCENE_MODEL_REASONING_ENABLED: ${{ vars.MIDSCENE_MODEL_REASONING_ENABLED || secrets.MIDSCENE_MODEL_REASONING_ENABLED }}
         run: npm run check:model
-
-      - name: Type-check Midscene custom nodes
-        # npm test loads midscene.config.ts via tsx/esbuild without semantic
-        # TS checks, so run the standalone package's tsc before the expensive
-        # browser tests.
-        working-directory: tests/midscene
-        run: npm run typecheck
 
       - name: Run all Midscene cases
         working-directory: tests/midscene

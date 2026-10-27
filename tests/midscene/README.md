@@ -339,3 +339,11 @@ first failing step. Screenshots come from that step's execution trace, not a
 different case or a synthetic image. Missing captures are explicitly marked.
 The top-level report link still opens the framework-generated HTML report.
 Without Pages, the test job retains the native text Summary and artifact link.
+
+Regular model runs validate definitions in the same job before model credentials
+are provided. PRs retain their separate credential-free validation job. Workspace
+installation skips developer hooks and explicitly rebuilds the approved Sharp
+dependency. Package build outputs are cached only for an exact fingerprint of
+committed package sources, shared scripts, root files, runner platform and Node
+version; there is no fallback to a partial cache key. A cache miss builds the
+checked-out source and saves it before model execution, even if later E2E fails.
