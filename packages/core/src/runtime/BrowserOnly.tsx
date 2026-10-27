@@ -60,7 +60,7 @@ function DeferredBrowserOnly({
 }
 
 function ModernBrowserOnly({ children, fallback }: BrowserOnlyProps) {
-  safeUse!(safeBrowserOnly!());
+  safeUse!(safeBrowserOnly!('This content is only rendered in the browser.'));
 
   const result = useMemo(() => {
     const content = children();

@@ -4,14 +4,11 @@ import { safeUse } from './react';
 
 export interface NoSSRProps {
   children: ReactNode;
-
-  reason?: string | (() => unknown);
-
   fallback?: ReactNode;
 }
 
-function ModernNoSSR({ children, reason }: NoSSRProps) {
-  safeUse!(safeBrowserOnly!(reason));
+function ModernNoSSR({ children }: NoSSRProps) {
+  safeUse!(safeBrowserOnly!('This content is only rendered in the browser.'));
 
   return <>{children}</>;
 }
