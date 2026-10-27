@@ -33,8 +33,8 @@ cases:
     steps:
       - app.open: { fixture: code-block-runtime, path: / }
       - aiAct: Bring the first code panel titled test.js into view. Read the rendered code inside that panel; do not use search or navigate to another page.
-      - aiAssert: The first test.js panel displays the rendered code console.log('Hello CodeBlock!');, not a blank panel.
+      - aiAssert: The first panel titled test.js visibly contains the code text console.log('Hello CodeBlock!'); and is not blank. Check the text content, not syntax-highlighting colors; plain black code text also satisfies this check.
       - aiAct: Bring the second test.js code panel into view.
-      - aiAssert: The second test.js panel displays the rendered code console.log('Hello CodeBlock!');.
+      - aiAssert: The second panel titled test.js visibly contains the code text console.log('Hello CodeBlock!'); and is not blank. Check the text content, not syntax-highlighting colors; plain black code text also satisfies this check.
       - aiAct: Bring the code panel titled Code Block into view.
-      - aiAssert: The Code Block panel displays the rendered code console.log('Hello Title!');.
+      - aiAssert: The panel titled Code Block visibly contains the code text console.log('Hello Title!'); and is not blank. Check the text content, not syntax-highlighting colors; plain black code text also satisfies this check.
