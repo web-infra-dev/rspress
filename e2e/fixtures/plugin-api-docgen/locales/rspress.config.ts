@@ -32,9 +32,6 @@ export default defineConfig({
         i18nSourceCalls++;
         return source;
       },
-      beforeBuild() {
-        assert.equal(i18nSourceCalls, 1);
-      },
       afterBuild(_, isProd) {
         if (isProd) {
           assert.equal(i18nSourceCalls, 1);

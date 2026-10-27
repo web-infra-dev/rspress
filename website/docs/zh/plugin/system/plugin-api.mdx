@@ -143,7 +143,7 @@ interface ConfigUtils {
 
 可以保存 `utils.getI18nData`，在所有 `config` hook 执行完毕后调用，例如在 `beforeBuild` 中读取合并后的国际化文案。结果包含插件默认文案和用户覆盖，并已按站点语言筛选、应用英文回退。
 
-Rspress 在 `beforeBuild` 前解析一次，并在插件和各编译目标间复用。开发模式下，修改 `i18n.json` 或 `rspress.config.ts` 中的 `i18nSource` 配置都会重新加载。
+Rspress 在首次读取时解析，并在插件和各编译目标间复用。开发模式下，修改 `i18n.json` 或 `rspress.config.ts` 中的 `i18nSource` 配置都会重新加载。
 
 在虚拟模块中，可以将 transform context 传给 `getI18nData(context)`，由 Rspress 跟踪国际化源文件的变化，包括文件尚不存在的情况。
 
