@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       file_concurrency:
-        description: Concurrent cases in the regular E2E run (with Pages reports)
+        description: Concurrent cases in the regular E2E run (with Cloudflare reports)
         type: choice
         options: ['1', '5', '10', '15', '20', '30', '40', '60']
         default: '40'
@@ -27,21 +27,18 @@ on:
         options: ['2000', '65000']
         default: '2000'
       publish_pages:
-        description: Publish reports to GitHub Pages
+        description: Publish reports to Cloudflare Workers
         required: false
         type: boolean
         default: true
 
 # Model runs use upstream main, the owner's benchmark branch, or manual dispatch.
-# Pages publication defaults on; manual runs can disable it.
+# Cloudflare publication defaults on; manual runs can disable it.
 
 permissions:
   contents: read
 
-# Model execution and Pages publication use separate job-level locks.
-
-env:
-  MIDSCENE_UPSTREAM_REPOSITORY: web-infra-dev/rspress
+# Model-backed runs use a job-level lock to bound endpoint load.
 
 jobs:
   fixture-windows:
@@ -60,8 +57,6 @@ jobs:
 
   midscene:
     name: Midscene E2E
-    outputs:
-      report-artifact-name: ${{ steps.midscene-test.outputs.report-artifact-name }}
     concurrency:
       group: midscene-model-execution
       cancel-in-progress: false
@@ -165,7 +160,7 @@ jobs:
 
       - name: Run all Midscene cases
         id: midscene-test
-        uses: web-infra-dev/midscene-action@5ef922b20a69d69a0f34639c4c867ba2049f6ede # v1
+        uses: quanru/midscene-action-upstream@bc2184574faa46b62d4deec48347bebc97eefcc7 # Cloudflare screenshot Summary; upstream PR #1
         env:
           MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
           MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME || secrets.MIDSCENE_MODEL_NAME }}
@@ -179,38 +174,7 @@ jobs:
           command: timeout --signal=TERM --kill-after=10s 220m npx midscene-test
           artifact-name: midscene-results
           retention-days: '14'
-          # Keep the existing GitHub Pages site and per-case screenshot table.
-          publish-pages: false
-
-  publish-pages:
-    name: Publish Midscene Pages report
-    concurrency:
-      group: midscene-pages-publication
-      cancel-in-progress: false
-    needs: midscene
-    if: >-
-      always() && !cancelled() &&
-      vars.MIDSCENE_PUBLISH_REPO == github.repository &&
-      (github.event_name != 'workflow_dispatch' || inputs.publish_pages) &&
-      needs.midscene.outputs.report-artifact-name != ''
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    permissions:
-      actions: read
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.report.outputs.page-url }}
-    steps:
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
-        with:
-          node-version: '24'
-      # Shared Pages support is proposed upstream; pin the reviewed fork commit.
-      - id: report
-        uses: quanru/midscene-action-upstream/pages@b0b2fe13eac26c75327a4cf322865fcd98c9c0f4
-        with:
-          artifact-name: ${{ needs.midscene.outputs.report-artifact-name }}
-          producer-result: ${{ needs.midscene.result }}
-          history-branches: main,test/midscene-e2e,ci/midscene-action,benchmark/midscene-speed-20261022
+          publish-pages: ${{ github.event_name != 'workflow_dispatch' || inputs.publish_pages }}
+          cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          cloudflare-account-id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          cloudflare-worker-name: rspress-midscene-reports

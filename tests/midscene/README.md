@@ -234,41 +234,27 @@ Missing credentials or a failed image-reading preflight fails the job explicitly
 Credentials are passed only to model preflight and test steps, not installation
 or fixture processes. Native reports are uploaded after failures too.
 
-The **Midscene E2E** job writes the framework-generated `result.md` directly to
-its Summary, and uploads `midscene-results` even after failures. The
-**Publish Midscene Pages report** job adds the online native HTML report link.
-The HTML overview and case details come directly from Midscene Test. After
-deployment, a separate Markdown renderer adds per-case screenshots and native
-step links to the Pages job Summary.
+The **Midscene E2E** job uses the native Midscene Action for execution, artifact
+upload and Cloudflare Workers publication. The HTML index and case details come
+from Midscene Test. After deployment, the Action adds per-case screenshots and
+native step links to the same job Summary. Test failures remain failures.
 
-Pages publication requires an existing native HTML report. Incomplete runs keep
-downloadable artifacts and an explanatory Summary without replacing the existing
-site or publishing a broken report link. Retention always protects the current
-run, including a rerun whose run ID is older than the retained history.
+Configure publication in repository settings or the `Model` environment:
 
-To enable publication:
+- Secret `CLOUDFLARE_API_TOKEN`: scoped to the report account, with Workers edit
+  permission for an existing Worker or Workers Admin to create one.
+- Variable `CLOUDFLARE_ACCOUNT_ID`: the Cloudflare account ID.
+- Worker name: `rspress-midscene-reports`. Enable its Preview URLs if Cloudflare
+  does not return a preview URL automatically.
 
-1. Ensure the repository Pages site is dedicated to these reports. Do not enable
-   this if Pages already hosts project documentation.
-2. Select **Settings → Pages → Source → GitHub Actions**.
-3. Set `MIDSCENE_PUBLISH_REPO` to `quanru/rspress` (or the upstream repository
-   name after integration), and allow the trusted branch in `github-pages`.
-4. Configure model credentials in repository settings or the `Model` environment.
-   The API key remains a secret; model name, family, and base URL can be variables
-   or secrets. The environment does not create a deployment record.
-
-Manual dispatch can disable publication with `publish_pages`. Without Pages,
-download the report and screenshots together from the artifact. The stable run
-entry redirects to the native framework index. Model runs are serialized across branches to bound endpoint load. Pages publication
-has a separate lock covering history reads through deployment, so the next test
-run can start while the previous report publishes. Regular CI starts historical
-slow cases first, uses a 120-second model-request timeout and retains the
-2-second retry delay because Midscene uses the same delay for request failures
-and output-format correction. For endpoints with minute-based quota limits,
-manual dispatch supports `request_retry_interval: 65000`. Case retries remain disabled.
-
-Publication retains the latest three trusted runs within a 900 MiB budget.
-Older Summary links expire when their run is pruned; artifacts expire after 14 days.
+Publication defaults on, including after relevant upstream main pushes. Missing
+Cloudflare inputs fail explicitly before the Action runs tests. Manual dispatch
+can set `publish_pages=false` to run with downloadable artifacts only; the input
+name follows the Action, but publication targets Cloudflare, not GitHub Pages.
+Each run/attempt gets its own Worker preview name. No GitHub Pages settings,
+`MIDSCENE_PUBLISH_REPO`, history-copy job or `pages: write` permission is needed.
+Existing GitHub Pages reports are not deleted. Raw artifacts retain the complete
+reports for 14 days. Model runs remain serialized to bound endpoint load.
 
 ## Dependency audit
 
@@ -294,39 +280,18 @@ benchmark results above describe their original configuration, not this suite.
 
 ## CI evidence table
 
-After Pages deployment succeeds, the publishing job adds a per-case Markdown
-table to the workflow Summary: project, case, screenshot, status, duration,
-and a link to the selected step in the native Midscene report. Failed cases
-appear first. Successful cases use the last recorded step; failures use the
-first failing step. Screenshots come from that step's execution trace, not a
-different case or a synthetic image. Missing captures are explicitly marked.
-The top-level report link still opens the framework-generated HTML report.
-Without Pages, the test job retains the native text Summary and artifact link.
-
-Regular model runs validate definitions in the same job before model credentials
-are provided. Workspace installation skips developer hooks and explicitly rebuilds the approved Sharp
-dependency. Package build outputs are cached only for an exact fingerprint of
-committed package sources, shared scripts, root files, runner platform and Node
-version; there is no fallback to a partial cache key. A cache miss builds the
-checked-out source and saves it before model execution, even if later E2E fails.
-
-Pages publishes the framework's native index, execution dumps and screenshots,
-without duplicate standalone `playwright-*.html` Agent reports. Full downloadable
-artifacts still contain those originals. This also prunes duplicate Agent HTML
-from retained Pages history, without rewriting native reports or their images.
+The Action reads the native HTML report's embedded run data. After Cloudflare
+publication, Summary shows each case's screenshot, status, duration and native
+step link, with failed cases first. Missing images are explicitly marked. Without
+publication, the native text Summary and raw artifacts remain available.
 
 ## Midscene action
 
-Regular CI uses `web-infra-dev/midscene-action` pinned to commit
-`5ef922b20a69d69a0f34639c4c867ba2049f6ede`, matching Midscene's own AI workflow.
-The Action runs the native CLI, uploads `midscene-results`, writes the native
-Summary and propagates test failures. Case sources are versioned in `cases/`; the workflow head SHA identifies them.
-Model verification still runs first.
-
-The Action's `publish-pages` input means Cloudflare Workers publication. It is
-disabled here: the existing GitHub Pages job consumes the Action's artifact output
-and retains the per-case screenshot table, report links and recent-run history.
-No Cloudflare credentials or model configuration changes are required.
+The Action is pinned to `quanru/midscene-action-upstream@bc2184574faa46b62d4deec48347bebc97eefcc7`
+while [upstream PR #1](https://github.com/web-infra-dev/midscene-action/pull/1)
+adds screenshot tables to native Cloudflare publication. Repin to the official
+reviewed commit after merge. There is no separate Pages sub-action or project-side
+report renderer. Case sources are committed in `cases/`.
 
 ## Supplementary case selection
 
@@ -334,18 +299,8 @@ The deterministic suite remains authoritative for exact text, counts, order, URL
 
 ## Shared CI support
 
-The root Midscene Action executes the native CLI and uploads its results. The
-`pages` sub-action owns GitHub Pages publication, recent history and per-case
-screenshot tables. This repository no longer maintains report parsers, publishing
-scripts, migration/manifest guards or a custom execution/benchmark harness.
-
-Pages support is temporarily pinned to `quanru/midscene-action-upstream/pages@b0b2fe13eac26c75327a4cf322865fcd98c9c0f4`
-while its upstream PR is reviewed. Switch to the upstream reviewed commit after
-merge. Existing Pages permissions, trusted triggers and publication locks remain
-in the workflow; the shared action verifies historical report provenance.
-
-`migration-inventory.json` remains historical documentation. The actual YAML files
-are the AI suite's source of truth, and the original deterministic tests execute
-their own contracts. Project support code only starts/stops fixtures, prepares
-local assets, isolates browser/source state, and (for Rspress) computes the exact
-workspace build-cache key.
+The Action owns execution, raw artifact upload, Cloudflare HTML publication and
+screenshot summaries. Project support only starts/stops fixtures, prepares local
+assets and isolates browser/source state; Rspress also computes its exact build
+cache key. YAML is the AI suite source of truth. The migration inventory is
+historical documentation; deterministic tests execute their own contracts.
