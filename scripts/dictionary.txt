@@ -201,3 +201,6 @@ blockedbyclient
 doubao
 quanru
 autoselection
+extname
+typedoc
+shadcn
