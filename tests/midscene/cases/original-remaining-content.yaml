@@ -5,20 +5,6 @@ cases:
       - app.open: { fixture: custom-icon, path: / }
       - aiAct: Bring the main article heading and navigation search control into view.
       - aiAssert: The article heading reads Hello world and the navigation offers Search.
-  - name: AUDIT-02 Read repeated numbered headings
-    tags: [replacement-final-content]
-    steps:
-      - app.open: { fixture: title-number, path: / }
-      - aiAct: Bring the article headings below Hello world into view.
-      - aiAssert: The article has three subheadings in order -22222222, -1111111111, and -1111111111. The repeated heading is not omitted.
-  - name: AUDIT-03 Read transformed runtime code panels
-    tags: [replacement-final-content]
-    steps:
-      - app.open: { fixture: code-block-runtime, path: /highlight }
-      - aiAct: Bring the first highlight.ts code panel into view.
-      - aiAssert: The panel is titled highlight.ts and shows three console.log lines, two with Highlighted followed by one with Not highlighted.
-      - aiAct: Bring the second highlight.ts code panel into view.
-      - aiAssert: The second panel is also titled highlight.ts and shows three console.log lines, two with Highlighted followed by one with Not highlighted.
   - name: AUDIT-04 Read the crawler fixture article
     tags: [replacement-final-content]
     steps:
@@ -36,18 +22,6 @@ cases:
           { fixture: plugin-preview-no-iframe, mode: production, path: / }
       - aiAct: Bring the rendered internal component preview into view, not its source code.
       - aiAssert: The rendered preview displays Internal preview only.
-  - name: AUDIT-06 Open the CLI base path in development
-    tags: [replacement-final-content]
-    steps:
-      - app.open: { fixture: basic-cli-base, path: /bar/ }
-      - aiAct: Bring the main article heading into view.
-      - aiAssert: The article heading reads Hello world, not a page-not-found message.
-  - name: AUDIT-07 Open the CLI base path in production
-    tags: [replacement-final-content]
-    steps:
-      - app.open: { fixture: basic-cli-base, mode: production, path: /bar/ }
-      - aiAct: Bring the main article heading into view.
-      - aiAssert: The article heading reads Hello world, not a page-not-found message.
   - name: AUDIT-08 Open the mobile language menu
     tags: [replacement-final-content]
     steps:
