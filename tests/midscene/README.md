@@ -11,16 +11,15 @@ Use Node.js 24 and the repository's pinned pnpm version:
 pnpm install --frozen-lockfile
 pnpm build
 cd tests/midscene
-npm ci
-npx playwright install chromium
+pnpm exec playwright install chromium
 cp .env.example .env
 # Fill in .env with your vision model configuration.
-npm run check:model
-npm test
+pnpm run check:model
+pnpm test
 ```
 
 Set `MIDSCENE_FILE_CONCURRENCY` to change local concurrency (default: 1).
-Reports: `midscene_run/report/`. Type checking: `npm run typecheck`.
+Reports: `midscene_run/report/`. Type checking: `pnpm run typecheck`.
 
 ## CI
 

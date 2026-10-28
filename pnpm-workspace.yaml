@@ -1,13 +1,16 @@
 packages:
+  - tests/midscene
   - scripts/config
   - packages/*
   - e2e/**
   - website
   - '!**/compiled/**'
-  - '!**/tests/**'
+  - '!packages/**/tests/**'
+  - '!e2e/**/tests/**'
   - '!packages/create-rspress/template-*'
 
 allowBuilds:
+  esbuild: true
   sharp: true
 
 hoistPattern: []
