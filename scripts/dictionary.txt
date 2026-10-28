@@ -45,6 +45,7 @@ domcontentloaded
 envinfo
 estree
 facti
+figtree
 flac
 flexbox
 flexbugs
@@ -74,6 +75,7 @@ jsesc
 jsxs
 juejin
 katex
+kazamori
 Kinsta
 koppers
 Lamperouge
@@ -147,6 +149,7 @@ rstack
 rstackjs
 rstest
 selfsign
+seshuk
 shiki
 shikijs
 sirv
