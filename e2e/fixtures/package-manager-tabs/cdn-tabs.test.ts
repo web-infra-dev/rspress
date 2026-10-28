@@ -76,9 +76,15 @@ test.describe('CDN tabs', () => {
     await tabs
       .locator('.rp-tabs__content__item--active .rp-code-copy-button')
       .click();
-    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-      '<link rel="stylesheet" href="https://unpkg.com/bootstrap@5/dist/css/bootstrap.min.css" />\n' +
-        '<script src="https://unpkg.com/bootstrap@5/dist/js/bootstrap.min.js"></script>',
-    );
+    // The native Windows clipboard converts line endings to CRLF.
+    await expect
+      .poll(async () => {
+        const text = await page.evaluate(() => navigator.clipboard.readText());
+        return text.replace(/\r\n/g, '\n');
+      })
+      .toBe(
+        '<link rel="stylesheet" href="https://unpkg.com/bootstrap@5/dist/css/bootstrap.min.css" />\n' +
+          '<script src="https://unpkg.com/bootstrap@5/dist/js/bootstrap.min.js"></script>',
+      );
   });
 });
