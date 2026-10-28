@@ -81,14 +81,19 @@ jobs:
           node-version: '24'
           cache: pnpm
 
+      # Capture source inputs before install/build creates generated files.
+      - name: Fingerprint workspace build inputs
+        id: build-inputs
+        env:
+          FINGERPRINT: ${{ hashFiles('*', 'packages/**', 'scripts/**', '!**/node_modules/**', '!**/dist/**', '!packages/create-rspress/template-basic-theme/**', '!packages/create-rspress/template-i18n-theme/**') }}
+        run: |
+          test -n "$FINGERPRINT"
+          echo "fingerprint=$FINGERPRINT" >> "$GITHUB_OUTPUT"
+
       - name: Install workspace dependencies without developer hooks
         run: |
           pnpm install --frozen-lockfile --ignore-scripts
           pnpm rebuild sharp
-
-      - name: Fingerprint committed build inputs
-        id: build-inputs
-        run: node tests/midscene/scripts/build-fingerprint.mjs
 
       - name: Restore workspace build
         id: workspace-build
@@ -98,7 +103,7 @@ jobs:
             packages/*/dist
             packages/create-rspress/template-basic-theme
             packages/create-rspress/template-i18n-theme
-          key: midscene-build-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.node.outputs.node-version }}-${{ steps.build-inputs.outputs.fingerprint }}
+          key: midscene-build-v2-${{ runner.os }}-${{ runner.arch }}-${{ steps.node.outputs.node-version }}-${{ steps.build-inputs.outputs.fingerprint }}
 
       - name: Build checked-out packages on cache miss
         if: steps.workspace-build.outputs.cache-hit != 'true'
