@@ -4,10 +4,9 @@
   "type": "module",
   "scripts": {
     "check:model": "midscene-test model verify",
-    "collect": "node scripts/collect-cases.mjs",
     "serve": "node scripts/serve.mjs",
     "test": "midscene-test",
-    "test:summary": "node --test scripts/*.test.mjs",
+    "test:fixtures": "node --test scripts/*.test.mjs",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

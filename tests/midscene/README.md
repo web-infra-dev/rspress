@@ -204,14 +204,13 @@ the local repository fixtures and synthetic smoke pages, never private user data
 
 ```sh
 cd tests/midscene
-npm run collect
 npm run typecheck
-npm run test:summary
+npm run test:fixtures
 ```
 
-Collection validates YAML with the framework, checks the committed case inventory,
-and rejects atomic AI operations or custom product-interaction nodes. Trust-policy checks reject reports from untrusted sources. The framework owns
-report rendering and Markdown results.
+Midscene validates YAML and nodes when executing the project. Fixture tests cover
+server lifecycle, isolation and project-specific behavior. Shared report and
+history tests live in Midscene Action.
 
 ## GitHub Actions
 
@@ -333,14 +332,20 @@ No Cloudflare credentials or model configuration changes are required.
 
 The deterministic suite remains authoritative for exact text, counts, order, URLs and command variants. The AI suite omits 22 redundant cases: ROUTE-01 through ROUTE-12, AUDIT-02/03/06/07, STYLE-05, STATIC-03, and COMPONENT-07 through COMPONENT-10. COMPONENT-03 remains a representative package-manager synchronization flow; the deterministic suite covers all five managers. Historical measurements above refer to the previous 153-case suite.
 
-## Remaining support code
+## Shared CI support
 
-The Action owns test execution, raw artifact upload and native text Summary.
-Support code is limited to project needs:
+The root Midscene Action executes the native CLI and uploads its results. The
+`pages` sub-action owns GitHub Pages publication, recent history and per-case
+screenshot tables. This repository no longer maintains report parsers, publishing
+scripts, migration/manifest guards or a custom execution/benchmark harness.
 
-- Fixture lifecycle, local assets and browser isolation: original-fixture, playground-assets, fixture-server and serve.
-- Definition/inventory validation and concurrency bounds: collect-cases, migration-inventory tests and concurrency.
-- Exact workspace cache key: build-fingerprint.
-- GitHub Pages history and per-case screenshot links: native-results, trusted-report-runs, prepare-pages-site and render-ci-summary. The Action currently publishes only to Cloudflare, so these remain necessary for the existing Pages site.
+Pages support is temporarily pinned to `quanru/midscene-action-upstream/pages@b0b2fe13eac26c75327a4cf322865fcd98c9c0f4`
+while its upstream PR is reviewed. Switch to the upstream reviewed commit after
+merge. Existing Pages permissions, trusted triggers and publication locks remain
+in the workflow; the shared action verifies historical report provenance.
 
-The associated tests protect these responsibilities; removing them solely to reduce script count would remove validation.
+`migration-inventory.json` remains historical documentation. The actual YAML files
+are the AI suite's source of truth, and the original deterministic tests execute
+their own contracts. Project support code only starts/stops fixtures, prepares
+local assets, isolates browser/source state, and (for Rspress) computes the exact
+workspace build-cache key.
