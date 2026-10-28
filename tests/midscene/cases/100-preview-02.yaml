@@ -1,0 +1,10 @@
+cases:
+  - name: PREVIEW-02 Hot-update an inline iframe preview
+    tags: [original-preview-hmr, remote-regression]
+    steps:
+      - app.open: { fixture: plugin-preview, path: /hmr }
+      - aiAct: Under the iframe-follow section, find the plain rendered text HMR Iframe Follow Original in the preview pane beside the source code. Scroll the main document only if this text is not readable, and stop as soon as it is readable. The fixed preview at the far right may cover part of the inline frame border; leave that panel and its toolbar alone. Do not click, drag, open a new window, or try to expose every frame edge.
+      - aiAssert: The inline iframe preview displays HMR Iframe Follow Original.
+      - fixture.update: { part: preview-follow }
+      - aiAct: Wait for the rendered inline iframe preview to display HMR Iframe Follow Updated. Do not reload or navigate elsewhere; stop if it has not changed within 30 seconds.
+      - aiAssert: The rendered inline iframe preview displays HMR Iframe Follow Updated.

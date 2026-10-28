@@ -1,0 +1,7 @@
+cases:
+  - name: NAV-09 Open a mixed link and dropdown menu
+    tags: [original-mixed-nav]
+    steps:
+      - app.open: { fixture: nav-link-items, path: / }
+      - aiAct: Hover over ItemsAndLink in the top navigation.
+      - aiAssert: Its dropdown shows Child1 and Child2.

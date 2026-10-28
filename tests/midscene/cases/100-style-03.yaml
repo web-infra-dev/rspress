@@ -1,0 +1,7 @@
+cases:
+  - name: STYLE-03 Read highlighted code differences
+    tags: [original-code]
+    steps:
+      - app.open: { fixture: code-block, path: / }
+      - aiAct: Bring the first diff-highlighted code example in transformers into view.
+      - aiAssert: The Diff remove line is marked as removed and the Diff add line is marked as added with distinct highlighting.

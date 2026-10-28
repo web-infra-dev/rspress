@@ -1,0 +1,7 @@
+cases:
+  - name: STYLE-02 Read the themed documentation link
+    tags: [original-style]
+    steps:
+      - app.open: { fixture: theme-css, path: / }
+      - aiAct: Find the link in the documentation article and bring it into view.
+      - aiAssert: The article link is visibly orange.

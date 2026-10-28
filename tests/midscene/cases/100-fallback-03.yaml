@@ -1,0 +1,7 @@
+cases:
+  - name: FALLBACK-03 Read public images from a production build
+    tags: [original-fallback]
+    steps:
+      - app.open: { fixture: public-dir, mode: production, path: /base/ }
+      - aiAct: Bring the large illustrated mascot image below Hello world into view. Stay on this article and do not use search.
+      - aiAssert: The article image is rendered, not a broken-image placeholder.

@@ -1,0 +1,9 @@
+cases:
+  - name: STYLE-01 Read styled Tailwind content
+    tags: [original-style, replacement-final-existing]
+    steps:
+      - app.open: { fixture: tailwind-v4, path: / }
+      - aiAct: Bring the Red Text, Bold Text, and Blue Box examples into view.
+      - aiAssert: Red Text is red, Bold Text appears bold, and Blue Box has a blue background with readable white text.
+      - aiAct: Bring the default and outline shadcn buttons into view.
+      - aiAssert: Both the default and outline buttons are visible and readable.

@@ -1,0 +1,9 @@
+cases:
+  - name: OVERVIEW-07 Expand a sidebar group without leaving the guide
+    tags:
+      [original-overviews, migration-regression, replacement-batch-3-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /guide/index.html }
+      - aiAssert: Top navigation is visible, and Guide and Advanced are top-level entries in the documentation sidebar.
+      - aiAct: In the left sidebar, expand Advanced using the small chevron at the right end of its row. Finish only when Plugin is visible as an indented child directly below Advanced in that sidebar. If Plugin is already visible there, leave the group expanded. The Plugin next-page link in the main article is not the sidebar child. Keep the Guide article open; do not click Plugin or use search.
+      - aiAssert: The Guide article remains open, and the sidebar displays Guide, Advanced, and Plugin.

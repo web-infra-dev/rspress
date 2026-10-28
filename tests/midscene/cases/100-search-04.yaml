@@ -1,0 +1,9 @@
+cases:
+  - name: SEARCH-04 Toggle search with the platform keyboard shortcut
+    tags: [original-search]
+    steps:
+      - app.open: { fixture: search, path: /base/ }
+      - aiAct: Open documentation search using Command+K on macOS or Control+K on Linux. Do not click the search button.
+      - aiAssert: The search dialog and search input are visible.
+      - aiAct: Press the same keyboard shortcut again to close search.
+      - aiAssert: The search dialog is closed.

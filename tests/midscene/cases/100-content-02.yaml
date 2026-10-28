@@ -1,0 +1,8 @@
+cases:
+  - name: CONTENT-02 Navigate nested overview levels
+    tags: [original-nested-overview, replacement-batch-5]
+    steps:
+      - app.open: { fixture: nested-overview, path: /base-url/basic-level-1/ }
+      - aiAssert: Below the Level 1 page title and Filter field, the overview has a single group heading Level 2. This group contains exactly three article entries — one wide row titled two with Section a and Section b links, followed by two cards titled Level 2 and Level 3. The left sidebar is not part of this group.
+      - aiAct: Click the two article link in the overview content, not an On this page anchor or a sidebar item. Wait for the article containing Section a and Section b to open.
+      - aiAssert: The article displays Section a with Content for section 1 and Section b with Content for section 2.

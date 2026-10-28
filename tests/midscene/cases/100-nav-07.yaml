@@ -1,0 +1,10 @@
+cases:
+  - name: NAV-07 Navigate nested menus with clean URLs
+    tags: [original-clean-nav, replacement-final-existing]
+    steps:
+      - app.open: { fixture: nav-link-items-clean, path: / }
+      - aiAssert: The top navigation displays OnlyLink, OnlyItems, ItemsAndLink, and NestedItems, with dropdown contents initially hidden.
+      - aiAct: Hover over NestedItems in the top navigation to open its desktop dropdown. Stop when the Level3Item1 link is visible. Desktop nested links appear together in this dropdown; do not try to open separate Level1 or Level2Nested submenus.
+      - aiAssert: The NestedItems dropdown shows the Level3Item1 and Level3Item2 links.
+      - aiAct: Click Level3Item1 in the open NestedItems dropdown. Wait for the main article heading Level 3 item 1 to appear, then stop. Do not choose Level3Item2 or navigate through search.
+      - aiAssert: The Level 3 item 1 article is visible.

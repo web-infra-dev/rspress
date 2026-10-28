@@ -1,0 +1,11 @@
+cases:
+  - name: COMPONENT-02 Switch tabs with explicit values
+    tags: [original-tabs]
+    steps:
+      - app.open: { fixture: tabs-component, path: / }
+      - aiAct: Find Tab e and bring its labels and active content into view without selecting another tab.
+      - aiAssert: Tab e offers Apple, Orange, and Banana, and initially displays This is an orange.
+      - aiAct: Find Tab e and select Banana.
+      - aiAssert: Tab e displays This is a banana.
+      - aiAct: Select Apple in Tab e.
+      - aiAssert: Tab e displays This is an apple.

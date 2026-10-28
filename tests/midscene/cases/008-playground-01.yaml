@@ -1,0 +1,17 @@
+cases:
+  - name: PLAYGROUND-01 Read internal and external playground output
+    tags:
+      [
+        original-playground,
+        migration-regression,
+        replacement-final-existing,
+        ci-failure-regression,
+      ]
+    steps:
+      - app.open: { fixture: plugin-playground, path: / }
+      - aiAct: Find the rendered plain text Hello World Internal (default) in the first playground. Stop as soon as this text is visible outside the line-numbered source editor; the whole card and its empty area do not need to fit on screen. If scrolling is needed, use the blank outer page margin, never the code editor. Do not edit code.
+      - aiAssert: The first playground output displays Hello World Internal (default).
+      - aiAct: Stay on the current Guide page and find Hello World External in the rendered preview pane of its second playground card, next to the line-numbered editor. External describes this demo's source file, not another page. If the text is already visible in that preview pane, stop immediately. Otherwise scroll only the document using a blank page margin. Do not click component, any sidebar item, or any next-page link. Do not edit code or navigate away.
+      - aiAssert: Guide is the selected sidebar page, and Hello World External is visible in the rendered preview pane of its second playground card next to a line-numbered source editor. A standalone Hello World External label on the component page does not satisfy this condition.
+      - aiAct: Find the last playground on the Guide page. Click a blank page margin outside every code editor to focus the document, then press the End key once to reach the bottom of the page. The target is the plain preview text Hello World Internal (vertical) above the last line-numbered source editor. Stop when that rendered text is visible; do not require the whole card to fit on screen. Do not edit code, reload, or navigate away.
+      - aiAssert: The last playground card visibly shows a standalone line reading Hello World Internal (vertical) above the horizontal divider and the line-numbered editor. This occurrence is plain text outside the editor, with no line number, JSX tags, or syntax highlighting. A matching phrase only inside the editor would not satisfy this check.

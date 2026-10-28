@@ -1,0 +1,7 @@
+cases:
+  - name: DOC-03 Navigate documentation on a phone
+    tags: [mobile]
+    steps:
+      - app.open: { path: /, viewport: mobile }
+      - aiAct: Use the mobile documentation navigation menu to open the Getting started article. Close the menu if it covers the article.
+      - aiAssert: The Getting started heading and pnpm install command are visible in the article, without a navigation menu covering them.

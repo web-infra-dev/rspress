@@ -22,6 +22,11 @@ for (const project of loaded.projects) {
         env: process.env,
       },
     );
+    assert.equal(
+      document.cases.length,
+      1,
+      'One case per file is required for native case concurrency',
+    );
     for (const { definition } of document.cases) {
       assert(
         !(definition.name in actual),

@@ -1,0 +1,8 @@
+cases:
+  - name: READ-12 Open the base homepage without a trailing slash
+    tags: [original-base, replacement-batch-5]
+    steps:
+      - app.open: { fixture: with-base, mode: production, path: /base }
+      - aiAssert: The article displays This is the index page, not a page-not-found error.
+      - aiAct: Follow the 点击 link in the article to the guide.
+      - aiAssert: The 快速开始 article is visible with an 进入安装 link, not a page-not-found error.

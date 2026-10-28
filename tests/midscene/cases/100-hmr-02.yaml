@@ -1,0 +1,10 @@
+cases:
+  - name: HMR-02 Update an imported Markdown fragment
+    tags: [original-hmr]
+    steps:
+      - app.open: { fixture: hmr, path: /guide/test.html }
+      - aiAct: Bring the FileCodeblock section and its rendered Markdown fragment into view.
+      - aiAssert: The rendered fragment contains This is mdx fragment.
+      - fixture.update: { part: fragment }
+      - aiAct: Wait for the rendered fragment to change to This is hmr mdx fragment. Do not reload the page or navigate elsewhere.
+      - aiAssert: The rendered fragment now contains This is hmr mdx fragment.

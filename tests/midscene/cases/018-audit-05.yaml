@@ -1,0 +1,8 @@
+cases:
+  - name: AUDIT-05 Read a production preview without iframe output
+    tags: [replacement-final-content]
+    steps:
+      - app.open:
+          { fixture: plugin-preview-no-iframe, mode: production, path: / }
+      - aiAct: Bring the rendered internal component preview into view, not its source code.
+      - aiAssert: The rendered preview displays Internal preview only.

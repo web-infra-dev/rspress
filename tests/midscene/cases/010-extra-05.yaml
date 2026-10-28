@@ -1,0 +1,12 @@
+cases:
+  - name: EXTRA-05 Interact with BrowserOnly components after production hydration
+    tags:
+      [original-additional, migration-regression, replacement-final-existing]
+    steps:
+      - app.open: { fixture: with-base, mode: production, path: /base/en/ }
+      - aiAct: Bring the BrowserOnly demonstration into view and wait for its initial asynchronous output, without clicking either button yet.
+      - aiAssert: The synchronous counter reads Sync 0 beside Increment, and the asynchronous output reads Async initial beside Update.
+      - aiAct: In the BrowserOnly demonstration, click only the word Increment at the left of the Sync 0 output. The clickable button is the word Increment, not the whole IncrementSync 0 row or the Sync 0 output. Wait until this row reads Sync 1, then stop without clicking again. The adjacent labels may touch without spaces. Do not click the Async Update button during this step. A counter still showing Sync 0 means the increment has not completed.
+      - aiAssert: The BrowserOnly row shows the Increment button followed by Sync 1; its counter value is 1. The button label may touch the output text.
+      - aiAct: The Increment button retains keyboard focus from the previous click. Press Tab once to focus the next button, Update, then press Space once to activate it. Use the keyboard instead of clicking the tightly joined UpdateAsync initial text. Async fallback updated is a normal temporary loading state, not a failure or the final result. If it appears, keep waiting and observe again until fallback disappears and the output reads Async updated. Do not activate Update again while loading. Stop only after seeing Async updated without fallback; do not reload or navigate away.
+      - aiAssert: The asynchronous output beside the Update button includes Async updated rather than Async initial.

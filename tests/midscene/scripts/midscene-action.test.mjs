@@ -21,7 +21,7 @@ test('regular CI delegates execution and artifacts to the pinned Midscene Action
     'web-infra-dev/midscene-action@5ef922b20a69d69a0f34639c4c867ba2049f6ede',
   );
   assert.equal(action['continue-on-error'], undefined);
-  assert.match(action.with.command, /timeout .*node scripts\/run-ci\.mjs$/);
+  assert.match(action.with.command, /timeout .*npx midscene-test$/);
   assert.equal(action.with['working-directory'], 'tests/midscene');
   assert.equal(action.with['artifact-name'], 'midscene-results');
   assert.equal(action.with['publish-pages'], false);

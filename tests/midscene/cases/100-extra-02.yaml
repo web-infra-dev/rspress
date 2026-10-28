@@ -1,0 +1,7 @@
+cases:
+  - name: EXTRA-02 Search through a custom search hook
+    tags: [original-additional, replacement-batch-3]
+    steps:
+      - app.open: { fixture: search-hooks, path: /base/ }
+      - aiAct: Open documentation search and search for Foo. Stay in the search dialog.
+      - aiAssert: Exactly one search result is listed, the Foo article.

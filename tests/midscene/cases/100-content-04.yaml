@@ -1,0 +1,11 @@
+cases:
+  - name: CONTENT-04 Custom navigation slots work on mobile
+    tags: [original-slots, replacement-batch-3-slots]
+    steps:
+      - app.open:
+          { fixture: nav-slots, mode: production, path: /, viewport: mobile }
+      - aiAssert: The mobile page offers a navigation menu button without expanded desktop navigation lists.
+      - aiAct: Click the hamburger button at the top right to open the mobile navigation menu. Wait until the menu animation has settled and the navigation labels BR, R1, BL, L1, R2, AR, More, L2, and AL are visible. A blank panel or the page table of contents is not the navigation menu. Keep the menu open.
+      - aiAssert: The menu displays BR, R1, BL, L1, R2, AR, More, L2, and AL.
+      - aiAct: Expand More, then Nested, and follow Target.
+      - aiAssert: The Target article is visible and the mobile menu is closed.

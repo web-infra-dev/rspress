@@ -1,0 +1,9 @@
+cases:
+  - name: COMPONENT-04 Change the reading theme
+    tags: [original-theme]
+    steps:
+      - app.open: { fixture: basic, path: / }
+      - aiAct: Use the appearance switch in the top navigation to set the documentation to dark mode.
+      - aiAssert: The documentation article and navigation use a dark background with readable light text.
+      - aiAct: Use the appearance switch to set the documentation to light mode.
+      - aiAssert: The documentation article uses a light background with readable dark text.

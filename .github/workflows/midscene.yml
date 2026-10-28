@@ -26,28 +26,6 @@ on:
         type: choice
         options: ['2000', '65000']
         default: '2000'
-      speed_benchmark:
-        description: Run the isolated speed experiment (fork only, no Pages deployment)
-        type: boolean
-        default: false
-      speed_modes:
-        description: JSON list of baseline, prompt, parallel, combined
-        type: string
-        default: '["parallel"]'
-      speed_concurrency:
-        description: Concurrent files for parallel and combined experiments
-        type: choice
-        options: ['5', '10', '15', '20', '30']
-        default: '5'
-      speed_timeout_minutes:
-        description: Stop an experiment that exceeds this test execution budget
-        type: choice
-        options: ['10', '220']
-        default: '220'
-      speed_ids:
-        description: Optional comma-separated case IDs (empty runs all cases)
-        type: string
-        default: ''
       publish_pages:
         description: Publish reports to GitHub Pages
         required: false
@@ -80,25 +58,6 @@ jobs:
       - run: node --test scripts/fixture-server.test.mjs
         working-directory: tests/midscene
 
-  validate:
-    if: inputs.speed_benchmark
-    name: Validate AI E2E definitions
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: '24'
-          cache: npm
-          cache-dependency-path: tests/midscene/package-lock.json
-      - run: npm ci
-        working-directory: tests/midscene
-      - run: npm run collect && npm run typecheck && npm run test:summary
-        working-directory: tests/midscene
-
   midscene:
     name: Midscene E2E
     outputs:
@@ -110,7 +69,6 @@ jobs:
       name: Model
       deployment: false
     if: >-
-      (!inputs.speed_benchmark) &&
       (github.repository == 'web-infra-dev/rspress' && github.ref == 'refs/heads/main' ||
       (github.event_name == 'push' && github.repository == 'quanru/rspress' && github.ref == 'refs/heads/benchmark/midscene-speed-20261022') ||
       (github.event_name == 'workflow_dispatch' && github.repository != 'web-infra-dev/rspress'))
@@ -118,7 +76,7 @@ jobs:
     timeout-minutes: 240
     env:
       HEADLESS: 'true'
-      MIDSCENE_SPEED_CONCURRENCY: ${{ inputs.file_concurrency || '40' }}
+      MIDSCENE_FILE_CONCURRENCY: ${{ inputs.file_concurrency || '40' }}
       # Request and output-format retries share this delay; case retries stay off.
       MIDSCENE_MODEL_TIMEOUT: '120000'
       MIDSCENE_MODEL_RETRY_COUNT: '4'
@@ -218,116 +176,11 @@ jobs:
           MIDSCENE_RETRY: '0'
         with:
           working-directory: tests/midscene
-          command: timeout --signal=TERM --kill-after=10s 220m node scripts/run-ci.mjs
+          command: timeout --signal=TERM --kill-after=10s 220m npx midscene-test
           artifact-name: midscene-results
           retention-days: '14'
           # Keep the existing GitHub Pages site and per-case screenshot table.
           publish-pages: false
-
-  speed-benchmark:
-    name: Speed experiment (${{ matrix.mode }})
-    needs: validate
-    if: github.event_name == 'workflow_dispatch' && inputs.speed_benchmark && github.repository_owner == 'quanru'
-    concurrency:
-      group: midscene-model-execution
-      cancel-in-progress: false
-    environment:
-      name: Model
-      deployment: false
-    runs-on: ubuntu-24.04
-    timeout-minutes: 240
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        mode: ${{ fromJSON(inputs.speed_modes) }}
-    env:
-      HEADLESS: 'true'
-      MIDSCENE_SPEED_CONCURRENCY: ${{ (matrix.mode == 'parallel' || matrix.mode == 'combined') && (inputs.speed_concurrency || '5') || '1' }}
-      MIDSCENE_MODEL_RETRY_COUNT: '4'
-      MIDSCENE_MODEL_RETRY_INTERVAL: '65000'
-      NODE_OPTIONS: '--dns-result-order=ipv4first --no-network-family-autoselection'
-    steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          persist-credentials: false
-      - uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
-        with:
-          node-version: '24'
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - name: Install browser and Midscene
-        working-directory: tests/midscene
-        run: |
-          npm ci
-          npx playwright install --with-deps chromium
-      - name: Check real browser isolation without a model
-        working-directory: tests/midscene
-        run: node scripts/speed-isolation.mjs
-      - name: Verify model
-        working-directory: tests/midscene
-        env:
-          MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
-          MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME || secrets.MIDSCENE_MODEL_NAME }}
-          MIDSCENE_MODEL_BASE_URL: ${{ vars.MIDSCENE_MODEL_BASE_URL || secrets.MIDSCENE_MODEL_BASE_URL }}
-          MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY || secrets.MIDSCENE_MODEL_FAMILY }}
-          MIDSCENE_MODEL_REASONING_ENABLED: ${{ vars.MIDSCENE_MODEL_REASONING_ENABLED || secrets.MIDSCENE_MODEL_REASONING_ENABLED }}
-        run: npm run check:model
-      - name: Measure all cases without case retries
-        working-directory: tests/midscene
-        env:
-          SPEED_MODE: ${{ matrix.mode }}
-          SPEED_TIME_LIMIT: ${{ inputs.speed_timeout_minutes || '220' }}
-          MIDSCENE_SPEED_IDS: ${{ inputs.speed_ids }}
-          MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
-          MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME || secrets.MIDSCENE_MODEL_NAME }}
-          MIDSCENE_MODEL_BASE_URL: ${{ vars.MIDSCENE_MODEL_BASE_URL || secrets.MIDSCENE_MODEL_BASE_URL }}
-          MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY || secrets.MIDSCENE_MODEL_FAMILY }}
-          MIDSCENE_MODEL_REASONING_ENABLED: ${{ vars.MIDSCENE_MODEL_REASONING_ENABLED || secrets.MIDSCENE_MODEL_REASONING_ENABLED }}
-          MIDSCENE_REPLANNING_CYCLE_LIMIT: '40'
-          MIDSCENE_RETRY: '0'
-        run: |
-          case "$SPEED_TIME_LIMIT" in 10|220) ;; *) echo 'Invalid speed time limit'; exit 1 ;; esac
-          timeout --signal=TERM --kill-after=60s "${SPEED_TIME_LIMIT}m" node scripts/speed-run.mjs "$SPEED_MODE"
-      - name: Upload measurements
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: speed-metrics-${{ matrix.mode }}
-          path: tests/midscene/speed-results/
-          retention-days: 14
-      - name: Upload native HTML reports
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: speed-reports-${{ matrix.mode }}
-          path: |
-            tests/midscene/midscene_run/
-            tests/midscene/.midscene/
-            tests/midscene/.speed-cases/
-          include-hidden-files: true
-          retention-days: 7
-      - name: Write experiment Summary
-        if: always()
-        working-directory: tests/midscene
-        run: node scripts/speed-summary.mjs speed-results >> "$GITHUB_STEP_SUMMARY"
-
-  speed-summary:
-    name: Speed comparison
-    needs: speed-benchmark
-    if: always() && github.event_name == 'workflow_dispatch' && inputs.speed_benchmark
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-        with:
-          persist-credentials: false
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          pattern: speed-metrics-*
-          path: speed-results
-          merge-multiple: true
-      - run: node tests/midscene/scripts/speed-summary.mjs speed-results >> "$GITHUB_STEP_SUMMARY"
 
   publish-pages:
     name: Publish Midscene Pages report

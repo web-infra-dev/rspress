@@ -1,0 +1,17 @@
+cases:
+  - name: ASSET-04 Read public assets from markdown-link-asset-clean Chinese documentation
+    tags: [replacement-final-assets]
+    steps:
+      - app.open:
+          {
+            fixture: markdown-link-asset-clean,
+            mode: production,
+            path: /base/zh/public-asset-test,
+          }
+      - aiAssert: The Public 资源测试 article displays six links including svg in public folder, txt in public folder, html in public folder, md in public folder, and two interface.DataProcessorDefinition links.
+      - aiAct: Follow txt in public folder.
+      - aiAssert: The opened text document displays Plain Text.
+      - aiAct: Go back to the Public 资源测试 article, then follow html in public folder.
+      - aiAssert: The opened HTML document displays Hello world as its heading.
+      - aiAct: Go back to the Public 资源测试 article, then follow md in public folder.
+      - aiAssert: The opened raw Markdown document displays the literal text # Test.

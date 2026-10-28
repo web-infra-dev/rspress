@@ -280,49 +280,18 @@ Use synthetic local fixtures and a dedicated quota-limited model key. Do not run
 `npm audit fix --force`: its suggested framework downgrades are incompatible with
 this integration.
 
-## Isolated speed experiment
+## Native execution
 
-On the `benchmark/midscene-speed-20261022` fork branch, dispatch this workflow
-with `speed_benchmark=true`. It defaults to the five-file `parallel` variant.
-Set `speed_concurrency` to `10`, `15`, `20`, or `30` to test higher parallelism; the default
-remains `5`. Serial controls always use one file. Locally, use
-`MIDSCENE_SPEED_CONCURRENCY=10 node scripts/speed-run.mjs parallel`.
-Select other variants with `speed_modes`; selected variants run separately on
-Node 24 / Midscene 1.16.5 runners, with case retries disabled:
+Each committed YAML file contains one case. Midscene's native file concurrency
+therefore gives every case its own page, context and isolated fixture. CI defaults
+to 40 concurrent files; select `file_concurrency` on manual dispatch, or set
+`MIDSCENE_FILE_CONCURRENCY=5 npm test` locally. Priority filename prefixes start
+previously slow cases first. Every outcome retains an independent `aiAssert`.
 
-| Mode     | Concurrent files     | Assertion handling                      |
-| -------- | -------------------- | --------------------------------------- |
-| baseline | 1                    | Independent `aiAssert` nodes            |
-| prompt   | 1                    | Adjacent assertions appended to `aiAct` |
-| parallel | 5, 10, 15, 20, or 30 | Independent `aiAssert` nodes            |
-| combined | 5, 10, 15, 20, or 30 | Adjacent assertions appended to `aiAct` |
-
-Each generated YAML file contains one original case; the original cases are
-unchanged. Native `fileSetup` gives each file its own page and browser context.
-Assertions before an action or after fixture updates remain independent.
-The merged mode is experimental: asking an action to check a result does not
-provide the same failure-detection guarantee as an independent assertion.
-
-All variants use the same file isolation, including the serial baseline.
-Compare against that fresh baseline, not timings from older framework versions.
-The Summary and `speed-metrics-*` artifacts record elapsed time, pass/fail counts,
-actual model calls, per-case timings, and configured versus observed file
-concurrency. Measurement JSON also records runner CPU count and total memory. Incomplete
-usage metrics are labeled explicitly. `speed-reports-*` contains native reports.
-This experiment never publishes or replaces the normal Pages report.
-
-CI allows four model-request retries with a 65-second interval so a minute-based
-RPM/TPM quota can recover. This uses Midscene's native request retry, not a case
-rerun or a retry of a failed assertion. The 15-minute case deadline includes
-these bounded waits. Request retry settings are saved in the measurement JSON;
-compare passing runs with the same settings before claiming a speedup.
-Higher concurrency may increase quota waits instead of reducing elapsed time;
-compare full passing runs and their retry logs before changing normal CI defaults.
-For a bounded performance experiment, set `speed_timeout_minutes=10`. The runner
-receives SIGTERM after ten minutes and has up to sixty seconds to finalize its
-interrupted report before forced termination. A deadline expiry fails the job;
-partially executed cases do not count as a passing result. Installation and report
-upload time are outside this test execution budget. The default remains 220 minutes.
+The former speed experiments, prompt-merging variants, runtime YAML generator
+and custom runner are removed. The Action calls `npx midscene-test` directly.
+Use the native report and CI job timestamps for measurements. Historical
+benchmark results above describe their original configuration, not this suite.
 
 ## CI evidence table
 
@@ -351,14 +320,27 @@ from retained Pages history, without rewriting native reports or their images.
 
 Regular CI uses `web-infra-dev/midscene-action` pinned to commit
 `5ef922b20a69d69a0f34639c4c867ba2049f6ede`, matching Midscene's own AI workflow.
-The Action runs the existing command, uploads `midscene-results`, writes the native
-Summary and propagates test failures. Generated case sources are included under
-`midscene_run/case-sources` in the artifact. Model verification still runs first.
+The Action runs the native CLI, uploads `midscene-results`, writes the native
+Summary and propagates test failures. Case sources are versioned in `cases/`; the workflow head SHA identifies them.
+Model verification still runs first.
 
 The Action's `publish-pages` input means Cloudflare Workers publication. It is
 disabled here: the existing GitHub Pages job consumes the Action's artifact output
 and retains the per-case screenshot table, report links and recent-run history.
 No Cloudflare credentials or model configuration changes are required.
+
 ## Supplementary case selection
 
 The deterministic suite remains authoritative for exact text, counts, order, URLs and command variants. The AI suite omits 22 redundant cases: ROUTE-01 through ROUTE-12, AUDIT-02/03/06/07, STYLE-05, STATIC-03, and COMPONENT-07 through COMPONENT-10. COMPONENT-03 remains a representative package-manager synchronization flow; the deterministic suite covers all five managers. Historical measurements above refer to the previous 153-case suite.
+
+## Remaining support code
+
+The Action owns test execution, raw artifact upload and native text Summary.
+Support code is limited to project needs:
+
+- Fixture lifecycle, local assets and browser isolation: original-fixture, playground-assets, fixture-server and serve.
+- Definition/inventory validation and concurrency bounds: collect-cases, migration-inventory tests and concurrency.
+- Exact workspace cache key: build-fingerprint.
+- GitHub Pages history and per-case screenshot links: native-results, trusted-report-runs, prepare-pages-site and render-ci-summary. The Action currently publishes only to Cloudflare, so these remain necessary for the existing Pages site.
+
+The associated tests protect these responsibilities; removing them solely to reduce script count would remove validation.

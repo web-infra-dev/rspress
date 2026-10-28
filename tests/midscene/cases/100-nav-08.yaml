@@ -1,0 +1,7 @@
+cases:
+  - name: NAV-08 Navigate clean URLs on mobile
+    tags: [original-clean-nav]
+    steps:
+      - app.open: { fixture: nav-link-items-clean, path: /, viewport: mobile }
+      - aiAct: Open the mobile menu and follow NestedItems, Level1, Level2Nested, and Level3Item2.
+      - aiAssert: The Level 3 item 2 article is visible without the mobile menu covering it.

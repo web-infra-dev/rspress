@@ -1,0 +1,7 @@
+cases:
+  - name: PLUGIN-05 Inspect a Twoslash type tooltip
+    tags: [original-twoslash]
+    steps:
+      - app.open: { fixture: plugin-twoslash, path: / }
+      - aiAct: In Extract type, hover over the marked msg variable to open its type information.
+      - aiAssert: A type information popup for msg is visible.

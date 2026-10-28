@@ -1,0 +1,10 @@
+cases:
+  - name: PREVIEW-03 Hot-update the fixed device preview
+    tags: [original-preview-hmr]
+    steps:
+      - app.open: { fixture: plugin-preview, path: /hmr }
+      - aiAct: Bring the fixed device preview displaying HMR Iframe Fixed Original into view, not merely its source code.
+      - aiAssert: The fixed device preview displays HMR Iframe Fixed Original.
+      - fixture.update: { part: preview-fixed }
+      - aiAct: Wait for the rendered fixed device preview to display HMR Iframe Fixed Updated. Do not reload or navigate elsewhere; stop if it has not changed within 30 seconds.
+      - aiAssert: The rendered fixed device preview displays HMR Iframe Fixed Updated.

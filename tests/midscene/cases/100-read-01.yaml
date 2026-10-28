@@ -1,0 +1,9 @@
+cases:
+  - name: READ-01 Navigate a site under a base path
+    tags: [original-base, replacement-batch-5]
+    steps:
+      - app.open: { fixture: with-base, mode: production, path: /base/en/ }
+      - aiAct: Follow the click link in the article to the guide.
+      - aiAssert: The Quick Start article is visible and its English sidebar contains Guide and Install.
+      - aiAct: Open Install from the sidebar.
+      - aiAssert: The Install article is visible, not a page-not-found error.

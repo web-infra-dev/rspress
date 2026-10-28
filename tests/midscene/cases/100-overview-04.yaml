@@ -1,0 +1,17 @@
+cases:
+  - name: OVERVIEW-04 Navigate second and third overview levels
+    tags:
+      [
+        original-overviews,
+        migration-regression,
+        ci-regression,
+        replacement-batch-5,
+      ]
+    steps:
+      - app.open:
+          { fixture: nested-overview, path: /base-url/basic-level-1/level-2/ }
+      - aiAssert: The main overview has section headings two then Level 3. Its article entries are two, three, and Level 3, with no additional article entries.
+      - aiAct: Open the Level 3 overview using the Level 3 link card in the main article, not the sidebar or On this page. Wait for the main article heading to change from Level 2 to Level 3 before continuing; do not open the child article titled three yet.
+      - aiAssert: The main article heading is Level 3, rather than Level 2. Its overview has one section heading, three, and exactly one article entry titled "three" with Feature a and Feature b sections.
+      - aiAct: Follow the Feature a link inside the overview card titled "three", below the "three" section heading. Wait for the article body containing Description of feature A and Description of feature B to appear. The overview card containing only Feature a and Feature b labels is not the destination article. Do not click the section heading, sidebar, or On this page.
+      - aiAssert: The article displays Feature a with Description of feature A and Feature b with Description of feature B.

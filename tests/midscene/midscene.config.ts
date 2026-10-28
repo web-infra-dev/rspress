@@ -11,7 +11,7 @@ import { createMidsceneNodes } from '@midscene/test/midscene';
 import { PlaywrightAgent } from '@midscene/web/playwright/agent';
 import { playgroundAsset } from './scripts/playground-assets.js';
 import { fixturePolicy } from './scripts/original-fixture-data.js';
-import { parseFileConcurrency } from './scripts/speed-concurrency.js';
+import { parseFileConcurrency } from './scripts/concurrency.js';
 import { startFixtureServer } from './fixture-server.js';
 import {
   OriginalFixture,
@@ -37,9 +37,7 @@ interface Context {
 interface ProjectContext {
   browser: Browser;
 }
-const concurrency = parseFileConcurrency(
-  process.env.MIDSCENE_SPEED_CONCURRENCY,
-);
+const concurrency = parseFileConcurrency(process.env.MIDSCENE_FILE_CONCURRENCY);
 const setup = defineProjectSetup<ProjectContext>({
   name: 'web',
   async setup({ onTeardown, signal }) {
@@ -214,7 +212,7 @@ export default defineTestProject<Context, ProjectContext>({
       maxConcurrentFiles: concurrency,
       retry: 0,
       files: {
-        include: [process.env.MIDSCENE_SPEED_CASES ?? 'cases/**/*.yaml'],
+        include: ['cases/**/*.yaml'],
       },
       tags: {
         include: (process.env.MIDSCENE_INCLUDE_TAGS ?? '')

@@ -1,0 +1,8 @@
+cases:
+  - name: NAV-01 Follow a desktop dropdown link
+    tags: [original-nav, replacement-final-existing]
+    steps:
+      - app.open: { fixture: nav-link-items, path: / }
+      - aiAssert: The top navigation displays OnlyLink, OnlyItems, ItemsAndLink, and NestedItems, with dropdown contents initially hidden.
+      - aiAct: Hover over NestedItems in the top navigation and select Level3Item1 from its dropdown. On desktop, the nested configuration is displayed as a flat list of links; do not search for separate Level1 or Level2Nested submenu controls. Stop when the Level 3 item 1 article opens. Do not use the sidebar, search, or enter a URL.
+      - aiAssert: The article heading is Level 3 item 1.

@@ -1,0 +1,8 @@
+cases:
+  - name: AUDIT-08 Open the mobile language menu
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: i18n, path: /, viewport: mobile }
+      - aiAct: Open the top-right mobile hamburger menu and wait for the Guide, Api, and 语言 rows to appear. Keep the navigation menu open.
+      - aiAct: Expand the language choices by clicking the 语言 row once. Wait for the animation to settle. Finish only when English is visibly listed below this row alongside the current 简体中文 choice. A row showing only 语言 and 简体中文 with a right arrow is still collapsed. Leave the choices expanded; do not click the row again or select a language.
+      - aiAssert: The mobile menu is visible and its language choices show current language 简体中文 and alternative English.
