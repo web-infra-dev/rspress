@@ -7,8 +7,6 @@ tag: theme-only
 
 import { SvgWrapper, SourceCode } from '@rspress/core/theme';
 
-Built-in icons support tree shaking.
-
 When Rspress uses icons, it uses a `SvgWrapper` component to render icons. It supports icon as a URL or an svgr React component:
 
 ```ts
@@ -32,7 +30,7 @@ export { IconGithub } from './my-icons';
 export * from '@rspress/core/theme-original';
 ```
 
-All icons used by Rspress are as follows:
+All icons used by Rspress support tree shaking and are listed below:
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/core/src/theme/icons.ts" />
 

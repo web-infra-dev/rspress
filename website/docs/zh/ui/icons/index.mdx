@@ -7,8 +7,6 @@ tag: theme-only
 
 import { SvgWrapper, SourceCode } from '@rspress/core/theme';
 
-内置图标支持 tree shaking。
-
 Rspress 内置使用图标时，会使用一个 `SvgWrapper` 组件来渲染图标。支持 icon 为 url 或者 svgr 的 React 组件：
 
 ```ts
@@ -32,7 +30,7 @@ export { IconGithub } from './my-icons';
 export * from '@rspress/core/theme-original';
 ```
 
-所有 Rspress 使用到的图标如下：
+所有 Rspress 使用到的图标均支持 tree shaking，列表如下：
 
 <SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/core/src/theme/icons.ts" />
 
