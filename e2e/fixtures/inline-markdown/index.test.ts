@@ -16,7 +16,7 @@ test.describe('inline Markdown', async () => {
     }
   });
 
-  test('preserves sidebar counts and serialized inline markup', async ({
+  test('Should render inline markdown of sidebar correctly', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}/inline/index`, {
@@ -25,6 +25,26 @@ test.describe('inline Markdown', async () => {
 
     const sidebar = page.locator('.rp-doc-layout__sidebar .rp-sidebar-item');
     await expect(sidebar).toHaveCount(12);
+
+    const sidebarTexts = (await sidebar.allTextContents()).map(text =>
+      text.trim(),
+    );
+    expect(sidebarTexts.join(',')).toEqual(
+      [
+        'Overview',
+        'Class: Component<P, S>',
+        'Class: Component<P, S>',
+        'bold',
+        'emphasis',
+        '<foo>',
+        '-m <number>',
+        'delete',
+        'link',
+        'Class: Component<P = { }, S = { }, SS = any>',
+        'Class: Foo<T = { }>',
+        'Class: Bar<T = any>',
+      ].join(','),
+    );
 
     const sidebarCount = await sidebar.count();
     const sidebarInnerHtml = await Promise.all(
@@ -55,7 +75,7 @@ test.describe('inline Markdown', async () => {
     ).toHaveText('<foo>');
   });
 
-  test('preserves serialized overview headings card titles and article links', async ({
+  test('Should render inline markdown of overview page correctly', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}/inline/index`, {
@@ -65,6 +85,23 @@ test.describe('inline Markdown', async () => {
     const overviewHeadingLocator = page.locator(
       '.rp-overview h2.rp-toc-include span',
     );
+    const overviewHeadings = await overviewHeadingLocator.allTextContents();
+    expect(overviewHeadings.map(text => text.trim()).join(',')).toEqual(
+      [
+        'Class: Component<P, S>',
+        'Class: Component<P, S>',
+        'bold',
+        'emphasis',
+        '<foo>',
+        '-m <number>',
+        'delete',
+        'link',
+        'Class: Component<P = { }, S = { }, SS = any>',
+        'Class: Foo<T = { }>',
+        'Class: Bar<T = any>',
+      ].join(','),
+    );
+
     const overviewHeadingCount = await overviewHeadingLocator.count();
     const overviewHeadingHtml = await Promise.all(
       Array.from({ length: overviewHeadingCount }, (_, index) =>
@@ -90,7 +127,20 @@ test.describe('inline Markdown', async () => {
     const overviewTitles = page.locator(
       '.rp-overview .rp-overview-group__item__title > a',
     );
-    await expect(overviewTitles).toHaveCount(11);
+    await expect(overviewTitles).toHaveText([
+      'Class: Component<P, S>',
+      'Class: Component<P, S>',
+      'bold',
+      'emphasis',
+      '<foo>',
+      '-m <number>',
+      'delete',
+      'link',
+      'Class: Component<P = { }, S = { }, SS = any>',
+      'Class: Foo<T = { }>',
+      'Class: Bar<T = any>',
+    ]);
+
     const overviewTitlesCount = await overviewTitles.count();
     const titleInnerHtml = await Promise.all(
       Array.from({ length: overviewTitlesCount }, (_, index) =>
@@ -117,7 +167,25 @@ test.describe('inline Markdown', async () => {
     const overviewLinks = page.locator(
       '.rp-overview .rp-overview-group__item__content__item__link',
     );
-    await expect(overviewLinks).toHaveCount(16);
+    await expect(overviewLinks).toHaveText([
+      'Class: Component<P, S>',
+      'Class: Component<P, S>',
+      '-m <number>',
+      '<foo>',
+      'foo <bar> baz',
+      'bold',
+      'emphasis',
+      'delete',
+      'This is a long string to test regex performance',
+      'Class: Bar<T = any>',
+      '**literal**',
+      '&lt;',
+      'this is link rsbuild',
+      'this is bold link rsbuild',
+      'this is code link rsbuild',
+      'this is bold code link rsbuild',
+    ]);
+
     const overviewLinkCount = await overviewLinks.count();
     const overviewLinkInnerHtml = await Promise.all(
       Array.from({ length: overviewLinkCount }, (_, index) =>
@@ -147,9 +215,7 @@ test.describe('inline Markdown', async () => {
     }
   });
 
-  test('preserves outline counts serialized markup and plain tooltip attributes', async ({
-    page,
-  }) => {
+  test('Should render inline markdown of aside correctly', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/inline/all`, {
       waitUntil: 'networkidle',
     });
@@ -160,6 +226,23 @@ test.describe('inline Markdown', async () => {
     const asideTexts = (await asideItems.allTextContents()).map(text =>
       text.trim(),
     );
+    expect(asideTexts.join(',')).toEqual(
+      [
+        'Class: Component<P, S>',
+        'Class: Component<P, S>',
+        '-m <number>',
+        '<foo>',
+        'foo <bar> baz',
+        'bold',
+        'emphasis',
+        'delete',
+        'This is a long string to test regex performance',
+        'Class: Bar<T = any>',
+        '**literal**',
+        '&lt;',
+      ].join(','),
+    );
+
     const asideCount = await asideItems.count();
     const asideInnerHtml = await Promise.all(
       Array.from({ length: asideCount }, (_, index) =>
@@ -230,7 +313,7 @@ test.describe('inline Markdown', async () => {
     }
   });
 
-  test('preserves code elements in previous and next generic headings', async ({
+  test('Should preserve escaped headings in previous and next page links', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}/inline/generic-braces`, {
@@ -242,16 +325,23 @@ test.describe('inline Markdown', async () => {
     const next = page.locator(
       '.rp-prev-next-page__next .rp-prev-next-page__item__title',
     );
+    await expect(previous).toHaveText(
+      'Class: Component<P = { }, S = { }, SS = any>',
+    );
     await expect(previous.locator('code')).toHaveText('any');
+    await expect(next).toHaveText('Class: Bar<T = any>');
     await expect(next.locator('code')).toHaveText('any');
   });
 
-  test('preserves the inline HTML image source URL', async ({ page }) => {
+  test('Should render html like <img> with inline markdown syntax correctly', async ({
+    page,
+  }) => {
     await page.goto(`http://localhost:${appPort}/`, {
       waitUntil: 'networkidle',
     });
 
     const img = page.locator('img').first();
+    await expect(img).toBeVisible();
     await expect(img).toHaveAttribute(
       'src',
       'https://assets.rspack.rs/rspress/rspress-logo.svg',

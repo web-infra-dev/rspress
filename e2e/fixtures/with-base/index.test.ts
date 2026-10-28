@@ -51,7 +51,23 @@ test.describe('site with base path', async () => {
     expect(href).toBe('/base/en/guide/install');
   });
 
-  test('BrowserOnly exposes transient fallback text before asynchronous content resolves', async ({
+  test('Should render the homepage - "/base"', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/base`, {
+      waitUntil: 'networkidle',
+    });
+    const docContent = page.locator('.rspress-doc');
+    await expect(docContent).toContainText('This is the index page');
+  });
+
+  test('Should render the homepage - "/base/"', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+    const docContent = page.locator('.rspress-doc');
+    await expect(docContent).toContainText('This is the index page');
+  });
+
+  test('BrowserOnly should render fallback and update client content', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}/base/en/`, {
@@ -61,13 +77,25 @@ test.describe('site with base path', async () => {
     await expect(page.locator('#browser-only-async-fallback')).toHaveText(
       'Async fallback initial',
     );
-    await page
-      .locator('#browser-only-async-content')
-      .waitFor({ state: 'attached' });
+    await expect(page.locator('#browser-only-sync-content')).toHaveText(
+      'Sync 0',
+    );
+
+    await page.locator('#browser-only-sync-increment').click();
+    await expect(page.locator('#browser-only-sync-content')).toHaveText(
+      'Sync 1',
+    );
+
+    await expect(page.locator('#browser-only-async-content')).toHaveText(
+      'Async initial',
+    );
 
     await page.locator('#browser-only-async-update').click();
     await expect(page.locator('#browser-only-async-fallback')).toHaveText(
       'Async fallback updated',
+    );
+    await expect(page.locator('#browser-only-async-content')).toHaveText(
+      'Async updated',
     );
   });
 });

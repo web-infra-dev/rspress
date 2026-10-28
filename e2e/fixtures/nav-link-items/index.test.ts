@@ -78,11 +78,19 @@ const createNavSuite = ({ title, configFile, paths }: NavSuiteConfig) => {
       }
     });
 
-    test('preserves dropdown counts and the initial hidden class', async ({
-      page,
-    }) => {
+    test('it should render correct visibility', async ({ page }) => {
       await init(page);
 
+      await expect(navMenu).toBeVisible();
+      await expect(
+        onlyLinkItem.locator('a.rp-nav-menu__item__container'),
+      ).toBeVisible();
+      await expect(
+        onlyItemsItem.locator('.rp-nav-menu__item__container'),
+      ).toBeVisible();
+      await expect(
+        itemsAndLinkItem.locator('.rp-nav-menu__item__container'),
+      ).toBeVisible();
       await expect(onlyItemsItem.locator('.rp-hover-group')).toHaveCount(1);
       await expect(itemsAndLinkItem.locator('.rp-hover-group')).toHaveCount(1);
       await expect(itemsAndLinkDropdown).toHaveClass(/rp-hover-group--hidden/);
@@ -341,7 +349,7 @@ test.describe('Nav SSG', () => {
     }
   });
 
-  test('preserves hidden dropdown classes in static desktop and tablet markup', async ({
+  test('items should be visible on hover when JavaScript is disabled', async ({
     browser,
   }) => {
     const context = await browser.newContext({ javaScriptEnabled: false });
@@ -359,12 +367,17 @@ test.describe('Nav SSG', () => {
       const itemsAndLinkDropdown = itemsAndLinkItem.locator('.rp-hover-group');
 
       await expect(itemsAndLinkDropdown).toHaveClass(/rp-hover-group--hidden/);
+      await itemsAndLinkItem.hover();
+      await expect(itemsAndLinkDropdown).toBeVisible();
 
       await page.setViewportSize({ width: 1024, height: 768 });
       const hamburger = page.locator('.rp-nav-hamburger__md');
       const hamburgerDropdown = hamburger.locator('.rp-hover-group');
 
+      await expect(hamburger).toBeVisible();
       await expect(hamburgerDropdown).toHaveClass(/rp-hover-group--hidden/);
+      await hamburger.hover();
+      await expect(hamburgerDropdown).toBeVisible();
     } finally {
       await context.close();
     }
