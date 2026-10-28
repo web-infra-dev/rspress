@@ -1,32 +1,29 @@
 import type { Header } from '@rspress/core';
 import { usePage } from '@rspress/core/runtime';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { processTitleElement } from './processTitleElement';
 
-const updateFns: Record<string, () => void> = {};
-const useForceUpdate = () => {
-  const [, setTick] = useState(0);
-  return () => setTick(tick => tick + 1);
+interface TocSnapshot {
+  pagePath: string;
+  headers: Header[];
+}
+
+// Share the collected headers between the desktop and mobile outlines.
+let tocSnapshot: TocSnapshot | undefined;
+const listeners = new Set<() => void>();
+const subscribe = (listener: () => void) => {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
 };
-const distributeUpdate = () => {
-  for (const fn of Object.values(updateFns)) {
-    fn();
+const getSnapshot = () => tocSnapshot;
+const getServerSnapshot = () => undefined;
+
+function setSnapshot(snapshot: TocSnapshot | undefined) {
+  tocSnapshot = snapshot;
+  for (const listener of listeners) {
+    listener();
   }
-};
-
-// use the same data between Aside(desktop) and Toc(mobile), and use publisher and subscriber to avoid useContext
-const useSubScribe = () => {
-  const forceUpdate = useForceUpdate();
-  useEffect(() => {
-    const id = Math.random().toString(36).slice(2);
-    updateFns[id] = forceUpdate;
-    return () => {
-      delete updateFns[id];
-    };
-  }, [forceUpdate]);
-};
-
-const headers: { current: Header[] } = { current: [] satisfies Header[] };
+}
 
 function isElementOnlyVisible(element: Element): boolean {
   const style = window.getComputedStyle(element);
@@ -63,13 +60,18 @@ function isElementVisible(element: Element): boolean {
  */
 export const useDynamicToc = (): Header[] => {
   const {
-    page: { toc = [] },
+    page: { toc = [], pagePath },
   } = usePage();
-  useSubScribe();
-  return headers.current.length > 0 ? headers.current : toc;
+  const snapshot = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
+  // An empty collection is valid; only fall back before this page is collected.
+  return snapshot?.pagePath === pagePath ? snapshot.headers : toc;
 };
 
-function updateHeaders(target: Element) {
+function updateHeaders(target: Element, pagePath: string) {
   const collectedHeaders: Header[] = [];
   const elements = target?.querySelectorAll(
     '.rspress-doc h2.rp-toc-include, h3.rp-toc-include, h4.rp-toc-include',
@@ -88,8 +90,7 @@ function updateHeaders(target: Element) {
     }
   });
 
-  headers.current = [...collectedHeaders];
-  distributeUpdate();
+  setSnapshot({ pagePath, headers: collectedHeaders });
 }
 
 const TOC_HEADING_TAGS = new Set(['H2', 'H3', 'H4']);
@@ -99,6 +100,9 @@ const TOC_HEADING_TAGS = new Set(['H2', 'H3', 'H4']);
  */
 export const useWatchToc = () => {
   const [innerRef, setRef] = useState<HTMLDivElement | null>(null);
+  const {
+    page: { pagePath },
+  } = usePage();
 
   useEffect(() => {
     let observer: null | MutationObserver = null;
@@ -106,7 +110,7 @@ export const useWatchToc = () => {
     const target = innerRef;
 
     if (target) {
-      updateHeaders(target);
+      updateHeaders(target, pagePath);
     }
 
     if (target && !observer) {
@@ -133,15 +137,16 @@ export const useWatchToc = () => {
             }
           }
         }
-        needUpdate && updateHeaders(target);
+        needUpdate && updateHeaders(target, pagePath);
       });
       observer.observe(target, { childList: true, subtree: true });
     }
     return () => {
       observer?.disconnect();
       observer = null;
+      setSnapshot(undefined);
     };
-  }, [innerRef]);
+  }, [innerRef, pagePath]);
 
   const rspressDocRef = useCallback(
     (ref: HTMLDivElement | null) => {
