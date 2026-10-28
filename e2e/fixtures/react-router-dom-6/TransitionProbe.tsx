@@ -14,13 +14,18 @@ export default function TransitionProbe() {
     throw pending;
   }
   return (
-    <button
-      type="button"
-      onClick={() => {
-        navigate('/slow.html');
-      }}
-    >
-      Open suspended page
-    </button>
+    <div style={{ position: 'fixed', bottom: 16, right: 16, zIndex: 100 }}>
+      <button
+        type="button"
+        onClick={() => {
+          navigate('/slow.html');
+        }}
+      >
+        Open suspended page
+      </button>
+      <button type="button" onClick={() => navigate('/scroll.html')}>
+        Open scroll page
+      </button>
+    </div>
   );
 }

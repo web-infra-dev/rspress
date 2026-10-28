@@ -26,13 +26,14 @@ export function useLinkNavigate({
     async (href: string) => {
       const { linkType, removeBaseHref, routePath, withBaseHref } =
         getHref(href);
-      if (linkType === 'external' || linkType === 'hashOnly') {
+      if (linkType === 'external') {
         window.location.assign(href);
         return;
       }
       // Keep same-page links client-side, including on a 404 page, so clicking
       // a parent menu link does not reload the document and close its submenu.
       if (
+        linkType !== 'hashOnly' &&
         !isActive(removeBaseHref, pathname) &&
         !pathnameToRouteService(routePath)
       ) {
@@ -40,15 +41,28 @@ export function useLinkNavigate({
         return;
       }
 
+      // Native hash navigation creates history entries without router keys.
+      // Preserve the current query and let the router track each anchor visit.
+      const hashUrl =
+        linkType === 'hashOnly'
+          ? new URL(href, window.location.href)
+          : undefined;
+      const to = hashUrl
+        ? { search: hashUrl.search, hash: hashUrl.hash }
+        : removeBaseHref;
+      const options = hashUrl
+        ? { replace: hashUrl.href === window.location.href }
+        : undefined;
+
       if (useTransitions && startTransition) {
         let navigation: void | Promise<void> = undefined;
         startTransition(() => {
-          navigation = navigate(removeBaseHref);
+          navigation = navigate(to, options);
           return navigation;
         });
         await navigation;
       } else {
-        await navigate(removeBaseHref);
+        await navigate(to, options);
       }
     },
     [useTransitions, pathname, navigate, startTransition],
