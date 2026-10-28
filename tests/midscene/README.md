@@ -1,305 +1,63 @@
-# Midscene AI E2E
+# Midscene E2E
 
-Exercise search, translated and versioned navigation, documentation components,
-generated API pages, previews, playgrounds, HMR, and production/static rendering.
-The fixture launcher runs the checked-out CLI against original `e2e/fixtures`;
-the initial documentation examples remain separate smoke cases.
+131 AI-driven cases supplement the original deterministic E2E tests.
+Cases use `aiAct` for interactions and independent `aiAssert` checks, with case
+retries disabled. Each YAML file owns an isolated browser context.
 
-`migration-inventory.json` accounts for all **237 baseline tests**. Every baseline
-case remains in the deterministic suite. Tests deleted or reduced during the
-initial migration have been restored from upstream commit `635b34fe7`, including
-later upstream regressions already merged into this branch.
+## Local execution
 
-The **131 AI cases supplement the original E2E suite**. They do not replace exact
-text, node counts, ordering, URLs, DOM structure, CSS, storage or build assertions.
-Visible content can still express a precise deterministic contract: for example,
-the sidebar convention test must check exactly eight entries in a fixed order.
-The existing Linux, macOS and Windows workflows continue to run the original
-E2E tests with `pnpm test:e2e`.
-
-AI cases cover visible navigation, search, sidebars, generated API pages, previews,
-playgrounds, code panels, language/version switching, package-manager commands,
-HMR and production/static rendering. All five package managers are checked across
-six synchronized panels (30 original commands). Long pages are checked in focused
-sections; action completion is never used as an assertion.
-
-Exact URL/href/src strings, DOM counts and classes, serialized HTML, CSS values,
-metadata, browser events, controlled search races, transient loading fallbacks,
-filesystem/build output and server restart counts remain deterministic. HMR tests
-wait for an update to attach before measuring retained window/React state and
-restart counts. Those waits are synchronization, not visible E2E proof.
-The inventory requires a retained deterministic test for every baseline entry;
-AI mappings and historical model runs only describe supplementary coverage.
-
-The audit also added missing awaits to filesystem checks in icon, public-directory and
-LLMS tests, made strict SSG failure reject an unexpectedly successful build, and
-closed each asset-test preview process after its test.
-
-Historical validation on 2026-10-15 (before deterministic restoration):
-
-- `pnpm test:e2e`: 183/183 deterministic tests passed across 62 files.
-- `20261015171335-c8e822b8`: 35 completed cases passed and three failed before
-  the run was deliberately stopped during a fourth incorrect prompt. This is
-  **not** a successful full run; its individual completed result files remain.
-- `20261015175519-35748856`: 21/21 passed, including the four corrected prompts,
-  every unexecuted case and the generated raw-link regression.
-- Together these runs verify 56 distinct cases, including every newly added or
-  strengthened case. Automatic retries remain disabled. Local evidence does not
-  substitute for a full remote run on the final commit.
-
-Prompt corrections describe the actual UI: Nested is a directory card, an empty
-custom home has no configured hero, a vertical Playground preview sits above its
-editor, a tablet hamburger offers Theme, and the sidebar badge belongs to the
-Introduction label rather than its internal overview identifier.
-
-Remote run [38718473488](https://github.com/quanru/rspress/actions/runs/38718473488)
-on `db99ff7` passed 148/153 cases with no retries. Its five failures exposed
-ambiguous or inaccurate prompts: group labels were compared across groups,
-the overview title panel was mistaken for an article column, an iframe action
-tried to uncover its whole border, the small social popup was called large,
-and a bottom-of-page counter was described only as a global component.
-The corrected five cases passed twice locally without retries:
-`20261015205824-e76a6c8c` and `20261015210312-9771190c` (5/5 each).
-The social popup additionally checks absence before hover and after moving away.
-These focused runs do not constitute a successful full remote run.
-
-Remote run [38740264126](https://github.com/quanru/rspress/actions/runs/38740264126)
-on `03908bb` passed 152/153 cases with no retries, including all five corrections.
-NAV-04 timed out while the model repeatedly clicked the selected version instead
-of opening the adjacent language menu. Its instruction now targets the English
-language menu directly; the independent assertion checks the Chinese article,
-selected language and unchanged v1 version. The corrected case passed three
-independent local runs on 2026-10-16 with no retries:
-`20261016001537-8c860a86`, `20261016001928-a8b102b0` and
-`20261016002019-cecc0dd3`. Full remote validation is still required.
-
-Remote run [38768414212](https://github.com/quanru/rspress/actions/runs/38768414212)
-on `df7d1b4` passed 151/153 cases with no retries, including NAV-04.
-PREVIEW-06's screenshot contained the expected rendered text, but the model
-misread the line at the preview's upper edge as a title above an empty preview.
-Its assertions now describe the visible line at that edge, distinct from the
-colored source code. VIRTUAL-03's GitHub icon was already visible; the plural
-"social icons" instruction made the model search for nonexistent extra icons.
-The redundant action is removed; its independent icon assertion and actual
-counter interaction remain. The counter action now identifies the bottom status
-row explicitly. Both corrected cases passed three independent local runs:
-`20261016021850-5b53d0de`, `20261016022001-bf219da4` and
-`20261016022105-6306a45b` (2/2 each, no retries). These are focused checks,
-not a successful full remote run.
-
-A separate local negative control on 2026-10-16 first passed the corrected JSX
-assertion against the real fixture, then hid only the first iframe body's rendered
-output while retaining the matching source code. The same assertion correctly
-failed for the blank preview. This fault injection changed only the temporary
-browser session, not fixture source files.
-
-Remote run [38785211479](https://github.com/quanru/rspress/actions/runs/38785211479)
-on `324ed0f` passed 151/153 with no retries; PREVIEW-06 and VIRTUAL-03 passed.
-SEARCH-08's planner mistook the existing `す` for `さ` and skipped the replacement;
-its independent result assertion correctly failed. The instruction now requires
-an actual replacement even when the characters look similar. STATIC-01's Target
-link was visible, but the model could not infer JavaScript availability from a
-screenshot. Its visual assertions now check only the visible links; browser setup
-still disables JavaScript. Collection additionally rejects any STATIC case that
-enables JavaScript or does not use a production build. Both negative guard checks
-were verified using in-memory definition mutations, without changing case files.
-The two corrected cases passed three independent local runs with no retries:
-`20261016035600-57a6fa1f`, `20261016035820-646ae396` and
-`20261016040013-61f76e1a` (2/2 each). Full remote validation remains required.
-
-Remote run [38798831268](https://github.com/quanru/rspress/actions/runs/38798831268)
-on `52c4031` passed 151/153 with no retries; SEARCH-08 and STATIC-01 passed.
-INLINE-02 misinterpreted "remaining" as entries after delete, although emphasis
-was correctly above delete in its screenshot. Its assertion now describes that
-explicit spatial relation and retains every expected entry and literal character.
-VIRTUAL-02's translation had updated, but the planner expected the entire joined
-status row to equal Translation after. Its wait now targets only the translation
-portion, preserving the neighboring search label and counter. The final counter
-wait also includes its retained value. Both cases passed three independent local
-runs: `20261016052639-e1651c56`, `20261016052919-97d75574` and
-`20261016053126-5b5e3bb2` (2/2 each, no retries). Full remote validation remains
-required.
-
-A local negative control passed the corrected outline assertion on the original
-page, then swapped emphasis and delete only in the outline. The same assertion
-correctly rejected that reversed order while the article and sidebar stayed intact.
-The fault injection affected only a temporary browser session.
-
-Remote run [38811047337](https://github.com/quanru/rspress/actions/runs/38811047337)
-on `49bf724` passed 151/153 cases; INLINE-02 and VIRTUAL-02 both passed.
-SEARCH-04 failed after two consecutive model requests hit the 180-second hard
-timeout. That is a model-request failure, not a demonstrated keyboard regression;
-its case remains unchanged. Several other requests timed out once and recovered.
-Case retries remain disabled, distinct from the framework's model-request retry.
-SEARCH-08 showed the correct Japanese input and result, but the assertion's reason
-contradictorily rejected text identical to its expected text. Its assertion now
-identifies the result title, pronunciation and highlighted suffix, retaining the
-exactly-one-result requirement. The complete case passed three independent local
-runs: `20261016072016-5eb1edf9`, `20261016072229-a77ef6ba` and
-`20261016072403-5347d110` (1/1 each, no case retries). Full remote validation
-remains required.
-
-A local control passed the corrected Japanese assertion on the real result,
-then rejected both an incorrect Japanese label with the same highlighted suffix
-and two duplicate result rows. These faults changed only the temporary browser
-session; all four query/count/text checks remain in the case.
-
-This isolated npm package uses
-`@midscene/test` 1.16.5, not Vitest. Each case starts in a fresh browser context.
-`app.open` only prepares the browser; all product interactions use `aiAct`.
-Separate `aiAssert` steps check outcomes instead of treating an AI action's completion
-as proof of success. Browser requests stay on the local fixture origin; preview
-fixtures may additionally load loopback origins declared by their iframe sources.
-Public network requests remain blocked.
-The original Playground's pinned Monaco 0.43.0 and Babel 7.22.20 CDN URLs are
-fulfilled from matching local npm packages. This preserves its editor/compiler
-runtime without allowing public requests or substituting a newer runtime version.
-The exact Rspress logo URL is fulfilled from its original SVG copy in `assets/`.
-Image checks verify rendering, not external CDN availability.
-
-`fixture.update` changes only allowlisted source text in an isolated temporary
-fixture copy for HMR checks. It does not operate the UI or modify original sources.
-Temporary copies and their owned CLI processes are cleaned up after the run.
-Signal-terminated processes are not reused, and teardown has a bounded wait.
-Fixture isolation, readiness and browser capabilities share one policy in
-`scripts/original-fixture-data.ts`; mutation targets automatically require isolation.
-
-## Run locally
-
-Use Node.js 24 and the repository's pinned pnpm version.
+Use Node.js 24 and the repository's pinned pnpm version. From the repository root:
 
 ```sh
-corepack enable
 pnpm install --frozen-lockfile
+pnpm build
 cd tests/midscene
 npm ci
 npx playwright install chromium
 cp .env.example .env
 ```
 
-Fill in the four model variables in `.env` with a vision-capable model.
-Keep credentials out of Git. Environment variables override `.env`; unset inherited
-`MIDSCENE_*` configuration when testing a different provider.
-
-The framework setup starts the synthetic fixture and tears down its owned process
-after the run. An already-running local fixture can be reused.
-
-Run the suite:
+Fill in `.env` with a vision-capable model configuration. Exported environment
+variables take precedence. Then run:
 
 ```sh
-cd tests/midscene
 npm run check:model
 npm test
 ```
 
-The smoke fixture listens on `http://127.0.0.1:4173`; original fixtures use owned
-dynamic ports. Set `MIDSCENE_INCLUDE_TAGS=original-search` to run the original
-search flows. Retries are disabled so the first failure remains visible.
+`npm run typecheck` checks fixture support without model calls. Local execution is
+serial by default; use `MIDSCENE_FILE_CONCURRENCY=5 npm test` for concurrency.
+The setup starts and cleans up its fixture services. Reports are written to
+`midscene_run/report/`, with structured results in `.midscene/test-results/`.
 
-Native reports live under `midscene_run/report/`; structured results live under
-`.midscene/test-results/`. Reports contain screenshots and test data, so use only
-the local repository fixtures and synthetic smoke pages, never private user data.
+## CI configuration
 
-## Model-free checks
+[The workflow](../../.github/workflows/midscene.yml) runs AI tests on relevant
+upstream `main` pushes and trusted manual dispatch, with 40 concurrent files
+by default. PRs do not run model-backed tests. Each AI run consumes model tokens.
 
-```sh
-cd tests/midscene
-npm run typecheck
-```
+Set these Actions secrets in the repository or the `Model` environment:
 
-Midscene validates YAML and nodes when executing the project. Fixture tests cover
-server lifecycle, isolation and project-specific behavior. Shared report and
-history tests live in Midscene Action.
+- `MIDSCENE_MODEL_BASE_URL`: provider base URL, without `/chat/completions`.
+- `MIDSCENE_MODEL_API_KEY`: dedicated model API key.
+- `MIDSCENE_MODEL_NAME`: vision-capable model name.
+- `MIDSCENE_MODEL_FAMILY`: matching Midscene model adapter.
+- `CLOUDFLARE_API_TOKEN`: report account token with Workers Scripts edit permission.
 
-## GitHub Actions
+Set `CLOUDFLARE_ACCOUNT_ID` as an Actions variable. The Worker name is
+`rspress-midscene-reports`; enable Preview URLs if no preview URL is returned.
+Missing configuration or failed model preflight fails the job explicitly.
 
-The workflow runs after merging to upstream `main`, on pushes that change the
-configured source or test paths. It does not run on pull requests. Maintainers
-can also dispatch it manually from `main`. The regular CI suite defaults to 40 concurrent cases; manual runs can
-override `file_concurrency`. The owner's `quanru/rspress` benchmark branch
-`benchmark/midscene-speed-20261022` also runs on relevant pushes. Other fork branches
-run AI tests only by manual dispatch. Local runs without a concurrency override
-remain serial. Every AI run consumes model
-tokens; do not configure secrets on an untrusted fork.
+Midscene Action uploads artifacts, publishes the native HTML report to Cloudflare,
+and adds screenshot/report links to the job Summary. Manual dispatch can set
+`publish_pages=false` for artifacts only. GitHub Pages is not required.
+The Action currently uses a fork commit pending
+[upstream screenshot-summary support](https://github.com/web-infra-dev/midscene-action/pull/1).
 
-Configure these repository Actions secrets before the first AI run:
+Original fixtures run through the checked-out Rspress CLI. HMR changes use isolated
+copies. Playground assets are served from pinned local packages. The offline
+`assets/rspress-logo.svg` was copied from
+https://assets.rspack.rs/rspress/rspress-logo.svg on 2026-10-15; these tests check
+rendering, not CDN availability.
 
-- `MIDSCENE_MODEL_BASE_URL`: OpenAI-compatible chat-completions base URL.
-- `MIDSCENE_MODEL_API_KEY`: dedicated, quota-limited API key.
-- `MIDSCENE_MODEL_NAME`: vision model or endpoint name.
-- `MIDSCENE_MODEL_FAMILY`: the corresponding Midscene adapter, such as `doubao-seed`.
-
-Missing credentials or a failed image-reading preflight fails the job explicitly.
-Credentials are passed only to model preflight and test steps, not installation
-or fixture processes. Native reports are uploaded after failures too.
-
-The **Midscene E2E** job uses the native Midscene Action for execution, artifact
-upload and Cloudflare Workers publication. The HTML index and case details come
-from Midscene Test. After deployment, the Action adds per-case screenshots and
-native step links to the same job Summary. Test failures remain failures.
-
-Configure publication in repository settings or the `Model` environment:
-
-- Secret `CLOUDFLARE_API_TOKEN`: scoped to the report account, with Workers edit
-  permission for an existing Worker or Workers Admin to create one.
-- Variable `CLOUDFLARE_ACCOUNT_ID`: the Cloudflare account ID.
-- Worker name: `rspress-midscene-reports`. Enable its Preview URLs if Cloudflare
-  does not return a preview URL automatically.
-
-Publication defaults on, including after relevant upstream main pushes. Missing
-Cloudflare inputs fail explicitly before the Action runs tests. Manual dispatch
-can set `publish_pages=false` to run with downloadable artifacts only; the input
-name follows the Action, but publication targets Cloudflare, not GitHub Pages.
-Each run/attempt gets its own Worker preview name. No GitHub Pages settings,
-`MIDSCENE_PUBLISH_REPO`, history-copy job or `pages: write` permission is needed.
-Existing GitHub Pages reports are not deleted. Raw artifacts retain the complete
-reports for 14 days. Model runs remain serialized to bound endpoint load.
-
-## Dependency audit
-
-`npm audit` previously reported advisories in the Midscene 1.15.3 dependency tree,
-including image processing and Puppeteer archive dependencies. These packages
-stay in this isolated test harness, not the product's runtime dependencies.
-Use synthetic local fixtures and a dedicated quota-limited model key. Do not run
-`npm audit fix --force`: its suggested framework downgrades are incompatible with
-this integration.
-
-## Native execution
-
-Each committed YAML file contains one case. Midscene's native file concurrency
-therefore gives every case its own page, context and isolated fixture. CI defaults
-to 40 concurrent files; select `file_concurrency` on manual dispatch, or set
-`MIDSCENE_FILE_CONCURRENCY=5 npm test` locally. Priority filename prefixes start
-previously slow cases first. Every outcome retains an independent `aiAssert`.
-
-The former speed experiments, prompt-merging variants, runtime YAML generator
-and custom runner are removed. The Action calls `npx midscene-test` directly.
-Use the native report and CI job timestamps for measurements. Historical
-benchmark results above describe their original configuration, not this suite.
-
-## CI evidence table
-
-The Action reads the native HTML report's embedded run data. After Cloudflare
-publication, Summary shows each case's screenshot, status, duration and native
-step link, with failed cases first. Missing images are explicitly marked. Without
-publication, the native text Summary and raw artifacts remain available.
-
-## Midscene action
-
-The Action is pinned to `quanru/midscene-action-upstream@bc2184574faa46b62d4deec48347bebc97eefcc7`
-while [upstream PR #1](https://github.com/web-infra-dev/midscene-action/pull/1)
-adds screenshot tables to native Cloudflare publication. Repin to the official
-reviewed commit after merge. There is no separate Pages sub-action or project-side
-report renderer. Case sources are committed in `cases/`.
-
-## Supplementary case selection
-
-The deterministic suite remains authoritative for exact text, counts, order, URLs and command variants. The AI suite omits 22 redundant cases: ROUTE-01 through ROUTE-12, AUDIT-02/03/06/07, STYLE-05, STATIC-03, and COMPONENT-07 through COMPONENT-10. COMPONENT-03 remains a representative package-manager synchronization flow; the deterministic suite covers all five managers. Historical measurements above refer to the previous 153-case suite.
-
-## Shared CI support
-
-The Action owns execution, raw artifact upload, Cloudflare HTML publication and
-screenshot summaries. Project support only starts/stops fixtures, prepares local
-assets and isolates browser/source state; Rspress also computes its exact build
-cache key. YAML is the AI suite source of truth. The migration inventory is
-historical documentation; deterministic tests execute their own contracts.
+See [NOTICE](NOTICE) for attribution of adapted Rome fixture support.
