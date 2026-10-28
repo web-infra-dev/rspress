@@ -9,9 +9,10 @@ import {
 test.describe('Markdown asset links', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runPreviewCommand>> | null;
-  test.afterAll(async () => {
+  test.afterEach(async () => {
     if (app) {
       await killProcess(app);
+      app = null;
     }
   });
 

@@ -32,15 +32,15 @@ test.describe('plugin-llms', async () => {
     await runBuildCommand(appDir);
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms.txt')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'llms.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms-full.txt')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'llms-full.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'index.md')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'index.md')),
     ).toBeTruthy();
 
     // Verify llms.txt content: nav sections should group routes correctly
@@ -130,23 +130,25 @@ test.describe('plugin-llms', async () => {
     await runBuildCommand(appDir, 'rspress-i18n.config.ts');
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms.txt')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'llms.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms-full.txt')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'llms-full.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'index.md')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'index.md')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'zh', 'llms.txt')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'zh', 'llms.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'zh', 'llms-full.txt')),
+      await pathExists(
+        path.resolve(appDir, 'doc_build', 'zh', 'llms-full.txt'),
+      ),
     ).toBeTruthy();
 
     // Verify zh/llms.txt has Chinese content grouped by nav
