@@ -69,7 +69,7 @@ test('regular CI defaults to forty concurrent cases and retains native Pages pub
   const run = workflow.jobs.midscene.steps.find(
     step => step.name === 'Run all Midscene cases',
   );
-  assert.match(run.run, /node scripts\/run-ci\.mjs/);
+  assert.match(run.with.command, /node scripts\/run-ci\.mjs/);
   assert.equal(workflow.jobs['publish-pages'].needs, 'midscene');
 });
 
@@ -94,7 +94,7 @@ test('model load stays serialized while publication does not block the next mode
   const pages = workflow.jobs['publish-pages'].concurrency;
   assert.notEqual(pages.group, model.group);
   assert.equal(pages['cancel-in-progress'], false);
-  assert.match(workflow.concurrency.group, /github.run_id/);
+  assert.equal(workflow.concurrency, undefined);
   assert.equal(workflow.jobs.midscene.env.MIDSCENE_MODEL_TIMEOUT, '120000');
 });
 

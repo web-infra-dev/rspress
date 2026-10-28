@@ -351,3 +351,16 @@ Pages publishes the framework's native index, execution dumps and screenshots,
 without duplicate standalone `playwright-*.html` Agent reports. Full downloadable
 artifacts still contain those originals. This also prunes duplicate Agent HTML
 from retained Pages history, without rewriting native reports or their images.
+
+## Midscene action
+
+Regular CI uses `web-infra-dev/midscene-action` pinned to commit
+`5ef922b20a69d69a0f34639c4c867ba2049f6ede`, matching Midscene's own AI workflow.
+The Action runs the existing command, uploads `midscene-results`, writes the native
+Summary and propagates test failures. Generated case sources are included under
+`midscene_run/case-sources` in the artifact. Model verification still runs first.
+
+The Action's `publish-pages` input means Cloudflare Workers publication. It is
+disabled here: the existing GitHub Pages job consumes the Action's artifact output
+and retains the per-case screenshot table, report links and recent-run history.
+No Cloudflare credentials or model configuration changes are required.

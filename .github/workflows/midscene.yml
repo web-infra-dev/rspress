@@ -102,7 +102,7 @@ jobs:
   midscene:
     name: Midscene E2E
     outputs:
-      report-artifact-name: ${{ steps.upload-results.outputs.artifact-id != '' && 'midscene-results' || '' }}
+      report-artifact-name: ${{ steps.midscene-test.outputs.report-artifact-name }}
     concurrency:
       group: midscene-model-execution
       cancel-in-progress: false
@@ -206,7 +206,8 @@ jobs:
         run: npm run check:model
 
       - name: Run all Midscene cases
-        working-directory: tests/midscene
+        id: midscene-test
+        uses: web-infra-dev/midscene-action@5ef922b20a69d69a0f34639c4c867ba2049f6ede # v1
         env:
           MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
           MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME || secrets.MIDSCENE_MODEL_NAME }}
@@ -215,36 +216,13 @@ jobs:
           MIDSCENE_MODEL_REASONING_ENABLED: ${{ vars.MIDSCENE_MODEL_REASONING_ENABLED || secrets.MIDSCENE_MODEL_REASONING_ENABLED }}
           MIDSCENE_REPLANNING_CYCLE_LIMIT: '40'
           MIDSCENE_RETRY: '0'
-        run: |
-          timeout --signal=TERM --kill-after=10s 220m node scripts/run-ci.mjs
-
-      - name: Upload Midscene test report
-        id: upload-results
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: midscene-results
-          compression-level: 1
-          path: |
-            tests/midscene/midscene_run/
-            tests/midscene/.midscene/
-            tests/midscene/.speed-cases/
-          include-hidden-files: true
-          if-no-files-found: warn
-          retention-days: 14
-
-      - name: Write test results to Summary
-        if: always()
-        run: |
-          {
-            for result in tests/midscene/.midscene/test-results/*/result.md; do
-              [ -f "$result" ] || continue
-              # Pages adds an online link after deployment succeeds.
-              sed '/^\[Open the Midscene Test report ↗\](/d' "$result"
-              echo
-            done
-            echo "[Download test artifacts]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID#artifacts)"
-          } >> "$GITHUB_STEP_SUMMARY"
+          working-directory: tests/midscene
+          command: timeout --signal=TERM --kill-after=10s 220m node scripts/run-ci.mjs
+          artifact-name: midscene-results
+          retention-days: '14'
+          # Keep the existing GitHub Pages site and per-case screenshot table.
+          publish-pages: false
 
   speed-benchmark:
     name: Speed experiment (${{ matrix.mode }})
