@@ -10,7 +10,7 @@ case remains in the deterministic suite. Tests deleted or reduced during the
 initial migration have been restored from upstream commit `635b34fe7`, including
 later upstream regressions already merged into this branch.
 
-The **153 AI cases supplement the original E2E suite**. They do not replace exact
+The **131 AI cases supplement the original E2E suite**. They do not replace exact
 text, node counts, ordering, URLs, DOM structure, CSS, storage or build assertions.
 Visible content can still express a precise deterministic contract: for example,
 the sidebar convention test must check exactly eight entries in a fixed order.
@@ -346,3 +346,7 @@ Pages publishes the framework's native index, execution dumps and screenshots,
 without duplicate standalone `playwright-*.html` Agent reports. Full downloadable
 artifacts still contain those originals. This also prunes duplicate Agent HTML
 from retained Pages history, without rewriting native reports or their images.
+
+## Supplementary case selection
+
+The deterministic suite remains authoritative for exact text, counts, order, URLs and command variants. The AI suite omits 22 redundant cases: ROUTE-01 through ROUTE-12, AUDIT-02/03/06/07, STYLE-05, STATIC-03, and COMPONENT-07 through COMPONENT-10. COMPONENT-03 remains a representative package-manager synchronization flow; the deterministic suite covers all five managers. Historical measurements above refer to the previous 153-case suite.
