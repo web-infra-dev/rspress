@@ -1,12 +1,11 @@
 # Midscene E2E
 
-131 AI-driven cases supplement the original deterministic E2E tests.
-Cases use `aiAct` for interactions and independent `aiAssert` checks, with case
-retries disabled. Each YAML file owns an isolated browser context.
+AI cases supplement the original deterministic tests. Interactions use `aiAct`,
+with independent `aiAssert` checks and no case retries.
 
-## Local execution
+## Run locally
 
-Use Node.js 24 and the repository's pinned pnpm version. From the repository root:
+Use Node.js 24 and the repository's pinned pnpm version:
 
 ```sh
 pnpm install --frozen-lockfile
@@ -15,50 +14,31 @@ cd tests/midscene
 npm ci
 npx playwright install chromium
 cp .env.example .env
-```
-
-Fill in `.env` with a vision-capable model configuration. Exported environment
-variables take precedence. Then run:
-
-```sh
+# Fill in .env with your vision model configuration.
 npm run check:model
 npm test
 ```
 
-`npm run typecheck` checks fixture support without model calls. Local execution is
-serial by default; use `MIDSCENE_FILE_CONCURRENCY=5 npm test` for concurrency.
-The setup starts and cleans up its fixture services. Reports are written to
-`midscene_run/report/`, with structured results in `.midscene/test-results/`.
+Set `MIDSCENE_FILE_CONCURRENCY` to change local concurrency (default: 1).
+Reports: `midscene_run/report/`. Type checking: `npm run typecheck`.
 
-## CI configuration
+## CI
 
-[The workflow](../../.github/workflows/midscene.yml) runs AI tests on relevant
-upstream `main` pushes and trusted manual dispatch, with 40 concurrent files
-by default. PRs do not run model-backed tests. Each AI run consumes model tokens.
+[Workflow](../../.github/workflows/midscene.yml): relevant upstream main pushes
+and trusted manual runs. Model calls consume tokens.
 
-Set these Actions secrets in the repository or the `Model` environment:
+In repository settings or the `Model` environment, configure:
 
-- `MIDSCENE_MODEL_BASE_URL`: provider base URL, without `/chat/completions`.
-- `MIDSCENE_MODEL_API_KEY`: dedicated model API key.
-- `MIDSCENE_MODEL_NAME`: vision-capable model name.
-- `MIDSCENE_MODEL_FAMILY`: matching Midscene model adapter.
-- `CLOUDFLARE_API_TOKEN`: report account token with Workers Scripts edit permission.
+- Secrets: the four `MIDSCENE_MODEL_*` values from [.env.example](.env.example),
+  plus `CLOUDFLARE_API_TOKEN` with Workers Scripts edit permission.
+- Variable: `CLOUDFLARE_ACCOUNT_ID`.
 
-Set `CLOUDFLARE_ACCOUNT_ID` as an Actions variable. The Worker name is
-`rspress-midscene-reports`; enable Preview URLs if no preview URL is returned.
-Missing configuration or failed model preflight fails the job explicitly.
+Midscene Action publishes native HTML reports and screenshot tables to Cloudflare.
+Enable Worker Preview URLs if no URL is returned. Manual `publish_pages=false`
+keeps downloadable artifacts only. GitHub Pages is not required.
 
-Midscene Action uploads artifacts, publishes the native HTML report to Cloudflare,
-and adds screenshot/report links to the job Summary. Manual dispatch can set
-`publish_pages=false` for artifacts only. GitHub Pages is not required.
-The Action currently uses a fork commit pending
-[upstream screenshot-summary support](https://github.com/web-infra-dev/midscene-action/pull/1).
-
-Original fixtures run through the checked-out Rspress CLI. HMR changes use isolated
-copies. Playground assets are served from pinned local packages. The offline
-`assets/rspress-logo.svg` was copied from
-https://assets.rspack.rs/rspress/rspress-logo.svg on 2026-10-15; these tests check
-rendering, not CDN availability.
+The offline `assets/rspress-logo.svg` comes from
+https://assets.rspack.rs/rspress/rspress-logo.svg (2026-10-15).
 
 ## Attribution
 
