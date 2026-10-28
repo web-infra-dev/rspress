@@ -6,8 +6,22 @@ import type { RspressPlugin, UserConfig } from '@rspress/shared';
 import { afterEach, beforeEach, describe, expect, it, rs } from '@rstest/core';
 import { PluginDriver } from '../../PluginDriver';
 import { getI18nData } from './getI18nData';
+import { DEFAULT_I18N_TEXT } from './DEFAULT_I18N_TEXT';
 
 describe('getI18nData', () => {
+  it('provides Tamil text for every built-in key and preserves interpolation', async () => {
+    const result = await getI18nData({ lang: 'ta' });
+
+    for (const [key, translations] of Object.entries(DEFAULT_I18N_TEXT)) {
+      expect(Object.keys(result[key])).toEqual(['ta']);
+      expect(result[key].ta).toBe(translations.ta);
+      expect(result[key].ta).toMatch(/[\u0b80-\u0bff]/u);
+      expect(translations.ta.match(/\{\{\w+\}\}/g) ?? []).toEqual(
+        translations.en.match(/\{\{\w+\}\}/g) ?? [],
+      );
+    }
+  });
+
   beforeEach(() => {
     rs.clearAllMocks();
   });

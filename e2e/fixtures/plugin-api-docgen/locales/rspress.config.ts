@@ -55,6 +55,7 @@ export default defineConfig({
     { lang: 'ja', label: 'Japanese' },
     { lang: 'ko', label: 'Korean' },
     { lang: 'ru', label: 'Russian' },
+    { lang: 'ta', label: 'Tamil' },
     { lang: 'fr', label: 'French' },
   ],
 });
