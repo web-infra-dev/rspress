@@ -1,10 +1,10 @@
 import type { Header } from '@rspress/core';
-import { usePage } from '@rspress/core/runtime';
+import { useLocation, usePage } from '@rspress/core/runtime';
 import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { processTitleElement } from './processTitleElement';
 
 interface TocSnapshot {
-  pagePath: string;
+  pathname: string;
   headers: Header[];
 }
 
@@ -60,18 +60,19 @@ function isElementVisible(element: Element): boolean {
  */
 export const useDynamicToc = (): Header[] => {
   const {
-    page: { toc = [], pagePath },
+    page: { toc = [] },
   } = usePage();
+  const { pathname } = useLocation();
   const snapshot = useSyncExternalStore(
     subscribe,
     getSnapshot,
     getServerSnapshot,
   );
   // An empty collection is valid; only fall back before this page is collected.
-  return snapshot?.pagePath === pagePath ? snapshot.headers : toc;
+  return snapshot?.pathname === pathname ? snapshot.headers : toc;
 };
 
-function updateHeaders(target: Element, pagePath: string) {
+function updateHeaders(target: Element, pathname: string) {
   const collectedHeaders: Header[] = [];
   const elements = target?.querySelectorAll(
     '.rspress-doc h2.rp-toc-include, h3.rp-toc-include, h4.rp-toc-include',
@@ -90,7 +91,7 @@ function updateHeaders(target: Element, pagePath: string) {
     }
   });
 
-  setSnapshot({ pagePath, headers: collectedHeaders });
+  setSnapshot({ pathname, headers: collectedHeaders });
 }
 
 const TOC_HEADING_TAGS = new Set(['H2', 'H3', 'H4']);
@@ -100,9 +101,7 @@ const TOC_HEADING_TAGS = new Set(['H2', 'H3', 'H4']);
  */
 export const useWatchToc = () => {
   const [innerRef, setRef] = useState<HTMLDivElement | null>(null);
-  const {
-    page: { pagePath },
-  } = usePage();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     let observer: null | MutationObserver = null;
@@ -110,7 +109,7 @@ export const useWatchToc = () => {
     const target = innerRef;
 
     if (target) {
-      updateHeaders(target, pagePath);
+      updateHeaders(target, pathname);
     }
 
     if (target && !observer) {
@@ -137,7 +136,7 @@ export const useWatchToc = () => {
             }
           }
         }
-        needUpdate && updateHeaders(target, pagePath);
+        needUpdate && updateHeaders(target, pathname);
       });
       observer.observe(target, { childList: true, subtree: true });
     }
@@ -146,7 +145,7 @@ export const useWatchToc = () => {
       observer = null;
       setSnapshot(undefined);
     };
-  }, [innerRef, pagePath]);
+  }, [innerRef, pathname]);
 
   const rspressDocRef = useCallback(
     (ref: HTMLDivElement | null) => {
