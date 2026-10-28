@@ -33,7 +33,7 @@ In repository settings or the `Model` environment, configure:
   plus `CLOUDFLARE_API_TOKEN` with Workers Scripts edit permission.
 - Variable: `CLOUDFLARE_ACCOUNT_ID`.
 
-Midscene Action publishes native HTML reports and screenshot tables to Cloudflare.
+Midscene Action writes native test results to Summary and publishes HTML reports to Cloudflare.
 Enable Worker Preview URLs if no URL is returned. Manual `publish_pages=false`
 keeps downloadable artifacts only. GitHub Pages is not required.
 
