@@ -5,22 +5,17 @@ generated API pages, previews, playgrounds, HMR, and production/static rendering
 The fixture launcher runs the checked-out CLI against original `e2e/fixtures`;
 the initial documentation examples remain separate smoke cases.
 
-`migration-inventory.json` accounts for every test at the recorded baseline
-commit. Assertion-level review is complete; no original is left pending.
+`migration-inventory.json` accounts for all **237 baseline tests**. Every baseline
+case remains in the deterministic suite. Tests deleted or reduced during the
+initial migration have been restored from upstream commit `635b34fe7`, including
+later upstream regressions already merged into this branch.
 
-| Original test disposition                              | Count |
-| ------------------------------------------------------ | ----: |
-| Pure UI originals removed and replaced by Midscene     |    54 |
-| Mixed originals split; only technical contracts remain |    66 |
-| Technical-only originals retained                      |   117 |
-| Total baseline originals                               |   237 |
-
-The suite contains **153 AI cases** and **183 remaining deterministic tests**.
-This is not a one-to-one translation: one long original may require several
-viewport-sized AI checks, while multiple originals can share a user flow.
-No replaced test is disabled with `skip`; Git history preserves its source.
-The existing Linux, macOS and Windows workflows continue to run the remaining
-technical tests with `pnpm test:e2e`.
+The **153 AI cases supplement the original E2E suite**. They do not replace exact
+text, node counts, ordering, URLs, DOM structure, CSS, storage or build assertions.
+Visible content can still express a precise deterministic contract: for example,
+the sidebar convention test must check exactly eight entries in a fixed order.
+The existing Linux, macOS and Windows workflows continue to run the original
+E2E tests with `pnpm test:e2e`.
 
 AI cases cover visible navigation, search, sidebars, generated API pages, previews,
 playgrounds, code panels, language/version switching, package-manager commands,
@@ -33,14 +28,14 @@ metadata, browser events, controlled search races, transient loading fallbacks,
 filesystem/build output and server restart counts remain deterministic. HMR tests
 wait for an update to attach before measuring retained window/React state and
 restart counts. Those waits are synchronization, not visible E2E proof.
-The inventory deliberately does not claim that AI preserves every original matcher
-literally; it records the replacement scope and per-case evidence instead.
+The inventory requires a retained deterministic test for every baseline entry;
+AI mappings and historical model runs only describe supplementary coverage.
 
 The audit also added missing awaits to filesystem checks in icon, public-directory and
 LLMS tests, made strict SSG failure reject an unexpectedly successful build, and
 closed each asset-test preview process after its test.
 
-Local validation on 2026-10-15:
+Historical validation on 2026-10-15 (before deterministic restoration):
 
 - `pnpm test:e2e`: 183/183 deterministic tests passed across 62 files.
 - `20261015171335-c8e822b8`: 35 completed cases passed and three failed before

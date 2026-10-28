@@ -52,19 +52,21 @@ test.describe('banner', async () => {
     }
   });
 
-  test('dismissal writes the banner storage key', async ({ page }) => {
+  test('Banner close hides banner and persists state', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
     await page.waitForSelector('.rp-banner');
 
     const closeButton = page.locator('.rp-banner__close');
+    await expect(closeButton).toBeVisible();
     await closeButton.click();
-    await expect
-      .poll(() =>
-        page.evaluate(() => window.localStorage.getItem('rp-banner-closed')),
-      )
-      .toBe('true');
+
+    await expect(page.locator('.rp-banner')).toHaveCount(0);
+    const stored = await page.evaluate(() =>
+      window.localStorage.getItem('rp-banner-closed'),
+    );
+    expect(stored).toBe('true');
   });
 
   test('Banner does not flash when previously dismissed', async ({ page }) => {

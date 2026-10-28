@@ -27,12 +27,20 @@ test.describe('basic site', async () => {
     }
   });
 
-  test('generates the Hello world header anchor href', async ({ page }) => {
+  test('Index page', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
+    await expect(page.locator('h1')).toContainText('Hello world');
     const headerAnchor = page.locator('.rp-header-anchor').first();
     await expect(headerAnchor).toHaveAttribute('href', '#hello-world');
+  });
+
+  test('404 page', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/404`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('body')).toContainText('404');
   });
 
   test('dark mode', async ({ page }) => {
@@ -47,13 +55,15 @@ test.describe('basic site', async () => {
     await expect.poll(() => getIsDark(page)).toBe(defaultIsDark);
   });
 
-  test('preserves the social preview link destination', async ({ page }) => {
+  test('Hover over social links', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}`, {
       waitUntil: 'networkidle',
     });
+    const socialLinks = page.locator('.rp-social-links').first();
+    await socialLinks.hover();
     await expect(
       page.locator('.rp-social-links__item a[href="/zh"]').first(),
-    ).toHaveAttribute('href', '/zh');
+    ).toBeVisible();
   });
 
   test('globalStyles should work', async ({ page }) => {
@@ -62,6 +72,20 @@ test.describe('basic site', async () => {
     });
     const link = page.locator('.rp-doc a').first();
     await expect(link).toHaveCSS('color', 'rgb(255, 165, 0)');
+  });
+
+  test('importing markdown with raw query should return source text', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.getByTestId('raw-markdown-content')).toContainText(
+      '# Raw Markdown',
+    );
+    await expect(page.getByTestId('raw-markdown-content')).toContainText(
+      'This file should be imported as source text.',
+    );
   });
 });
 
@@ -82,7 +106,7 @@ test.describe('themeConfig.darkMode', async () => {
     app = await runDevCommand(appDir, appPort, configFile);
   }
 
-  test('true updates the root theme class when the system preference changes', async ({
+  test('true follows the system preference and keeps the switch visible', async ({
     page,
   }) => {
     await startApp('rspress.true.config.ts');
@@ -92,12 +116,13 @@ test.describe('themeConfig.darkMode', async () => {
     });
 
     await expect.poll(() => getIsDark(page)).toBe(true);
+    await expect(page.locator('.rp-switch-appearance').first()).toBeVisible();
 
     await page.emulateMedia({ colorScheme: 'light' });
     await expect.poll(() => getIsDark(page)).toBe(false);
   });
 
-  test('dark sets the root theme class despite a light system preference', async ({
+  test('dark defaults to dark mode when there is no saved preference', async ({
     page,
   }) => {
     await startApp('rspress.dark.config.ts');
@@ -107,6 +132,7 @@ test.describe('themeConfig.darkMode', async () => {
     });
 
     await expect.poll(() => getIsDark(page)).toBe(true);
+    await expect(page.locator('.rp-switch-appearance').first()).toBeVisible();
   });
 
   test('force-dark ignores saved preferences and hides the switch', async ({
@@ -137,7 +163,18 @@ test.describe('CLI base option', async () => {
     }
   });
 
-  test('prefixes production stylesheet and script URLs with the CLI base', async ({
+  test('should serve dev pages from the CLI base path', async ({ page }) => {
+    const appDir = import.meta.dirname;
+    appPort = await getPort();
+    app = await runDevCommand(appDir, appPort, undefined, ['--base', CLI_BASE]);
+
+    await page.goto(`http://localhost:${appPort}${CLI_BASE}`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('h1')).toContainText('Hello world');
+  });
+
+  test('should serve preview pages from the CLI base path', async ({
     page,
   }) => {
     const appDir = import.meta.dirname;
@@ -148,6 +185,7 @@ test.describe('CLI base option', async () => {
     await page.goto(`http://localhost:${appPort}${CLI_BASE}`, {
       waitUntil: 'networkidle',
     });
+    await expect(page.locator('h1')).toContainText('Hello world');
     const assetUrls = await page.evaluate(() =>
       [
         ...[

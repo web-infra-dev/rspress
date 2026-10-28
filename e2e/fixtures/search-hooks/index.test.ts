@@ -33,14 +33,13 @@ test.describe('search hooks', async () => {
     }
   });
 
-  test('invokes beforeSearch and onSearch in order with the query', async ({
-    page,
-  }) => {
+  test('search-hooks should work', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/`, {
       waitUntil: 'networkidle',
     });
     const { infoList } = proxyConsole(page);
-    await searchInPage(page, 'Foo');
+    const suggestItems0 = await searchInPage(page, 'Foo');
+    expect(suggestItems0.length).toBe(1);
     expect(infoList).toEqual(['beforeSearch', 'Foo', 'onSearch', 'Foo']);
   });
 });

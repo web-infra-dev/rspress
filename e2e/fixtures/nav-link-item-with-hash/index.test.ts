@@ -28,7 +28,9 @@ test.describe('navigation links with hashes', async () => {
     expect(page.url()).toContain('/#pageB');
   });
 
-  test('sets the mobile menu open class', async ({ page }) => {
+  test('Close the hamburger menu when clicking on an item in mobile view', async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 375, height: 812 });
 
     await page.goto(`http://localhost:${appPort}/`, {
@@ -38,5 +40,8 @@ test.describe('navigation links with hashes', async () => {
     await page.locator('.rp-nav-hamburger').first().click();
     const navScreen = page.locator('.rp-nav-screen');
     await expect(navScreen).toHaveClass(/rp-nav-screen--open/);
+
+    await page.getByRole('link', { name: 'PageC' }).click();
+    expect(await navScreen.isVisible()).toBe(false);
   });
 });

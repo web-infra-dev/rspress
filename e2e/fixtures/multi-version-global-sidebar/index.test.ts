@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/test';
+import { getSidebarTexts } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('multi version global sidebar', async () => {
@@ -29,5 +30,25 @@ test.describe('multi version global sidebar', async () => {
     ).toHaveAttribute('href', '/v2/');
     await page.getByRole('link', { name: 'go to home' }).click();
     await expect(page.locator('h1')).toContainText('Version two');
+  });
+
+  test('Should keep global sidebar isolated by version', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}/`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('h1')).toContainText('Version one');
+    expect(await getSidebarTexts(page)).toEqual([
+      'Version one',
+      'Version one guide',
+    ]);
+
+    await page.goto(`http://localhost:${appPort}/v2/`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('h1')).toContainText('Version two');
+    expect(await getSidebarTexts(page)).toEqual([
+      'Version two',
+      'Version two guide',
+    ]);
   });
 });
