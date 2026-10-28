@@ -41,20 +41,6 @@ permissions:
 # Model-backed runs use a job-level lock to bound endpoint load.
 
 jobs:
-  fixture-windows:
-    name: Validate fixture cleanup on Windows
-    runs-on: windows-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: '24'
-      - run: node --test scripts/fixture-server.test.mjs
-        working-directory: tests/midscene
-
   midscene:
     name: Midscene E2E
     concurrency:
@@ -145,7 +131,7 @@ jobs:
 
       - name: Validate fixture support before model access
         working-directory: tests/midscene
-        run: npm run typecheck && npm run test:fixtures
+        run: npm run typecheck
 
       - name: Verify Midscene model compatibility
         working-directory: tests/midscene

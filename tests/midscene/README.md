@@ -205,7 +205,6 @@ the local repository fixtures and synthetic smoke pages, never private user data
 ```sh
 cd tests/midscene
 npm run typecheck
-npm run test:fixtures
 ```
 
 Midscene validates YAML and nodes when executing the project. Fixture tests cover

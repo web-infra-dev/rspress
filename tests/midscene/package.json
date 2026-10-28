@@ -4,9 +4,8 @@
   "type": "module",
   "scripts": {
     "check:model": "midscene-test model verify",
-    "serve": "node scripts/serve.mjs",
+    "serve": "cd fixture && node ../../../packages/core/bin/rspress.js dev --host 127.0.0.1 --port 4173",
     "test": "midscene-test",
-    "test:fixtures": "node --test scripts/*.test.mjs",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

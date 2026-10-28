@@ -61,15 +61,23 @@ export async function startFixtureServer(
   ]) {
     if (process.env[key] !== undefined) env[key] = process.env[key];
   }
-  env.FIXTURE_PORT = url.port || '80';
 
   await mkdir(path.dirname(logPath), { recursive: true });
   const log = await open(logPath, 'w');
   const child = spawn(
     process.execPath,
-    [fileURLToPath(new URL('scripts/serve.mjs', import.meta.url))],
+    [
+      fileURLToPath(
+        new URL('../../packages/core/bin/rspress.js', import.meta.url),
+      ),
+      'dev',
+      '--host',
+      '127.0.0.1',
+      '--port',
+      url.port || '80',
+    ],
     {
-      cwd: harnessRoot,
+      cwd: path.join(harnessRoot, 'fixture'),
       env,
       detached: process.platform !== 'win32',
       stdio: ['ignore', log.fd, log.fd],
