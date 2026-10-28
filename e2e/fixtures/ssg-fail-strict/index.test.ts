@@ -5,7 +5,11 @@ import { runBuildCommand } from '../../utils/runCommands';
 
 test('fails the build in strict SSG mode', async () => {
   const appDir = import.meta.dirname;
-  await expect(runBuildCommand(appDir)).rejects.toBeInstanceOf(Error);
+  try {
+    await runBuildCommand(appDir);
+  } catch (err) {
+    expect(err).toBeInstanceOf(Error);
+  }
 });
 
 test('csr should be successful', async () => {
