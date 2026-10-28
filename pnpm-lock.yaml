@@ -2680,8 +2680,8 @@ importers:
         specifier: ^19.3.0
         version: 19.3.0(react@19.3.0)
       rsbuild-plugin-google-analytics:
-        specifier: ^1.0.6
-        version: 1.0.6(@rsbuild/core@2.2.14)
+        specifier: ^1.1.0
+        version: 1.1.0(@rsbuild/core@2.2.14)
       rsbuild-plugin-open-graph:
         specifier: ^1.1.3
         version: 1.1.3(@rsbuild/core@2.2.14)
@@ -6919,10 +6919,10 @@ packages:
       typescript:
         optional: true
 
-  rsbuild-plugin-google-analytics@1.0.6:
-    resolution: {integrity: sha512-FQeauAxLkxrXTxZkA8ehIuSdob16g5KIJy2VdNRjkgM3J5qah2lqZNXGAjFNa62Lu9DIYkVajbPai/fi+Ph7cg==}
+  rsbuild-plugin-google-analytics@1.1.0:
+    resolution: {integrity: sha512-Wd0jzjuOrA8tzFCn3WaZ2moI2ypd222pDWhSjNqKZQcNO7vKBGKrGdI5ga4OB++SSb+JGs/NhJi24XXIbVujlA==}
     peerDependencies:
-      '@rsbuild/core': ^1.0.0 || ^2.0.0-0
+      '@rsbuild/core': ^1.0.0 || ^2.0.0
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -12615,7 +12615,7 @@ snapshots:
       '@microsoft/api-extractor': 7.59.4(@types/node@22.19.15)
       typescript: 7.0.2
 
-  rsbuild-plugin-google-analytics@1.0.6(@rsbuild/core@2.2.14):
+  rsbuild-plugin-google-analytics@1.1.0(@rsbuild/core@2.2.14):
     optionalDependencies:
       '@rsbuild/core': 2.2.14
 
