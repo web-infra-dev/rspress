@@ -138,38 +138,19 @@ The new `ErrorLayout` error page offers reload and home actions when page loadin
 
 Rspress restores the scroll position when readers go back, go forward, or reload. For example, after reading partway through a long page, visiting another page, and going back, readers can continue where they left off. React Router also handles anchor navigation.
 
-## Other improvements
+## Upgrade checklist
 
-- Fix dynamic headings falling out of sync with the outline after navigation.
-- Allow long sidebar labels to wrap.
-- Improve logo and heading anchor accessibility.
-- Adjust the search panel layout for different screen widths.
-- Hide individual file size details in build logs by default.
+Once the stable release is available, use this checklist to upgrade:
 
-## Upgrading to 2.1.0
+- [ ] Update `@rspress/core` and any official plugins to their corresponding versions.
 
-Once the stable release is available, update the core package and upgrade any official plugins used by your project to their corresponding versions:
+  ```bash
+  pnpm add -D @rspress/core@~2.1.0
+  ```
 
-```bash
-pnpm add -D @rspress/core@~2.1.0
-```
-
-These options have new defaults and can be disabled as needed:
-
-| Option                       | Default behavior in 2.1.0                               | Retain previous behavior     |
-| ---------------------------- | ------------------------------------------------------- | ---------------------------- |
-| `llms`                       | Generate page Markdown, `llms.txt`, and `llms-full.txt` | Set `llms: false`            |
-| `sitemap`                    | Generate `sitemap.xml` with core                        | Set `sitemap: false`         |
-| `route.cleanUrls`            | Generate links without `.html`                          | Set `route.cleanUrls: false` |
-| `markdown.link.checkAnchors` | Validate internal link anchors                          | Set `checkAnchors: false`    |
-
-Run a production build after upgrading, fix invalid anchors, and check that your hosting platform serves URLs without `.html` directly.
-
-SSG-MD requires server rendering support. `ssg` controls HTML generation, while `llms` controls Markdown generation, so `ssg: false` does not disable SSG-MD. Wrap browser-dependent content in [`BrowserOnly`](/ui/runtime-components/browser-only). Sites that cannot support server rendering need both `ssg: false` and `llms: false`.
-
-Custom themes must remove calls to these APIs and use the built-in router loading and scroll restoration instead:
-
-- `warmPageData` from `@rspress/core/runtime`.
-- `useScrollAfterNav` and `useScrollReset` from `@rspress/core/theme`.
+- [ ] Check server rendering compatibility for SSG-MD. Wrap browser-dependent content in [`BrowserOnly`](/ui/runtime-components/browser-only). Setting `ssg: false` does not disable SSG-MD. Sites that cannot support server rendering need both `ssg: false` and `llms: false`.
+- [ ] Check your sitemap configuration. Replace `@rspress/plugin-sitemap` with the built-in `sitemap` option, or set `sitemap: false` if another process generates the sitemap.
+- [ ] Check that your host supports URLs without `.html`, such as serving `/foo.html` directly when `/foo` is requested. Set `route.cleanUrls: false` to retain the previous link format.
+- [ ] Run a production build and fix invalid anchors. Exclude dynamically generated anchors with `markdown.link.checkAnchors.excludes`, or set `checkAnchors: false` to disable validation.
 
 Thank you to everyone who contributed to this release! Share feedback on [GitHub](https://github.com/web-infra-dev/rspress), or join the conversation on [Discord](https://discord.gg/mkVw5zPAtf).

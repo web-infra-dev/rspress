@@ -140,38 +140,19 @@ Rspress 现在使用 React Router Data 模式。点击默认主题链接或调�
 
 浏览器前进、后退或刷新页面时，Rspress 会恢复之前的滚动位置。例如，读到长文中部，跳转到另一页后再返回，可以继续从原来的位置阅读。锚点跳转也由 React Router 处理。
 
-## 其他改进 \{#other-improvements}
+## 升级检查清单 \{#upgrade-checklist}
 
-- 修复页面切换后动态标题与右侧目录不同步的问题。
-- 支持较长的侧边栏文本自动换行。
-- 改进 Logo 与标题锚点的可访问性。
-- 调整搜索面板在不同屏幕宽度下的布局。
-- 构建日志默认隐藏逐文件大小明细。
+正式版发布后，可按以下清单升级：
 
-## 升级到 2.1.0 \{#upgrading-to-210}
+- [ ] 将 `@rspress/core` 和使用的官方插件升级到对应版本。
 
-正式版发布后，可以更新核心包，并将项目中使用的官方插件一并升级到对应版本：
+  ```bash
+  pnpm add -D @rspress/core@~2.1.0
+  ```
 
-```bash
-pnpm add -D @rspress/core@~2.1.0
-```
-
-以下配置的默认值发生了变化，可按需关闭：
-
-| 配置                         | 2.1.0 默认行为                                   | 保留原有行为                  |
-| ---------------------------- | ------------------------------------------------ | ----------------------------- |
-| `llms`                       | 生成页面 Markdown、`llms.txt` 和 `llms-full.txt` | 设置 `llms: false`            |
-| `sitemap`                    | 内置生成 `sitemap.xml`                           | 设置 `sitemap: false`         |
-| `route.cleanUrls`            | 生成无 `.html` 后缀的链接                        | 设置 `route.cleanUrls: false` |
-| `markdown.link.checkAnchors` | 检查站内链接的目标锚点                           | 设置 `checkAnchors: false`    |
-
-升级后执行一次生产构建，修复发现的无效锚点，并确认部署平台能直接访问无 `.html` 后缀的 URL。
-
-SSG-MD 需要页面支持服务端渲染。`ssg` 控制 HTML 生成，`llms` 控制 Markdown 生成，因此 `ssg: false` 不会关闭 SSG-MD。需要浏览器环境的内容可用 [`BrowserOnly`](/zh/ui/runtime-components/browser-only) 包裹；完全不支持服务端渲染的站点，需要同时设置 `ssg: false` 和 `llms: false`。
-
-自定义主题还需移除以下 API 的调用，改用内置的路由加载和滚动恢复：
-
-- `@rspress/core/runtime` 的 `warmPageData`。
-- `@rspress/core/theme` 的 `useScrollAfterNav` 和 `useScrollReset`。
+- [ ] 检查 SSG-MD 的服务端渲染兼容性。需要浏览器环境的内容可用 [`BrowserOnly`](/zh/ui/runtime-components/browser-only) 包裹。`ssg: false` 不会关闭 SSG-MD；完全不支持服务端渲染的站点，需要同时设置 `ssg: false` 和 `llms: false`。
+- [ ] 检查 sitemap 配置。已有项目可用内置 `sitemap` 替换 `@rspress/plugin-sitemap`；如果通过其他方式生成站点地图，可设置 `sitemap: false`。
+- [ ] 确认部署平台支持无 `.html` 后缀的 URL，例如访问 `/foo` 时直接返回 `/foo.html`。如需保留原有链接格式，可设置 `route.cleanUrls: false`。
+- [ ] 执行生产构建，修复发现的无效锚点。动态生成的锚点可通过 `markdown.link.checkAnchors.excludes` 排除，也可设置 `checkAnchors: false` 关闭检查。
 
 感谢所有参与这个版本的贡献者！欢迎通过 [GitHub](https://github.com/web-infra-dev/rspress) 分享反馈，也欢迎在 [Discord](https://discord.gg/mkVw5zPAtf) 与我们交流。
