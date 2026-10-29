@@ -211,6 +211,26 @@ jobs:
 
 部署将在几分钟内完成，你也可以同时在该页面为你的站点绑定 Zeabur 提供的免费子域名或者自己购买的自定义域名。
 
+### 部署到 deed.page
+
+[deed.page](https://deed.page) 是一个无需注册账号的静态托管服务，只需一次 HTTP 请求即可上传构建产物。
+
+#### 如何部署
+
+执行构建后，将 `doc_build` 目录中的内容打包并上传：
+
+```bash
+npm run build
+tar -C doc_build -czf site.tar.gz .
+curl -T site.tar.gz "https://deed.page/v1/sites?slug=my-rspress-docs"
+```
+
+返回的 JSON 中包含站点地址（例如 `https://my-rspress-docs.deed.page/`）和一个 `token`。请妥善保管该 token，之后向同一个 slug 上传新的构建产物时，将其放在 `Authorization: Bearer` 请求头中发送。
+
+站点部署在子域名的根路径下，因此无需修改 `base`。`/guide/start/getting-started` 这样的无后缀路由以及生成的 `404.html` 均无需额外配置即可使用。
+
+单次上传的大小上限为 4 MB，更大的站点可以使用 manifest 方式上传，详见 [deed.page 文档](https://deed.page/docs)。
+
 ## 常见问题
 
 ### 刷新页面时出现 404

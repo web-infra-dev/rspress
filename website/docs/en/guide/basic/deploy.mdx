@@ -211,6 +211,26 @@ Click `Deploy New Service` and import your Rspress repository. Deployment starts
 
 Deployment usually finishes within a minute. You can also bind a free Zeabur subdomain or your own domain to the site.
 
+### Deploy to deed.page
+
+[deed.page](https://deed.page) is a static host that does not require an account. You upload the build output with a single HTTP request.
+
+#### How to deploy
+
+Run the build, then pack the contents of `doc_build` and upload the archive:
+
+```bash
+npm run build
+tar -C doc_build -czf site.tar.gz .
+curl -T site.tar.gz "https://deed.page/v1/sites?slug=my-rspress-docs"
+```
+
+The JSON response contains the site URL, such as `https://my-rspress-docs.deed.page/`, and a `token`. Keep the token private. Send it in an `Authorization: Bearer` header when you upload a new build to the same slug.
+
+The site is served from the root of its subdomain, so the default `base` works. Routes without a `.html` suffix, such as `/guide/start/getting-started`, and the generated `404.html` work without extra configuration.
+
+A single upload is limited to 4 MB. For larger builds, use the manifest upload described in the [deed.page documentation](https://deed.page/docs).
+
 ## Troubleshooting
 
 ### Page shows 404 after refresh
