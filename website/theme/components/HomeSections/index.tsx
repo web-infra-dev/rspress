@@ -288,7 +288,11 @@ function SsgMdVisual(props: { copyText: string; copiedText: string }) {
   };
 
   return (
-    <div ref={rootRef} className={styles.ssgMdVisual}>
+    <div
+      ref={rootRef}
+      className={styles.ssgMdVisual}
+      onFocusCapture={() => setAutoPlay(false)}
+    >
       <div className={`${styles.card} ${styles.treeCard}`}>
         <div className={styles.cardHeader}>
           <div className={styles.cardHeaderTitle}>
