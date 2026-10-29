@@ -26,15 +26,18 @@ Reports: `midscene_run/report/`. Type checking: `pnpm run typecheck`.
 [Workflow](../../.github/workflows/midscene.yml): relevant upstream main pushes
 and trusted manual runs. Model calls consume tokens.
 
-In repository settings or the `Model` environment, configure:
+In repository settings or the `Model` environment, configure the four
+`MIDSCENE_MODEL_*` secrets from [.env.example](.env.example).
 
-- Secrets: the four `MIDSCENE_MODEL_*` values from [.env.example](.env.example),
-  plus `CLOUDFLARE_API_TOKEN` with Workers Scripts edit permission.
-- Variable: `CLOUDFLARE_ACCOUNT_ID`.
+Midscene Action writes native test results to Summary and uploads downloadable
+HTML report artifacts. Cloudflare is optional: to also publish online reports,
+set secret `CLOUDFLARE_API_TOKEN` with Workers Scripts edit permission and variable
+`CLOUDFLARE_ACCOUNT_ID`. Enable Worker Preview URLs if no URL is returned.
 
-Midscene Action writes native test results to Summary and publishes HTML reports to Cloudflare.
-Enable Worker Preview URLs if no URL is returned. Manual `publish_pages=false`
-keeps downloadable artifacts only. GitHub Pages is not required.
+If either Cloudflare credential is missing, tests still run and Summary explains
+why online publication was skipped. Manual `publish_pages=false` also disables
+publication. Invalid configured credentials still cause a publication failure.
+GitHub Pages is not required.
 
 The offline `assets/rspress-logo.svg` comes from
 https://assets.rspack.rs/rspress/rspress-logo.svg (2026-10-15).
