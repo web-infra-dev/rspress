@@ -163,13 +163,17 @@
     "zh": "文档目录示例",
     "en": "Documentation directory examples"
   },
+  "homeI18nSingleLanguage": {
+    "zh": "单语言",
+    "en": "Single language"
+  },
   "homeI18nLanguages": {
     "zh": "多语言",
     "en": "Languages"
   },
   "homeI18nVersioned": {
     "zh": "多语言 + 多版本",
-    "en": "Languages + versions"
+    "en": "Multi-version"
   },
   "homeI18nDirectory": {
     "zh": "按目录组织内容",
