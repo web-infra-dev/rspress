@@ -1,5 +1,7 @@
 import type { DocSearchProps } from '@docsearch/react';
 
+// These translations use DocSearch's official nested i18n structure and are
+// passed directly to DocSearch rather than Rspress's i18nSource API.
 export type Locales = Record<
   string,
   { translations: DocSearchProps['translations']; placeholder: string }

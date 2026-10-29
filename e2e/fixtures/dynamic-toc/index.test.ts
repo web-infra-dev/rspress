@@ -1,14 +1,25 @@
 import { expect, test } from '@e2e/test';
 
-import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
+import {
+  getPort,
+  killProcess,
+  runBuildCommand,
+  runDevCommand,
+  runPreviewCommand,
+} from '../../utils/runCommands';
 
-test.describe('dynamic toc', async () => {
+test.describe.each(['dev', 'build'])('dynamic toc (%s)', async mode => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
     appPort = await getPort();
-    app = await runDevCommand(appDir, appPort);
+    if (mode === 'dev') {
+      app = await runDevCommand(appDir, appPort);
+    } else {
+      await runBuildCommand(appDir);
+      app = await runPreviewCommand(appDir, appPort);
+    }
   });
 
   test.afterAll(async () => {
@@ -104,5 +115,93 @@ test.describe('dynamic toc', async () => {
       const h4Count = await h4Items.count();
       expect(h4Count).toBeGreaterThan(0);
     }
+  });
+
+  test('Should clear the outline when navigating to an overview page', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1100, height: 900 });
+    await page.goto(`http://localhost:${appPort}/overview`, {
+      waitUntil: 'networkidle',
+    });
+
+    const outlineButton = page.locator('.rp-sidebar-menu__right');
+    const outlineArrow = page.locator('.rp-sidebar-menu__right__icon');
+    await expect(outlineButton).toBeDisabled();
+    await expect(outlineArrow).toHaveCount(0);
+
+    await page
+      .locator('.rp-overview')
+      .getByRole('link', { name: 'Dynamic TOC', exact: true })
+      .click();
+    await expect(page.locator('.rp-toc-item').first()).toHaveText(
+      'Term dynamic & content',
+    );
+    await expect(outlineButton).toBeEnabled();
+
+    await page
+      .locator('.rspress-doc')
+      .getByRole('link', { name: 'Overview', exact: true })
+      .click();
+    await expect(page.locator('.rp-overview')).toBeVisible();
+    await expect(outlineButton).toBeDisabled();
+    await expect(outlineArrow).toHaveCount(0);
+
+    await page.goBack();
+    await expect(page.locator('.rp-toc-item').first()).toHaveText(
+      'Term dynamic & content',
+    );
+    await expect(outlineButton).toBeEnabled();
+    await expect(outlineArrow).toHaveCount(1);
+  });
+
+  test('Should keep the outline empty after removing all headings', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1100, height: 900 });
+    await page.goto(`http://localhost:${appPort}/test-depth`, {
+      waitUntil: 'networkidle',
+    });
+
+    await expect(page.locator('.rp-toc-item')).toHaveCount(5);
+    await page.locator('.rspress-doc').evaluate(doc => {
+      for (const heading of doc.querySelectorAll('h2, h3, h4')) {
+        heading.remove();
+      }
+    });
+
+    await expect(page.locator('.rp-toc-item')).toHaveCount(0);
+    await expect(page.locator('.rp-sidebar-menu__right')).toBeDisabled();
+    await expect(page.locator('.rp-sidebar-menu__right__icon')).toHaveCount(0);
+  });
+
+  test('Should update the outline between document pages', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('.rp-toc-item').first()).toHaveText(
+      'Term dynamic & content',
+    );
+
+    await page
+      .locator('.rspress-doc')
+      .getByRole('link', { name: 'Test data depth', exact: true })
+      .click();
+    await expect(page.locator('.rp-toc-item')).toHaveText([
+      'Heading level 2',
+      'Heading level 3',
+      'Heading level 4',
+      'Another level 3',
+      'Another level 2',
+    ]);
+
+    await page
+      .locator('.rspress-doc')
+      .getByRole('link', { name: 'Dynamic TOC', exact: true })
+      .click();
+    await expect(page.locator('.rp-toc-item')).toHaveText([
+      'Term dynamic & content',
+      'Literal **literal** &lt;',
+    ]);
   });
 });

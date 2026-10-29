@@ -24,6 +24,8 @@ minimumReleaseAgeExclude:
   - '@rsbuild/*'
   - '@rslib/*'
   - rsbuild-plugin-dts
+  # Reviewed loading strategy option: rstackjs/rsbuild-plugin-google-analytics#82
+  - rsbuild-plugin-google-analytics@1.1.0
   - '@rspress/*'
   - '@rstest/*'
   - '@rsdoctor/*'

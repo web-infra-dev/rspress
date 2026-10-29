@@ -14,7 +14,6 @@ import {
   type DocLayoutProps,
   Nav,
   type NavProps,
-  useScrollReset,
   useSetup,
 } from '@rspress/core/theme';
 import { Head, useHead } from '@unhead/react';
@@ -120,7 +119,6 @@ const HeadTags = memo(
 
 const ClientEffects = () => {
   useSetup();
-  useScrollReset();
   return null;
 };
 

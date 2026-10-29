@@ -4,7 +4,6 @@ import {
   Callout,
   FallbackHeading,
   getCustomMDXComponent,
-  useScrollAfterNav,
 } from '@rspress/core/theme';
 import './doc.scss';
 
@@ -38,8 +37,6 @@ export function DocContent({
    */
   afterDocContent?: React.ReactNode;
 }) {
-  useScrollAfterNav();
-
   const mdxComponents = {
     ...getCustomMDXComponent(),
     ...components,

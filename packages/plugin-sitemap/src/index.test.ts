@@ -11,7 +11,7 @@ async function configure(config: UserConfig, options?: PluginSitemapOptions) {
   const plugin = pluginSitemap(options);
   const result = await plugin.config!(
     config,
-    { addPlugin: rs.fn(), removePlugin: rs.fn() },
+    { addPlugin: rs.fn(), removePlugin: rs.fn(), getI18nData: rs.fn() },
     true,
   );
   return { plugin, result, warning };

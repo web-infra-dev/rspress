@@ -8,6 +8,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '言語',
     ko: '언어',
     ru: 'Языки',
+    ta: 'மொழிகள்',
   },
   themeText: {
     zh: '主题',
@@ -15,6 +16,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'テーマ',
     ko: '테마',
     ru: 'Тема',
+    ta: 'தோற்றம்',
   },
   versionsText: {
     zh: '版本',
@@ -22,6 +24,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'バージョン',
     ko: '버전',
     ru: 'Версии',
+    ta: 'பதிப்புகள்',
   },
   menuTitle: {
     zh: '菜单',
@@ -29,6 +32,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'メニュー',
     ko: '사이드바 메뉴',
     ru: 'Меню',
+    ta: 'பட்டி',
   },
   outlineTitle: {
     zh: '目录',
@@ -36,6 +40,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '目次',
     ko: '이 페이지 목차',
     ru: 'ОГЛАВЛЕНИЕ',
+    ta: 'இந்தப் பக்கத்தில்',
   },
   scrollToTopText: {
     en: 'Back to top',
@@ -43,6 +48,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'トップに戻る',
     ko: '맨 위로',
     ru: 'Наверх',
+    ta: 'பக்கத்தின் மேலே செல்லவும்',
   },
   lastUpdatedText: {
     en: 'Last Updated',
@@ -50,6 +56,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '最終更新',
     ko: '업데이트 날짜',
     ru: 'Последнее обновление',
+    ta: 'கடைசியாகப் புதுப்பிக்கப்பட்டது',
   },
   lastUpdatedAuthorText: {
     en: 'by',
@@ -57,6 +64,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '更新者',
     ko: '작성자',
     ru: 'автор',
+    ta: 'புதுப்பித்தவர்',
   },
   prevPageText: {
     en: 'Previous page',
@@ -64,6 +72,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '前のページ',
     ko: '이전 페이지',
     ru: 'Предыдущая страница',
+    ta: 'முந்தைய பக்கம்',
   },
   nextPageText: {
     en: 'Next page',
@@ -71,6 +80,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '次のページ',
     ko: '다음 페이지',
     ru: 'Следующая страница',
+    ta: 'அடுத்த பக்கம்',
   },
   sourceCodeText: {
     en: 'Source Code',
@@ -78,6 +88,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'ソースコード',
     ko: '소스 코드',
     ru: 'Исходный код',
+    ta: 'மூலக் குறியீடு',
   },
   searchPlaceholderText: {
     en: 'Search',
@@ -85,6 +96,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '検索',
     ko: '검색',
     ru: 'Поиск',
+    ta: 'தேடுக',
   },
   searchPanelCancelText: {
     en: 'Cancel',
@@ -92,6 +104,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'キャンセル',
     ko: '취소',
     ru: 'Отмена',
+    ta: 'ரத்து செய்',
   },
   searchNoResultsText: {
     en: 'No matching results',
@@ -99,6 +112,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '一致する結果が見つかりません',
     ko: '일치하는 결과가 없습니다',
     ru: 'Нет результатов, соответствующих запросу',
+    ta: 'பொருந்தும் முடிவுகள் இல்லை',
   },
   searchSuggestedQueryText: {
     en: 'Try searching for different keywords',
@@ -106,6 +120,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '別のキーワードで検索してみてください',
     ko: '다른 키워드로 검색해 보세요',
     ru: 'Попробуйте поискать по другим ключевым словам',
+    ta: 'வேறு தேடல் சொற்களை முயற்சிக்கவும்',
   },
   'overview.filterNameText': {
     en: 'Filter',
@@ -113,6 +128,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'フィルター',
     ko: '필터',
     ru: 'Фильтр',
+    ta: 'வடிகட்டு',
   },
   'overview.filterPlaceholderText': {
     en: 'Search API',
@@ -120,6 +136,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'API を検索',
     ko: 'API 검색',
     ru: 'API поиска',
+    ta: 'API-ஐத் தேடுக',
   },
   'overview.filterNoResultText': {
     en: 'No matching API found',
@@ -127,6 +144,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '一致する API が見つかりません',
     ko: '일치하는 API가 없습니다',
     ru: 'Не найден подходящий API',
+    ta: 'பொருந்தும் API எதுவும் கிடைக்கவில்லை',
   },
   openInText: {
     en: 'Open in {{name}}',
@@ -134,6 +152,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '{{name}} で開く',
     ko: '{{name}}에서 열기',
     ru: 'Открыть в {{name}}',
+    ta: '{{name}}-இல் திறக்கவும்',
   },
   copyMarkdownText: {
     en: 'Copy Markdown',
@@ -141,6 +160,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'Markdown をコピー',
     ko: '마크다운 복사',
     ru: 'Скопировать Markdown',
+    ta: 'Markdown-ஐ நகலெடு',
   },
   copyMarkdownLinkText: {
     en: 'Copy Markdown link',
@@ -148,6 +168,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'Markdown リンクをコピー',
     ko: '마크다운 링크 복사',
     ru: 'Скопировать ссылку в формате Markdown',
+    ta: 'Markdown இணைப்பை நகலெடு',
   },
   editLinkText: {
     en: 'Edit this page',
@@ -155,6 +176,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'このページを編集',
     ko: '이 페이지 편집',
     ru: 'Отредактировать страницу',
+    ta: 'இந்தப் பக்கத்தைத் திருத்தவும்',
   },
   codeButtonGroupCopyButtonText: {
     en: 'Copy code',
@@ -162,6 +184,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'コードをコピー',
     ko: '코드 복사',
     ru: 'Скопировать код',
+    ta: 'குறியீட்டை நகலெடு',
   },
   codeButtonGroupWrapButtonText: {
     en: 'Toggle code wrap',
@@ -169,6 +192,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'コードの折り返しを切り替え',
     ko: '코드 줄바꿈 전환',
     ru: 'Переключить перенос кода',
+    ta: 'குறியீட்டு வரி மடக்கத்தை மாற்று',
   },
   notFoundText: {
     en: 'PAGE NOT FOUND',
@@ -176,6 +200,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'ページが見つかりません',
     ko: '페이지를 찾을 수 없음',
     ru: 'СТРАНИЦА НЕ НАЙДЕНА',
+    ta: 'பக்கம் கிடைக்கவில்லை',
   },
   takeMeHomeText: {
     en: 'Take me home',
@@ -183,6 +208,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'ホームに連れてって',
     ko: '홈으로 이동',
     ru: 'Вернуться на главную',
+    ta: 'முகப்புக்குச் செல்லவும்',
   },
 
   errorTitleText: {
@@ -191,6 +217,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'エラーが発生しました',
     ko: '문제가 발생했습니다',
     ru: 'Что-то пошло не так',
+    ta: 'பிழை ஏற்பட்டது',
   },
   errorDescriptionText: {
     en: 'This page could not be loaded. Try reloading it or return to the home page.',
@@ -198,6 +225,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'ページを読み込めませんでした。再読み込みするか、ホームに戻ってください。',
     ko: '페이지를 불러올 수 없습니다. 새로고침하거나 홈으로 돌아가세요.',
     ru: 'Не удалось загрузить страницу. Попробуйте обновить её или вернуться на главную.',
+    ta: 'இந்தப் பக்கத்தை ஏற்ற முடியவில்லை. மீண்டும் ஏற்றவும் அல்லது முகப்புப் பக்கத்திற்குத் திரும்பவும்.',
   },
   reloadPageText: {
     en: 'Reload page',
@@ -205,6 +233,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '再読み込み',
     ko: '새로고침',
     ru: 'Обновить страницу',
+    ta: 'பக்கத்தை மீண்டும் ஏற்றவும்',
   },
   errorDetailsText: {
     en: 'Error details',
@@ -212,6 +241,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'エラーの詳細',
     ko: '오류 세부 정보',
     ru: 'Подробности ошибки',
+    ta: 'பிழை விவரங்கள்',
   },
 
   promptCopyText: {
@@ -220,6 +250,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'Prompt をコピー',
     ko: '프롬프트 복사',
     ru: 'Скопировать Prompt',
+    ta: 'Prompt-ஐ நகலெடு',
   },
   promptCopiedText: {
     en: 'Copied',
@@ -227,6 +258,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: 'コピーしました',
     ko: '복사됨',
     ru: 'Скопировано',
+    ta: 'நகலெடுக்கப்பட்டது',
   },
   promptExpandText: {
     en: 'Expand',
@@ -234,6 +266,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '展開',
     ko: '펼치기',
     ru: 'Развернуть',
+    ta: 'விரிவாக்கு',
   },
   promptCollapseText: {
     en: 'Collapse',
@@ -241,6 +274,7 @@ export const DEFAULT_I18N_TEXT = {
     ja: '折りたたむ',
     ko: '접기',
     ru: 'Свернуть',
+    ta: 'சுருக்கு',
   },
 } as const satisfies Required<I18nText>;
 

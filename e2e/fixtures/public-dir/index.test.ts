@@ -22,7 +22,7 @@ test.describe('public directory', async () => {
     const appDir = import.meta.dirname;
     await runBuildCommand(appDir);
 
-    const existsImg = pathExists(
+    const existsImg = await pathExists(
       path.resolve(appDir, 'doc_build', 'rspress-icon.png'),
     );
     expect(existsImg).toBeTruthy();

@@ -32,6 +32,7 @@ componentized
 componentp
 consolas
 contentful
+cookieless
 corejs
 corepack
 craco
@@ -45,6 +46,7 @@ domcontentloaded
 envinfo
 estree
 facti
+figtree
 flac
 flexbox
 flexbugs
@@ -74,6 +76,7 @@ jsesc
 jsxs
 juejin
 katex
+kazamori
 Kinsta
 koppers
 Lamperouge
@@ -126,6 +129,7 @@ preflights
 prefresh
 preprocessors
 Println
+privatus
 Publint
 pxtorem
 Qrcode
@@ -146,6 +150,7 @@ rstack
 rstackjs
 rstest
 selfsign
+seshuk
 shiki
 shikijs
 sirv

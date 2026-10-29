@@ -1,8 +1,12 @@
 import type { SiteData, UserConfig } from '@rspress/shared';
 import { getIconUrlPath } from '@rspress/shared/node-utils';
+import type { PluginDriver } from '../../PluginDriver';
 import { normalizeThemeConfig } from './normalizeThemeConfig';
 
-export async function createSiteData(userConfig: UserConfig): Promise<{
+export async function createSiteData(
+  userConfig: UserConfig,
+  pluginDriver: PluginDriver,
+): Promise<{
   siteData: Omit<SiteData, 'root' | 'pages'>;
 }> {
   // prevent modify the origin config object
@@ -23,7 +27,7 @@ export async function createSiteData(userConfig: UserConfig): Promise<{
       useTransitions: true,
       ...userConfig?.route,
     },
-    themeConfig: await normalizeThemeConfig(userConfig),
+    themeConfig: await normalizeThemeConfig(userConfig, pluginDriver),
     lang: userConfig?.lang || '',
     locales: userConfig?.locales || userConfig.themeConfig?.locales || [],
     logo: userConfig?.logo || '',

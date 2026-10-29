@@ -87,6 +87,28 @@ for (const mode of ['dev', 'build'] as const) {
       await expect(body).toContainText(`react ${getPackageVersion('react')}`);
     });
 
+    test('restores scroll on backward and forward navigation', async ({
+      page,
+    }) => {
+      await page.goto(`http://localhost:${appPort}`, {
+        waitUntil: 'networkidle',
+      });
+      await page.evaluate(() => window.scrollTo(0, 350));
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(350);
+      await page.getByRole('button', { name: 'Open scroll page' }).click();
+      await expect(page).toHaveURL(/\/scroll$/);
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+      await page.evaluate(() => window.scrollTo(0, 550));
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(550);
+
+      await page.goBack();
+      await expect(page.locator('h1')).toContainText('Hello world');
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(350);
+      await page.goForward();
+      await expect(page.locator('h1')).toContainText('Scroll page');
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(550);
+    });
+
     if (mode === 'build') {
       test('emits HTML and Markdown with the consumer router', () => {
         const output = path.join(import.meta.dirname, 'doc_build');

@@ -160,7 +160,7 @@ export default defineConfig({
     },
     plugins: [
       pluginSass(),
-      pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
+      pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J', scriptLoading: 'defer' }),
       pluginOpenGraph({
         url: siteOrigin,
         description: 'Rsbuild based static site generator',

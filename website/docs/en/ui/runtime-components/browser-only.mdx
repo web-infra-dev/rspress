@@ -52,4 +52,4 @@ If you pass JSX directly as children, React evaluates the expressions inside whi
 
 ## How it works
 
-`BrowserOnly` is implemented using **useEffect + dynamic imports**, thus avoiding SSR compatibility issues.
+`BrowserOnly` uses [`browser()`](https://react.dev/reference/react-dom/browser) (`useEffect` in older React versions) to avoid SSR compatibility issues.

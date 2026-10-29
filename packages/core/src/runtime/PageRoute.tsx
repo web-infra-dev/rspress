@@ -1,7 +1,9 @@
 import nprogress from 'nprogress';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+  Outlet,
   type RouteObject,
+  ScrollRestoration,
   useLoaderData,
   useNavigation,
 } from 'react-router-dom';
@@ -50,13 +52,24 @@ function PageRoute() {
 export function createPageRoutes(): RouteObject[] {
   return [
     {
-      id: PAGE_ROUTE_ID,
-      // Keep Rspress' matching rules for .html, /index, case, and encoded paths.
-      path: '*',
-      loader: pageDataLoader,
-      element: <PageRoute />,
-      errorElement: <ErrorRoute />,
+      // Wait for the initial page loader before mounting scroll restoration.
       hydrateFallbackElement: <></>,
+      element: (
+        <>
+          <Outlet />
+          <ScrollRestoration storageKey="rspress-scroll-positions" />
+        </>
+      ),
+      children: [
+        {
+          id: PAGE_ROUTE_ID,
+          // Keep Rspress' matching rules for .html, /index, case, and encoded paths.
+          path: '*',
+          loader: pageDataLoader,
+          element: <PageRoute />,
+          errorElement: <ErrorRoute />,
+        },
+      ],
     },
   ];
 }
