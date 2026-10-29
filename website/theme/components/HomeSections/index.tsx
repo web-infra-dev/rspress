@@ -71,12 +71,12 @@ function Section(props: {
   linkHref: string;
   secondaryLink?: { text: string; href: string };
   reverse?: boolean;
-  flatVisual?: boolean;
+  compact?: boolean;
   visual: ReactNode;
 }) {
   return (
     <section
-      className={`${styles.section} ${props.reverse ? styles.reverse : ''} ${props.flatVisual ? styles.sectionCompact : ''}`}
+      className={`${styles.section} ${props.reverse ? styles.reverse : ''} ${props.compact ? styles.sectionCompact : ''}`}
     >
       <div className={styles.text}>
         <span className={styles.eyebrow}>{props.eyebrow}</span>
@@ -103,11 +103,7 @@ function Section(props: {
           ) : null}
         </div>
       </div>
-      <div
-        className={`${styles.visual} ${props.flatVisual ? styles.visualFlat : ''}`}
-      >
-        {props.visual}
-      </div>
+      <div className={styles.visual}>{props.visual}</div>
     </section>
   );
 }
@@ -667,11 +663,6 @@ function I18nVisual() {
   const t = useI18n<typeof import('i18n')>();
   const rootRef = useRef<HTMLDivElement>(null);
   const [stage, setStage] = useState<I18nStage>(0);
-  const stageLabels = [
-    t('homeI18nSingleLanguage'),
-    t('homeI18nLanguages'),
-    t('homeI18nVersioned'),
-  ];
   const visibleRowCount = I18N_ROWS.filter(row => row.states[stage]).length;
 
   useEffect(() => {
@@ -785,38 +776,9 @@ function I18nVisual() {
           <IconFolder />
           <span>docs</span>
         </div>
-        <div
-          className={styles.i18nStages}
-          role="group"
-          aria-label={t('homeI18nExample')}
-        >
-          {stageLabels.map((label, index) => (
-            <span
-              key={label}
-              data-state={
-                index === stage
-                  ? 'active'
-                  : index < stage
-                    ? 'complete'
-                    : 'pending'
-              }
-            >
-              <i />
-              {label}
-            </span>
-          ))}
-        </div>
       </div>
       {renderTree(true)}
       {renderTree(false)}
-      <div className={styles.i18nNotes}>
-        <p data-visible={stage !== 2} aria-hidden={stage === 2}>
-          {t('homeI18nLanguageDefault')}
-        </p>
-        <p data-visible={stage === 2} aria-hidden={stage !== 2}>
-          {t('homeI18nVersionDefault')}
-        </p>
-      </div>
     </div>
   );
 }
@@ -1063,7 +1025,7 @@ export function HomeSections() {
           text: t('homeI18nVersionLink'),
           href: `${prefix}/guide/basic/multi-version`,
         }}
-        flatVisual
+        compact
         visual={<I18nVisual />}
       />
       <Section

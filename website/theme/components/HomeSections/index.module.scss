@@ -101,17 +101,10 @@
   .sectionCompact {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 3rem;
-  }
 
-  .visualFlat {
-    min-height: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: none;
-
-    &::before {
-      display: none;
+    .visual {
+      min-height: 0;
+      padding: 20px;
     }
   }
 }
@@ -312,55 +305,6 @@
 
 /* ---------- languages and versions ---------- */
 
-.i18nStages {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  justify-content: flex-end;
-  gap: 12px;
-  min-width: 0;
-  padding: 0;
-  background-color: transparent;
-
-  span {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--rp-c-text-3);
-    font-size: 11px;
-    font-weight: 600;
-    white-space: nowrap;
-    transition: color 0.3s ease;
-
-    i {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background-color: var(--rp-c-divider);
-      transition:
-        background-color 0.3s ease,
-        box-shadow 0.3s ease;
-    }
-  }
-
-  span[data-state='active'] {
-    color: var(--rp-c-brand);
-
-    i {
-      background-color: var(--rp-c-brand);
-      box-shadow: 0 0 0 4px var(--rp-c-brand-tint);
-    }
-  }
-
-  span[data-state='complete'] {
-    color: var(--rp-c-text-2);
-
-    i {
-      background-color: var(--rp-c-brand);
-    }
-  }
-}
-
 .i18nCardHeader {
   padding: 8px 16px;
   background-color: transparent;
@@ -458,25 +402,6 @@
   }
 }
 
-.i18nNotes {
-  display: grid;
-  margin: 0 16px 8px;
-
-  p {
-    grid-area: 1 / 1;
-    margin: 0;
-    color: var(--rp-c-text-3);
-    font-size: 11px;
-    line-height: 1.6;
-    transition: opacity 0.3s ease;
-
-    &[data-visible='false'] {
-      visibility: hidden;
-      opacity: 0;
-    }
-  }
-}
-
 @media (max-width: 600px) {
   .i18nTreeColumns {
     display: none;
@@ -492,15 +417,6 @@
     padding: 8px 12px;
   }
 
-  .i18nStages {
-    gap: 6px;
-
-    span {
-      gap: 4px;
-      font-size: 9px;
-    }
-  }
-
   .i18nTreeViewport {
     margin: 6px 8px;
   }
@@ -513,25 +429,12 @@
       font-size: 10px;
     }
   }
-
-  .i18nNotes {
-    margin: 0 12px 8px;
-  }
-}
-
-@media (max-width: 360px) {
-  .i18nStages i {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .i18nStages span,
-  .i18nStages i,
   .i18nTree,
   .i18nTree .treeRow,
-  .i18nTree .treeRoute,
-  .i18nNotes p {
+  .i18nTree .treeRoute {
     transition: none;
   }
 }
