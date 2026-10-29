@@ -13,15 +13,13 @@ The stable 2.1.0 release is not available yet. This article covers features alre
 
 :::
 
-Rspress 2.0 introduced a new theme, SSG-MD, Shiki syntax highlighting, and lazy compilation. In 2.1.0, we continue to improve the default documentation experience, making documentation easier for Agents to use and reducing the configuration needed to maintain a site.
-
-The main updates are:
+The main updates in Rspress 2.1.0 are:
 
 - **SSG-MD enabled by default**: SSG-MD is now stable and generates `llms.txt` and page Markdown by default.
 - **New WebMCP tools**: browser Agents can directly query, read, and navigate documentation.
-- **More complete site defaults**: built-in sitemaps, clean URLs, and internal anchor validation.
-- **Easier documentation authoring**: a new `CdnTabs` component, custom commands in package manager tabs, and resizable component previews.
-- **More consistent navigation**: React Router Data mode, scroll restoration, and recovery actions when a page fails to load.
+- **Built-in sitemaps, clean URLs and anchor validation enabled by default**.
+- **New CdnTabs component**, custom commands in `PackageManagerTabs`, and resizable component previews.
+- **Migration to React Router Data mode**, with scroll restoration and a new page loading error screen.
 
 ## SSG-MD enabled by default
 
@@ -40,17 +38,13 @@ doc_build/
     └── getting-started.md
 ```
 
-The default theme also enables Markdown copying and AI tool entries, making it easier for readers to use the current page with AI. Configure [`themeConfig.llmsUI`](/api/config/config-theme#llmsui) to adjust the interface.
-
-SSG-MD renders React components, so pages need to support server rendering. `ssg` controls HTML generation and `llms` controls Markdown generation independently: setting `ssg: false` still leaves SSG-MD enabled. For sites that depend entirely on a browser environment, set both `ssg: false` and `llms: false`, or isolate browser-dependent content with [`BrowserOnly`](/ui/runtime-components/browser-only).
+The default theme also shows a Markdown copy button and AI tool entries. Customize or disable them with [`themeConfig.llmsUI`](/api/config/config-theme#llmsui).
 
 For more background, see [Building an Agent-friendly website](/blog/agent-friendly-website).
 
-## WebMCP tools for browser agents
+## Built-in WebMCP tools
 
-Markdown makes documentation content easier to read. [WebMCP](/guide/basic/webmcp) lets a site expose tools directly to browser Agents.
-
-Rspress 2.1.0 includes six documentation tools, enabled by default:
+[WebMCP](/guide/basic/webmcp) lets websites provide tools to browser Agents. Rspress 2.1.0 enables these six documentation tools by default:
 
 | Tool                       | Purpose                                                                        |
 | -------------------------- | ------------------------------------------------------------------------------ |
@@ -59,9 +53,9 @@ Rspress 2.1.0 includes six documentation tools, enabled by default:
 | `rspress_get_page`         | Read a specific page's metadata, outline, and Markdown without navigating      |
 | `rspress_get_current_page` | Read the current page's metadata, outline, and Markdown                        |
 | `rspress_search_docs`      | Search the local documentation index for the current language and version      |
-| `rspress_navigate`         | Navigate to an internal page and return information after the page commits     |
+| `rspress_navigate`         | Navigate to an internal page and return page information once it loads         |
 
-A browser Agent can list pages, read relevant sections as Markdown, and then take the reader to the corresponding page. Markdown reading requires `llms`; documentation search uses the default theme's local search index.
+Reading page Markdown requires `llms`. Documentation search only supports the default theme's local search.
 
 The new [`useWebMcp`](/ui/hooks/use-web-mcp) Hook also lets components register their own tools:
 
@@ -82,17 +76,17 @@ export function PageTitleTool() {
 }
 ```
 
-Tools register when the component mounts, unregister when it unmounts, and execute with the latest committed component state. Mount site-wide tools in persistent components and page-specific tools within their pages.
+Tools register when the component mounts and unregister when it unmounts. Register site-wide tools in layout components and page-specific tools in their pages.
 
-WebMCP is an experimental browser capability. It requires a browser with `document.modelContext` enabled and a secure context such as HTTPS or localhost. Other browsers can still read the site normally. Set `webMcp: false` to disable built-in tools; custom tools remain managed independently by `useWebMcp`.
+WebMCP is still an experimental browser API. It requires `document.modelContext` to be enabled and access over HTTPS or localhost. Other browsers can read the site normally.
 
-## More complete site defaults
+Set `webMcp: false` to disable built-in tools. This does not affect custom tools registered with `useWebMcp`.
 
-### Built-in sitemaps
+## Built-in sitemaps
 
-Sitemap generation is now built into core and enabled by default. Production builds generate `sitemap.xml` without an additional plugin, helping search engines discover site pages.
+Rspress 2.1.0 generates `sitemap.xml` by default during production builds. Installing `@rspress/plugin-sitemap` is no longer necessary.
 
-Configure the deployment origin to generate absolute URLs. Rspress also incorporates `base` for sites deployed to a subpath:
+Set the deployment origin with `siteOrigin` and the subpath with `base` to generate absolute URLs:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -103,25 +97,25 @@ export default defineConfig({
 });
 ```
 
-Built-in sitemaps support custom priorities, update frequencies, and individual page entries, and work with `ssg: false`. Existing projects can migrate from `@rspress/plugin-sitemap` to the top-level [`sitemap`](/api/config/config-basic#sitemap) option. Set `sitemap: false` if another process already generates your sitemap.
+Use the top-level [`sitemap`](/api/config/config-basic#sitemap) option to configure priorities, update frequencies, and individual page entries. Existing projects can use it to replace `@rspress/plugin-sitemap`.
 
-### Clean URLs by default
+Sitemaps are generated even with `ssg: false`. Set `sitemap: false` if another process generates your sitemap.
 
-[`route.cleanUrls`](/api/config/config-basic#routecleanurls) now defaults to `true`. Generated links for regular pages use paths such as `/guide/getting-started`, without the `.html` suffix.
+## Clean URLs by default
 
-This option changes the link format. Your hosting platform must still serve `/foo.html` directly when `/foo` is requested. Check your hosting configuration when upgrading, or explicitly set `route.cleanUrls: false` to retain the previous link format.
+[`route.cleanUrls`](/api/config/config-basic#routecleanurls) now defaults to `true` instead of `false`. Generated links for regular pages omit `.html`, for example changing `/guide/getting-started.html` to `/guide/getting-started`.
 
-### Internal anchor validation by default
+Your hosting platform must serve `/foo.html` directly when `/foo` is requested. Set `route.cleanUrls: false` if your host does not support this or you need to keep the `.html` suffix.
 
-Rspress now checks whether a linked section exists, in addition to checking the target page. For example, a link to `/guide/config#old-heading` left behind after renaming a heading can be caught during documentation validation.
+## Internal anchor validation by default
 
-Anchor validation covers same-page, relative, and absolute internal links to Markdown and MDX pages, and skips external URLs. Exclude anchors that cannot be identified statically, such as dynamically generated anchors, with [`markdown.link.checkAnchors.excludes`](/api/config/config-build#markdownlinkcheckanchors), or set `checkAnchors: false` to disable validation.
+[`markdown.link.checkAnchors`](/api/config/config-build#markdownlinkcheckanchors) now defaults to `true` instead of `false`. Rspress checks whether linked sections exist, catching stale links such as `/guide/config#old-heading` after a heading is renamed.
 
-## Easier documentation authoring
+Validation covers same-page, relative, and absolute internal links to Markdown and MDX pages, and skips external URLs. Use `markdown.link.checkAnchors.excludes` for anchors that cannot be identified statically, such as dynamically generated anchors, or set `checkAnchors: false` to disable validation.
 
-### New CdnTabs component
+## New CdnTabs component
 
-Quick start guides for browser libraries often need both package installation commands and CDN instructions. The new [`CdnTabs`](/ui/components/cdn-tabs) component generates HTML tags for jsDelivr and unpkg from an npm package name and asset paths:
+The new [`CdnTabs`](/ui/components/cdn-tabs) component generates CDN snippets for jsDelivr and unpkg from an npm package name and asset paths:
 
 ```mdx title="index.mdx"
 import { CdnTabs } from '@rspress/core/theme';
@@ -132,13 +126,13 @@ import { CdnTabs } from '@rspress/core/theme';
 />
 ```
 
-CSS files produce `<link rel="stylesheet">` tags, and JavaScript files produce `<script src>` tags. The component includes CDN icons and HTML syntax highlighting, and synchronizes CDN selection across `CdnTabs` instances on the same page.
+CSS files produce `<link rel="stylesheet">` tags, and JavaScript files produce `<script src>` tags. The component includes CDN icons and HTML syntax highlighting. Selecting a CDN switches all `CdnTabs` instances on the same page.
 
-`CdnTabs` also supports SSG-MD: generated Markdown includes HTML examples for each CDN, so Agents can read these instructions too.
+`CdnTabs` supports SSG-MD. Generated Markdown includes HTML examples for each CDN.
 
-### Custom commands in package manager tabs
+## Custom commands in package manager tabs
 
-[`PackageManagerTabs`](/ui/components/package-manager-tabs) now supports a complete `command` in each `additionalTabs` entry, allowing extra tool tabs to display their own commands:
+Each `additionalTabs` entry in [`PackageManagerTabs`](/ui/components/package-manager-tabs) now accepts a `command` property to display a custom command as written:
 
 ```mdx
 import { PackageManagerTabs } from '@rspress/core/theme';
@@ -154,27 +148,31 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 />
 ```
 
-Package manager icons are also maintained as built-in Rspress icons and exported through public APIs for reuse in custom themes.
+Package manager icons are now built into Rspress and publicly exported for use in custom themes.
 
-### Resizable component previews
+## Resizable component previews
 
-The `preview="iframe-follow"` mode in [`@rspress/plugin-preview`](/plugin/official-plugins/preview) now supports resizing. On wide screens, drag the divider between the code and preview to adjust the preview width, or double-click to reset it.
+The `preview="iframe-follow"` mode in [`@rspress/plugin-preview`](/plugin/official-plugins/preview) now supports resizing. On wide screens, drag the divider between the code and preview to see how the component behaves at different widths. Double-click the divider to reset it.
 
-Readers can use this to explore how responsive components behave at different widths.
+## React Router data mode
 
-## More consistent navigation
+Rspress now uses React Router Data mode. Default theme links and `useNavigate()` calls load the destination's data and code before switching the URL and page content. The current page stays visible while loading.
 
-### React Router data mode
+With React Router 7, navigation functions returned by `useNavigate()` and `useLinkNavigate()` support `await` to wait for navigation to finish.
 
-Rspress now uses React Router Data mode to coordinate page loading. Both default theme links and `useNavigate()` calls in custom components load the target page data and asynchronous module before committing the URL and page content together. The current page stays visible while the destination loads.
+The new `ErrorLayout` error page offers reload and home actions when page loading or rendering fails. It also shows error details in development. Custom themes can replace `ErrorLayout`.
 
-With React Router 7, `navigate()` and `useLinkNavigate()` can await navigation completion. A new error page provides reload and home actions when page loading or rendering fails, with error details in development. Custom themes can replace it through `ErrorLayout`.
+## Scroll restoration
 
-### Scroll restoration
+Rspress restores the scroll position when readers go back, go forward, or reload. For example, after reading partway through a long page, visiting another page, and going back, readers can continue where they left off. React Router also handles anchor navigation.
 
-Rspress integrates React Router's scroll restoration. After reading partway through a long page, visiting another page, and going back, readers can return to their previous position. Back, forward, and anchor navigation now share coordinated scroll handling.
+## Other improvements
 
-This release also fixes dynamic headings falling out of sync with the outline after navigation, improves wrapping for long sidebar labels, enhances logo and heading anchor accessibility, and refines the responsive search panel layout. Build logs hide individual file size details by default to reduce lengthy output.
+- Fix dynamic headings falling out of sync with the outline after navigation.
+- Allow long sidebar labels to wrap.
+- Improve logo and heading anchor accessibility.
+- Adjust the search panel layout for different screen widths.
+- Hide individual file size details in build logs by default.
 
 ## Upgrading to 2.1.0
 
@@ -184,7 +182,7 @@ Once the stable release is available, update the core package and upgrade any of
 pnpm add -D @rspress/core@~2.1.0
 ```
 
-Existing projects should review these default changes:
+These options have new defaults and can be disabled as needed:
 
 | Option                       | Default behavior in 2.1.0                               | Retain previous behavior     |
 | ---------------------------- | ------------------------------------------------------- | ---------------------------- |
@@ -193,8 +191,13 @@ Existing projects should review these default changes:
 | `route.cleanUrls`            | Generate links without `.html`                          | Set `route.cleanUrls: false` |
 | `markdown.link.checkAnchors` | Validate internal link anchors                          | Set `checkAnchors: false`    |
 
-Run a production build after upgrading to review anchor diagnostics, and verify direct access to clean URLs in your deployment environment. If your site previously used `ssg: false` to disable server rendering, also check whether its pages support the now-default SSG-MD rendering.
+Run a production build after upgrading, fix invalid anchors, and check that your hosting platform serves URLs without `.html` directly.
 
-Custom themes should also review API changes related to routing and scrolling. `warmPageData` is no longer exported from `@rspress/core/runtime`, and `useScrollAfterNav` and `useScrollReset` are no longer exported from `@rspress/core/theme`. Remove calls to these APIs and let the new router loading and scroll restoration mechanisms handle this behavior.
+SSG-MD requires server rendering support. `ssg` controls HTML generation, while `llms` controls Markdown generation, so `ssg: false` does not disable SSG-MD. Wrap browser-dependent content in [`BrowserOnly`](/ui/runtime-components/browser-only). Sites that cannot support server rendering need both `ssg: false` and `llms: false`.
+
+Custom themes must remove calls to these APIs and use the built-in router loading and scroll restoration instead:
+
+- `warmPageData` from `@rspress/core/runtime`.
+- `useScrollAfterNav` and `useScrollReset` from `@rspress/core/theme`.
 
 Thank you to everyone who contributed to this release! Share feedback on [GitHub](https://github.com/web-infra-dev/rspress), or join the conversation on [Discord](https://discord.gg/mkVw5zPAtf).
