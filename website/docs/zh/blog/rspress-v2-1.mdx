@@ -1,6 +1,6 @@
 ---
 authors: ['sooniter']
-description: 'Rspress 2.1.0 带来默认开启的 Agent 文档能力、WebMCP、内置 sitemap、简洁 URL，以及更完善的文档组件和阅读体验。'
+description: 'Rspress 2.1.0 默认启用 SSG-MD，新增 WebMCP、内置 sitemap，并改进 URL、文档组件和路由体验。'
 sidebar: false
 pageType: doc
 ---
@@ -17,14 +17,17 @@ Rspress 2.0 引入了全新主题、SSG-MD、Shiki 代码高亮和按需编译�
 
 这次更新主要包括：
 
-- **默认面向 Agent**：默认生成 `llms.txt` 和页面 Markdown，并新增 WebMCP 工具，让浏览器智能体能够查询、读取和导航文档。
+- **SSG-MD 默认启用**：SSG-MD 从实验特性转为稳定特性，默认生成 `llms.txt` 和页面 Markdown。
+- **新增 WebMCP 工具**：浏览器智能体可以直接查询、读取和导航文档。
 - **更完整的站点默认配置**：内置 sitemap，默认启用简洁 URL 和站内锚点检查。
 - **更方便的文档编写**：新增 `CdnTabs`，增强包管理器标签页，并支持拖拽调整组件预览宽度。
 - **更连贯的阅读体验**：路由迁移到 React Router Data 模式，支持滚动位置恢复，并完善页面加载失败时的恢复操作。
 
-## 默认生成面向 Agent 的文档 \{#agent-documentation-by-default}
+## SSG-MD 默认启用 \{#ssg-md-enabled-by-default}
 
-Rspress 2.0 已经支持 [SSG-MD](/zh/guide/basic/ssg-md)，可以将 MDX 和 React 组件渲染为 Markdown。从 2.1.0 开始，`llms` 默认开启，无需再手动添加 `llms: true`。
+[SSG-MD](/zh/guide/basic/ssg-md) 在 Rspress 2.1.0 中从实验特性转为稳定特性，并默认启用，无需再单独设置 `llms: true`。
+
+SSG-MD 可以将 MDX 和 React 组件渲染为 Markdown，供 Agent 读取。
 
 执行生产构建后，除了 HTML 页面，还会生成：
 
