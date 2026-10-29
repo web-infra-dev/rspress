@@ -209,3 +209,4 @@ autoselection
 extname
 typedoc
 shadcn
+Octocat
