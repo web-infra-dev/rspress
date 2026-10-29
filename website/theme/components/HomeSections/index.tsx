@@ -178,7 +178,9 @@ console.log('Hello Rspress');
 \`\`\``;
 
 function SsgMdVisual(props: { copyText: string; copiedText: string }) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const [tab, setTab] = useState<SsgMdTab>('md');
+  const [autoPlay, setAutoPlay] = useState(true);
   const [copied, setCopied] = useState(false);
   const copyTimer = useRef<number | null>(null);
   const tabRefs = useRef<Record<SsgMdTab, HTMLButtonElement | null>>({
@@ -186,6 +188,52 @@ function SsgMdVisual(props: { copyText: string; copiedText: string }) {
     md: null,
     llms: null,
   });
+
+  useEffect(() => {
+    if (
+      !autoPlay ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
+
+    let timer: number | undefined;
+    const stop = () => {
+      if (timer !== undefined) {
+        window.clearInterval(timer);
+        timer = undefined;
+      }
+    };
+    const start = () => {
+      if (timer === undefined) {
+        timer = window.setInterval(() => {
+          setTab(current => {
+            const index = SSG_MD_TABS.findIndex(item => item.key === current);
+            return SSG_MD_TABS[(index + 1) % SSG_MD_TABS.length].key;
+          });
+        }, 3200);
+      }
+    };
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0]?.isIntersecting) {
+          start();
+        } else {
+          stop();
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    if (rootRef.current) {
+      observer.observe(rootRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      stop();
+    };
+  }, [autoPlay]);
 
   useEffect(
     () => () => {
@@ -233,16 +281,14 @@ function SsgMdVisual(props: { copyText: string; copiedText: string }) {
     }
 
     event.preventDefault();
+    setAutoPlay(false);
     const nextTab = SSG_MD_TABS[nextIndex].key;
     setTab(nextTab);
     tabRefs.current[nextTab]?.focus();
   };
 
   return (
-    <div className={styles.ssgMdVisual}>
-      <span className={styles.dataFlow} aria-hidden="true">
-        <i />
-      </span>
+    <div ref={rootRef} className={styles.ssgMdVisual}>
       <div className={`${styles.card} ${styles.treeCard}`}>
         <div className={styles.cardHeader}>
           <div className={styles.cardHeaderTitle}>
@@ -312,7 +358,10 @@ function SsgMdVisual(props: { copyText: string; copiedText: string }) {
               aria-selected={tab === key}
               tabIndex={tab === key ? 0 : -1}
               className={`${styles.tab} ${tab === key ? styles.tabActive : ''}`}
-              onClick={() => setTab(key)}
+              onClick={() => {
+                setAutoPlay(false);
+                setTab(key);
+              }}
               onKeyDown={event => handleTabKeyDown(event, key)}
             >
               {label}
