@@ -15,7 +15,7 @@ pageType: doc
 
 Rspress 2.1.0 的主要更新包括：
 
-- **SSG-MD 默认启用**：SSG-MD 从实验特性转为稳定特性，默认生成 `llms.txt` 和页面 Markdown。
+- **SSG-MD 默认启用**：默认生成 `llms.txt` 和页面 Markdown，无需单独配置。
 - **新增 WebMCP 工具**：浏览器智能体可以直接查询、读取和导航文档。
 - **内置 sitemap，默认启用 cleanUrls 和锚点检查**。
 - **新增 CdnTabs**，`PackageManagerTabs` 支持自定义命令，组件预览支持拖拽调整宽度。
@@ -23,9 +23,9 @@ Rspress 2.1.0 的主要更新包括：
 
 ## SSG-MD 默认启用 \{#ssg-md-enabled-by-default}
 
-[SSG-MD](/zh/guide/basic/ssg-md) 在 Rspress 2.1.0 中从实验特性转为稳定特性，并默认启用，无需再单独设置 `llms: true`。
+[SSG-MD](/zh/guide/basic/ssg-md) 可以将 MDX 和 React 组件渲染为 Markdown，供 Agent 读取。
 
-SSG-MD 可以将 MDX 和 React 组件渲染为 Markdown，供 Agent 读取。
+Rspress 官网已在 [AFDocs 评测](https://x.com/Soon_Iter/status/2090359544769913185) 中获得 **100/100 满分**。从 Rspress 2.1.0 开始，SSG-MD 默认启用，无需再单独设置 `llms: true`。
 
 执行生产构建后，除了 HTML 页面，还会生成：
 
@@ -38,9 +38,7 @@ doc_build/
     └── getting-started.md
 ```
 
-默认主题也会显示 Markdown 复制按钮和 AI 工具入口，可通过 [`themeConfig.llmsUI`](/zh/api/config/config-theme#llmsui) 自定义或关闭。
-
-更多设计背景见[怎样构建一个 Agent-friendly 的网站](/zh/blog/agent-friendly-website)。
+在[怎样构建一个 Agent-friendly 的网站](/zh/blog/agent-friendly-website)一文中，我们介绍了如何结合 SSG-MD、llms.txt 和 Markdown 内容协商，让 Agent 发现和读取文档。
 
 ## 内置 WebMCP 工具 \{#built-in-webmcp-tools}
 
