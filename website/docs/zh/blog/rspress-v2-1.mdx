@@ -18,7 +18,7 @@ Rspress 2.1.0 的主要更新包括：
 - **SSG-MD 默认启用**：默认生成 `llms.txt` 和页面 Markdown，无需单独配置。
 - **新增 WebMCP 工具**：浏览器智能体可以直接查询、读取和导航文档。
 - **内置 sitemap，默认启用 cleanUrls 和锚点检查**。
-- **新增 CdnTabs**，`PackageManagerTabs` 支持自定义命令，组件预览支持拖拽调整宽度。
+- **新增 CdnTabs**：自动生成 jsDelivr、unpkg 的 CDN 引入代码。
 - **路由迁移到 React Router Data 模式**，支持滚动位置恢复，新增页面加载错误页。
 
 ## SSG-MD 默认启用 \{#ssg-md-enabled-by-default}
@@ -44,16 +44,14 @@ doc_build/
 
 [WebMCP](/zh/guide/basic/webmcp) 允许网站向浏览器智能体提供工具。Rspress 2.1.0 默认启用以下六个文档工具：
 
-| 工具                       | 用途                                          |
-| -------------------------- | --------------------------------------------- |
-| `rspress_get_site_info`    | 获取站点信息、语言、版本、导航和当前侧边栏    |
-| `rspress_list_pages`       | 按语言、版本和关键词筛选页面列表              |
-| `rspress_get_page`         | 无需跳转，读取指定页面的信息、目录和 Markdown |
-| `rspress_get_current_page` | 读取当前页面的信息、目录和 Markdown           |
-| `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引              |
-| `rspress_navigate`         | 跳转到站内页面，加载完成后返回页面信息        |
-
-读取页面 Markdown 需要启用 `llms`；文档搜索仅支持默认主题的本地搜索。
+| 工具                       | 用途                                                                                             |
+| -------------------------- | ------------------------------------------------------------------------------------------------ |
+| `rspress_get_site_info`    | 获取站点信息、语言、版本、导航和当前侧边栏                                                       |
+| `rspress_list_pages`       | 按语言、版本和关键词筛选页面列表                                                                 |
+| `rspress_get_page`         | 无需跳转，读取指定页面的信息、目录和 [SSG-MD 文档](/zh/guide/basic/ssg-md)（随 SSG-MD 一同启用） |
+| `rspress_get_current_page` | 读取当前页面的信息、目录和 [SSG-MD 文档](/zh/guide/basic/ssg-md)（随 SSG-MD 一同启用）           |
+| `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引                                                                 |
+| `rspress_navigate`         | 跳转到站内页面，加载完成后返回页面信息                                                           |
 
 你也可以通过新增的 [`useWebMcp`](/zh/ui/hooks/use-web-mcp) Hook，为自己的组件注册工具：
 
@@ -129,30 +127,6 @@ import { CdnTabs } from '@rspress/core/theme';
 CSS 文件生成 `<link rel="stylesheet">`，JavaScript 文件生成 `<script src>`。组件内置 CDN 图标和 HTML 语法高亮，同一页面中的 `CdnTabs` 会同步切换选中的 CDN。
 
 `CdnTabs` 支持 SSG-MD，生成的 Markdown 会保留各个 CDN 的 HTML 代码示例。
-
-## PackageManagerTabs 支持自定义命令 \{#custom-commands-in-package-manager-tabs}
-
-[`PackageManagerTabs`](/zh/ui/components/package-manager-tabs) 的 `additionalTabs` 新增 `command` 属性，可原样展示自定义命令：
-
-```mdx
-import { PackageManagerTabs } from '@rspress/core/theme';
-
-<PackageManagerTabs
-  command="install -D @rspress/core"
-  additionalTabs={[
-    {
-      tool: 'custom',
-      command: 'custom add --dev @rspress/core',
-    },
-  ]}
-/>
-```
-
-包管理器图标也改为 Rspress 内置图标，可通过公开导出在自定义主题中复用。
-
-## 组件预览支持拖拽调整宽度 \{#resizable-component-previews}
-
-[`@rspress/plugin-preview`](/zh/plugin/official-plugins/preview) 的 `preview="iframe-follow"` 模式现在支持拖拽调整预览宽度。在宽屏布局下，拖动代码与预览之间的分隔条，就能查看组件在不同宽度下的表现；双击分隔条可恢复默认宽度。
 
 ## 路由迁移到 React Router data 模式 \{#react-router-data-mode}
 

@@ -18,7 +18,7 @@ The main updates in Rspress 2.1.0 are:
 - **SSG-MD enabled by default**: generate `llms.txt` and page Markdown without additional configuration.
 - **New WebMCP tools**: browser Agents can directly query, read, and navigate documentation.
 - **Built-in sitemaps, clean URLs and anchor validation enabled by default**.
-- **New CdnTabs component**, custom commands in `PackageManagerTabs`, and resizable component previews.
+- **New CdnTabs component**: generate CDN snippets for jsDelivr and unpkg.
 - **Migration to React Router Data mode**, with scroll restoration and a new page loading error screen.
 
 ## SSG-MD enabled by default
@@ -44,16 +44,14 @@ In [How to build an Agent-friendly website](/blog/agent-friendly-website), we ex
 
 [WebMCP](/guide/basic/webmcp) lets websites provide tools to browser Agents. Rspress 2.1.0 enables these six documentation tools by default:
 
-| Tool                       | Purpose                                                                        |
-| -------------------------- | ------------------------------------------------------------------------------ |
-| `rspress_get_site_info`    | Get site information, languages, versions, navigation, and the current sidebar |
-| `rspress_list_pages`       | Filter pages by language, version, and keywords                                |
-| `rspress_get_page`         | Read a specific page's metadata, outline, and Markdown without navigating      |
-| `rspress_get_current_page` | Read the current page's metadata, outline, and Markdown                        |
-| `rspress_search_docs`      | Search the local documentation index for the current language and version      |
-| `rspress_navigate`         | Navigate to an internal page and return page information once it loads         |
-
-Reading page Markdown requires `llms`. Documentation search only supports the default theme's local search.
+| Tool                       | Purpose                                                                                                                                     |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rspress_get_site_info`    | Get site information, languages, versions, navigation, and the current sidebar                                                              |
+| `rspress_list_pages`       | Filter pages by language, version, and keywords                                                                                             |
+| `rspress_get_page`         | Read a specific page's metadata, outline, and [SSG-MD documentation](/guide/basic/ssg-md) without navigating (enabled together with SSG-MD) |
+| `rspress_get_current_page` | Read the current page's metadata, outline, and [SSG-MD documentation](/guide/basic/ssg-md) (enabled together with SSG-MD)                   |
+| `rspress_search_docs`      | Search the local documentation index for the current language and version                                                                   |
+| `rspress_navigate`         | Navigate to an internal page and return page information once it loads                                                                      |
 
 The new [`useWebMcp`](/ui/hooks/use-web-mcp) Hook also lets components register their own tools:
 
@@ -127,30 +125,6 @@ import { CdnTabs } from '@rspress/core/theme';
 CSS files produce `<link rel="stylesheet">` tags, and JavaScript files produce `<script src>` tags. The component includes CDN icons and HTML syntax highlighting. Selecting a CDN switches all `CdnTabs` instances on the same page.
 
 `CdnTabs` supports SSG-MD. Generated Markdown includes HTML examples for each CDN.
-
-## Custom commands in package manager tabs
-
-Each `additionalTabs` entry in [`PackageManagerTabs`](/ui/components/package-manager-tabs) now accepts a `command` property to display a custom command as written:
-
-```mdx
-import { PackageManagerTabs } from '@rspress/core/theme';
-
-<PackageManagerTabs
-  command="install -D @rspress/core"
-  additionalTabs={[
-    {
-      tool: 'custom',
-      command: 'custom add --dev @rspress/core',
-    },
-  ]}
-/>
-```
-
-Package manager icons are now built into Rspress and publicly exported for use in custom themes.
-
-## Resizable component previews
-
-The `preview="iframe-follow"` mode in [`@rspress/plugin-preview`](/plugin/official-plugins/preview) now supports resizing. On wide screens, drag the divider between the code and preview to see how the component behaves at different widths. Double-click the divider to reset it.
 
 ## React Router data mode
 
