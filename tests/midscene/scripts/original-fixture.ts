@@ -256,15 +256,20 @@ export class OriginalFixture {
 
   async update(part: FixtureUpdatePart): Promise<void> {
     const mutation = fixtureMutations[part];
-    if (!this.scratch || !mutation.fixtures.some(name => name === this.fixture))
+    if (
+      !this.scratch ||
+      !this.scratchRoot ||
+      !mutation.fixtures.some(name => name === this.fixture)
+    )
       throw new Error('Open the matching isolated HMR fixture first');
     const [relative, before, after] = mutation.change;
     const filename = path.join(this.scratch, relative);
     const content = await readFile(filename, 'utf8');
     if (!content.includes(before))
       throw new Error(`HMR fixture no longer contains ${before}`);
-    // Keep the dev server from compiling a truncated file between write events.
-    const pending = `${filename}.midscene-pending`;
+    // Stage outside the watched document root: add/unlink events restart the server.
+    // Atomic replacement also avoids compiling a partially written source file.
+    const pending = path.join(this.scratchRoot, 'midscene-update-pending');
     try {
       await writeFile(pending, content.replace(before, after));
       await rename(pending, filename);
