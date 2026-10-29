@@ -240,6 +240,9 @@ function SsgMdVisual(props: { copyText: string; copiedText: string }) {
 
   return (
     <div className={styles.ssgMdVisual}>
+      <span className={styles.dataFlow} aria-hidden="true">
+        <i />
+      </span>
       <div className={`${styles.card} ${styles.treeCard}`}>
         <div className={styles.cardHeader}>
           <div className={styles.cardHeaderTitle}>
@@ -393,15 +396,80 @@ function SsgMdVisual(props: { copyText: string; copiedText: string }) {
   );
 }
 
-/* ---------- visual 2: _meta.json -> sidebar (hover wiring) ---------- */
+/* ---------- visual 2: _meta.json -> sidebar (automatic + hover wiring) ---------- */
+
+const AUTO_NAV_ITEMS = ['header', 'introduction', 'quick-start', 'advanced'];
 
 function AutoNavVisual() {
+  const rootRef = useRef<HTMLDivElement>(null);
   const [wiring, setWiring] = useState<string | null>(null);
+  const [manual, setManual] = useState(false);
+
+  useEffect(() => {
+    if (manual) {
+      return;
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setWiring(null);
+      return;
+    }
+
+    let timer: number | undefined;
+    let index = 0;
+    const stop = () => {
+      if (timer !== undefined) {
+        window.clearInterval(timer);
+        timer = undefined;
+      }
+    };
+    const showNext = () => {
+      setWiring(AUTO_NAV_ITEMS[index]);
+      index = (index + 1) % AUTO_NAV_ITEMS.length;
+    };
+    const start = () => {
+      if (timer === undefined) {
+        showNext();
+        timer = window.setInterval(showNext, 1800);
+      }
+    };
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0]?.isIntersecting) {
+          start();
+        } else {
+          stop();
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    if (rootRef.current) {
+      observer.observe(rootRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      stop();
+    };
+  }, [manual]);
+
   const wireHandlers = (id: string) => ({
-    onMouseEnter: () => setWiring(id),
-    onMouseLeave: () => setWiring(null),
-    onFocus: () => setWiring(id),
-    onBlur: () => setWiring(null),
+    onMouseEnter: () => {
+      setManual(true);
+      setWiring(id);
+    },
+    onMouseLeave: () => {
+      setManual(false);
+      setWiring(null);
+    },
+    onFocus: () => {
+      setManual(true);
+      setWiring(id);
+    },
+    onBlur: () => {
+      setManual(false);
+      setWiring(null);
+    },
     tabIndex: 0,
   });
   // Hovering or focusing either side frames the source and its counterpart.
@@ -410,7 +478,7 @@ function AutoNavVisual() {
     `${base} ${ringFor(id) ? styles.wireTarget : ''}`;
 
   return (
-    <div className={`${styles.card} ${styles.autoNavCard}`}>
+    <div ref={rootRef} className={`${styles.card} ${styles.autoNavCard}`}>
       <div className={styles.autoNavCode}>
         <div className={styles.cardHeader}>
           <div className={styles.cardHeaderTitle}>
