@@ -445,7 +445,7 @@
   display: flex;
   align-items: flex-start;
 
-  @media (max-width: 480px) {
+  @media (max-width: 1100px) {
     flex-direction: column;
   }
 }
@@ -454,7 +454,7 @@
   width: 62%;
   flex-shrink: 0;
 
-  @media (max-width: 480px) {
+  @media (max-width: 1100px) {
     width: 100%;
   }
 }
@@ -514,31 +514,29 @@
 /* tabbed preview card */
 
 .tabHeader {
-  display: flex;
-  gap: 2px;
-  padding: 8px 10px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.15fr) minmax(0, 0.7fr);
+  padding: 8px 8px 0;
   border-bottom: 1px solid var(--rp-c-divider-light);
   background-color: var(--rp-c-bg-soft);
-  overflow-x: auto;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  overflow: hidden;
 }
 
 .tab {
   appearance: none;
+  min-width: 0;
   border: none;
   background: transparent;
   margin-bottom: -1px;
-  padding: 6px 8px 8px;
+  padding: 6px 4px 8px;
   border-bottom: 2px solid transparent;
   font-family: var(--rp-font-family-mono);
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--rp-c-text-3);
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
   transition:
     color 0.15s ease,
@@ -602,9 +600,10 @@
 
 .pageHead {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px 8px;
 }
 
 .pageTitle {
@@ -716,7 +715,7 @@
   margin: 4.5rem 0 2rem -18%;
   box-shadow: var(--rp-shadow-3);
 
-  @media (max-width: 480px) {
+  @media (max-width: 1100px) {
     width: calc(100% - 1.5rem);
     margin: -0.75rem 0 0 1.5rem;
   }
@@ -728,8 +727,9 @@
   font-size: 12px;
   line-height: 1.8;
   color: var(--rp-c-text-2);
-  overflow-x: auto;
-  white-space: pre;
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .llmsTitle {
