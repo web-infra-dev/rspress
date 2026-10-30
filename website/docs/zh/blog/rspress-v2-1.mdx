@@ -1,0 +1,158 @@
+---
+authors: ['sooniter']
+description: 'Rspress 2.1.0 默认启用 SSG-MD，新增 WebMCP、内置 sitemap，并改进 URL、文档组件和路由体验。'
+sidebar: false
+pageType: doc
+---
+
+# Rspress 2.1.0 发布公告 \{#announcing-rspress-210}
+
+:::info 发布稿草案
+
+2.1.0 正式版尚未发布。本文涵盖当前已合并的功能，正式发布日期待定。
+
+:::
+
+Rspress 2.1.0 的主要更新包括：
+
+- **SSG-MD 默认启用**：默认生成 `llms.txt` 和页面 Markdown，无需单独配置。
+- **新增 WebMCP 工具**：浏览器智能体可以直接查询、读取和导航文档。
+- **内置 sitemap，默认启用 cleanUrls 和锚点检查**。
+- **新增 CdnTabs**：自动生成 jsDelivr、unpkg 的 CDN 引入代码。
+- **路由迁移到 React Router Data 模式**，支持滚动位置恢复，新增页面加载错误页。
+
+## SSG-MD 默认启用 \{#ssg-md-enabled-by-default}
+
+[SSG-MD](/zh/guide/basic/ssg-md) 可以将 MDX 和 React 组件渲染为 Markdown，供 Agent 读取。
+
+Rspress 官网已在 [AFDocs 评测](https://x.com/Soon_Iter/status/2090359544769913185) 中获得 **100/100 满分**。从 Rspress 2.1.0 开始，SSG-MD 默认启用，无需再单独设置 `llms: true`。
+
+执行生产构建后，除了 HTML 页面，还会生成：
+
+```text
+doc_build/
+├── llms.txt           # 文档索引，供 Agent 按需查阅
+├── llms-full.txt      # 完整文档内容
+└── guide/
+    ├── getting-started.html
+    └── getting-started.md
+```
+
+在[怎样构建一个 Agent-friendly 的网站](/zh/blog/agent-friendly-website)一文中，我们介绍了如何结合 SSG-MD、llms.txt 和 Markdown 内容协商，让 Agent 发现和读取文档。
+
+## 内置 WebMCP 工具 \{#built-in-webmcp-tools}
+
+[WebMCP](/zh/guide/basic/webmcp) 允许网站向浏览器智能体提供工具。Rspress 2.1.0 默认启用以下六个文档工具：
+
+| 工具                       | 用途                                                                                             |
+| -------------------------- | ------------------------------------------------------------------------------------------------ |
+| `rspress_get_site_info`    | 获取站点信息、语言、版本、导航和当前侧边栏                                                       |
+| `rspress_list_pages`       | 按语言、版本和关键词筛选页面列表                                                                 |
+| `rspress_get_page`         | 无需跳转，读取指定页面的信息、目录和 [SSG-MD 文档](/zh/guide/basic/ssg-md)（随 SSG-MD 一同启用） |
+| `rspress_get_current_page` | 读取当前页面的信息、目录和 [SSG-MD 文档](/zh/guide/basic/ssg-md)（随 SSG-MD 一同启用）           |
+| `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引                                                                 |
+| `rspress_navigate`         | 跳转到站内页面，加载完成后返回页面信息                                                           |
+
+你也可以通过新增的 [`useWebMcp`](/zh/ui/hooks/use-web-mcp) Hook，为自己的组件注册工具：
+
+```tsx
+import { usePage, useWebMcp } from '@rspress/core/runtime';
+
+export function PageTitleTool() {
+  const { page } = usePage();
+
+  useWebMcp({
+    name: 'my_site_page_title',
+    description: 'Get the current page title',
+    annotations: { readOnlyHint: true },
+    execute: () => ({ title: page.title }),
+  });
+
+  return null;
+}
+```
+
+工具在组件挂载时注册，卸载时移除。全站工具可以注册在布局组件中，页面专属工具则注册在对应页面中。
+
+WebMCP 仍是实验性浏览器 API，需要浏览器启用 `document.modelContext`，并通过 HTTPS 或 localhost 访问站点。不支持 WebMCP 的浏览器可正常阅读文档。
+
+设置 `webMcp: false` 可以关闭内置工具，不影响 `useWebMcp` 注册的自定义工具。
+
+## 内置 sitemap \{#built-in-sitemaps}
+
+Rspress 2.1.0 内置 sitemap 生成功能，生产构建默认生成 `sitemap.xml`，无需安装 `@rspress/plugin-sitemap`。
+
+通过 `siteOrigin` 设置部署域名，`base` 设置部署子路径，生成的 sitemap 将包含完整 URL：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+});
+```
+
+通过顶层 [`sitemap`](/zh/api/config/config-basic#sitemap) 配置，可以设置页面优先级、更新频率和单页条目。已有项目可以用它替换 `@rspress/plugin-sitemap`。
+
+即使设置了 `ssg: false`，仍会生成 sitemap。如果站点通过其他方式生成 sitemap，可设置 `sitemap: false` 关闭内置生成。
+
+## cleanUrls 默认启用 \{#clean-urls-by-default}
+
+[`route.cleanUrls`](/zh/api/config/config-basic#routecleanurls) 的默认值从 `false` 改为 `true`。站内生成的普通页面链接将省略 `.html` 后缀，例如从 `/guide/getting-started.html` 改为 `/guide/getting-started`。
+
+托管平台需要支持访问 `/foo` 时直接返回 `/foo.html`。如果不支持，或需要保留 `.html` 后缀，可设置 `route.cleanUrls: false`。
+
+## 锚点检查默认启用 \{#internal-anchor-validation-by-default}
+
+[`markdown.link.checkAnchors`](/zh/api/config/config-build#markdownlinkcheckanchors) 的默认值从 `false` 改为 `true`。Rspress 会检查站内链接指向的章节是否存在，帮助发现修改标题后遗留的无效链接，例如 `/guide/config#old-heading`。
+
+检查范围包括当前页面、相对路径和绝对路径的站内 Markdown / MDX 链接，不检查外部 URL。动态生成等无法静态识别的锚点可通过 `markdown.link.checkAnchors.excludes` 排除，也可设置 `checkAnchors: false` 关闭检查。
+
+{/* cspell:ignore cdntabs */}
+
+## 新增 CdnTabs \{#new-cdntabs-component}
+
+新增的 [`CdnTabs`](/zh/ui/components/cdn-tabs) 组件根据 npm 包名和资源路径，生成 jsDelivr、unpkg 的 CDN 引入代码：
+
+```mdx title="index.mdx"
+import { CdnTabs } from '@rspress/core/theme';
+
+<CdnTabs
+  package="bootstrap@5"
+  files={['dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js']}
+/>
+```
+
+CSS 文件生成 `<link rel="stylesheet">`，JavaScript 文件生成 `<script src>`。组件内置 CDN 图标和 HTML 语法高亮，同一页面中的 `CdnTabs` 会同步切换选中的 CDN。
+
+`CdnTabs` 支持 SSG-MD，生成的 Markdown 会保留各个 CDN 的 HTML 代码示例。
+
+## 路由迁移到 React Router data 模式 \{#react-router-data-mode}
+
+Rspress 现在使用 React Router Data 模式。点击默认主题链接或调用 `useNavigate()` 时，会先加载目标页面的数据和代码，再切换地址和页面内容。加载期间保留当前页面。
+
+在 React Router 7 下，`useNavigate()` 和 `useLinkNavigate()` 返回的导航函数都支持 `await`，可以等待导航完成。
+
+新增 `ErrorLayout` 错误页。页面加载或渲染失败时，读者可以重新加载或返回首页，开发环境下还会显示错误详情。自定义主题可以替换 `ErrorLayout`。
+
+## 支持滚动位置恢复 \{#scroll-restoration}
+
+浏览器前进、后退或刷新页面时，Rspress 会恢复之前的滚动位置。例如，读到长文中部，跳转到另一页后再返回，可以继续从原来的位置阅读。锚点跳转也由 React Router 处理。
+
+## 升级检查清单 \{#upgrade-checklist}
+
+正式版发布后，可按以下清单升级：
+
+- [ ] 将 `@rspress/core` 和使用的官方插件升级到对应版本。
+
+  ```bash
+  pnpm add -D @rspress/core@~2.1.0
+  ```
+
+- [ ] 检查 SSG-MD 的服务端渲染兼容性。需要浏览器环境的内容可用 [`BrowserOnly`](/zh/ui/runtime-components/browser-only) 包裹。`ssg: false` 不会关闭 SSG-MD；完全不支持服务端渲染的站点，需要同时设置 `ssg: false` 和 `llms: false`。
+- [ ] 检查 sitemap 配置。已有项目可用内置 `sitemap` 替换 `@rspress/plugin-sitemap`；如果通过其他方式生成站点地图，可设置 `sitemap: false`。
+- [ ] 确认部署平台支持无 `.html` 后缀的 URL，例如访问 `/foo` 时直接返回 `/foo.html`。如需保留原有链接格式，可设置 `route.cleanUrls: false`。
+- [ ] 执行生产构建，修复发现的无效锚点。动态生成的锚点可通过 `markdown.link.checkAnchors.excludes` 排除，也可设置 `checkAnchors: false` 关闭检查。
+
+感谢所有参与这个版本的贡献者！欢迎通过 [GitHub](https://github.com/web-infra-dev/rspress) 分享反馈，也欢迎在 [Discord](https://discord.gg/mkVw5zPAtf) 与我们交流。
