@@ -1,6 +1,6 @@
 import {
   logger,
-  type NavItemWithLink,
+  type NavItem,
   normalizeHref,
   type PageIndexInfo,
   withBase,
@@ -21,7 +21,7 @@ function routePathToMdPath(
 
 function generateLlmsTxt(
   pageDataArray: PageIndexInfo[][],
-  navList: (NavItemWithLink & { lang: string })[],
+  navList: (NavItem & { lang: string })[],
   others: PageIndexInfo[],
   llmsTxtOptions: LlmsTxt,
   title: string | undefined,
@@ -52,7 +52,7 @@ function generateLlmsTxt(
     if (pages.length === 0) {
       continue;
     }
-    const title = text;
+    const title = text ?? 'Others';
     lines.push(`\n## ${title}\n`);
 
     for (const page of pages) {
@@ -99,7 +99,7 @@ function generateLlmsTxt(
 
 function generateLlmsFullTxt(
   pageDataArray: PageIndexInfo[][],
-  navList: (NavItemWithLink & { lang: string })[],
+  navList: (NavItem & { lang: string })[],
   others: PageIndexInfo[],
   base: string,
   siteOrigin: string | undefined,

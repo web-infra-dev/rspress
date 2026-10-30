@@ -1,5 +1,5 @@
 import type { NavItemWithChildren } from '@rspress/core';
-import { matchNavbar, useLocation } from '@rspress/core/runtime';
+import { matchNavbar, useLocation, useSite } from '@rspress/core/runtime';
 import { Link, SvgWrapper, Tag } from '@rspress/core/theme';
 import cls from 'clsx';
 
@@ -29,6 +29,8 @@ function HoverGroupItem({
   depth?: number;
 }) {
   const { pathname } = useLocation();
+  const { site } = useSite();
+  const versions = site.multiVersion?.versions ?? [];
 
   if ('items' in item && item.items && item.items.length > 0) {
     const hasLink = 'link' in item && item.link;
@@ -79,7 +81,7 @@ function HoverGroupItem({
     const download = 'download' in item ? item.download : undefined;
     const isActiveItem = activeMatcher
       ? activeMatcher(item)
-      : matchNavbar(item, pathname);
+      : matchNavbar(item, pathname, versions);
 
     return (
       <li
