@@ -3,7 +3,6 @@ import {
   copyToClipboard,
   IconArrowRight,
   IconCopy,
-  IconFile,
   IconSuccess,
   Link,
 } from '@rspress/core/theme-original';
@@ -16,6 +15,12 @@ import {
   useRef,
   useState,
 } from 'react';
+import {
+  MaterialFileIcon,
+  MaterialHtmlIcon,
+  MaterialJsonIcon,
+  MaterialMarkdownIcon,
+} from './MaterialIcons';
 import styles from './index.module.scss';
 
 /* ---------- syntax token helpers (same vars as HeroInteractive) ---------- */
@@ -34,10 +39,26 @@ const Line = ({ children }: PropsWithChildren) => (
 );
 
 const IconFolder = () => (
-  <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M3 5a2 2 0 0 1 2-2h4.2a2 2 0 0 1 1.6.8L12.2 5H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5z" />
+  <svg width="1em" height="1em" viewBox="0 0 16 16" aria-hidden="true">
+    <path
+      d="m6.922 3.768-.644-.536A1 1 0 0 0 5.638 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H7.562a1 1 0 0 1-.64-.232"
+      fill="#90a4ae"
+    />
   </svg>
 );
+
+function getMaterialFileIcon(name: string) {
+  if (name.endsWith('.md')) {
+    return <MaterialMarkdownIcon />;
+  }
+  if (name.endsWith('.json')) {
+    return <MaterialJsonIcon />;
+  }
+  if (name.endsWith('.html')) {
+    return <MaterialHtmlIcon />;
+  }
+  return <MaterialFileIcon />;
+}
 
 /* ---------- section shell ---------- */
 
@@ -50,11 +71,12 @@ function Section(props: {
   linkHref: string;
   secondaryLink?: { text: string; href: string };
   reverse?: boolean;
+  compact?: boolean;
   visual: ReactNode;
 }) {
   return (
     <section
-      className={`${styles.section} ${props.reverse ? styles.reverse : ''}`}
+      className={`${styles.section} ${props.reverse ? styles.reverse : ''} ${props.compact ? styles.sectionCompact : ''}`}
     >
       <div className={styles.text}>
         <span className={styles.eyebrow}>{props.eyebrow}</span>
@@ -93,23 +115,48 @@ function TreeRow(props: {
   type: 'folder' | 'file';
   name: string;
   index?: number;
+  slot?: number;
+  x?: number;
+  width?: number;
+  routeX?: number;
   accent?: boolean;
   current?: boolean;
   tag?: string;
+  route?: string;
+  guide?: boolean;
+  visible?: boolean;
+  stagger?: boolean;
 }) {
   return (
     <div
-      className={`${styles.treeRow} ${styles.staggerRise} ${props.accent ? styles.treeRowAccent : ''} ${props.current ? styles.treeRowCurrent : ''}`}
+      className={`${styles.treeRow} ${props.stagger === false ? '' : styles.staggerRise} ${props.accent ? styles.treeRowAccent : ''} ${props.current ? styles.treeRowCurrent : ''} ${props.guide ? styles.treeRowGuide : ''}`}
+      data-visible={props.visible ?? true}
+      aria-hidden={props.visible === false ? true : undefined}
       style={
         {
           paddingLeft: props.depth * 20 + 12,
+          ...(props.width === undefined ? {} : { width: `${props.width}%` }),
           '--i': props.index ?? 0,
+          '--slot': props.slot ?? 0,
+          '--depth': props.depth,
+          '--x': `${props.x ?? 0}%`,
+          '--route-x': `${props.routeX ?? 0}%`,
         } as CSSProperties
       }
     >
-      {props.type === 'folder' ? <IconFolder /> : <IconFile />}
+      {props.type === 'folder' ? (
+        <IconFolder />
+      ) : (
+        getMaterialFileIcon(props.name)
+      )}
       <span>{props.name}</span>
       {props.tag ? <em className={styles.treeTag}>{props.tag}</em> : null}
+      {props.route ? (
+        <span className={styles.treeRoute}>
+          <IconArrowRight />
+          <code>{props.route}</code>
+        </span>
+      ) : null}
     </div>
   );
 }
@@ -131,7 +178,9 @@ console.log('Hello Rspress');
 \`\`\``;
 
 function SsgMdVisual(props: { copyText: string; copiedText: string }) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const [tab, setTab] = useState<SsgMdTab>('md');
+  const [autoPlay, setAutoPlay] = useState(true);
   const [copied, setCopied] = useState(false);
   const copyTimer = useRef<number | null>(null);
   const tabRefs = useRef<Record<SsgMdTab, HTMLButtonElement | null>>({
@@ -139,6 +188,52 @@ function SsgMdVisual(props: { copyText: string; copiedText: string }) {
     md: null,
     llms: null,
   });
+
+  useEffect(() => {
+    if (
+      !autoPlay ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
+
+    let timer: number | undefined;
+    const stop = () => {
+      if (timer !== undefined) {
+        window.clearInterval(timer);
+        timer = undefined;
+      }
+    };
+    const start = () => {
+      if (timer === undefined) {
+        timer = window.setInterval(() => {
+          setTab(current => {
+            const index = SSG_MD_TABS.findIndex(item => item.key === current);
+            return SSG_MD_TABS[(index + 1) % SSG_MD_TABS.length].key;
+          });
+        }, 3200);
+      }
+    };
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0]?.isIntersecting) {
+          start();
+        } else {
+          stop();
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    if (rootRef.current) {
+      observer.observe(rootRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      stop();
+    };
+  }, [autoPlay]);
 
   useEffect(
     () => () => {
@@ -186,13 +281,18 @@ function SsgMdVisual(props: { copyText: string; copiedText: string }) {
     }
 
     event.preventDefault();
+    setAutoPlay(false);
     const nextTab = SSG_MD_TABS[nextIndex].key;
     setTab(nextTab);
     tabRefs.current[nextTab]?.focus();
   };
 
   return (
-    <div className={styles.ssgMdVisual}>
+    <div
+      ref={rootRef}
+      className={styles.ssgMdVisual}
+      onFocusCapture={() => setAutoPlay(false)}
+    >
       <div className={`${styles.card} ${styles.treeCard}`}>
         <div className={styles.cardHeader}>
           <div className={styles.cardHeaderTitle}>
@@ -262,7 +362,10 @@ function SsgMdVisual(props: { copyText: string; copiedText: string }) {
               aria-selected={tab === key}
               tabIndex={tab === key ? 0 : -1}
               className={`${styles.tab} ${tab === key ? styles.tabActive : ''}`}
-              onClick={() => setTab(key)}
+              onClick={() => {
+                setAutoPlay(false);
+                setTab(key);
+              }}
               onKeyDown={event => handleTabKeyDown(event, key)}
             >
               {label}
@@ -346,15 +449,80 @@ function SsgMdVisual(props: { copyText: string; copiedText: string }) {
   );
 }
 
-/* ---------- visual 2: _meta.json -> sidebar (hover wiring) ---------- */
+/* ---------- visual 2: _meta.json -> sidebar (automatic + hover wiring) ---------- */
+
+const AUTO_NAV_ITEMS = ['header', 'introduction', 'quick-start', 'advanced'];
 
 function AutoNavVisual() {
+  const rootRef = useRef<HTMLDivElement>(null);
   const [wiring, setWiring] = useState<string | null>(null);
+  const [manual, setManual] = useState(false);
+
+  useEffect(() => {
+    if (manual) {
+      return;
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setWiring(null);
+      return;
+    }
+
+    let timer: number | undefined;
+    let index = 0;
+    const stop = () => {
+      if (timer !== undefined) {
+        window.clearInterval(timer);
+        timer = undefined;
+      }
+    };
+    const showNext = () => {
+      setWiring(AUTO_NAV_ITEMS[index]);
+      index = (index + 1) % AUTO_NAV_ITEMS.length;
+    };
+    const start = () => {
+      if (timer === undefined) {
+        showNext();
+        timer = window.setInterval(showNext, 1800);
+      }
+    };
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0]?.isIntersecting) {
+          start();
+        } else {
+          stop();
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    if (rootRef.current) {
+      observer.observe(rootRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      stop();
+    };
+  }, [manual]);
+
   const wireHandlers = (id: string) => ({
-    onMouseEnter: () => setWiring(id),
-    onMouseLeave: () => setWiring(null),
-    onFocus: () => setWiring(id),
-    onBlur: () => setWiring(null),
+    onMouseEnter: () => {
+      setManual(true);
+      setWiring(id);
+    },
+    onMouseLeave: () => {
+      setManual(false);
+      setWiring(null);
+    },
+    onFocus: () => {
+      setManual(true);
+      setWiring(id);
+    },
+    onBlur: () => {
+      setManual(false);
+      setWiring(null);
+    },
     tabIndex: 0,
   });
   // Hovering or focusing either side frames the source and its counterpart.
@@ -363,11 +531,11 @@ function AutoNavVisual() {
     `${base} ${ringFor(id) ? styles.wireTarget : ''}`;
 
   return (
-    <div className={`${styles.card} ${styles.autoNavCard}`}>
+    <div ref={rootRef} className={`${styles.card} ${styles.autoNavCard}`}>
       <div className={styles.autoNavCode}>
         <div className={styles.cardHeader}>
           <div className={styles.cardHeaderTitle}>
-            <IconFile />
+            <MaterialJsonIcon />
             <span>docs/guide/_meta.json</span>
           </div>
         </div>
@@ -490,89 +658,248 @@ function AutoNavVisual() {
 
 /* ---------- visual 3: languages and versions as directories ---------- */
 
+type I18nStage = 0 | 1 | 2;
+
+type I18nRowState = {
+  depth: number;
+  slot: number;
+  route?: string;
+};
+
+type I18nRow = {
+  id: string;
+  type: 'folder' | 'file';
+  name: string;
+  tag?: string;
+  accent?: boolean;
+  guide?: boolean;
+  states: Partial<Record<I18nStage, I18nRowState>>;
+};
+
+const I18N_ROW_HEIGHT = 24;
+const I18N_COLUMN_ROWS = 5;
+const I18N_STACK_ROWS = 10;
+const I18N_ROWS: I18nRow[] = [
+  {
+    id: 'v1',
+    type: 'folder',
+    name: 'v1',
+    accent: true,
+    states: { 2: { depth: 0, slot: 0 } },
+  },
+  {
+    id: 'en',
+    type: 'folder',
+    name: 'en',
+    tag: 'English',
+    accent: true,
+    guide: true,
+    states: {
+      0: { depth: 0, slot: 0 },
+      1: { depth: 0, slot: 0 },
+      2: { depth: 1, slot: 1 },
+    },
+  },
+  {
+    id: 'en-index',
+    type: 'file',
+    name: 'index.md',
+    states: {
+      0: { depth: 1, slot: 1, route: '/' },
+      1: { depth: 1, slot: 1, route: '/' },
+      2: { depth: 2, slot: 2, route: '/' },
+    },
+  },
+  {
+    id: 'zh',
+    type: 'folder',
+    name: 'zh',
+    tag: '简体中文',
+    accent: true,
+    guide: true,
+    states: {
+      1: { depth: 0, slot: 2 },
+      2: { depth: 1, slot: 3 },
+    },
+  },
+  {
+    id: 'zh-index',
+    type: 'file',
+    name: 'index.md',
+    states: {
+      1: { depth: 1, slot: 3, route: '/zh/' },
+      2: { depth: 2, slot: 4, route: '/zh/' },
+    },
+  },
+  {
+    id: 'v2',
+    type: 'folder',
+    name: 'v2',
+    accent: true,
+    states: { 2: { depth: 0, slot: 5 } },
+  },
+  {
+    id: 'v2-en',
+    type: 'folder',
+    name: 'en',
+    tag: 'English',
+    accent: true,
+    guide: true,
+    states: { 2: { depth: 1, slot: 6 } },
+  },
+  {
+    id: 'v2-en-index',
+    type: 'file',
+    name: 'index.md',
+    states: { 2: { depth: 2, slot: 7, route: '/v2/' } },
+  },
+  {
+    id: 'v2-zh',
+    type: 'folder',
+    name: 'zh',
+    tag: '简体中文',
+    accent: true,
+    guide: true,
+    states: { 2: { depth: 1, slot: 8 } },
+  },
+  {
+    id: 'v2-zh-index',
+    type: 'file',
+    name: 'index.md',
+    states: { 2: { depth: 2, slot: 9, route: '/v2/zh/' } },
+  },
+];
+
+function getI18nRowState(row: I18nRow, stage: I18nStage) {
+  for (let current = stage; current >= 0; current -= 1) {
+    const state = row.states[current as I18nStage];
+    if (state) {
+      return state;
+    }
+  }
+  return Object.values(row.states)[0]!;
+}
+
 function I18nVisual() {
   const t = useI18n<typeof import('i18n')>();
-  const [versioned, setVersioned] = useState(false);
-  const versions = versioned ? ['v1', 'v2'] : [''];
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [stage, setStage] = useState<I18nStage>(0);
+  const visibleRowCount = I18N_ROWS.filter(row => row.states[stage]).length;
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setStage(2);
+      return;
+    }
+
+    let timer: number | undefined;
+    const stop = () => {
+      if (timer !== undefined) {
+        window.clearInterval(timer);
+        timer = undefined;
+      }
+    };
+    const start = () => {
+      if (timer === undefined) {
+        timer = window.setInterval(() => {
+          setStage(current => ((current + 1) % 3) as I18nStage);
+        }, 2400);
+      }
+    };
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0]?.isIntersecting) {
+          start();
+        } else {
+          stop();
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    if (rootRef.current) {
+      observer.observe(rootRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      stop();
+    };
+  }, []);
+
+  const renderTree = (columns: boolean) => {
+    const rowCount = columns ? I18N_COLUMN_ROWS : I18N_STACK_ROWS;
+    const occupiedRowCount =
+      columns && stage === 2 ? I18N_COLUMN_ROWS : visibleRowCount;
+    const treeOffset = ((rowCount - occupiedRowCount) * I18N_ROW_HEIGHT) / 2;
+    const layout = columns ? 'columns' : 'stack';
+
+    return (
+      <div
+        className={`${styles.i18nTreeViewport} ${columns ? styles.i18nTreeColumns : styles.i18nTreeStack}`}
+        role="group"
+        aria-label={t('homeI18nRoutes')}
+        style={{ height: rowCount * I18N_ROW_HEIGHT }}
+      >
+        <div
+          className={styles.i18nTree}
+          style={
+            {
+              transform: `translateY(${treeOffset}px)`,
+              '--row-height': `${I18N_ROW_HEIGHT}px`,
+            } as CSSProperties
+          }
+        >
+          {I18N_ROWS.map(row => {
+            const baseState = getI18nRowState(row, stage);
+            const isSecondVersion = row.id.startsWith('v2');
+            const state = columns
+              ? {
+                  ...baseState,
+                  slot:
+                    stage === 2
+                      ? baseState.slot % I18N_COLUMN_ROWS
+                      : baseState.slot,
+                  x: isSecondVersion && stage === 2 ? 100 : 0,
+                  width: 50,
+                  routeX: stage === 2 ? 0 : 100,
+                }
+              : { ...baseState, x: 0, width: 100, routeX: 0 };
+
+            return (
+              <TreeRow
+                key={`${layout}-${row.id}`}
+                depth={state.depth}
+                slot={state.slot}
+                x={state.x}
+                width={state.width}
+                routeX={state.routeX}
+                type={row.type}
+                name={row.name}
+                tag={row.tag}
+                accent={row.accent}
+                guide={row.guide}
+                route={state.route}
+                visible={row.states[stage] !== undefined}
+                stagger={false}
+              />
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <div className={styles.card}>
-      <div
-        className={styles.i18nModes}
-        role="group"
-        aria-label={t('homeI18nExample')}
-      >
-        {[false, true].map(mode => (
-          <button
-            key={String(mode)}
-            type="button"
-            aria-pressed={versioned === mode}
-            onClick={() => setVersioned(mode)}
-          >
-            {mode ? t('homeI18nVersioned') : t('homeI18nLanguages')}
-          </button>
-        ))}
-      </div>
-      <div className={styles.cardHeader}>
+    <div ref={rootRef} className={styles.card}>
+      <div className={`${styles.cardHeader} ${styles.i18nCardHeader}`}>
         <div className={styles.cardHeaderTitle}>
           <IconFolder />
           <span>docs</span>
         </div>
-        <span>{t('homeI18nDirectory')}</span>
       </div>
-      <div className={styles.i18nTree}>
-        {versions.map(version => (
-          <div key={version}>
-            {version ? (
-              <TreeRow depth={0} type="folder" name={version} accent />
-            ) : null}
-            {['en', 'zh'].map(language => (
-              <div key={language}>
-                <TreeRow
-                  depth={versioned ? 1 : 0}
-                  type="folder"
-                  name={language}
-                  tag={language === 'en' ? 'English' : '简体中文'}
-                  accent
-                />
-                <TreeRow
-                  depth={versioned ? 2 : 1}
-                  type="file"
-                  name="index.md"
-                />
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className={styles.i18nRoutes}>
-        <span className={styles.i18nRouteLabel}>{t('homeI18nRoutes')}</span>
-        {versions.flatMap(version =>
-          ['en', 'zh'].map(language => {
-            const file = ['docs', version, language, 'index.md']
-              .filter(Boolean)
-              .join('/');
-            const prefix = [
-              version === 'v2' ? version : '',
-              language === 'zh' ? language : '',
-            ]
-              .filter(Boolean)
-              .join('/');
-            return (
-              <div key={file} className={styles.i18nRoute}>
-                <code>{file}</code>
-                <IconArrowRight />
-                <code>{prefix ? `/${prefix}/` : '/'}</code>
-              </div>
-            );
-          }),
-        )}
-        <p>
-          {versioned
-            ? t('homeI18nVersionDefault')
-            : t('homeI18nLanguageDefault')}
-        </p>
-      </div>
+      {renderTree(true)}
+      {renderTree(false)}
     </div>
   );
 }
@@ -819,6 +1146,7 @@ export function HomeSections() {
           text: t('homeI18nVersionLink'),
           href: `${prefix}/guide/basic/multi-version`,
         }}
+        compact
         visual={<I18nVisual />}
       />
       <Section

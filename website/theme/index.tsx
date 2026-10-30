@@ -45,10 +45,7 @@ function HomeLayout(props: HomeLayoutProps) {
         </SlotPreview>
       }
       afterHeroActions={
-        <div
-          className="rp-doc"
-          style={{ width: '100%', maxWidth: 450, margin: '-1rem 0' }}
-        >
+        <div className="rp-doc home-install">
           <PackageManagerTabs command="create rspress@latest" />
         </div>
       }
