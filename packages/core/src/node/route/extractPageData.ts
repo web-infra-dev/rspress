@@ -382,7 +382,7 @@ async function getPageIndexInfoByRoute(
   // 1. Replace rules for frontmatter & content
   applyReplaceRulesToNestedObject(frontmatter, replaceRules);
 
-  const { flattenContent } = await flattenMdxContent(
+  const { flattenContent, deps } = await flattenMdxContent(
     applyReplaceRules(contentWithoutFrontMatter, replaceRules),
     route.absolutePath,
     alias,
@@ -412,6 +412,7 @@ async function getPageIndexInfoByRoute(
       toc: rawToc.map(item => ({ ...item, charIndex: -1 })),
       content: '',
       description: frontmatter.description || extractedDescription || undefined,
+      ...(deps.length ? { _deps: deps } : {}),
       _flattenContent: flattenContent,
       frontmatter: {
         ...frontmatter,
@@ -434,6 +435,7 @@ async function getPageIndexInfoByRoute(
     // processed markdown content for search index
     content: processedContent,
     description: frontmatter.description || extractedDescription || undefined,
+    ...(deps.length ? { _deps: deps } : {}),
     _flattenContent: flattenContent,
     frontmatter: {
       ...frontmatter,
