@@ -1,0 +1,11 @@
+cases:
+  - name: COMPONENT-01 Switch code tabs
+    tags: [original-tabs]
+    steps:
+      - app.open: { fixture: tabs-component, path: / }
+      - aiAct: Find Tab d and bring its active code panel into view without changing the selected tab.
+      - aiAssert: Tab d initially displays content markup, not content subscribe, and index.markup is the selected tab.
+      - aiAct: Find Tab d, select its index.js tab, and bring the entire active code panel into view.
+      - aiAssert: Tab d displays content subscribe in the active code panel.
+      - aiAct: Select the index.markup tab in Tab d and bring the entire active code panel into view.
+      - aiAssert: Tab d displays content markup in the active code panel.

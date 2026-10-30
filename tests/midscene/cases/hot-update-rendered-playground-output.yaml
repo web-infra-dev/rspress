@@ -1,0 +1,10 @@
+cases:
+  - name: PLAYGROUND-02 Hot-update rendered playground output
+    tags: [original-playground]
+    steps:
+      - app.open: { fixture: plugin-playground, path: / }
+      - aiAct: Find the rendered plain text Hello World Internal (default) in the first playground. Stop as soon as this text is visible outside the line-numbered source editor; the whole card and its empty area do not need to fit on screen. If scrolling is needed, use the blank outer page margin, never the code editor. Do not edit code.
+      - aiAssert: The first playground output displays Hello World Internal (default).
+      - fixture.update: { part: playground }
+      - aiAct: Wait for the rendered first playground output to display Hello World Internal (updated). Do not reload or navigate elsewhere; stop if it has not changed within 30 seconds.
+      - aiAssert: The rendered first playground output displays Hello World Internal (updated).

@@ -1,0 +1,7 @@
+cases:
+  - name: PLUGIN-04 Read a Vue component preview
+    tags: [original-custom-preview]
+    steps:
+      - app.open: { fixture: plugin-preview-custom-entry, path: / }
+      - aiAct: Use documentation navigation to open the Vue guide.
+      - aiAssert: The rendered Vue preview displays Hello World VUE.

@@ -1,0 +1,8 @@
+cases:
+  - name: COMPAT-06 Recover from a missing page with React Router DOM 6
+    tags: [original-compatibility-fallback]
+    steps:
+      - app.open: { fixture: react-router-dom-6, path: /404 }
+      - aiAssert: The page displays a 404 message.
+      - aiAct: Click the center of the outlined Take me home button directly below PAGE NOT FOUND. The button is centered horizontally in the whole viewport; the blank area to its right is not the button. Wait for the Hello world article containing react-router-dom 6. If the 404 page stays unchanged, inspect the screenshot and locate the actual button again instead of repeatedly clicking the same blank position. Do not use Home navigation, Open suspended page, search, the address bar, or reload.
+      - aiAssert: The Hello world article is visible and contains react-router-dom 6.

@@ -1,0 +1,13 @@
+cases:
+  - name: LAYOUT-02 Read the custom home layout
+    tags:
+      [
+        original-layouts,
+        replacement-batch-3,
+        replacement-final-existing,
+        ci-failure-regression,
+      ]
+    steps:
+      - app.open: { fixture: custom-layout, path: / }
+      - aiAct: Inspect the top navigation and the wide home-layout area below it. This fixture deliberately has no configured hero title, tagline, or action buttons. Stay on this page; do not search for missing content, reload, or toggle the theme.
+      - aiAssert: The home page shows top navigation with Home, Search, and an appearance control above a wide empty home-layout area. It has no documentation article, sidebar, or table of contents.

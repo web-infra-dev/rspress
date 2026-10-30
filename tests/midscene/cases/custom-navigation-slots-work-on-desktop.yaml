@@ -1,0 +1,10 @@
+cases:
+  - name: CONTENT-03 Custom navigation slots work on desktop
+    tags: [original-slots, replacement-batch-3-slots]
+    steps:
+      - app.open: { fixture: nav-slots, mode: production, path: / }
+      - aiAssert: The desktop navigation includes the custom labels BL, L1, L2, AL in that relative order on the left and BR, R1, R2, AR, More in that relative order on the right. This is not an exhaustive list of navigation items; Home, Search, and a theme toggle may also be present.
+      - aiAct: Hover over More at the right end of the top navigation and wait for its dropdown containing the Target link. Stop when Target is visible. Do not look for or expand Nested; on desktop the Target link is directly visible in this dropdown. Do not navigate using the other navigation labels.
+      - aiAssert: The More dropdown is open and shows the Target link.
+      - aiAct: Click Target inside the open More dropdown. Wait until the main article heading is Target and its body says Navigation destination. The original Navigation slots article is not the destination. Stay on the Target article once it opens.
+      - aiAssert: The Target article is open.

@@ -1,0 +1,8 @@
+cases:
+  - name: READ-07 Expand the restored guide sidebar
+    tags: [original-home-sidebar, migration-regression]
+    steps:
+      - app.open: { fixture: issue-1309, path: / }
+      - aiAssert: The home page has no documentation sidebar.
+      - aiAct: Use the top navigation to open Guide.
+      - aiAssert: The guide page displays its sidebar instead of the home page layout.

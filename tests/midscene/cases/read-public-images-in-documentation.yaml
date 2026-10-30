@@ -1,0 +1,7 @@
+cases:
+  - name: READ-08 Read public images in documentation
+    tags: [original-public-image]
+    steps:
+      - app.open: { fixture: public-dir, path: /base/ }
+      - aiAct: Bring the large illustrated mascot image below Hello world into view. Stay on this article and do not use search.
+      - aiAssert: The article image is rendered, not a broken-image placeholder.

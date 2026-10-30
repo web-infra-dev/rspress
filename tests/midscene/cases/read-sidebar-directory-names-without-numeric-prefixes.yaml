@@ -1,0 +1,8 @@
+cases:
+  - name: OVERVIEW-05 Read sidebar directory names without numeric prefixes
+    tags: [original-overviews, replacement-batch-3-overviews]
+    steps:
+      - app.open:
+          { fixture: auto-nav-sidebar-issue-1682, path: /010.sub-directory/ }
+      - aiAct: In the left sidebar, expand the Second sub-directory group using its disclosure arrow so that its child link test is visible beneath it. Leave First sub-directory, Second sub-directory, and test visible together in the sidebar. The test link in the article footer is not the sidebar child.
+      - aiAssert: The sidebar has exactly three entries in order First sub-directory, Second sub-directory, and test, without numeric filename prefixes.

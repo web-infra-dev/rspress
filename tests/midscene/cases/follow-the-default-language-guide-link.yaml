@@ -1,0 +1,13 @@
+cases:
+  - name: NAV-12 Follow the default language guide link
+    tags:
+      [
+        original-locale-links,
+        replacement-batch-2-navigation,
+        replacement-batch-6,
+      ]
+    steps:
+      - app.open: { fixture: i18n, path: /guide/basic/quick-start }
+      - aiAssert: The Chinese sidebar displays 基本 and the section heading 成长.
+      - aiAct: Follow the absolute-path installation link inside the Chinese article.
+      - aiAssert: The 安装 article is visible and the navigation language remains 简体中文.

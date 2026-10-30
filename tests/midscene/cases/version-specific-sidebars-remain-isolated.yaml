@@ -1,0 +1,10 @@
+cases:
+  - name: NAV-05 Version-specific sidebars remain isolated
+    tags: [original-version-sidebar, replacement-batch-3]
+    steps:
+      - app.open: { fixture: multi-version-global-sidebar, path: / }
+      - aiAssert: The initial article heading is Version one. The sidebar has only Version one and Version one guide, with no Version two entries.
+      - aiAct: Switch to v2 using the version selector. Stay on its landing page.
+      - aiAssert: The article heading is Version two. The sidebar has only Version two and Version two guide, with no Version one entries.
+      - aiAct: Open Version two guide from the sidebar.
+      - aiAssert: Version two guide is open, the sidebar contains Version two entries, and no Version one guide entry is shown.

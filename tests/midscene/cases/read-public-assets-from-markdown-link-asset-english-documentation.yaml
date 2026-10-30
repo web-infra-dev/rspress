@@ -1,0 +1,17 @@
+cases:
+  - name: ASSET-01 Read public assets from markdown-link-asset English documentation
+    tags: [replacement-final-assets]
+    steps:
+      - app.open:
+          {
+            fixture: markdown-link-asset,
+            mode: production,
+            path: /base/public-asset-test,
+          }
+      - aiAssert: The Public asset test article displays six links including svg in public folder, txt in public folder, html in public folder, md in public folder, and two interface.DataProcessorDefinition links.
+      - aiAct: Follow txt in public folder.
+      - aiAssert: The opened text document displays Plain Text.
+      - aiAct: Use browser back navigation to return to the Public asset test article. Click the link with the exact visible text html in public folder, between txt in public folder and md in public folder. Do not click either interface.DataProcessorDefinition link.
+      - aiAssert: The opened HTML document displays Hello world as its heading.
+      - aiAct: Use browser back navigation to return to the Public asset test article. Click the link with the exact visible text md in public folder, directly below html in public folder. Do not click either interface.DataProcessorDefinition link.
+      - aiAssert: The opened raw Markdown document displays the literal text # Test.

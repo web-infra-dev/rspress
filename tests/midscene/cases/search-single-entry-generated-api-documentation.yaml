@@ -1,0 +1,10 @@
+cases:
+  - name: PLUGIN-06 Search single-entry generated API documentation
+    tags: [original-single-api, replacement-batch-4]
+    steps:
+      - app.open: { fixture: plugin-api-docgen/single, path: /zh/ }
+      - aiAssert: The Button API table is visible with 属性, 说明, 类型, 默认值, disabled, and size.
+      - aiAct: Return to the documentation home using the site logo, then open documentation search and search for disabled. Stay in the search dialog.
+      - aiAssert: Exactly one result for the generated API documentation is listed.
+      - aiAct: Open that generated API documentation result and bring its Button table into view.
+      - aiAssert: The Button API table displays 属性, 说明, 类型, 默认值 columns. The disabled row has Whether to disable the button, - This is extra line a, - This is extra line b, a type that includes boolean (the optional property may also include undefined), and a dash default. The size row has Type of Button, a type containing the four string options "mini", "small", "default", and "large" (the optional property may also include undefined), and the default value 'default'.

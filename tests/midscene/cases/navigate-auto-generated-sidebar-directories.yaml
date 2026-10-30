@@ -1,0 +1,8 @@
+cases:
+  - name: NAV-06 Navigate auto-generated sidebar directories
+    tags: [original-sidebar, replacement-batch-5]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar-no-meta, path: / }
+      - aiAssert: The sidebar contains HomePage, API, plugin, Plugin a, Plugin b, Commands, config, Basic config, Build config, Front matter config, and Theme config in that order, with no additional entries.
+      - aiAct: Use the sidebar to open Basic config inside Rspress config. Do not use search or enter a URL.
+      - aiAssert: The Basic config article is open with root and logoText sections.

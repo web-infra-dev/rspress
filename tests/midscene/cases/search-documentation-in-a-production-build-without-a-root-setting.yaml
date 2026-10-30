@@ -1,0 +1,7 @@
+cases:
+  - name: FALLBACK-04 Search documentation in a production build without a root setting
+    tags: [original-fallback]
+    steps:
+      - app.open: { fixture: no-config-root, mode: production, path: / }
+      - aiAct: Open documentation search, search for Hello world, and open the matching result.
+      - aiAssert: The Hello world article is visible and the search dialog is closed.

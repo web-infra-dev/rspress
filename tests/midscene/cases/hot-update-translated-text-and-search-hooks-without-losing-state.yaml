@@ -1,0 +1,24 @@
+cases:
+  - name: VIRTUAL-02 Hot-update translated text and search hooks without losing state
+    tags:
+      [
+        original-virtual-hmr,
+        migration-regression,
+        remote-inline-virtual-regression,
+      ]
+    steps:
+      - app.open: { fixture: hmr-lazy, path: /guide/test.html }
+      - aiAct: Find the bottom status row showing Translation before, Search hook before, and the button Count 0. Click the Count 0 button and wait until its label changes to Count 1. Stop as soon as Count 1 is visible; do not click it again. Stay on this article.
+      - aiAssert: Translation before, Search hook before, and Count 1 are visible in the global component.
+      - fixture.update: { part: translation }
+      - aiAct: Watch the Translation before text at the beginning of the bottom status row until that portion reads Translation after. The adjacent Search hook before text and Count 1 button remain in the same row; do not wait for them to disappear. Do not reload or navigate elsewhere; stop if the translation portion has not updated within 30 seconds.
+      - aiAssert: Translation after and Count 1 are visible.
+      - fixture.update: { part: search-hook }
+      - aiAct: Watch the bottom status row beside the Count 1 button, not the top navigation Search control. Wait for this row to display Search hook after alongside Translation after. Do not reload or navigate elsewhere; stop if it has not updated within 30 seconds.
+      - aiAssert: Translation after, Search hook after, and Count 1 are visible.
+      - fixture.update: { part: search-renderer-remove }
+      - aiAct: Watch the bottom status row beside the Count 1 button until its Search hook after text is replaced by No custom renderer. Do not interact with the top Search control, reload, or navigate elsewhere; stop if it has not updated within 30 seconds.
+      - aiAssert: No custom renderer and Count 1 are visible in the global component.
+      - fixture.update: { part: counter-label }
+      - aiAct: Watch the counter button in the bottom status row until it displays Updated count with the retained value 1. Do not click it again, reload, or navigate elsewhere; stop if the label has not updated within 30 seconds.
+      - aiAssert: The global component displays Updated count 1, retaining its previous counter value.

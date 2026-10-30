@@ -1,0 +1,13 @@
+cases:
+  - name: THEME-02 Forced dark documentation ignores a saved light preference
+    tags: [original-theme-config]
+    steps:
+      - app.open:
+          {
+            fixture: basic-force-dark,
+            path: /,
+            colorScheme: light,
+            savedAppearance: light,
+          }
+      - aiAct: Bring the Hello world article and top navigation into view. Stay on the article.
+      - aiAssert: The page uses a dark reading theme and does not offer an appearance switch in the top navigation.

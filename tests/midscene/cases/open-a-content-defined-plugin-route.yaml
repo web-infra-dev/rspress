@@ -1,0 +1,7 @@
+cases:
+  - name: OVERVIEW-06 Open a content-defined plugin route
+    tags: [original-overviews]
+    steps:
+      - app.open: { fixture: custom-plugin, path: / }
+      - aiAct: Open documentation search, search for Demo2, and open the matching result.
+      - aiAssert: The content-defined plugin article displays Demo2.

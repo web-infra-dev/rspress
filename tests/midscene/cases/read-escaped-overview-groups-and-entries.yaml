@@ -1,0 +1,23 @@
+cases:
+  - name: INLINE-03 Read escaped overview groups and entries
+    tags: [replacement-final-inline, remote-regression]
+    steps:
+      - app.open: { fixture: inline-markdown, path: /inline/index }
+      - aiAct: Bring the beginning of the central overview into view, ignoring duplicate labels in the sidebars.
+      - aiAssert: The overview begins with two groups titled Class Component<P, S>. Each group's own card title reads Class Component<P, S>.
+      - aiAct: Scroll only the central overview to show the bold group heading and its entire card. Do not follow any link.
+      - aiAssert: The group headed bold contains a card titled bold. Both labels are readable text, not raw HTML tags.
+      - aiAct: Scroll only the central overview to show the emphasis group heading and its entire card. Do not follow any link.
+      - aiAssert: The group headed emphasis contains a card titled emphasis. Both labels are readable text, not raw HTML tags.
+      - aiAct: Scroll the central overview to the <foo> group. Show its heading and its card title together, then stop without clicking any link.
+      - aiAssert: The group heading and its own card title both read <foo>, preserving the angle brackets.
+      - aiAct: Continue down the central overview to the -m <number> group. Show its heading and its card title together inside the viewport, then stop without clicking any link.
+      - aiAssert: The group heading and its own card title both read -m <number>, preserving the angle brackets.
+      - aiAct: Scroll the central overview to the delete and link groups.
+      - aiAssert: The group headed delete contains a card titled delete. The separate group headed link contains a card titled link.
+      - aiAct: Scroll only the main document to the generic Class Component group below the link group. Show its heading and card together, then stop. Do not click any links or try to fit later groups on screen.
+      - aiAssert: Below the link group, the generic group heading reads Class Component<P = { }, S = { }, SS = any>. Its card repeats the same generic type text.
+      - aiAct: Continue down the main overview to the next group, Class Foo. Show its heading and card together, then stop without clicking any link.
+      - aiAssert: The next group heading reads Class Foo<T = { }>, and its card repeats the same generic type text.
+      - aiAct: Continue down the main overview to the final group, Class Bar. Show its heading and card together, then stop without clicking any link.
+      - aiAssert: The final group heading reads Class Bar<T = any>, and its card repeats the same generic type text.

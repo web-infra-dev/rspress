@@ -1,0 +1,9 @@
+cases:
+  - name: CONTENT-07 Follow previous and next links with generic headings
+    tags: [original-markdown, replacement-final-existing]
+    steps:
+      - app.open: { fixture: inline-markdown, path: /inline/generic-braces }
+      - aiAct: Bring the previous and next article links at the bottom into view, without following them yet.
+      - aiAssert: The previous article label reads Class Component<P = { }, S = { }, SS = any> and the next article label reads Class Bar<T = any>. The generic symbols are preserved as readable text.
+      - aiAct: Find the next article link at the bottom and follow Class Bar.
+      - aiAssert: The article heading is Class Bar with the generic type T and default any displayed as text.

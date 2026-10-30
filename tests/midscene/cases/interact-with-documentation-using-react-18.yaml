@@ -1,0 +1,7 @@
+cases:
+  - name: COMPAT-01 Interact with documentation using React 18
+    tags: [original-compatibility, replacement-batch-2]
+    steps:
+      - app.open: { fixture: react-18, path: / }
+      - aiAct: Open search, search for Hello world, and open the matching result.
+      - aiAssert: The Hello world article is visible and contains react 18.

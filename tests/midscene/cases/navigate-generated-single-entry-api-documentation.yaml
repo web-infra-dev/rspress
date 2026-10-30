@@ -1,0 +1,9 @@
+cases:
+  - name: TYPEDOC-01 Navigate generated single-entry API documentation
+    tags: [original-typedoc, replacement-final-existing]
+    steps:
+      - app.open: { fixture: plugin-typedoc/single, path: /api/ }
+      - aiAct: Bring the generated API sidebar into view, expanding its Functions and Types groups if needed.
+      - aiAssert: The sidebar contains six entries in order @rspress-fixture/rspress-plugin-typedoc-single, Functions, Function createMiddleware(), Function mergeMiddlewares(), Types, and Type Alias Middleware.
+      - aiAct: In the generated API sidebar, expand Functions if needed and open createMiddleware.
+      - aiAssert: The generated createMiddleware function article is open and the sidebar offers mergeMiddlewares and the Middleware type.

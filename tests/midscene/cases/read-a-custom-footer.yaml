@@ -1,0 +1,7 @@
+cases:
+  - name: READ-06 Read a custom footer
+    tags: [original-footer, replacement-batch-2]
+    steps:
+      - app.open: { fixture: custom-home-footer, path: / }
+      - aiAct: Scroll to the home page footer.
+      - aiAssert: Custom footer text is visible at the bottom of the home page.

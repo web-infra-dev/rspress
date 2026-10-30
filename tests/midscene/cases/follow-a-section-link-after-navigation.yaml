@@ -1,0 +1,7 @@
+cases:
+  - name: READ-03 Follow a section link after navigation
+    tags: [original-anchor]
+    steps:
+      - app.open: { fixture: hash-anchor-scroll, path: /docs/source }
+      - aiAct: Click directly on the blue Target section text below Copy Markdown on the left side of the article. Wait until the Source page is replaced by the destination containing the Target heading. If Source is still visible, the navigation has not happened; locate and activate the blue link again. Do not manually scroll after navigation or use the address bar, because this test checks automatic positioning of the target heading.
+      - aiAssert: The Target heading is visible below the navigation without being obscured.

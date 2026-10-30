@@ -1,0 +1,8 @@
+cases:
+  - name: NAV-02 Follow a deeply nested link on a phone
+    tags: [original-nav]
+    steps:
+      - app.open: { fixture: nav-link-items, path: /, viewport: mobile }
+      - aiAct: Open the site navigation using the hamburger icon at the top RIGHT beside search. Do not click the separate Menu button below the header on the left; it opens the article sidebar. Wait until OnlyLink, OnlyItems, ItemsAndLink, and NestedItems are visible in the site navigation.
+      - aiAct: In the open site navigation, expand NestedItems, then Level1, then Level2Nested, and follow Level3Item2. Wait for the Level 3 item 2 article to open and the navigation to close. Do not use search, the article sidebar, or direct URL entry.
+      - aiAssert: The article heading is Level 3 item 2 and the navigation menu is no longer covering it.

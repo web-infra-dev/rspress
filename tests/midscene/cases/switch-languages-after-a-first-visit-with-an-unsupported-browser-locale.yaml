@@ -1,0 +1,10 @@
+cases:
+  - name: NAV-15 Switch languages after a first visit with an unsupported browser locale
+    tags: [original-locale-links, replacement-batch-6]
+    steps:
+      - app.open: { fixture: i18n, path: /, locale: nl-NL }
+      - aiAssert: The 首页 article is visible with the code text 你好，Rspress, and the navigation language is 简体中文. No page-not-found message is displayed.
+      - aiAct: Hover over 简体中文 in the top navigation to open its language menu. Do not choose a language yet.
+      - aiAssert: The language menu is open and offers English.
+      - aiAct: Choose English from the open language menu.
+      - aiAssert: The Index article is visible with the code text Hello, Rspress, and the navigation language is English.

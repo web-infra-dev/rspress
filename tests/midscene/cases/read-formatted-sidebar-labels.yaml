@@ -1,0 +1,9 @@
+cases:
+  - name: INLINE-01 Read formatted sidebar labels
+    tags: [replacement-final-inline]
+    steps:
+      - app.open: { fixture: inline-markdown, path: /inline/index }
+      - aiAct: Bring the upper portion of the left sidebar into view, keeping this overview page open.
+      - aiAssert: The sidebar starts with Overview, two Class Component<P, S> entries, then bold, emphasis, <foo>, and -m <number> in that order. Angle brackets appear as text rather than disappearing.
+      - aiAct: Scroll within the left sidebar to bring its lower entries starting from delete into view. Do not navigate.
+      - aiAssert: Starting at delete, five consecutive sidebar entries read delete, link, Class Component<P = { }, S = { }, SS = any>, Class Foo<T = { }>, and Class Bar<T = any> in that order. Earlier sidebar entries such as -m <number> may also remain visible above delete. The generic type text is readable.

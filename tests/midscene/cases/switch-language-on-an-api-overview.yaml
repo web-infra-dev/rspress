@@ -1,0 +1,10 @@
+cases:
+  - name: NAV-03 Switch language on an API overview
+    tags: [original-i18n, replacement-batch-2-navigation]
+    steps:
+      - app.open: { fixture: i18n, path: /api }
+      - aiAssert: The API Overview initially shows the introductory text zh, not en, with 简体中文 selected.
+      - aiAct: In the top navigation, hover over the current language 简体中文 and choose English from its language menu. Do not type into the API filter.
+      - aiAssert: The Overview heading and the introductory text en are visible, zh is absent from the overview, and the top navigation language is English.
+      - aiAct: In the top navigation, hover over English and choose 简体中文 from its language menu. Do not type into the API filter.
+      - aiAssert: The Overview heading and the introductory text zh are visible, en is absent from the overview, and the top navigation language is 简体中文.

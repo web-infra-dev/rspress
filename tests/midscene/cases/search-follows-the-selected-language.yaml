@@ -1,0 +1,11 @@
+cases:
+  - name: SEARCH-07 Search follows the selected language
+    tags: [original-localized-search, replacement-batch-3]
+    steps:
+      - app.open: { fixture: search-i18n, path: / }
+      - aiAct: Open the search dialog and type Button into its input. Keep the dialog open with the results visible; do not press Enter or select a result.
+      - aiAssert: A search result containing Button en is visible.
+      - aiAct: Close search, switch the site language to 简体中文 using the language menu, then open search and type Button into its input. Keep the dialog open with its results visible; do not press Enter or select a result.
+      - aiAssert: A search result containing Button 中文 is visible and Button en is not listed.
+      - aiAct: Close search, switch the site language back to English using the language menu, then open search and type Button into its input. Keep the dialog open with its results visible; do not press Enter or select a result.
+      - aiAssert: The first search result contains Button en and no Button 中文 result is listed.

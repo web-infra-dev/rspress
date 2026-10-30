@@ -1,0 +1,7 @@
+cases:
+  - name: READ-09 Read a heading through the table of contents
+    tags: [original-toc, replacement-batch-3]
+    steps:
+      - app.open: { fixture: dynamic-toc, path: / }
+      - aiAct: Wait for the Term heading and its On this page entry to update to Term dynamic & content. Then use that On this page entry to open the heading.
+      - aiAssert: The article heading and its On this page entry both display Term dynamic & content, with a readable ampersand rather than an encoded ampersand entity.

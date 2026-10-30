@@ -1,0 +1,21 @@
+cases:
+  - name: CONTENT-01 Follow a generated API overview link
+    tags:
+      [
+        original-overview,
+        replacement-batch-3-overviews,
+        replacement-final-existing,
+        ci-failure-regression,
+      ]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/index.html }
+      - aiAct: Scroll only the main document to show the Config overview group with its Basic config, Theme config, Build config rows and the three cards below. Stay on the current API Overview page. Do not click Config in the sidebar, any card, any heading, or any link; those navigate to a different overview. Stop once the group is visible.
+      - aiAssert: In the main overview content, Config has three wide rows titled Basic config, Theme config, and Build config from top to bottom, followed by cards titled Front matter config, Extname config, and Nested from left to right. The rows include links root, logoText, nav, sidebar, builderConfig, Default config, markdown, and markdown.remarkPlugins. Nested is a directory card, not an article. Ignore the separate sidebar ordering.
+      - aiAct: Scroll only the main document to show both Components and Runtime API entries in the Client API overview group. Do not click any sidebar entry, heading, card, or link. Stay on the current API Overview page.
+      - aiAssert: The Client API overview contains a Components row with Usage and Example links, followed by a separate card titled Runtime API. Runtime API is a title-only card in this overview.
+      - aiAct: Scroll the main API Overview article to the Commands overview entry and its rspress dev and rspress build links. Stay on the overview; do not click or scroll the sidebar.
+      - aiAssert: The Commands overview entry in the main article offers rspress dev and rspress build links.
+      - aiAct: Scroll the main article farther down to show the Single, Section a, and Section b overview cards, including the Section b card below its heading. Stay on API Overview without clicking a link.
+      - aiAssert: The main overview article shows cards titled Single, Section a, and Section b. These are title-only cards; they do not need child article links.
+      - aiAct: In the API overview article, follow the Commands link. Do not use the sidebar or search.
+      - aiAssert: The Commands article is open with rspress dev and rspress build sections.

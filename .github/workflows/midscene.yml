@@ -1,0 +1,165 @@
+name: E2E Testing by Midscene
+
+# AI-native visual E2E against original repository fixtures and local smoke pages.
+# Model credentials are scoped to verification and case execution.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      [
+        'packages/**',
+        'e2e/**',
+        'tests/midscene/**',
+        '.github/workflows/midscene.yml',
+        'pnpm-lock.yaml',
+        'pnpm-workspace.yaml',
+      ]
+  workflow_dispatch:
+    inputs:
+      publish_pages:
+        description: Publish reports to Cloudflare Workers
+        required: false
+        type: boolean
+        default: true
+
+# Model runs use relevant upstream main pushes or trusted manual dispatch.
+# Cloudflare publication is optional; configured credentials enable it by default.
+
+permissions:
+  contents: read
+
+# Model-backed runs use a job-level lock to bound endpoint load.
+
+jobs:
+  midscene:
+    name: Midscene E2E
+    concurrency:
+      group: midscene-model-execution
+      cancel-in-progress: false
+    environment:
+      name: Model
+      deployment: false
+    if: >-
+      (github.repository == 'web-infra-dev/rspress' && github.ref == 'refs/heads/main' ||
+      (github.event_name == 'workflow_dispatch' && github.repository != 'web-infra-dev/rspress'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    env:
+      HEADLESS: 'true'
+      MIDSCENE_FILE_CONCURRENCY: '40'
+      # Request and output-format retries share this delay; case retries stay off.
+      MIDSCENE_MODEL_TIMEOUT: '120000'
+      MIDSCENE_MODEL_RETRY_COUNT: '4'
+      MIDSCENE_MODEL_RETRY_INTERVAL: '2000'
+      # The model endpoint is reachable over IPv4; avoid family-race timeouts.
+      NODE_OPTIONS: '--dns-result-order=ipv4first --no-network-family-autoselection'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      # pnpm must exist before setup-node resolves the pnpm store for its
+      # cache; without a version it reads the root `packageManager` field.
+      - name: Enable pnpm
+        uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5
+
+      - name: Activate Node.js 24 and pnpm
+        id: node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      # Capture source inputs before install/build creates generated files.
+      - name: Fingerprint workspace build inputs
+        id: build-inputs
+        env:
+          FINGERPRINT: ${{ hashFiles('*', 'packages/**', 'scripts/**', '!**/node_modules/**', '!**/dist/**', '!packages/create-rspress/template-basic-theme/**', '!packages/create-rspress/template-i18n-theme/**') }}
+        run: |
+          test -n "$FINGERPRINT"
+          echo "fingerprint=$FINGERPRINT" >> "$GITHUB_OUTPUT"
+
+      - name: Install workspace dependencies without developer hooks
+        run: |
+          pnpm install --frozen-lockfile --ignore-scripts
+          pnpm rebuild sharp esbuild
+
+      - name: Restore workspace build
+        id: workspace-build
+        uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          path: |
+            packages/*/dist
+            packages/create-rspress/template-basic-theme
+            packages/create-rspress/template-i18n-theme
+          key: midscene-build-v2-${{ runner.os }}-${{ runner.arch }}-${{ steps.node.outputs.node-version }}-${{ steps.build-inputs.outputs.fingerprint }}
+
+      - name: Build checked-out packages on cache miss
+        if: steps.workspace-build.outputs.cache-hit != 'true'
+        run: pnpm run build
+
+      - name: Save workspace build
+        if: steps.workspace-build.outputs.cache-hit != 'true'
+        uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5
+        with:
+          path: |
+            packages/*/dist
+            packages/create-rspress/template-basic-theme
+            packages/create-rspress/template-i18n-theme
+          key: ${{ steps.workspace-build.outputs.cache-primary-key }}
+
+      - name: Install Chromium for Midscene
+        working-directory: tests/midscene
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Validate fixture support before model access
+        working-directory: tests/midscene
+        run: pnpm run typecheck
+
+      - name: Verify Midscene model compatibility
+        working-directory: tests/midscene
+        # Only model verification and case execution receive model credentials.
+        env:
+          MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
+          MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME || secrets.MIDSCENE_MODEL_NAME }}
+          MIDSCENE_MODEL_BASE_URL: ${{ vars.MIDSCENE_MODEL_BASE_URL || secrets.MIDSCENE_MODEL_BASE_URL }}
+          MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY || secrets.MIDSCENE_MODEL_FAMILY }}
+          MIDSCENE_MODEL_REASONING_ENABLED: ${{ vars.MIDSCENE_MODEL_REASONING_ENABLED || secrets.MIDSCENE_MODEL_REASONING_ENABLED }}
+        run: pnpm run check:model
+
+      - name: Configure optional report publication
+        id: report-publication
+        env:
+          PUBLISH_REQUESTED: ${{ github.event_name != 'workflow_dispatch' || inputs.publish_pages }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [[ "$PUBLISH_REQUESTED" == true && -n "$CLOUDFLARE_API_TOKEN" && -n "$CLOUDFLARE_ACCOUNT_ID" ]]; then
+            echo 'enabled=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'enabled=false' >> "$GITHUB_OUTPUT"
+            echo '::notice::Online reports are disabled or Cloudflare credentials are missing. Tests, Summary, and report artifacts remain enabled.'
+            echo 'Online HTML publication is disabled or Cloudflare credentials are missing. Test results and downloadable report artifacts remain available below.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Run all Midscene cases
+        id: midscene-test
+        uses: web-infra-dev/midscene-action@5ef922b20a69d69a0f34639c4c867ba2049f6ede # v1
+        env:
+          MIDSCENE_MODEL_API_KEY: ${{ secrets.MIDSCENE_MODEL_API_KEY }}
+          MIDSCENE_MODEL_NAME: ${{ vars.MIDSCENE_MODEL_NAME || secrets.MIDSCENE_MODEL_NAME }}
+          MIDSCENE_MODEL_BASE_URL: ${{ vars.MIDSCENE_MODEL_BASE_URL || secrets.MIDSCENE_MODEL_BASE_URL }}
+          MIDSCENE_MODEL_FAMILY: ${{ vars.MIDSCENE_MODEL_FAMILY || secrets.MIDSCENE_MODEL_FAMILY }}
+          MIDSCENE_MODEL_REASONING_ENABLED: ${{ vars.MIDSCENE_MODEL_REASONING_ENABLED || secrets.MIDSCENE_MODEL_REASONING_ENABLED }}
+          MIDSCENE_REPLANNING_CYCLE_LIMIT: '40'
+          MIDSCENE_RETRY: '0'
+        with:
+          working-directory: tests/midscene
+          command: timeout --signal=TERM --kill-after=10s 220m pnpm exec midscene-test
+          artifact-name: midscene-results
+          retention-days: '14'
+          publish-pages: ${{ steps.report-publication.outputs.enabled }}
+          cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          cloudflare-account-id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          cloudflare-worker-name: rspress-midscene-reports

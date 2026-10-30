@@ -1,0 +1,9 @@
+cases:
+  - name: PLAYGROUND-03 Read playground and preview on the same page
+    tags: [original-playground, replacement-batch-4]
+    steps:
+      - app.open: { fixture: plugin-playground-preview, path: / }
+      - aiAct: Use the Playground demo link in the right-hand On this page navigation to bring that section into view. Stop when the plain text Hello World Playground is visible in the rendered pane to the right of the line-numbered editor; the entire editor and its empty area do not need to fit on screen. Do not scroll inside or edit the code editor.
+      - aiAssert: The rendered playground displays Hello World Playground.
+      - aiAct: Bring the Preview demo section into view. If the rendered Hello World Preview text is already visible outside the source code, stop immediately. Otherwise click the Preview demo link in the right-hand On this page navigation once. Stop when the rendered text is visible; the active navigation highlight does not need to change. Do not edit code or navigate away from this page.
+      - aiAssert: The rendered preview displays Hello World Preview.

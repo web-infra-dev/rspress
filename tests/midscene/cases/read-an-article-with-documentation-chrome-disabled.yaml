@@ -1,0 +1,7 @@
+cases:
+  - name: LAYOUT-01 Read an article with documentation chrome disabled
+    tags: [original-layouts, replacement-batch-3]
+    steps:
+      - app.open: { fixture: custom-layout, path: /frontmatter }
+      - aiAct: Bring the existing Frontmatter heading into view. This fixture contains only that heading; do not search for more text or navigate elsewhere.
+      - aiAssert: Frontmatter is visible without a top navigation bar, documentation sidebar, table of contents, or document footer.

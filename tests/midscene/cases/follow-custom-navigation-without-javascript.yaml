@@ -1,0 +1,16 @@
+cases:
+  - name: STATIC-01 Follow custom navigation without JavaScript
+    tags:
+      [
+        original-static,
+        replacement-batch-3-slots,
+        remote-search-static-regression,
+      ]
+    steps:
+      - app.open:
+          { fixture: nav-slots, mode: production, javascript: false, path: / }
+      - aiAssert: The custom navigation links BL, AL, BR, and AR are visible.
+      - aiAct: Hover over More in the top navigation.
+      - aiAssert: The open More dropdown contains a visible Target link.
+      - aiAct: Follow the Target link in that dropdown.
+      - aiAssert: The Target article is visible.
