@@ -22,6 +22,7 @@ export const SidebarMenu = forwardRef(
       onIsOutlineOpenChange,
       beforeOutline,
       afterOutline,
+      showOutline: showOutlineProp,
     }: {
       isSidebarOpen: boolean;
       onIsSidebarOpenChange: (isOpen: boolean) => void;
@@ -29,6 +30,7 @@ export const SidebarMenu = forwardRef(
       onIsOutlineOpenChange: (isOpen: boolean) => void;
       beforeOutline?: ReactNode;
       afterOutline?: ReactNode;
+      showOutline?: boolean;
     },
     forwardedRef,
   ) => {
@@ -46,10 +48,11 @@ export const SidebarMenu = forwardRef(
     const {
       frontmatter: {
         sidebar: sidebarConfig = true,
-        outline: showOutline = true,
+        outline: frontmatterShowOutline = true,
       },
     } = useFrontmatter();
     const showSidebar = sidebarConfig === true;
+    const showOutline = showOutlineProp ?? frontmatterShowOutline;
 
     function openSidebar() {
       onIsSidebarOpenChange(true);
