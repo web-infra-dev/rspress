@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-sitemap",
-  "version": "2.1.0-beta.2",
+  "version": "2.1.0",
   "description": "Legacy sitemap plugin. Sitemap generation is built into @rspress/core via the sitemap config.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
