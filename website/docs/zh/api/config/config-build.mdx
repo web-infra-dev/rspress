@@ -46,6 +46,56 @@ export default defineConfig({
 
 :::
 
+### 构建报告
+
+默认情况下，`rspress build` 会在构建和 Rspress `afterBuild` 钩子执行完成后，打印页面目录树，同时保留 Rsbuild 各环境的总体积和压缩体积汇总。
+
+```text
+Page (raw size)     HTML  Markdown
+/                 6.5 kB   0.85 kB
+├─ guide/         4.3 kB   0.73 kB
+│  ├─ api/        1.3 kB   0.20 kB
+│  │  └─ config   1.3 kB   0.20 kB
+│  ├─ index       2.5 kB   0.45 kB
+│  └─ start      0.50 kB   0.08 kB
+├─ index          1.5 kB   0.12 kB
+└─ 404           0.75 kB         -
+```
+
+HTML 和 Markdown 列显示文件未压缩的体积，单位为十进制 kB。目录行汇总其所有子页面的体积，`/` 汇总全部页面，`index` 表示目录首页。`-` 表示文件不存在。[llms](/api/config/config-agent#llms) 为 `false` 时，不显示 Markdown 列。
+
+目录树使用 Rspress 默认的 `builderConfig.performance.printFileSize.detail: false` 配置。若要关闭全部文件体积报告：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    performance: {
+      printFileSize: false,
+    },
+  },
+});
+```
+
+若要改为显示 Rsbuild 原有的逐产物文件列表：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  builderConfig: {
+    performance: {
+      printFileSize: {
+        detail: true,
+      },
+    },
+  },
+});
+```
+
+这些配置同样遵循 `builderConfig.environments` 中的各环境覆盖：设置了 `detail: true` 的环境保留 Rsbuild 的文件列表，不在目录树中显示对应列。`total: false`、自定义 `total` 函数或 `diff: true` 也会让该环境继续使用 Rsbuild 的报告。详见 [Rsbuild - performance.printFileSize](https://rsbuild.rs/zh/config/performance/print-file-size)。
+
 ## builderConfig.plugins
 
 - **类型**: `RsbuildPlugin[]`
