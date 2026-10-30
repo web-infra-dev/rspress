@@ -17,6 +17,9 @@ hoistPattern: []
 
 linkWorkspacePackages: true
 
+overrides:
+  'gray-matter>js-yaml': ^3.15.1
+
 # Reduce the risk of installing compromised packages
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
