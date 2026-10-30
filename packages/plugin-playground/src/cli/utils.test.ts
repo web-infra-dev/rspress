@@ -1,6 +1,51 @@
 import { describe, expect, it } from '@rstest/core';
 import type { Code } from 'mdast';
-import { getNodeMeta } from './utils';
+import { getNodeMeta, parseImports } from './utils';
+
+describe('parseImports', () => {
+  it.each(['tsx', '.tsx'])(
+    'collects only static imports from %s',
+    sourceExt => {
+      expect(
+        parseImports(
+          `import React from 'react';
+import type { ReactNode } from 'react';
+import { Button } from 'ui';
+import './style.css';
+export { value } from 're-export';
+const lazy = import('dynamic');
+export default function Demo(): ReactNode {
+  return (<Button />);
+}`,
+          sourceExt,
+        ),
+      ).toEqual(['react', 'react', 'ui', './style.css']);
+    },
+  );
+
+  it.each(['jsx', '.js', '.mjs', '.cjs'])(
+    'preserves JSX support in %s',
+    sourceExt => {
+      expect(
+        parseImports(
+          `export default () => <div />;
+import React from 'react';`,
+          sourceExt,
+        ),
+      ).toEqual(['react']);
+    },
+  );
+
+  it('parses TypeScript assertions without treating them as JSX', () => {
+    expect(
+      parseImports(
+        `const value = <string>input;
+import after from 'after';`,
+        '.ts',
+      ),
+    ).toEqual(['after']);
+  });
+});
 
 const code = (meta?: string): Code => ({
   type: 'code',

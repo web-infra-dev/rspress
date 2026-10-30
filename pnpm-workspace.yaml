@@ -20,6 +20,7 @@ linkWorkspacePackages: true
 # Reduce the risk of installing compromised packages
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
+  - '@swc-next/*'
   - '@rspack/*'
   - '@rsbuild/*'
   - '@rslib/*'
