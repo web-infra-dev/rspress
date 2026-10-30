@@ -7,6 +7,7 @@ import {
   type RouteMeta,
   RSPRESS_TEMP_DIR,
   removeTrailingSlash,
+  safeDecodeURIComponent,
   type UserConfig,
 } from '@rspress/shared';
 import { DEFAULT_PAGE_EXTENSIONS } from '@rspress/shared/constants';
@@ -317,7 +318,7 @@ ${routeMeta
      *   filePath: '/Users/foo/bar/index.md'
      * }
      */
-    return `{ path: '${route.routePath}', element: React.createElement(${component}), filePath: '${route.relativePath}', preload: ${preload}, lang: '${route.lang}', version: '${route.version}' }`;
+    return `{ path: ${JSON.stringify(route.routePath)}, element: React.createElement(${component}), filePath: ${JSON.stringify(route.relativePath)}, preload: ${preload}, lang: ${JSON.stringify(route.lang)}, version: ${JSON.stringify(route.version)} }`;
   })
   .join(',\n')}
 ];
@@ -375,7 +376,7 @@ ${routeMeta
   }
 
   #linkToRoutePath(routePath: string) {
-    return decodeURIComponent(routePath.split('#')[0])
+    return safeDecodeURIComponent(routePath.split('#')[0])
       .replace(/\.html$/, '')
       .replace(/\/index$/, '/');
   }
