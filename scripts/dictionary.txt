@@ -194,7 +194,6 @@ webp
 wechat
 weibo
 weixin
-zeabur
 zhihu
 zhong
 Zovn
