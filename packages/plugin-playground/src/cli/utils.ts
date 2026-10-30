@@ -1,20 +1,19 @@
-import type { Program } from '@babel/types';
-import oxc from '@oxidation-compiler/napi';
+import { langFromPath, parseSync } from '@swc-next/parser';
 import type { Code } from 'mdast';
 
 export const parseImports = (code: string, sourceExt: string) => {
-  const parsed = oxc.parseSync(code, {
+  const lang = langFromPath(`index.${sourceExt}`);
+  const { program } = parseSync(code, {
+    // Preserve JSX support in JavaScript files, including .js, .mjs and .cjs.
+    lang: lang === 'js' ? 'jsx' : lang,
     sourceType: 'module',
-    sourceFilename: `index.${sourceExt}`,
+    comments: 'none',
   });
-
-  const ast = JSON.parse(parsed.program) as Program;
 
   const result: string[] = [];
 
-  // oxc didn't have "traverse", so it currently only scans the first level
-  // (generally, demos are not too complicated, right?)
-  ast.body.forEach(statement => {
+  // Static imports are top-level statements.
+  program.body.forEach(statement => {
     if (statement.type === 'ImportDeclaration') {
       result.push(statement.source.value);
     }
