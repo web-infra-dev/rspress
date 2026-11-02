@@ -1,19 +1,16 @@
 ---
+date: 2026-11-02
 authors: ['sooniter']
 description: 'Rspress 2.1.0 默认启用 SSG-MD，新增 WebMCP、内置 sitemap，并改进 URL、文档组件和路由体验。'
 sidebar: false
 pageType: doc
 ---
 
+_2026 年 11 月 2 日_
+
 # Rspress 2.1.0 发布公告 \{#announcing-rspress-210}
 
-:::info 发布稿草案
-
-2.1.0 正式版尚未发布。本文涵盖当前已合并的功能，正式发布日期待定。
-
-:::
-
-Rspress 2.1.0 的主要更新包括：
+Rspress 2.1.0 已正式发布，主要更新包括：
 
 - **SSG-MD 默认启用**：默认生成 `llms.txt` 和页面 Markdown，无需单独配置。
 - **新增 WebMCP 工具**：浏览器智能体可以直接查询、读取和导航文档。
@@ -142,17 +139,21 @@ Rspress 现在使用 React Router Data 模式。点击默认主题链接或调�
 
 ## 升级检查清单 \{#upgrade-checklist}
 
-正式版发布后，可按以下清单升级：
-
 - [ ] 将 `@rspress/core` 和使用的官方插件升级到对应版本。
 
-  ```bash
-  pnpm add -D @rspress/core@~2.1.0
+  ```json title="package.json"
+  {
+    "devDependencies": {
+      "@rspress/core": "~2.1.0"
+    }
+  }
   ```
 
 - [ ] 检查 SSG-MD 的服务端渲染兼容性。需要浏览器环境的内容可用 [`BrowserOnly`](/zh/ui/runtime-components/browser-only) 包裹。`ssg: false` 不会关闭 SSG-MD；完全不支持服务端渲染的站点，需要同时设置 `ssg: false` 和 `llms: false`。
 - [ ] 检查 sitemap 配置。已有项目可用内置 `sitemap` 替换 `@rspress/plugin-sitemap`；如果通过其他方式生成站点地图，可设置 `sitemap: false`。
 - [ ] 确认部署平台支持无 `.html` 后缀的 URL，例如访问 `/foo` 时直接返回 `/foo.html`。如需保留原有链接格式，可设置 `route.cleanUrls: false`。
 - [ ] 执行生产构建，修复发现的无效锚点。动态生成的锚点可通过 `markdown.link.checkAnchors.excludes` 排除，也可设置 `checkAnchors: false` 关闭检查。
+
+完整更新见 [v2.1.0 Release Notes](https://github.com/web-infra-dev/rspress/releases/tag/v2.1.0)。
 
 感谢所有参与这个版本的贡献者！欢迎通过 [GitHub](https://github.com/web-infra-dev/rspress) 分享反馈，也欢迎在 [Discord](https://discord.gg/mkVw5zPAtf) 与我们交流。
