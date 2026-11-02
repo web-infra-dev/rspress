@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  gray-matter>js-yaml: ^3.15.1
-
 importers:
 
   .:
