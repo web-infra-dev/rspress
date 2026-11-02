@@ -1,7 +1,7 @@
 ---
 date: 2026-11-02
 authors: ['sooniter']
-description: 'Rspress 2.1.0 默认启用 SSG-MD，新增 WebMCP、内置 sitemap，并改进 URL、文档组件和路由体验。'
+description: 'Rspress 2.1.0 默认启用 SSG-MD，内置 WebMCP 和 sitemap，默认启用简洁 URL、锚点检查，并支持滚动位置恢复。'
 sidebar: false
 pageType: doc
 ---
@@ -15,7 +15,6 @@ Rspress 2.1.0 已正式发布，主要更新包括：
 - **SSG-MD 默认启用**：默认生成 `llms.txt` 和页面 Markdown，无需单独配置。
 - **新增 WebMCP 工具**：浏览器智能体可以直接查询、读取和导航文档。
 - **内置 sitemap，默认启用 cleanUrls 和锚点检查**。
-- **新增 CdnTabs**：自动生成 jsDelivr、unpkg 的 CDN 引入代码。
 - **路由迁移到 React Router Data 模式**，支持滚动位置恢复，新增页面加载错误页。
 
 ## SSG-MD 默认启用 \{#ssg-md-enabled-by-default}
@@ -106,25 +105,6 @@ export default defineConfig({
 
 检查范围包括当前页面、相对路径和绝对路径的站内 Markdown / MDX 链接，不检查外部 URL。动态生成等无法静态识别的锚点可通过 `markdown.link.checkAnchors.excludes` 排除，也可设置 `checkAnchors: false` 关闭检查。
 
-{/* cspell:ignore cdntabs */}
-
-## 新增 CdnTabs \{#new-cdntabs-component}
-
-新增的 [`CdnTabs`](/zh/ui/components/cdn-tabs) 组件根据 npm 包名和资源路径，生成 jsDelivr、unpkg 的 CDN 引入代码：
-
-```mdx title="index.mdx"
-import { CdnTabs } from '@rspress/core/theme';
-
-<CdnTabs
-  package="bootstrap@5"
-  files={['dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js']}
-/>
-```
-
-CSS 文件生成 `<link rel="stylesheet">`，JavaScript 文件生成 `<script src>`。组件内置 CDN 图标和 HTML 语法高亮，同一页面中的 `CdnTabs` 会同步切换选中的 CDN。
-
-`CdnTabs` 支持 SSG-MD，生成的 Markdown 会保留各个 CDN 的 HTML 代码示例。
-
 ## 路由迁移到 React Router data 模式 \{#react-router-data-mode}
 
 Rspress 现在使用 React Router Data 模式。点击默认主题链接或调用 `useNavigate()` 时，会先加载目标页面的数据和代码，再切换地址和页面内容。加载期间保留当前页面。
@@ -139,12 +119,14 @@ Rspress 现在使用 React Router Data 模式。点击默认主题链接或调�
 
 ## 升级检查清单 \{#upgrade-checklist}
 
-- [ ] 将 `@rspress/core` 和使用的官方插件升级到对应版本。
+- [ ] 将 `@rspress/core` 和项目中使用的官方插件一并升级，例如：
 
   ```json title="package.json"
   {
     "devDependencies": {
-      "@rspress/core": "~2.1.0"
+      "@rspress/core": "~2.1.0",
+      "@rspress/plugin-preview": "~2.1.0",
+      "@rspress/plugin-twoslash": "~2.1.0"
     }
   }
   ```

@@ -1,7 +1,7 @@
 ---
 date: 2026-11-02
 authors: ['sooniter']
-description: 'Rspress 2.1.0 enables SSG-MD by default, adds WebMCP and built-in sitemaps, and improves URLs, documentation components, and navigation.'
+description: 'Rspress 2.1.0 enables SSG-MD, clean URLs, and anchor checks by default, adds built-in WebMCP and sitemaps, and supports scroll restoration.'
 sidebar: false
 pageType: doc
 ---
@@ -15,7 +15,6 @@ Rspress 2.1.0 is now available. This release includes:
 - **SSG-MD enabled by default**: generate `llms.txt` and page Markdown without additional configuration.
 - **New WebMCP tools**: browser Agents can directly query, read, and navigate documentation.
 - **Built-in sitemaps, clean URLs and anchor validation enabled by default**.
-- **New CdnTabs component**: generate CDN snippets for jsDelivr and unpkg.
 - **Migration to React Router Data mode**, with scroll restoration and a new page loading error screen.
 
 ## SSG-MD enabled by default
@@ -106,23 +105,6 @@ Your hosting platform must serve `/foo.html` directly when `/foo` is requested. 
 
 Validation covers same-page, relative, and absolute internal links to Markdown and MDX pages, and skips external URLs. Use `markdown.link.checkAnchors.excludes` for anchors that cannot be identified statically, such as dynamically generated anchors, or set `checkAnchors: false` to disable validation.
 
-## New CdnTabs component
-
-The new [`CdnTabs`](/ui/components/cdn-tabs) component generates CDN snippets for jsDelivr and unpkg from an npm package name and asset paths:
-
-```mdx title="index.mdx"
-import { CdnTabs } from '@rspress/core/theme';
-
-<CdnTabs
-  package="bootstrap@5"
-  files={['dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js']}
-/>
-```
-
-CSS files produce `<link rel="stylesheet">` tags, and JavaScript files produce `<script src>` tags. The component includes CDN icons and HTML syntax highlighting. Selecting a CDN switches all `CdnTabs` instances on the same page.
-
-`CdnTabs` supports SSG-MD. Generated Markdown includes HTML examples for each CDN.
-
 ## React Router data mode
 
 Rspress now uses React Router Data mode. Default theme links and `useNavigate()` calls load the destination's data and code before switching the URL and page content. The current page stays visible while loading.
@@ -137,12 +119,14 @@ Rspress restores the scroll position when readers go back, go forward, or reload
 
 ## Upgrade checklist
 
-- [ ] Update `@rspress/core` and any official plugins to their corresponding versions.
+- [ ] Update `@rspress/core` and any official plugins used by your project, for example:
 
   ```json title="package.json"
   {
     "devDependencies": {
-      "@rspress/core": "~2.1.0"
+      "@rspress/core": "~2.1.0",
+      "@rspress/plugin-preview": "~2.1.0",
+      "@rspress/plugin-twoslash": "~2.1.0"
     }
   }
   ```
