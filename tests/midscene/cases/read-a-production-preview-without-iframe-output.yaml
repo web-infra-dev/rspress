@@ -4,5 +4,5 @@ cases:
     steps:
       - app.open:
           { fixture: plugin-preview-no-iframe, mode: production, path: / }
-      - aiAct: Bring the rendered internal component preview into view, not its source code.
-      - aiAssert: The rendered preview displays Internal preview only.
+      - aiWaitFor: The Internal only page shows a preview card containing the plain text Internal preview only.
+      - aiAssert: Inside the preview card, the rendered output reads Internal preview only as ordinary text outside any syntax-highlighted source code. If source code is also expanded below it, the rendered output above still satisfies this check.

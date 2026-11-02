@@ -7,5 +7,10 @@ cases:
       - aiAssert: The mobile page offers a navigation menu button without expanded desktop navigation lists.
       - aiAct: Click the hamburger button at the top right to open the mobile navigation menu. Wait until the menu animation has settled and the navigation labels BR, R1, BL, L1, R2, AR, More, L2, and AL are visible. A blank panel or the page table of contents is not the navigation menu. Keep the menu open.
       - aiAssert: The menu displays BR, R1, BL, L1, R2, AR, More, L2, and AL.
-      - aiAct: Expand More, then Nested, and follow Target.
+      - aiAct: Expand More if it is collapsed. Leave it expanded.
+      - aiWaitFor: The Nested navigation item is visible beneath More.
+      - aiAct: Expand Nested if Target is not already visible. Leave Nested expanded and do not click any link yet.
+      - aiWaitFor: The Target link is visible beneath the expanded Nested navigation item, above L2.
+      - aiAct: Click the visible Target link beneath Nested, not L2. The destination article is titled Target.
+      - aiWaitFor: The Target article is visible and the mobile navigation menu is closed.
       - aiAssert: The Target article is visible and the mobile menu is closed.
