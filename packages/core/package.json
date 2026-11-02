@@ -103,7 +103,7 @@
     "vfile": "^6.0.3"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.59.4",
+    "@microsoft/api-extractor": "^7.60.1",
     "@rsbuild/plugin-sass": "~2.0.1",
     "@rsbuild/plugin-svgr": "^2.0.5",
     "@rspress/config": "workspace:*",
