@@ -29,7 +29,6 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
     const enabled = site?.themeConfig?.enableAppearanceAnimation;
 
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    const isDark = nextTheme === 'dark';
 
     if (supported && enabled) {
       isAppearanceTransitioning = true;
@@ -42,25 +41,14 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
         y,
       });
       const root = document.documentElement;
+      root.style.setProperty('--rp-vt-clip-start', clipPath[0]);
+      root.style.setProperty('--rp-vt-clip-end', clipPath[1]);
       root.classList.add('rp-appearance-transition');
 
-      // Clip the new light snapshot before the animation is attached.
-      if (!isDark) {
-        root.style.setProperty('--rp-vt-clip-initial', clipPath[0]);
-        root.classList.add('rp-transition-dark-to-light');
-      }
-
-      let animation: Animation | undefined;
-      let cleaned = false;
       const cleanup = () => {
-        if (cleaned) {
-          return;
-        }
-        cleaned = true;
-        animation?.cancel();
         root.classList.remove('rp-appearance-transition');
-        root.classList.remove('rp-transition-dark-to-light');
-        root.style.removeProperty('--rp-vt-clip-initial');
+        root.style.removeProperty('--rp-vt-clip-start');
+        root.style.removeProperty('--rp-vt-clip-end');
         isAppearanceTransitioning = false;
       };
 
@@ -80,30 +68,11 @@ export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
         transition.updateCallbackDone.catch(() => {
           transition.skipTransition();
         });
-        transition.ready
-          .then(() => {
-            if (cleaned) {
-              return;
-            }
-            animation = root.animate(
-              {
-                clipPath: isDark ? [...clipPath].reverse() : clipPath,
-              },
-              {
-                duration: 400,
-                easing: 'ease-in',
-                fill: 'both',
-                pseudoElement: isDark
-                  ? '::view-transition-old(root)'
-                  : '::view-transition-new(root)',
-              },
-            );
-          })
-          .catch(() => {
-            // Skipping still runs the update callback. Keep ownership until
-            // finished settles so a late callback cannot race another switch.
-            transition.skipTransition();
-          });
+        transition.ready.catch(() => {
+          // Skipping still runs the update callback. Keep ownership until
+          // finished settles so a late callback cannot race another switch.
+          transition.skipTransition();
+        });
         transition.finished.then(cleanup, cleanup);
       } catch {
         cleanup();

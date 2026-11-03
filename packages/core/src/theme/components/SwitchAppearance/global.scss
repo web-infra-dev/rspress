@@ -32,8 +32,21 @@ html.rp-appearance-transition .rspress-doc {
   z-index: 9999;
 }
 
-/* The new light snapshot starts clipped, including before ready resolves.
-   Keep this scoped to dark-to-light so the new dark snapshot stays visible. */
-html.rp-transition-dark-to-light::view-transition-new(root) {
-  clip-path: var(--rp-vt-clip-initial);
+/* CSS starts clipping when the snapshots are created, without waiting for a
+   ready callback to attach an animation. Always animate the light snapshot. */
+html.rp-appearance-transition:not(.dark)::view-transition-new(root) {
+  animation: rp-appearance 400ms ease-in both;
+}
+
+html.rp-appearance-transition.dark::view-transition-old(root) {
+  animation: rp-appearance 400ms ease-in reverse both;
+}
+
+@keyframes rp-appearance {
+  from {
+    clip-path: var(--rp-vt-clip-start);
+  }
+  to {
+    clip-path: var(--rp-vt-clip-end);
+  }
 }
