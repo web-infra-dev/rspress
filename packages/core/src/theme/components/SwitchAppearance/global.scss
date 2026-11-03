@@ -31,3 +31,9 @@ html.rp-appearance-transition .rspress-doc {
 .dark::view-transition-old(root) {
   z-index: 9999;
 }
+
+/* The new light snapshot starts clipped, including before ready resolves.
+   Keep this scoped to dark-to-light so the new dark snapshot stays visible. */
+html.rp-transition-dark-to-light::view-transition-new(root) {
+  clip-path: var(--rp-vt-clip-initial);
+}
