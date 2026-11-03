@@ -8,22 +8,31 @@ import {
 
 type ProbeWindow = typeof window & {
   appearanceProbe: {
-    mode: 'pause' | 'skip' | 'start-error' | 'animate-error' | 'update-error';
+    mode:
+      | 'pause'
+      | 'run'
+      | 'skip'
+      | 'start-error'
+      | 'update-error'
+      | 'delayed-skip';
     starts: number;
+    jsAnimations: number;
     initialClip: string;
     animation?: Animation;
     transition?: ViewTransition;
+    releaseUpdate?: () => void;
     errors: string[];
   };
 };
 
-// Observe the real browser transition and retain its animation after cleanup.
+// Observe the real CSS transition animation and retain it after cleanup.
 // Pausing lets assertions inspect the boundary frames without timing races.
 function installProbe(theme: 'light' | 'dark') {
   localStorage.setItem('rspress-theme-appearance', theme);
   const probe: ProbeWindow['appearanceProbe'] = {
     mode: 'pause',
     starts: 0,
+    jsAnimations: 0,
     initialClip: '',
     errors: [],
   };
@@ -38,6 +47,11 @@ function installProbe(theme: 'light' | 'dark') {
       throw new Error('startViewTransition failed');
     }
     const transition = start(async () => {
+      if (probe.mode === 'delayed-skip') {
+        await new Promise<void>(resolve => {
+          probe.releaseUpdate = resolve;
+        });
+      }
       if (typeof update === 'function') {
         await update();
       }
@@ -46,7 +60,28 @@ function installProbe(theme: 'light' | 'dark') {
       }
     });
     probe.transition = transition;
-    if (probe.mode === 'skip') {
+    transition.ready.then(
+      () => {
+        const animation = document
+          .getAnimations()
+          .find(
+            animation =>
+              animation instanceof CSSAnimation &&
+              animation.animationName === 'rp-appearance',
+          );
+        probe.animation = animation;
+        if (animation && probe.mode === 'pause') {
+          animation.pause();
+          animation.currentTime = 0;
+          probe.initialClip = getComputedStyle(
+            document.documentElement,
+            (animation.effect as KeyframeEffect).pseudoElement!,
+          ).clipPath;
+        }
+      },
+      () => {},
+    );
+    if (probe.mode === 'skip' || probe.mode === 'delayed-skip') {
       transition.skipTransition();
     }
     return transition;
@@ -54,19 +89,8 @@ function installProbe(theme: 'light' | 'dark') {
   const animate = Element.prototype.animate;
   Element.prototype.animate = function (keyframes, options) {
     if (typeof options === 'object' && options?.pseudoElement) {
-      probe.initialClip = getComputedStyle(
-        this,
-        options.pseudoElement,
-      ).clipPath;
-      if (probe.mode === 'animate-error') {
-        throw new Error('pseudo-element animation failed');
-      }
-      const animation = animate.call(this, keyframes, options);
-      probe.animation = animation;
-      if (probe.mode === 'pause') {
-        animation.pause();
-      }
-      return animation;
+      probe.jsAnimations++;
+      throw new Error('Appearance animations must be CSS-driven');
     }
     return animate.call(this, keyframes, options);
   };
@@ -113,22 +137,23 @@ test.describe('appearance view transition', () => {
           initialClip: probe.initialClip,
           frames: effect.getKeyframes().map(frame => frame.clipPath),
           fill: effect.getTiming().fill,
+          direction: effect.getTiming().direction,
           pseudoElement: effect.pseudoElement,
+          jsAnimations: probe.jsAnimations,
         };
       });
       expect(boundary.fill).toBe('both');
+      expect(boundary.direction).toBe(theme === 'dark' ? 'normal' : 'reverse');
+      expect(boundary.jsAnimations).toBe(0);
       expect(boundary.pseudoElement).toBe(
         theme === 'dark'
           ? '::view-transition-new(root)'
           : '::view-transition-old(root)',
       );
-      if (theme === 'dark') {
-        expect(boundary.initialClip).toBe(boundary.frames[0]);
-        expect(boundary.initialClip).toMatch(/^circle\(0% at /);
-      } else {
-        expect(boundary.initialClip).toBe('none');
-        expect(boundary.frames[1]).toMatch(/^circle\(0% at /);
-      }
+      expect(boundary.initialClip).toBe(
+        boundary.frames[theme === 'dark' ? 0 : 1],
+      );
+      expect(boundary.frames[0]).toMatch(/^circle\(0% at /);
       // A second switch must not abort the paused transition.
       await page.locator('.rp-switch-appearance').evaluateAll(switches => {
         switches.forEach(element =>
@@ -164,8 +189,8 @@ test.describe('appearance view transition', () => {
         const probe = (window as ProbeWindow).appearanceProbe;
         return {
           state: probe.animation!.playState,
-          clip: document.documentElement.style.getPropertyValue(
-            '--rp-vt-clip-initial',
+          clips: ['--rp-vt-clip-start', '--rp-vt-clip-end'].map(property =>
+            document.documentElement.style.getPropertyValue(property),
           ),
           errors: probe.errors,
           animations: document
@@ -179,20 +204,14 @@ test.describe('appearance view transition', () => {
       });
       expect(cleanup).toEqual({
         state: 'idle',
-        clip: '',
+        clips: ['', ''],
         errors: [],
         animations: 0,
       });
-      await expect(root).not.toHaveClass(/rp-transition-dark-to-light/);
     });
   }
 
-  for (const mode of [
-    'skip',
-    'start-error',
-    'animate-error',
-    'update-error',
-  ] as const) {
+  for (const mode of ['skip', 'start-error', 'update-error'] as const) {
     test(`${mode}: cleans up and allows a subsequent switch`, async ({
       page,
     }) => {
@@ -211,11 +230,11 @@ test.describe('appearance view transition', () => {
       );
       expect(
         await page.evaluate(() =>
-          document.documentElement.style.getPropertyValue(
-            '--rp-vt-clip-initial',
+          ['--rp-vt-clip-start', '--rp-vt-clip-end'].map(property =>
+            document.documentElement.style.getPropertyValue(property),
           ),
         ),
-      ).toBe('');
+      ).toEqual(['', '']);
       await page.evaluate(() => {
         (window as ProbeWindow).appearanceProbe.mode = 'skip';
       });
@@ -233,6 +252,48 @@ test.describe('appearance view transition', () => {
     });
   }
 
+  test('skipping waits for a delayed update before allowing another switch', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.addInitScript(installProbe, 'dark' as const);
+    await page.goto(`http://localhost:${appPort}`);
+    await expect(page.locator('.coordinate-readout')).toBeVisible();
+    await page.evaluate(() => {
+      (window as ProbeWindow).appearanceProbe.mode = 'delayed-skip';
+    });
+    const appearance = page.locator('.rp-switch-appearance:visible').first();
+    await appearance.click();
+    await page.waitForFunction(
+      () => (window as ProbeWindow).appearanceProbe.releaseUpdate,
+    );
+    await appearance.click();
+    expect(
+      await page.evaluate(() => (window as ProbeWindow).appearanceProbe.starts),
+    ).toBe(1);
+    await expect(page.locator('html')).toHaveClass(/rp-appearance-transition/);
+    await page.evaluate(() => {
+      const probe = (window as ProbeWindow).appearanceProbe;
+      probe.mode = 'skip';
+      probe.releaseUpdate!();
+    });
+    await expect(page.locator('html')).not.toHaveClass(/dark/);
+    await expect(page.locator('html')).not.toHaveClass(
+      /rp-appearance-transition/,
+    );
+    await appearance.click();
+    await expect(page.locator('html')).toHaveClass(/dark/);
+    await expect(page.locator('html')).not.toHaveClass(
+      /rp-appearance-transition/,
+    );
+    expect(
+      await page.evaluate(() => {
+        const { starts, errors } = (window as ProbeWindow).appearanceProbe;
+        return { starts, errors };
+      }),
+    ).toEqual({ starts: 2, errors: [] });
+  });
+
   test('reduced motion updates the theme without starting a transition', async ({
     page,
   }) => {
@@ -245,5 +306,87 @@ test.describe('appearance view transition', () => {
     expect(
       await page.evaluate(() => (window as ProbeWindow).appearanceProbe.starts),
     ).toBe(0);
+  });
+
+  for (const layout of ['desktop', 'mobile'] as const) {
+    test(`${layout}: repeated switches finish without retained CSS animations`, async ({
+      page,
+    }) => {
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+      await page.addInitScript(installProbe, 'dark' as const);
+      if (layout === 'mobile') {
+        await page.setViewportSize({ width: 390, height: 844 });
+      }
+      await page.goto(`http://localhost:${appPort}`);
+      await expect(page.locator('.coordinate-readout')).toBeVisible();
+      if (layout === 'mobile') {
+        await page.locator('.rp-nav-hamburger:visible').click();
+      }
+      await page.evaluate(() => {
+        (window as ProbeWindow).appearanceProbe.mode = 'run';
+      });
+      const root = page.locator('html');
+      const appearance = page.locator('.rp-switch-appearance:visible').first();
+      for (let i = 0; i < 4; i++) {
+        await appearance.click();
+        if (i % 2 === 0) {
+          await expect(root).not.toHaveClass(/dark/);
+        } else {
+          await expect(root).toHaveClass(/dark/);
+        }
+        await expect(root).not.toHaveClass(/rp-appearance-transition/);
+      }
+      expect(
+        await page.evaluate(() => {
+          const probe = (window as ProbeWindow).appearanceProbe;
+          return {
+            starts: probe.starts,
+            jsAnimations: probe.jsAnimations,
+            errors: probe.errors,
+            clips: ['--rp-vt-clip-start', '--rp-vt-clip-end'].map(property =>
+              document.documentElement.style.getPropertyValue(property),
+            ),
+            animations: document
+              .getAnimations()
+              .filter(animation =>
+                (animation.effect as KeyframeEffect)?.pseudoElement?.includes(
+                  'view-transition',
+                ),
+              ).length,
+          };
+        }),
+      ).toEqual({
+        starts: 4,
+        jsAnimations: 0,
+        errors: [],
+        clips: ['', ''],
+        animations: 0,
+      });
+    });
+  }
+
+  test('other view transitions do not run the appearance animation', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.addInitScript(installProbe, 'dark' as const);
+    await page.goto(`http://localhost:${appPort}`);
+    await expect(page.locator('.coordinate-readout')).toBeVisible();
+    const animations = await page.evaluate(async () => {
+      const transition = document.startViewTransition(() => {
+        document.body.dataset.transition = 'other';
+      });
+      await transition.ready;
+      const names = document
+        .getAnimations()
+        .filter(
+          animation =>
+            animation instanceof CSSAnimation &&
+            animation.animationName === 'rp-appearance',
+        ).length;
+      await transition.finished;
+      return names;
+    });
+    expect(animations).toBe(0);
   });
 });
