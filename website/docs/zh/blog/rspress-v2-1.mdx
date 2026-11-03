@@ -1,7 +1,7 @@
 ---
 date: 2026-11-02
 authors: ['sooniter']
-description: 'Rspress 2.1.0 默认启用 SSG-MD，内置 WebMCP 和 sitemap，默认启用简洁 URL、锚点检查，并支持滚动位置恢复。'
+description: 'Rspress 2.1.0 默认启用 SSG-MD，内置 WebMCP 和 sitemap，默认启用简洁 URL、锚点检查，并改进搜索面板样式和滚动位置恢复。'
 sidebar: false
 pageType: doc
 ---
@@ -16,6 +16,7 @@ Rspress 2.1.0 已正式发布，主要更新包括：
 
 - **SSG-MD 默认启用**：默认生成 `llms.txt` 和页面 Markdown，无需单独配置。
 - **新增 WebMCP 工具**：浏览器智能体可以直接查询、读取和导航文档。
+- **SearchPanel 样式更新**：调整桌面和移动端布局，改善搜索结果与空状态的展示。
 - **内置 sitemap，默认启用 cleanUrls 和锚点检查**。
 - **路由迁移到 React Router Data 模式**，支持滚动位置恢复，新增页面加载错误页。
 
@@ -76,6 +77,18 @@ WebMCP 仍是实验性浏览器 API，需要浏览器启用 `document.modelConte
 
 设置 `webMcp: false` 可以关闭内置工具，不影响 `useWebMcp` 注册的自定义工具。
 
+## SearchPanel 样式更新 \{#search-panel-styling-updates}
+
+默认主题的本地搜索面板更新了样式：
+
+- 桌面面板加宽，去掉输入框边框和结果项的独立阴影。
+- 移动端增加面板边距，调整输入框和取消按钮尺寸，结果区在面板内部滚动。
+- 长文本自动换行，空结果状态的留白更均衡。
+
+![新版搜索面板](https://assets.rspack.rs/rspress/assets/rspress-full-text-search.png)
+
+详见[全文搜索](/zh/guide/start/introduction#全文搜索)和 [PR #3683](https://github.com/web-infra-dev/rspress/pull/3683)。
+
 ## 内置 sitemap \{#built-in-sitemaps}
 
 Rspress 2.1.0 内置 sitemap 生成功能，生产构建默认生成 `sitemap.xml`，无需安装 `@rspress/plugin-sitemap`。
@@ -134,6 +147,7 @@ Rspress 现在使用 React Router Data 模式。点击默认主题链接或调�
   ```
 
 - [ ] 检查 SSG-MD 的服务端渲染兼容性。需要浏览器环境的内容可用 [`BrowserOnly`](/zh/ui/runtime-components/browser-only) 包裹。`ssg: false` 不会关闭 SSG-MD；完全不支持服务端渲染的站点，需要同时设置 `ssg: false` 和 `llms: false`。
+- [ ] 如果自定义了 `SearchPanel` 的主题样式，升级后检查桌面和移动端的显示效果是否符合预期。
 - [ ] 检查 sitemap 配置。已有项目可用内置 `sitemap` 替换 `@rspress/plugin-sitemap`；如果通过其他方式生成站点地图，可设置 `sitemap: false`。
 - [ ] 确认部署平台支持无 `.html` 后缀的 URL，例如访问 `/foo` 时直接返回 `/foo.html`。如需保留原有链接格式，可设置 `route.cleanUrls: false`。
 - [ ] 执行生产构建，修复发现的无效锚点。动态生成的锚点可通过 `markdown.link.checkAnchors.excludes` 排除，也可设置 `checkAnchors: false` 关闭检查。

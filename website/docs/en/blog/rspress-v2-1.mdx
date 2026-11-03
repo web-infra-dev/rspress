@@ -1,7 +1,7 @@
 ---
 date: 2026-11-02
 authors: ['sooniter']
-description: 'Rspress 2.1.0 enables SSG-MD, clean URLs, and anchor checks by default, adds built-in WebMCP and sitemaps, and supports scroll restoration.'
+description: 'Rspress 2.1.0 enables SSG-MD, clean URLs, and anchor checks by default, adds built-in WebMCP and sitemaps, and improves search panel styling and scroll restoration.'
 sidebar: false
 pageType: doc
 ---
@@ -16,6 +16,7 @@ Rspress 2.1.0 is now available. This release includes:
 
 - **SSG-MD enabled by default**: generate `llms.txt` and page Markdown without additional configuration.
 - **New WebMCP tools**: browser Agents can directly query, read, and navigate documentation.
+- **Updated search panel styling**: refine desktop and mobile layouts, search results, and empty states.
 - **Built-in sitemaps, clean URLs and anchor validation enabled by default**.
 - **Migration to React Router Data mode**, with scroll restoration and a new page loading error screen.
 
@@ -76,6 +77,18 @@ WebMCP is still an experimental browser API. It requires `document.modelContext`
 
 Set `webMcp: false` to disable built-in tools. This does not affect custom tools registered with `useWebMcp`.
 
+## Search panel styling updates
+
+The default theme's local search panel has updated styles:
+
+- A wider desktop panel, without the input border or individual result shadows.
+- Mobile side gutters, adjusted input and cancel button sizes, and results that scroll within the panel.
+- Wrapping for long text and balanced spacing in the empty state.
+
+![Updated search panel](https://assets.rspack.rs/rspress/assets/rspress-full-text-search.png)
+
+See [Full-text search](/guide/start/introduction#full-text-search) and [PR #3683](https://github.com/web-infra-dev/rspress/pull/3683).
+
 ## Built-in sitemaps
 
 Rspress 2.1.0 generates `sitemap.xml` by default during production builds. Installing `@rspress/plugin-sitemap` is no longer necessary.
@@ -134,6 +147,7 @@ Rspress restores the scroll position when readers go back, go forward, or reload
   ```
 
 - [ ] Check server rendering compatibility for SSG-MD. Wrap browser-dependent content in [`BrowserOnly`](/ui/runtime-components/browser-only). Setting `ssg: false` does not disable SSG-MD. Sites that cannot support server rendering need both `ssg: false` and `llms: false`.
+- [ ] If you customized the `SearchPanel` theme styles, visually check the desktop and mobile layouts after upgrading to confirm they still look as expected.
 - [ ] Check your sitemap configuration. Replace `@rspress/plugin-sitemap` with the built-in `sitemap` option, or set `sitemap: false` if another process generates the sitemap.
 - [ ] Check that your host supports URLs without `.html`, such as serving `/foo.html` directly when `/foo` is requested. Set `route.cleanUrls: false` to retain the previous link format.
 - [ ] Run a production build and fix invalid anchors. Exclude dynamically generated anchors with `markdown.link.checkAnchors.excludes`, or set `checkAnchors: false` to disable validation.
