@@ -46,55 +46,36 @@ export default defineConfig({
 
 :::
 
-### 构建报告
+### 构建报告 \{#build-report}
 
-默认情况下，`rspress build` 会在构建和 Rspress `afterBuild` 钩子执行完成后，打印页面目录树，同时保留 Rsbuild 各环境的总体积和压缩体积汇总。
+Rspress 使用 Rsbuild 的 [performance.printFileSize.total](https://rsbuild.rs/zh/config/performance/print-file-size#total) 回调，按目录汇总各构建环境的编译产物：
 
 ```text
-Page (raw size)     HTML  Markdown
-/                 6.5 kB   0.85 kB
-├─ guide/         4.3 kB   0.73 kB
-│  ├─ api/        1.3 kB   0.20 kB
-│  │  └─ config   1.3 kB   0.20 kB
-│  ├─ index       2.5 kB   0.45 kB
-│  └─ start      0.50 kB   0.08 kB
-├─ index          1.5 kB   0.12 kB
-└─ 404           0.75 kB         -
+Output (node): doc_build/ (4 files)
+├─ guide/ (3 files, 3.0 kB)
+│  ├─ api/ (1 file, 0.50 kB)
+│  └─ (files) (2 files, 2.5 kB)
+└─ (files) (1 file, 1.0 kB)
+Total size (node): 4.0 kB (0.80 kB gzipped)
 ```
 
-HTML 和 Markdown 列显示文件未压缩的体积，单位为十进制 kB。目录行汇总其所有子页面的体积，`/` 汇总全部页面，`index` 表示目录首页。`-` 表示文件不存在。[llms](/api/config/config-agent#llms) 为 `false` 时，不显示 Markdown 列。
+目录体积为未压缩大小。`(files)` 汇总同时含有子目录的目录下的直接文件。总体积和压缩体积由 Rsbuild 在应用 `include` 和 `exclude` 过滤后计算。
 
-目录树使用 Rspress 默认的 `builderConfig.performance.printFileSize.detail: false` 配置。若要关闭全部文件体积报告：
+SSG HTML 通常属于 `node` 环境，Markdown 和 `llms*.txt` 属于 `node_md`，客户端资源属于 `web`；CSR HTML 也计入 `web`。报告只统计 Rsbuild 回调提供的产物，不包含实验性 SSG Worker 直接写入磁盘的 HTML，也不包含 Rspress `afterBuild` 钩子对文件的修改。
+
+目录汇总适用于 `detail: false`（Rspress 默认值）、未设置 `total` 且未启用 `diff` 的情况。所有 Rsbuild 配置和环境级覆盖仍然可用：`printFileSize: false` 关闭报告；`detail: true` 恢复文件列表；显式设置 `total` 或 `diff: true` 则使用 Rsbuild 配置的报告。
+
+例如，仅保留 Rsbuild 原有的总体积汇总：
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
 export default defineConfig({
   builderConfig: {
     performance: {
-      printFileSize: false,
+      printFileSize: { total: true },
     },
   },
 });
 ```
-
-若要改为显示 Rsbuild 原有的逐产物文件列表：
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  builderConfig: {
-    performance: {
-      printFileSize: {
-        detail: true,
-      },
-    },
-  },
-});
-```
-
-这些配置同样遵循 `builderConfig.environments` 中的各环境覆盖：设置了 `detail: true` 的环境保留 Rsbuild 的文件列表，不在目录树中显示对应列。`total: false`、自定义 `total` 函数或 `diff: true` 也会让该环境继续使用 Rsbuild 的报告。详见 [Rsbuild - performance.printFileSize](https://rsbuild.rs/zh/config/performance/print-file-size)。
 
 ## builderConfig.plugins
 

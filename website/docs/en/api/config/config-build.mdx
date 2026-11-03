@@ -48,53 +48,34 @@ To modify the output directory, use [outDir](/api/config/config-basic#outdir).
 
 ### Build report
 
-By default, `rspress build` prints a page directory tree after the build and Rspress `afterBuild` hooks finish. Rsbuild's total and compressed size summaries for each environment are preserved.
+Rspress uses Rsbuild's [performance.printFileSize.total](https://rsbuild.rs/config/performance/print-file-size#total) callback to summarize compilation assets by directory, separately for each build environment:
 
 ```text
-Page (raw size)     HTML  Markdown
-/                 6.5 kB   0.85 kB
-├─ guide/         4.3 kB   0.73 kB
-│  ├─ api/        1.3 kB   0.20 kB
-│  │  └─ config   1.3 kB   0.20 kB
-│  ├─ index       2.5 kB   0.45 kB
-│  └─ start      0.50 kB   0.08 kB
-├─ index          1.5 kB   0.12 kB
-└─ 404           0.75 kB         -
+Output (node): doc_build/ (4 files)
+├─ guide/ (3 files, 3.0 kB)
+│  ├─ api/ (1 file, 0.50 kB)
+│  └─ (files) (2 files, 2.5 kB)
+└─ (files) (1 file, 1.0 kB)
+Total size (node): 4.0 kB (0.80 kB gzipped)
 ```
 
-The HTML and Markdown columns show uncompressed file sizes in decimal kB. Directory rows sum their descendant pages, `/` sums all pages, and `index` represents a directory's home page. A `-` indicates a missing file. When [llms](/api/config/config-agent#llms) is `false`, the Markdown column is omitted.
+Directory sizes are uncompressed. `(files)` groups files directly inside a directory that also has subdirectories. Rsbuild calculates the totals and compressed sizes after applying `include` and `exclude`.
 
-The tree uses Rspress's default `builderConfig.performance.printFileSize.detail: false`. To disable all file size reporting:
+SSG HTML normally belongs to `node`, Markdown and `llms*.txt` to `node_md`, and client assets to `web`. CSR HTML is included in `web`. Only assets supplied by Rsbuild are counted: HTML written directly to disk by experimental SSG workers and file changes made in Rspress `afterBuild` hooks are outside this report.
+
+The directory summary applies when `detail: false` (Rspress's default), `total` is unset, and `diff` is disabled. All existing Rsbuild options and environment-level overrides remain available: `printFileSize: false` disables reporting; `detail: true` restores the file list; an explicit `total` value or `diff: true` uses Rsbuild's configured report.
+
+For example, keep only Rsbuild's plain total summaries:
 
 ```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
 export default defineConfig({
   builderConfig: {
     performance: {
-      printFileSize: false,
+      printFileSize: { total: true },
     },
   },
 });
 ```
-
-To display Rsbuild's list of individual output files instead of the page tree:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  builderConfig: {
-    performance: {
-      printFileSize: {
-        detail: true,
-      },
-    },
-  },
-});
-```
-
-These settings also respect per-environment overrides in `builderConfig.environments`: an environment using `detail: true` keeps Rsbuild's file list and contributes no column to the tree. `total: false`, a custom `total` function, or `diff: true` also keeps Rsbuild's reporter for that environment. See [Rsbuild - performance.printFileSize](https://rsbuild.rs/config/performance/print-file-size).
 
 ## builderConfig.plugins
 
