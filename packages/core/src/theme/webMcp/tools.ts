@@ -168,7 +168,7 @@ export function defineTool(
   execute: (args: Record<string, unknown>, signal?: AbortSignal) => unknown,
 ): WebMcpOptions {
   return {
-    name: `rspress_${name}`,
+    name,
     description,
     inputSchema: {
       type: 'object',

@@ -25,14 +25,14 @@ export default defineConfig({
 
 ## 内置工具
 
-| 工具                       | 用途                                                                                                             |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `rspress_get_site_info`    | 返回站点元信息、语言、版本、导航和当前侧边栏。                                                                   |
-| `rspress_list_pages`       | 筛选和分页读取页面元信息，默认使用当前语言和版本，不依赖搜索。                                                   |
-| `rspress_get_page`         | 无需跳转即可读取已知路由的元信息、frontmatter、目录和 Markdown（启用 [SSG-MD](/zh/guide/basic/ssg-md) 时可用）。 |
-| `rspress_get_current_page` | 读取当前页面的元信息、frontmatter、目录和 Markdown（启用 [SSG-MD](/zh/guide/basic/ssg-md) 时可用）。             |
-| `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引（仅支持默认主题的本地搜索）。                                                   |
-| `rspress_navigate`         | 跳转到已知站内路由，等待页面提交后返回元信息、章节路由和前后页。                                                 |
+| 工具               | 用途                                                                                                             |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `get_site_info`    | 返回站点元信息、语言、版本、导航和当前侧边栏。                                                                   |
+| `list_pages`       | 筛选和分页读取页面元信息，默认使用当前语言和版本，不依赖搜索。                                                   |
+| `get_page_by_path` | 无需跳转即可读取已知路由的元信息、frontmatter、目录和 Markdown（启用 [SSG-MD](/zh/guide/basic/ssg-md) 时可用）。 |
+| `get_current_page` | 读取当前页面的元信息、frontmatter、目录和 Markdown（启用 [SSG-MD](/zh/guide/basic/ssg-md) 时可用）。             |
+| `search_docs`      | 搜索当前语言和版本的本地文档索引（仅支持默认主题的本地搜索）。                                                   |
+| `navigate`         | 跳转到已知站内路由，等待页面提交后返回元信息、章节路由和前后页。                                                 |
 
 <details>
 <summary>查看工具输入的 JSON Schema</summary>

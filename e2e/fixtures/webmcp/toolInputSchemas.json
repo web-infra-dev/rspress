@@ -1,11 +1,11 @@
 {
-  "rspress_get_current_page": {
+  "get_current_page": {
     "type": "object",
     "properties": {},
     "required": [],
     "additionalProperties": false
   },
-  "rspress_get_page": {
+  "get_page_by_path": {
     "type": "object",
     "properties": {
       "routePath": {
@@ -16,13 +16,13 @@
     "required": ["routePath"],
     "additionalProperties": false
   },
-  "rspress_get_site_info": {
+  "get_site_info": {
     "type": "object",
     "properties": {},
     "required": [],
     "additionalProperties": false
   },
-  "rspress_list_pages": {
+  "list_pages": {
     "type": "object",
     "properties": {
       "query": {
@@ -48,7 +48,7 @@
     "required": [],
     "additionalProperties": false
   },
-  "rspress_navigate": {
+  "navigate": {
     "type": "object",
     "properties": {
       "routePath": {
@@ -59,7 +59,7 @@
     "required": ["routePath"],
     "additionalProperties": false
   },
-  "rspress_search_docs": {
+  "search_docs": {
     "type": "object",
     "properties": {
       "query": {
