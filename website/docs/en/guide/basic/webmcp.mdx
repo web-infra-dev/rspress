@@ -9,9 +9,11 @@ Rspress enables [`webMcp`](/api/config/config-agent#webmcp) by default, so agent
 
 <Prompt
   title="Try WebMCP with your agent"
-  description="Send this prompt to Codex or another agent to see which WebMCP tools the page offers."
-  prompt="Open https://rspress.rs in your browser and check which WebMCP tools the page makes available to you. Use the names and descriptions returned by the browser to list each tool by name and explain in one sentence what it can do. If the list is empty or you cannot access it, say which happened."
+  description="Send this prompt to Codex or another agent to discover the page's tools through a native WebMCP connection or CDP."
+  prompt="Discover the WebMCP tools available at https://rspress.rs. Prefer your native WebMCP browser connection. If it is unavailable, try Chrome DevTools Protocol (CDP), for example through Puppeteer's WebMCP API, to load the page and discover its tools. Use the actual tool names and descriptions returned by the connection to list each tool by name and explain in one sentence what it can do. If the list is empty or you cannot retrieve it, say which happened and explain any missing capability or connection error."
 />
+
+Agents without a native WebMCP browser connection, such as CLI agents, can use [Puppeteer's WebMCP API](https://pptr.dev/guides/webmcp) over CDP. This requires a compatible Chrome instance with WebMCP enabled and the page loaded; fetching the HTML alone does not expose its tools.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

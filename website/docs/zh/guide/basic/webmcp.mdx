@@ -9,9 +9,11 @@ Rspress 默认开启 [`webMcp`](/zh/api/config/config-agent#webmcp)，Agent 可�
 
 <Prompt
   title="用你的 Agent 试试 WebMCP"
-  description="把这段提示词发给 Codex 或其他 Agent，让它看看这个页面提供了哪些 WebMCP 工具。"
-  prompt="在浏览器中打开 https://rspress.rs，查看当前页面向你提供了哪些 WebMCP 工具。请根据浏览器实际返回的工具名称和描述，列出每个工具的名称，并用一句话说明它能做什么。如果工具列表为空，或你无法查看列表，请说明你遇到的是哪种情况。"
+  description="把这段提示词发给 Codex 或其他 Agent，通过原生 WebMCP 连接或 CDP 发现页面提供的工具。"
+  prompt="查看 https://rspress.rs 提供的 WebMCP 工具。优先使用你的原生 WebMCP 浏览器连接。如果不可用，尝试通过 Chrome DevTools Protocol（CDP）加载页面并发现工具，例如使用 Puppeteer 的 WebMCP API。请根据连接实际返回的工具名称和描述，列出每个工具的名称，并用一句话说明它能做什么。如果工具列表为空，或你无法获取列表，请说明你遇到的是哪种情况，以及缺少的能力或连接错误。"
 />
+
+没有原生 WebMCP 浏览器连接的 Agent（例如 CLI Agent），可以通过 CDP 使用 [Puppeteer 的 WebMCP API](https://pptr.dev/guides/webmcp)。这仍需要兼容的 Chrome 实例启用 WebMCP 并加载页面；仅获取 HTML 无法发现页面注册的工具。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
