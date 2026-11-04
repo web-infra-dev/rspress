@@ -32,14 +32,14 @@ See [AI config](/api/config/config-agent#webmcp) for the configuration reference
 
 ## Built-in tools
 
-| Tool                       | Purpose                                                                                                           |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `rspress_get_site_info`    | Site metadata, locales, versions, navigation, and the active sidebar.                                             |
-| `rspress_list_pages`       | Filter and paginate page metadata, defaulting to the active language and version. Works independently of search.  |
-| `rspress_get_page`         | Read metadata, frontmatter, TOC, and SSG-MD Markdown for a known route without navigating.                        |
-| `rspress_get_current_page` | Read metadata, frontmatter, TOC, and SSG-MD Markdown for the current page.                                        |
-| `rspress_search_docs`      | Search the local documentation index for the active language and version (default theme local search only).       |
-| `rspress_navigate`         | Navigate to a known internal route, then return committed page metadata, section routes, and previous/next pages. |
+| Tool                       | Purpose                                                                                                                          |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `rspress_get_site_info`    | Site metadata, locales, versions, navigation, and the active sidebar.                                                            |
+| `rspress_list_pages`       | Filter and paginate page metadata, defaulting to the active language and version. Works independently of search.                 |
+| `rspress_get_page`         | Read metadata, frontmatter, TOC, and Markdown for a known route without navigating (enabled with [SSG-MD](/guide/basic/ssg-md)). |
+| `rspress_get_current_page` | Read metadata, frontmatter, TOC, and Markdown for the current page (enabled with [SSG-MD](/guide/basic/ssg-md)).                 |
+| `rspress_search_docs`      | Search the local documentation index for the active language and version (default theme local search only).                      |
+| `rspress_navigate`         | Navigate to a known internal route, then return committed page metadata, section routes, and previous/next pages.                |
 
 Route paths exclude the configured `base` and support query strings and hashes.
 
