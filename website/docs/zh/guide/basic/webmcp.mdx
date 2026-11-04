@@ -23,8 +23,6 @@ export default defineConfig({
 
 设置 `webMcp: false` 可以关闭 Rspress 内置工具，仍可使用 [`useWebMcp`](/ui/hooks/use-web-mcp) hook 注册自定义工具。
 
-完整配置项请参阅 [AI 配置](/api/config/config-agent#webmcp)。
-
 ## 内置工具
 
 | 工具                       | 用途                                                                                                             |
@@ -35,6 +33,15 @@ export default defineConfig({
 | `rspress_get_current_page` | 读取当前页面的元信息、frontmatter、目录和 Markdown（启用 [SSG-MD](/zh/guide/basic/ssg-md) 时可用）。             |
 | `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引（仅支持默认主题的本地搜索）。                                                   |
 | `rspress_navigate`         | 跳转到已知站内路由，等待页面提交后返回元信息、章节路由和前后页。                                                 |
+
+<details>
+<summary>查看工具输入的 JSON Schema</summary>
+
+```json file="../../../../../e2e/fixtures/webmcp/toolInputSchemas.json" title="toolInputSchemas.json"
+
+```
+
+</details>
 
 路由路径不包含配置项 `base`，支持查询参数和锚点。
 

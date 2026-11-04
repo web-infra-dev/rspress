@@ -15,14 +15,9 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-const allTools = [
-  'get_current_page',
-  'get_page',
-  'get_site_info',
-  'list_pages',
-  'navigate',
-  'search_docs',
-].map(name => `rspress_${name}`);
+import toolInputSchemas from './toolInputSchemas.json' with { type: 'json' };
+
+const allTools = Object.keys(toolInputSchemas).sort();
 
 test.describe('WebMCP production tools', () => {
   let app: Awaited<ReturnType<typeof runPreviewCommand>>;
@@ -44,8 +39,13 @@ test.describe('WebMCP production tools', () => {
     page,
   }) => {
     await page.waitForLoadState('networkidle');
-    const names = await listTools(page);
-    expect(names).toEqual(allTools);
+    const schemas = Object.fromEntries(
+      (await page.webmcp.tools()).map(({ name, inputSchema }) => [
+        name,
+        inputSchema,
+      ]),
+    );
+    expect(schemas).toEqual(toolInputSchemas);
     expect(await page.webmcp.callTool('rspress_get_site_info')).toMatchObject({
       title: 'WebMCP docs',
       base: '/docs/',

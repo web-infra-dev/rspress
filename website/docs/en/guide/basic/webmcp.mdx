@@ -23,8 +23,6 @@ export default defineConfig({
 
 Set `webMcp: false` to disable the Rspress built-in tools. The [`useWebMcp`](/ui/hooks/use-web-mcp) hook remains available for registering custom tools.
 
-See [AI config](/api/config/config-agent#webmcp) for the configuration reference.
-
 ## Built-in tools
 
 | Tool                       | Purpose                                                                                                                          |
@@ -35,6 +33,15 @@ See [AI config](/api/config/config-agent#webmcp) for the configuration reference
 | `rspress_get_current_page` | Read metadata, frontmatter, TOC, and Markdown for the current page (enabled with [SSG-MD](/guide/basic/ssg-md)).                 |
 | `rspress_search_docs`      | Search the local documentation index for the active language and version (default theme local search only).                      |
 | `rspress_navigate`         | Navigate to a known internal route, then return committed page metadata, section routes, and previous/next pages.                |
+
+<details>
+<summary>View tool input schemas</summary>
+
+```json file="../../../../../e2e/fixtures/webmcp/toolInputSchemas.json" title="toolInputSchemas.json"
+
+```
+
+</details>
 
 Route paths exclude the configured `base` and support query strings and hashes.
 

@@ -1,0 +1,78 @@
+{
+  "rspress_get_current_page": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "rspress_get_page": {
+    "type": "object",
+    "properties": {
+      "routePath": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": ["routePath"],
+    "additionalProperties": false
+  },
+  "rspress_get_site_info": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "rspress_list_pages": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "minLength": 1
+      },
+      "lang": {
+        "type": "string"
+      },
+      "version": {
+        "type": "string"
+      },
+      "limit": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 100
+      },
+      "offset": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "rspress_navigate": {
+    "type": "object",
+    "properties": {
+      "routePath": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required": ["routePath"],
+    "additionalProperties": false
+  },
+  "rspress_search_docs": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "minLength": 1
+      },
+      "limit": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 20
+      }
+    },
+    "required": ["query"],
+    "additionalProperties": false
+  }
+}
