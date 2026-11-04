@@ -131,7 +131,7 @@ console.log('Highlighted');
 
 ```ts
 import { defineConfig } from '@rspress/core';
-import { transformerNotationHighlight } from '@shikijs/transformers';
+import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 
 export default defineConfig({
   markdown: {
@@ -412,6 +412,8 @@ Rspress 在 V2 中，使用 [Shiki](https://shiki.style) 进行编译时的代�
 
 除了上文中的 [transformerNotationHighlight](#notation-行高亮)，Rspress 默认支持 [@shikijs/transformers](https://shiki.style/packages/transformers) 中的以下 transformers。
 
+Rspress 通过 `@rspress/core/shiki-transformers` 重新导出 `@shikijs/transformers` 中的所有 transformers，无需单独安装 `@shikijs/transformers`。
+
 ### transformerNotationDiff
 
 <Tabs>
@@ -430,7 +432,7 @@ console.log('unchanged');
 
 ```ts
 import { defineConfig } from '@rspress/core';
-import { transformerNotationDiff } from '@shikijs/transformers';
+import { transformerNotationDiff } from '@rspress/core/shiki-transformers';
 export default defineConfig({
   markdown: {
     shiki: {
@@ -469,7 +471,7 @@ console.warn('Warning'); // [\!code warning]
 
 ```ts
 import { defineConfig } from '@rspress/core';
-import { transformerNotationErrorLevel } from '@shikijs/transformers';
+import { transformerNotationErrorLevel } from '@rspress/core/shiki-transformers';
 export default defineConfig({
   markdown: {
     shiki: {
@@ -508,7 +510,7 @@ console.log('Not focused');
 
 ```ts
 import { defineConfig } from '@rspress/core';
-import { transformerNotationFocus } from '@shikijs/transformers';
+import { transformerNotationFocus } from '@rspress/core/shiki-transformers';
 export default defineConfig({
   markdown: {
     shiki: {
@@ -548,7 +550,7 @@ const str: string = 1;
 
 ```mdx title="foo.mdx"
 import { CodeBlockRuntime } from '@rspress/core/theme';
-import { transformerNotationHighlight } from '@shikijs/transformers';
+import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 
 <CodeBlockRuntime
   lang="ts"
@@ -564,7 +566,7 @@ console.log('Not highlighted');`}
 ```
 
 import { CodeBlockRuntime } from '@rspress/core/theme';
-import { transformerNotationHighlight } from '@shikijs/transformers';
+import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 
 <CodeBlockRuntime
   lang="ts"

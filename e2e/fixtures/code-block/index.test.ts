@@ -29,6 +29,12 @@ test.describe('Shiki code blocks', async () => {
     const shikiDoms = page.locator('.rp-codeblock__content');
     await expect(shikiDoms).toHaveCount(6);
 
+    await expect(shikiDoms.first().locator('.line.diff.remove')).toHaveCount(1);
+    await expect(shikiDoms.first().locator('.line.diff.add')).toHaveCount(1);
+    await expect(shikiDoms.nth(2).locator('.line.error')).toHaveCount(1);
+    await expect(shikiDoms.nth(3).locator('.line.focused')).toHaveCount(1);
+    await expect(shikiDoms.nth(4).locator('.line.highlighted')).toHaveCount(3);
+
     const firstShikiDom = shikiDoms.first();
 
     expect(

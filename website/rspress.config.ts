@@ -3,18 +3,18 @@ import path from 'node:path';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { RsdoctorRspackPlugin } from '@rsdoctor/core';
 import { defineConfig } from '@rspress/core';
-import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
-import { pluginAlgolia } from '@rspress/plugin-algolia';
-import { pluginPlayground } from '@rspress/plugin-playground';
-import { pluginPreview } from '@rspress/plugin-preview';
-import { pluginTwoslash } from '@rspress/plugin-twoslash';
 import {
+  transformerCompatibleMetaHighlight,
   transformerNotationDiff,
   transformerNotationErrorLevel,
   transformerNotationFocus,
   transformerNotationHighlight,
   transformerRemoveNotationEscape,
-} from '@shikijs/transformers';
+} from '@rspress/core/shiki-transformers';
+import { pluginAlgolia } from '@rspress/plugin-algolia';
+import { pluginPlayground } from '@rspress/plugin-playground';
+import { pluginPreview } from '@rspress/plugin-preview';
+import { pluginTwoslash } from '@rspress/plugin-twoslash';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import pluginFileTree from 'rspress-plugin-file-tree';

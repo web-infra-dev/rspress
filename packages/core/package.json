@@ -69,6 +69,7 @@
     "@rsbuild/plugin-react": "~2.1.1",
     "@rspress/shared": "workspace:*",
     "@shikijs/rehype": "^4.2.0",
+    "@shikijs/transformers": "^4.2.0",
     "@types/mdast": "^4.0.4",
     "@types/react": "^19.3.0",
     "@unhead/react": "^2.1.17",
