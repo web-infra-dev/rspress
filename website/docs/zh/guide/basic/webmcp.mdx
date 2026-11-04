@@ -10,7 +10,7 @@ Rspress 默认开启 [`webMcp`](/zh/api/config/config-agent#webmcp)，Agent 可�
 <Prompt
   title="用你的 Agent 试试 WebMCP"
   description="把这段提示词发给 Codex 或其他 Agent，让它看看这个页面提供了哪些 WebMCP 工具。"
-  prompt="在浏览器中打开 https://rspress.rs，列出当前页面提供的 WebMCP 工具，并简要说明每个工具的用途。"
+  prompt="在浏览器中打开 https://rspress.rs，查看当前页面向你提供了哪些 WebMCP 工具。请根据浏览器实际返回的工具名称和描述，列出每个工具的名称，并用一句话说明它能做什么。如果工具列表为空，或你无法查看列表，请说明你遇到的是哪种情况。"
 />
 
 ```ts title="rspress.config.ts"
