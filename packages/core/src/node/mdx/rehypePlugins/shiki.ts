@@ -1,4 +1,5 @@
 import {
+  getShikiTransformers,
   transformerAddFold,
   transformerAddLang,
   transformerAddLineNumbers,
@@ -30,7 +31,7 @@ function createRehypeShikiOptions(
     transformerAddLineNumbers({ defaultShowLineNumbers: showLineNumbers }),
     transformerAddWrapCode({ defaultWrapCode }),
     transformerAddFold({ defaultCodeOverflow }),
-    ...transformers,
+    ...getShikiTransformers(transformers),
   ];
 
   return {

@@ -27,13 +27,23 @@ test.describe('Shiki code blocks', async () => {
       waitUntil: 'networkidle',
     });
     const shikiDoms = page.locator('.rp-codeblock__content');
-    await expect(shikiDoms).toHaveCount(6);
+    await expect(shikiDoms).toHaveCount(7);
 
     await expect(shikiDoms.first().locator('.line.diff.remove')).toHaveCount(1);
     await expect(shikiDoms.first().locator('.line.diff.add')).toHaveCount(1);
     await expect(shikiDoms.nth(2).locator('.line.error')).toHaveCount(1);
+    await expect(shikiDoms.nth(2).locator('.line.warning')).toHaveCount(1);
     await expect(shikiDoms.nth(3).locator('.line.focused')).toHaveCount(1);
     await expect(shikiDoms.nth(4).locator('.line.highlighted')).toHaveCount(3);
+
+    await expect(shikiDoms.nth(6).locator('.highlighted-word')).toHaveText(
+      'highlighted',
+    );
+
+    await expect(shikiDoms.nth(6).locator('.highlighted-word')).toHaveCSS(
+      'background-color',
+      'rgba(59, 130, 246, 0.1)',
+    );
 
     const firstShikiDom = shikiDoms.first();
 

@@ -78,6 +78,7 @@ test.describe('<CodeBlockRuntime />', async () => {
       const shikiContainer = content.locator('.shiki.css-variables').first();
       await expect(shikiContainer).toHaveJSProperty('tagName', 'PRE');
       await expect(shikiContainer.locator('.line.highlighted')).toHaveCount(2);
+      await expect(shikiContainer.locator('.highlighted-word')).toHaveCount(2);
       await expect(shikiContainer.locator('code').first()).toHaveText(
         "console.log('Highlighted'); \nconsole.log('Highlighted');\nconsole.log('Not highlighted');",
       );

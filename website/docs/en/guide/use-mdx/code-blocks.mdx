@@ -111,10 +111,7 @@ When using external file code blocks, it's common to use them together with [rou
 
 ## Notation line highlight
 
-You can use [Shiki transformers](#shiki-transformers) with the `transformerNotationHighlight` and `// [!code highlight]` comments to highlight code lines.
-
-<Tabs>
-<Tab label="Code">
+Use `// [!code highlight]` comments to highlight code lines. This syntax is enabled by default; no transformer configuration is required.
 
 ````mdx
 ```ts
@@ -125,25 +122,6 @@ console.log('Highlighted');
 console.log('Highlighted');
 ```
 ````
-
-</Tab>
-<Tab label="rspress.config.ts">
-
-```ts
-import { defineConfig } from '@rspress/core';
-import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
-
-export default defineConfig({
-  markdown: {
-    shiki: {
-      transformers: [transformerNotationHighlight()],
-    },
-  },
-});
-```
-
-</Tab>
-</Tabs>
 
 It renders as:
 
@@ -408,16 +386,33 @@ function test() {
 
 Rspress uses [Shiki](https://shiki.style) for compile-time code highlighting, providing flexible code block capabilities.
 
-You can add custom [shiki transformers](https://shiki.style/guide/transformers.html) via [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshiki) for richer code block effects.
+You can add custom [shiki transformers](https://shiki.style/guide/transformers.html) via [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshiki) for richer code block effects. Custom transformers are added alongside the defaults. A custom transformer with the same `name` as a built-in transformer replaces that default, so its options take effect.
 
-In addition to the [transformerNotationHighlight](#notation-line-highlight) mentioned above, Rspress defaults to supporting the following transformers from [@shikijs/transformers](https://shiki.style/packages/transformers).
+Rspress enables line highlighting, word highlighting, diff, focus, and error/warning annotations from [@shikijs/transformers](https://shiki.style/packages/transformers) by default, for both Markdown code blocks and `CodeBlockRuntime`. No transformer configuration is required. Escape annotations as `[\!code ...]` to display them literally.
 
 Rspress re-exports all transformers from `@shikijs/transformers` through `@rspress/core/shiki-transformers`, so you do not need to install `@shikijs/transformers` separately.
 
-### transformerNotationDiff
+### transformerNotationWordHighlight
 
-<Tabs>
-<Tab label="Syntax">
+Use `// [!code word:text]` to highlight matching words:
+
+````mdx
+```ts
+// [\!code word:message]
+const message = 'Hello';
+console.log(message);
+```
+````
+
+It renders as:
+
+```ts
+// [!code word:message]
+const message = 'Hello';
+console.log(message);
+```
+
+### transformerNotationDiff
 
 ````mdx
 ```ts
@@ -426,24 +421,6 @@ console.log('added'); // [\!code ++]
 console.log('unchanged');
 ```
 ````
-
-</Tab>
-<Tab label="rspress.config.ts">
-
-```ts
-import { defineConfig } from '@rspress/core';
-import { transformerNotationDiff } from '@rspress/core/shiki-transformers';
-export default defineConfig({
-  markdown: {
-    shiki: {
-      transformers: [transformerNotationDiff()],
-    },
-  },
-});
-```
-
-</Tab>
-</Tabs>
 
 It renders as:
 
@@ -455,9 +432,6 @@ console.log('unchanged');
 
 ### transformerNotationErrorLevel
 
-<Tabs>
-<Tab label="Syntax">
-
 ````mdx
 ```ts
 console.log('No errors or warnings');
@@ -465,24 +439,6 @@ console.error('Error'); // [\!code error]
 console.warn('Warning'); // [\!code warning]
 ```
 ````
-
-</Tab>
-<Tab label="rspress.config.ts">
-
-```ts
-import { defineConfig } from '@rspress/core';
-import { transformerNotationErrorLevel } from '@rspress/core/shiki-transformers';
-export default defineConfig({
-  markdown: {
-    shiki: {
-      transformers: [transformerNotationErrorLevel()],
-    },
-  },
-});
-```
-
-</Tab>
-</Tabs>
 
 It renders as:
 
@@ -494,9 +450,6 @@ console.warn('Warning'); // [!code warning]
 
 ### transformerNotationFocus
 
-<Tabs>
-<Tab label="Syntax">
-
 ````mdx
 ```ts
 console.log('Not focused');
@@ -504,24 +457,6 @@ console.log('Focused'); // [\!code focus]
 console.log('Not focused');
 ```
 ````
-
-</Tab>
-<Tab label="rspress.config.ts">
-
-```ts
-import { defineConfig } from '@rspress/core';
-import { transformerNotationFocus } from '@rspress/core/shiki-transformers';
-export default defineConfig({
-  markdown: {
-    shiki: {
-      transformers: [transformerNotationFocus()],
-    },
-  },
-});
-```
-
-</Tab>
-</Tabs>
 
 It renders as:
 
@@ -550,7 +485,6 @@ Here is an example:
 
 ```mdx title="foo.mdx"
 import { CodeBlockRuntime } from '@rspress/core/theme';
-import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 
 <CodeBlockRuntime
   lang="ts"
@@ -559,14 +493,10 @@ import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 // [\!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
-  shikiOptions={{
-    transformers: [transformerNotationHighlight()],
-  }}
 />
 ```
 
 import { CodeBlockRuntime } from '@rspress/core/theme';
-import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 
 <CodeBlockRuntime
   lang="ts"
@@ -575,9 +505,6 @@ import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 // [!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
-  shikiOptions={{
-    transformers: [transformerNotationHighlight()],
-  }}
 />
 
 :::warning

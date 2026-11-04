@@ -3,14 +3,7 @@ import path from 'node:path';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { RsdoctorRspackPlugin } from '@rsdoctor/core';
 import { defineConfig } from '@rspress/core';
-import {
-  transformerCompatibleMetaHighlight,
-  transformerNotationDiff,
-  transformerNotationErrorLevel,
-  transformerNotationFocus,
-  transformerNotationHighlight,
-  transformerRemoveNotationEscape,
-} from '@rspress/core/shiki-transformers';
+import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginPlayground } from '@rspress/plugin-playground';
 import { pluginPreview } from '@rspress/plugin-preview';
@@ -81,14 +74,7 @@ export default defineConfig({
         'css',
         'html',
       ],
-      transformers: [
-        transformerNotationDiff(),
-        transformerNotationErrorLevel(),
-        transformerNotationHighlight(),
-        transformerNotationFocus(),
-        transformerCompatibleMetaHighlight(),
-        transformerRemoveNotationEscape(),
-      ],
+      transformers: [transformerCompatibleMetaHighlight()],
     },
     link: {
       checkDeadLinks: {

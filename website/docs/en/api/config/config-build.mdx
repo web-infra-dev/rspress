@@ -210,6 +210,8 @@ const shikiOptions = {
 
 Configure Shiki-related options. For details, see [RehypeShikiOptions](https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts).
 
+Line highlighting, word highlighting, diff, focus, and error/warning notation transformers are enabled by default, along with notation escape removal. `transformers` adds custom transformers while keeping these defaults. A custom transformer with the same `name` replaces the corresponding default. See [Shiki transformers](/guide/use-mdx/code-blocks#shiki-transformers).
+
 ### markdown.link
 
 - **Type**:

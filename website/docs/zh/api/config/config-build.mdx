@@ -212,6 +212,8 @@ const shikiOptions = {
 
 配置 Shiki 相关配置。具体可见 [RehypeShikiOptions](https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts)。
 
+默认启用行高亮、单词高亮、diff、focus、error/warning 注释和注释转义处理。`transformers` 会在保留默认项的基础上添加自定义 transformer；与默认项的 `name` 相同时会替换对应项。详见 [Shiki transformers](/zh/guide/use-mdx/code-blocks#shiki-transformers)。
+
 ### markdown.link
 
 - **类型**:

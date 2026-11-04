@@ -44,11 +44,12 @@ Use `CodeBlockRuntime` only when necessary. It increases runtime bundle size, es
 
 ## Using shiki options
 
-Here is an example using a transformer for line highlighting:
+Notation syntax for line and word highlighting, diff, focus, and error/warning annotations works by default. Use `shikiOptions.transformers` to add custom transformers or override a built-in transformer by its `name`.
+
+Here is an example using line highlighting without configuration:
 
 ```mdx title="foo.mdx"
 import { CodeBlockRuntime } from '@rspress/core/theme';
-import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 
 <CodeBlockRuntime
   lang="ts"
@@ -57,13 +58,8 @@ import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 // [\!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
-  shikiOptions={{
-    transformers: [transformerNotationHighlight()],
-  }}
 />
 ```
-
-import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 
 <CodeBlockRuntime
   lang="ts"
@@ -72,9 +68,6 @@ import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
 // [!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
-  shikiOptions={{
-    transformers: [transformerNotationHighlight()],
-  }}
 />
 
 ## Importing file content

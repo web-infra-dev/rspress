@@ -81,3 +81,11 @@
     }
   }
 }
+
+.shiki .highlighted-word {
+  background-color: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+  padding: 1px 3px;
+  margin: -1px -3px;
+}
