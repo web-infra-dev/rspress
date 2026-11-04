@@ -13,7 +13,7 @@ import {
 } from '../webMcp/tools';
 
 /**
- * Registers `get_page_by_path` and `get_current_page` to read page
+ * Registers `get_page` and `get_current_page` to read page
  * metadata and generated SSG-MD without navigating. The app registers these
  * tools when Markdown generation is enabled, independently of the theme UI.
  * @unstable
@@ -24,7 +24,7 @@ export function useWebMcpPageReading() {
   const { pages } = usePages();
   useWebMcp(
     defineTool(
-      'get_page_by_path',
+      'get_page',
       'Read metadata, frontmatter, table of contents and generated Markdown for the documentation page specified by routePath, without navigating. Paths are relative to the site base.',
       { routePath: routePathField },
       ['routePath'],

@@ -5,7 +5,7 @@
     "required": [],
     "additionalProperties": false
   },
-  "get_page_by_path": {
+  "get_page": {
     "type": "object",
     "properties": {
       "routePath": {

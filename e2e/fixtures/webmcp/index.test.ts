@@ -230,13 +230,13 @@ test.describe('WebMCP production tools', () => {
     page,
   }) => {
     const routePath = '/docs/深入';
-    expect(
-      await page.webmcp.callTool('get_page_by_path', { routePath }),
-    ).toMatchObject({
-      title: 'Nested page',
-      routePath,
-      markdown: expect.stringContaining('Nested content'),
-    });
+    expect(await page.webmcp.callTool('get_page', { routePath })).toMatchObject(
+      {
+        title: 'Nested page',
+        routePath,
+        markdown: expect.stringContaining('Nested content'),
+      },
+    );
     await expect(page).toHaveURL(`http://localhost:${port}/docs/`);
     expect(await page.webmcp.callTool('navigate', { routePath })).toMatchObject(
       {
@@ -254,7 +254,7 @@ test.describe('WebMCP production tools', () => {
     page,
   }) => {
     await expect(page.locator('.rp-llms-hint')).toHaveCount(0);
-    const remote = await page.webmcp.callTool('get_page_by_path', {
+    const remote = await page.webmcp.callTool('get_page', {
       routePath: '/v2/zh/guide',
     });
     expect(remote).toMatchObject({
@@ -431,7 +431,7 @@ test.describe('WebMCP production tools', () => {
       }),
     );
     await expect(
-      page.webmcp.callTool('get_page_by_path', { routePath: '/guide' }),
+      page.webmcp.callTool('get_page', { routePath: '/guide' }),
     ).rejects.toThrow();
   });
   test('retries a failed index request for agents and the search UI', async ({
@@ -543,7 +543,7 @@ test.describe('WebMCP development', () => {
       .poll(() => listTools(page))
       .toEqual(
         allTools.filter(
-          name => !['get_page_by_path', 'get_current_page'].includes(name),
+          name => !['get_page', 'get_current_page'].includes(name),
         ),
       );
     expect(
