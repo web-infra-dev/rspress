@@ -1,16 +1,24 @@
+import { Prompt } from '@rspress/core/theme';
 import { VersionBadge } from '../../../components/VersionBadge';
 
 # WebMCP
 
 <VersionBadge version="2.1.0" />
 
-Rspress 可以通过浏览器原生 [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api) 向浏览器智能体提供文档工具。该功能内置于 core，默认开启。启用 Markdown 生成后即可使用全部六个工具：
+Rspress 默认通过浏览器原生的 [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api) 提供六个工具，供浏览器智能体搜索、阅读和浏览文档。
+
+<Prompt
+  title="试一试"
+  description="将这段提示词复制到 Codex 或其他智能体中，确保它已连接到启用 WebMCP 的浏览器。"
+  prompt="在浏览器中打开 https://rspress.rs，列出当前页面提供的 WebMCP 工具，并简要说明每个工具的用途。"
+  defaultCollapsed={false}
+/>
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  llms: true,
+  webMcp: true, // 默认值
 });
 ```
 
@@ -22,14 +30,14 @@ WebMCP 是实验性功能，需要浏览器在 HTTPS 或 localhost 等安全上�
 
 ## 内置工具
 
-| 工具                       | 用途                                                                                              |
-| -------------------------- | ------------------------------------------------------------------------------------------------- |
-| `rspress_get_site_info`    | 返回站点元信息、语言、版本、导航和当前侧边栏。                                                    |
-| `rspress_list_pages`       | 筛选和分页读取页面元信息，默认使用当前语言和版本，不依赖搜索。                                    |
-| `rspress_get_page`         | 无需跳转即可读取已知路由的元信息、frontmatter、目录和 SSG-MD Markdown（在 `llms: true` 时开启）。 |
-| `rspress_get_current_page` | 读取当前页面的元信息、frontmatter、目录和 SSG-MD Markdown（在 `llms: true` 时开启）。             |
-| `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引（仅支持默认主题的本地搜索）。                                    |
-| `rspress_navigate`         | 跳转到已知站内路由，等待页面提交后返回元信息、章节路由和前后页。                                  |
+| 工具                       | 用途                                                                    |
+| -------------------------- | ----------------------------------------------------------------------- |
+| `rspress_get_site_info`    | 返回站点元信息、语言、版本、导航和当前侧边栏。                          |
+| `rspress_list_pages`       | 筛选和分页读取页面元信息，默认使用当前语言和版本，不依赖搜索。          |
+| `rspress_get_page`         | 无需跳转即可读取已知路由的元信息、frontmatter、目录和 SSG-MD Markdown。 |
+| `rspress_get_current_page` | 读取当前页面的元信息、frontmatter、目录和 SSG-MD Markdown。             |
+| `rspress_search_docs`      | 搜索当前语言和版本的本地文档索引（仅支持默认主题的本地搜索）。          |
+| `rspress_navigate`         | 跳转到已知站内路由，等待页面提交后返回元信息、章节路由和前后页。        |
 
 路由路径不包含配置项 `base`，支持查询参数和锚点。
 
