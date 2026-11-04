@@ -85,6 +85,10 @@
     gap: 1rem;
     align-items: flex-start;
     justify-content: space-between;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
   }
 
   &__header-left {
@@ -164,6 +168,10 @@
     gap: 0.5rem;
     align-items: center;
     flex-shrink: 0;
+
+    @media (max-width: 768px) {
+      align-self: flex-end;
+    }
   }
 
   &__title {
