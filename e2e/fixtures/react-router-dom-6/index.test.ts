@@ -148,8 +148,8 @@ webMcpTest.describe('WebMCP React Router 6 compatibility', () => {
     'waits for committed context even when useNavigate returns void',
     async ({ page }) => {
       await page.goto(`http://localhost:${port}/docs/`);
-      await expect.poll(() => listTools(page)).toContain('rspress_navigate');
-      const result = await page.webmcp.callTool('rspress_navigate', {
+      await expect.poll(() => listTools(page)).toContain('navigate');
+      const result = await page.webmcp.callTool('navigate', {
         routePath: '/guide#install',
       });
       expect(await page.locator('h1').textContent()).toContain('v1 en guide');

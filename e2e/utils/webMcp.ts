@@ -89,7 +89,7 @@ export async function installModelContext(
       window.webMcpTest = {
         list: () => [...tools.keys()].sort(),
         async run(name, input = {}, signal) {
-          const tool = tools.get(`rspress_${name}`);
+          const tool = tools.get(name);
           if (!tool) throw new Error(`Missing tool: ${name}`);
           return tool.execute(input, { signal });
         },

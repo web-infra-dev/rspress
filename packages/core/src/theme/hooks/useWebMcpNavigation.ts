@@ -123,7 +123,7 @@ function useAwaitedNavigation(result: NavigationResult) {
 }
 
 /**
- * Registers `rspress_navigate` for known internal routes. Waits for committed
+ * Registers `navigate` for known internal routes. Waits for committed
  * page context before returning metadata, section routes, and adjacent pages.
  * @unstable
  */

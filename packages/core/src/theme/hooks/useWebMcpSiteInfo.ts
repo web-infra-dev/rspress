@@ -9,7 +9,7 @@ import { defineTool } from '../webMcp/tools';
 import type { SiteInfo } from '../webMcp/types';
 
 /**
- * Registers `rspress_get_site_info` to expose site metadata, locales, versions,
+ * Registers `get_site_info` to expose site metadata, locales, versions,
  * navigation, and the active sidebar from the current page context.
  * @unstable
  */

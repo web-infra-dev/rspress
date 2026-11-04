@@ -46,7 +46,7 @@ test.describe('WebMCP production tools', () => {
       ]),
     );
     expect(schemas).toEqual(toolInputSchemas);
-    expect(await page.webmcp.callTool('rspress_get_site_info')).toMatchObject({
+    expect(await page.webmcp.callTool('get_site_info')).toMatchObject({
       title: 'WebMCP docs',
       base: '/docs/',
       lang: 'en',
@@ -55,7 +55,7 @@ test.describe('WebMCP production tools', () => {
       defaultVersion: 'v1',
     });
     expect(
-      (await page.webmcp.callTool('rspress_get_site_info')).sidebar.length,
+      (await page.webmcp.callTool('get_site_info')).sidebar.length,
     ).toBeGreaterThan(0);
     // The theme may prefetch the index through a link before any search.
     expect(
@@ -80,7 +80,7 @@ test.describe('WebMCP production tools', () => {
 
   test('filters and paginates page discovery', async ({ page }) => {
     expect(
-      await page.webmcp.callTool('rspress_list_pages', {
+      await page.webmcp.callTool('list_pages', {
         limit: 1,
         offset: 2,
       }),
@@ -91,10 +91,10 @@ test.describe('WebMCP production tools', () => {
       pages: [{ title: 'v1 en home' }],
     });
     expect(
-      await page.webmcp.callTool('rspress_list_pages', { query: 'install' }),
+      await page.webmcp.callTool('list_pages', { query: 'install' }),
     ).toMatchObject({ total: 1, pages: [{ routePath: '/guide' }] });
     expect(
-      await page.webmcp.callTool('rspress_list_pages', {
+      await page.webmcp.callTool('list_pages', {
         lang: 'zh',
         version: 'v2',
       }),
@@ -106,35 +106,35 @@ test.describe('WebMCP production tools', () => {
   }) => {
     expect(
       JSON.stringify(
-        await page.webmcp.callTool('rspress_search_docs', {
+        await page.webmcp.callTool('search_docs', {
           query: 'cobalt',
         }),
       ),
     ).toContain('v1 en home');
-    await page.webmcp.callTool('rspress_navigate', { routePath: '/zh/' });
+    await page.webmcp.callTool('navigate', { routePath: '/zh/' });
     expect(
       JSON.stringify(
-        await page.webmcp.callTool('rspress_search_docs', { query: 'jade' }),
+        await page.webmcp.callTool('search_docs', { query: 'jade' }),
       ),
     ).toContain('v1 zh home');
     expect(
       JSON.stringify(
-        await page.webmcp.callTool('rspress_search_docs', {
+        await page.webmcp.callTool('search_docs', {
           query: 'cobalt',
         }),
       ),
     ).not.toContain('v1 en home');
-    await page.webmcp.callTool('rspress_navigate', { routePath: '/v2/' });
+    await page.webmcp.callTool('navigate', { routePath: '/v2/' });
     expect(
       JSON.stringify(
-        await page.webmcp.callTool('rspress_search_docs', { query: 'amber' }),
+        await page.webmcp.callTool('search_docs', { query: 'amber' }),
       ),
     ).toContain('v2 en home');
-    expect(await page.webmcp.callTool('rspress_get_site_info')).toMatchObject({
+    expect(await page.webmcp.callTool('get_site_info')).toMatchObject({
       lang: 'en',
       version: 'v2',
     });
-    expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
+    expect(await page.webmcp.callTool('list_pages')).toMatchObject({
       total: 2,
       pages: [{ version: 'v2' }, { version: 'v2' }],
     });
@@ -153,7 +153,7 @@ test.describe('WebMCP production tools', () => {
     });
     expect(
       JSON.stringify(
-        await page.webmcp.callTool('rspress_search_docs', {
+        await page.webmcp.callTool('search_docs', {
           query: 'cobalt',
         }),
       ),
@@ -167,7 +167,7 @@ test.describe('WebMCP production tools', () => {
     await expect(page.locator('.rp-search-panel__input')).not.toBeVisible();
     expect(
       JSON.stringify(
-        await page.webmcp.callTool('rspress_search_docs', {
+        await page.webmcp.callTool('search_docs', {
           query: 'cobalt',
         }),
       ),
@@ -178,7 +178,7 @@ test.describe('WebMCP production tools', () => {
   test('returns committed page context, sections and adjacent links with query/hash', async ({
     page,
   }) => {
-    const result = await page.webmcp.callTool('rspress_navigate', {
+    const result = await page.webmcp.callTool('navigate', {
       routePath: '/guide.html?source=agent#install',
     });
     expect(await page.locator('h1').textContent()).toContain('v1 en guide');
@@ -196,12 +196,12 @@ test.describe('WebMCP production tools', () => {
       `http://localhost:${port}/docs/guide?source=agent#install`,
     );
     expect(
-      await page.webmcp.callTool('rspress_navigate', {
+      await page.webmcp.callTool('navigate', {
         routePath: '/guide?source=agent#install',
       }),
     ).toMatchObject({ page: { title: 'v1 en guide' } });
     expect(
-      await page.webmcp.callTool('rspress_navigate', {
+      await page.webmcp.callTool('navigate', {
         routePath: '/guide#usage',
       }),
     ).toMatchObject({ routePath: '/guide#usage' });
@@ -217,11 +217,11 @@ test.describe('WebMCP production tools', () => {
       'guide',
     ]) {
       await expect(
-        page.webmcp.callTool('rspress_navigate', { routePath }),
+        page.webmcp.callTool('navigate', { routePath }),
       ).rejects.toThrow();
     }
     await expect(
-      page.webmcp.callTool('rspress_search_docs', { query: ' ', limit: 100 }),
+      page.webmcp.callTool('search_docs', { query: ' ', limit: 100 }),
     ).rejects.toThrow();
     await expect(page).toHaveURL(`http://localhost:${port}/docs/`);
   });
@@ -230,20 +230,20 @@ test.describe('WebMCP production tools', () => {
     page,
   }) => {
     const routePath = '/docs/深入';
-    expect(
-      await page.webmcp.callTool('rspress_get_page', { routePath }),
-    ).toMatchObject({
-      title: 'Nested page',
-      routePath,
-      markdown: expect.stringContaining('Nested content'),
-    });
+    expect(await page.webmcp.callTool('get_page', { routePath })).toMatchObject(
+      {
+        title: 'Nested page',
+        routePath,
+        markdown: expect.stringContaining('Nested content'),
+      },
+    );
     await expect(page).toHaveURL(`http://localhost:${port}/docs/`);
-    expect(
-      await page.webmcp.callTool('rspress_navigate', { routePath }),
-    ).toMatchObject({
-      routePath,
-      page: { title: 'Nested page' },
-    });
+    expect(await page.webmcp.callTool('navigate', { routePath })).toMatchObject(
+      {
+        routePath,
+        page: { title: 'Nested page' },
+      },
+    );
     await expect(page.locator('h1').first()).toContainText('Nested page');
     await expect(page).toHaveURL(
       `http://localhost:${port}/docs/docs/${encodeURIComponent('深入')}`,
@@ -254,7 +254,7 @@ test.describe('WebMCP production tools', () => {
     page,
   }) => {
     await expect(page.locator('.rp-llms-hint')).toHaveCount(0);
-    const remote = await page.webmcp.callTool('rspress_get_page', {
+    const remote = await page.webmcp.callTool('get_page', {
       routePath: '/v2/zh/guide',
     });
     expect(remote).toMatchObject({
@@ -264,13 +264,11 @@ test.describe('WebMCP production tools', () => {
     });
     expect(remote.markdown).toContain('## Install');
     await expect(page).toHaveURL(`http://localhost:${port}/docs/`);
-    expect(
-      (await page.webmcp.callTool('rspress_get_current_page')).markdown,
-    ).toContain('cobalt platypus');
-    await page.webmcp.callTool('rspress_navigate', { routePath: '/guide' });
-    expect(
-      await page.webmcp.callTool('rspress_get_current_page'),
-    ).toMatchObject({
+    expect((await page.webmcp.callTool('get_current_page')).markdown).toContain(
+      'cobalt platypus',
+    );
+    await page.webmcp.callTool('navigate', { routePath: '/guide' });
+    expect(await page.webmcp.callTool('get_current_page')).toMatchObject({
       title: 'v1 en guide',
       routePath: '/guide',
     });
@@ -297,7 +295,7 @@ test.describe('WebMCP production tools', () => {
       { times: 1 },
     );
     let settled = false;
-    const navigation = page.webmcp.callTool('rspress_navigate', {
+    const navigation = page.webmcp.callTool('navigate', {
       routePath: '/guide',
     });
     void navigation.then(
@@ -338,14 +336,14 @@ test.describe('WebMCP production tools', () => {
       },
       { times: 1 },
     );
-    const first = page.webmcp.callTool('rspress_navigate', {
+    const first = page.webmcp.callTool('navigate', {
       routePath: '/guide',
     });
     // Handle rejection immediately while the first page chunk is blocked.
     const firstResult = Promise.allSettled([first]);
     try {
       await started;
-      await page.webmcp.callTool('rspress_navigate', { routePath: '/zh/' });
+      await page.webmcp.callTool('navigate', { routePath: '/zh/' });
       expect((await firstResult)[0].status).toBe('rejected');
       await expect(page.locator('h1')).toContainText('v1 zh home');
     } finally {
@@ -361,7 +359,7 @@ test.describe('WebMCP production tools', () => {
     await page.reload();
     await expect
       .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toContain('rspress_navigate');
+      .toContain('navigate');
     const result = await page.evaluate(async () => {
       const first = window.webMcpTest
         .run('navigate', { routePath: '/guide' })
@@ -387,7 +385,7 @@ test.describe('WebMCP production tools', () => {
     await page.reload();
     await expect
       .poll(() => page.evaluate(() => window.webMcpTest.list()))
-      .toContain('rspress_navigate');
+      .toContain('navigate');
     const error = await page.evaluate(async () => {
       const controller = new AbortController();
       const result = window.webMcpTest.run(
@@ -419,7 +417,7 @@ test.describe('WebMCP production tools', () => {
       { times: 1 },
     );
     await expect(
-      page.webmcp.callTool('rspress_navigate', { routePath: '/guide' }),
+      page.webmcp.callTool('navigate', { routePath: '/guide' }),
     ).rejects.toThrow();
   });
 
@@ -433,7 +431,7 @@ test.describe('WebMCP production tools', () => {
       }),
     );
     await expect(
-      page.webmcp.callTool('rspress_get_page', { routePath: '/guide' }),
+      page.webmcp.callTool('get_page', { routePath: '/guide' }),
     ).rejects.toThrow();
   });
   test('retries a failed index request for agents and the search UI', async ({
@@ -448,7 +446,7 @@ test.describe('WebMCP production tools', () => {
       return route.continue();
     });
     await expect(
-      page.webmcp.callTool('rspress_search_docs', { query: 'cobalt' }),
+      page.webmcp.callTool('search_docs', { query: 'cobalt' }),
     ).rejects.toThrow();
     await page.locator('.rp-search-button').click();
     await page.locator('.rp-search-panel__input').fill('cobalt');
@@ -457,7 +455,7 @@ test.describe('WebMCP production tools', () => {
     );
     expect(
       JSON.stringify(
-        await page.webmcp.callTool('rspress_search_docs', { query: 'cobalt' }),
+        await page.webmcp.callTool('search_docs', { query: 'cobalt' }),
       ),
     ).toContain('v1 en home');
     expect(requests).toBe(2);
@@ -466,9 +464,9 @@ test.describe('WebMCP production tools', () => {
   test('returns serializable custom search results without a local index', async ({
     page,
   }) => {
-    await page.webmcp.callTool('rspress_navigate', { routePath: '/v2/zh/' });
-    await expect.poll(() => listTools(page)).toContain('rspress_search_docs');
-    const result = await page.webmcp.callTool('rspress_search_docs', {
+    await page.webmcp.callTool('navigate', { routePath: '/v2/zh/' });
+    await expect.poll(() => listTools(page)).toContain('search_docs');
+    const result = await page.webmcp.callTool('search_docs', {
       query: 'custom',
     });
     expect(result).toContainEqual({
@@ -496,10 +494,10 @@ test.describe('WebMCP production tools', () => {
   test('uses search hooks and unregisters only search when its component unmounts', async ({
     page,
   }) => {
-    await expect.poll(() => listTools(page)).toContain('rspress_search_docs');
+    await expect.poll(() => listTools(page)).toContain('search_docs');
     expect(
       JSON.stringify(
-        await page.webmcp.callTool('rspress_search_docs', { query: 'alias' }),
+        await page.webmcp.callTool('search_docs', { query: 'alias' }),
       ),
     ).toContain('v1 en home');
     await page.locator('.rp-search-button').click();
@@ -509,18 +507,18 @@ test.describe('WebMCP production tools', () => {
     );
     await page.keyboard.press('Escape');
     const others = (await listTools(page)).filter(
-      name => name !== 'rspress_search_docs',
+      name => name !== 'search_docs',
     );
     await page.getByRole('button', { name: 'Toggle search component' }).click();
     await expect.poll(() => listTools(page)).toEqual(others);
-    expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
+    expect(await page.webmcp.callTool('list_pages')).toMatchObject({
       total: 3,
     });
     await page.getByRole('button', { name: 'Toggle search component' }).click();
-    await expect.poll(() => listTools(page)).toContain('rspress_search_docs');
+    await expect.poll(() => listTools(page)).toContain('search_docs');
     expect(
       JSON.stringify(
-        await page.webmcp.callTool('rspress_search_docs', { query: 'alias' }),
+        await page.webmcp.callTool('search_docs', { query: 'alias' }),
       ),
     ).toContain('v1 en home');
   });
@@ -545,17 +543,16 @@ test.describe('WebMCP development', () => {
       .poll(() => listTools(page))
       .toEqual(
         allTools.filter(
-          name =>
-            !['rspress_get_page', 'rspress_get_current_page'].includes(name),
+          name => !['get_page', 'get_current_page'].includes(name),
         ),
       );
     expect(
       JSON.stringify(
-        await page.webmcp.callTool('rspress_search_docs', { query: 'cobalt' }),
+        await page.webmcp.callTool('search_docs', { query: 'cobalt' }),
       ),
     ).toContain('v1 en home');
     expect(
-      await page.webmcp.callTool('rspress_navigate', { routePath: '/guide' }),
+      await page.webmcp.callTool('navigate', { routePath: '/guide' }),
     ).toMatchObject({ page: { title: 'v1 en guide' } });
   });
   test('unsupported browsers render normally', async ({ page }) => {
@@ -582,8 +579,7 @@ test('disabled WebMCP is absent from production JavaScript', async () => {
   expect(
     js.some(
       code =>
-        code.includes('rspress_get_site_info') ||
-        code.includes('Failed to register'),
+        code.includes('get_site_info') || code.includes('Failed to register'),
     ),
   ).toBe(false);
 });
@@ -606,12 +602,8 @@ test.describe('WebMCP default configuration', () => {
     await page.goto(`http://localhost:${port}/docs/`);
     await expect
       .poll(() => listTools(page))
-      .toEqual([
-        'rspress_get_site_info',
-        'rspress_list_pages',
-        'rspress_navigate',
-      ]);
-    expect(await page.webmcp.callTool('rspress_list_pages')).toMatchObject({
+      .toEqual(['get_site_info', 'list_pages', 'navigate']);
+    expect(await page.webmcp.callTool('list_pages')).toMatchObject({
       total: 3,
     });
     for (const [route, title] of [
@@ -621,7 +613,7 @@ test.describe('WebMCP default configuration', () => {
     ]) {
       const routePath = `${route}?from=agent#install`;
       expect(
-        await page.webmcp.callTool('rspress_navigate', { routePath }),
+        await page.webmcp.callTool('navigate', { routePath }),
       ).toMatchObject({
         routePath,
         page: { title },
@@ -633,7 +625,7 @@ test.describe('WebMCP default configuration', () => {
       const response = await page.reload();
       expect(response?.status()).toBe(200);
       await expect(page.locator('h1').first()).toContainText(title);
-      await expect.poll(() => listTools(page)).toContain('rspress_navigate');
+      await expect.poll(() => listTools(page)).toContain('navigate');
     }
   });
 });
@@ -742,7 +734,7 @@ test.describe('public useWebMcp hook', () => {
     await expect.poll(() => state(page)).toMatchObject({ registered: true });
     await expect(
       page.evaluate(() =>
-        window.webMcpTest.run('test_value', {}, AbortSignal.abort()),
+        window.webMcpTest.run('rspress_test_value', {}, AbortSignal.abort()),
       ),
     ).rejects.toThrow();
   });
