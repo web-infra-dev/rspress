@@ -5,16 +5,14 @@ import { VersionBadge } from '../../../components/VersionBadge';
 
 <VersionBadge version="2.1.0" />
 
-默认情况下，浏览器智能体可以通过原生 [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api) 搜索、阅读和浏览 Rspress 文档。
+默认情况下，Agent 可以通过 [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api) 搜索、阅读和浏览 Rspress 文档。例如，ChatGPT 桌面应用的内置浏览器支持这些工具，具体用法见 [ChatGPT 站点工具指南](https://learn.chatgpt.com/docs/webmcp)。
 
 <Prompt
-  title="用你的智能体试试 WebMCP"
-  description="把这段提示词发给 Codex 或其他智能体，让它看看这个页面提供了哪些 WebMCP 工具。"
+  title="用你的 Agent 试试 WebMCP"
+  description="把这段提示词发给 Codex 或其他 Agent，让它看看这个页面提供了哪些 WebMCP 工具。"
   prompt="在浏览器中打开 https://rspress.rs，列出当前页面提供的 WebMCP 工具，并简要说明每个工具的用途。"
   defaultCollapsed={false}
 />
-
-要在 ChatGPT 中试用这段提示词，可以用桌面应用的内置浏览器打开 rspress.rs。具体用法见 [ChatGPT 站点工具指南](https://learn.chatgpt.com/docs/webmcp)。
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -45,7 +43,7 @@ WebMCP 是实验性功能，需要浏览器在 HTTPS 或 localhost 等安全上�
 
 `rspress_list_pages` 接受 `query`、`lang`、`version`、`limit`（1–100，默认 50）和 `offset`（默认 0）。其中 `query` 匹配页面标题、描述、路由和章节标题。`rspress_search_docs` 接受 `query` 和 `limit`（1–20，默认 10）。
 
-## 跨源智能体
+## 跨源 Agent
 
 通过 [`webMcp.exposedTo`](/api/config/config-agent#webmcp) 允许指定的安全来源发现工具。
 

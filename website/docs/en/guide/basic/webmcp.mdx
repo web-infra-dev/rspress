@@ -5,7 +5,7 @@ import { VersionBadge } from '../../../components/VersionBadge';
 
 <VersionBadge version="2.1.0" />
 
-By default, browser agents can search, read, and navigate Rspress documentation through the native [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api).
+By default, agents can search, read, and navigate Rspress documentation through the [WebMCP API](https://developer.chrome.com/docs/ai/webmcp/imperative-api). For example, the ChatGPT desktop app supports these tools in its built-in browser. See the [ChatGPT site tools guide](https://learn.chatgpt.com/docs/webmcp) for details.
 
 <Prompt
   title="Try WebMCP with your agent"
@@ -13,8 +13,6 @@ By default, browser agents can search, read, and navigate Rspress documentation 
   prompt="Open https://rspress.rs in the browser and list the WebMCP tools the page exposes. Give the name and purpose of each tool."
   defaultCollapsed={false}
 />
-
-To try this prompt in ChatGPT, open rspress.rs in the desktop app’s built-in browser. See [Site tools](https://learn.chatgpt.com/docs/webmcp) for details.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
