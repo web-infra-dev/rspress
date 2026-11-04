@@ -163,3 +163,34 @@ jobs:
           cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           cloudflare-account-id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           cloudflare-worker-name: rspress-midscene-reports
+
+      - name: Add result badge to Summary
+        if: always()
+        env:
+          REPORT_URL: ${{ steps.midscene-test.outputs.page-url }}
+          ARTIFACT_URL: ${{ steps.midscene-test.outputs.artifact-url }}
+          TEST_OUTCOME: ${{ steps.midscene-test.outcome }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync, readdirSync, readFileSync } from 'node:fs';
+          const root = 'tests/midscene/.midscene/test-results';
+          let markdown;
+          try {
+            const runs = readdirSync(root, { withFileTypes: true }).filter((entry) => entry.isDirectory());
+            if (runs.length !== 1) throw new Error('Expected one test run');
+            const result = JSON.parse(readFileSync(`${root}/${runs[0].name}/summary.json`, 'utf8'));
+            const { passed, failed, notRun, total } = result.summary;
+            if (![passed, failed, notRun, total].every((count) => Number.isSafeInteger(count) && count >= 0) ||
+                passed + failed + notRun !== total || !result.endedAt) {
+              throw new Error('Incomplete test results');
+            }
+            const badge = `![Midscene E2E: ${passed} passed, ${failed} failed](https://badge.midscenejs.com/e2e?pass=${passed}&fail=${failed})`;
+            const url = process.env.REPORT_URL || process.env.ARTIFACT_URL;
+            markdown = url ? `[${badge}](${url})` : badge;
+            markdown += `\n\n${passed}/${total} passed · ${failed} failed · ${notRun} not run. Test run status: ${result.status}.`;
+          } catch {
+            markdown = 'Result badge unavailable: no complete, unambiguous test summary was produced.';
+          }
+          markdown += `\n\nCI test step: ${process.env.TEST_OUTCOME || 'not run'}.\n`;
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY, `\n### Midscene result badge\n\n${markdown}`);
+          NODE

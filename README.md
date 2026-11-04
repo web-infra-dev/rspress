@@ -12,6 +12,7 @@ A fast Rsbuild-based static site generator.
   <a href="https://npmcharts.com/compare/@rspress/core?minimal=true"><img src="https://img.shields.io/npm/dm/@rspress/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
   <a href="https://github.com/web-infra-dev/rspress/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@rspress/core?style=flat-square&colorA=564341&colorB=EDED91" alt="license" /></a>
   <a href="https://deepwiki.com/web-infra-dev/rspress"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki" /></a>
+  <a href="https://midscenejs.com"><img src="https://badge.midscenejs.com/by-midscene" alt="E2E by Midscene.js" /></a>
 </p>
 
 ## 🔥 Features
