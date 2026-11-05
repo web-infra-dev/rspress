@@ -237,9 +237,11 @@ const transformers = [
 ];
 ```
 
+这些默认项也适用于 `CodeBlockRuntime`。使用 `[\!code ...]` 转义注释可按原文显示。
+
 自定义 transformer 会先于默认的注释语法 transformers 执行。与默认项的 `name` 相同时会替换对应项，其他默认项会保留。设置 `transformers: []` 仍会启用默认项。
 
-添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。例如，添加 `transformerMetaWordHighlight` 后，可以通过代码块 meta 属性中的 `/word/` 高亮单词：
+可直接从 `@rspress/core/shiki-transformers` 导入 transformers，无需单独安装 `@shikijs/transformers`。例如，添加 `transformerMetaWordHighlight` 后，可以通过代码块 meta 属性中的 `/word/` 高亮单词：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

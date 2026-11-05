@@ -384,13 +384,7 @@ function test() {
 
 ## Shiki transformers
 
-Rspress uses [Shiki](https://shiki.style) for compile-time code highlighting, providing flexible code block capabilities.
-
-You can add custom [shiki transformers](https://shiki.style/guide/transformers.html) via [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshikitransformers) for richer code block effects. Custom transformers are added alongside the defaults. A custom transformer with the same `name` as a built-in transformer replaces that default, so its options take effect.
-
-Rspress enables line highlighting, word highlighting, diff, focus, and error/warning annotations from [@shikijs/transformers](https://shiki.style/packages/transformers) by default, for both Markdown code blocks and `CodeBlockRuntime`. No transformer configuration is required. Escape annotations as `[\!code ...]` to display them literally.
-
-Rspress re-exports all transformers from `@shikijs/transformers` through `@rspress/core/shiki-transformers`, so you do not need to install `@shikijs/transformers` separately.
+Rspress includes several built-in transformers from [@shikijs/transformers](https://shiki.style/packages/transformers). You can also add custom transformers via [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshikitransformers).
 
 ### transformerNotationWordHighlight
 

@@ -235,9 +235,11 @@ const transformers = [
 ];
 ```
 
+These defaults also apply to `CodeBlockRuntime`. Escape annotations as `[\!code ...]` to display them literally.
+
 Custom transformers run before the default notation transformers. A custom transformer with the same `name` replaces the corresponding default; other defaults are preserved. Setting `transformers: []` keeps the defaults enabled.
 
-Add custom [Shiki transformers](https://shiki.style/guide/transformers.html) for richer code block effects. For example, add `transformerMetaWordHighlight` to highlight words using `/word/` in code block meta attributes:
+Import transformers directly from `@rspress/core/shiki-transformers` without installing `@shikijs/transformers` separately. For example, add `transformerMetaWordHighlight` to highlight words using `/word/` in code block meta attributes:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
