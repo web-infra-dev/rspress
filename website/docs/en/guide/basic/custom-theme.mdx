@@ -7,13 +7,16 @@ description: Customize themes with CSS variables, BEM class names, component wra
 import { Prompt } from '@rspress/core/theme';
 import { SlotPreviewToggle } from '../../../components/SlotPreview';
 
-<Prompt custom>
+<Prompt
+  title="Create your custom theme in one click"
+  description="Send this prompt to your AI agent to help you design and build a custom theme."
+  prompt={`Help me create a custom theme for the current Rspress project:
 
-If you are using a coding agent, install the [`rspress-custom-theme` Agent Skill](https://github.com/rstackjs/agent-skills#rspress-custom-theme) to help the agent generate a brand-new theme for you.
+1. Run \`npx skills add rstackjs/agent-skills --skill rspress-custom-theme\` to install the \`rspress-custom-theme\` skill.
+2. Use the \`rspress-custom-theme\` skill to understand the project content and my style preferences, then design and implement the theme.`}
+   />
 
 For more information about AI-assisted development with Rspress, see the [AI page](../start/ai.mdx).
-
-</Prompt>
 
 1. For CSS, Rspress provides [CSS variables](#css-variables) and [BEM class names](#bem-classname) for customization.
 
