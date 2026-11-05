@@ -1,6 +1,6 @@
 cases:
   - name: NAV-08 Navigate clean URLs on mobile
-    tags: [stability-regression, original-clean-nav]
+    tags: [original-clean-nav]
     steps:
       - app.open: { fixture: nav-link-items-clean, path: /, viewport: mobile }
       - aiTap: The hamburger navigation menu button at the top right.

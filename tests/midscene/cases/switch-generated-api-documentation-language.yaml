@@ -1,12 +1,6 @@
 cases:
   - name: PLUGIN-02 Switch generated API documentation language
-    tags:
-      [
-        stability-regression,
-        language-start-regression,
-        original-api,
-        replacement-batch-4,
-      ]
+    tags: [original-api, replacement-batch-4]
     steps:
       - app.open: { fixture: plugin-api-docgen/locales, path: / }
       - aiHover: The current language selector in the top navigation.

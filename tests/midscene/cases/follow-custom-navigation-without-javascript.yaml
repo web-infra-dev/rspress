@@ -2,9 +2,7 @@ cases:
   - name: STATIC-01 Follow custom navigation without JavaScript
     tags:
       [
-        stability-regression,
         original-static,
-        original-slots,
         replacement-batch-3-slots,
         remote-search-static-regression,
       ]

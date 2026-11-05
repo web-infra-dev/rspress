@@ -2,7 +2,6 @@ cases:
   - name: CONTENT-01 Follow a generated API overview link
     tags:
       [
-        stability-regression,
         original-overview,
         replacement-batch-3-overviews,
         replacement-final-existing,

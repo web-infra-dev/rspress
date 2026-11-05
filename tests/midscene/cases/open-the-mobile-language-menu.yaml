@@ -1,6 +1,6 @@
 cases:
   - name: AUDIT-08 Open the mobile language menu
-    tags: [stability-regression, replacement-final-content]
+    tags: [replacement-final-content]
     steps:
       - app.open: { fixture: i18n, path: /, viewport: mobile }
       - aiTap: The hamburger navigation menu button at the top right.

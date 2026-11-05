@@ -1,6 +1,6 @@
 cases:
   - name: ASSET-03 Read public assets from markdown-link-asset-clean English documentation
-    tags: [stability-regression, replacement-final-assets]
+    tags: [replacement-final-assets]
     steps:
       - app.open:
           {

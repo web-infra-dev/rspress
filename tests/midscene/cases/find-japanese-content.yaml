@@ -2,8 +2,6 @@ cases:
   - name: SEARCH-08 Find Japanese content
     tags:
       [
-        stability-regression,
-        language-start-regression,
         original-localized-search,
         replacement-batch-3,
         remote-search-static-regression,

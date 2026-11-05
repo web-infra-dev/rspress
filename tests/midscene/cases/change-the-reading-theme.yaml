@@ -1,6 +1,6 @@
 cases:
   - name: COMPONENT-04 Change the reading theme
-    tags: [stability-regression, original-theme]
+    tags: [original-theme]
     steps:
       - app.open: { fixture: basic, path: / }
       - aiAct: Use the appearance switch in the top navigation to set the documentation to dark mode.

@@ -1,6 +1,6 @@
 cases:
   - name: INLINE-01 Read formatted sidebar labels
-    tags: [stability-regression, replacement-final-inline]
+    tags: [replacement-final-inline]
     steps:
       - app.open: { fixture: inline-markdown, path: /inline/index }
       - aiAct: Bring the upper portion of the left sidebar into view, keeping this overview page open.

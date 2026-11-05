@@ -1,6 +1,6 @@
 cases:
   - name: SEARCH-04 Toggle search with the platform keyboard shortcut
-    tags: [stability-regression, original-search]
+    tags: [original-search]
     steps:
       - app.open: { fixture: search, path: /base/ }
       - aiKeyboardPress: { keyName: Control+K }

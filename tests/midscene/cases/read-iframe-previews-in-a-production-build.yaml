@@ -1,12 +1,6 @@
 cases:
   - name: PREVIEW-05 Read iframe previews in a production build
-    tags:
-      [
-        stability-regression,
-        preview-frame-regression,
-        original-preview-render,
-        replacement-batch-4,
-      ]
+    tags: [original-preview-render, replacement-batch-4]
     steps:
       - app.open: { fixture: plugin-preview, mode: production, path: / }
       - aiAct: Stay on Guide and read the fixed device preview on the right. It renders three short lines of static demo output, not navigation links. Bring those rendered lines into view without clicking their text, navigating, or reading only the source code.

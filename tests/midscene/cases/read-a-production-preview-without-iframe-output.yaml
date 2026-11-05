@@ -1,6 +1,6 @@
 cases:
   - name: AUDIT-05 Read a production preview without iframe output
-    tags: [stability-regression, replacement-final-content]
+    tags: [replacement-final-content]
     steps:
       - app.open:
           { fixture: plugin-preview-no-iframe, mode: production, path: / }

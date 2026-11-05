@@ -1,6 +1,6 @@
 cases:
   - name: CONTENT-03 Custom navigation slots work on desktop
-    tags: [stability-regression, original-slots, replacement-batch-3-slots]
+    tags: [original-slots, replacement-batch-3-slots]
     steps:
       - app.open: { fixture: nav-slots, mode: production, path: / }
       - aiAssert:

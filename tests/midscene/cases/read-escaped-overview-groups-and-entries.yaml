@@ -1,6 +1,6 @@
 cases:
   - name: INLINE-03 Read escaped overview groups and entries
-    tags: [stability-regression, replacement-final-inline, remote-regression]
+    tags: [replacement-final-inline, remote-regression]
     steps:
       - app.open: { fixture: inline-markdown, path: /inline/index }
       - aiAct: Bring the beginning of the central overview into view, ignoring duplicate labels in the sidebars.
