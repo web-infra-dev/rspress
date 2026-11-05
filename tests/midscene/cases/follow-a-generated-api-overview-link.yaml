@@ -2,6 +2,7 @@ cases:
   - name: CONTENT-01 Follow a generated API overview link
     tags:
       [
+        stability-regression,
         original-overview,
         replacement-batch-3-overviews,
         replacement-final-existing,
@@ -14,7 +15,8 @@ cases:
       - aiAct: Scroll only the main document to show both Components and Runtime API entries in the Client API overview group. Do not click any sidebar entry, heading, card, or link. Stay on the current API Overview page.
       - aiAssert: The Client API overview contains a Components row with Usage and Example links, followed by a separate card titled Runtime API. Runtime API is a title-only card in this overview.
       - aiAct: Scroll the main API Overview article to the Commands overview entry and its rspress dev and rspress build links. Stay on the overview; do not click or scroll the sidebar.
-      - aiAssert: The Commands overview entry in the main article offers rspress dev and rspress build links.
+      - overview.expectLinks: { labels: [rspress dev, rspress build] }
+      - aiAssert: The Commands overview entry in the main article contains entries labelled rspress dev and rspress build. The command names may use gray code styling; blue text or underlines are not required.
       - aiAct: Scroll the main article farther down to show the Single, Section a, and Section b overview cards, including the Section b card below its heading. Stay on API Overview without clicking a link.
       - aiAssert: The main overview article shows cards titled Single, Section a, and Section b. These are title-only cards; they do not need child article links.
       - aiAct: In the API overview article, follow the Commands link. Do not use the sidebar or search.

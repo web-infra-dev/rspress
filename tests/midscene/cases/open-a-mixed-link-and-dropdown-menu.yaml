@@ -1,7 +1,9 @@
 cases:
   - name: NAV-09 Open a mixed link and dropdown menu
-    tags: [original-mixed-nav]
+    tags:
+      [stability-regression, navigation-dropdown-regression, original-mixed-nav]
     steps:
       - app.open: { fixture: nav-link-items, path: / }
-      - aiAct: Hover over ItemsAndLink in the top navigation.
+      - aiHover: The ItemsAndLink dropdown trigger in the top navigation, between OnlyItems and NestedItems.
+      - aiWaitFor: The ItemsAndLink dropdown displays Child1 and Child2.
       - aiAssert: Its dropdown shows Child1 and Child2.

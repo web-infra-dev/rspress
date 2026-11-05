@@ -2,6 +2,8 @@ cases:
   - name: SEARCH-08 Find Japanese content
     tags:
       [
+        stability-regression,
+        language-start-regression,
         original-localized-search,
         replacement-batch-3,
         remote-search-static-regression,
@@ -9,11 +11,43 @@ cases:
       ]
     steps:
       - app.open: { fixture: search-i18n, path: / }
-      - aiAct: Switch the site language to 日本語 using the language menu, then open search and enter ご.
-      - aiAssert: The search input contains ご (hiragana go). Exactly one result row is listed, with the Japanese page title beginning にほんご and ending ページ. Read the title as a whole; matching characters may be underlined or the entire row may be selected in blue.
-      - aiAct: Replace the search query with ヘッダー. Stay in the search dialog.
-      - aiAssert: Exactly two search results are listed and the first contains ヘッダー.
-      - aiAct: Replace the search query with す. Stay in the search dialog.
-      - aiAssert: The search dialog shows exactly one result row. Its main title reads できます (de-ki-ma-su), with す highlighted at the end. The smaller line beneath the title is its page breadcrumb, not a second result.
-      - aiAct: Select all text in the search input and replace it with the literal character さ (hiragana sa, not す which is su). Perform the replacement even if the current character looks similar; do not treat the existing input as already correct. Keep the dialog open and wait for its results to update.
-      - aiAssert: Exactly one search result row is listed. Its long Japanese title wraps across lines and ends with the two characters さい (hiragana sa followed by i). Check the end of the title above the smaller page breadcrumb.
+      - aiHover: The current language selector in the top navigation.
+      - aiWaitFor: The language menu offers 日本語.
+      - aiTap: The 日本語 option in the open language menu.
+      - aiTap: The documentation search button with the magnifying-glass icon in the top navigation.
+      - aiWaitFor: The search dialog and its empty input are visible.
+      - aiInput:
+          { prompt: The search input in the open search dialog., value: ご }
+      - search.expectResults:
+          {
+            query: ご,
+            count: 1,
+            firstContains: にほんご,
+            firstStartsWith: にほんご,
+            firstEndsWith: ページ,
+          }
+      - aiAssert: The search dialog shows one Japanese result row with matching characters highlighted. The selected row may have a blue background.
+      - aiInput:
+          {
+            prompt: The search input in the open search dialog.,
+            value: ヘッダー,
+          }
+      - search.expectResults:
+          { query: ヘッダー, count: 2, firstContains: ヘッダー }
+      - aiAssert: The search dialog shows two Japanese result rows with matching characters highlighted.
+      - aiInput:
+          { prompt: The search input in the open search dialog., value: す }
+      - search.expectResults:
+          {
+            query: す,
+            count: 1,
+            firstContains: できます,
+            firstStartsWith: できます,
+            firstEndsWith: できます,
+          }
+      - aiAssert: The search dialog shows one result row with the matching character highlighted at the end of its main text. The smaller page breadcrumb below is not a second result.
+      - aiInput:
+          { prompt: The search input in the open search dialog., value: さ }
+      - search.expectResults:
+          { query: さ, count: 1, firstContains: さい, firstEndsWith: さい }
+      - aiAssert: The search dialog shows one result row. Its long Japanese text wraps across lines, with matching characters highlighted above the smaller page breadcrumb.

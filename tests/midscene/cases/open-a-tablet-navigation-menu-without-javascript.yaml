@@ -1,6 +1,12 @@
 cases:
   - name: AUDIT-09 Open a tablet navigation menu without JavaScript
-    tags: [replacement-final-content, replacement-final-followup]
+    tags:
+      [
+        stability-regression,
+        navigation-dropdown-regression,
+        replacement-final-content,
+        replacement-final-followup,
+      ]
     steps:
       - app.open:
           {
@@ -11,5 +17,6 @@ cases:
             path: /,
           }
       - aiAssert: The tablet top navigation displays its menu control and the navigation dropdown is closed.
-      - aiAct: Hover over the tablet navigation hamburger menu control without clicking any link.
+      - aiHover: The tablet navigation hamburger menu control at the top right, not any of the text links.
+      - aiWaitFor: The hamburger dropdown is open and shows Theme.
       - aiAssert: The hamburger dropdown is visibly open below the top-right menu control and shows Theme. OnlyLink, OnlyItems, ItemsAndLink, and NestedItems remain visible in the top navigation outside this dropdown.
