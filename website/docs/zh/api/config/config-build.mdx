@@ -212,7 +212,51 @@ const shikiOptions = {
 
 配置 Shiki 相关配置。具体可见 [RehypeShikiOptions](https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts)。
 
-默认启用行高亮、单词高亮、diff、focus、error/warning 注释和注释转义处理。`transformers` 会在保留默认项的基础上添加自定义 transformer；与默认项的 `name` 相同时会替换对应项。详见 [Shiki transformers](/zh/guide/use-mdx/code-blocks#shiki-transformers)。
+#### markdown.shiki.transformers
+
+- **类型**: `import('shiki').ShikiTransformer[]`
+- **默认值**:
+
+```ts
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+  transformerRemoveNotationEscape,
+} from '@rspress/core/shiki-transformers';
+
+const transformers = [
+  transformerNotationHighlight(),
+  transformerNotationWordHighlight(),
+  transformerNotationDiff(),
+  transformerNotationFocus(),
+  transformerNotationErrorLevel(),
+  transformerRemoveNotationEscape(),
+];
+```
+
+配置 Markdown 代码块使用的 Shiki transformers。除了上面的注释语法 transformers，Rspress 还会始终添加用于代码块标题、语言标签、行号、换行和折叠的内部 transformers。
+
+自定义 transformer 会先于默认的注释语法 transformers 执行。与默认项的 `name` 相同时会替换对应项，其他默认项会保留。设置 `transformers: []` 仍会启用默认项。
+
+例如，自定义 `transformerNotationHighlight` 的选项，并保留其他默认项：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationHighlight({ matchAlgorithm: 'v1' })],
+    },
+  },
+});
+```
+
+注释语法示例和更多 transformers 详见 [Shiki transformers](/zh/guide/use-mdx/code-blocks#shiki-transformers)。
 
 ### markdown.link
 

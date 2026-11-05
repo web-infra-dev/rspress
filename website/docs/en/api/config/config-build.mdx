@@ -210,7 +210,51 @@ const shikiOptions = {
 
 Configure Shiki-related options. For details, see [RehypeShikiOptions](https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts).
 
-Line highlighting, word highlighting, diff, focus, and error/warning notation transformers are enabled by default, along with notation escape removal. `transformers` adds custom transformers while keeping these defaults. A custom transformer with the same `name` replaces the corresponding default. See [Shiki transformers](/guide/use-mdx/code-blocks#shiki-transformers).
+#### markdown.shiki.transformers
+
+- **Type**: `import('shiki').ShikiTransformer[]`
+- **Default**:
+
+```ts
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+  transformerRemoveNotationEscape,
+} from '@rspress/core/shiki-transformers';
+
+const transformers = [
+  transformerNotationHighlight(),
+  transformerNotationWordHighlight(),
+  transformerNotationDiff(),
+  transformerNotationFocus(),
+  transformerNotationErrorLevel(),
+  transformerRemoveNotationEscape(),
+];
+```
+
+Configures Shiki transformers for Markdown code blocks. In addition to the notation transformers above, Rspress always adds internal transformers for code block titles, language labels, line numbers, wrapping, and folding.
+
+Custom transformers run before the default notation transformers. A custom transformer with the same `name` replaces the corresponding default; other defaults are preserved. Setting `transformers: []` keeps the defaults enabled.
+
+For example, customize `transformerNotationHighlight` while keeping the other defaults:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerNotationHighlight({ matchAlgorithm: 'v1' })],
+    },
+  },
+});
+```
+
+See [Shiki transformers](/guide/use-mdx/code-blocks#shiki-transformers) for notation examples and more transformers.
 
 ### markdown.link
 

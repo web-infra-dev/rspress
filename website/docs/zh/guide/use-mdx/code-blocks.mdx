@@ -386,7 +386,7 @@ function test() {
 
 Rspress 在 V2 中，使用 [Shiki](https://shiki.style) 进行编译时的代码高亮，提供了灵活扩展的代码块能力。
 
-通过配置 [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshiki) 添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。自定义 transformer 会与默认项一起使用；与内置 transformer 的 `name` 相同时会替换对应默认项，使自定义选项生效。
+通过配置 [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshikitransformers) 添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。自定义 transformer 会与默认项一起使用；与内置 transformer 的 `name` 相同时会替换对应默认项，使自定义选项生效。
 
 Rspress 默认为 Markdown 代码块和 `CodeBlockRuntime` 启用 [@shikijs/transformers](https://shiki.style/packages/transformers) 中的行高亮、单词高亮、diff、focus 和 error/warning 注释语法，无需配置 transformer。使用 `[\!code ...]` 转义注释可按原文显示。
 
