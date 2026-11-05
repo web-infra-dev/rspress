@@ -1,6 +1,6 @@
 cases:
   - name: ASSET-04 Read public assets from markdown-link-asset-clean Chinese documentation
-    tags: [replacement-final-assets]
+    tags: [stability-regression, replacement-final-assets]
     steps:
       - app.open:
           {
@@ -9,9 +9,16 @@ cases:
             path: /base/zh/public-asset-test,
           }
       - aiAssert: The Public 资源测试 article displays six links including svg in public folder, txt in public folder, html in public folder, md in public folder, and two interface.DataProcessorDefinition links.
-      - aiAct: Follow txt in public folder.
+      - aiTap: The link with the exact text txt in public folder in the main article.
       - aiAssert: The opened text document displays Plain Text.
-      - aiAct: Go back to the Public 资源测试 article, then follow html in public folder.
+      - action: { name: GoBack, params: {} }
+      - app.expectLocation:
+          { path: /base/zh/public-asset-test, heading: Public 资源测试 }
+      - aiTap: The link with the exact text html in public folder in the main article, below txt in public folder and above md in public folder.
+      - app.expectLocation: { path: /base/hello, heading: Hello world }
       - aiAssert: The opened HTML document displays Hello world as its heading.
-      - aiAct: Go back to the Public 资源测试 article, then follow md in public folder.
+      - action: { name: GoBack, params: {} }
+      - app.expectLocation:
+          { path: /base/zh/public-asset-test, heading: Public 资源测试 }
+      - aiTap: The link with the exact text md in public folder in the main article, below html in public folder. Do not select an interface.DataProcessorDefinition link.
       - aiAssert: The opened raw Markdown document displays the literal text # Test.
