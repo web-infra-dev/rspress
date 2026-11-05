@@ -166,6 +166,7 @@ Rspress restores the scroll position when readers go back, go forward, or reload
 
 - [ ] Check server rendering compatibility for SSG-MD. Wrap browser-dependent content in [`BrowserOnly`](/ui/runtime-components/browser-only). Setting `ssg: false` does not disable SSG-MD. Sites that cannot support server rendering need both `ssg: false` and `llms: false`.
 - [ ] If you customized the `SearchPanel` theme styles, visually check the desktop and mobile layouts after upgrading to confirm they still look as expected.
+- [ ] Remove manually configured [default Shiki transformers](#shiki-transformers-enabled-by-default) from `markdown.shiki.transformers`.
 - [ ] Check your sitemap configuration. Replace `@rspress/plugin-sitemap` with the built-in `sitemap` option, or set `sitemap: false` if another process generates the sitemap.
 - [ ] Check that your host supports URLs without `.html`, such as serving `/foo.html` directly when `/foo` is requested. Set `route.cleanUrls: false` to retain the previous link format.
 - [ ] Run a production build and fix invalid anchors. Exclude dynamically generated anchors with `markdown.link.checkAnchors.excludes`, or set `checkAnchors: false` to disable validation.

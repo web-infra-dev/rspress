@@ -166,6 +166,7 @@ Rspress 现在使用 React Router Data 模式。点击默认主题链接或调�
 
 - [ ] 检查 SSG-MD 的服务端渲染兼容性。需要浏览器环境的内容可用 [`BrowserOnly`](/zh/ui/runtime-components/browser-only) 包裹。`ssg: false` 不会关闭 SSG-MD；完全不支持服务端渲染的站点，需要同时设置 `ssg: false` 和 `llms: false`。
 - [ ] 如果自定义了 `SearchPanel` 的主题样式，升级后检查桌面和移动端的显示效果是否符合预期。
+- [ ] 可以删除 `markdown.shiki.transformers` 中手动配置的[默认 Shiki transformers](#shiki-transformers-enabled-by-default)。
 - [ ] 检查 sitemap 配置。已有项目可用内置 `sitemap` 替换 `@rspress/plugin-sitemap`；如果通过其他方式生成站点地图，可设置 `sitemap: false`。
 - [ ] 确认部署平台支持无 `.html` 后缀的 URL，例如访问 `/foo` 时直接返回 `/foo.html`。如需保留原有链接格式，可设置 `route.cleanUrls: false`。
 - [ ] 执行生产构建，修复发现的无效锚点。动态生成的锚点可通过 `markdown.link.checkAnchors.excludes` 排除，也可设置 `checkAnchors: false` 关闭检查。
