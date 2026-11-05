@@ -28,7 +28,7 @@ pnpm test
 
 Set `MIDSCENE_FILE_CONCURRENCY` to change local concurrency (default: 1).
 Reports: `midscene_run/report/`. Type checking: `pnpm run typecheck`.
-To run the 17 cases covering the recent CI failures and asset-link variants:
+To run the 18 cases covering the recent CI failures and asset-link variants:
 
 ```sh
 MIDSCENE_INCLUDE_TAGS=stability-regression pnpm test
