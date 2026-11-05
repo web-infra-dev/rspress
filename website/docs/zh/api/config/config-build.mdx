@@ -241,20 +241,27 @@ const transformers = [
 
 自定义 transformer 会先于默认的注释语法 transformers 执行。与默认项的 `name` 相同时会替换对应项，其他默认项会保留。设置 `transformers: []` 仍会启用默认项。
 
-例如，自定义 `transformerNotationHighlight` 的选项，并保留其他默认项：
+添加自定义 [shiki transformers](https://shiki.style/guide/transformers.html) 来实现更加丰富的代码块效果。例如，添加 `transformerMetaWordHighlight` 后，可以通过代码块 meta 属性中的 `/word/` 高亮单词：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
-import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
+import { transformerMetaWordHighlight } from '@rspress/core/shiki-transformers';
 
 export default defineConfig({
   markdown: {
     shiki: {
-      transformers: [transformerNotationHighlight({ matchAlgorithm: 'v1' })],
+      transformers: [transformerMetaWordHighlight()],
     },
   },
 });
 ```
+
+````md
+```ts /message/
+const message = 'Hello, Rspress!';
+console.log(message);
+```
+````
 
 注释语法示例和更多 transformers 详见 [Shiki transformers](/zh/guide/use-mdx/code-blocks#shiki-transformers)。
 

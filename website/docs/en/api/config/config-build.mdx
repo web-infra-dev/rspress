@@ -239,20 +239,27 @@ Configures Shiki transformers for Markdown code blocks. In addition to the notat
 
 Custom transformers run before the default notation transformers. A custom transformer with the same `name` replaces the corresponding default; other defaults are preserved. Setting `transformers: []` keeps the defaults enabled.
 
-For example, customize `transformerNotationHighlight` while keeping the other defaults:
+Add custom [Shiki transformers](https://shiki.style/guide/transformers.html) for richer code block effects. For example, add `transformerMetaWordHighlight` to highlight words using `/word/` in code block meta attributes:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
-import { transformerNotationHighlight } from '@rspress/core/shiki-transformers';
+import { transformerMetaWordHighlight } from '@rspress/core/shiki-transformers';
 
 export default defineConfig({
   markdown: {
     shiki: {
-      transformers: [transformerNotationHighlight({ matchAlgorithm: 'v1' })],
+      transformers: [transformerMetaWordHighlight()],
     },
   },
 });
 ```
+
+````md
+```ts /message/
+const message = 'Hello, Rspress!';
+console.log(message);
+```
+````
 
 See [Shiki transformers](/guide/use-mdx/code-blocks#shiki-transformers) for notation examples and more transformers.
 
