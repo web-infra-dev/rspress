@@ -17,6 +17,7 @@ Rspress 2.1.0 is now available. This release includes:
 - **SSG-MD enabled by default**: generate `llms.txt` and page Markdown without additional configuration.
 - **New WebMCP tools**: browser Agents can directly query, read, and navigate documentation.
 - **Updated search panel styling**: refine desktop and mobile layouts, search results, and empty states.
+- **Shiki notation transformers enabled by default**: use code annotations without installing or configuring transformers.
 - **Built-in sitemaps, clean URLs and anchor validation enabled by default**.
 - **Migration to React Router Data mode**, with scroll restoration and a new page loading error screen.
 
@@ -88,6 +89,23 @@ The default theme's local search panel has updated styles:
 ![Updated search panel](https://assets.rspack.rs/rspress/assets/rspress-full-text-search.png)
 
 See [Full-text search](/guide/start/introduction#full-text-search) and [PR #3683](https://github.com/web-infra-dev/rspress/pull/3683).
+
+## Shiki transformers enabled by default
+
+Markdown code blocks and `CodeBlockRuntime` now enable these Shiki transformers by default:
+
+| Transformer                        | Purpose                                                             |
+| ---------------------------------- | ------------------------------------------------------------------- |
+| `transformerNotationHighlight`     | Highlight lines with `[!code highlight]`                            |
+| `transformerNotationWordHighlight` | Highlight matching words with `[!code word:text]`                   |
+| `transformerNotationDiff`          | Mark added and removed lines with `[!code ++]` and `[!code --]`     |
+| `transformerNotationFocus`         | Focus lines with `[!code focus]`                                    |
+| `transformerNotationErrorLevel`    | Mark errors and warnings with `[!code error]` and `[!code warning]` |
+| `transformerRemoveNotationEscape`  | Display escaped notation such as `[\!code highlight]` as plain text |
+
+Rspress also re-exports all `@shikijs/transformers` exports from `@rspress/core/shiki-transformers`, so you can import additional transformers without installing a separate package.
+
+Use [`markdown.shiki.transformers`](/api/config/config-build#markdownshikitransformers) to add transformers or customize a default transformer. A custom transformer with the same `name` replaces the corresponding default while preserving the others. See [Shiki transformers](/guide/use-mdx/code-blocks#shiki-transformers) for examples.
 
 ## Built-in sitemaps
 
