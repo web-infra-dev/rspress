@@ -13,12 +13,12 @@ cases:
       - aiAssert: The opened text document displays Plain Text.
       - action: { name: GoBack, params: {} }
       - app.expectLocation:
-          { path: /base/public-asset-test, heading: Public asset test }
+          { path: /base/public-asset-test.html, heading: Public asset test }
       - aiTap: The link with the exact text html in public folder in the main article, below txt in public folder and above md in public folder.
       - app.expectLocation: { path: /base/hello.html, heading: Hello world }
       - aiAssert: The opened HTML document displays Hello world as its heading.
       - action: { name: GoBack, params: {} }
       - app.expectLocation:
-          { path: /base/public-asset-test, heading: Public asset test }
+          { path: /base/public-asset-test.html, heading: Public asset test }
       - aiTap: The link with the exact text md in public folder in the main article, below html in public folder. Do not select an interface.DataProcessorDefinition link.
       - aiAssert: The opened raw Markdown document displays the literal text # Test.
