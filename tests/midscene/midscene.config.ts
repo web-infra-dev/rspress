@@ -13,6 +13,11 @@ import { playgroundAsset } from './scripts/playground-assets.js';
 import { fixturePolicy } from './scripts/original-fixture-data.js';
 import { startFixtureServer } from './fixture-server.js';
 import {
+  expectLocation,
+  expectOverviewLinks,
+  expectSearchResults,
+} from './scripts/page-assertions.js';
+import {
   OriginalFixture,
   originalFixtures,
   fixtureUpdateParts,
@@ -198,6 +203,50 @@ const updateFixture = defineNode<typeof updateInput, void, Context>({
     await context.fixture.update(input.part);
   },
 });
+const locationInput = z.strictObject({
+  path: z.string().startsWith('/'),
+  heading: z.string().min(1),
+});
+const location = defineNode<typeof locationInput, void, Context>({
+  name: 'app.expectLocation',
+  description:
+    'Verify the destination URL, article heading, and closed mobile menu without operating the UI.',
+  inputSchema: locationInput,
+  async execute({ context, input }) {
+    if (!context.page) throw new Error('Call app.open first');
+    await expectLocation(context.page, input);
+  },
+});
+const searchInput = z.strictObject({
+  query: z.string().min(1),
+  count: z.number().int().positive(),
+  firstContains: z.string().min(1),
+  firstStartsWith: z.string().min(1).optional(),
+  firstEndsWith: z.string().min(1).optional(),
+});
+const searchResults = defineNode<typeof searchInput, void, Context>({
+  name: 'search.expectResults',
+  description:
+    'Verify the exact search input, result count, and first rendered match without operating the UI.',
+  inputSchema: searchInput,
+  async execute({ context, input }) {
+    if (!context.page) throw new Error('Call app.open first');
+    await expectSearchResults(context.page, input);
+  },
+});
+const overviewLinksInput = z.strictObject({
+  labels: z.array(z.string().min(1)).min(1),
+});
+const overviewLinks = defineNode<typeof overviewLinksInput, void, Context>({
+  name: 'overview.expectLinks',
+  description:
+    'Verify rendered overview entries are links with navigation destinations, regardless of their color.',
+  inputSchema: overviewLinksInput,
+  async execute({ context, input }) {
+    if (!context.page) throw new Error('Call app.open first');
+    await expectOverviewLinks(context.page, input.labels);
+  },
+});
 export default defineTestProject<Context, ProjectContext>({
   test: {
     maxConcurrentProjects: 1,
@@ -225,6 +274,9 @@ export default defineTestProject<Context, ProjectContext>({
   nodes: [
     open,
     updateFixture,
+    location,
+    searchResults,
+    overviewLinks,
     ...createMidsceneNodes<Context>({
       agentClass: PlaywrightAgent,
       getAgent({ context }) {

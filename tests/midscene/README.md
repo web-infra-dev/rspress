@@ -1,7 +1,15 @@
 # Midscene E2E
 
-AI cases supplement the original deterministic tests. Interactions use `aiAct`,
-with independent `aiAssert` checks and no case retries.
+AI cases supplement the original deterministic tests. Interactions use `aiAct` or atomic Midscene actions such as `aiTap`, `aiHover`,
+`aiInput`, and `aiKeyboardPress`, with independent `aiAssert` checks and no case
+retries. Use one tap for a toggle and wait for its result before the next action.
+
+Read-only `app.expectLocation` checks the actual destination URL, heading, and
+closed mobile menu. `search.expectResults` checks exact Japanese input and result
+text independently of visual glyph recognition; AI assertions still verify the
+visible results and highlights. `overview.expectLinks` verifies that command entries have real link destinations
+even when styled as gray code. These checks do not change the page or bypass UI
+navigation.
 
 ## Run locally
 
@@ -20,6 +28,13 @@ pnpm test
 
 Set `MIDSCENE_FILE_CONCURRENCY` to change local concurrency (default: 1).
 Reports: `midscene_run/report/`. Type checking: `pnpm run typecheck`.
+To run the 13 cases identified by the recent CI failure review:
+
+```sh
+MIDSCENE_INCLUDE_TAGS=stability-regression pnpm test
+```
+
+Full CI runs still select every case.
 
 ## CI
 
