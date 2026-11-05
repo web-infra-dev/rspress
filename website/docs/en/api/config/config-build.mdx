@@ -235,8 +235,6 @@ const transformers = [
 ];
 ```
 
-Configures Shiki transformers for Markdown code blocks. In addition to the notation transformers above, Rspress always adds internal transformers for code block titles, language labels, line numbers, wrapping, and folding.
-
 Custom transformers run before the default notation transformers. A custom transformer with the same `name` replaces the corresponding default; other defaults are preserved. Setting `transformers: []` keeps the defaults enabled.
 
 Add custom [Shiki transformers](https://shiki.style/guide/transformers.html) for richer code block effects. For example, add `transformerMetaWordHighlight` to highlight words using `/word/` in code block meta attributes:
