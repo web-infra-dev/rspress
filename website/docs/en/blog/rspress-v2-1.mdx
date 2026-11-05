@@ -6,6 +6,8 @@ sidebar: false
 pageType: doc
 ---
 
+import { Prompt } from '@rspress/core/theme';
+
 _November 2, 2026_
 
 # Announcing Rspress 2.1.0
@@ -73,7 +75,24 @@ export function PageTitleTool() {
 
 Tools register when the component mounts and unregister when it unmounts. Register site-wide tools in layout components and page-specific tools in their pages.
 
-WebMCP is still an experimental browser API. It requires `document.modelContext` to be enabled and access over HTTPS or localhost. Other browsers can read the site normally.
+<Prompt
+  title="Try WebMCP with your agent"
+  description="Send this prompt to Codex or another agent to see which WebMCP tools the page offers."
+  prompt={`## Task
+
+Open https://rspress.rs in a browser and check which WebMCP tools the current page makes available to you. Use the actual tool names and descriptions returned by the browser to list each tool by name and explain in one sentence what it can do.
+
+## WebMCP connection options
+
+- Native connection: If your agent environment provides a WebMCP browser connection, use it to discover the page's tools.
+- CLI fallback: Run this command to open the page, wait for loading, list its WebMCP tools as JSON, and close the browser:
+
+npx -y agent-browser@latest --session rspress-webmcp --json batch "open https://rspress.rs" "wait --load networkidle" "webmcp list" "close"
+
+If Chrome is missing, run npx -y agent-browser@latest install first, then retry. See https://agent-browser.dev/webmcp for command details.
+
+Read the live tool registry rather than inferring tools from HTML or documentation. If setup or discovery fails, report the actual error; distinguish this from a successfully retrieved empty tool list.`}
+/>
 
 Set `webMcp: false` to disable built-in tools. This does not affect custom tools registered with `useWebMcp`.
 

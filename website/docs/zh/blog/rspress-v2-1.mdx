@@ -6,6 +6,8 @@ sidebar: false
 pageType: doc
 ---
 
+import { Prompt } from '@rspress/core/theme';
+
 _2026 年 11 月 2 日_
 
 # Rspress 2.1.0 发布公告 \{#announcing-rspress-210}
@@ -73,7 +75,24 @@ export function PageTitleTool() {
 
 工具在组件挂载时注册，卸载时移除。全站工具可以注册在布局组件中，页面专属工具则注册在对应页面中。
 
-WebMCP 仍是实验性浏览器 API，需要浏览器启用 `document.modelContext`，并通过 HTTPS 或 localhost 访问站点。不支持 WebMCP 的浏览器可正常阅读文档。
+<Prompt
+  title="用你的 Agent 试试 WebMCP"
+  description="把这段提示词发给 Codex 或其他 Agent，让它看看这个页面提供了哪些 WebMCP 工具。"
+  prompt={`## 实际业务需求
+
+在浏览器中打开 https://rspress.rs，查看当前页面向你提供了哪些 WebMCP 工具。请根据浏览器实际返回的工具名称和描述，列出每个工具的名称，并用一句话说明它能做什么。
+
+## WebMCP 可能的连接方式
+
+- 原生连接：如果 Agent 环境提供了 WebMCP 浏览器连接，直接使用它发现页面的工具。
+- CLI fallback：运行下面的命令，打开页面、等待加载、以 JSON 列出 WebMCP 工具并关闭浏览器：
+
+npx -y agent-browser@latest --session rspress-webmcp --json batch "open https://rspress.rs" "wait --load networkidle" "webmcp list" "close"
+
+如果缺少 Chrome，先运行 npx -y agent-browser@latest install，再重试。命令用法参考 https://agent-browser.dev/webmcp。
+
+请读取实时工具注册表，不要根据 HTML 或文档推测工具列表。如果安装或发现工具失败，请报告实际错误，并与成功获取到空工具列表的情况区分开。`}
+/>
 
 设置 `webMcp: false` 可以关闭内置工具，不影响 `useWebMcp` 注册的自定义工具。
 
