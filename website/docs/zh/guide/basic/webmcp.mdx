@@ -17,7 +17,11 @@ Rspress 默认开启 [`webMcp`](/zh/api/config/config-agent#webmcp)，Agent 可�
 ## WebMCP 可能的连接方式
 
 - 原生连接：如果 Agent 环境提供了 WebMCP 浏览器连接，直接使用它发现页面的工具。
-- CLI fallback：通过终端创建临时 Node.js 项目，安装最新版 Puppeteer，并使用 --enable-features=WebMCP 参数启动其自带的无头 Chrome。加载页面，等待异步工具注册完成，再通过 page.webmcp.tools() 获取工具列表。API 用法参考 https://pptr.dev/guides/webmcp。完成后关闭你启动的浏览器。
+- CLI fallback：运行下面的命令，打开页面、等待加载、以 JSON 列出 WebMCP 工具并关闭浏览器：
+
+npx -y agent-browser@latest --session rspress-webmcp --json batch "open https://rspress.rs" "wait --load networkidle" "webmcp list" "close"
+
+如果缺少 Chrome，先运行 npx -y agent-browser@latest install，再重试。命令用法参考 https://agent-browser.dev/webmcp。
 
 请读取实时工具注册表，不要根据 HTML 或文档推测工具列表。如果安装或发现工具失败，请报告实际错误，并与成功获取到空工具列表的情况区分开。`}
 />

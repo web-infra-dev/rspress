@@ -17,7 +17,11 @@ Open https://rspress.rs in a browser and check which WebMCP tools the current pa
 ## WebMCP connection options
 
 - Native connection: If your agent environment provides a WebMCP browser connection, use it to discover the page's tools.
-- CLI fallback: Use your terminal to create a temporary Node.js project, install the latest Puppeteer, and launch its bundled Chrome in headless mode with --enable-features=WebMCP. Load the page, wait for asynchronous tool registration, and read page.webmcp.tools(). See https://pptr.dev/guides/webmcp for the API. Close the browser you launched when finished.
+- CLI fallback: Run this command to open the page, wait for loading, list its WebMCP tools as JSON, and close the browser:
+
+npx -y agent-browser@latest --session rspress-webmcp --json batch "open https://rspress.rs" "wait --load networkidle" "webmcp list" "close"
+
+If Chrome is missing, run npx -y agent-browser@latest install first, then retry. See https://agent-browser.dev/webmcp for command details.
 
 Read the live tool registry rather than inferring tools from HTML or documentation. If setup or discovery fails, report the actual error; distinguish this from a successfully retrieved empty tool list.`}
 />
