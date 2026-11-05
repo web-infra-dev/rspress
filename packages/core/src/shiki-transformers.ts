@@ -27,8 +27,10 @@ export function getShikiTransformers(
     transformerRemoveNotationEscape(),
   ];
 
+  // Shiki caches parsed notation comments across transformers. Run user
+  // transformers first so their matching algorithm and hook order take priority.
   return [
-    ...defaults.filter(transformer => !customNames.has(transformer.name)),
     ...transformers,
+    ...defaults.filter(transformer => !customNames.has(transformer.name)),
   ];
 }

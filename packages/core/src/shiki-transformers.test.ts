@@ -58,6 +58,38 @@ console.warn('warning'); // [!code warning]`);
     expect(transformers).toEqual([custom]);
   });
 
+  it.each([
+    'const a = 1; /* [!code highlight] */ const b = 2;',
+    'const a = 1; // [!code highlight] // explanation',
+  ])('preserves the legacy matching algorithm for %s', async code => {
+    const custom = transformerNotationHighlight({
+      classActiveLine: 'custom',
+      matchAlgorithm: 'v1',
+    });
+    const before = await codeToHtml(code, {
+      lang: 'ts',
+      theme: 'github-light',
+      transformers: [custom],
+    });
+
+    expect(before).toContain('class="line custom"');
+    expect(await highlight(code, [custom])).toBe(before);
+  });
+
+  it('runs user hooks before default notation processing', async () => {
+    let sawNotation = false;
+    await highlight("console.log('highlight'); // [!code highlight]", [
+      {
+        name: 'inspect-comments',
+        code(node) {
+          sawNotation = JSON.stringify(node).includes('[!code highlight]');
+        },
+      },
+    ]);
+
+    expect(sawNotation).toBe(true);
+  });
+
   it('runs additional custom transformers alongside the defaults', async () => {
     const html = await highlight(
       "console.log('highlight'); // [!code highlight]",
