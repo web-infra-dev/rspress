@@ -210,6 +210,59 @@ const shikiOptions = {
 
 Configure Shiki-related options. For details, see [RehypeShikiOptions](https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts).
 
+#### markdown.shiki.transformers
+
+- **Type**: `import('shiki').ShikiTransformer[]`
+- **Default**:
+
+```ts
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+  transformerRemoveNotationEscape,
+} from '@shikijs/transformers';
+
+const transformers = [
+  transformerNotationHighlight(),
+  transformerNotationWordHighlight(),
+  transformerNotationDiff(),
+  transformerNotationFocus(),
+  transformerNotationErrorLevel(),
+  transformerRemoveNotationEscape(),
+];
+```
+
+These defaults also apply to `CodeBlockRuntime`. Escape annotations as `[\!code ...]` to display them literally.
+
+Custom transformers run before the default notation transformers. A custom transformer with the same `name` replaces the corresponding default; other defaults are preserved. Setting `transformers: []` keeps the defaults enabled.
+
+Import transformers directly from `@rspress/core/shiki-transformers` without installing `@shikijs/transformers` separately. For example, add `transformerMetaWordHighlight` to highlight words using `/word/` in code block meta attributes:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { transformerMetaWordHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerMetaWordHighlight()],
+    },
+  },
+});
+```
+
+````md
+```ts /message/
+const message = 'Hello, Rspress!';
+console.log(message);
+```
+````
+
+See [Shiki transformers](/guide/use-mdx/code-blocks#shiki-transformers) for notation examples and more transformers.
+
 ### markdown.link
 
 - **Type**:

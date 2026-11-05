@@ -17,6 +17,7 @@ Rspress 2.1.0 已正式发布，主要更新包括：
 - **SSG-MD 默认启用**：默认生成 `llms.txt` 和页面 Markdown，无需单独配置。
 - **新增 WebMCP 工具**：浏览器智能体可以直接查询、读取和导航文档。
 - **SearchPanel 样式更新**：调整桌面和移动端布局，改善搜索结果与空状态的展示。
+- **默认启用 Shiki 注释语法 transformers**：无需安装或配置 transformer，即可使用代码注释语法。
 - **内置 sitemap，默认启用 cleanUrls 和锚点检查**。
 - **路由迁移到 React Router Data 模式**，支持滚动位置恢复，新增页面加载错误页。
 
@@ -89,6 +90,23 @@ WebMCP 仍是实验性浏览器 API，需要浏览器启用 `document.modelConte
 
 详见[全文搜索](/zh/guide/start/introduction#全文搜索)和 [PR #3683](https://github.com/web-infra-dev/rspress/pull/3683)。
 
+## 默认启用 Shiki transformers \{#shiki-transformers-enabled-by-default}
+
+Markdown 代码块和 [`CodeBlockRuntime`](/zh/ui/components/code-block-runtime) 现在默认启用以下 Shiki transformers：
+
+| Transformer                        | 用途                                                     |
+| ---------------------------------- | -------------------------------------------------------- |
+| `transformerNotationHighlight`     | 通过 `[!code highlight]` 高亮代码行                      |
+| `transformerNotationWordHighlight` | 通过 `[!code word:text]` 高亮匹配的单词                  |
+| `transformerNotationDiff`          | 通过 `[!code ++]` 和 `[!code --]` 标记新增和删除的代码行 |
+| `transformerNotationFocus`         | 通过 `[!code focus]` 聚焦代码行                          |
+| `transformerNotationErrorLevel`    | 通过 `[!code error]` 和 `[!code warning]` 标记错误和警告 |
+| `transformerRemoveNotationEscape`  | 将 `[\!code highlight]` 等转义注释按原文显示             |
+
+Rspress 还通过 `@rspress/core/shiki-transformers` 重新导出 `@shikijs/transformers` 的所有导出，无需单独安装依赖即可导入更多 transformers。
+
+通过 [`markdown.shiki.transformers`](/zh/api/config/config-build#markdownshikitransformers) 可以添加 transformer 或自定义默认项。与默认项的 `name` 相同时会替换对应项，其他默认项会保留。示例见 [Shiki transformers](/zh/guide/use-mdx/code-blocks#shiki-transformers)。
+
 ## 内置 sitemap \{#built-in-sitemaps}
 
 Rspress 2.1.0 内置 sitemap 生成功能，生产构建默认生成 `sitemap.xml`，无需安装 `@rspress/plugin-sitemap`。
@@ -148,6 +166,7 @@ Rspress 现在使用 React Router Data 模式。点击默认主题链接或调�
 
 - [ ] 检查 SSG-MD 的服务端渲染兼容性。需要浏览器环境的内容可用 [`BrowserOnly`](/zh/ui/runtime-components/browser-only) 包裹。`ssg: false` 不会关闭 SSG-MD；完全不支持服务端渲染的站点，需要同时设置 `ssg: false` 和 `llms: false`。
 - [ ] 如果自定义了 `SearchPanel` 的主题样式，升级后检查桌面和移动端的显示效果是否符合预期。
+- [ ] 可以删除 `markdown.shiki.transformers` 中手动配置的[默认 Shiki transformers](#shiki-transformers-enabled-by-default)。
 - [ ] 检查 sitemap 配置。已有项目可用内置 `sitemap` 替换 `@rspress/plugin-sitemap`；如果通过其他方式生成站点地图，可设置 `sitemap: false`。
 - [ ] 确认部署平台支持无 `.html` 后缀的 URL，例如访问 `/foo` 时直接返回 `/foo.html`。如需保留原有链接格式，可设置 `route.cleanUrls: false`。
 - [ ] 执行生产构建，修复发现的无效锚点。动态生成的锚点可通过 `markdown.link.checkAnchors.excludes` 排除，也可设置 `checkAnchors: false` 关闭检查。

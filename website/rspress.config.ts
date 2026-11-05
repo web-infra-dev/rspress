@@ -8,13 +8,6 @@ import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginPlayground } from '@rspress/plugin-playground';
 import { pluginPreview } from '@rspress/plugin-preview';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
-import {
-  transformerNotationDiff,
-  transformerNotationErrorLevel,
-  transformerNotationFocus,
-  transformerNotationHighlight,
-  transformerRemoveNotationEscape,
-} from '@shikijs/transformers';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import pluginFileTree from 'rspress-plugin-file-tree';
@@ -81,14 +74,7 @@ export default defineConfig({
         'css',
         'html',
       ],
-      transformers: [
-        transformerNotationDiff(),
-        transformerNotationErrorLevel(),
-        transformerNotationHighlight(),
-        transformerNotationFocus(),
-        transformerCompatibleMetaHighlight(),
-        transformerRemoveNotationEscape(),
-      ],
+      transformers: [transformerCompatibleMetaHighlight()],
     },
     link: {
       checkDeadLinks: {

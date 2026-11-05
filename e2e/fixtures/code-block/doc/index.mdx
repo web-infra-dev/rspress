@@ -24,6 +24,7 @@ export function foo() {
 ```ts
 export function foo() {
   console.log('Error level'); // [!code error]
+  console.warn('Warning level'); // [!code warning]
 }
 ```
 
@@ -49,4 +50,9 @@ export function foo() {
 -  console.log('Diff remove');
 +  console.log('Diff add');
 }
+```
+
+```ts
+// [!code word:highlighted]
+const highlighted = 'word';
 ```
