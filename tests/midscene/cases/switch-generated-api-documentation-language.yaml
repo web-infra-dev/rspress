@@ -1,9 +1,18 @@
 cases:
   - name: PLUGIN-02 Switch generated API documentation language
-    tags: [stability-regression, original-api, replacement-batch-4]
+    tags:
+      [
+        stability-regression,
+        language-start-regression,
+        original-api,
+        replacement-batch-4,
+      ]
     steps:
       - app.open: { fixture: plugin-api-docgen/locales, path: / }
-      - aiAct: Switch to 简体中文 using the language selector, then scroll the central article until the complete Button API table, including the bottom of the size row, fits inside the viewport. Close the language dropdown. Do not stop with any table row clipped at the bottom.
+      - aiHover: The current language selector in the top navigation.
+      - aiWaitFor: The language menu offers 简体中文.
+      - aiTap: The 简体中文 option in the open language menu.
+      - aiAct: Scroll the central article until the complete Button API table, including the bottom of the size row, fits inside the viewport. Do not stop with any table row clipped at the bottom.
       - aiAssert: The Button API table displays the localized column headers 组件属性 | 名称 字段 (possibly wrapped across lines), 参数说明, 类型, 默认值.
       - aiAssert: The complete disabled row is visible. It has Whether to disable the button, - This is extra line a, - This is extra line b, the type boolean | undefined, and a dash default.
       - aiAct: Bring the entire size row of the Button API table into view, including the last line of its type cell. Do not navigate away.

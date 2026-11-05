@@ -3,6 +3,7 @@ cases:
     tags:
       [
         stability-regression,
+        language-start-regression,
         original-localized-search,
         replacement-batch-3,
         remote-search-static-regression,
@@ -10,7 +11,11 @@ cases:
       ]
     steps:
       - app.open: { fixture: search-i18n, path: / }
-      - aiAct: Switch the site language to 日本語 using the language menu, then open search. Leave the empty search input visible.
+      - aiHover: The current language selector in the top navigation.
+      - aiWaitFor: The language menu offers 日本語.
+      - aiTap: The 日本語 option in the open language menu.
+      - aiTap: The documentation search button with the magnifying-glass icon in the top navigation.
+      - aiWaitFor: The search dialog and its empty input are visible.
       - aiInput:
           { prompt: The search input in the open search dialog., value: ご }
       - search.expectResults:
