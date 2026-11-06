@@ -88,7 +88,7 @@ export function SidebarItemRaw({
           className,
         )}
         style={{
-          paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
+          marginLeft: depth * 24,
         }}
         {...{ 'data-depth': depth }}
         {...(context ? { 'data-context': context } : {})}
@@ -110,7 +110,7 @@ export function SidebarItemRaw({
         className,
       )}
       style={{
-        paddingLeft: depth === 0 ? '12px' : `calc(12px * ${depth} + 12px)`,
+        marginLeft: depth * 24,
       }}
       {...{ 'data-depth': depth }}
       {...(context ? { 'data-context': context } : {})}
