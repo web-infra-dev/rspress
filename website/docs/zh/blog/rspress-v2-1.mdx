@@ -1,20 +1,33 @@
 ---
 date: 2026-11-02
 authors: ['sooniter']
-description: 'Rspress 2.1.0 默认启用 SSG-MD，内置 WebMCP 和 sitemap，默认启用简洁 URL、锚点检查，并改进搜索面板样式和滚动位置恢复。'
+description: 'Rspress 2.1 默认启用 SSG-MD，内置 WebMCP 和 sitemap，默认启用简洁 URL、锚点检查，并改进搜索面板样式和滚动位置恢复。'
 sidebar: false
 pageType: doc
+head:
+  - - meta
+    - property: og:image
+      content: https://assets.rspack.rs/rspress/assets/rspress-banner-v2-1.png
+  - - meta
+    - property: og:image:width
+      content: '2172'
+  - - meta
+    - property: og:image:height
+      content: '724'
+  - - meta
+    - name: twitter:image
+      content: https://assets.rspack.rs/rspress/assets/rspress-banner-v2-1.png
 ---
 
 import { Prompt } from '@rspress/core/theme';
 
 _2026 年 11 月 2 日_
 
-# Rspress 2.1.0 发布公告 \{#announcing-rspress-210}
+# Rspress 2.1 发布公告 \{#announcing-rspress-210}
 
-![Rspress 2.1 发布横幅](/rspress-v2-1-banner.png)
+![Rspress 2.1 发布横幅](https://assets.rspack.rs/rspress/assets/rspress-banner-v2-1.png)
 
-Rspress 2.1.0 已正式发布，主要更新包括：
+Rspress 2.1 已正式发布，主要更新包括：
 
 - **SSG-MD 默认启用**：默认生成 `llms.txt` 和页面 Markdown，无需单独配置。
 - **新增 WebMCP 工具**：浏览器智能体可以直接查询、读取和导航文档。
@@ -27,7 +40,7 @@ Rspress 2.1.0 已正式发布，主要更新包括：
 
 [SSG-MD](/zh/guide/basic/ssg-md) 可以将 MDX 和 React 组件渲染为 Markdown，供 Agent 读取。
 
-Rspress 官网已在 [AFDocs 评测](https://x.com/Soon_Iter/status/2090359544769913185) 中获得 **100/100 满分**。从 Rspress 2.1.0 开始，SSG-MD 默认启用，无需再单独设置 `llms: true`。
+Rspress 官网已在 [AFDocs 评测](https://x.com/Soon_Iter/status/2090359544769913185) 中获得 **100/100 满分**。从 Rspress 2.1 开始，SSG-MD 默认启用，无需再单独设置 `llms: true`。
 
 执行生产构建后，除了 HTML 页面，还会生成：
 
@@ -44,7 +57,7 @@ doc_build/
 
 ## 内置 WebMCP 工具 \{#built-in-webmcp-tools}
 
-[WebMCP](/zh/guide/basic/webmcp) 允许网站向浏览器智能体提供工具。Rspress 2.1.0 默认启用以下六个文档工具：
+[WebMCP](/zh/guide/basic/webmcp) 允许网站向浏览器智能体提供工具。Rspress 2.1 默认启用以下文档工具：
 
 | 工具               | 用途                                                                                             |
 | ------------------ | ------------------------------------------------------------------------------------------------ |
@@ -107,7 +120,7 @@ npx -y agent-browser@latest --session rspress-webmcp --json batch "open https://
 
 ![新版搜索面板](https://assets.rspack.rs/rspress/assets/rspress-full-text-search.png)
 
-详见[全文搜索](/zh/guide/start/introduction#全文搜索)和 [PR #3683](https://github.com/web-infra-dev/rspress/pull/3683)。
+详见[全文搜索](/zh/guide/start/introduction#全文搜索)。
 
 ## 默认启用 Shiki transformers \{#shiki-transformers-enabled-by-default}
 
@@ -128,7 +141,7 @@ Rspress 还通过 `@rspress/core/shiki-transformers` 重新导出 `@shikijs/tran
 
 ## 内置 sitemap \{#built-in-sitemaps}
 
-Rspress 2.1.0 内置 sitemap 生成功能，生产构建默认生成 `sitemap.xml`，无需安装 `@rspress/plugin-sitemap`。
+Rspress 2.1 内置 sitemap 生成功能，生产构建默认生成 `sitemap.xml`，无需安装 `@rspress/plugin-sitemap`。
 
 通过 `siteOrigin` 设置部署域名，`base` 设置部署子路径，生成的 sitemap 将包含完整 URL：
 
@@ -161,7 +174,7 @@ export default defineConfig({
 
 Rspress 现在使用 React Router Data 模式。点击默认主题链接或调用 `useNavigate()` 时，会先加载目标页面的数据和代码，再切换地址和页面内容。加载期间保留当前页面。
 
-在 React Router 7 下，`useNavigate()` 和 `useLinkNavigate()` 返回的导航函数都支持 `await`，可以等待导航完成。
+在 React Router 7 下，`useNavigate()` 返回的导航函数支持 `await`，可以等待导航完成。
 
 新增 `ErrorLayout` 错误页。页面加载或渲染失败时，读者可以重新加载或返回首页，开发环境下还会显示错误详情。自定义主题可以替换 `ErrorLayout`。
 
@@ -190,6 +203,6 @@ Rspress 现在使用 React Router Data 模式。点击默认主题链接或调�
 - [ ] 确认部署平台支持无 `.html` 后缀的 URL，例如访问 `/foo` 时直接返回 `/foo.html`。如需保留原有链接格式，可设置 `route.cleanUrls: false`。
 - [ ] 执行生产构建，修复发现的无效锚点。动态生成的锚点可通过 `markdown.link.checkAnchors.excludes` 排除，也可设置 `checkAnchors: false` 关闭检查。
 
-完整更新见 [v2.1.0 Release Notes](https://github.com/web-infra-dev/rspress/releases/tag/v2.1.0)。
+完整更新见 [Rspress 2.1 Release Notes](https://github.com/web-infra-dev/rspress/releases/tag/v2.1.0)。
 
 感谢所有参与这个版本的贡献者！欢迎通过 [GitHub](https://github.com/web-infra-dev/rspress) 分享反馈，也欢迎在 [Discord](https://discord.gg/mkVw5zPAtf) 与我们交流。
