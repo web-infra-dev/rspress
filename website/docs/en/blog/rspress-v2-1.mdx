@@ -107,7 +107,7 @@ The default theme's local search panel has updated styles:
 
 ![Updated search panel](https://assets.rspack.rs/rspress/assets/rspress-full-text-search.png)
 
-See [Full-text search](/guide/start/introduction#full-text-search) and [PR #3683](https://github.com/web-infra-dev/rspress/pull/3683).
+See [Full-text search](/guide/start/introduction#full-text-search).
 
 ## Shiki transformers enabled by default
 
@@ -161,7 +161,7 @@ Validation covers same-page, relative, and absolute internal links to Markdown a
 
 Rspress now uses React Router Data mode. Default theme links and `useNavigate()` calls load the destination's data and code before switching the URL and page content. The current page stays visible while loading.
 
-With React Router 7, navigation functions returned by `useNavigate()` and `useLinkNavigate()` support `await` to wait for navigation to finish.
+With React Router 7, the navigation function returned by `useNavigate()` supports `await` to wait for navigation to finish.
 
 The new `ErrorLayout` error page offers reload and home actions when page loading or rendering fails. It also shows error details in development. Custom themes can replace `ErrorLayout`.
 

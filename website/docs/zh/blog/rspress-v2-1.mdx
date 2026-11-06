@@ -107,7 +107,7 @@ npx -y agent-browser@latest --session rspress-webmcp --json batch "open https://
 
 ![新版搜索面板](https://assets.rspack.rs/rspress/assets/rspress-full-text-search.png)
 
-详见[全文搜索](/zh/guide/start/introduction#全文搜索)和 [PR #3683](https://github.com/web-infra-dev/rspress/pull/3683)。
+详见[全文搜索](/zh/guide/start/introduction#全文搜索)。
 
 ## 默认启用 Shiki transformers \{#shiki-transformers-enabled-by-default}
 
@@ -161,7 +161,7 @@ export default defineConfig({
 
 Rspress 现在使用 React Router Data 模式。点击默认主题链接或调用 `useNavigate()` 时，会先加载目标页面的数据和代码，再切换地址和页面内容。加载期间保留当前页面。
 
-在 React Router 7 下，`useNavigate()` 和 `useLinkNavigate()` 返回的导航函数都支持 `await`，可以等待导航完成。
+在 React Router 7 下，`useNavigate()` 返回的导航函数支持 `await`，可以等待导航完成。
 
 新增 `ErrorLayout` 错误页。页面加载或渲染失败时，读者可以重新加载或返回首页，开发环境下还会显示错误详情。自定义主题可以替换 `ErrorLayout`。
 
