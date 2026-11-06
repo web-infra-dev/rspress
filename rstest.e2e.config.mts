@@ -7,7 +7,7 @@ export default defineConfig({
   globals: false,
   testEnvironment: 'node',
   include: ['e2e/**/*.test.{ts,mjs}'],
-  exclude: ['**/node_modules/**', 'e2e/utils/**/*.test.ts'],
+  exclude: ['**/node_modules/**'],
   output: {
     externals: ['@rspress/core'],
   },
