@@ -109,7 +109,7 @@ export function useLangsMenu() {
   return translationMenuData;
 }
 
-function replaceVersion(
+export function replaceVersion(
   rawUrl: string,
   version: {
     current: string;
@@ -133,7 +133,7 @@ function replaceVersion(
     if (version.current !== version.default) {
       parts.shift();
     }
-  } else {
+  } else if (version.current !== version.default) {
     parts.shift();
   }
 
