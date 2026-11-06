@@ -1,0 +1,67 @@
+---
+description: ErrorLayout component for page loading and rendering failures, with reload and home actions and custom theme support.
+overviewHeaders: []
+---
+
+# ErrorLayout
+
+`ErrorLayout` is the error page displayed when page data or code fails to load, or when a page fails to render. Rspress renders it automatically, with actions to reload the page or return to the homepage.
+
+In development, the default component also displays error details. These details are hidden in production.
+
+Unmatched routes use `NotFoundLayout` to display a 404 page.
+
+## Usage
+
+Override `ErrorLayout` through a [custom theme](/guide/basic/custom-theme#reexport):
+
+```tsx title="theme/index.tsx"
+import type { ErrorLayoutProps } from '@rspress/core/theme-original';
+
+export function ErrorLayout({ lang, homeHref }: ErrorLayoutProps) {
+  return (
+    <main lang={lang}>
+      <h1>This page could not be loaded</h1>
+      <button type="button" onClick={() => window.location.reload()}>
+        Reload page
+      </button>
+      <a href={homeHref}>Return to homepage</a>
+    </main>
+  );
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+To reuse the default error page, import `ErrorLayout` from `@rspress/core/theme-original` and forward all props to it.
+
+:::tip Page context
+
+Page context may be unavailable when an error occurs. Use the `lang` and `homeHref` props instead of hooks that depend on page data, such as `usePage()`, `useLang()`, or `useVersion()`.
+
+:::
+
+## Props
+
+Rspress passes the following props to `ErrorLayout`:
+
+### error
+
+- **Type:** `unknown`
+- **Required:** Yes
+
+The error caught while loading or rendering the page. Narrow its type before accessing properties such as `message` or `stack`.
+
+### lang
+
+- **Type:** `string`
+- **Required:** Yes
+
+The current language code, resolved from the URL and site configuration. Use it to render localized error messages.
+
+### homeHref
+
+- **Type:** `string`
+- **Required:** Yes
+
+The homepage URL, including the site's base path and the current language and version prefixes when applicable. Use this value for the home link instead of hardcoding `/`.

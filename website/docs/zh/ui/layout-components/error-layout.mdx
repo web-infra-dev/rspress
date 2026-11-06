@@ -1,0 +1,67 @@
+---
+description: ErrorLayout 错误页组件，用于处理页面加载和渲染失败，提供重新加载、返回首页操作，并支持自定义主题覆盖。
+overviewHeaders: []
+---
+
+# ErrorLayout
+
+`ErrorLayout` 是页面数据或代码加载失败、页面渲染失败时显示的错误页。Rspress 会自动渲染该组件，提供重新加载页面和返回首页的操作。
+
+在开发环境中，默认组件还会显示错误详情。生产环境中会隐藏这些详情。
+
+未匹配到路由时，会使用 `NotFoundLayout` 显示 404 页面。
+
+## 用法 \{#usage}
+
+通过[自定义主题](/guide/basic/custom-theme#reexport)覆盖 `ErrorLayout`：
+
+```tsx title="theme/index.tsx"
+import type { ErrorLayoutProps } from '@rspress/core/theme-original';
+
+export function ErrorLayout({ lang, homeHref }: ErrorLayoutProps) {
+  return (
+    <main lang={lang}>
+      <h1>页面加载失败</h1>
+      <button type="button" onClick={() => window.location.reload()}>
+        重新加载
+      </button>
+      <a href={homeHref}>返回首页</a>
+    </main>
+  );
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+如果要复用默认错误页，可以从 `@rspress/core/theme-original` 导入 `ErrorLayout`，并将所有 props 传递给它。
+
+:::tip 页面上下文
+
+发生错误时，页面上下文可能不可用。请使用 `lang` 和 `homeHref` 属性，避免使用依赖页面数据的 hooks，例如 `usePage()`、`useLang()` 或 `useVersion()`。
+
+:::
+
+## Props
+
+Rspress 会向 `ErrorLayout` 传入以下属性：
+
+### error
+
+- **类型：** `unknown`
+- **必填：** 是
+
+页面加载或渲染时捕获的错误。访问 `message` 或 `stack` 等属性前，需要先收窄错误类型。
+
+### lang
+
+- **类型：** `string`
+- **必填：** 是
+
+根据 URL 和站点配置解析出的当前语言代码，用于渲染对应语言的错误信息。
+
+### homeHref
+
+- **类型：** `string`
+- **必填：** 是
+
+首页 URL，包含站点的 base 路径，以及适用时的当前语言和版本前缀。请将此值用于返回首页的链接，避免硬编码 `/`。
