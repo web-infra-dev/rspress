@@ -170,6 +170,14 @@ export const DEFAULT_I18N_TEXT = {
     ru: 'Скопировать ссылку в формате Markdown',
     ta: 'Markdown இணைப்பை நகலெடு',
   },
+  viewMarkdownText: {
+    en: 'View as Markdown',
+    zh: '以 Markdown 查看',
+    ja: 'Markdown として表示',
+    ko: '마크다운으로 보기',
+    ru: 'Просмотреть в формате Markdown',
+    ta: 'Markdown ஆகப் பார்க்கவும்',
+  },
   editLinkText: {
     en: 'Edit this page',
     zh: '编辑此页面',

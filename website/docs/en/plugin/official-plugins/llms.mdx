@@ -61,7 +61,7 @@ export default defineConfig({
     // Or with custom options:
     // llmsUI: {
     //   injectLlmsHint: false, // Disable the HTML/Markdown directive hint for LLMs
-    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    //   viewOptions: ['markdownLink', 'viewMarkdown', 'chatgpt', 'claude'],
     //   placement: 'outline', // Display in outline panel instead of below H1
     // },
   },
@@ -386,6 +386,7 @@ type LlmsViewOptionsItem =
       icon?: React.ReactNode;
     }
   | 'markdownLink'
+  | 'viewMarkdown'
   | 'chatgpt'
   | 'claude';
 
@@ -411,13 +412,14 @@ type LlmsViewOptionsItem =
       icon?: React.ReactNode;
     }
   | 'markdownLink'
+  | 'viewMarkdown'
   | 'chatgpt'
   | 'claude';
 ```
 
-- **Default**: `['markdownLink', 'chatgpt', 'claude']`
+- **Default**: `['markdownLink', 'viewMarkdown', 'chatgpt', 'claude']`
 
-Customizes the options in the dropdown menu. By default, it supports "Copy Markdown Link", [ChatGPT](https://chatgpt.com/), and [Claude](https://claude.ai).
+Customizes the options in the dropdown menu. By default, it supports "Copy Markdown link", "View as Markdown" (opens the Markdown file in a new tab), [ChatGPT](https://chatgpt.com/), and [Claude](https://claude.ai).
 
 ## Generate multiple groups of `llms.txt` at the same time \{#group}
 

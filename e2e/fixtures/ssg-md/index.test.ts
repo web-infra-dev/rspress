@@ -8,6 +8,80 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
+for (const { placement, config, viewText, menuTexts } of [
+  {
+    placement: 'title',
+    config: 'rspress.config.ts',
+    viewText: 'View as Markdown',
+    menuTexts: [
+      'Copy Markdown link',
+      'View as Markdown',
+      'Open in ChatGPT',
+      'Open in Claude',
+    ],
+  },
+  {
+    placement: 'outline',
+    config: 'rspress-outline.config.ts',
+    viewText: '以 Markdown 查看',
+    menuTexts: [
+      '复制 Markdown 链接',
+      '以 Markdown 查看',
+      '在 ChatGPT 中打开',
+      '在 Claude 中打开',
+    ],
+  },
+]) {
+  test(`view as Markdown should open the current page from ${placement}`, async ({
+    page,
+  }) => {
+    const appDir = import.meta.dirname;
+    await runBuildCommand(appDir, config);
+    const port = await getPort();
+    const app = await runPreviewCommand(appDir, port, ['-c', config]);
+    const origin = `http://localhost:${port}`;
+    const trigger = page.locator(
+      placement === 'title'
+        ? '.rp-llms-view-options__trigger'
+        : '.rp-outline__open-in-wrapper > button',
+    );
+
+    try {
+      await page.goto(`${origin}/docs/?from=test#code-blocks`);
+      await trigger.click();
+      await expect(page.locator('.rp-llms-view-options__menu-item')).toHaveText(
+        menuTexts,
+      );
+      const link = page.getByRole('link', { name: viewText, exact: true });
+      await expect(link).toHaveAttribute('href', '/docs/index.md');
+      await expect(link).toHaveAttribute('target', '_blank');
+      await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+
+      const popupPromise = page.waitForEvent('popup');
+      await link.click();
+      const popup = await popupPromise;
+      try {
+        await expect(popup).toHaveURL(`${origin}/docs/index.md`);
+        await expect(popup.locator('body')).toContainText('Rspress uses');
+      } finally {
+        await popup.close();
+      }
+
+      await page
+        .locator('.rspress-doc')
+        .getByRole('link', { name: 'MDX and React components', exact: true })
+        .click();
+      await expect(page).toHaveURL(`${origin}/docs/components`);
+      await trigger.click();
+      await expect(
+        page.getByRole('link', { name: viewText, exact: true }),
+      ).toHaveAttribute('href', '/docs/components.md');
+    } finally {
+      await killProcess(app);
+    }
+  });
+}
+
 test('llms should be enabled by default', async () => {
   const appDir = import.meta.dirname;
   await runBuildCommand(appDir);
