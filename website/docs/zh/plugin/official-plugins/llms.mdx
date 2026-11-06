@@ -61,7 +61,7 @@ export default defineConfig({
     // 或者使用自定义选项：
     // llmsUI: {
     //   injectLlmsHint: false, // 禁用面向大语言模型的 HTML/Markdown directive hint
-    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+    //   viewOptions: ['markdownLink', 'viewMarkdown', 'chatgpt', 'claude'],
     //   placement: 'outline', // 在大纲面板中显示而非 H1 下方
     // },
   },
@@ -385,6 +385,7 @@ type LlmsViewOptionsItem =
       icon?: React.ReactNode;
     }
   | 'markdownLink'
+  | 'viewMarkdown'
   | 'chatgpt'
   | 'claude';
 
@@ -410,13 +411,14 @@ type LlmsViewOptionsItem =
       icon?: React.ReactNode;
     }
   | 'markdownLink'
+  | 'viewMarkdown'
   | 'chatgpt'
   | 'claude';
 ```
 
-- **默认值**：`['markdownLink', 'chatgpt', 'claude']`
+- **默认值**：`['markdownLink', 'viewMarkdown', 'chatgpt', 'claude']`
 
-自定义下拉菜单中的选项，默认支持 "复制 Markdown 链接"、[Chatgpt](https://chatgpt.com/) 和 [Claude](https://claude.ai)。
+自定义下拉菜单中的选项，默认支持「复制 Markdown 链接」、「以 Markdown 查看」（在新标签页中打开 Markdown 文件）、[ChatGPT](https://chatgpt.com/) 和 [Claude](https://claude.ai)。
 
 ## 同时生成多组 `llms.txt` \{#group}
 
