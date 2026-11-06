@@ -23,6 +23,7 @@ import { default as IconJsdelivrHelper } from './assets/jsdelivr.svg';
 import { default as IconJumpHelper } from './assets/jump.svg';
 import { default as IconLinkHelper } from './assets/link.svg';
 import { default as IconLoadingHelper } from './assets/loading.svg';
+import { default as IconMarkdownHelper } from './assets/markdown.svg';
 import { default as IconMenuHelper } from './assets/menu.svg';
 import { default as IconMoonHelper } from './assets/moon.svg';
 import { default as IconNpmHelper } from './assets/npm.svg';
@@ -60,6 +61,11 @@ export const IconHeader = IconHeaderHelper as Icon;
 export const IconJsdelivr = IconJsdelivrHelper as Icon;
 export const IconJump = IconJumpHelper as Icon;
 export const IconLoading = IconLoadingHelper as Icon;
+/**
+ * Markdown Mark by Dustin Curtis, dedicated to the public domain.
+ * @see https://github.com/dcurtis/markdown-mark
+ */
+export const IconMarkdown = IconMarkdownHelper as Icon;
 export const IconMenu = IconMenuHelper as Icon;
 export const IconMoon = IconMoonHelper as Icon;
 export const IconNpm = IconNpmHelper as Icon;

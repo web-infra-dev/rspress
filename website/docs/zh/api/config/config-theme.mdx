@@ -578,7 +578,8 @@ type LlmsUI =
   | boolean
   | {
       injectLlmsHint?: boolean;
-      viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
+      viewOptions?:
+        false | Array<'markdownLink' | 'viewMarkdown' | 'chatgpt' | 'claude'>;
       placement?: 'title' | 'outline';
     };
 ```
@@ -603,7 +604,7 @@ export default defineConfig({
   themeConfig: {
     llmsUI: {
       injectLlmsHint: true,
-      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+      viewOptions: ['markdownLink', 'viewMarkdown', 'chatgpt', 'claude'],
       placement: 'outline',
     },
   },
@@ -654,12 +655,13 @@ export default defineConfig({
 
 ### viewOptions
 
-- **类型**：`false | Array<'markdownLink' | 'chatgpt' | 'claude'>`
-- **默认值**：`['markdownLink', 'chatgpt', 'claude']`
+- **类型**：`false | Array<'markdownLink' | 'viewMarkdown' | 'chatgpt' | 'claude'>`
+- **默认值**：`['markdownLink', 'viewMarkdown', 'chatgpt', 'claude']`
 
 LlmsViewOptions 下拉菜单的选项。内置选项包括：
 
-- `'markdownLink'`: 复制 markdown 文件链接
+- `'markdownLink'`: 复制 Markdown 文件链接
+- `'viewMarkdown'`: 在新标签页中查看当前页面的 Markdown 文件
 - `'chatgpt'`: 在 ChatGPT 中打开
 - `'claude'`: 在 Claude 中打开
 

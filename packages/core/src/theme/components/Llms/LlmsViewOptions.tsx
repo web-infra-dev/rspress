@@ -10,6 +10,7 @@ import {
   IconDown,
   IconExternalLink,
   IconLink,
+  IconMarkdown,
   IconOpenAI,
   SvgWrapper,
 } from '@rspress/core/theme';
@@ -31,6 +32,7 @@ export type LlmsViewOptionsItem =
       icon?: React.ReactNode;
     }
   | 'markdownLink'
+  | 'viewMarkdown'
   | 'chatgpt'
   | 'claude';
 
@@ -44,7 +46,9 @@ type MenuItem = {
 export interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Default options for the dropdown.
-   * @default ['markdownLink', 'chatgpt', 'claude']
+   * @default ['markdownLink', 'viewMarkdown', 'chatgpt', 'claude']
+   * - 'markdownLink': Copy Markdown link
+   * - 'viewMarkdown': View as Markdown
    * - 'chatgpt': Open in ChatGPT
    * - 'claude': Open in Claude
    *
@@ -67,6 +71,7 @@ export interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLBut
 
 const DEFAULT_OPTIONS: LlmsViewOptionsItem[] = [
   'markdownLink',
+  'viewMarkdown',
   'chatgpt',
   'claude',
 ];
@@ -122,6 +127,11 @@ export function LlmsViewOptions({
           void copyToClipboard(fullMarkdownUrl);
         },
       },
+      viewMarkdown: {
+        title: t('viewMarkdownText'),
+        href: pathname,
+        icon: <SvgWrapper icon={IconMarkdown} />,
+      },
       chatgpt: {
         title: t('openInText', { name: 'ChatGPT' }),
         href: `https://chatgpt.com/?${new URLSearchParams({
@@ -146,6 +156,9 @@ export function LlmsViewOptions({
         .map((option): MenuItem | null => {
           if (option === 'markdownLink') {
             return items.markdownLink;
+          }
+          if (option === 'viewMarkdown') {
+            return items.viewMarkdown;
           }
           if (option === 'chatgpt') {
             return items.chatgpt;
