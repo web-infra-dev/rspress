@@ -82,7 +82,7 @@ export async function runNpmScript(
         if (code !== 0 || commandName !== 'build') {
           reject(
             new Error(
-              `${commandName} process exited before completion with code: ${code} signal: ${signal}\n${stdoutOutput}\n${stderrOutput}`,
+              `process unexpected exit with code: ${code} signal: ${signal}\nCommand: ${commandName}\n${stdoutOutput}\n${stderrOutput}`,
             ),
           );
         } else {
