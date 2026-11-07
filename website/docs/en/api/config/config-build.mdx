@@ -46,6 +46,37 @@ To modify the output directory, use [outDir](/api/config/config-basic#outdir).
 
 :::
 
+### Build report
+
+Rspress uses Rsbuild's [performance.printFileSize.total](https://rsbuild.rs/config/performance/print-file-size#total) callback to summarize compilation assets by directory, separately for each build environment:
+
+```text
+Output (node): doc_build/ (4 files)
+├─ guide/ (3 files, 3.0 kB)
+│  ├─ api/ (1 file, 0.50 kB)
+│  └─ (files) (2 files, 2.5 kB)
+└─ (files) (1 file, 1.0 kB)
+Total size (node): 4.0 kB (0.80 kB gzipped)
+```
+
+Directory sizes are uncompressed. `(files)` groups files directly inside a directory that also has subdirectories. Rsbuild calculates the totals and compressed sizes after applying `include` and `exclude`.
+
+SSG HTML normally belongs to `node`, Markdown and `llms*.txt` to `node_md`, and client assets to `web`. CSR HTML is included in `web`. Only assets supplied by Rsbuild are counted: HTML written directly to disk by experimental SSG workers and file changes made in Rspress `afterBuild` hooks are outside this report.
+
+The directory summary applies when `detail: false` (Rspress's default), `total` is unset, and `diff` is disabled. All existing Rsbuild options and environment-level overrides remain available: `printFileSize: false` disables reporting; `detail: true` restores the file list; an explicit `total` value or `diff: true` uses Rsbuild's configured report.
+
+For example, keep only Rsbuild's plain total summaries:
+
+```ts title="rspress.config.ts"
+export default defineConfig({
+  builderConfig: {
+    performance: {
+      printFileSize: { total: true },
+    },
+  },
+});
+```
+
 ## builderConfig.plugins
 
 - **Type**: `RsbuildPlugin[]`

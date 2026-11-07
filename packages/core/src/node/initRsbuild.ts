@@ -59,6 +59,7 @@ import { rsbuildPluginSitemap } from './sitemap';
 import { rsbuildPluginCSR } from './ssg/rsbuildPluginCSR';
 import { rsbuildPluginSSG } from './ssg/rsbuildPluginSSG';
 import { rsbuildPluginSSGMD } from './ssg-md/rsbuildPluginSSGMD';
+import { withFileSizeSummary } from './utils/fileSize';
 import {
   createError,
   resolveReactAlias,
@@ -635,6 +636,17 @@ export async function initRsbuild(
     config: {
       ...configResult,
       content: rsbuildConfig,
+    },
+  });
+
+  // Use the resolved environment options so shared and environment-level
+  // printFileSize overrides keep Rsbuild's reporting behavior.
+  rsbuild.modifyEnvironmentConfig({
+    order: 'post',
+    handler(config) {
+      config.performance.printFileSize = withFileSizeSummary(
+        config.performance.printFileSize,
+      );
     },
   });
 
