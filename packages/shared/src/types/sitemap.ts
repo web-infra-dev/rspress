@@ -25,10 +25,39 @@ interface Sitemap {
 interface CustomMaps {
   [routePath: string]: Sitemap;
 }
+export interface RobotsPolicy {
+  userAgent: string | string[];
+  allow?: string | string[];
+  disallow?: string | string[];
+  crawlDelay?: number;
+  cleanParam?: string | string[];
+}
+
+export interface RobotsOptions {
+  policies?: RobotsPolicy[];
+  additionalSitemaps?: string[];
+  includeSitemap?: boolean;
+  host?: string;
+  outputFileName?: string;
+  mergeStrategy?: 'merge' | 'replace' | 'preserve';
+  transform?: (content: string) => string | Promise<string>;
+}
+
+export interface LinkTagOptions {
+  rel?: string;
+  type?: string;
+  href?: string;
+}
+
+export interface SitemapDiscoveryOptions {
+  linkTag?: boolean | LinkTagOptions;
+  robotsTxt?: boolean | RobotsOptions;
+}
 
 export interface SitemapOptions {
   siteUrl?: string;
   customMaps?: CustomMaps;
   defaultPriority?: Priority;
   defaultChangeFreq?: ChangeFreq;
+  discovery?: SitemapDiscoveryOptions;
 }
