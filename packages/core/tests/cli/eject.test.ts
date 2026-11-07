@@ -119,11 +119,7 @@ describe('eject command', () => {
       expect(helperExists).toBe(true);
     });
 
-    it('should exit with error for non-existent component', async () => {
-      const mockExit = rs.spyOn(process, 'exit').mockImplementation(() => {
-        throw new Error('process.exit called');
-      });
-
+    it('should reject with available components without writing files', async () => {
       // Setup empty components directory
       vol.fromJSON({
         [`${MOCK_THEME_PATH}/Sidebar/index.tsx`]:
@@ -132,10 +128,11 @@ describe('eject command', () => {
 
       await expect(
         ejectComponent('NonExistentComponent', '/project'),
-      ).rejects.toThrow('process.exit called');
+      ).rejects.toThrow(
+        /Component NonExistentComponent not found in theme\.[\s\S]*Available components:[\s\S]*Banner/,
+      );
 
-      expect(mockExit).toHaveBeenCalledWith(1);
-      mockExit.mockRestore();
+      expect(fs.existsSync('/project/theme')).toBe(false);
     });
   });
 });
