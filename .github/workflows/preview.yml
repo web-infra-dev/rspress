@@ -34,23 +34,24 @@ jobs:
 
       - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
         id: changes
+        # Manual runs leave the output unset; only 'false' skips later steps.
+        if: github.event_name != 'workflow_dispatch'
         with:
-          predicate-quantifier: 'every'
-          filters: |
-            changed:
-              - "packages/**"
+          token: ''
+          predicate-quantifier: 'some-with-excludes'
+          filters: .github/filters.yml
 
       - name: Setup Node.js
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.changes.outputs.preview != 'false'
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: '.nvmrc'
           package-manager-cache: false
 
       - name: Install Dependencies
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.changes.outputs.preview != 'false'
         run: pnpm install
 
       - name: Publish Preview
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.changes.outputs.preview != 'false'
         run: pnpx pkg-pr-new publish --compact --pnpm ./packages/*
