@@ -6,15 +6,6 @@ name: E2E Testing by Midscene
 on:
   push:
     branches: [main]
-    paths:
-      [
-        'packages/**',
-        'e2e/**',
-        'tests/midscene/**',
-        '.github/workflows/midscene.yml',
-        'pnpm-lock.yaml',
-        'pnpm-workspace.yaml',
-      ]
   workflow_dispatch:
     inputs:
       publish_pages:
@@ -32,7 +23,25 @@ permissions:
 # Model-backed runs use a job-level lock to bound endpoint load.
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      midscene: ${{ github.event_name == 'workflow_dispatch' || steps.changes.outputs.midscene == 'true' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Detect changes
+        uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: changes
+        if: github.event_name != 'workflow_dispatch'
+        with:
+          token: ''
+          predicate-quantifier: 'some-with-excludes'
+          filters: .github/filters.yml
+
   midscene:
+    needs: changes
     name: Midscene E2E
     concurrency:
       group: midscene-model-execution
@@ -41,6 +50,7 @@ jobs:
       name: Model
       deployment: false
     if: >-
+      needs.changes.outputs.midscene == 'true' &&
       (github.repository == 'web-infra-dev/rspress' && github.ref == 'refs/heads/main' ||
       (github.event_name == 'workflow_dispatch' && github.repository != 'web-infra-dev/rspress'))
     runs-on: ubuntu-26.04

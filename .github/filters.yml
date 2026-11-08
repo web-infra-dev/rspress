@@ -1,0 +1,46 @@
+# Shared by test workflows and, where available, ecosystem CI.
+# Exclude documentation by location: Markdown and metadata in fixtures and
+# scaffolding templates are executable inputs and must still trigger tests.
+# Consumers use token: '' for git-based PR detection without API permissions.
+# Use predicate-quantifier: some-with-excludes in every consumer.
+changed:
+  - '**'
+  - '!*.{md,mdx}'
+  - '!packages/*/{README*,CHANGELOG*,AGENTS}.md'
+  - '!{.agents,.vscode}/**'
+  - '!.github/ISSUE_TEMPLATE/**'
+  - '!.github/{FUNDING.yml,renovate.json,renovate.json5,PULL_REQUEST_TEMPLATE.md}'
+  - '!{skills-lock.json,skills.json,cspell.config.*}'
+  - '!scripts/dictionary.txt'
+
+# Inputs that can affect published package contents.
+preview:
+  - 'packages/**'
+  - 'scripts/**'
+  - 'patches/**'
+  - 'package.json'
+  - 'pnpm-lock.yaml'
+  - 'pnpm-workspace.yaml'
+  - '.npmrc'
+  - '.nvmrc'
+  - 'rstack.config.*'
+  - 'tsconfig*.json'
+  - '.github/filters.yml'
+  - '.github/workflows/preview.yml'
+
+# Keep model-backed E2E scoped separately from ordinary tests.
+midscene:
+  - 'packages/**'
+  - 'e2e/**'
+  - 'tests/midscene/**'
+  - 'scripts/**'
+  - 'patches/**'
+  - 'package.json'
+  - 'pnpm-lock.yaml'
+  - 'pnpm-workspace.yaml'
+  - '.npmrc'
+  - '.nvmrc'
+  - 'rstack.config.*'
+  - 'tsconfig*.json'
+  - '.github/workflows/midscene.yml'
+  - '.github/filters.yml'
