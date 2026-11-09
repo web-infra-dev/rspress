@@ -99,7 +99,7 @@ export default defineConfig({
     pluginFileTree(),
     pluginOg({
       domain: siteOrigin,
-      maxTitleSizePerLine: 28,
+      maxTitleSizePerLine: 20,
       async resvgOptions() {
         // fetch font files to og-fonts
         const fontDir = path.join(import.meta.dirname, './og-fonts');
