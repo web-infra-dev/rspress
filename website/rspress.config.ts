@@ -98,13 +98,13 @@ export default defineConfig({
     pluginFileTree(),
     pluginOg({
       domain: siteOrigin,
-      maxTitleSizePerLine: 28,
+      maxTitleSizePerLine: 20,
       async resvgOptions() {
         // fetch font files to og-fonts
         const fontDir = path.join(import.meta.dirname, './og-fonts');
         const fontFile = path.join(fontDir, 'wqy-microhei.ttc');
         const fontUrl =
-          'https://github.com/anthonyfok/fonts-wqy-microhei/raw/cd82defe33ec0e86e628329f1b63049ef562c8e5/wqy-microhei.ttc';
+          'https://raw.githubusercontent.com/SoonIter/fonts-wqy-microhei/cd82defe33ec0e86e628329f1b63049ef562c8e5/wqy-microhei.ttc';
 
         try {
           await fs.access(fontFile);
