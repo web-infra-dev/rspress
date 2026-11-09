@@ -1,5 +1,5 @@
 ---
-description: Configure languages, organize multilingual docs, and localize navigation, with optional i18n text data and the useI18n hook.
+description: Configure a multilingual Rspress site, use built-in UI translations, and customize navigation and interface text.
 ---
 
 import { Tabs, Tab } from '@rspress/core/theme';
@@ -233,7 +233,9 @@ For more usage details and type hints, see [`useI18n`](/ui/hooks/use-i18n).
 
 ## Customize i18n text
 
-Rspress's default theme includes UI translations for several languages. Missing translations fall back to English.
+Rspress's default theme includes UI translations for Czech (`cs`), Dutch (`nl`), English (`en`), French (`fr`), German (`de`), Italian (`it`), Japanese (`ja`), Korean (`ko`), Polish (`pl`), Portuguese (`pt` and `pt-BR`), Russian (`ru`), Simplified Chinese (`zh`), Spanish (`es`), Tamil (`ta`), Traditional Chinese (`zh-Hant`), Turkish (`tr`), and Vietnamese (`vi`).
+
+Use [BCP 47 language tags](https://www.rfc-editor.org/info/bcp47) in your site configuration. Rspress tries the configured tag first, then its canonical form, script, and base language before falling back to English. For example, `es-MX` can use `es` text, `zh-CN` can use `zh` text, and `zh-TW` can use `zh-Hant` text.
 
 The translation sources described above can also override built-in text: use an existing key instead of defining a new one. For example, add `editLinkText` to your chosen source to customize the edit link text:
 
@@ -261,6 +263,6 @@ If you use `i18n.json`, add the same entry there instead:
 }
 ```
 
-To add another language, add its language code and translated text under each text key in `i18nSource` or `i18n.json`, using the same language code as your site configuration. Any built-in text you have not translated will continue to use its English fallback.
+To add another language, add its language code and translated text under each text key in `i18nSource` or `i18n.json`, using the same language code as your site configuration.
 
 Customizing UI text is optional and also works on single-language sites. For the complete list of built-in translation keys, see the [API reference](/api/config/config-basic#i18nsource).

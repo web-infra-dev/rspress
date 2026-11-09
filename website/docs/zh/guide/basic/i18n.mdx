@@ -1,5 +1,5 @@
 ---
-description: 配置语言、组织多语言文档并本地化导航，按需通过 i18n.json 或 i18nSource 定义翻译文本，并使用 useI18n 在组件中读取。
+description: 配置 Rspress 多语言站点，使用内置界面翻译，并自定义导航和界面文案。
 ---
 
 import { Tabs, Tab } from '@rspress/core/theme';
@@ -235,7 +235,9 @@ const MyComponent = () => {
 
 ## 修改 i18n 文案 \{#customize-i18n-text}
 
-Rspress 默认主题内置了多种语言的界面文案。缺少对应语言的翻译时，会回退到英文。
+Rspress 默认主题内置了以下界面翻译：简体中文（`zh`）、繁体中文（`zh-Hant`）、英语（`en`）、日语（`ja`）、韩语（`ko`）、俄语（`ru`）、泰米尔语（`ta`）、西班牙语（`es`）、法语（`fr`）、德语（`de`）、葡萄牙语（`pt` 和 `pt-BR`）、意大利语（`it`）、波兰语（`pl`）、越南语（`vi`）、土耳其语（`tr`）、捷克语（`cs`）和荷兰语（`nl`）。
+
+在站点配置中使用 [BCP 47 语言标签](https://www.rfc-editor.org/info/bcp47)。Rspress 优先使用配置中的语言标签，再尝试规范形式、文字系统和基础语言，最后回退到英文。例如，`es-MX` 可以使用 `es` 文案，`zh-CN` 可以使用 `zh` 文案，`zh-TW` 可以使用 `zh-Hant` 文案。
 
 上文的翻译配置也可以用来覆盖内置文案，只需使用已有的 key。例如，在你选择的翻译来源中添加 `editLinkText`，修改编辑链接的文案：
 
@@ -263,6 +265,6 @@ export default defineConfig({
 }
 ```
 
-要补充其他语言，在 `i18nSource` 或 `i18n.json` 的各个文案 key 下添加对应的语言代码和翻译文本即可，语言代码应与站点配置一致。尚未翻译的内置文案会继续回退到英文。
+要补充其他语言，在 `i18nSource` 或 `i18n.json` 的各个文案 key 下添加对应的语言代码和翻译文本，语言代码应与站点配置一致。
 
 修改界面文案是可选的，也适用于单语言站点。完整的内置文案 key 列表请参考 [API 文档](/api/config/config-basic#i18nsource)。
