@@ -57,8 +57,8 @@ export function useSearchPanel({
   >(undefined);
   const searchEnabled = search !== false;
   const searchOptions: LocalSearchOptions = search === false ? {} : search;
-  const versionedSearch = searchEnabled && (search?.versioned ?? true);
-  const searchVersion = versionedSearch ? version : '';
+  const isSearchVersioned = searchEnabled && (search?.versioned ?? true);
+  const searchVersion = isSearchVersioned ? version : '';
   const searchIndexURL = searchEnabled
     ? getSearchIndexURL(lang, searchVersion)
     : undefined;
@@ -71,7 +71,7 @@ export function useSearchPanel({
     if (
       pageSearcherRef.current &&
       previous?.currentLang === lang &&
-      (!versionedSearch || previous.currentVersion === version) &&
+      (!isSearchVersioned || previous.currentVersion === version) &&
       pageSearcherURLRef.current === searchIndexURL
     ) {
       return pageSearcherRef.current;
