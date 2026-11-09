@@ -19,6 +19,33 @@ import toolInputSchemas from './toolInputSchemas.json' with { type: 'json' };
 
 const allTools = Object.keys(toolInputSchemas).sort();
 
+async function holdFirstHomeSearch(page: Page, fail = false) {
+  const search = await page.evaluateHandle(fail => {
+    const started = Promise.withResolvers<void>();
+    const gate = Promise.withResolvers<void>();
+    let first = true;
+    window.onTestSearch = async query => {
+      if (query !== 'home' || !first) return;
+      first = false;
+      started.resolve();
+      await gate.promise;
+      if (fail) throw new Error('Superseded search failed');
+    };
+    return { started: started.promise, release: gate.resolve };
+  }, fail);
+  return {
+    waitUntilStarted: () => search.evaluate(({ started }) => started),
+    release: () =>
+      search.evaluate(({ release }) => {
+        release();
+        // Let the old hook and any resulting React updates finish.
+        return new Promise(resolve =>
+          requestAnimationFrame(() => requestAnimationFrame(resolve)),
+        );
+      }),
+  };
+}
+
 test.describe('WebMCP production tools', () => {
   let app: Awaited<ReturnType<typeof runPreviewCommand>>;
   let port: number;
@@ -459,6 +486,49 @@ test.describe('WebMCP production tools', () => {
       ),
     ).toContain('v1 en home');
     expect(requests).toBe(2);
+  });
+
+  test('ignores a late failure after entering the same search again', async ({
+    page,
+  }) => {
+    const oldSearch = await holdFirstHomeSearch(page, true);
+    await page.locator('.rp-search-button').click();
+    const input = page.getByRole('textbox', { name: 'SearchPanelInput' });
+    const result = page.locator('.rp-suggest-item').first();
+
+    try {
+      await input.fill('home');
+      await oldSearch.waitUntilStarted();
+      await input.fill('install');
+      await expect(result).toContainText('v1 en guide');
+      await input.fill('home');
+      await expect(result).toContainText('v1 en home');
+    } finally {
+      await oldSearch.release();
+    }
+    await expect(result).toContainText('v1 en home');
+    await expect(page.locator('.rp-search-panel__error')).toHaveCount(0);
+  });
+
+  test('ignores a late result for the same query from the previous locale', async ({
+    page,
+  }) => {
+    const oldSearch = await holdFirstHomeSearch(page);
+    const button = page.locator('.rp-search-button');
+    const input = page.getByRole('textbox', { name: 'SearchPanelInput' });
+    const result = page.locator('.rp-suggest-item').first();
+
+    try {
+      await button.click();
+      await input.fill('home');
+      await oldSearch.waitUntilStarted();
+      await page.webmcp.callTool('navigate', { routePath: '/zh/' });
+      await expect(input).toHaveValue('home');
+      await expect(result).toContainText('v1 zh home');
+    } finally {
+      await oldSearch.release();
+    }
+    await expect(result).toContainText('v1 zh home');
   });
 
   test('returns serializable custom search results without a local index', async ({
