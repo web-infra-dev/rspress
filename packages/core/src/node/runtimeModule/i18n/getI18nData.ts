@@ -69,30 +69,6 @@ function mergeI18nData(
   }
   return result;
 }
-
-function getLocaleCandidates(lang: string): string[] {
-  try {
-    const locale = new Intl.Locale(lang);
-    const { baseName, language } = locale;
-    // A region-only Chinese tag such as zh-TW can select the Traditional catalog.
-    const script =
-      locale.script ??
-      (language === 'zh' ? locale.maximize().script : undefined);
-    return [
-      ...new Set([
-        lang,
-        locale.toString(),
-        baseName,
-        ...(script ? [`${language}-${script}`] : []),
-        language,
-      ]),
-    ];
-  } catch {
-    // Custom locale IDs still support exact matches.
-    return [lang];
-  }
-}
-
 const logPrefix = '[i18n]';
 const logKeys = new Set<string>();
 let logged = false;
@@ -155,23 +131,15 @@ export async function getI18nData(
 
   // 4. select langs from i18nSourceFull for treeshaking
   const cyan = picocolors.cyan;
-  const localeCandidates = langs.map(lang => ({
-    lang,
-    candidates: getLocaleCandidates(lang),
-  }));
   const filteredI18nSource: Record<string, Record<string, string>> = {};
   for (const key in i18nSourceFull) {
-    const translations = i18nSourceFull[key];
     filteredI18nSource[key] = {};
-    for (const { lang, candidates } of localeCandidates) {
-      const matchedLocale = candidates.find(
-        candidate => translations[candidate],
-      );
-      if (matchedLocale) {
-        filteredI18nSource[key][lang] = translations[matchedLocale];
+    for (const lang of langs) {
+      if (i18nSourceFull[key][lang]) {
+        filteredI18nSource[key][lang] = i18nSourceFull[key][lang];
       } else {
         // fallback to 'en'
-        const enText = translations.en;
+        const enText = i18nSourceFull[key].en;
         logKeys.add(key);
 
         if (enText) {

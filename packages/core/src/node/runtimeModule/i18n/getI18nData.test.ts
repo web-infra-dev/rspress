@@ -48,51 +48,6 @@ describe('getI18nData', () => {
     }
   });
 
-  it.each([
-    ['es-MX', 'es'],
-    ['fr-CA', 'fr'],
-    ['pt-br', 'pt-BR'],
-    ['pt-PT', 'pt'],
-    ['ja-JP', 'ja'],
-    ['zh-CN', 'zh'],
-    ['zh-Hans', 'zh'],
-    ['zh-Hans-TW', 'zh'],
-    ['zh-hant', 'zh-Hant'],
-    ['zh-TW', 'zh-Hant'],
-    ['zh-Hant-HK', 'zh-Hant'],
-  ] as const)(
-    'uses the %s locale with the %s catalog',
-    async (lang, catalog) => {
-      const result = await getI18nData({ lang });
-
-      for (const [key, translations] of Object.entries(DEFAULT_I18N_TEXT)) {
-        expect(result[key]).toEqual({ [lang]: translations[catalog] });
-      }
-    },
-  );
-
-  it('prefers exact custom text and accepts custom locale IDs', async () => {
-    const result = await getI18nData({
-      locales: [
-        { lang: 'zh-TW', label: '繁體中文' },
-        { lang: 'custom_locale', label: 'Custom' },
-      ],
-      i18nSource: {
-        searchPlaceholderText: {
-          en: 'Search',
-          zh: '搜索',
-          'zh-TW': '搜尋文件',
-          custom_locale: 'Custom search',
-        },
-      },
-    });
-
-    expect(result.searchPlaceholderText).toEqual({
-      'zh-TW': '搜尋文件',
-      custom_locale: 'Custom search',
-    });
-  });
-
   beforeEach(() => {
     rs.clearAllMocks();
   });
