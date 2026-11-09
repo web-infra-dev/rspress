@@ -48,6 +48,14 @@ describe('getI18nData', () => {
     }
   });
 
+  it('provides Traditional Chinese text for zh-TW', async () => {
+    const result = await getI18nData({ lang: 'zh-TW' });
+
+    for (const [key, translations] of Object.entries(DEFAULT_I18N_TEXT)) {
+      expect(result[key]).toEqual({ 'zh-TW': translations['zh-Hant'] });
+    }
+  });
+
   beforeEach(() => {
     rs.clearAllMocks();
   });
