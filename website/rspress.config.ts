@@ -80,7 +80,6 @@ export default defineConfig({
       checkDeadLinks: {
         excludes: ['/og-image.png', '/llms-full.txt'],
       },
-      checkAnchors: true,
     },
   },
   plugins: [
@@ -174,7 +173,6 @@ export default defineConfig({
     },
   },
   route: {
-    cleanUrls: true,
     exclude: ['**/fragments/**', 'components/**'],
   },
   themeConfig: {
@@ -218,5 +216,4 @@ export default defineConfig({
   // ssg: {
   //   experimentalWorker: true,
   // },
-  llms: true,
 });
