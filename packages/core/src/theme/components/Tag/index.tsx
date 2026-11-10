@@ -88,7 +88,7 @@ export const Tag = ({ tag }: { tag?: string }) => {
   }
 
   if (isPic) {
-    return <img src={normalizeImagePath(normalizedTag)} />;
+    return <img src={normalizeImagePath(normalizedTag)} alt="" />;
   }
 
   if (normalizedTag === 'experimental') {

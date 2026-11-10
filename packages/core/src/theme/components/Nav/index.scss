@@ -89,9 +89,19 @@
     align-items: center;
     height: 100%;
     gap: 24px;
-    list-style: none;
 
     @media (max-width: 1280px) {
+      display: none;
+    }
+  }
+
+  &__switchers {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: inherit;
+
+    &:empty {
       display: none;
     }
   }
