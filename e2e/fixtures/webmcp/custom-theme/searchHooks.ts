@@ -12,3 +12,11 @@ export const onSearch = (query: string) => {
     { group: 'Cyclic', result: cyclic },
   ];
 };
+
+declare global {
+  interface Window {
+    onTestSearch?: (query: string) => Promise<void>;
+  }
+}
+
+export const afterSearch = (query: string) => window.onTestSearch?.(query);

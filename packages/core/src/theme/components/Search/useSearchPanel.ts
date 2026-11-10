@@ -4,6 +4,8 @@ import { debounce } from '@rspress/shared/lodash-es';
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
+  useMemo,
   useRef,
   useState,
   type RefObject,
@@ -24,18 +26,6 @@ import {
   queryField,
   toWebMcpSearchResults,
 } from '../../webMcp/tools';
-
-const useDebounce = <T extends (...args: any[]) => any>(cb: T) => {
-  const cbRef = useRef(cb);
-  cbRef.current = cb;
-  return useCallback(
-    debounce(
-      ((...args: Parameters<T>): ReturnType<T> => cbRef.current(...args)) as T,
-      150,
-    ),
-    [],
-  );
-};
 
 export function useSearchPanel({
   focused,
@@ -67,9 +57,10 @@ export function useSearchPanel({
   >(undefined);
   const searchEnabled = search !== false;
   const searchOptions: LocalSearchOptions = search === false ? {} : search;
-  const versionedSearch = searchEnabled && (search?.versioned ?? true);
+  const isSearchVersioned = searchEnabled && (search?.versioned ?? true);
+  const searchVersion = isSearchVersioned ? version : '';
   const searchIndexURL = searchEnabled
-    ? getSearchIndexURL(lang, versionedSearch ? version : '')
+    ? getSearchIndexURL(lang, searchVersion)
     : undefined;
   const DEFAULT_RESULT = [
     { group: siteTitle, result: [], renderType: RenderType.Default },
@@ -80,7 +71,7 @@ export function useSearchPanel({
     if (
       pageSearcherRef.current &&
       previous?.currentLang === lang &&
-      (!versionedSearch || previous.currentVersion === version) &&
+      (!isSearchVersioned || previous.currentVersion === version) &&
       pageSearcherURLRef.current === searchIndexURL
     ) {
       return pageSearcherRef.current;
@@ -162,88 +153,76 @@ export function useSearchPanel({
     });
   }
 
+  const requestIdRef = useRef(0);
+  const scheduleQuery = useMemo(
+    () => debounce((run: () => void) => run(), 150),
+    [],
+  );
+  const invalidateQuery = useCallback(() => {
+    requestIdRef.current++;
+    scheduleQuery.cancel();
+  }, [scheduleQuery]);
+
+  // A query belongs to the popup session and index that started it.
+  useLayoutEffect(
+    () => invalidateQuery,
+    [
+      focused,
+      searchEnabled,
+      lang,
+      searchVersion,
+      searchIndexURL,
+      invalidateQuery,
+    ],
+  );
+
+  useLayoutEffect(() => {
+    pageSearcherRef.current = null;
+    setInitStatus('initial');
+    setSearchError(undefined);
+  }, [searchEnabled, lang, searchVersion, searchIndexURL]);
+
   const initSearch = async () => {
-    if (initStatus !== 'initial') {
+    const searcher = createSearcher();
+    if (
+      initStatus !== 'initial' &&
+      initializationRef.current?.searcher === searcher
+    ) {
       return;
     }
-    const searcher = createSearcher();
     setSearchError(undefined);
     setInitStatus('initing');
     try {
       await initializeSearcher(searcher);
+      if (pageSearcherRef.current === searcher) {
+        setInitStatus('inited');
+      }
     } catch (error) {
-      if (pageSearcherRef.current !== searcher) {
-        return;
+      if (pageSearcherRef.current === searcher) {
+        setSearchError(error instanceof Error ? error.message : String(error));
+        setInitStatus('error');
       }
-      setSearchError(error instanceof Error ? error.message : String(error));
-      setInitStatus('error');
-      setIsSearching(false);
-      return;
-    }
-    if (pageSearcherRef.current !== searcher) {
-      return;
-    }
-    setInitStatus('inited');
-    const currentQuery = searchInputRef.current?.value;
-    if (currentQuery) {
-      const matched = await searcher.match(currentQuery);
-      if (
-        pageSearcherRef.current !== searcher ||
-        searchInputRef.current?.value !== currentQuery
-      ) {
-        return;
-      }
-      setSearchResult(matched || DEFAULT_RESULT);
-      setIsSearching(false);
     }
   };
 
-  useEffect(() => {
-    if (!searchEnabled) {
-      return;
-    }
-    if (focused) {
-      setSearchResult(DEFAULT_RESULT);
-      initSearch();
-    } else {
-      setQuery('');
-    }
-  }, [focused, searchEnabled]);
+  const runQuery = async (value: string, requestId: number) => {
+    const isCurrent = () =>
+      requestId === requestIdRef.current &&
+      searchInputRef.current?.value === value;
+    if (!isCurrent()) return;
 
-  useEffect(() => {
-    if (!searchEnabled) {
-      return;
-    }
-    const { currentLang, currentVersion } = pageSearcherConfigRef.current ?? {};
-    const isLangChanged = lang !== currentLang;
-    const isVersionChanged = versionedSearch && version !== currentVersion;
-    const isIndexChanged = pageSearcherURLRef.current !== searchIndexURL;
-    if (isLangChanged || isVersionChanged || isIndexChanged) {
-      setInitStatus('initial');
-      setSearchError(undefined);
-      setIsSearching(false);
-      pageSearcherRef.current = null;
-    }
-  }, [lang, version, versionedSearch, searchEnabled, searchIndexURL]);
-
-  const handleQueryChangedImpl = async (value: string) => {
-    const newQuery = value;
-    setQuery(newQuery);
-    if (!newQuery) {
-      setIsSearching(false);
-      return;
-    }
+    setQuery(value);
     try {
       const result = await searchDocs(value);
-      if (searchInputRef.current?.value === newQuery) {
+      if (isCurrent()) {
         setSearchError(undefined);
         setInitStatus('inited');
         setCurrentSuggestionIndex(0);
-        setSearchResult(result || DEFAULT_RESULT);
+        setSearchResult(result);
         setIsSearching(false);
       }
     } catch (error) {
-      if (searchInputRef.current?.value === newQuery) {
+      if (isCurrent()) {
         setSearchError(error instanceof Error ? error.message : String(error));
         setInitStatus('error');
         setIsSearching(false);
@@ -251,15 +230,40 @@ export function useSearchPanel({
     }
   };
 
-  const handleQueryChange = useDebounce(handleQueryChangedImpl);
-  const handleQueryInput = (value: string) => {
-    setIsSearching(Boolean(value));
-    handleQueryChange(value);
-  };
   const clearQuery = () => {
+    invalidateQuery();
     setQuery('');
     setIsSearching(false);
   };
+
+  const handleQueryInput = (value: string) => {
+    if (!value) {
+      clearQuery();
+      return;
+    }
+    // Assign the ID before debounce so a previous request cannot publish while
+    // the latest input is waiting to start, even if the text is identical.
+    const requestId = ++requestIdRef.current;
+    setIsSearching(true);
+    scheduleQuery(() => {
+      void runQuery(value, requestId);
+    });
+  };
+
+  useEffect(() => {
+    if (!focused || !searchEnabled) {
+      clearQuery();
+      return;
+    }
+
+    setSearchResult(DEFAULT_RESULT);
+    const value = searchInputRef.current?.value;
+    if (value) {
+      handleQueryInput(value);
+    } else {
+      void initSearch();
+    }
+  }, [focused, searchEnabled, lang, searchVersion, searchIndexURL]);
 
   return {
     searchEnabled,
