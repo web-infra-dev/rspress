@@ -1,0 +1,7 @@
+cases:
+  - name: AUDIT-13 Read an inline Markdown image
+    tags: [replacement-final-content, replacement-final-followup]
+    steps:
+      - app.open: { fixture: inline-markdown, path: / }
+      - aiAct: Stay on the My Site home page. Bring the Blazing fast build speed feature card and its image icon into view without following any link.
+      - aiAssert: The Blazing fast build speed feature card displays its illustrated image icon, not a broken-image placeholder.

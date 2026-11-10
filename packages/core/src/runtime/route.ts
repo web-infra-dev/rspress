@@ -1,6 +1,8 @@
 import type { Route } from '@rspress/shared';
-import { cleanUrl } from '@rspress/shared';
+import { cleanUrl, normalizeHref } from '@rspress/shared';
 import { routes } from 'virtual-routes';
+import { siteData } from './hooks/useSite';
+import { removeBase, removeTrailingSlash } from './utils';
 
 /**
  * Normalize route path by:
@@ -115,6 +117,47 @@ export function pathnameToRouteService(pathname: string): Route | undefined {
 }
 
 /**
+ * Redirects a pathname to the matching route's canonical URL with the History
+ * API.
+ *
+ * The URL format follows the `cleanUrls` setting. Query strings, hashes, and
+ * history state are preserved.
+ *
+ * @returns Whether the URL was updated.
+ */
+export function redirectToCleanUrl(
+  location: Pick<Location, 'hash' | 'pathname' | 'search'>,
+  history: Pick<History, 'replaceState' | 'state'>,
+): boolean {
+  if (siteData.route?.cleanUrlsRedirect === false) {
+    return false;
+  }
+
+  const matchedRoute = pathnameToRouteService(removeBase(location.pathname));
+  if (!matchedRoute) {
+    return false;
+  }
+
+  const canonicalRoutePath = normalizeHref(
+    matchedRoute.path,
+    Boolean(siteData.route?.cleanUrls),
+  );
+  const canonicalPathname = `${removeTrailingSlash(
+    siteData.base,
+  )}${canonicalRoutePath}`;
+  if (location.pathname === canonicalPathname) {
+    return false;
+  }
+
+  history.replaceState(
+    history.state,
+    '',
+    `${canonicalPathname}${location.search}${location.hash}`,
+  );
+  return true;
+}
+
+/**
  * link: /api/config
  * currentPathname:
  *  0. /api/config
@@ -132,7 +175,17 @@ export function isActive(itemLink: string, currentPathname: string): boolean {
   return linkMatched !== null;
 }
 
+// The public config uses "prefetch" to match Link API naming in frameworks
+// like Next.js and Nuxt:
+// https://github.com/vercel/next.js/blob/b4b909bc9b6faa05cb4982e7fe516a89fd0e10d0/packages/next/src/client/components/app-router-instance.ts#L392-L438
+// https://github.com/nuxt/nuxt/blob/252d77ed4f3255c5a818d3ff38f2234777716246/packages/nuxt/src/app/components/nuxt-link.ts#L410-L426
+// Internally this helper keeps "preload" because it triggers Route.preload(),
+// which dynamically loads the target page chunk.
 export const preloadLink = (link: string) => {
+  if (siteData?.route?.prefetchLink === false) {
+    return;
+  }
+
   const route = pathnameToRouteService(link);
   if (route) {
     route.preload();

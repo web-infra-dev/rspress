@@ -1,26 +1,26 @@
 import path from 'node:path';
 import { describe, expect, test } from '@rstest/core';
 import { loadConfigFile } from '../../src/config/loadConfigFile';
-import { normalizePath } from '../../src/node/utils/normalizePath';
+import { slash } from '../../src/node/utils/slash';
 
 const TEST_TITLE = 'my-title';
 
 describe('Should load config file', () => {
   test('Load async function config in cjs project', async () => {
     const fixtureDir = path.join(__dirname, 'cjs-async');
-    const { config } = await loadConfigFile(
+    const { content: config } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.ts'),
     );
 
     expect(config).toMatchObject({
-      root: normalizePath(fixtureDir),
+      root: slash(fixtureDir),
       title: TEST_TITLE,
     });
   });
 
   test('Load async function config in esm project', async () => {
     const fixtureDir = path.join(__dirname, 'esm-async');
-    const { config } = await loadConfigFile(
+    const { content: config } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.ts'),
     );
 
@@ -32,7 +32,7 @@ describe('Should load config file', () => {
 
   test('Load config.cjs', async () => {
     const fixtureDir = path.join(__dirname, 'cjs');
-    const { config } = await loadConfigFile(
+    const { content: config } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.cjs'),
     );
 
@@ -44,20 +44,20 @@ describe('Should load config file', () => {
 
   test('Load config.mjs', async () => {
     const fixtureDir = path.join(__dirname, 'esm');
-    const { config } = await loadConfigFile(
+    const { content: config } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.mjs'),
     );
 
     expect(config).toMatchObject({
       // we need to normalize path as jiti will inject `__dirname` with posix separator in esm files
-      root: normalizePath(fixtureDir),
+      root: slash(fixtureDir),
       title: TEST_TITLE,
     });
   });
 
   test('Load config.js/config.ts in cjs project', async () => {
     const fixtureDir = path.join(__dirname, 'cjs');
-    const { config } = await loadConfigFile(
+    const { content: config } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.js'),
     );
 
@@ -66,28 +66,28 @@ describe('Should load config file', () => {
       title: TEST_TITLE,
     });
 
-    const { config: config2 } = await loadConfigFile(
+    const { content: config2 } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.ts'),
     );
     expect(config2).toMatchObject({
-      root: normalizePath(fixtureDir),
+      root: slash(fixtureDir),
       title: TEST_TITLE,
     });
   });
 
   test('Load config.js/config.ts in esm project', async () => {
     const fixtureDir = path.join(__dirname, 'esm');
-    const { config } = await loadConfigFile(
+    const { content: config } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.js'),
     );
 
     const expectConfig = {
-      root: normalizePath(fixtureDir),
+      root: slash(fixtureDir),
       title: TEST_TITLE,
     };
     expect(config).toMatchObject(expectConfig);
 
-    const { config: config2 } = await loadConfigFile(
+    const { content: config2 } = await loadConfigFile(
       path.join(fixtureDir, 'rspress.config.ts'),
     );
     expect(config2).toMatchObject(expectConfig);

@@ -68,6 +68,7 @@
     // fill: var(--rp-home-feature-bg-fill);
     backdrop-filter: blur(10px);
     transition: all 0.3s;
+    overflow: hidden;
 
     &--clickable {
       cursor: pointer;

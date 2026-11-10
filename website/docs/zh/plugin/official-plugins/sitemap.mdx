@@ -1,12 +1,18 @@
 ---
-tag: new
+description: '通过 @rspress/plugin-sitemap 生成 Rspress 站点地图，并配置站点 URL 和各页面的站点地图字段。'
 ---
 
 # @rspress/plugin-sitemap <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-sitemap" />
 
 import { SourceCode } from '@rspress/core/theme';
 
-自动生成用于 SEO 的 [站点地图 (sitemap)](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview)，有利于搜索引擎抓取。
+自动生成用于 SEO 的[站点地图 (sitemap)](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview)，有利于搜索引擎抓取。
+
+:::info
+
+2.1.0 后可使用 [`sitemap`](/zh/api/config/config-basic#sitemap) 配置替代。
+
+:::
 
 ## 安装
 
@@ -39,13 +45,7 @@ export default defineConfig({
 
 ```ts
 type ChangeFreq =
-  | 'always'
-  | 'hourly'
-  | 'daily'
-  | 'weekly'
-  | 'monthly'
-  | 'yearly'
-  | 'never';
+  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
 
 type Priority =
   | '0.0'
@@ -83,11 +83,13 @@ export interface PluginSitemapOptions {
 ### siteUrl
 
 - **类型**： `string`
-- **必填**
+- **默认值**：[`siteOrigin`](/zh/api/config/config-basic#siteorigin) 与 [`base`](/zh/api/config/config-basic#base)，未配置 `siteOrigin` 时使用 `base`
 
 部署访问的站点 URL，例如 `https://example.com`。
 
-当存在 `base` 配置时，`siteUrl` 需要包含 `base` 的路径。例如：
+sitemap 的 `<loc>` 应是包含协议和域名的绝对 URL，例如 `https://example.com/base/`。当存在 `base` 配置时，插件级 `siteUrl` 需要包含 `base` 的路径。
+
+如果已经在 Rspress 中配置了 [`siteOrigin`](/zh/api/config/config-basic#siteorigin) 和 [`base`](/zh/api/config/config-basic#base)，可以省略插件级 `siteUrl`。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。如果既没有配置插件级 `siteUrl`，也没有配置 `siteOrigin`，插件会回退使用 `base`，这会保留已有的相对路径行为，但不会生成绝对 sitemap URL：
 
 ```ts
 // rspress.config.ts
@@ -96,11 +98,11 @@ import { defineConfig } from '@rspress/core';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
+  siteOrigin: 'https://example.com',
   base: '/base/',
   plugins: [
-    pluginSitemap({
-      siteUrl: 'https://example.com/base/',
-    }),
+    // siteUrl 默认为 'https://example.com/base/'
+    pluginSitemap(),
   ],
 });
 ```

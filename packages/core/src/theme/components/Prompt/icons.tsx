@@ -50,7 +50,7 @@ export const AGENT_ICONS: AgentIcon[] = [
   },
   {
     name: 'Cursor',
-    color: '#434343',
+    color: '#737373',
     svg: (
       <svg
         aria-hidden="true"

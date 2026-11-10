@@ -1,0 +1,8 @@
+cases:
+  - name: PLUGIN-05 Inspect a Twoslash type tooltip
+    tags: [stability-regression, atomic-hover-regression, original-twoslash]
+    steps:
+      - app.open: { fixture: plugin-twoslash, path: / }
+      - aiHover: The marked msg variable in the Extract type code example.
+      - aiWaitFor: A type information popup for msg is visible.
+      - aiAssert: A type information popup for msg is visible.

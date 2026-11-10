@@ -1,20 +1,27 @@
-import { PackageManagerTabs } from '@theme';
+---
+description: 'Use Agent Skills, llms.txt, Markdown documentation, and AGENTS.md to help coding agents work with Rspress.'
+---
+
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 # AI
 
-To help AI better understand Rspress's features, configuration, and best practices so it can provide more accurate assistance during day-to-day development and troubleshooting, Rspress provides the following capabilities:
+Rspress provides the following capabilities to help AI understand its features, configuration, and best practices, so it can provide more accurate assistance during day-to-day development and troubleshooting:
 
 - [Agent Skills](#agent-skills)
 - [llms.txt](#llmstxt)
 - [Markdown docs](#markdown-docs)
+- [WebMCP](#webmcp)
 - [AGENTS.md](#agentsmd)
 
 ## Agent Skills
 
-Agent Skills are domain-specific knowledge packs that can be installed into Agents, enabling them to give more accurate and professional suggestions or perform actions in specific scenarios.
+Agent Skills are domain-specific knowledge packs that can be installed into coding agents, enabling more accurate, domain-specific suggestions and actions in supported scenarios.
 
 In the [rstackjs/agent-skills](https://github.com/rstackjs/agent-skills) repository, there are many skills for the Rstack ecosystem. The skills related to Rspress include:
 
+- [rspress-docs-generator](https://github.com/rstackjs/agent-skills#rspress-docs-generator): Recommended for creating and maintaining Rspress documentation sites, especially when a monorepo keeps a dedicated Rspress project as its documentation site.
+- [rspress-best-practices](https://github.com/rstackjs/agent-skills#rspress-best-practices): Rspress best practices for config, CLI workflow, content organization, frontmatter, MDX, themes, i18n, search, static assets, deployment, and debugging.
 - [rspress-v2-upgrade](https://github.com/rstackjs/agent-skills#rspress-v2-upgrade): Migrate Rspress projects from v1 to v2.
 - [rspress-custom-theme](https://github.com/rstackjs/agent-skills#rspress-custom-theme): Customize Rspress themes using CSS variables, Layout slots, component wrapping, or component ejection.
 - [rspress-description-generator](https://github.com/rstackjs/agent-skills#rspress-description-generator): Generate and maintain `description` frontmatter for Rspress documentation files.
@@ -22,14 +29,14 @@ In the [rstackjs/agent-skills](https://github.com/rstackjs/agent-skills) reposit
 In Coding Agents that support skills, you can use the [skills](https://www.npmjs.com/package/skills) package to install a specific skill with the following command:
 
 <PackageManagerTabs
-  command="skills add rstackjs/agent-skills --skill rspress-v2-upgrade"
+  command="skills add rstackjs/agent-skills --skill rspress-docs-generator"
   dlx
 />
 
-After installation, simply use natural language prompts to trigger the skill, for example:
+After installation, use natural language prompts to trigger the skill. For example:
 
 ```
-Help me upgrade this Rspress v1 project to v2
+Help me update the Rspress documentation project in this monorepo for the current feature branch
 ```
 
 ## llms.txt
@@ -53,7 +60,7 @@ You can choose the file that best fits your use case:
 - `llms.txt` is smaller and consumes fewer tokens, making it suitable for AI to fetch specific pages on demand.
 - `llms-full.txt` contains the complete documentation content, so AI doesn't need to follow individual links — ideal when you need AI to have a comprehensive understanding of Rspress, though it consumes more tokens and is best used with AI tools that support large context windows.
 
-Furthermore, Rspress has built-in [SSG-MD](/guide/basic/ssg-md) capability, which can generate `llms.txt` compliant files for your own documentation sites. Simply enable `llms: true` in the config to use it.
+Rspress also has built-in [SSG-MD](/guide/basic/ssg-md) support, which can generate `llms.txt`-compliant files for your own documentation sites. This is enabled by default since v2.1.0.
 
 ## Markdown docs
 
@@ -64,6 +71,10 @@ https://rspress.rs/guide/start/introduction.md
 ```
 
 Providing the Markdown link or content allows AI to focus on a specific chapter, which is useful for targeted troubleshooting or looking up a particular topic.
+
+## WebMCP
+
+This documentation site uses [WebMCP](/guide/basic/webmcp) to give agents tools to read documentation, find pages by keyword, and navigate to them. Rspress projects enable WebMCP by default.
 
 ## AGENTS.md
 
@@ -89,14 +100,4 @@ You are an expert in JavaScript, Rspress, and documentation site development. Yo
 - Rspack: https://rspack.rs/llms.txt
 ```
 
-You can customize it for your project, adding more details about the project structure, overall architecture, and other relevant information so Agents can better understand your project.
-
-::: tip
-
-If you are using Claude Code, you can create a `CLAUDE.md` file and reference the `AGENTS.md` file in it.
-
-```markdown title="CLAUDE.md"
-@AGENTS.md
-```
-
-:::
+You can customize it for your project by adding details about the project structure, overall architecture, and other relevant information so agents can better understand your project.

@@ -117,7 +117,7 @@ tag: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0
 
 ### 图片 URL
 
-你可以使用外部 URL 或 data URL 作为标签：
+你可以使用外部 URL、data URL 或 public 目录路径作为标签：
 
 ```mdx
 ---
@@ -128,6 +128,12 @@ tag: https://example.com/icon.png
 ```mdx
 ---
 tag: data:image/svg+xml;base64,...
+---
+```
+
+```mdx
+---
+tag: /icons/status.svg
 ---
 ```
 
@@ -156,7 +162,7 @@ interface TagProps {
    * - 常用标签：'new'、'experimental'、'deprecated'、'updated'
    * - 多个常用标签：'new, experimental'
    * - SVG 字符串：'<svg>...</svg>'
-   * - 图片 URL：'https://...' 或 'data:...'
+   * - 图片 URL：'https://...'、'data:...' 或 '/icons/status.svg'
    * - 纯文本：任意其他字符串
    */
   tag?: string;

@@ -1,0 +1,7 @@
+cases:
+  - name: CONTENT-06 Read a custom plugin route
+    tags: [original-plugin-route]
+    steps:
+      - app.open: { fixture: custom-plugin, path: / }
+      - aiAct: Open documentation search, search for Demo1, and open the matching result.
+      - aiAssert: The Demo1 article is visible.

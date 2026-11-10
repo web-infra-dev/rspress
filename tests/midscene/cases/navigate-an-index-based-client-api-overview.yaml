@@ -1,0 +1,8 @@
+cases:
+  - name: OVERVIEW-02 Navigate an index-based client API overview
+    tags: [original-overviews, replacement-batch-3-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/client-api.html }
+      - aiAssert: The overview has a Client API section with Components and Runtime API article entries, including Usage and Example links.
+      - aiAct: Follow Runtime API in the overview article, not the sidebar or search.
+      - aiAssert: The Runtime API article displays usePageData and useLang sections.

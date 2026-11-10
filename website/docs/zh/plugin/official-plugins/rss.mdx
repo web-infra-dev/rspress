@@ -1,3 +1,7 @@
+---
+description: '通过 @rspress/plugin-rss 为选定的 Rspress 页面生成 RSS、Atom 或 JSON feed，并定制内容和输出。'
+---
+
 # @rspress/plugin-rss <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss" />
 
 import { SourceCode, PackageManagerTabs } from '@rspress/core/theme';
@@ -141,7 +145,7 @@ RSS 文件由两部分组成，一部分是 RSS 的基础信息，在 RSS 格式
 
 ```ts
 export interface PluginRssOptions {
-  siteUrl: string;
+  siteUrl?: string;
   feed?: Partial<FeedChannel> | FeedChannel[];
   output?: Omit<FeedOutputOptions, 'filename'>;
 }
@@ -150,11 +154,13 @@ export interface PluginRssOptions {
 #### `siteUrl`
 
 - **类型**： `string`
-- **必填**
+- **默认值**：[`siteOrigin`](/zh/api/config/config-basic#siteorigin) + [`base`](/zh/api/config/config-basic#base)，未配置 `siteOrigin` 时使用 `base`
 
 当前文档站点的站点 URL。将在 RSS 文件中使用。
 
-当存在 `base` 配置时，`siteUrl` 需要包含 `base` 的路径。例如：
+RSS 链接会在文档页面上下文之外被消费，因此应配置包含协议和域名的绝对 URL，例如 `https://example.com/base/`。当存在 `base` 配置时，插件级 `siteUrl` 需要包含 `base` 的路径。
+
+如果已经在 Rspress 中配置了 [`siteOrigin`](/zh/api/config/config-basic#siteorigin) 和 [`base`](/zh/api/config/config-basic#base)，可以省略插件级 `siteUrl`。完整 URL 拼接顺序是 `siteOrigin + base + routePath`。如果既没有配置插件级 `siteUrl`，也没有配置 `siteOrigin`，插件会回退使用 `base`，这会保留已有的相对路径行为，但不会生成绝对 RSS 链接：
 
 ```ts
 // rspress.config.ts
@@ -163,11 +169,11 @@ import { defineConfig } from '@rspress/core';
 import { pluginRss } from '@rspress/plugin-rss';
 
 export default defineConfig({
+  siteOrigin: 'https://example.com',
   base: '/base/',
   plugins: [
-    pluginRss({
-      siteUrl: 'https://example.com/base/',
-    }),
+    // siteUrl 默认为 'https://example.com/base/'
+    pluginRss(),
   ],
 });
 ```
@@ -194,10 +200,7 @@ RSS 配置，多值数组可以生成多个 RSS 文件。
 export interface FeedChannel extends Partial<FeedOptions> {
   id: string;
   test:
-    | RegExp
-    | string
-    | (RegExp | string)[]
-    | ((item: PageIndexInfo) => boolean);
+    RegExp | string | (RegExp | string)[] | ((item: PageIndexInfo) => boolean);
   item?: (
     item: FeedItem,
     page: PageIndexInfo,
@@ -245,7 +248,7 @@ feed: {
 #### `item`
 
 - **类型**：`(item: FeedItem, page: PageIndexInfo, siteUrl: string) => FeedItem | PromiseLike<FeedItem>`
-- **默认值**：<SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-rss/src/createFeed.ts" />
+- **默认值**：<SourceCode href="https://github.com/web-infra-dev/rspress/blob/main/packages/plugin-rss/src/createFeed.ts" />
 
 生成 RSS 文件中每一篇文章的结构化数据。
 
@@ -256,7 +259,7 @@ feed: {
 你可以传入一个函数来修改内置逻辑生成的数据，该数据会作为第一个参数传给你传入的这个函数。比如下方配置可以截断 RSS 中的文章内容：
 
 ```ts
-const item: FeedChannel['item'] = (item) => ({
+const item: FeedChannel['item'] = item => ({
   ...item,
   content: item.content.slice(0, 1000),
 });

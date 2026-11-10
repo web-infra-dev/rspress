@@ -1,16 +1,18 @@
-# Customizing head tags
+# Customizing head tags / SEO
 
 Adding head tags (such as meta tags) to web pages is crucial for SEO optimization and social media sharing. For example, [Open Graph](https://ogp.me/) is a web metadata protocol that controls how pages appear when shared on social media platforms.
 
 Currently, Rspress automatically injects the following head tags:
 
-| Tag                                                         | Description                                                                                 |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `<meta name="generator" content="Rspress v${version}">`     | Identifies the site generator and version                                                   |
-| `<meta name="description" content="${description}">`        | Page description, see [How description is determined](#how-description-is-determined) below |
-| `<meta property="og:type" content="website">`               | Open Graph type, fixed as `website`                                                         |
-| `<meta property="og:title" content="${title}">`             | Open Graph title, uses current page title (if available)                                    |
-| `<meta property="og:description" content="${description}">` | Open Graph description, same as above                                                       |
+| Tag                                                            | Description                                                                                 |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `<meta name="generator" content="Rspress v${version}">`        | Identifies the site generator and version                                                   |
+| `<meta name="description" content="${description}">`           | Page description, see [How description is determined](#how-description-is-determined) below |
+| `<meta property="og:type" content="website">`                  | Open Graph type, fixed as `website`                                                         |
+| `<meta property="og:title" content="${title}">`                | Open Graph title, uses current page title (if available)                                    |
+| `<meta property="og:description" content="${description}">`    | Open Graph description, same as above                                                       |
+| `<link rel="alternate" hreflang="${lang}" href="${url}">`      | Alternate language versions of the current page on multilingual sites                       |
+| `<link rel="preload" href="${currentRouteChunk}" as="script">` | Performance optimization that preloads the current page's async route chunk                 |
 
 ## How description is determined
 
@@ -56,6 +58,17 @@ head:
   - - meta
     - property: og:description
       content: This is description
+---
+```
+
+You can use the same `head` frontmatter field to add a `<meta name="keywords">` tag:
+
+```md title="example.mdx"
+---
+head:
+  - - meta
+    - name: keywords
+      content: Rspress, React, static site generator
 ---
 ```
 
@@ -110,12 +123,12 @@ export default defineConfig({
 });
 ```
 
-For more configuration details, please refer to the [Rsbuild html.tags documentation](https://rsbuild.rs/config/html/tags).
+For more configuration details, see the [Rsbuild html.tags documentation](https://rsbuild.rs/config/html/tags).
 
 :::tip Difference from Rspress head configuration
 
-- **Rspress head configuration**: Can access route-related information, supports dynamically setting head tags based on different pages
-- **Rsbuild html.tags**: A static build-time configuration, suitable for global uniform tag injection (such as analytics code)
+- **Rspress head configuration**: Can access route-related information and dynamically set head tags for different pages.
+- **Rsbuild html.tags**: A static build-time configuration suitable for globally injecting the same tags, such as analytics code.
 
 If you need to dynamically adjust head content based on page routes, use [Global head configuration](#global-head-configuration), the [Head component](#head-component), or the [useHead hook](#usehead-hook).
 

@@ -1,0 +1,25 @@
+{
+  "name": "@rspress-fixture/remark-image",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "@rspress/core": "workspace:*",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "picocolors": "^1.1.1",
+    "remark": "^15.0.1",
+    "remark-stringify": "^11.0.0",
+    "unified-lint-rule": "^3.0.1"
+  }
+}

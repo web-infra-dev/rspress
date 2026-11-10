@@ -1,21 +1,13 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pluginSass } from '@rsbuild/plugin-sass';
-import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+import { RsdoctorRspackPlugin } from '@rsdoctor/core';
 import { defineConfig } from '@rspress/core';
 import { transformerCompatibleMetaHighlight } from '@rspress/core/shiki-transformers';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginPlayground } from '@rspress/plugin-playground';
 import { pluginPreview } from '@rspress/plugin-preview';
-import { pluginSitemap } from '@rspress/plugin-sitemap';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
-import {
-  transformerNotationDiff,
-  transformerNotationErrorLevel,
-  transformerNotationFocus,
-  transformerNotationHighlight,
-  transformerRemoveNotationEscape,
-} from '@shikijs/transformers';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import pluginFileTree from 'rspress-plugin-file-tree';
@@ -23,7 +15,7 @@ import pluginOg from 'rspress-plugin-og';
 
 // import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 
-const siteUrl = 'https://rspress.rs';
+const siteOrigin = 'https://rspress.rs';
 
 const commonRsdoctorConfig = {
   disableClientServer: true,
@@ -35,9 +27,23 @@ const commonRsdoctorConfig = {
   },
 };
 
+const getRsdoctorReportType = (environmentName?: string) => {
+  switch (environmentName) {
+    case 'node':
+      return 'html';
+    case 'node_md':
+      return 'md';
+    case 'web':
+      return 'js';
+    default:
+      return environmentName ?? 'unknown';
+  }
+};
+
 export default defineConfig({
   title: 'Rspress',
   description: 'Rsbuild based static site generator',
+  siteOrigin,
   lang: 'en',
   logo: 'https://assets.rspack.rs/rspress/rspress-logo.svg',
   logoText: 'Rspress',
@@ -68,14 +74,7 @@ export default defineConfig({
         'css',
         'html',
       ],
-      transformers: [
-        transformerNotationDiff(),
-        transformerNotationErrorLevel(),
-        transformerNotationHighlight(),
-        transformerNotationFocus(),
-        transformerCompatibleMetaHighlight(),
-        transformerRemoveNotationEscape(),
-      ],
+      transformers: [transformerCompatibleMetaHighlight()],
     },
     link: {
       checkDeadLinks: {
@@ -93,22 +92,19 @@ export default defineConfig({
     pluginPlayground(),
     pluginTwoslash(),
     // pluginFontOpenSans(), // removed this line for Rspress preview
-    pluginSitemap({
-      siteUrl,
-    }),
     pluginAlgolia({
       verificationContent: '8F5BFE50E65777F1',
     }),
     pluginFileTree(),
     pluginOg({
-      domain: 'https://rspress.rs',
-      maxTitleSizePerLine: 28,
+      domain: siteOrigin,
+      maxTitleSizePerLine: 20,
       async resvgOptions() {
         // fetch font files to og-fonts
-        const fontDir = path.join(__dirname, './og-fonts');
+        const fontDir = path.join(import.meta.dirname, './og-fonts');
         const fontFile = path.join(fontDir, 'wqy-microhei.ttc');
         const fontUrl =
-          'https://github.com/anthonyfok/fonts-wqy-microhei/raw/cd82defe33ec0e86e628329f1b63049ef562c8e5/wqy-microhei.ttc';
+          'https://raw.githubusercontent.com/SoonIter/fonts-wqy-microhei/cd82defe33ec0e86e628329f1b63049ef562c8e5/wqy-microhei.ttc';
 
         try {
           await fs.access(fontFile);
@@ -136,11 +132,22 @@ export default defineConfig({
     }),
   ],
   builderConfig: {
+    splitChunks: {
+      cacheGroups: {
+        // Avoid duplicating the global FileTree component in route chunks.
+        fileTree: {
+          chunks: 'async',
+          enforce: true,
+          name: 'file-tree',
+          test: /rspress-plugin-file-tree/,
+        },
+      },
+    },
     plugins: [
       pluginSass(),
-      pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J' }),
+      pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J', scriptLoading: 'defer' }),
       pluginOpenGraph({
-        url: siteUrl,
+        url: siteOrigin,
         description: 'Rsbuild based static site generator',
         twitter: {
           site: '@rspack_dev',
@@ -156,7 +163,7 @@ export default defineConfig({
               ...commonRsdoctorConfig,
               output: {
                 ...commonRsdoctorConfig.output,
-                reportDir: `./doc_build/diff-rsdoctor/${config.name}`,
+                reportDir: `./doc_build/diff-rsdoctor/website_${getRsdoctorReportType(config.name)}`,
               },
             }),
           );
@@ -166,7 +173,6 @@ export default defineConfig({
     },
   },
   route: {
-    cleanUrls: true,
     exclude: ['**/fragments/**', 'components/**'],
   },
   themeConfig: {
@@ -181,7 +187,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        mode: 'link',
+        mode: 'github-stars',
         content: 'https://github.com/web-infra-dev/rspress',
       },
       {
@@ -210,5 +216,4 @@ export default defineConfig({
   // ssg: {
   //   experimentalWorker: true,
   // },
-  llms: true,
 });

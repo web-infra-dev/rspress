@@ -12,7 +12,7 @@ function orderStringSet(input: Set<string>) {
 }
 
 describe('walk', () => {
-  it('basic', async () => {
+  it('processes locale-specific navigation and sidebars', async () => {
     const docsDir = path.join(__dirname, './fixtures/docs-locales');
     const mockNormalizeRoutePath = (link: string) => {
       return normalizeRoutePath(

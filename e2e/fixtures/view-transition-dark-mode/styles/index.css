@@ -1,0 +1,22 @@
+.coordinate-readout {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 10000;
+  display: grid;
+  gap: 2px;
+  min-width: 220px;
+  padding: 12px 14px;
+  border: 1px solid var(--rp-c-divider);
+  border-radius: 10px;
+  background: var(--rp-c-bg-soft);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+  color: var(--rp-c-text-1);
+  font:
+    12px/1.5 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+}

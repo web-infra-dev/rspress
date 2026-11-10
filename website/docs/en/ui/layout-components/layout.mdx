@@ -3,6 +3,9 @@ description: Layout component, serves as the layout container for the entire pag
 overviewHeaders: []
 ---
 
+import { SlotPreviewToggle } from '../../../components/SlotPreview';
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # Layout
 
 `Layout` is the core layout component of Rspress, serving as the layout container for the entire page. It provides rich slot props to extend the default theme layout without ejecting.
@@ -24,6 +27,10 @@ export * from '@rspress/core/theme-original';
 
 The `Layout` component provides a series of slot props for extending the default theme layout:
 
+Click below to preview slot locations on the page.
+
+<SlotPreviewToggle />
+
 <details>
 
 ```tsx title="theme/index.tsx"
@@ -34,19 +41,19 @@ import {
 
 const Layout = () => (
   <BasicLayout
-    /* Before Home page Hero section */
+    /* Before homepage Hero section */
     beforeHero={<div>beforeHero</div>}
-    /* After Home page Hero section */
+    /* After homepage Hero section */
     afterHero={<div>afterHero</div>}
-    /* Before Home page Features section */
+    /* Before homepage Features section */
     beforeFeatures={<div>beforeFeatures</div>}
-    /* After Home page Features section */
+    /* After homepage Features section */
     afterFeatures={<div>afterFeatures</div>}
-    /* Before Doc page Footer section */
+    /* Before doc page Footer section */
     beforeDocFooter={<div>beforeDocFooter</div>}
-    /* After Doc page Footer section */
+    /* After doc page Footer section */
     afterDocFooter={<div>afterDocFooter</div>}
-    /* At the beginning of Doc page */
+    /* At the beginning of doc page */
     beforeDoc={<div>beforeDoc</div>}
     /* At the end of Doc page */
     afterDoc={<div>afterDoc</div>}
@@ -68,6 +75,12 @@ const Layout = () => (
     beforeNavMenu={<div>beforeNavMenu</div>}
     /* After nav menu */
     afterNavMenu={<div>afterNavMenu</div>}
+    /* Before/after the left navigation items (desktop and mobile) */
+    beforeLeftNavItems={<li>beforeLeftNavItems</li>}
+    afterLeftNavItems={<li>afterLeftNavItems</li>}
+    /* Before/after the right navigation items (desktop and mobile) */
+    beforeRightNavItems={<li>beforeRightNavItems</li>}
+    afterRightNavItems={<li>afterRightNavItems</li>}
     /* Above left sidebar */
     beforeSidebar={<div>beforeSidebar</div>}
     /* Below left sidebar */
@@ -82,7 +95,7 @@ const Layout = () => (
     bottom={<div>bottom</div>}
     /* Custom MDX components */
     components={{
-      h1: (props) => {
+      h1: props => {
         const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
         return (
           <>
@@ -102,3 +115,23 @@ export * from '@rspress/core/theme-original';
 ```
 
 </details>
+
+### Custom navigation lists
+
+<VersionBadge version="2.0.22" />
+
+Use `beforeLeftNavItems` / `afterLeftNavItems` and `beforeRightNavItems` / `afterRightNavItems` to insert items before or after the left and right navigation lists. `NavList` automatically adapts to desktop and mobile.
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [{ text: 'Community', link: '/community' }];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+`items` uses the same structure as [`themeConfig.nav`](/api/config/config-theme#nav); placement is determined by the slot.

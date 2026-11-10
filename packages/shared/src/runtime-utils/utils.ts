@@ -62,7 +62,7 @@ export function normalizePosixPath(id: string): string {
   return normalizedPath;
 }
 
-export const inBrowser = () => !process.env.__SSR__;
+export const inBrowser = () => !import.meta.env.SSR;
 
 export function addLeadingSlash(url: string) {
   return url.charAt(0) === '/' || isExternalUrl(url) ? url : `/${url}`;
@@ -121,7 +121,6 @@ export function replaceLang(
 
   let versionPart = '';
   let langPart = '';
-  let purePathPart = '';
 
   const parts = url.split('/').filter(Boolean);
 
@@ -140,7 +139,7 @@ export function replaceLang(
     parts.shift();
   }
 
-  purePathPart = parts.join('/') || '';
+  let purePathPart = parts.join('/') || '';
 
   if ((versionPart || langPart) && !purePathPart) {
     purePathPart = cleanUrls ? 'index' : 'index.html';
@@ -270,7 +269,9 @@ export function withBase(url: string, base: string): string {
   const normalizedUrl = addLeadingSlash(url);
   const normalizedBase = normalizeSlash(base);
 
-  const hasBase = normalizedUrl.startsWith(normalizedBase);
+  const hasBase =
+    normalizedUrl === normalizedBase ||
+    normalizedUrl.startsWith(`${normalizedBase}/`);
   if (hasBase) {
     // normalizedUrl => '/base' base => '/base/'
     if (`${normalizedUrl}/` === base) {
@@ -282,11 +283,18 @@ export function withBase(url: string, base: string): string {
   return `${normalizedBase}${normalizedUrl}`;
 }
 
+export function withSiteOrigin(url: string, siteOrigin?: string): string {
+  if (!siteOrigin || isExternalUrl(url)) {
+    return url;
+  }
+  return new URL(addLeadingSlash(url), addTrailingSlash(siteOrigin)).href;
+}
+
 export function removeBase(url: string, base: string) {
   const normalizedUrl = addLeadingSlash(url);
   const normalizedBase = normalizeSlash(base);
   const removedBaseUrl = normalizedUrl.replace(
-    new RegExp(`^${normalizedBase}`),
+    new RegExp(`^${normalizedBase}(?=/|$)`),
     '',
   );
   if (removedBaseUrl === '') {

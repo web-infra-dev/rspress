@@ -1,41 +1,58 @@
 import {
-  BrowserRouter,
-  PageContext,
+  createBrowserRouter,
+  RouterProvider,
   removeTrailingSlash,
   ThemeContext,
+  useSite,
   withBase,
 } from '@rspress/core/runtime';
-import { useThemeState } from '@theme';
+import { useThemeState } from '@rspress/core/theme';
 import { createHead, UnheadProvider } from '@unhead/react/client';
-import { useMemo, useState } from 'react';
-import { App } from './App';
+import { useMemo } from 'react';
 import type { Page } from './initPageData';
+import { PAGE_ROUTE_ID } from './pageDataLoader';
+import { createPageRoutes } from './PageRoute';
 
 const head = createHead();
 
-// eslint-disable-next-line import/no-commonjs
+export function createClientRouter(initialPageData?: Page) {
+  // React Router otherwise uses "default" for every directly loaded document,
+  // causing their saved scroll positions to share the same sessionStorage key.
+  if (!window.history.state?.key) {
+    window.history.replaceState(
+      { ...window.history.state, key: Math.random().toString(36).slice(2, 10) },
+      '',
+    );
+  }
+
+  return createBrowserRouter(createPageRoutes(), {
+    basename: removeTrailingSlash(withBase('/')),
+    hydrationData: initialPageData
+      ? { loaderData: { [PAGE_ROUTE_ID]: initialPageData } }
+      : undefined,
+  });
+}
 
 export function ClientApp({
-  initialPageData = null as unknown as Page,
+  router,
 }: {
-  initialPageData?: Page;
+  router: ReturnType<typeof createClientRouter>;
 }) {
-  const [data, setData] = useState(initialPageData);
   const [theme, setTheme] = useThemeState();
+  const { site } = useSite();
+  const transitionOptions = {
+    useTransitions: site.route.useTransitions,
+    // React Router 6 uses this flag for updates after async loaders complete.
+    future: { v7_startTransition: site.route.useTransitions },
+  };
 
   return (
     <ThemeContext.Provider
       value={useMemo(() => ({ theme, setTheme }), [theme, setTheme])}
     >
-      <PageContext.Provider
-        value={useMemo(() => ({ data, setData }), [data, setData])}
-      >
-        <BrowserRouter basename={removeTrailingSlash(withBase('/'))}>
-          <UnheadProvider head={head}>
-            <App />
-          </UnheadProvider>
-        </BrowserRouter>
-      </PageContext.Provider>
+      <UnheadProvider head={head}>
+        <RouterProvider router={router} {...transitionOptions} />
+      </UnheadProvider>
     </ThemeContext.Provider>
   );
 }

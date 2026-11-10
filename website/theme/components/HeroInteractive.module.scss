@@ -289,6 +289,12 @@
     animation: none;
     margin-bottom: 20px;
   }
+
+  @media (max-width: 600px) {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 0;
+  }
 }
 
 @keyframes breathe {
@@ -378,4 +384,17 @@
 
 :global(.rp-home-hero__badge)::before {
   animation: breathe 3s ease-in-out infinite reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .logo,
+  .sidebarHeader,
+  .sidebarItem > div,
+  .skeletonText,
+  .glowLeft,
+  .glowRight,
+  :global(.rp-home-hero__badge)::before {
+    animation: none;
+  }
 }

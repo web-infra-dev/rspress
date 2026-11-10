@@ -51,6 +51,7 @@ function resolveNavForVersion(
 }
 
 const rsbuildPluginLlms = ({
+  docDirectory,
   disableSSGRef,
   baseRef,
   pageDataList,
@@ -58,6 +59,7 @@ const rsbuildPluginLlms = ({
   titleRef,
   descriptionRef,
   langRef,
+  siteOriginRef,
   sidebar,
   routeServiceRef,
   nav,
@@ -107,10 +109,12 @@ const rsbuildPluginLlms = ({
           let mdContent: string | Buffer;
           try {
             mdContent = await normalizeMdFile(
+              docDirectory,
               content,
               filepath,
               routeServiceRef.current!,
               baseRef.current,
+              siteOriginRef.current,
               typeof mdFiles !== 'boolean'
                 ? (mdFiles?.mdxToMd ?? false)
                 : false,
@@ -185,6 +189,7 @@ const rsbuildPluginLlms = ({
             titleRef.current,
             descriptionRef.current,
             baseRef.current,
+            siteOriginRef.current,
           );
           api.processAssets(
             {
@@ -205,6 +210,7 @@ const rsbuildPluginLlms = ({
             navList,
             others,
             baseRef.current,
+            siteOriginRef.current,
           );
           api.processAssets(
             { targets: disableSSG ? ['web'] : ['node'], stage: 'additional' },
@@ -275,11 +281,7 @@ function mergeRouteMetaWithPageData(
 
 function flatSidebar(
   sidebar: (
-    | SidebarGroup
-    | SidebarItem
-    | SidebarDivider
-    | SidebarSectionHeader
-    | string
+    SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader | string
   )[],
 ): string[] {
   if (!sidebar) {
@@ -374,6 +376,7 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
   const titleRef: { current: string | undefined } = { current: '' };
   const descriptionRef: { current: string | undefined } = { current: '' };
   const langRef: { current: string | undefined } = { current: '' };
+  const siteOriginRef: { current: string | undefined } = { current: '' };
   const pageDataList: PageIndexInfo[] = [];
   const routes: RouteMeta[] = [];
   const sidebar: Sidebar = {};
@@ -425,15 +428,21 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
         config.builderConfig.plugins = [];
       }
 
+      const docDirectory = config.root!;
+      baseRef.current = config.base ?? '/';
+      siteOriginRef.current = config.siteOrigin;
+
       config.builderConfig.plugins.push(
         ...(Array.isArray(mergedOptions)
           ? mergedOptions.map((item, index) => {
               return rsbuildPluginLlms({
+                docDirectory,
                 pageDataList,
                 routes,
                 titleRef,
                 descriptionRef,
                 langRef,
+                siteOriginRef,
                 sidebar,
                 routeServiceRef,
                 nav,
@@ -447,11 +456,13 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
             })
           : [
               rsbuildPluginLlms({
+                docDirectory,
                 pageDataList,
                 routes,
                 titleRef,
                 descriptionRef,
                 langRef,
+                siteOriginRef,
                 sidebar,
                 routeServiceRef,
                 nav,
@@ -495,6 +506,7 @@ export function pluginLlms(options?: RspressPluginLlmsOptions): RspressPlugin {
       titleRef.current = config.title;
       descriptionRef.current = config.description;
       langRef.current = config.lang ?? '';
+      siteOriginRef.current = config.siteOrigin;
       baseRef.current = config.base ?? '/';
       docDirectoryRef.current = config.root ?? 'docs';
 

@@ -1,4 +1,8 @@
-import { PackageManagerTabs } from '@theme';
+---
+description: '使用 Agent Skills、llms.txt、Markdown 文档和 AGENTS.md 帮助编程 Agent 使用 Rspress。'
+---
+
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 # AI
 
@@ -7,6 +11,7 @@ import { PackageManagerTabs } from '@theme';
 - [Agent Skills](#agent-skills)
 - [llms.txt](#llmstxt)
 - [Markdown 文档](#markdown-文档)
+- [WebMCP](#webmcp)
 - [AGENTS.md](#agentsmd)
 
 ## Agent Skills
@@ -15,6 +20,8 @@ Agent Skills 是可安装到 Agent 中的领域知识包，能够让 Agent 在�
 
 我们在 [rstackjs/agent-skills](https://github.com/rstackjs/agent-skills) 仓库中为 Rstack 生态提供了许多 Skills，其中关于 Rspress 的 Skills 包括：
 
+- [rspress-docs-generator](https://github.com/rstackjs/agent-skills#rspress-docs-generator)：推荐用于创建和维护 Rspress 文档站点，尤其适合在 monorepo 中维护一个独立 Rspress 项目作为文档站的场景。
+- [rspress-best-practices](https://github.com/rstackjs/agent-skills#rspress-best-practices)：涵盖 Rspress 配置、CLI 工作流、内容组织、frontmatter、MDX、主题、i18n、搜索、静态资源、部署和调试的最佳实践。
 - [rspress-v2-upgrade](https://github.com/rstackjs/agent-skills#rspress-v2-upgrade)：将 Rspress v1 项目升级到 v2。
 - [rspress-custom-theme](https://github.com/rstackjs/agent-skills#rspress-custom-theme)：使用 CSS 变量、Layout 插槽、组件包装或组件弹出等方式自定义 Rspress 主题。
 - [rspress-description-generator](https://github.com/rstackjs/agent-skills#rspress-description-generator)：为 Rspress 文档文件生成和维护 `description` frontmatter。
@@ -22,14 +29,14 @@ Agent Skills 是可安装到 Agent 中的领域知识包，能够让 Agent 在�
 在支持 Skills 的 Coding Agent 中，可以通过以下命令使用 [skills](https://www.npmjs.com/package/skills) 包安装指定的 Skill：
 
 <PackageManagerTabs
-  command="skills add rstackjs/agent-skills --skill rspress-v2-upgrade"
+  command="skills add rstackjs/agent-skills --skill rspress-docs-generator"
   dlx
 />
 
 安装完成后，用自然语言输入相关提示词即可触发对应 Skill，例如：
 
 ```
-帮我把这个 Rspress v1 项目升级到 v2
+帮我根据当前功能分支更新这个 monorepo 里的 Rspress 文档项目
 ```
 
 ## llms.txt
@@ -53,7 +60,7 @@ https://rspress.rs/llms-full.txt
 - `llms.txt` 体积较小、消耗 token 少，适合让 AI 按需获取具体页面。
 - `llms-full.txt` 包含全量文档内容，无需 AI 逐一跟随链接，适合需要 AI 全面了解 Rspress 的场景，但会消耗更多 token，建议在支持大上下文窗口的 AI 工具中使用。
 
-此外，Rspress 内置了 [SSG-MD](/guide/basic/ssg-md) 能力，可以为你自己的文档站点生成符合 `llms.txt` 规范的文件。只需在配置中启用 `llms: true` 即可使用。
+此外，Rspress 内置了 [SSG-MD](/guide/basic/ssg-md) 能力，可以为你自己的文档站点生成符合 `llms.txt` 规范的文件。自 v2.1.0 起默认开启。
 
 ## Markdown 文档
 
@@ -64,6 +71,10 @@ https://rspress.rs/guide/start/introduction.md
 ```
 
 将 Markdown 链接或内容提供给 AI，即可让其精确了解某一具体章节的内容，适合在针对性问题排查或查阅特定内容时使用。
+
+## WebMCP
+
+本文档站点通过 [WebMCP](/zh/guide/basic/webmcp) 向 Agent 提供工具，用于读取文档、按关键词查找页面和跳转到相关页面。Rspress 项目默认启用 WebMCP。
 
 ## AGENTS.md
 
@@ -90,13 +101,3 @@ You are an expert in JavaScript, Rspress, and documentation site development. Yo
 ```
 
 你也可以根据项目的实际情况进行修改，添加更多关于项目结构、整体架构等多方面的信息，以便 Agents 更好地理解你的项目。
-
-::: tip
-
-如果你使用的是 Claude Code，可以创建一个 `CLAUDE.md` 文件，并在其中引用 `AGENTS.md` 文件。
-
-```markdown title="CLAUDE.md"
-@AGENTS.md
-```
-
-:::

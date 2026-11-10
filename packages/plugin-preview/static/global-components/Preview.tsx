@@ -22,6 +22,10 @@ interface BasePreviewProps {
   demoId: string;
 }
 
+const CODE_MIN_WIDTH = 200;
+const DEVICE_MIN_WIDTH = 240;
+const KEY_STEP = 16;
+
 const PreviewIframeFollow: React.FC<BasePreviewProps> = ({
   children,
   demoId,
@@ -43,10 +47,124 @@ const PreviewIframeFollow: React.FC<BasePreviewProps> = ({
     );
   }, [dark]);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const deviceRef = useRef<HTMLDivElement>(null);
+  const resizerRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<{ startX: number; startWidth: number } | null>(null);
+  // null = default flex layout (no drag yet)
+  const [deviceWidth, setDeviceWidth] = useState<number | null>(null);
+  const [dragging, setDragging] = useState(false);
+  // measured values for aria-*
+  const [bounds, setBounds] = useState({ now: 0, max: 0 });
+
+  const getMax = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return DEVICE_MIN_WIDTH;
+    const handle = resizerRef.current?.getBoundingClientRect().width ?? 0;
+    // clientWidth excludes container border
+    return Math.max(
+      DEVICE_MIN_WIDTH,
+      container.clientWidth - CODE_MIN_WIDTH - handle,
+    );
+  }, []);
+
+  const clamp = useCallback(
+    (w: number) => Math.min(Math.max(w, DEVICE_MIN_WIDTH), getMax()),
+    [getMax],
+  );
+
+  const getCurrentWidth = () =>
+    deviceRef.current?.getBoundingClientRect().width ?? DEVICE_MIN_WIDTH;
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || typeof ResizeObserver === 'undefined') return;
+    const update = () => {
+      const max = getMax();
+      setBounds({ now: Math.round(getCurrentWidth()), max: Math.round(max) });
+      // keep custom width valid when container shrinks
+      setDeviceWidth(w =>
+        w == null ? w : Math.min(Math.max(w, DEVICE_MIN_WIDTH), max),
+      );
+    };
+    const ro = new ResizeObserver(update);
+    ro.observe(container);
+    if (deviceRef.current) ro.observe(deviceRef.current);
+    return () => ro.disconnect();
+  }, [getMax]);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    e.currentTarget.setPointerCapture(e.pointerId);
+    dragRef.current = { startX: e.clientX, startWidth: getCurrentWidth() };
+    setDragging(true);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (!drag) return;
+    setDeviceWidth(clamp(drag.startWidth - (e.clientX - drag.startX)));
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current) return;
+    dragRef.current = null;
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+    setDragging(false);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const current = deviceWidth ?? getCurrentWidth();
+    let next: number | null = null;
+    // handle on left of device: moving left grows device
+    if (e.key === 'ArrowLeft') next = current + KEY_STEP;
+    else if (e.key === 'ArrowRight') next = current - KEY_STEP;
+    else if (e.key === 'Home') next = DEVICE_MIN_WIDTH;
+    else if (e.key === 'End') next = getMax();
+    if (next == null) return;
+    e.preventDefault();
+    setDeviceWidth(clamp(next));
+  };
+
   return (
-    <div className="rp-preview rp-not-doc rp-preview--iframe-follow">
+    <div
+      ref={containerRef}
+      className={`rp-preview rp-not-doc rp-preview--iframe-follow${
+        dragging ? ' rp-preview--iframe-follow--dragging' : ''
+      }`}
+    >
       <div className="rp-preview--iframe-follow__code">{children?.[0]}</div>
-      <div className="rp-preview--iframe-follow__device">
+      <div
+        ref={resizerRef}
+        className="rp-preview--iframe-follow__resizer"
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Resize preview"
+        aria-valuenow={bounds.now}
+        aria-valuemin={DEVICE_MIN_WIDTH}
+        aria-valuemax={bounds.max}
+        tabIndex={0}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onDoubleClick={() => setDeviceWidth(null)}
+        onKeyDown={onKeyDown}
+      >
+        <span className="rp-preview--iframe-follow__resizer__dot" />
+        <span className="rp-preview--iframe-follow__resizer__dot" />
+        <span className="rp-preview--iframe-follow__resizer__dot" />
+      </div>
+      <div
+        ref={deviceRef}
+        className="rp-preview--iframe-follow__device"
+        style={
+          deviceWidth == null ? undefined : { flex: `0 0 ${deviceWidth}px` }
+        }
+      >
         <iframe
           className="rp-preview--iframe-follow__device__iframe"
           src={getPageUrl(demoId)}
@@ -69,7 +187,7 @@ const PreviewInternal: React.FC<{ children: React.ReactNode[] }> = ({
       if (!showCode) {
         ev.currentTarget.blur();
       }
-      setShowCode(!showCode);
+      setShowCode(prevShowCode => !prevShowCode);
     },
     [showCode],
   );

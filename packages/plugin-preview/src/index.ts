@@ -12,8 +12,9 @@ import {
   removeTrailingSlash,
 } from '@rspress/core';
 import picocolors from 'picocolors';
+import { previewI18n } from '../static/i18n';
 import entryContent from '../static/iframe/entry?raw';
-import { STATIC_DIR } from './constants';
+import { PACKAGE_ROOT, STATIC_DIR } from './constants';
 import { generateEntry } from './generateEntry';
 import { pluginLogger, previewLogger } from './logger';
 import { globalDemos, isDirtyRef, remarkWriteCodeFile } from './remarkPlugin';
@@ -44,6 +45,8 @@ export function pluginPreview(options?: Options): RspressPlugin {
   let devServer: StartServerResult | undefined;
   let clientConfig: RsbuildConfig;
   let port = devPort;
+  const hasIframeDemos = () =>
+    Object.values(globalDemos).some(demos => demos.length > 0);
 
   async function createDemoRsbuild() {
     const distPath = clientConfig?.output?.distPath;
@@ -127,11 +130,21 @@ export function pluginPreview(options?: Options): RspressPlugin {
   }
 
   async function buildDemo() {
+    if (!hasIframeDemos()) {
+      return;
+    }
     const rsbuildInstance = await createDemoRsbuild();
     await rsbuildInstance.build();
   }
 
   async function startDemoServer() {
+    if (!hasIframeDemos()) {
+      await devServer?.server.close();
+      devServer = undefined;
+      isDirtyRef.current = false;
+      return;
+    }
+
     if (devServer && !isDirtyRef.current) {
       return;
     }
@@ -157,6 +170,12 @@ export function pluginPreview(options?: Options): RspressPlugin {
 
   return {
     name: '@rspress/plugin-preview',
+    i18nSource(source) {
+      return {
+        ...source,
+        ...previewI18n,
+      };
+    },
     config(config) {
       config.markdown = config.markdown || {};
       return config;
@@ -167,7 +186,7 @@ export function pluginPreview(options?: Options): RspressPlugin {
     },
     builderConfig: {
       source: {
-        include: [join(__dirname, '..')],
+        include: [PACKAGE_ROOT],
       },
       tools: {
         bundlerChain(chain) {

@@ -1,0 +1,7 @@
+cases:
+  - name: AUDIT-10 Read sidebar badges and navigation icons
+    tags: [replacement-final-content, replacement-final-followup]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /sidebar-icon/ }
+      - aiAct: Inspect the Introduction entry under Start Here in the left sidebar. Stay on the Sidebar icon article without following any navigation link.
+      - aiAssert: The Introduction entry under Start Here displays a new badge beside its text.

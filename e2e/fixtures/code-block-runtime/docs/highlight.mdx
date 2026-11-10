@@ -1,19 +1,17 @@
-import { CodeBlockRuntime } from '@theme';
-import { transformerNotationHighlight } from '@shikijs/transformers';
+import { CodeBlockRuntime } from '@rspress/core/theme';
 
 <CodeBlockRuntime
   lang="ts"
   title="highlight.ts"
-  code={`console.log('Highlighted'); // [!code highlight]
+  code={`// [!code word:Highlighted]
+console.log('Highlighted'); // [!code highlight]
 // [!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
-  shikiOptions={{
-    transformers: [transformerNotationHighlight()],
-  }}
 />
 
 ```ts title="highlight.ts"
+// [!code word:Highlighted]
 console.log('Highlighted'); // [!code highlight]
 // [!code highlight:1]
 console.log('Highlighted');

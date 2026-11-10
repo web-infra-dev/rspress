@@ -1,9 +1,9 @@
 import { Tabs, Tab } from '@rspress/core/theme';
 import { Border } from '../../components/Border';
 
-In the [docs directory](/api/config/config-basic#root), MDX fragments or React components need to be excluded from routing through the [route.exclude](/api/config/config-basic#routeexclude) configuration. For convenience, files starting with "\_" are excluded by default via [route.excludeConvention](/api/config/config-basic#routeexcludeconvention).
+In the [docs directory](/api/config/config-basic#root), MDX fragments or React components must be excluded from routing with [route.exclude](/api/config/config-basic#routeexclude). For convenience, files starting with "\_" are excluded by default through [route.excludeConvention](/api/config/config-basic#routeexcludeconvention).
 
-You can also place components in adjacent directories outside the docs directory, for example:
+You can also place components in adjacent directories outside the docs directory. For example:
 
 ```tree
 docs
@@ -42,7 +42,7 @@ export default Button;
 </Tab>
 </Tabs>
 
-It will be rendered as:
+It is rendered as:
 
 <Border className='rp-toc-exclude'>
 

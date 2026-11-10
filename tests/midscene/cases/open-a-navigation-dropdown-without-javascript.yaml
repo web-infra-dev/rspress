@@ -1,0 +1,22 @@
+cases:
+  - name: STATIC-02 Open a navigation dropdown without JavaScript
+    tags:
+      [
+        stability-regression,
+        navigation-dropdown-regression,
+        original-static,
+        replacement-final-existing,
+        replacement-final-followup,
+      ]
+    steps:
+      - app.open:
+          {
+            fixture: nav-link-items,
+            mode: production,
+            javascript: false,
+            path: /,
+          }
+      - aiAssert: ItemsAndLink is visible in the top navigation and its Child1 and Child2 dropdown entries are initially hidden.
+      - aiHover: The ItemsAndLink dropdown trigger in the top navigation, between OnlyItems and NestedItems.
+      - aiWaitFor: The ItemsAndLink dropdown displays Child1 and Child2.
+      - aiAssert: The dropdown displays Child1 and Child2.

@@ -1,0 +1,7 @@
+cases:
+  - name: READ-10 Open custom layout pages from search
+    tags: [original-custom-layout, replacement-batch-3]
+    steps:
+      - app.open: { fixture: custom-layout, path: / }
+      - aiAct: Open search, find Page type, and open that result.
+      - aiAssert: The Page type heading and Custom page should work text are visible with top navigation, without a documentation sidebar or a home hero.

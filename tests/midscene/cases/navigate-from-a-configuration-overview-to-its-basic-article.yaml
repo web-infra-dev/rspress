@@ -1,0 +1,15 @@
+cases:
+  - name: OVERVIEW-01 Navigate from a configuration overview to its basic article
+    tags: [original-overviews, replacement-batch-3-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/config.html }
+      - aiAct: Bring the Basic config and Theme config sections into view in the main overview article using scrolling only. Stop with both sections and their article links visible. Do not click any headings, cards, links, sidebar entries, or On this page entries. Stay on the configuration overview.
+      - aiAssert: In the main overview article, Basic config with root and logoText links is followed by Theme config with nav and sidebar links. Sidebar labels are not evidence.
+      - aiAct: Scroll down in the main overview article to the Front matter config and Build config sections. Stop with both sections and the Build config article links visible. Use scrolling only; do not click any headings, cards, links, sidebar entries, or On this page entries.
+      - aiAssert: In the main overview article, Front matter config is followed by Build config with builderConfig, Default config, markdown, and markdown.remarkPlugins links. Sidebar labels are not evidence.
+      - aiAct: Scroll down in the main configuration overview article until the Extname config section and its article card are fully visible. Use scrolling only; do not click headings, cards, links or sidebar entries.
+      - aiAssert: The main overview article shows an Extname config section with an Extname config article entry.
+      - aiAct: Scroll farther down in the same main configuration overview article to show the Nested section and the complete Nested config card with its Nested H2 link below the heading. Do not click anything or scroll the sidebar. A Nested heading alone at the bottom edge is not enough; bring the card below it into view.
+      - aiAssert: The main overview article shows the Nested section containing a Nested config article entry with a Nested H2 link. Sidebar labels are not evidence.
+      - aiAct: Scroll back up within the main overview article to its Basic config section. Click the Basic config article link in that section, beside the root and logoText links. Do not use the sidebar, search, or On this page. Wait for the Basic config article body with root and logoText sections to appear.
+      - aiAssert: The Basic config article displays the root and logoText sections.

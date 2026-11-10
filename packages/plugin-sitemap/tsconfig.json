@@ -2,9 +2,12 @@
   "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "src",
     "rootDir": "."
   },
   "include": ["src"],
-  "references": [{ "path": "../core" }]
+  "references": [
+    {
+      "path": "../core"
+    }
+  ]
 }

@@ -1,0 +1,7 @@
+cases:
+  - name: EXTRA-03 Read replaced home and navigation text
+    tags: [original-additional]
+    steps:
+      - app.open: { fixture: replace-rules, path: / }
+      - aiAct: Bring the home hero and top navigation into view.
+      - aiAssert: The home hero displays bar-hero and the top navigation displays bar-meta rather than the original foo text.

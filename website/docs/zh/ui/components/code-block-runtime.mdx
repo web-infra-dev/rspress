@@ -44,11 +44,12 @@ import { CodeBlockRuntime } from '@rspress/core/theme';
 
 ## 使用 Shiki 选项
 
-以下是一个使用 transformer 实现行高亮的示例：
+行高亮、单词高亮、diff、focus 和 error/warning 注释语法默认启用。使用 `shikiOptions.transformers` 添加自定义 transformer，或通过相同的 `name` 覆盖内置项。
+
+以下是一个无需配置的行高亮示例：
 
 ```mdx title="foo.mdx"
 import { CodeBlockRuntime } from '@rspress/core/theme';
-import { transformerNotationHighlight } from '@shikijs/transformers';
 
 <CodeBlockRuntime
   lang="ts"
@@ -57,13 +58,8 @@ import { transformerNotationHighlight } from '@shikijs/transformers';
 // [\!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
-  shikiOptions={{
-    transformers: [transformerNotationHighlight()],
-  }}
 />
 ```
-
-import { transformerNotationHighlight } from '@shikijs/transformers';
 
 <CodeBlockRuntime
   lang="ts"
@@ -72,9 +68,6 @@ import { transformerNotationHighlight } from '@shikijs/transformers';
 // [!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
-  shikiOptions={{
-    transformers: [transformerNotationHighlight()],
-  }}
 />
 
 ## 导入文件内容

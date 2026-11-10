@@ -6,13 +6,12 @@ import {
   withCustomConfig,
   withDefaultConfig,
 } from 'react-docgen-typescript';
+import type { apiDocgenI18n } from '../static/i18n';
 import { apiDocMap } from './constants';
-import { locales } from './locales';
 import type {
   ApiParseTool,
   DocGenOptions,
   Entries,
-  SupportLanguages,
   ToolEntries,
 } from './types';
 
@@ -23,6 +22,7 @@ const isToolEntries = (obj: Record<string, unknown>): obj is ToolEntries => {
 export const docgen = async ({
   entries,
   languages,
+  i18nSource,
   apiParseTool,
   appDir,
   parseToolOptions,
@@ -95,6 +95,7 @@ export const docgen = async ({
               apiDocMap[`${key}-${language}`] = generateTable(
                 componentDoc,
                 language,
+                i18nSource,
               );
             });
           }
@@ -128,13 +129,22 @@ export const docgen = async ({
 
 function generateTable(
   componentDoc: ComponentDoc[],
-  language: SupportLanguages,
+  language: string,
+  i18nSource: DocGenOptions['i18nSource'],
 ) {
+  const t = (key: keyof typeof apiDocgenI18n) => i18nSource[key][language];
+  const escapeTableCell = (text: string) =>
+    text.replace(/(?<!\\)\|/g, '&#124;').replace(/\r?\n/g, '&#10;');
   return componentDoc
     .map(param => {
       const { props } = param;
-      const t = locales[language] ?? locales.en;
-      const PROP_TABLE_HEADER = `|${t.property}|${t.description}|${t.type}|${t.defaultValue}|\n|:---:|:---:|:---:|:---:|`;
+      const headers = [
+        t('apiDocgenProperty'),
+        t('apiDocgenDescription'),
+        t('apiDocgenType'),
+        t('apiDocgenDefaultValue'),
+      ].map(escapeTableCell);
+      const PROP_TABLE_HEADER = `|${headers.join('|')}|\n|:---:|:---:|:---:|:---:|`;
 
       const tableContent = Object.keys(props)
         .filter(propName => {
@@ -149,20 +159,20 @@ function generateTable(
             props[propName];
           const getType = () =>
             `\`${type.name.replace(/\|/g, '\\|')}\`${
-              required ? ` **(${t.required})**` : ''
+              required ? ` **(${t('apiDocgenRequired')})**` : ''
             }`;
           const getDefaultValue = () => `\`${defaultValue?.value || '-'}\``;
 
           const getDescription = () => {
             switch (name) {
               case 'className':
-                return description || t.className;
+                return description || t('apiDocgenClassName');
               case 'style':
-                return description || t.style;
+                return description || t('apiDocgenStyle');
               case 'children':
-                return description || t.children;
+                return description || t('apiDocgenChildren');
               case 'disabled':
-                return description || t.disabled;
+                return description || t('apiDocgenDisabled');
               default:
                 return description;
             }
@@ -173,7 +183,7 @@ function generateTable(
             .replace(/\n/g, '&#10;');
 
           return `|${[name, formattedDescription, getType(), getDefaultValue()]
-            .map(str => str.replace(/(?<!\\)\|/g, '&#124;'))
+            .map(escapeTableCell)
             .join('|')}|`;
         });
 

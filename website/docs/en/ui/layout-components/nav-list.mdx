@@ -1,0 +1,55 @@
+---
+description: NavList renders custom navigation items in the desktop navbar and mobile menu.
+overviewHeaders: []
+---
+
+import { VersionBadge } from '../../../components/VersionBadge';
+
+# NavList
+
+<VersionBadge version="2.0.22" />
+
+`NavList` renders a list of custom navigation items using the layout's current navigation presentation. The same component works in the desktop navbar and the expanded mobile menu.
+
+## Usage
+
+Use `NavList` with one of the navigation item slots in a [custom theme](/guide/basic/custom-theme):
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [
+  { text: 'Community', link: '/community' },
+  {
+    text: 'Resources',
+    items: [{ text: 'Examples', link: '/examples' }],
+  },
+];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+On desktop, the items are rendered in the navbar. On small screens, the same items are rendered in the expanded mobile menu, so the theme does not need separate desktop and mobile implementations.
+
+## Props
+
+### items
+
+- **Type:** `NavItem[]`
+
+Navigation items to render. The item shape is the same as [`themeConfig.nav`](/api/config/config-theme#nav), including `text`, `link`, and nested `items`.
+
+## Placement
+
+Pass `NavList` to one of the four navigation item slots on `Layout`:
+
+- `beforeLeftNavItems`
+- `afterLeftNavItems`
+- `beforeRightNavItems`
+- `afterRightNavItems`
+
+The slot determines whether the list appears before or after the corresponding left or right navigation items.

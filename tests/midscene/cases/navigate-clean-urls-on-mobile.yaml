@@ -1,0 +1,17 @@
+cases:
+  - name: NAV-08 Navigate clean URLs on mobile
+    tags: [stability-regression, original-clean-nav]
+    steps:
+      - app.open: { fixture: nav-link-items-clean, path: /, viewport: mobile }
+      - aiTap: The hamburger navigation menu button at the top right.
+      - aiWaitFor: The open mobile navigation menu shows NestedItems.
+      - aiTap: The NestedItems expandable row in the mobile navigation menu.
+      - aiWaitFor: The Level1 expandable row is visible beneath NestedItems.
+      - aiTap: The Level1 expandable row beneath NestedItems, not Level1Item2.
+      - aiWaitFor: The Level2Nested expandable row is visible beneath Level1.
+      - aiTap: The Level2Nested expandable row, not Level2Item1.
+      - aiWaitFor: The Level3Item2 link is visible beneath Level2Nested.
+      - aiTap: The Level3Item2 link beneath Level2Nested, not Level3Item1.
+      - app.expectLocation:
+          { path: /nested-items/level3-item2, heading: Level 3 item 2 }
+      - aiAssert: The Level 3 item 2 article is visible without the mobile menu covering it.

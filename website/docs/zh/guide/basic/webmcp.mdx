@@ -1,0 +1,65 @@
+import { Prompt } from '@rspress/core/theme';
+import { VersionBadge } from '../../../components/VersionBadge';
+
+# WebMCP
+
+<VersionBadge version="2.1.0" />
+
+Rspress 默认开启 [`webMcp`](/zh/api/config/config-agent#webmcp)，Agent 可以通过 [WebMCP](https://developer.chrome.com/docs/ai/webmcp) 搜索、阅读和浏览 Rspress 文档。更多内容参考 [ChatGPT - 站点工具](https://learn.chatgpt.com/docs/webmcp)。
+
+<Prompt
+  title="用你的 Agent 试试 WebMCP"
+  description="把这段提示词发给 Codex 或其他 Agent，让它看看这个页面提供了哪些 WebMCP 工具。"
+  prompt={`## 实际业务需求
+
+在浏览器中打开 https://rspress.rs，查看当前页面向你提供了哪些 WebMCP 工具。请根据浏览器实际返回的工具名称和描述，列出每个工具的名称，并用一句话说明它能做什么。
+
+## WebMCP 可能的连接方式
+
+- 原生连接：如果 Agent 环境提供了 WebMCP 浏览器连接，直接使用它发现页面的工具。
+- CLI fallback：运行下面的命令，打开页面、等待加载、以 JSON 列出 WebMCP 工具并关闭浏览器：
+
+npx -y agent-browser@latest --session rspress-webmcp --json batch "open https://rspress.rs" "wait --load networkidle" "webmcp list" "close"
+
+如果缺少 Chrome，先运行 npx -y agent-browser@latest install，再重试。命令用法参考 https://agent-browser.dev/webmcp。
+
+请读取实时工具注册表，不要根据 HTML 或文档推测工具列表。如果安装或发现工具失败，请报告实际错误，并与成功获取到空工具列表的情况区分开。`}
+/>
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  webMcp: true, // 默认值
+});
+```
+
+设置 `webMcp: false` 可以关闭 Rspress 内置工具，仍可使用 [`useWebMcp`](/ui/hooks/use-web-mcp) hook 注册自定义工具。
+
+## 内置工具
+
+| 工具               | 用途                                                                                                             |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `get_site_info`    | 返回站点元信息、语言、版本、导航和当前侧边栏。                                                                   |
+| `list_pages`       | 筛选和分页读取页面元信息，默认使用当前语言和版本，不依赖搜索。                                                   |
+| `get_page`         | 无需跳转即可读取已知路由的元信息、frontmatter、目录和 Markdown（启用 [SSG-MD](/zh/guide/basic/ssg-md) 时可用）。 |
+| `get_current_page` | 读取当前页面的元信息、frontmatter、目录和 Markdown（启用 [SSG-MD](/zh/guide/basic/ssg-md) 时可用）。             |
+| `search_docs`      | 搜索当前语言和版本的本地文档索引（仅支持默认主题的本地搜索）。                                                   |
+| `navigate`         | 跳转到已知站内路由，等待页面提交后返回元信息、章节路由和前后页。                                                 |
+
+<details>
+<summary>查看工具输入的 JSON Schema</summary>
+
+```json file="../../../../../e2e/fixtures/webmcp/toolInputSchemas.json" title="toolInputSchemas.json"
+
+```
+
+</details>
+
+## 跨源 Agent
+
+通过 [`webMcp.exposedTo`](/api/config/config-agent#webmcp) 允许指定的安全来源发现工具。
+
+## 自定义工具
+
+通过 `@rspress/core/runtime` 导出的 [`useWebMcp`](/ui/hooks/use-web-mcp)，可以在自定义组件中注册工具，并在组件卸载时自动移除。

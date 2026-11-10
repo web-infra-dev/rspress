@@ -39,7 +39,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 
 ## Add extra tabs
 
-Use `additionalTabs` to add more package managers:
+Use `additionalTabs` to add more package managers. Set `command` on each extra tab to provide its full command:
 
 ```mdx preview title="index.mdx"
 import { PackageManagerTabs } from '@rspress/core/theme';
@@ -49,6 +49,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
   additionalTabs={[
     {
       tool: 'custom',
+      command: 'custom add --dev @rspress/core',
     },
   ]}
 />
@@ -90,6 +91,8 @@ type PackageManagerTabProps = (
     additionalTabs?: {
       // Extra package manager name
       tool: string;
+      // Full command for this tab, rendered as written
+      command?: string;
       // Icon for the extra package manager
       icon?: React.ReactNode;
     }[];

@@ -5,8 +5,8 @@ export const Img = (props: ComponentProps<'img'>) => {
   return (
     <img
       {...props}
-      alt={props.alt ?? ''}
       src={normalizeImagePath(props.src || '')}
+      alt={props.alt ?? ''}
     />
   );
 };

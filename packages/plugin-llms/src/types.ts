@@ -69,11 +69,13 @@ export interface Options {
 export type RspressPluginLlmsOptions = Options | Options[];
 
 export interface rsbuildPluginLlmsOptions {
+  docDirectory: string;
   disableSSGRef: { current: boolean };
   titleRef: { current: string | undefined };
   descriptionRef: { current: string | undefined };
   langRef: { current: string | undefined };
   baseRef: { current: string };
+  siteOriginRef: { current: string | undefined };
   pageDataList: PageIndexInfo[];
   routeServiceRef: { current: RouteService | undefined };
   routes: RouteMeta[];

@@ -3,6 +3,9 @@ description: Layout 布局组件，作为整个页面的布局容器，提供丰
 overviewHeaders: []
 ---
 
+import { SlotPreviewToggle } from '../../../components/SlotPreview';
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # Layout
 
 `Layout` 是 Rspress 的核心布局组件，作为整个页面的布局容器。它提供了丰富的插槽 props，可以在不 eject 的情况下扩展默认主题的布局。
@@ -23,6 +26,10 @@ export * from '@rspress/core/theme-original';
 ## 插槽 Props
 
 `Layout` 组件设计了一系列的插槽 props 用于扩展默认主题的布局：
+
+点击下方按钮，在页面中预览各插槽的位置。
+
+<SlotPreviewToggle />
 
 <details>
 
@@ -68,6 +75,12 @@ const Layout = () => (
     beforeNavMenu={<div>beforeNavMenu</div>}
     /* 导航栏菜单之后 */
     afterNavMenu={<div>afterNavMenu</div>}
+    /* 左侧导航项之前/之后（桌面端和移动端） */
+    beforeLeftNavItems={<li>beforeLeftNavItems</li>}
+    afterLeftNavItems={<li>afterLeftNavItems</li>}
+    /* 右侧导航项之前/之后（桌面端和移动端） */
+    beforeRightNavItems={<li>beforeRightNavItems</li>}
+    afterRightNavItems={<li>afterRightNavItems</li>}
     /* 左侧侧边栏上面 */
     beforeSidebar={<div>beforeSidebar</div>}
     /* 左侧侧边栏下面 */
@@ -82,7 +95,7 @@ const Layout = () => (
     bottom={<div>bottom</div>}
     /* 自定义 MDX 组件 */
     components={{
-      h1: (props) => {
+      h1: props => {
         const { h1: OriginalH1, p: OriginalP } = basicGetCustomMDXComponent();
         return (
           <>
@@ -102,3 +115,23 @@ export * from '@rspress/core/theme-original';
 ```
 
 </details>
+
+### 自定义导航列表
+
+<VersionBadge version="2.0.22" />
+
+通过 `beforeLeftNavItems` / `afterLeftNavItems` 和 `beforeRightNavItems` / `afterRightNavItems` 在左右导航项前后插入内容。`NavList` 自动适配桌面端和移动端。
+
+```tsx title="theme/index.tsx"
+import { Layout as BasicLayout, NavList } from '@rspress/core/theme-original';
+
+const customItems = [{ text: 'Community', link: '/community' }];
+
+export function Layout() {
+  return <BasicLayout afterRightNavItems={<NavList items={customItems} />} />;
+}
+
+export * from '@rspress/core/theme-original';
+```
+
+`items` 使用与 [`themeConfig.nav`](/api/config/config-theme#nav) 相同的结构，插入位置由插槽决定。

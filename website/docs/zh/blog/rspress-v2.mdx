@@ -3,7 +3,7 @@ date: 2026-01-30
 authors: ['sooniter']
 description: 'Rspress 2.0 正式发布，带来全新主题、AI-native 的 SSG-MD 和 llms.txt 生成、Shiki 代码高亮、按需编译，以及更完善的文档开发体验。'
 sidebar: false
-pageType: doc-wide
+pageType: doc
 ---
 
 _2026 年 1 月 30 日_
@@ -28,7 +28,7 @@ Rspress 1.x 已经解决了文档站框架编译性能的问题，但仍存在�
 
 - **AI-native**：文档不仅服务于人类读者，也需要被 Agent 更好地理解和使用。Rspress 现在内置了 [llms.txt](https://llmstxt.org/) 生成和从 SSG 衍生出的 [**SSG-MD**](/zh/guide/basic/ssg-md) 功能，生成高质量的 Markdown 渲染内容供 Agent 读取。
 
-- **按需编译，瞬间启动**：默认启用 [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation)，配合链接 hover 时对资源的 preload 功能，仅在访问特定路由时构建所需文件，实现无论项目规模多大，dev 也可**瞬间启动**。
+- **按需编译，瞬间启动**：默认启用 [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation)，配合链接 hover 时的资源预取功能，仅在访问特定路由时构建所需文件，实现无论项目规模多大，dev 也可**瞬间启动**。
 
 - **Shiki 代码高亮**：默认集成 Shiki，在**构建时完成语法高亮**，支持主题切换、transformer 扩展，比如 [@rspress/plugin-twoslash](/plugin/official-plugins/twoslash)，带来更丰富的代码块展示效果。
 
@@ -231,7 +231,7 @@ Rspress 2.0 底层由 Rsbuild 和 Rspack 2.0 预览版本驱动，同时默认�
 
 #### 按需编译
 
-默认开启 [dev.lazyCompilation](https://rsbuild.rs/zh/config/dev/lazy-compilation)，只有当你访问某个页面时，该页面才会被编译，大幅提升了开发启动速度，甚至实现毫秒级的冷启动。Rspress 同时实现了路由的 preload 策略，当鼠标悬停在链接上时会预先加载目标路由页面，搭配 lazyCompilation 实现无损的开发体验。
+默认开启 [dev.lazyCompilation](https://rsbuild.rs/zh/config/dev/lazy-compilation)，只有当你访问某个页面时，该页面才会被编译，大幅提升了开发启动速度，甚至实现毫秒级的冷启动。Rspress 同时实现了路由预取策略，当鼠标悬停在链接上时会预取目标路由页面，搭配 lazyCompilation 实现无损的开发体验。
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img

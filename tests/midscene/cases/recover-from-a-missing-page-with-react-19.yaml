@@ -1,0 +1,8 @@
+cases:
+  - name: COMPAT-05 Recover from a missing page with React 19
+    tags: [original-compatibility-fallback]
+    steps:
+      - app.open: { fixture: react-19, path: /404 }
+      - aiAssert: The page displays a 404 message.
+      - aiAct: Click the outlined "Take me home" button below "PAGE NOT FOUND". Wait until the 404 page is replaced by the Hello world article containing react 19. If the page remains unchanged, inspect the current screenshot and locate that button again. Use only this recovery button; do not use the navbar, search, address bar, or reload.
+      - aiAssert: The Hello world article is visible and contains react 19.

@@ -3,6 +3,7 @@
     "type": "dir",
     "name": "tagged-dir",
     "label": "Tagged Dir",
+    "icon": "/dir.svg",
     "tag": "experimental"
   }
 ]

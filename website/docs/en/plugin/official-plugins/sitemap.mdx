@@ -1,12 +1,18 @@
 ---
-tag: new
+description: 'Generate a sitemap for Rspress with @rspress/plugin-sitemap and configure the site URL and sitemap fields for individual pages.'
 ---
 
 # @rspress/plugin-sitemap <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-sitemap" />
 
 import { SourceCode } from '@rspress/core/theme';
 
-Automatically generate [sitemap](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview) for SEO, which helps search engines crawl your site.
+Automatically generate a [sitemap](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview) for SEO so search engines can crawl your site more easily.
+
+:::info
+
+From 2.1.0, use the [`sitemap`](/api/config/config-basic#sitemap) configuration instead.
+
+:::
 
 ## Installation
 
@@ -35,17 +41,11 @@ export default defineConfig({
 
 ## Configuration
 
-This plugin accepts an object parameter with the following type:
+This plugin accepts an options object with the following type:
 
 ```ts
 type ChangeFreq =
-  | 'always'
-  | 'hourly'
-  | 'daily'
-  | 'weekly'
-  | 'monthly'
-  | 'yearly'
-  | 'never';
+  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
 
 type Priority =
   | '0.0'
@@ -83,11 +83,13 @@ export interface PluginSitemapOptions {
 ### siteUrl
 
 - **Type**: `string`
-- **Required**
+- **Default**: [`siteOrigin`](/api/config/config-basic#siteorigin) + [`base`](/api/config/config-basic#base), or `base` when `siteOrigin` is not configured
 
 The site URL for deployment access, for example `https://example.com`.
 
-When there is a `base` configuration, `siteUrl` needs to include the `base` path. For example:
+Sitemap `<loc>` entries should be absolute URLs with protocol and domain, such as `https://example.com/base/`. When `base` is configured, plugin-level `siteUrl` must include the `base` path.
+
+If [`siteOrigin`](/api/config/config-basic#siteorigin) and [`base`](/api/config/config-basic#base) are configured in Rspress, you can omit the plugin-level `siteUrl`. The full URL concatenation order is `siteOrigin + base + routePath`. If neither plugin-level `siteUrl` nor `siteOrigin` is configured, the plugin falls back to `base`, which keeps existing relative path behavior but does not generate absolute sitemap URLs.
 
 ```ts
 // rspress.config.ts
@@ -96,11 +98,11 @@ import { defineConfig } from '@rspress/core';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
+  siteOrigin: 'https://example.com',
   base: '/base/',
   plugins: [
-    pluginSitemap({
-      siteUrl: 'https://example.com/base/',
-    }),
+    // siteUrl defaults to 'https://example.com/base/'
+    pluginSitemap(),
   ],
 });
 ```
@@ -124,7 +126,7 @@ interface CustomMaps {
 
 - **Default**: `{}`
 
-Used to set custom sitemap values for certain important pages individually.
+Sets custom sitemap values for specific important pages.
 
 ### defaultChangeFreq
 

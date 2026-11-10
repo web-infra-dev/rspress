@@ -1,0 +1,7 @@
+cases:
+  - name: SEARCH-01 Select a search result using the keyboard
+    tags: [original-search]
+    steps:
+      - app.open: { fixture: search, path: /base/ }
+      - aiAct: Open search, enter Foo, use the down and up arrow keys to select a Foo result, then press Enter to open it. Do not click a result.
+      - aiAssert: The Foo article is open and the search dialog is closed.

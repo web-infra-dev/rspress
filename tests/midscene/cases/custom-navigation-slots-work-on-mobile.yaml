@@ -1,0 +1,17 @@
+cases:
+  - name: CONTENT-04 Custom navigation slots work on mobile
+    tags: [stability-regression, original-slots, replacement-batch-3-slots]
+    steps:
+      - app.open:
+          { fixture: nav-slots, mode: production, path: /, viewport: mobile }
+      - aiAssert: The mobile page offers a navigation menu button without expanded desktop navigation lists.
+      - aiTap: The hamburger navigation menu button at the top right.
+      - aiWaitFor: The mobile navigation menu displays BR, R1, BL, L1, R2, AR, More, L2, and AL.
+      - aiAssert: The menu displays BR, R1, BL, L1, R2, AR, More, L2, and AL.
+      - aiTap: The More row with a right-facing expansion arrow in the open mobile navigation menu.
+      - aiWaitFor: The Nested navigation item is visible beneath More.
+      - aiTap: The Nested row with a right-facing expansion arrow beneath More. This is an expandable row, not the L2 link below it.
+      - aiWaitFor: The Target link is visible beneath the expanded Nested navigation item, above L2.
+      - aiTap: The Target link beneath Nested in the open mobile navigation menu, not L2.
+      - app.expectLocation: { path: /target, heading: Target }
+      - aiAssert: The Target article is visible and the mobile menu is closed.

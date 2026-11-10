@@ -5,10 +5,10 @@
     "declaration": true,
     "noEmit": false,
     "module": "ESNext",
-    "target": "ES2020",
+    "target": "ES2023",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "bundler"
   },
-  "include": ["rslib.config.ts"]
+  "include": ["rstack.config.ts"]
 }

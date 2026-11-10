@@ -4,7 +4,9 @@ import nodeModule from 'node:module';
 // enable on-disk code caching of all modules loaded by Node.js
 // requires Nodejs >= 22.8.0
 const { enableCompileCache } = nodeModule;
-if (enableCompileCache) {
+const isCI = Boolean(process.env.CI) && process.env.CI !== 'false';
+// Skip CI, where the cache is unlikely to be reused.
+if (enableCompileCache && !isCI) {
   try {
     enableCompileCache();
   } catch {
@@ -12,4 +14,9 @@ if (enableCompileCache) {
   }
 }
 
-import('../dist/cli/index.js');
+async function main() {
+  const { runCLI } = await import('../dist/index.js');
+  runCLI();
+}
+
+main();

@@ -20,7 +20,7 @@ console.log('Hello World');
 ```
 ````
 
-It will be rendered as:
+It renders as:
 
 ```js
 console.log('Hello World');
@@ -32,16 +32,16 @@ You can use the `title="..."` attribute to add a title to a code block.
 
 ````mdx
 ```jsx title="src/components/HelloCodeBlockTitle.tsx"
-const HelloCodeBlockTitle = (props) => {
+const HelloCodeBlockTitle = props => {
   return <h1>Hello CodeBlock Title</h1>;
 };
 ```
 ````
 
-It will be rendered as:
+It renders as:
 
 ```jsx title="src/components/HelloCodeBlockTitle.tsx"
-const HelloCodeBlockTitle = (props) => {
+const HelloCodeBlockTitle = props => {
   return <h1>Hello CodeBlock Title</h1>;
 };
 ```
@@ -73,11 +73,23 @@ Use relative paths starting with `./` or `../` to reference files relative to th
 </Tab>
 </Tabs>
 
-It will be rendered as:
+It renders as:
 
 ```tsx file="./_tsx-component.tsx"
 
 ```
+
+### Absolute paths with `/` prefix
+
+Use the `/` prefix to reference files using absolute paths relative to the docs directory. This is useful when you need to reference shared code files from different locations in your documentation:
+
+````mdx
+```tsx file="/components/Button.tsx"
+
+```
+````
+
+For example, if your docs directory is `/project/docs`, then `/components/Button.tsx` will resolve to `/project/docs/components/Button.tsx`.
 
 ### Absolute paths with `<root>/` prefix
 
@@ -93,16 +105,13 @@ For example, if your project root is `/project`, then `<root>/src/components/But
 
 :::tip
 
-When using external file code blocks, it's common to use them together with [route conventions](./components.mdx#route-convention). Name files starting with `_`.
+When using external file code blocks, it's common to use them together with [route conventions](./components.mdx#routing-convention). Name files starting with `_`.
 
 :::
 
 ## Notation line highlight
 
-You can use [Shiki transformers](#shiki-transformers) with the `transformerNotationHighlight` and `// [!code highlight]` comments to highlight code lines.
-
-<Tabs>
-<Tab label="Code">
+Use `// [!code highlight]` comments to highlight code lines. This syntax is enabled by default; no transformer configuration is required.
 
 ````mdx
 ```ts
@@ -114,26 +123,7 @@ console.log('Highlighted');
 ```
 ````
 
-</Tab>
-<Tab label="rspress.config.ts">
-
-```ts
-import { defineConfig } from '@rspress/core';
-import { transformerNotationHighlight } from '@shikijs/transformers';
-
-export default defineConfig({
-  markdown: {
-    shiki: {
-      transformers: [transformerNotationHighlight()],
-    },
-  },
-});
-```
-
-</Tab>
-</Tabs>
-
-It will be rendered as:
+It renders as:
 
 ```ts title="highlight.ts"
 console.log('Highlighted'); // [!code highlight]
@@ -182,7 +172,7 @@ export default defineConfig({
 </Tab>
 </Tabs>
 
-It will be rendered as:
+It renders as:
 
 ```ts {1,3-4}
 console.log('Highlighted');
@@ -203,7 +193,7 @@ function hello() {
 ```
 ````
 
-It will be rendered as:
+It renders as:
 
 ```ts lineNumbers
 function hello() {
@@ -243,7 +233,7 @@ const longLine = 'This is a very long line of code that will wrap when the wrapC
 ```
 ````
 
-It will be rendered as:
+It renders as:
 
 {/* prettier-ignore */}
 ```ts wrapCode
@@ -288,7 +278,7 @@ Use the `fold` attribute to enable expand/collapse functionality. You can also c
 ```
 ````
 
-It will be rendered as:
+It renders as:
 
 ```jsx title="fold-demo.tsx" fold height="350"
 import { useState } from 'react';
@@ -318,7 +308,7 @@ export default () => {
       <div>Line 19</div>
       <div>Line 20</div>
       <div>{count}</div>
-      <button onClick={() => setCount((c) => c + 1)}>{count}</button>
+      <button onClick={() => setCount(c => c + 1)}>{count}</button>
     </div>
   );
 };
@@ -338,7 +328,7 @@ Use the `height` attribute alone (without `fold`) to set a fixed height with a v
 ```
 ````
 
-It will be rendered as:
+It renders as:
 
 ```tsx title="scroll-demo.tsx" height="200"
 const lines = Array.from({ length: 20 }, (_, index) => `Line ${index + 1}`);
@@ -346,7 +336,7 @@ const lines = Array.from({ length: 20 }, (_, index) => `Line ${index + 1}`);
 export default function ScrollDemo() {
   return (
     <div>
-      {lines.map((line) => (
+      {lines.map(line => (
         <div key={line}>{line}</div>
       ))}
     </div>
@@ -364,7 +354,7 @@ const longLine = 'This code block has line numbers, code wrapping, and a title';
 ```
 ````
 
-It will be rendered as:
+It renders as:
 
 ```ts lineNumbers wrapCode title="example.ts"
 const longLine = 'This code block has line numbers, code wrapping, and a title';
@@ -382,7 +372,7 @@ function test() {
 ```
 ````
 
-It will be rendered as:
+It renders as:
 
 ```diff
 function test() {
@@ -396,14 +386,29 @@ function test() {
 
 Rspress uses [Shiki](https://shiki.style) for compile-time code highlighting, providing flexible code block capabilities.
 
-You can add custom [shiki transformers](https://shiki.style/guide/transformers.html) via [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshiki) for richer code block effects.
+Rspress includes several built-in transformers from [@shikijs/transformers](https://shiki.style/packages/transformers). You can also add custom transformers via [`markdown.shiki.transformers`](../../api/config/config-build.mdx#markdownshikitransformers).
 
-In addition to the [transformerNotationHighlight](#notation-line-highlight) mentioned above, Rspress defaults to supporting the following transformers from [@shikijs/transformers](https://shiki.style/packages/transformers).
+### transformerNotationWordHighlight
+
+Use `// [!code word:text]` to highlight matching words:
+
+````mdx
+```ts
+// [\!code word:message]
+const message = 'Hello';
+console.log(message);
+```
+````
+
+It renders as:
+
+```ts
+// [!code word:message]
+const message = 'Hello';
+console.log(message);
+```
 
 ### transformerNotationDiff
-
-<Tabs>
-<Tab label="Syntax">
 
 ````mdx
 ```ts
@@ -413,25 +418,7 @@ console.log('unchanged');
 ```
 ````
 
-</Tab>
-<Tab label="rspress.config.ts">
-
-```ts
-import { defineConfig } from '@rspress/core';
-import { transformerNotationDiff } from '@shikijs/transformers';
-export default defineConfig({
-  markdown: {
-    shiki: {
-      transformers: [transformerNotationDiff()],
-    },
-  },
-});
-```
-
-</Tab>
-</Tabs>
-
-It will be rendered as:
+It renders as:
 
 ```ts
 console.log('deleted'); // [!code --]
@@ -441,47 +428,25 @@ console.log('unchanged');
 
 ### transformerNotationErrorLevel
 
-<Tabs>
-<Tab label="Syntax">
-
 ````mdx
 ```ts
 console.log('No errors or warnings');
 console.error('Error'); // [\!code error]
 console.warn('Warning'); // [\!code warning]
+console.info('Info'); // [\!code info]
 ```
 ````
 
-</Tab>
-<Tab label="rspress.config.ts">
-
-```ts
-import { defineConfig } from '@rspress/core';
-import { transformerNotationErrorLevel } from '@shikijs/transformers';
-export default defineConfig({
-  markdown: {
-    shiki: {
-      transformers: [transformerNotationErrorLevel()],
-    },
-  },
-});
-```
-
-</Tab>
-</Tabs>
-
-It will be rendered as:
+It renders as:
 
 ```ts
 console.log('No errors or warnings');
 console.error('Error'); // [!code error]
 console.warn('Warning'); // [!code warning]
+console.info('Info'); // [!code info]
 ```
 
 ### transformerNotationFocus
-
-<Tabs>
-<Tab label="Syntax">
 
 ````mdx
 ```ts
@@ -491,25 +456,7 @@ console.log('Not focused');
 ```
 ````
 
-</Tab>
-<Tab label="rspress.config.ts">
-
-```ts
-import { defineConfig } from '@rspress/core';
-import { transformerNotationFocus } from '@shikijs/transformers';
-export default defineConfig({
-  markdown: {
-    shiki: {
-      transformers: [transformerNotationFocus()],
-    },
-  },
-});
-```
-
-</Tab>
-</Tabs>
-
-It will be rendered as:
+It renders as:
 
 ```ts
 console.log('Not focused');
@@ -536,7 +483,6 @@ Here is an example:
 
 ```mdx title="foo.mdx"
 import { CodeBlockRuntime } from '@rspress/core/theme';
-import { transformerNotationHighlight } from '@shikijs/transformers';
 
 <CodeBlockRuntime
   lang="ts"
@@ -545,14 +491,10 @@ import { transformerNotationHighlight } from '@shikijs/transformers';
 // [\!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
-  shikiOptions={{
-    transformers: [transformerNotationHighlight()],
-  }}
 />
 ```
 
 import { CodeBlockRuntime } from '@rspress/core/theme';
-import { transformerNotationHighlight } from '@shikijs/transformers';
 
 <CodeBlockRuntime
   lang="ts"
@@ -561,11 +503,8 @@ import { transformerNotationHighlight } from '@shikijs/transformers';
 // [!code highlight:1]
 console.log('Highlighted');
 console.log('Not highlighted');`}
-  shikiOptions={{
-    transformers: [transformerNotationHighlight()],
-  }}
 />
 
 :::warning
-It is recommended to use `CodeBlockRuntime` only when necessary, as it increases runtime bundle size and cannot benefit from compile-time highlighting performance.
+Use `CodeBlockRuntime` only when necessary. It increases runtime bundle size and cannot benefit from compile-time highlighting.
 :::

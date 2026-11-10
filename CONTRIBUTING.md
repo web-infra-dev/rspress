@@ -101,27 +101,31 @@ Build all packages:
 pnpm run build
 ```
 
-If you need to clean all `node_modules/*` in the project, run the `reset` command:
+Package builds run in dependency order, with up to three packages building concurrently. A failed build stops the command with a nonzero exit code.
+
+To build the documentation website and its workspace dependencies:
 
 ```sh
-pnpm run reset
+pnpm run build:website
 ```
+
+If the packages are already built (as in CI), reuse their outputs:
+
+```sh
+pnpm --filter @rspress/docs run build
+```
+
+To watch a package, run `pnpm dev` in that package's directory in a separate terminal. Run `pnpm build` first to build its workspace dependencies. `pnpm dev:website` builds the website's workspace dependencies before starting the documentation dev server.
 
 ### Debug code
 
-After `build`, we need to link this repo to the global, run the link command:
+After building the packages, run the following command in the project you want to debug to link the local `@rspress/core` package. Replace the path with your local Rspress checkout:
 
 ```sh
-pnpm link --global
+pnpm link /absolute/path/to/rspress/packages/core
 ```
 
-At debug repo, replace the version in node_modules with the local version:
-
-```sh
-pnpm link --global rspress
-```
-
-If you want to debug package, first open the package directory, then run the `build` command:
+To watch for source changes, run `pnpm dev` in the corresponding package directory of the Rspress checkout in a separate terminal:
 
 ```sh
 # Replace some-path with the path of the package you want to work on
@@ -141,10 +145,16 @@ Before submitting a pull request, it's important to make sure that the changes h
 pnpm run test:unit
 ```
 
-Alternatively, you can run the unit tests of single package using the `--filter` option:
+To run a single package's unit tests, pass its source directory as a test path filter from the repository root:
 
 ```sh
-pnpm run --filter rspress test
+pnpm test:unit packages/core
+```
+
+To update snapshots for those tests:
+
+```sh
+pnpm test:unit packages/core --update
 ```
 
 ### Run E2E tests
@@ -159,14 +169,13 @@ pnpm run test:e2e
 
 ---
 
-## Linting
+## Check
 
-To help maintain consistency and readability of the codebase, we use a ESLint to lint the codes.
-
-You can run the Linter by executing the following command:
+Rspress uses Rstack CLI to lint, type-check, and verify formatting. Before submitting a pull request, run:
 
 ```sh
-pnpm run lint
+pnpm run check
+pnpm run check-spell
 ```
 
 ---
@@ -201,4 +210,4 @@ Repository maintainers can publish a new version of changed packages to npm.
 2. Create a pull request, the title should be `Release: v1.2.0`, ensure the CI check passes.
 3. Run the [release action](https://github.com/web-infra-dev/rspress/actions/workflows/release.yml) to publish packages to npm.
 4. Merge the release pull request to `main`.
-5. Generate the [release notes](https://github.com/web-infra-dev/rspress/releases) via GitHub, see [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
+5. Use the `create-draft-release-notes` skill to create a draft [GitHub release note](https://github.com/web-infra-dev/rspress/releases). Review the draft release note, optionally add release highlights, and publish it.

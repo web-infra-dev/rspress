@@ -1,12 +1,12 @@
 ---
-tag: updated
+description: 'Render component previews from MDX code blocks or local files with @rspress/plugin-preview, including iframe preview modes.'
 ---
 
 # @rspress/plugin-preview <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-preview" />
 
 import { SourceCode, PackageManagerTabs, Tabs, Tab } from '@rspress/core/theme';
 
-Used to preview components in the code block of md(x) files, suitable for writing component library documentation.
+Preview components from code blocks in MDX files. This is useful for component library documentation.
 
 ## Installation
 
@@ -16,7 +16,7 @@ Used to preview components in the code block of md(x) files, suitable for writin
 
 ### 1. Install the plugin
 
-First, write the following config in the config file:
+First, add the following configuration:
 
 ```ts title="rspress.config.ts" twoslash
 import { defineConfig } from '@rspress/core';
@@ -29,7 +29,7 @@ export default defineConfig({
 
 ### 2. Use in mdx files
 
-Use the ` ```tsx preview ` syntax in mdx files:
+Use the ` ```tsx preview ` syntax in MDX files:
 
 ````mdx title="example.mdx"
 ```tsx preview
@@ -51,7 +51,7 @@ export default App;
 ```
 ````
 
-The rendering result is as follows:
+It renders as follows:
 
 ```tsx preview
 import { useState } from 'react';
@@ -74,13 +74,13 @@ export default App;
 :::tip
 
 1. Currently only works in `.mdx` files.
-2. You need to export the component as default, and Rspress will automatically render this component.
+2. Export the component as the default export, and Rspress will render it automatically.
 
 :::
 
 ### 3. Write component code in other files (optional)
 
-In addition to writing component code in the code block of the mdx file, you can also use it with [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) to write the example code in other files.
+Instead of writing component code directly in an MDX code block, you can use it with [File Code Block](../../guide/use-mdx/code-blocks.mdx#file-code-block) and keep example code in separate files.
 
 ````mdx title="example.mdx"
 ```tsx file="./_demo.tsx" preview
@@ -92,7 +92,7 @@ In addition to writing component code in the code block of the mdx file, you can
 
 ```
 
-The rendering result is as follows:
+It renders as follows:
 
 ```tsx file="./_demo.tsx" preview
 
@@ -102,15 +102,15 @@ The rendering result is as follows:
 
 This plugin supports multiple preview modes. You can switch between them by adjusting the `preview="..."` meta information. For example, you can use ` ```tsx preview="iframe-follow" ` to switch to [iframe-follow](#previewiframe-follow) mode.
 
-` ```tsx preview` is equivalent to ` ```tsx preview="{defaultPreviewMode}"`, which is determined by the [defaultPreviewMode](#defaultPreviewMode) configuration.
+` ```tsx preview` is equivalent to ` ```tsx preview="{defaultPreviewMode}"`, which is determined by the [defaultPreviewMode](#defaultpreviewmode) configuration.
 
 :::tip
 
-iframe preview mode has a separate compilation and runtime environment.
+Iframe preview mode has separate compilation and runtime environments.
 
-1. Separate compilation environment, the example code in the code block will be compiled as an entry by a separate Rsbuild instance, allowing injection of sass or less variables, etc.
+1. Separate compilation environment: example code in the code block is compiled as an entry by a separate Rsbuild instance, allowing Sass/Less variables and other setup to be injected.
 
-2. Separate runtime environment, effectively avoiding style conflicts with the documentation site, and can load the component library's own `base.css`.
+2. Separate runtime environment: style conflicts with the documentation site are avoided, and the component library can load its own `base.css`.
 
 :::
 
@@ -142,7 +142,7 @@ Rendering result:
 
 ### `preview="iframe-follow"`
 
-This mode displays an iframe preview area on the right side of the code block that follows the content flow.
+This mode displays an iframe preview area on the right side of the code block that follows the content flow. On wide screens, drag the divider between the code and the preview to resize the preview (double-click to reset).
 
 Syntax:
 
@@ -182,12 +182,15 @@ You can inject global scripts or styles into the iframe preview environment usin
 
 - **Dark mode handling**: Inject a `MutationObserver` to watch for `html.dark` class changes, then sync to `body.dark` or perform other dark mode processing.
 
-- **Using Tailwind CSS**: Since the iframe preview environment is a separate Rsbuild instance, if your previewed components depend on Tailwind CSS, you need to inject `@import "tailwindcss";` via `preEntry`.
+- **Using Tailwind CSS**: Since the iframe preview environment is a separate Rsbuild instance, if your previewed components depend on Tailwind CSS v4, configure `@rsbuild/plugin-tailwindcss` in `iframeOptions.builderConfig.plugins` and inject your Tailwind CSS entry via `preEntry`.
 
 ```ts title="rspress.config.ts"
+import { pluginTailwindcss } from '@rsbuild/plugin-tailwindcss';
+
 pluginPreview({
   iframeOptions: {
     builderConfig: {
+      plugins: [pluginTailwindcss()],
       source: {
         preEntry: [
           '@vant/touch-emulator',
@@ -201,6 +204,21 @@ pluginPreview({
 ```
 
 :::
+
+## Internationalization
+
+This plugin uses the [plugin API `i18nSource`](../system/plugin-api.mdx#i18nsource) to add the following translations:
+
+<details>
+<summary>Translation source</summary>
+
+```ts title="i18n.ts" file="../../../../../packages/plugin-preview/static/i18n.ts"
+
+```
+
+</details>
+
+You can override these texts with the [user configuration `i18nSource`](../../api/config/config-basic.mdx#i18nsource).
 
 ## Options
 

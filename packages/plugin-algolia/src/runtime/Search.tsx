@@ -1,8 +1,7 @@
 import type { DocSearchProps } from '@docsearch/react';
 import { DocSearch } from '@docsearch/react';
-import { removeBase, useLang, useNavigate } from '@rspress/core/runtime';
-// @ts-expect-error @theme is not typed
-import { Link } from '@theme';
+import { removeBase, safePreconnect, useLang } from '@rspress/core/runtime';
+import { Link, useLinkNavigate } from '@rspress/core/theme';
 import '@docsearch/css';
 import './Search.css';
 import { useEffect } from 'react';
@@ -21,14 +20,26 @@ type SearchProps = {
 };
 
 function Search({ locales = {}, docSearchProps }: SearchProps) {
-  const navigate = useNavigate();
+  const navigate = useLinkNavigate();
 
   const lang = useLang();
   const { translations, placeholder } = locales?.[lang] ?? {};
 
+  const appId = docSearchProps.appId;
+  if (appId) {
+    if (typeof safePreconnect === 'function') {
+      safePreconnect(`https://${appId}-dsn.algolia.net`, { crossOrigin: '' });
+    }
+  }
+
+  // React 18 does not expose ReactDOM.preconnect, so keep the
+  // client-side preconnect fallback for older React versions.
   useEffect(() => {
+    if (!appId || typeof safePreconnect === 'function') {
+      return;
+    }
+
     const preconnect = document.createElement('link');
-    const appId = docSearchProps.appId;
     preconnect.id = appId;
     preconnect.rel = 'preconnect';
     preconnect.href = `https://${appId}-dsn.algolia.net`;
@@ -37,7 +48,7 @@ function Search({ locales = {}, docSearchProps }: SearchProps) {
     return () => {
       document.head.removeChild(preconnect);
     };
-  }, [docSearchProps.appId]);
+  }, [appId]);
 
   return (
     <>

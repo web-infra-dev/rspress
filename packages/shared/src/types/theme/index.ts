@@ -4,36 +4,34 @@ import type { NormalizedSidebar, Sidebar } from './sidebar';
 import type { SocialLink } from './socialLink';
 
 /**
- * Option item for LlmsViewOptions component.
+ * Built-in option item for LlmsViewOptions configured through
+ * `rspress.config.ts`.
  */
-export type LlmsViewOption =
-  | 'markdownLink'
-  | 'chatgpt'
-  | 'claude'
-  | {
-      title: string;
-      icon?: React.ReactNode;
-      onClick?: () => void;
-    }
-  | {
-      title: string;
-      href: string;
-      icon?: React.ReactNode;
-    };
+export type LlmsViewOption = 'markdownLink' | 'chatgpt' | 'claude';
 
 /**
- * Configuration for LLMS UI components displayed on H1 headers.
- * When enabled, LlmsCopyButton and LlmsViewOptions will be automatically
- * added below H1 headers without requiring custom getCustomMDXComponent.
+ * Configuration for LLMS UI components displayed below H1 headers or in the
+ * outline sidebar. When enabled, the copy and view options UI will be added
+ * automatically without requiring custom getCustomMDXComponent.
  * @default false
  */
 export type LlmsUI =
   | {
       /**
+       * Whether to inject an LLM directive hint into generated pages. In SSG
+       * HTML output, it is rendered as a visually hidden plain-text DOM element
+       * with llms.txt, llms-full.txt, and the current page's Markdown version.
+       * In SSG-MD Markdown output, it is rendered as a leading blockquote
+       * string.
+       * @default true
+       */
+      injectLlmsHint?: boolean;
+      /**
        * Options for LlmsViewOptions component dropdown menu.
+       * Set to `false` or an empty array to hide the view options UI.
        * @default ['markdownLink', 'chatgpt', 'claude']
        */
-      viewOptions?: LlmsViewOption[];
+      viewOptions?: false | LlmsViewOption[];
       /**
        * Where to display the LLM UI components.
        * - 'title': Show as buttons below the H1 title (default)
@@ -60,14 +58,41 @@ export interface Footer {
   message?: string;
 }
 
+export type LastUpdatedAuthor =
+  | boolean
+  | ((info: { name: string; email: string; filePath: string }) => string);
+
+export type NormalizedLastUpdated = boolean | { author?: boolean };
+
+export type LastUpdated =
+  | boolean
+  | {
+      /**
+       * Whether to display the last author of the file (from git log).
+       * - `false`: hide the author.
+       * - `true`: show the commit author's name.
+       * - function: receives `{ name, email, filePath }` and returns the display string.
+       * @default false
+       */
+      author?: LastUpdatedAuthor;
+    };
+
+export type NormalizedDarkMode =
+  'light' | 'dark' | 'auto' | 'force-light' | 'force-dark' | 'force-auto';
+
+export type DarkMode = boolean | NormalizedDarkMode;
+
 export type ThemeConfig = {
   /**
-   * Whether to enable dark mode.
+   * Whether to enable dark mode and how to resolve the default theme.
+   * - `true`: same as `'auto'`.
+   * - `false`: same as `'force-light'`.
    * @default true
    */
-  darkMode?: boolean;
+  darkMode?: DarkMode;
   /**
    * The nav items. When it's an object, the key is the version of current doc.
+   * @default []
    */
   nav?: NavItem[] | { [key: string]: NavItem[] };
   /**
@@ -81,12 +106,14 @@ export type ThemeConfig = {
   editLink?: EditLink;
   /**
    * Whether to display the last update time of the file.
+   * Set `author` to show the last commit author.
    * @default false
    */
-  lastUpdated?: boolean;
+  lastUpdated?: LastUpdated;
   /**
    * The social links to be displayed at the end of the nav bar. Perfect for
    * placing links to social services such as GitHub, X, Facebook, etc.
+   * @default []
    */
   socialLinks?: SocialLink[];
   /**
@@ -104,7 +131,7 @@ export type ThemeConfig = {
   /**
    * The behavior of hiding navbar
    * Currently, Rspress V2 does not implement `hideNavBar`
-   * @default 'never''
+   * @default 'never'
    */
   hideNavbar?: 'always' | 'auto' | 'never';
   /**
@@ -124,7 +151,8 @@ export type ThemeConfig = {
    */
   enableScrollToTop?: boolean;
   /**
-   * Whether to redirect to the closest locale when the user visits the site
+   * Whether to redirect to the closest locale when the user visits the site.
+   * @deprecated Use `route.localeRedirect` instead.
    * @default 'auto'
    */
   localeRedirect?: 'auto' | 'never' | 'only-default-lang';
@@ -135,8 +163,8 @@ export type ThemeConfig = {
   fallbackHeadingTitle?: boolean;
   /**
    * LLMS UI components configuration.
-   * When llmsUI.enableOnH1 is true, LlmsCopyButton and LlmsViewOptions
-   * will be automatically added below H1 headers.
+   * When enabled, LlmsCopyButton and LlmsViewOptions will be automatically
+   * added below H1 headers or to the outline sidebar.
    */
   llmsUI?: LlmsUI;
 };
@@ -145,8 +173,11 @@ export interface NormalizedLocales extends Omit<LocaleConfig, 'sidebar'> {
   sidebar: NormalizedSidebar;
 }
 
-export interface NormalizedThemeConfig
-  extends Omit<ThemeConfig, 'locales' | 'sidebar'> {
+export interface NormalizedThemeConfig extends Omit<
+  ThemeConfig,
+  'lastUpdated' | 'locales' | 'sidebar'
+> {
+  lastUpdated?: NormalizedLastUpdated;
   locales: NormalizedLocales[];
   sidebar: NormalizedSidebar;
 }

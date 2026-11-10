@@ -1,0 +1,7 @@
+cases:
+  - name: NAV-11 Follow a relative link in a translated guide
+    tags: [original-locale-links, replacement-batch-6]
+    steps:
+      - app.open: { fixture: i18n, path: /en/guide/basic/quick-start }
+      - aiAct: Follow click for relative path inside the article, not a sidebar link.
+      - aiAssert: The Install article is visible and the navigation language remains English.

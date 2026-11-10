@@ -7,9 +7,20 @@
   background-color: transparent;
 
   &__md {
-    @media (max-width: 1280px) and (min-width: 769px) {
-      display: block;
+    display: block;
+
+    &-wrapper {
+      display: none;
+
+      @media (max-width: 1280px) and (min-width: 769px) {
+        display: block;
+      }
     }
+
+    &__versions:empty {
+      display: none;
+    }
+
     &__hover-group {
       width: 250px;
       padding: 12px;
@@ -21,21 +32,13 @@
     }
   }
 
-  &__md-wrapper {
-    display: none;
-    position: relative;
-
-    @media (max-width: 1280px) and (min-width: 769px) {
-      display: block;
-    }
-  }
-
   &__sm {
     @media (max-width: 768px) {
       display: block;
     }
   }
-  &:hover {
+  &:hover,
+  &__md-wrapper:hover > &__md {
     background-color: var(--rp-c-bg-mute);
   }
   &--active {

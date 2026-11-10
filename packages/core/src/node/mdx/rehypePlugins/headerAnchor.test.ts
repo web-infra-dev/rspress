@@ -2,14 +2,14 @@ import { describe, expect, it } from '@rstest/core';
 import { compile } from '../processor';
 
 describe('rehypeHeadAnchor', () => {
-  it('basic', async () => {
+  it('adds unique heading anchor IDs', async () => {
     const result = await compile({
       source: `
 # Guide
 
 ## title 1 {#custom-id}
 
-## title 1 \{#custom-id}
+## title 1 \\{#custom-id}
 
 ## title 2
 
@@ -33,6 +33,7 @@ describe('rehypeHeadAnchor', () => {
       pluginDriver: null,
       routeService: null,
     });
+    expect(result).toContain('tabIndex: "-1"');
     expect(result).toMatchSnapshot();
   });
 
@@ -44,6 +45,36 @@ describe('rehypeHeadAnchor', () => {
 
       docDirectory: '/usr/rspress-project/docs',
       filepath: '/usr/rspress-project/docs/inline-code.mdx',
+      config: null,
+      pluginDriver: null,
+      routeService: null,
+    });
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should include nested link text in title id', async () => {
+    const result = await compile({
+      source: `
+## this is bold link [**rsbuild**](https://rsbuild.rs)
+`,
+
+      docDirectory: '/usr/rspress-project/docs',
+      filepath: '/usr/rspress-project/docs/nested-link.mdx',
+      config: null,
+      pluginDriver: null,
+      routeService: null,
+    });
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should preserve nested custom id-like text', async () => {
+    const result = await compile({
+      source: `
+## **literal {#inner} text** suffix
+`,
+
+      docDirectory: '/usr/rspress-project/docs',
+      filepath: '/usr/rspress-project/docs/nested-id-text.mdx',
       config: null,
       pluginDriver: null,
       routeService: null,

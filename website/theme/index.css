@@ -13,3 +13,114 @@
 .blog-back-button a:focus-visible {
   color: var(--rp-c-brand);
 }
+
+.rp-home-hero {
+  margin-top: 4rem;
+  margin-bottom: 3.5rem;
+}
+
+.rp-home-hero__container {
+  gap: 28px;
+}
+
+.rp-home-hero__tagline {
+  margin: 0;
+}
+
+.rp-home-hero__actions {
+  gap: 12px;
+}
+
+.rp-home-hero__action {
+  min-width: 140px;
+  justify-content: center;
+}
+
+.home-install {
+  width: 100%;
+  max-width: 450px;
+  margin: -0.75rem 0 0;
+}
+
+.home-install .rp-tabs {
+  margin: 0;
+  border-color: var(--rp-c-divider-light);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgb(15 23 42 / 5%);
+}
+
+.home-install .rp-tabs__label {
+  gap: 2px;
+  padding: 6px;
+}
+
+.home-install .rp-tabs__label__item {
+  margin-right: 0;
+  padding: 5px 10px;
+}
+
+@media (max-width: 1000px) {
+  .rp-home-hero {
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 2.5rem;
+  }
+
+  .rp-home-hero__container {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .rp-home-hero {
+    padding: 1rem 20px 2rem;
+  }
+
+  .rp-home-hero__container {
+    gap: 18px;
+  }
+
+  .rp-home-hero__title {
+    font-size: 2.25rem;
+  }
+
+  .rp-home-hero__subtitle {
+    margin-top: 0.5rem;
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+
+  .rp-home-hero__tagline {
+    font-size: 1rem;
+  }
+
+  .rp-home-hero__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+  }
+
+  .rp-home-hero__action {
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+  }
+
+  .home-install {
+    max-width: 100%;
+    margin-top: -0.5rem;
+  }
+
+  .home-install .rp-tabs__label {
+    flex-wrap: nowrap;
+    gap: 0;
+    padding-right: 4px;
+    padding-left: 4px;
+    overflow-x: auto;
+  }
+
+  .home-install .rp-tabs__label__item {
+    flex-shrink: 0;
+    padding: 6px;
+  }
+}

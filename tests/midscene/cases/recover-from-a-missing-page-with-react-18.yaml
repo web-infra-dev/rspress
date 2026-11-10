@@ -1,0 +1,8 @@
+cases:
+  - name: COMPAT-04 Recover from a missing page with React 18
+    tags: [original-compatibility-fallback]
+    steps:
+      - app.open: { fixture: react-18, path: /404 }
+      - aiAssert: The page displays a 404 message.
+      - aiAct: Click the Take me home recovery button below the 404 message and wait for the Hello world article to replace the error page. Do not click the top-left site title, enter a URL, or use search. Stop when the article is visible.
+      - aiAssert: The Hello world article is visible and contains react 18.

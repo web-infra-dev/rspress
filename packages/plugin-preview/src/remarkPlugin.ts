@@ -171,6 +171,8 @@ export const remarkWriteCodeFile: Plugin<[RemarkPluginOptions], Root> =
 
       if (demosInCurrPage[pageName].length !== 0) {
         globalDemos[pageName] = demosInCurrPage[pageName];
+      } else {
+        delete globalDemos[pageName];
       }
     };
   };

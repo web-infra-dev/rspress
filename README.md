@@ -12,6 +12,7 @@ A fast Rsbuild-based static site generator.
   <a href="https://npmcharts.com/compare/@rspress/core?minimal=true"><img src="https://img.shields.io/npm/dm/@rspress/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
   <a href="https://github.com/web-infra-dev/rspress/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/@rspress/core?style=flat-square&colorA=564341&colorB=EDED91" alt="license" /></a>
   <a href="https://deepwiki.com/web-infra-dev/rspress"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki" /></a>
+  <a href="https://midscenejs.com"><img src="https://badge.midscenejs.com/by-midscene" alt="E2E by Midscene.js" /></a>
 </p>
 
 ## 🔥 Features
@@ -29,7 +30,7 @@ Go to the [Quick start](https://rspress.rs/guide/start/getting-started.html) to 
 
 ## 🦀 Rstack
 
-Rstack is a unified JavaScript toolchain centered on Rspack, with high performance and consistent architecture.
+Rspress is part of Rstack, the fast, unified JavaScript toolchain for developers and agents.
 
 | Name                                                  | Description              | Version                                                                                                                                                                          |
 | ----------------------------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -40,6 +41,7 @@ Rstack is a unified JavaScript toolchain centered on Rspack, with high performan
 | [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | Build analyzer           | <a href="https://npmjs.com/package/@rsdoctor/core"><img src="https://img.shields.io/npm/v/@rsdoctor/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a> |
 | [Rstest](https://github.com/web-infra-dev/rstest)     | Testing framework        | <a href="https://npmjs.com/package/@rstest/core"><img src="https://img.shields.io/npm/v/@rstest/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>     |
 | [Rslint](https://github.com/web-infra-dev/rslint)     | Linter                   | <a href="https://npmjs.com/package/@rslint/core"><img src="https://img.shields.io/npm/v/@rslint/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>     |
+| [Rstack CLI](https://github.com/rstackjs/rstack-cli)  | Unified CLI              | <a href="https://npmjs.com/package/rstack"><img src="https://img.shields.io/npm/v/rstack?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>                 |
 
 ## 🤝 Contribution
 
@@ -63,7 +65,7 @@ Come and chat with us on [Discord](https://discord.gg/XsaKEEk4mW)! The Rstack te
 
 ## 🌟 Quality
 
-Rspress uses [Web Infra QoS](https://web-infra-qos.netlify.app?product=rspress) to observe the trend of key metrics, such as bundle size, compile speed and install size.
+Rspress uses [Web Infra QoS](https://web-infra-qos.pages.dev/?product=rspress) to observe the trend of key metrics, such as bundle size, compile speed and install size.
 
 ## 📖 License
 

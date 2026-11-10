@@ -2,8 +2,8 @@
   "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "src",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["node", "rstack/types"]
   },
   "include": ["src"]
 }

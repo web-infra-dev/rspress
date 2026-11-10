@@ -1,0 +1,9 @@
+cases:
+  - name: LAYOUT-04 Read a localized home hero and follow its action
+    tags: [original-layouts, replacement-batch-2-navigation]
+    steps:
+      - app.open: { fixture: page-type-home, path: /base/zh/ }
+      - aiAct: Bring the Chinese home hero and its actions into view.
+      - aiAssert: The hero displays E2E 用例 title, E2E 用例 subTitle, E2E 用例 tagline, and the actions 操作 1, 操作 2, and External.
+      - aiAct: Follow 操作 1 in the hero.
+      - aiAssert: The Chinese action article is open rather than a page-not-found error.

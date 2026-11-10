@@ -9,6 +9,7 @@ export default defineConfig({
       checkDeadLinks: {
         excludes: ['/ignored'],
       },
+      checkAnchors: true,
     },
   },
   plugins: [

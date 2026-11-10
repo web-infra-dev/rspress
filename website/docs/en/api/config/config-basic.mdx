@@ -1,3 +1,9 @@
+---
+description: 'Basic Rspress configuration options, including site metadata, locales, routes, and search.'
+---
+
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # Basic config
 
 ## root
@@ -5,7 +11,7 @@
 - **Type**: `string`
 - **Default**: `docs`
 
-Specifies the document root directory. For example:
+Specifies the docs root directory. For example:
 
 ```ts title="rspress.config.ts" twoslash
 import { defineConfig } from '@rspress/core';
@@ -15,9 +21,9 @@ export default defineConfig({
 });
 ```
 
-This config supports both relative and absolute paths, with relative paths being relative to the current working directory(cwd).
+This option supports both relative and absolute paths. Relative paths are resolved from the current working directory (cwd).
 
-Of course, in addition to specifying the document root directory through the config file, you can also specify it through command line parameters, such as:
+You can also pass the docs root as a CLI argument:
 
 ```bash
 rspress dev docs
@@ -39,12 +45,36 @@ export default defineConfig({
 });
 ```
 
+## siteOrigin
+
+<VersionBadge version="2.0.17" />
+
+- **Type**: `string`
+- **Default**: `""`
+
+The optional deployment origin of the site, for example `https://foo.github.io`.
+
+Rspress uses this value together with [`base`](#base) when generated files need absolute URLs, such as `sitemap.xml`, `llms.txt` links, or plugin outputs. The full URL concatenation order is `siteOrigin + base + routePath`.
+
+If `siteOrigin` is not configured, Rspress uses `base + routePath` as the fallback.
+
+If your site is deployed to `https://foo.github.io/bar/`, set `siteOrigin` to `"https://foo.github.io"` and `base` to `"/bar/"`:
+
+```ts title="rspress.config.ts" twoslash
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://foo.github.io',
+  base: '/bar/',
+});
+```
+
 ## title
 
 - **Type**: `string`
 - **Default**: `"Rspress"`
 
-Site title. This parameter will be used as the title of the HTML page. For example:
+Site title. Rspress uses this as the HTML page title. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -59,7 +89,7 @@ export default defineConfig({
 - **Type**: `string`
 - **Default**: `""`
 
-Site description. This will be used as the description of the HTML page. For example:
+Site description. Rspress uses this as the HTML page description. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -74,7 +104,7 @@ export default defineConfig({
 - **Type**: `string | URL`
 - **Default**: `""`
 
-Site icon. This path will be used as the icon path for the HTML page. For example:
+Site icon. Rspress uses this path as the page icon. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -84,14 +114,14 @@ export default defineConfig({
 });
 ```
 
-For normal path, Rspress will find your icon in the `public` directory, of course you can also set it to a CDN address, or use the `file://` protocol or `URL` to use local absolute path.
+For a normal path, Rspress resolves the icon from the `public` directory. You can also use a CDN URL, the `file://` protocol, or a `URL` object for a local absolute path.
 
 ## lang
 
 - **Type**: `string`
-- **Default**: `""`
+- **Default**: `"en"`
 
-Default language of the site. See [Internationalization](/guide/basic/i18n) for more details.
+Default language of the site. See [i18n](/guide/basic/i18n) for more details.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -110,6 +140,57 @@ export default defineConfig({
   ],
 });
 ```
+
+## locales
+
+- **Type**: `Locale[]`
+- **Default**: `undefined`
+
+Configures the supported languages and site information for each language.
+
+```ts
+export interface Locale {
+  lang: string;
+  label: string;
+  title?: string;
+  description?: string;
+}
+```
+
+| Field         | Description                                                                     |
+| ------------- | ------------------------------------------------------------------------------- |
+| `lang`        | Language code. Must match the corresponding directory name under the docs root. |
+| `label`       | Display text in the navbar language switcher.                                   |
+| `title`       | Site title for this language.                                                   |
+| `description` | Site description for this language.                                             |
+
+Set the top-level [`lang`](#lang) to one of these language codes to select the default language. Rspress omits the language prefix from the default language's routes.
+
+For example:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  lang: 'en',
+  locales: [
+    {
+      lang: 'en',
+      label: 'English',
+      title: 'My Site',
+      description: 'My site description',
+    },
+    {
+      lang: 'zh',
+      label: '简体中文',
+      title: '站点标题',
+      description: '站点描述',
+    },
+  ],
+});
+```
+
+For the complete setup, see [i18n](/guide/basic/i18n). For language-specific theme options such as `nav` and `sidebar`, see [`themeConfig.locales`](/api/config/config-theme#locales).
 
 ## i18nSourcePath
 
@@ -138,7 +219,7 @@ This has the same effect as placing an `i18n.json` at the project root. If you a
 - **Type**: `Record<string, Record<string, string>> | ((value: Record<string, Record<string, string>>) => Record<string, Record<string, string>> | Promise<Record<string, Record<string, string>>>)`
 - **Default**: `{}`
 
-You can use this configuration to modify Rspress's built-in i18n text or extend custom component text. When extending text, it is usually used together with [useI18n](/ui/hooks/use-i18n.html).
+Use this option to modify Rspress's built-in i18n text or add text for custom components. It is usually used together with [useI18n](/ui/hooks/use-i18n.html).
 
 :::tip
 
@@ -156,7 +237,7 @@ The `i18nSource` parameter is an object with the following structure:
 }
 ```
 
-Where the first-level `textKey` is the text key name, the second-level `locale` is the language code (e.g., `zh`, `en`), and the value is the translated text for the corresponding language.
+The first-level `textKey` is the text key, the second-level `locale` is the language code (for example, `zh` or `en`), and the value is the translated text for that language.
 
 Here is an example of modifying Rspress's built-in i18n text:
 
@@ -178,7 +259,7 @@ export default defineConfig({
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  i18nSource: async (source) => {
+  i18nSource: async source => {
     for (const key of Object.keys(source)) {
       source[key]['en_US'] = source[key]['en'];
     }
@@ -191,7 +272,7 @@ Here are the built-in i18n texts in Rspress:
 
 <details>
 
-```ts file="../../../../../packages/core/src/node/runtimeModule/DEFAULT_I18N_TEXT.ts"
+```ts file="../../../../../packages/core/src/node/runtimeModule/i18n/DEFAULT_I18N_TEXT.ts"
 
 ```
 
@@ -199,10 +280,10 @@ Here are the built-in i18n texts in Rspress:
 
 ## logo \{#logo-1}
 
-- **Type**: `string | { dark: string; light: string }`
+- **Type**: `string | { dark: string; light: string; width?: number; height?: number }`
 - **Default**: `""`
 
-Site logo. This path will be used as the logo path in the upper left corner of the navbar. For example:
+Site logo. Rspress uses this path for the logo in the upper-left corner of the navbar. In the object form, optional `width` and `height` set the intrinsic dimensions (in pixels) for both images; use the source images' dimensions to reserve their aspect ratio and reduce layout shifts. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -212,9 +293,9 @@ export default defineConfig({
 });
 ```
 
-Rspress will find your icon in the `public` directory, you can also set it to a CDN address.
+Rspress resolves the logo from the `public` directory. You can also use a CDN URL.
 
-Of course you can set different logos for dark/light mode:
+You can also set different logos for dark and light mode:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -223,6 +304,8 @@ export default defineConfig({
   logo: {
     dark: '/logo-dark.png',
     light: '/logo-light.png',
+    width: 120,
+    height: 32,
   },
 });
 ```
@@ -232,7 +315,7 @@ export default defineConfig({
 - **Type**: `string`
 - **Default**: `/${lang}/`
 
-Custom link for the logo. By default, clicking the logo will navigate to the home page of the current language. For example:
+Custom link for the logo. By default, clicking the logo navigates to the homepage of the current language. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -248,7 +331,7 @@ export default defineConfig({
 - **Type**: `string`
 - **Default**: `""`
 
-Site logo Text. This text will be used as the logo text in the upper left corner of the navbar. For example:
+Site logo text. Rspress displays this text in the upper-left corner of the navbar. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -263,7 +346,7 @@ export default defineConfig({
 - **Type**: `string`
 - **Default**: `doc_build`
 
-Custom output directory for built sites. for example:
+Custom output directory for built sites. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -289,52 +372,16 @@ export default defineConfig({
 });
 ```
 
-This config supports both relative and absolute paths, with relative paths being relative to the current working directory.
+This option supports both relative and absolute paths. Relative paths are resolved from the current working directory.
 
 For more details on custom themes, see [Custom Theme](/guide/basic/custom-theme).
-
-## locales
-
-- **Type**: `Locale[]`
-
-```ts
-export interface Locale {
-  lang: string;
-  label: string;
-  title?: string;
-  description?: string;
-}
-```
-
-I18n config of the site. for example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  locales: [
-    {
-      lang: 'en-US',
-      label: 'English',
-      title: 'My Site',
-      description: 'My site description',
-    },
-    {
-      lang: 'zh-CN',
-      label: '简体中文',
-      title: '站点标题',
-      description: '站点描述',
-    },
-  ],
-});
-```
 
 ## head
 
 - **Type**: `string` | `[string, Record<string, string>]` | `(route) => string | [string, Record<string, string>] | undefined`
 - Can be appended per page via [frontmatter](./config-frontmatter.mdx#head)
 
-Used to set additional elements rendered in the `<head>` tag of the page's HTML in production mode.
+Adds extra elements to the page's HTML `<head>` in production builds.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -347,7 +394,7 @@ export default defineConfig({
     ['meta', { name: 'author', content: 'John Doe' }],
     // [htmlTag, { attrName: attrValue, attrName2: attrValue2 }]
     // or
-    (route) => {
+    route => {
       if (route.routePath.startsWith('/jane/'))
         return "<meta name='author' content='Jane Doe'>";
       if (route.routePath.startsWith('/john/'))
@@ -364,7 +411,7 @@ export default defineConfig({
 - **Type:** `string`
 - **Default:** `undefined`
 
-Used to add global styles, configured as the path to a style file. For example:
+Adds global styles from a style file path. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -381,37 +428,137 @@ export default defineConfig({
 }
 ```
 
-## llms
+## sitemap
 
-- **Type**: `boolean | { remarkSplitMdxOptions?: RemarkSplitMdxOptions }`
-- **Default**: `false`
+<VersionBadge version="2.1.0" />
 
-Whether to enable [SSG-MD](/guide/basic/ssg-md) to generate `llms.txt`, `llms-full.txt`, and Markdown files for each page, making your documentation easier for large language models to understand.
+- **Type**: `boolean | SitemapOptions`
+- **Default**: `true`
+
+Generate `sitemap.xml` in the output directory during production builds. This feature is built into Rspress and does not require a plugin. It also works when `ssg` is `false`. Existing sitemap files copied from the public directory are preserved. Generated URLs follow `route.cleanUrls`.
+
+Configure [`siteOrigin`](#siteorigin) so the sitemap contains absolute URLs. Rspress combines `siteOrigin`, [`base`](#base), and each page's route path:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  llms: true,
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+  // sitemap is enabled by default.
 });
 ```
 
-:::warning
+Set `sitemap: false` to disable generation, or pass an options object to customize it:
 
-`llms` is an experimental feature. If SSG-MD cannot be enabled due to SSR incompatibility, use [@rspress/plugin-llms](/plugin/official-plugins/llms) as a fallback.
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
 
-:::
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  sitemap: {
+    defaultChangeFreq: 'weekly',
+    defaultPriority: '0.7',
+  },
+});
+```
 
-For detailed usage, configuration options, and implementation principles, see [llms.txt (SSG-MD)](/guide/basic/ssg-md).
+The options have the following type, exported as `SitemapOptions` from `@rspress/core`:
+
+```ts
+type ChangeFreq =
+  'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+
+type Priority =
+  | '0.0'
+  | '0.1'
+  | '0.2'
+  | '0.3'
+  | '0.4'
+  | '0.5'
+  | '0.6'
+  | '0.7'
+  | '0.8'
+  | '0.9'
+  | '1.0';
+
+// https://www.sitemaps.org/protocol.html
+interface Sitemap {
+  loc: string;
+  lastmod?: string;
+  changefreq?: ChangeFreq;
+  priority?: Priority;
+}
+
+interface CustomMaps {
+  [routePath: string]: Sitemap;
+}
+
+export interface SitemapOptions {
+  siteUrl?: string;
+  customMaps?: CustomMaps;
+  defaultPriority?: Priority;
+  defaultChangeFreq?: ChangeFreq;
+}
+```
+
+### sitemap.siteUrl
+
+- **Type**: `string`
+- **Default**: [`siteOrigin`](#siteorigin) + [`base`](#base), or `base` when `siteOrigin` is not configured
+
+Override the deployment URL used in sitemap entries. Use an absolute URL that includes the base path, such as `https://example.com/docs/`. This value takes precedence over `siteOrigin` and `base`. Only HTTP(S) URLs without query strings or fragments are accepted.
+
+If neither `sitemap.siteUrl` nor `siteOrigin` is configured, entries use `base + routePath` and remain relative paths. Configure either value to generate absolute sitemap URLs.
+
+### sitemap.customMaps
+
+- **Type**: `Record<string, Sitemap>`
+- **Default**: `{}`
+
+Override sitemap values for individual pages. Keys are route paths without `base`, and values override the generated `loc`, `lastmod`, `changefreq`, and `priority`. By default, `lastmod` is the source file's modification time. This option customizes existing pages; it does not add routes.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  siteOrigin: 'https://example.com',
+  base: '/docs/',
+  sitemap: {
+    customMaps: {
+      '/guide': {
+        loc: 'https://example.com/docs/guide',
+        lastmod: '2026-01-01',
+        changefreq: 'weekly',
+        priority: '0.8',
+      },
+    },
+  },
+});
+```
+
+### sitemap.defaultChangeFreq
+
+- **Type**: `ChangeFreq`
+- **Default**: `'monthly'`
+
+The default `changefreq` value for each page. Available values are `'always'`, `'hourly'`, `'daily'`, `'weekly'`, `'monthly'`, `'yearly'`, and `'never'`. Use `customMaps` to override it for a specific page.
+
+### sitemap.defaultPriority
+
+- **Type**: `Priority`
+- **Default**: `'0.5'`
+
+The default `priority` value for each page, from `'0.0'` to `'1.0'` in increments of `0.1`. The root route `/` uses `'1.0'`. Use `customMaps` to override it for a specific page.
 
 ## mediumZoom
 
 - **Type**: `boolean` | `{ selector?: string }`
 - **Default**: `true`
 
-Whether to enable the image zoom function. It is enabled by default, you can disable it by setting `mediumZoom` to `false`.
+Controls whether image zoom is enabled. It is enabled by default; set `mediumZoom` to `false` to disable it.
 
-> The bottom layer is implemented using the [medium-zoom](https://github.com/francoischalifour/medium-zoom) library.
+> Image zoom is implemented with the [medium-zoom](https://github.com/francoischalifour/medium-zoom) library.
 
 Example usage:
 
@@ -421,7 +568,7 @@ import { defineConfig } from '@rspress/core';
 export default defineConfig({
   // Turn off image zoom
   mediumZoom: false,
-  // Configure the CSS selector to customize the picture to be zoomed, the default is '.rspress-doc img'
+  // Configure the CSS selector for images that can be zoomed. The default is '.rspress-doc img'
   mediumZoom: {
     selector: '.rspress-doc img',
   },
@@ -440,12 +587,16 @@ type SearchOptions = {
 };
 ```
 
+:::tip
+To exclude an individual page from the search index, set [`search: false`](/api/config/config-frontmatter#search) in its frontmatter.
+:::
+
 ### searchHooks
 
 - **Type**: `string`
 - **Default**: `undefined`
 
-You can add search runtime hooks logic through the `searchHooks` parameter, for example:
+Use `searchHooks` to add runtime hooks for search. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -510,7 +661,7 @@ export default defineConfig({
 });
 ```
 
-The item of `globalUIComponents` can be a string, which is the path of the component file, or an array, the first item is the path of the component file, and the second item is the component props, for example:
+Each `globalUIComponents` item can be either a component file path string or a tuple. In the tuple form, the first item is the component file path and the second item is the component props. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -535,7 +686,7 @@ import GlobalUIComponents from '../../fragments/global-ui-components.mdx';
 
 - **Type**: `{ default: string; versions: string[] }`
 
-You can enable multi-version support through the `multiVersion` parameter, for example:
+Enable multi-version support with `multiVersion`. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -561,7 +712,7 @@ Custom route config.
 - **Type**: `string[]`
 - **Default**: `[]`
 
-Add some extra files in the route. By default, only the files in the document root directory will be included in the route. If you want to add some extra files to the route, you can use this option. For example:
+Adds extra files to the route table. By default, only files in the docs root are included. For example:
 
 ```js
 import { defineConfig } from '@rspress/core';
@@ -573,11 +724,11 @@ export default defineConfig({
 });
 ```
 
-> Note: The strings in the array support glob patterns, the glob expression should be based on the `root` directory of the document, with the corresponding extensions suffix.
+> Note: Strings in the array support glob patterns. The glob expression should be relative to the docs root and include the relevant file extensions.
 
 :::note
 
-We recommend using [addPages hook](/plugin/system/plugin-api.html#addpages) in a custom Rspress plugin to add some additional files to the route, so that the page route and file path/content can be specified more flexibly and reasonably.
+For more flexible page routes and file/content mapping, we recommend using the [addPages hook](/plugin/system/plugin-api.html#addpages) in a custom Rspress plugin.
 
 :::
 
@@ -598,14 +749,14 @@ export default defineConfig({
 });
 ```
 
-> Note: The strings in the array support glob patterns, the glob expression should be based on the `root` directory of the document.
+> Note: Strings in the array support glob patterns. The glob expression should be relative to the docs root.
 
 ### route.excludeConvention
 
 - **Type**: `string[]`
 - **Default**: `['**/_[^_]*']`
 
-A [routing convention](../../guide/use-mdx/components.mdx) set for the convenience of users to use components in the [docs directory](/api/config/config-basic#root), which excludes files starting with `_` by default.
+A [routing convention](../../guide/use-mdx/components.mdx) that makes it easier to keep components in the [docs directory](/api/config/config-basic#root). By default, files starting with `_` are excluded.
 
 If you really need some routes starting with `_`, you can adjust this rule, for example, set it to exclude only files starting with `_fragment-`:
 
@@ -624,7 +775,7 @@ export default defineConfig({
 - **Type**: `string[]`
 - **Default**: `['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']`
 
-The extensions of the files that will be included in the route. By default, Rspress will include all `'js'`, `'jsx'`, `'ts'`, `'tsx'`, `'md'`, `'mdx'` files in the route. If you want to customize the extensions, you can use this option. For example:
+File extensions to include in the route table. By default, Rspress includes all `'js'`, `'jsx'`, `'ts'`, `'tsx'`, `'md'`, and `'mdx'` files. To customize the extensions, use this option:
 
 ```js
 import { defineConfig } from '@rspress/core';
@@ -639,16 +790,179 @@ export default defineConfig({
 ### route.cleanUrls
 
 - **Type**: `Boolean`
-- **Default**: `false`
+- **Default**: `true` (`false` before v2.1.0)
 
-Generate url without suffix when `cleanUrls` is `true` for shorter url link.
+Generates URLs without file extensions. Set `cleanUrls` to `false` to keep the `.html` suffix.
+
+:::warning Server Support Required
+
+Enabling this may require additional configuration on your hosting platform. For it to work, your server must be able to serve `/foo.html` when visiting `/foo` without a redirect.
+
+:::
 
 ```js
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   route: {
-    cleanUrls: true,
+    cleanUrls: false,
+  },
+});
+```
+
+### route.cleanUrlsRedirect
+
+- **Type**: `Boolean`
+- **Default**: `true`
+
+When enabled, Rspress normalizes non-canonical browser URLs during client
+startup, using the actual matched route as the source of truth. The target
+format follows [`route.cleanUrls`](#routecleanurls).
+
+`route.cleanUrls` controls the preferred URL format used by generated links,
+while `route.cleanUrlsRedirect` only normalizes the browser address bar.
+
+:::warning Client-side fallback
+
+This option runs after the requested page HTML and client runtime have loaded.
+It uses `history.replaceState` and does not return an HTTP 301/308 response, so
+it cannot fully replace a server-side or CDN canonical redirect, especially for
+SEO. The hosting platform must still serve the correct Rspress page for the
+requested URL variant. Prefer a server-side redirect when available.
+
+:::
+
+#### With `cleanUrls: true`
+
+Regular page routes omit the trailing slash, while directory index routes
+retain it.
+
+| Incoming URL         | Matched route | Browser URL update           |
+| -------------------- | ------------- | ---------------------------- |
+| `/file`              | `/file`       | No update                    |
+| `/file.html`         | `/file`       | `replaceState` to `/file`    |
+| `/file/`             | `/file`       | `replaceState` to `/file`    |
+| `/file/index`        | `/file`       | `replaceState` to `/file`    |
+| `/file/index.html`   | `/file`       | `replaceState` to `/file`    |
+| `/folder`            | `/folder/`    | `replaceState` to `/folder/` |
+| `/folder.html`       | `/folder/`    | `replaceState` to `/folder/` |
+| `/folder/`           | `/folder/`    | No update                    |
+| `/folder/index`      | `/folder/`    | `replaceState` to `/folder/` |
+| `/folder/index.html` | `/folder/`    | `replaceState` to `/folder/` |
+
+#### With `cleanUrls: false`
+
+Regular page routes use `.html`, while directory index routes use
+`/index.html`.
+
+| Incoming URL         | Matched route | Browser URL update                     |
+| -------------------- | ------------- | -------------------------------------- |
+| `/file`              | `/file`       | `replaceState` to `/file.html`         |
+| `/file.html`         | `/file`       | No update                              |
+| `/file/`             | `/file`       | `replaceState` to `/file.html`         |
+| `/file/index`        | `/file`       | `replaceState` to `/file.html`         |
+| `/file/index.html`   | `/file`       | `replaceState` to `/file.html`         |
+| `/folder`            | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder.html`       | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder/`           | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder/index`      | `/folder/`    | `replaceState` to `/folder/index.html` |
+| `/folder/index.html` | `/folder/`    | No update                              |
+
+For example, both `/zh/guide/start/introduction.html` and
+`/zh/guide/start/introduction/index.html` match
+`/zh/guide/start/introduction`; the final URL follows the configured
+`cleanUrls` format without losing the locale prefix.
+
+The canonical URL formats align with Cloudflare's
+[HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/).
+However, Cloudflare performs server-side HTTP redirects, while this option only
+updates the URL in the browser.
+
+Set `cleanUrlsRedirect` to `false` to disable browser URL normalization:
+
+```js
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    cleanUrlsRedirect: false,
+  },
+});
+```
+
+### route.localeRedirect
+
+<VersionBadge version="2.0.19" />
+
+- **Type**: `'auto' | 'never' | 'only-default-lang'`
+- **Default**: `'auto'`
+
+Controls how first-time visitors are redirected to the closest configured locale based on `window.navigator.language`:
+
+- `auto`: Redirect from any locale to the closest configured locale.
+- `never`: Disable automatic locale redirects.
+- `only-default-lang`: Redirect only when the visitor opens the default locale.
+
+:::tip Prefer server-side redirects
+
+This option performs the redirect in the browser. For production sites, prefer handling locale negotiation and redirects on the server or at the CDN edge when possible. This redirects visitors before HTML is delivered and does not depend on client-side JavaScript.
+
+:::
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    localeRedirect: 'never',
+  },
+});
+```
+
+### route.useTransitions
+
+<VersionBadge version="2.0.17" />
+
+- **Type**: `Boolean`
+- **Default**: `true`
+
+Enable concurrent, optimized routing for internal links rendered by Rspress' default `Link` component. This covers links in markdown and MDX content, as well as default theme navigation links such as sidebar items.
+
+By default, this option is enabled. Internal page transitions are wrapped inside React's `startTransition` unless you explicitly set `useTransitions` to `false`. This prevents the heavy rendering of new page content from blocking user input, keeping the page responsive and interactive during navigation.
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    useTransitions: false,
+  },
+});
+```
+
+### route.prefetchLink
+
+<VersionBadge version="2.0.17" />
+
+- **Type**: `Boolean`
+- **Default**: `true`
+
+By default, Rspress' `Link` component prefetches resources for the matching route when users hover over internal links, and it applies the same behavior on touch devices. This is a performance optimization. Set this option to `false` to disable it.
+
+:::tip
+
+In development, link prefetching is designed to work together with [`dev.lazyCompilation`](https://rsbuild.rs/config/dev/lazy-compilation), which Rspress enables by default. Lazy compilation improves startup speed by compiling pages only when they are visited, while link prefetching starts compiling the target route on hover to reduce the wait when the target route is opened for the first time.
+
+:::
+
+Example:
+
+```js title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  route: {
+    prefetchLink: false,
   },
 });
 ```
@@ -658,9 +972,9 @@ export default defineConfig({
 - **Type**: `boolean | { experimentalWorker?: boolean; experimentalLoose?: boolean; }`
 - **Default**: `true`
 
-Whether to enable static site generation. Rspress enable it by default to generate CSR outputs and SSG outputs.
+Controls whether page content is rendered into HTML at build time. Rspress enables SSG by default.
 
-If your document site is only required to be used in CSR scenarios, you can set `ssg` to `false`, and Rspress will only generate CSR outputs.
+Set `ssg: false` to generate HTML shells for client-side rendering.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -672,11 +986,20 @@ export default defineConfig({
 
 :::tip
 
-SSG requires the source code to support SSR. If the code is not compatible to SSR, the build process will fail. You can try:
+Both [SSG](/guide/basic/ssg) and [SSG-MD](/guide/basic/ssg-md) require source code to compile under SSR. Code that is incompatible with SSR will cause the build to fail. You can try:
 
-1. Fix code to make it SSR-compatible.
+1. Make your code SSR-compatible. See [Common issues and solutions](/guide/basic/ssg#common-issues-and-solutions) in the SSG guide.
 
-2. Set `ssg: false`, but the SSG feature will be lost.
+2. If your code does not support SSR, set both `ssg: false` and `llms: false`:
+
+   ```ts title="rspress.config.ts"
+   import { defineConfig } from '@rspress/core';
+
+   export default defineConfig({
+     ssg: false,
+     llms: false,
+   });
+   ```
 
 :::
 
@@ -685,14 +1008,16 @@ SSG requires the source code to support SSR. If the code is not compatible to SS
 - **Type**: `boolean`
 - **Default**: `false`
 
-After enabled, you can use worker to accelerate the SSG process and reduce memory usage. It is suitable for large document sites and is based on [tinypool](https://github.com/tinylibs/tinypool).
+When enabled, Rspress uses workers to accelerate SSG and reduce memory usage. This is suitable for large documentation sites and is based on [tinypool](https://github.com/tinylibs/tinypool).
 
 ### experimentalExcludeRoutePaths
 
 - **Type**: `(string | RegExp)[]`
 - **Default**: `[]`
 
-After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
+Excludes selected pages from SSG so they use CSR HTML directly. This can help large documentation sites bypass SSG errors on a small number of pages, but it is not recommended as a default choice.
+
+This option only affects SSG; it does not exclude pages from SSG-MD. If excluded pages are incompatible with SSR, make them SSR-compatible or set `llms: false` to disable SSG-MD.
 
 ## replaceRules
 
@@ -716,9 +1041,9 @@ export default {
 
 - **Type**: `Object`
 
-Scans the `md` and `mdx` files in the document root directory to detect missing language versions, protect language parity.
+Scans `md` and `mdx` files in the docs root to detect missing language versions and protect language parity.
 
-### languageParity.enable
+### languageParity.enabled
 
 - **Type**: `boolean`
 - **Default**: `false`
@@ -740,7 +1065,7 @@ export default defineConfig({
 - **Type**: `string[]`
 - **Default**: `[]`
 
-Specifies the folders to be checked, defaulting to all files in the document root directory. Paths should be relative to each language directory. For example:
+Specifies which folders to check. By default, all files in the docs root are checked. Paths should be relative to each language directory. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

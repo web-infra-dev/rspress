@@ -1,0 +1,167 @@
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import type { TransformContext } from '@rsbuild/core';
+import type { UserConfig } from '@rspress/shared';
+import { logger } from '@rspress/shared/logger';
+import picocolors from 'picocolors';
+import type { PluginDriver } from '../../PluginDriver';
+import { createError, pathExists } from '../../utils';
+import { DEFAULT_I18N_TEXT } from './DEFAULT_I18N_TEXT';
+
+const DEFAULT_I18N_SOURCE_PATH = join(process.cwd(), 'i18n.json');
+
+type I18nData = Record<string, Record<string, string>>;
+type I18nDependencyContext = Pick<
+  TransformContext,
+  'addDependency' | 'addMissingDependency'
+>;
+
+export function createI18nDataLoader(
+  getConfig: () => UserConfig,
+  pluginDriver: PluginDriver,
+) {
+  let snapshotPromise:
+    | Promise<{
+        data: Promise<I18nData>;
+        sourcePath: string;
+        sourceExists: boolean;
+      }>
+    | undefined;
+
+  const load = async () => {
+    const config = getConfig();
+    const sourcePath = config.i18nSourcePath ?? DEFAULT_I18N_SOURCE_PATH;
+    const sourceExists = await pathExists(sourcePath);
+    const data = getI18nData(config, pluginDriver);
+    return { data, sourcePath, sourceExists };
+  };
+
+  return {
+    async get(context?: I18nDependencyContext): Promise<I18nData> {
+      snapshotPromise ??= load();
+      const snapshot = await snapshotPromise;
+      if (context) {
+        if (snapshot.sourceExists) {
+          context.addDependency(snapshot.sourcePath);
+        } else {
+          context.addMissingDependency(snapshot.sourcePath);
+        }
+      }
+      return snapshot.data;
+    },
+    invalidate() {
+      snapshotPromise = undefined;
+    },
+  };
+}
+
+function mergeI18nData(
+  ...sources: Record<string, Record<string, string>>[]
+): Record<string, Record<string, string>> {
+  const result: Record<string, Record<string, string>> = {};
+  for (const source of sources) {
+    for (const key in source) {
+      if (!result[key]) {
+        result[key] = {};
+      }
+      Object.assign(result[key], source[key]);
+    }
+  }
+  return result;
+}
+const logPrefix = '[i18n]';
+const logKeys = new Set<string>();
+let logged = false;
+
+export async function getI18nData(
+  docConfig: UserConfig,
+  pluginDriver?: PluginDriver,
+): Promise<I18nData> {
+  const {
+    i18nSourcePath = DEFAULT_I18N_SOURCE_PATH,
+    i18nSource = {},
+    themeConfig,
+    locales,
+  } = docConfig;
+
+  let langs: string[] =
+    (locales ?? themeConfig?.locales)?.map(locale => locale.lang) ?? [];
+  if (langs.length === 0) {
+    langs = [docConfig.lang ?? 'en'];
+  }
+  // 0. load default value
+  let i18nSourceFull: Record<string, Record<string, string>> = JSON.parse(
+    JSON.stringify(DEFAULT_I18N_TEXT),
+  );
+
+  // 1. modified by plugin (default value)
+  const i18nSourceFromPlugin = await pluginDriver?.i18nSource(i18nSourceFull);
+  if (i18nSourceFromPlugin) {
+    i18nSourceFull = i18nSourceFromPlugin;
+  }
+
+  // 2. load i18nSource from i18n.json
+  let i18nSourceFromJson: Record<string, Record<string, string>> = {};
+  try {
+    const content = await readFile(i18nSourcePath, 'utf8');
+    i18nSourceFromJson = JSON.parse(content.replace(/^\uFEFF/, ''));
+  } catch (e) {
+    logger.debug(
+      'getI18nData from i18n.json Failed: \n',
+      e instanceof Error ? e.message : '',
+    );
+  }
+
+  i18nSourceFull = mergeI18nData(i18nSourceFull, i18nSourceFromJson);
+
+  // 3. load i18nSource from rspress.config.ts
+  if (typeof i18nSource === 'function') {
+    try {
+      i18nSourceFull = await i18nSource(i18nSourceFull);
+    } catch (e) {
+      logger.error(
+        `${logPrefix} getI18nData Failed to execute \`i18nSource\` function in \`rspress.config.ts\`: \n`,
+        e,
+      );
+      throw e;
+    }
+  } else {
+    i18nSourceFull = mergeI18nData(i18nSourceFull, i18nSource);
+  }
+
+  // 4. select langs from i18nSourceFull for treeshaking
+  const cyan = picocolors.cyan;
+  const filteredI18nSource: Record<string, Record<string, string>> = {};
+  for (const key in i18nSourceFull) {
+    filteredI18nSource[key] = {};
+    for (const lang of langs) {
+      if (i18nSourceFull[key][lang]) {
+        filteredI18nSource[key][lang] = i18nSourceFull[key][lang];
+      } else {
+        // fallback to 'en'
+        const enText = i18nSourceFull[key].en;
+        logKeys.add(key);
+
+        if (enText) {
+          filteredI18nSource[key][lang] = enText;
+        } else {
+          logger.error(
+            `${logPrefix} i18n key ${cyan(key)} has no text for lang ${cyan(lang)}, and no fallback ${cyan('en')} text either.`,
+          );
+          throw createError(`i18n text missing for ${picocolors.cyan(key)}`);
+        }
+      }
+    }
+  }
+
+  if (logKeys.size > 0 && !logged) {
+    logger.warn(
+      `${logPrefix} The following i18n keys are missing for some languages and have fallen back to 'en':
+      ${picocolors.gray(JSON.stringify(Object.fromEntries([...logKeys.keys()].map(i => [i, '...'])), null, 2))}
+      You can provide translations via ${picocolors.cyan('i18n.json')} file or ${picocolors.cyan('i18nSource')} config in rspress.config.ts`,
+    );
+    logged = true;
+  }
+
+  return filteredI18nSource;
+}

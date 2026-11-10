@@ -4,6 +4,11 @@ export {
   matchSidebar,
 } from './runtime-utils/sidebar';
 export {
+  getDefaultDarkModeValue,
+  isDarkModeSwitchEnabled,
+  normalizeDarkMode,
+} from './runtime-utils/darkMode';
+export {
   addLeadingSlash,
   addTrailingSlash,
   cleanUrl,
@@ -29,6 +34,7 @@ export {
   SEARCH_INDEX_NAME,
   slash,
   withBase,
+  withSiteOrigin,
   withoutLang,
 } from './runtime-utils/utils';
 export * from './types';

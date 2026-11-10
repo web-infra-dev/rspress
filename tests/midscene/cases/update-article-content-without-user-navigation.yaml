@@ -1,0 +1,10 @@
+cases:
+  - name: HMR-01 Update article content without user navigation
+    tags: [original-hmr]
+    steps:
+      - app.open: { fixture: hmr, path: /guide/test.html }
+      - aiAct: Bring the Basic section and its Hello world paragraph into view.
+      - aiAssert: The Basic section contains Hello world.
+      - fixture.update: { part: article }
+      - aiAct: Wait for the Basic paragraph to change to Hello hmr world. Do not reload the page or navigate elsewhere.
+      - aiAssert: The Basic section contains Hello hmr world without any user navigation.

@@ -1,0 +1,24 @@
+cases:
+  - name: ASSET-01 Read public assets from markdown-link-asset English documentation
+    tags: [stability-regression, replacement-final-assets]
+    steps:
+      - app.open:
+          {
+            fixture: markdown-link-asset,
+            mode: production,
+            path: /base/public-asset-test,
+          }
+      - aiAssert: The Public asset test article displays six links including svg in public folder, txt in public folder, html in public folder, md in public folder, and two interface.DataProcessorDefinition links.
+      - aiTap: The link with the exact text txt in public folder in the main article.
+      - aiAssert: The opened text document displays Plain Text.
+      - action: { name: GoBack, params: {} }
+      - app.expectLocation:
+          { path: /base/public-asset-test.html, heading: Public asset test }
+      - aiTap: The link with the exact text html in public folder in the main article, below txt in public folder and above md in public folder.
+      - app.expectLocation: { path: /base/hello.html, heading: Hello world }
+      - aiAssert: The opened HTML document displays Hello world as its heading.
+      - action: { name: GoBack, params: {} }
+      - app.expectLocation:
+          { path: /base/public-asset-test.html, heading: Public asset test }
+      - aiTap: The link with the exact text md in public folder in the main article, below html in public folder. Do not select an interface.DataProcessorDefinition link.
+      - aiAssert: The opened raw Markdown document displays the literal text # Test.

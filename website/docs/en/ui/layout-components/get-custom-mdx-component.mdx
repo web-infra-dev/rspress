@@ -1,0 +1,36 @@
+---
+description: getCustomMDXComponent theme API for overriding default MDX element renderers in Rspress doc layouts.
+overviewHeaders: []
+---
+
+# getCustomMDXComponent
+
+`getCustomMDXComponent` returns the default components used by the Rspress doc layout to render native Markdown and MDX elements. Use it from a custom theme when you need to override how headings, links, code blocks, images, tables, and other document elements are rendered.
+
+## Usage
+
+Import `getCustomMDXComponent` from `@rspress/core/theme-original` in your custom theme, then export a new function with the same name:
+
+```tsx title="theme/index.tsx"
+import { getCustomMDXComponent as getBasicCustomMDXComponent } from '@rspress/core/theme-original';
+
+function getCustomMDXComponent() {
+  const mdxComponents = getBasicCustomMDXComponent();
+  const { h1: H1, p: P } = mdxComponents;
+
+  return {
+    ...mdxComponents,
+    h1: props => (
+      <>
+        <H1 {...props} />
+        <P>below h1</P>
+      </>
+    ),
+  };
+}
+
+export { getCustomMDXComponent };
+export * from '@rspress/core/theme-original';
+```
+
+The exported `getCustomMDXComponent` will replace the default one for the site. Rspress will call it when rendering doc content and pass the returned component map to MDX. In the example above, every H1 keeps the default renderer and gets an extra paragraph below it.

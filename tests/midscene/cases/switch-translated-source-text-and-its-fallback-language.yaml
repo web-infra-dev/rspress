@@ -1,0 +1,11 @@
+cases:
+  - name: LAYOUT-05 Switch translated source text and its fallback language
+    tags: [original-layouts, replacement-batch-2]
+    steps:
+      - app.open: { fixture: i18n-source-text, path: / }
+      - aiAct: Switch the page to 简体中文.
+      - aiAssert: The page displays 被配置修改, 配置-文件, 配置-json, 配置-插件, and This text is only in English.
+      - aiAct: Switch the page to English.
+      - aiAssert: The page displays Modified by configuration, Configuration-file, Configuration-json, Configuration-plugin, and This text is only in English.
+      - aiAct: Switch the page to EN_US.
+      - aiAssert: The EN_US page displays Modified by configuration, Configuration-file, Configuration-json, Configuration-plugin, and This text is only in English.

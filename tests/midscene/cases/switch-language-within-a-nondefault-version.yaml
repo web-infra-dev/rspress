@@ -1,0 +1,7 @@
+cases:
+  - name: NAV-13 Switch language within a nondefault version
+    tags: [original-version-language]
+    steps:
+      - app.open: { fixture: multi-version, path: /base/v2/ }
+      - aiAct: Use the language selector to switch to 简体中文 without changing the version.
+      - aiAssert: The article heading is v2 中文 and the version selector still displays v2.

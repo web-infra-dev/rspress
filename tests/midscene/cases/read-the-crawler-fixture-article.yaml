@@ -1,0 +1,11 @@
+cases:
+  - name: AUDIT-04 Read the crawler fixture article
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: search-algolia, path: / }
+      - aiAct: Bring the Search algolia heading, opening paragraph, and Installation section into view without opening search.
+      - aiAssert: The article is titled Search algolia and describes a test page for Algolia search crawler selectors. Installation lists First run the installation command, Then configure your project, and Finally start using it.
+      - aiAct: Scroll the article to Configuration and its code example.
+      - aiAssert: Configuration is readable with the introduction Here is how to configure the search and code export default {}.
+      - aiAct: Bring Advanced options and API keys into view.
+      - aiAssert: Advanced options and API keys are readable headings with You can also configure advanced options and Make sure to set your API keys properly below them.

@@ -1,0 +1,9 @@
+cases:
+  - name: PROD-01 Interact with the production documentation build
+    tags: [original-production]
+    steps:
+      - app.open: { fixture: production, path: / }
+      - aiAct: Set the production documentation to dark mode using its appearance switch.
+      - aiAssert: The documentation uses a dark background with readable light text.
+      - aiAct: Set the production documentation to light mode using the same switch.
+      - aiAssert: The documentation uses a light background with readable dark text.

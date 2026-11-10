@@ -1,3 +1,7 @@
+---
+description: '通过 Rsbuild 插件和全局样式在 Rspress 中集成 Tailwind CSS v4，并在 MDX 中使用工具类。'
+---
+
 # Tailwind CSS
 
 [Tailwind CSS](https://tailwindcss.com/) 是一个以 utility class 为核心的 CSS 框架，用于快速构建自定义用户界面。它可以配合 Rspress 中的 MDX 文件使用，帮助你更高效地创作文档样式，例如。
@@ -8,16 +12,17 @@
 <div className="text-3xl font-bold underline">Hello world!</div>
 ```
 
-Rspress 基于 [Rsbuild](https://rsbuild.rs/) 构建，Tailwind CSS 的配置方式与 Rsbuild 一致。更多详情请参考：
+Rspress 基于 [Rsbuild](https://rsbuild.rs/) 构建，因此可以使用 Rsbuild 推荐的插件方式接入 Tailwind CSS v4。更多详情请参考：
 
 - [Rsbuild - Tailwind CSS v4](https://rsbuild.rs/zh/guide/styling/tailwindcss)
 - [Rsbuild - Tailwind CSS v3](https://rsbuild.rs/zh/guide/styling/tailwindcss-v3)
+- [Rsbuild - Tailwind CSS 插件](https://rsbuild.rs/zh/plugins/list/plugin-tailwindcss)
 
 下面介绍如何在 Rspress 中集成 Tailwind CSS v4。
 
 :::tip
 
-Rspress 所有内置组件均采用 BEM 命名规范，没有内置使用 Tailwind CSS，因此不会与 Tailwind CSS 类名冲突。你可以自由使用 Tailwind v4 或 v3，无需担心样式冲突问题。
+Rspress 所有内置组件均采用 BEM 命名规范，没有内置使用 Tailwind CSS。Tailwind CSS 依赖和构建插件由你的项目自行管理，因此不会与 Rspress 产生版本冲突。
 
 :::
 
@@ -27,19 +32,7 @@ import { PackageManagerTabs, Steps } from '@rspress/core/theme';
 
 ### 安装依赖
 
-<PackageManagerTabs command="add tailwindcss @tailwindcss/postcss -D" />
-
-### 创建 PostCSS 配置
-
-在项目根目录创建 `postcss.config.mjs` 文件：
-
-```js title="postcss.config.mjs"
-export default {
-  plugins: {
-    '@tailwindcss/postcss': {},
-  },
-};
-```
+<PackageManagerTabs command="add @rsbuild/plugin-tailwindcss tailwindcss -D" />
 
 ### 创建 Tailwind CSS 文件
 
@@ -49,6 +42,12 @@ export default {
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 ```
+
+:::tip
+
+Tailwind CSS v4 不适合与 Sass、Less 或 Stylus 等 CSS 预处理器一起使用。请将 `@import 'tailwindcss';` 放在 `.css` 文件的开头。
+
+:::
 
 :::tip 暗黑模式
 
@@ -62,19 +61,25 @@ Rspress 通过判断 `html` 元素上的 `.dark` 类来实现暗黑模式切换�
 
 ```ts title="rspress.config.ts"
 import * as path from 'node:path';
+import { pluginTailwindcss } from '@rsbuild/plugin-tailwindcss';
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  root: path.join(__dirname, 'doc'),
+  root: path.join(__dirname, 'docs'),
   globalStyles: path.join(__dirname, 'tailwind.css'),
+  builderConfig: {
+    plugins: [pluginTailwindcss()],
+  },
 });
 ```
+
+如果你的项目已经有 PostCSS 配置，也可以参考 Rsbuild 文档改用 `@tailwindcss/postcss` 接入。
 
 ### 使用
 
 现在你可以在 MDX 文件中使用 Tailwind 工具类：
 
-```mdx title="doc/foo.mdx"
+```mdx title="docs/foo.mdx"
 # Foo
 
 <div className="text-3xl font-bold underline">Hello world!</div>

@@ -1,8 +1,8 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getSidebarTexts } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('Auto nav and sidebar test', async () => {
+test.describe('auto nav and sidebar without metadata', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
@@ -55,7 +55,7 @@ test.describe('Auto nav and sidebar test', async () => {
     await expect(configLink).toHaveCount(1);
     await configLink.first().click();
     await expect(page).toHaveURL(
-      `http://localhost:${appPort}/api/rspress-config/index.html`,
+      `http://localhost:${appPort}/api/rspress-config/`,
     );
   });
 });

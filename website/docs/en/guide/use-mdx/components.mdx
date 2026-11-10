@@ -4,13 +4,13 @@ description: Use MDX to import and render React components in Markdown, with sup
 
 # MDX and React components
 
-Rspress supports [MDX](https://mdxjs.com/), a content authoring format that seamlessly combines Markdown with JSX. MDX allows you to use React components directly in your documentation, combining Markdown's concise syntax with the power of the React ecosystem, making it ideal for building interactive, component-based technical documentation.
+Rspress supports [MDX](https://mdxjs.com/), a content authoring format that seamlessly combines Markdown with JSX. MDX lets you use React components directly in your documentation, pairing Markdown's concise syntax with the React ecosystem. It is ideal for building interactive, component-based technical documentation.
 
 ## What is MDX
 
-MDX is a combination of Markdown and JSX syntax, allowing you to write and use React components directly in Markdown documents.
+MDX combines Markdown and JSX syntax, so you can write Markdown content and use React components in the same file.
 
-We recommend using `.mdx` for all documentation files, which enables you to write content just like regular Markdown and also import and utilize the [built-in components](/ui/components/index.mdx) provided by Rspress.
+We recommend using `.mdx` for all documentation files. This lets you write content like regular Markdown while importing and using the [built-in components](/ui/components/index.mdx) provided by Rspress.
 
 ```mdx title="docs/index.mdx"
 # Hello, world!
@@ -61,7 +61,7 @@ Testing the use of MDX fragments and React components.
 
 </Tabs>
 
-It will be rendered as:
+It renders as:
 
 import MdxFragment from './_mdx-fragment.mdx';
 import TsxComponent from './_tsx-component';
@@ -74,7 +74,7 @@ Testing the use of MDX fragments and React components.
 <TsxComponent />
 </Border>
 
-You can use [built-in components](/ui/components/index.mdx) provided by Rspress or install some React component libraries to enrich your documentation in `.mdx` files.
+In `.mdx` files, you can use the [built-in components](/ui/components/index.mdx) provided by Rspress or install React component libraries to enrich your documentation.
 
 ## Routing convention
 
@@ -90,7 +90,7 @@ import RouteConvention from '@en/fragments/route-convention.mdx';
 
 import EscapeHatch from './_escape-hatch';
 
-It will be rendered as:
+It renders as:
 
 <Border className="rp-toc-exclude">
   <EscapeHatch />
@@ -98,9 +98,9 @@ It will be rendered as:
 
 :::warning
 
-tsx and html syntax can make it difficult to extract static information, such as local search indexes.
+TSX and HTML syntax can make it difficult to extract static information, such as local search indexes.
 
-It is more recommended to use `.mdx` files to write document content and use `.tsx` files to write interactive dynamic content.
+We recommend using `.mdx` files for document content and `.tsx` files for interactive dynamic content.
 
 :::
 

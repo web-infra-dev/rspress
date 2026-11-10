@@ -1,0 +1,50 @@
+[
+  {
+    "type": "section-header",
+    "label": "Start Here"
+  },
+  {
+    "type": "file",
+    "name": "index",
+    "label": "Introduction",
+    "icon": "<svg viewBox=\"0 0 32 32\" fill=\"currentColor\"><path d=\"m25.7 9.3-7-7A1 1 0 0 0 18 2H8a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V10a1 1 0 0 0-.3-.7ZM18 4.4l5.6 5.6H18V4.4ZM24 28H8V4h8v6a2 2 0 0 0 2 2h6v16Z\"/><path d=\"M10 22h12v2H10zm0-6h12v2H10z\"/></svg>",
+    "tag": "new",
+    "context": "sidebar-icon-overview"
+  },
+  {
+    "type": "file",
+    "name": "getting-started",
+    "label": "Quick Start",
+    "icon": "<svg viewBox=\"0 0 32 32\" fill=\"currentColor\"><path d=\"m25.7 9.3-7-7A1 1 0 0 0 18 2H8a2 2 0 0 0-2 2v24a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V10a1 1 0 0 0-.3-.7ZM18 4.4l5.6 5.6H18V4.4ZM24 28H8V4h8v6a2 2 0 0 0 2 2h6v16Z\"/><path d=\"M10 22h12v2H10zm0-6h12v2H10z\"/></svg>"
+  },
+  {
+    "type": "dir",
+    "name": "guide",
+    "label": "Guides",
+    "icon": "/sidebar-book.svg",
+    "context": "sidebar-icon-guide"
+  },
+  {
+    "type": "dir",
+    "name": "reference",
+    "label": "Reference",
+    "icon": "/sidebar-book.svg"
+  },
+  {
+    "type": "section-header",
+    "label": "Resources",
+    "icon": "<img src=\"/sidebar-resources.svg\" alt=\"\" />"
+  },
+  {
+    "type": "file",
+    "name": "examples",
+    "label": "Examples",
+    "icon": "/sidebar-flask.svg"
+  },
+  {
+    "type": "custom-link",
+    "label": "Rspress Documentation",
+    "link": "https://rspress.dev/",
+    "icon": "/sidebar-globe.svg"
+  }
+]

@@ -27,8 +27,7 @@ const normalizeImageUrl = (imageUrl: string): string => {
 
 function checkDeadImages(
   checkDeadImages:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) },
+    boolean | { excludes: string[] | ((url: string) => boolean) },
   deadImages: Map<string, string>,
   file: VFile,
   lint?: boolean,
@@ -139,13 +138,6 @@ export const remarkImage =
         },
       };
     };
-    const getMdxAltAttribute = (alt = '') => {
-      return {
-        type: 'mdxJsxAttribute' as const,
-        name: 'alt',
-        value: alt,
-      };
-    };
 
     visit(tree, 'image', node => {
       const { alt, url } = node;
@@ -155,6 +147,10 @@ export const remarkImage =
 
       if (shouldCheckDeadImages) {
         resolveImage(url, file.path, docDirectory, deadImages);
+      }
+
+      if (lint) {
+        return;
       }
 
       const imagePath = normalizeImageUrl(url);
@@ -169,9 +165,13 @@ export const remarkImage =
         name: 'img',
         children: [],
         attributes: [
-          getMdxAltAttribute(alt),
+          {
+            type: 'mdxJsxAttribute',
+            name: 'alt',
+            value: alt ?? '',
+          },
           getMdxSrcAttribute(tempVariableName),
-        ].filter(Boolean),
+        ],
       });
 
       images.push(getDefaultImportAstNode(tempVariableName, imagePath));
@@ -187,15 +187,19 @@ export const remarkImage =
         return;
       }
 
+      if (!lint && !getNodeAttribute(node, 'alt', true)) {
+        // An authored JSX spread can still provide its own alt text.
+        node.attributes.unshift({
+          type: 'mdxJsxAttribute',
+          name: 'alt',
+          value: '',
+        });
+      }
+
       const srcAttr = getNodeAttribute(node, 'src', true);
 
       if (typeof srcAttr?.value !== 'string') {
         return;
-      }
-
-      const altAttr = getNodeAttribute(node, 'alt', true);
-      if (!altAttr) {
-        node.attributes.push(getMdxAltAttribute());
       }
 
       if (shouldCheckDeadImages) {

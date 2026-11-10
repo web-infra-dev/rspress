@@ -1,0 +1,7 @@
+cases:
+  - name: EXTRA-04 Read imported Markdown as source text
+    tags: [original-additional]
+    steps:
+      - app.open: { fixture: basic, path: / }
+      - aiAct: Bring the raw Markdown source block in the Hello world article into view.
+      - aiAssert: The source block displays the literal heading marker in # Raw Markdown and the sentence This file should be imported as source text.

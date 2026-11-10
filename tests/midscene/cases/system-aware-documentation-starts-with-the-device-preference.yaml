@@ -1,0 +1,9 @@
+cases:
+  - name: THEME-03 System-aware documentation starts with the device preference
+    tags: [original-theme-config]
+    steps:
+      - app.open: { fixture: basic-system, path: /, colorScheme: dark }
+      - aiAct: Bring the Hello world article and its top appearance switch into view. Do not change the theme yet.
+      - aiAssert: The page initially uses the device's dark reading theme and displays an appearance switch.
+      - aiAct: Use the appearance switch to change the page to light mode.
+      - aiAssert: The article uses a light reading theme.

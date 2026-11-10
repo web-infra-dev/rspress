@@ -1,0 +1,8 @@
+cases:
+  - name: READ-02 Mobile hash navigation closes its menu
+    tags: [original-hash]
+    steps:
+      - app.open:
+          { fixture: nav-link-item-with-hash, path: /, viewport: mobile }
+      - aiAct: Open the mobile navigation menu and select PageC.
+      - aiAssert: contentC is visible and the mobile menu is closed.

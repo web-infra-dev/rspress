@@ -205,17 +205,15 @@ async function metaFileItemToSidebarItem(
   extensions: string[],
   mdFileSet: Set<string>,
 ): Promise<SidebarItem | null> {
-  let metaItem: FileSideMeta | null = null;
-  if (typeof metaItemRaw === 'string') {
-    metaItem = {
-      name: metaItemRaw,
-      type: 'file',
-    };
-  } else {
-    metaItem = metaItemRaw;
-  }
+  const metaItem: FileSideMeta =
+    typeof metaItemRaw === 'string'
+      ? {
+          name: metaItemRaw,
+          type: 'file',
+        }
+      : metaItemRaw;
 
-  const { name, context, label, overviewHeaders, tag } = metaItem;
+  const { name, context, icon, label, overviewHeaders, tag } = metaItem;
   const metaFilePath = join(workDir, '_meta.json');
 
   if (typeof name !== 'string') {
@@ -247,10 +245,12 @@ async function metaFileItemToSidebarItem(
     docsDir,
   );
   const title = label || info.title;
+  const sidebarIcon = info.icon || icon;
   mdFileSet.add(absolutePathWithExt);
   return {
     text: title,
     link,
+    ...(sidebarIcon ? { icon: sidebarIcon } : {}),
     tag: info.tag || tag,
     overviewHeaders: info.overviewHeaders || overviewHeaders,
     context: info.context || context,
@@ -272,6 +272,7 @@ async function metaDirItemToSidebarItem(
     label,
     collapsible,
     collapsed,
+    icon: metaJsonIcon,
     tag: metaJsonTag,
     context: metaJsonContext,
     overviewHeaders: metaJsonOverviewHeaders,
@@ -319,10 +320,7 @@ async function metaDirItemToSidebarItem(
       ),
     );
     return items.flat().filter(Boolean) as (
-      | SidebarItem
-      | SidebarGroup
-      | SidebarDivider
-      | SidebarSectionHeader
+      SidebarItem | SidebarGroup | SidebarDivider | SidebarSectionHeader
     )[];
   }
 
@@ -343,7 +341,7 @@ async function metaDirItemToSidebarItem(
       throw new Error(`Excluded route: ${name}`);
     }
 
-    const { link, text, _fileKey, context, overviewHeaders, tag } =
+    const { link, text, _fileKey, context, icon, overviewHeaders, tag } =
       sameNameFile;
     return {
       text: label || text || name,
@@ -351,6 +349,7 @@ async function metaDirItemToSidebarItem(
       collapsed,
       items: await getItems(),
       link,
+      ...(metaJsonIcon || icon ? { icon: metaJsonIcon || icon } : {}),
       tag: metaJsonTag || tag,
       overviewHeaders: metaJsonOverviewHeaders || overviewHeaders,
       context: metaJsonContext || context,
@@ -376,6 +375,7 @@ async function metaDirItemToSidebarItem(
         collapsible,
         collapsed,
         items: await getItems(),
+        ...(metaJsonIcon ? { icon: metaJsonIcon } : {}),
         tag: metaJsonTag,
         overviewHeaders: metaJsonOverviewHeaders,
         context: metaJsonContext,
@@ -397,6 +397,7 @@ async function metaDirItemToSidebarItem(
           collapsible,
           collapsed,
           items: await getItems(),
+          ...(metaJsonIcon ? { icon: metaJsonIcon } : {}),
           tag: metaJsonTag,
           overviewHeaders: metaJsonOverviewHeaders,
           context: metaJsonContext,
@@ -404,13 +405,15 @@ async function metaDirItemToSidebarItem(
         } satisfies SidebarGroup;
       }
 
-      const { link, text, _fileKey, context, overviewHeaders, tag } = indexFile;
+      const { link, text, _fileKey, context, icon, overviewHeaders, tag } =
+        indexFile;
       return {
         text: label || text || name,
         collapsible,
         collapsed,
         items: await getItems(!forceIndexFileAsItem),
         link,
+        ...(metaJsonIcon || icon ? { icon: metaJsonIcon || icon } : {}),
         tag: metaJsonTag || tag,
         overviewHeaders: metaJsonOverviewHeaders || overviewHeaders,
         context: metaJsonContext || context,
@@ -437,6 +440,7 @@ async function metaDirSectionHeaderItemToSidebarItem(
 
   const fakeSectionHeaderMetaItem: SectionHeaderMeta = {
     label: metaItem.label,
+    icon: metaItem.icon,
     tag: metaItem.tag,
     type: 'section-header',
   };
@@ -474,6 +478,7 @@ function metaCustomLinkItemToSidebarItem(
       label,
       link,
       context,
+      icon,
       items,
       tag,
       collapsed,
@@ -483,6 +488,7 @@ function metaCustomLinkItemToSidebarItem(
     return {
       text: label ?? link,
       context,
+      ...(icon ? { icon } : {}),
       tag,
       link,
       items: items.map(subItem =>
@@ -498,12 +504,13 @@ function metaCustomLinkItemToSidebarItem(
     } satisfies SidebarGroup;
   }
   if ('link' in metaItem && typeof metaItem.link === 'string') {
-    const { label, link, context, tag } = metaItem;
+    const { label, link, context, icon, tag } = metaItem;
 
     if (isExternalUrl(link)) {
       return {
         text: label ?? link,
         link,
+        ...(icon ? { icon } : {}),
         tag,
         context,
       } satisfies SidebarItem;
@@ -512,6 +519,7 @@ function metaCustomLinkItemToSidebarItem(
     return {
       text: label ?? link,
       link: addRoutePrefix(workDir, docsDir, link),
+      ...(icon ? { icon } : {}),
       tag,
       context,
     } satisfies SidebarItem;
@@ -534,9 +542,10 @@ function metaSectionHeaderToSidebarItem(
   metaItem: SectionHeaderMeta,
 ): SidebarSectionHeader {
   // section header
-  const { label, tag } = metaItem;
+  const { icon, label, tag } = metaItem;
   return {
     sectionHeaderText: label ?? '',
+    ...(icon ? { icon } : {}),
     tag,
   } satisfies SidebarSectionHeader;
 }

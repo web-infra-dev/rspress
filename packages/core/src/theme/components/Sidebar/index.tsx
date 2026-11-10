@@ -67,6 +67,7 @@ function SidebarListItem(props: {
     return (
       <SidebarSectionHeader
         key={index}
+        icon={item.icon}
         sectionHeaderText={item.sectionHeaderText}
         tag={item.tag}
       />

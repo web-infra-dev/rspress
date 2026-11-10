@@ -1,0 +1,7 @@
+cases:
+  - name: DOC-01 Find deployment instructions using search
+    tags: [search]
+    steps:
+      - app.open: { path: / }
+      - aiAct: Open documentation search, search for "Deployment", and open the Deployment page from the results.
+      - aiAssert: The Deployment article is open, with "Publish your documentation" and instructions to upload the doc_build directory.

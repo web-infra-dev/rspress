@@ -1,6 +1,7 @@
 import type { loadConfig, RsbuildConfig } from '@rsbuild/core';
 import type { RehypeShikiOptions } from '@shikijs/rehype';
 import type { ZoomOptions } from 'medium-zoom';
+import type { ComponentType, ReactElement } from 'react';
 import type { PluggableList } from 'unified';
 import type { AdditionalPage, RspressPlugin } from './Plugin';
 import type {
@@ -8,14 +9,22 @@ import type {
   NormalizedThemeConfig as NormalizedDefaultThemeConfig,
 } from './theme';
 import type { I18nText } from './theme/i18nText';
+import type { SitemapOptions } from './sitemap';
+
+export type { SitemapOptions } from './sitemap';
 
 // #region theme
 export type { I18nText } from './theme/i18nText';
 export type {
+  DarkMode,
   EditLink,
   Footer,
+  LastUpdated,
+  LastUpdatedAuthor,
   LlmsUI,
   LlmsViewOption,
+  NormalizedDarkMode,
+  NormalizedLastUpdated,
   NormalizedLocales,
   NormalizedThemeConfig,
   ThemeConfig,
@@ -46,9 +55,9 @@ export type { AdditionalPage, RspressPlugin, RspressPlugin as Plugin };
 
 export interface Route {
   path: string;
-  element: React.ReactElement;
+  element: ReactElement;
   filePath: string;
-  preload: () => Promise<PageModule<React.ComponentType<unknown>>>;
+  preload: () => Promise<PageModule<ComponentType<unknown>>>;
   lang: string;
 }
 
@@ -90,8 +99,90 @@ interface RemarkSplitMdxOptions {
 }
 // #endregion
 
+export interface LlmsTxtPage {
+  /**
+   * The route path of the page.
+   */
+  routePath: string;
+  /**
+   * The URL of the generated Markdown file.
+   */
+  link: string;
+  /**
+   * The title of the page.
+   */
+  title: string;
+  /**
+   * The description of the page.
+   */
+  description?: string;
+  /**
+   * The frontmatter of the page.
+   */
+  frontmatter: FrontMatterMeta;
+  /**
+   * The language of the page.
+   */
+  lang: string;
+  /**
+   * The version of the page.
+   */
+  version: string;
+}
+
+export interface LlmsTxtSection {
+  /**
+   * The title of the section, derived from navigation.
+   */
+  title: string;
+  /**
+   * Pages in navigation and sidebar order.
+   */
+  pages: LlmsTxtPage[];
+}
+
+export interface LlmsTxtContext {
+  /**
+   * The site title.
+   */
+  title: string | undefined;
+  /**
+   * The site description.
+   */
+  description: string | undefined;
+  /**
+   * The language of the generated llms.txt.
+   */
+  lang: string;
+  /**
+   * The version of the generated llms.txt.
+   */
+  version: string;
+  /**
+   * The configured base path.
+   */
+  base: string;
+  /**
+   * The configured site origin.
+   */
+  siteOrigin: string | undefined;
+  /**
+   * Page sections in navigation order.
+   */
+  sections: LlmsTxtSection[];
+}
+
+export type LlmsTxtRenderer = (
+  context: LlmsTxtContext,
+) => string | Promise<string>;
+
 export interface RouteMeta {
   routePath: string;
+  /**
+   * Route path without language and version prefixes.
+   */
+  pureRoutePath: string;
+  /** Native absolute file system path. */
   absolutePath: string;
   relativePath: string;
   pageName: string;
@@ -126,9 +217,18 @@ export interface UserConfig {
    */
   root?: string;
   /**
-   * Path to the logo file in nav bar.
+   * Path to the logo file in nav bar. The object form can also provide the
+   * image's intrinsic dimensions to avoid layout shifts.
+   * @default ''
    */
-  logo?: string | { dark: string; light: string };
+  logo?:
+    | string
+    | {
+        dark: string;
+        light: string;
+        width?: number;
+        height?: number;
+      };
   /**
    * The text of the logo in nav bar.
    * @default ''
@@ -145,7 +245,17 @@ export interface UserConfig {
    */
   base?: string;
   /**
+   * Origin of the site, such as `https://example.com`.
+   */
+  siteOrigin?: string;
+  /**
+   * Generate sitemap.xml during production builds.
+   * @default true
+   */
+  sitemap?: boolean | SitemapOptions;
+  /**
    * Path to html icon file.
+   * @default ''
    */
   icon?: string | URL;
   /**
@@ -179,11 +289,12 @@ export interface UserConfig {
   locales?: Locale[];
   /**
    * The i18n text data source path. Default is `i18n.json` in cwd.
-   * @default '<cwd>/i18n.json'
+   * @default path.join(process.cwd(), 'i18n.json')
    */
   i18nSourcePath?: string;
   /**
    * The i18n text data.
+   * @default {}
    */
   i18nSource?:
     | (I18nText & Record<string, Record<string, string>>)
@@ -214,18 +325,22 @@ export interface UserConfig {
   plugins?: RspressPlugin[];
   /**
    * Replace rule, will replace the content of the page.
+   * @default []
    */
   replaceRules?: ReplaceRule[];
   /**
    * Output directory
+   * @default 'doc_build'
    */
   outDir?: string;
   /**
    * User side custom theme directory
+   * @default path.join(process.cwd(), 'theme')
    */
   themeDir?: string;
   /**
    * Global components
+   * @default []
    */
   globalUIComponents?: (string | [string, object])[];
   /**
@@ -237,7 +352,10 @@ export interface UserConfig {
    */
   search?: SearchOptions;
   /**
-   * Whether to enable ssg
+   * Whether to prerender page content into HTML at build time (SSG).
+   * Set to `false` to generate HTML shells for client-side rendering instead.
+   * This does not disable SSG-MD or llms.txt generation, which are controlled
+   * independently by `llms`.
    * @default true
    */
   ssg?:
@@ -250,24 +368,40 @@ export interface UserConfig {
         experimentalWorker?: boolean;
         /**
          * After enabled, some pages will not be rendered by SSG, and they will directly use html under CSR. This is suitable for SSG errors in large document sites bypassing a small number of pages. It is not recommended to enable this option actively.
+         * Only affects SSG, not SSG-MD. If excluded pages are not SSR-compatible,
+         * fix their SSR compatibility or set `llms: false` to disable SSG-MD.
          * @default []
          */
         experimentalExcludeRoutePaths?: (string | RegExp)[];
       };
 
   /**
-   * Whether to enable llms and ssg-md
-   * @default false
-   * @experimental
+   * Whether to render pages to Markdown (SSG-MD) and generate llms.txt and
+   * llms-full.txt at build time.
+   * Independent of `ssg`: these files are still generated when `ssg: false`.
+   * Set to `false` to disable these outputs without affecting SSG.
+   * @default true
    */
   llms?:
     | boolean
     | {
         /**
+         * Customize the content of generated llms.txt files.
+         * @experimental
+         */
+        llmsTxt?: LlmsTxtRenderer;
+        /**
          * @experimental
          */
         remarkSplitMdxOptions?: RemarkSplitMdxOptions;
       };
+  /**
+   * Expose built-in documentation tools through the browser WebMCP API.
+   * Markdown tools require `llms: true` in production.
+   * @default true
+   * @experimental
+   */
+  webMcp?: boolean | { exposedTo?: string[] };
   /**
    * Whether to enable medium-zoom
    * @default true
@@ -297,14 +431,17 @@ export interface UserConfig {
   languageParity?: {
     /**
      * Whether to enable language parity checking
+     * @default false
      */
     enabled?: boolean;
     /**
      * Directories to include in the parity check
+     * @default []
      */
     include?: string[];
     /**
      * Directories to exclude from the parity check
+     * @default []
      */
     exclude?: string[];
   };
@@ -329,6 +466,7 @@ export interface PageDataLegacy {
     headingTitle?: string;
     pagePath: string;
     lastUpdatedTime?: string;
+    lastUpdatedAuthor?: string;
     description?: string;
     pageType: PageType;
     [key: string]: unknown;
@@ -337,6 +475,7 @@ export interface PageDataLegacy {
 
 export interface SiteData {
   base: string;
+  siteOrigin: string;
   lang: string;
   route: RouteOptions;
   locales: { lang: string; label: string }[];
@@ -344,7 +483,14 @@ export interface SiteData {
   description: string;
   icon: string;
   themeConfig: NormalizedDefaultThemeConfig;
-  logo: string | { dark: string; light: string };
+  logo:
+    | string
+    | {
+        dark: string;
+        light: string;
+        width?: number;
+        height?: number;
+      };
   logoText: string;
   logoHref: string;
   search: SearchOptions;
@@ -426,7 +572,7 @@ export interface Feature {
   link?: string;
 }
 
-export interface PageModule<T extends React.ComponentType<unknown>> {
+export interface PageModule<T extends ComponentType<unknown>> {
   default: T;
   frontmatter?: FrontMatterMeta;
   content?: string;
@@ -442,6 +588,7 @@ export interface FrontMatterMeta {
   pageType?: PageType;
   features?: Feature[];
   hero?: Hero;
+  icon?: string;
   tag?: string;
 
   // ui
@@ -455,13 +602,15 @@ export interface FrontMatterMeta {
   titleSuffix?: string;
   head?: [string, Record<string, string>][];
   context?: string;
+  // set to false to exclude the page from the built-in search index
+  search?: boolean;
   [key: string]: unknown;
 }
 
 export interface RouteOptions {
   /**
    * The extension name of the filepath that will be converted to a route
-   * @default ['js','jsx','ts','tsx','md','mdx']
+   * @default ['.js', '.jsx', '.ts', '.tsx', '.md', '.mdx']
    */
   extensions?: string[];
   /**
@@ -481,9 +630,38 @@ export interface RouteOptions {
   excludeConvention?: string[];
   /**
    * use links without .html files
-   * @default false
+   * @default true
    */
   cleanUrls?: boolean;
+  /**
+   * Normalize non-canonical browser URLs to the format selected by `cleanUrls`
+   * with the History API.
+   *
+   * When `cleanUrls` is enabled, regular page routes omit the trailing slash
+   * while directory index routes retain it. Otherwise, routes use `.html`
+   * URLs. This client-side fallback does not replace server-side 301/308
+   * redirects.
+   * @default true
+   */
+  cleanUrlsRedirect?: boolean;
+  /**
+   * How to redirect first-time visitors to the closest configured locale
+   * based on their browser language.
+   * @default 'auto'
+   */
+  localeRedirect?: 'auto' | 'never' | 'only-default-lang';
+  /**
+   * Enable concurrent, optimized routing for internal links rendered by
+   * Rspress' default Link component.
+   * @default true
+   */
+  useTransitions?: boolean;
+  /**
+   * Whether to enable prefetching for matching internal routes from Rspress'
+   * default Link component.
+   * @default true
+   */
+  prefetchLink?: boolean;
 }
 
 export interface SearchHooks {
@@ -515,8 +693,12 @@ export type RemarkLinkOptions = {
    * @default true
    */
   checkDeadLinks?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
+  /**
+   * Whether to enable dead anchor checks
+   * @default true
+   */
+  checkAnchors?: boolean | { excludes: string[] | ((url: string) => boolean) };
   /**
    * [](/v3/zh/guide) [](/zh/guide) [](/guide) will be regarded as the same [](/v3/zh/guide) according to the directory.
    * @default true
@@ -530,15 +712,29 @@ export type RemarkImageOptions = {
    * @default true
    */
   checkDeadImages?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
 };
 
 export interface MarkdownOptions {
+  /**
+   * @default []
+   */
   remarkPlugins?: PluggableList;
+  /**
+   * @default []
+   */
   rehypePlugins?: PluggableList;
+  /**
+   * @default { checkDeadLinks: true, checkAnchors: true, autoPrefix: true }
+   */
   link?: RemarkLinkOptions;
+  /**
+   * @default { checkDeadImages: true }
+   */
   image?: RemarkImageOptions;
+  /**
+   * @default false
+   */
   showLineNumbers?: boolean;
   /**
    * Whether to wrap code by default
@@ -563,6 +759,7 @@ export interface MarkdownOptions {
   };
   /**
    * Register global components in mdx files
+   * @default []
    */
   globalComponents?: string[];
   /**

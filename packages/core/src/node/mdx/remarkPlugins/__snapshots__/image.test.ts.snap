@@ -1,11 +1,11 @@
 // Rstest Snapshot v1
 
-exports[`mdx > basic 1`] = `
+exports[`mdx > transforms relative image paths 1`] = `
 "import {Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs} from "react/jsx-runtime";
 import {useMDXComponents as _provideComponents} from "@mdx-js/react";
 import image0 from "./test3.jpg";
 import image1 from "./test4.png";
-import {Callout as $$$callout$$$} from "@theme";
+import {Callout as $$$callout$$$} from "@rspress/core/theme";
 function _createMdxContent(props) {
   const _components = {
     img: "img",
@@ -21,7 +21,7 @@ function _createMdxContent(props) {
       })
     }), "\\n", _jsx("img", {
       src: image1,
-      alt: ""
+      alt: "alt2"
     })]
   });
 }

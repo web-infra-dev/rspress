@@ -1,6 +1,6 @@
 import { access, readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
 /**
@@ -32,15 +32,15 @@ test.describe('plugin-llms', async () => {
     await runBuildCommand(appDir);
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms.txt')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'llms.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms-full.txt')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'llms-full.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'index.md')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'index.md')),
     ).toBeTruthy();
 
     // Verify llms.txt content: nav sections should group routes correctly
@@ -52,17 +52,33 @@ test.describe('plugin-llms', async () => {
     expect(llmsTxt).toContain('## Guide');
     expect(llmsTxt).toContain('## Api');
     // Guide routes should be grouped under Guide section
-    expect(llmsTxt).toContain('- [Guide](/guide/index.md)');
+    expect(llmsTxt).toContain(
+      '- [Guide](https://example.com/docs/guide/index.md)',
+    );
     // Api routes should be grouped under Api section
-    expect(llmsTxt).toContain('- [Commands](/api/commands.md)');
+    expect(llmsTxt).toContain(
+      '- [Commands](https://example.com/docs/api/commands.md)',
+    );
 
     // Verify llms-full.txt has markdown content with url frontmatter
     const llmsFullTxt = await readFile(
       path.resolve(appDir, 'doc_build', 'llms-full.txt'),
       'utf-8',
     );
-    expect(llmsFullTxt).toContain('url: /guide/index.md');
-    expect(llmsFullTxt).toContain('url: /api/commands.md');
+    expect(llmsFullTxt).toContain(
+      'url: https://example.com/docs/guide/index.md',
+    );
+    expect(llmsFullTxt).toContain(
+      'url: https://example.com/docs/api/commands.md',
+    );
+
+    const guideMd = await readFile(
+      path.resolve(appDir, 'doc_build', 'guide', 'index.md'),
+      'utf-8',
+    );
+    expect(guideMd).toContain(
+      '[API documentation](https://example.com/docs/api/index.md)',
+    );
   });
 
   test('should order llms.txt entries according to _meta.json', async () => {
@@ -114,23 +130,25 @@ test.describe('plugin-llms', async () => {
     await runBuildCommand(appDir, 'rspress-i18n.config.ts');
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms.txt')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'llms.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'llms-full.txt')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'llms-full.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'index.md')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'index.md')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'zh', 'llms.txt')),
+      await pathExists(path.resolve(appDir, 'doc_build', 'zh', 'llms.txt')),
     ).toBeTruthy();
 
     expect(
-      pathExists(path.resolve(appDir, 'doc_build', 'zh', 'llms-full.txt')),
+      await pathExists(
+        path.resolve(appDir, 'doc_build', 'zh', 'llms-full.txt'),
+      ),
     ).toBeTruthy();
 
     // Verify zh/llms.txt has Chinese content grouped by nav

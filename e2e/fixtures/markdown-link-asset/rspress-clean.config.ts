@@ -7,9 +7,9 @@ export default defineConfig({
   lang: 'en',
   route: {
     cleanUrls: true,
+    localeRedirect: 'never',
   },
   themeConfig: {
-    localeRedirect: 'never',
     locales: [
       {
         lang: 'zh',

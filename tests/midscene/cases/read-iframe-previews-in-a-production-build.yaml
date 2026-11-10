@@ -1,0 +1,13 @@
+cases:
+  - name: PREVIEW-05 Read iframe previews in a production build
+    tags:
+      [
+        stability-regression,
+        preview-frame-regression,
+        original-preview-render,
+        replacement-batch-4,
+      ]
+    steps:
+      - app.open: { fixture: plugin-preview, mode: production, path: / }
+      - aiAct: Stay on Guide and read the fixed device preview on the right. It renders three short lines of static demo output, not navigation links. Bring those rendered lines into view without clicking their text, navigating, or reading only the source code.
+      - aiAssert: In the rendered output area of the fixed device frame on the right, below Guide, three black text lines read Hello World Internal, Hello World External, and Render from JSON. Verify all three lines in that right-hand preview area. The source code on the left may repeat the same strings; matching text in source code alone does not satisfy this assertion.

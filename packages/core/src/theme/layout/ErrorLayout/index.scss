@@ -1,0 +1,52 @@
+.rp-error {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: 20vh;
+
+  &__description {
+    max-width: 28rem;
+    color: var(--rp-c-text-2);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+
+    button {
+      background: transparent;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--rp-c-brand);
+      outline-offset: 4px;
+    }
+  }
+
+  &__details {
+    margin-top: 2.5rem;
+    padding: 1rem 1.25rem;
+    width: 100%;
+    max-width: 56rem;
+    border: 1px solid var(--rp-c-divider);
+    border-radius: 0.75rem;
+    background: var(--rp-c-bg-soft);
+    text-align: left;
+
+    summary {
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    pre {
+      margin-top: 1rem;
+      overflow: auto;
+      max-height: 20rem;
+      font-size: 0.8125rem;
+      line-height: 1.7;
+    }
+  }
+}

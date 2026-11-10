@@ -1,0 +1,8 @@
+cases:
+  - name: OVERVIEW-03 Follow an anchor from a nested configuration overview
+    tags: [original-overviews, replacement-batch-3-overviews]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/config/nested.html }
+      - aiAssert: The overview has a Nested section containing the Nested config article entry and its Nested H2 link.
+      - aiAct: Follow Nested H2 in the overview article, not the sidebar or search.
+      - aiAssert: The Nested H2 article heading is visible.

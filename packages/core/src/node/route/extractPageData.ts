@@ -7,13 +7,11 @@ import {
   type ReplaceRule,
   type RouteMeta,
 } from '@rspress/shared';
-import { loadFrontMatter } from '@rspress/shared/node-utils';
+import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 import type { Node, Nodes, Root } from 'mdast';
 import remarkGFM from 'remark-gfm';
 import remarkParse from 'remark-parse';
-import type { Plugin } from 'unified';
 import { unified } from 'unified';
-import { remove } from 'unist-util-remove';
 import { importStatementRegex } from '../constants';
 import { parseToc } from '../mdx/remarkPlugins/toc';
 import { flattenMdxContent } from '../utils';
@@ -51,38 +49,10 @@ interface ExtractPageDataOptions {
 }
 
 /**
- * Remark plugin to remove code blocks from the AST
- * Used when searchCodeBlocks is false to exclude code from search index
+ * Cached processor instance for performance optimization
+ * Reusing the processor avoids the overhead of creating a new instance for each file
  */
-const remarkRemoveCodeBlocks: Plugin<[], Root> = () => {
-  return tree => {
-    remove(tree, 'code');
-  };
-};
-
-/**
- * Remark plugin to remove images from the AST
- * Images should not appear in search content
- */
-const remarkRemoveImages: Plugin<[], Root> = () => {
-  return tree => {
-    remove(tree, 'image');
-  };
-};
-
-/**
- * Cached processor instances for performance optimization
- * Reusing processors avoids the overhead of creating new instances for each file
- */
-const createProcessor = (searchCodeBlocks: boolean) =>
-  unified()
-    .use(remarkParse)
-    .use(remarkGFM)
-    .use(remarkRemoveImages)
-    .use(searchCodeBlocks ? [] : [remarkRemoveCodeBlocks]);
-
-const processorWithCode = createProcessor(true);
-const processorWithoutCode = createProcessor(false);
+const processor = unified().use(remarkParse).use(remarkGFM);
 
 /**
  * Extract text content from a node recursively
@@ -128,7 +98,11 @@ const SEARCH_BLOCK_TYPES = new Set([
 /**
  * Recursively extract raw text from the mdast
  */
-function extractSearchText(node: Nodes, codeblocks: boolean): Array<string> {
+function extractSearchText(
+  node: Nodes,
+  codeblocks: boolean,
+  parentType?: string,
+): Array<string> {
   const { type } = node;
 
   // Return an empty string for any kind of "non-content" node
@@ -145,19 +119,26 @@ function extractSearchText(node: Nodes, codeblocks: boolean): Array<string> {
     return ['\n'];
   }
 
-  // If we are text or inline code then just return that nodes value, for example `**test**` becomes `test`
-  if (type === 'text' || type === 'inlineCode') {
+  // If we are inline code then just return that nodes value, for example `**test**` becomes `test`
+  if (type === 'inlineCode') {
     return [node.value];
+  }
+
+  if (type === 'text') {
+    const value =
+      parentType === 'heading' ? extractTextAndId(node.value)[0] : node.value;
+    return [stripSearchMarkdownMarkers(value)];
   }
   // multiline code blocks are prefixed and suffixed with newlines
   if (type === 'code') {
-    return [`\n${node.value}\n`];
+    const value = stripSearchMarkdownMarkers(node.value);
+    return value ? [`\n${value}\n`] : [];
   }
 
   const result: Array<string> = [];
   if ('children' in node) {
     for (const child of node.children) {
-      result.push(...extractSearchText(child as Nodes, codeblocks));
+      result.push(...extractSearchText(child as Nodes, codeblocks, type));
     }
   }
 
@@ -257,6 +238,27 @@ const CONTAINER_DIRECTIVE_REGEX = /^\s*:::\s*(\w+)\s*(.*)?/;
  * Regex to match a closing container directive marker (:::)
  */
 const CONTAINER_DIRECTIVE_END_REGEX = /^\s*:::\s*$/;
+
+/**
+ * Regex to match GitHub alert markers ([!TIP], [!NOTE], etc.)
+ */
+const GITHUB_ALERT_MARKER_REGEX = /^\s*\[!\w+\]\s*$/;
+
+/**
+ * Strip markdown-only marker lines from search content while keeping their
+ * visible body searchable.
+ */
+function stripSearchMarkdownMarkers(text: string): string {
+  return text
+    .split('\n')
+    .filter(
+      line =>
+        !CONTAINER_DIRECTIVE_REGEX.test(line) &&
+        !CONTAINER_DIRECTIVE_END_REGEX.test(line) &&
+        !GITHUB_ALERT_MARKER_REGEX.test(line),
+    )
+    .join('\n');
+}
 
 /**
  * Remove container directive blocks (:::tip ... :::) from text.
@@ -390,9 +392,6 @@ async function getPageIndexInfoByRoute(
   // Normalize line endings to LF for cross-platform consistency
   content = content.replace(/\r\n/g, '\n');
 
-  // Use cached processor based on searchCodeBlocks config
-  const processor = searchCodeBlocks ? processorWithCode : processorWithoutCode;
-
   // Parse markdown to AST
   const tree = processor.parse(content);
 
@@ -421,12 +420,9 @@ async function getPageIndexInfoByRoute(
     } satisfies PageIndexInfo;
   }
 
-  // Run plugins and stringify to markdown for search content
-  const processedTree = await processor.run(tree);
-
   // Walk the AST to extract plain text content and compute heading positions
   const { content: processedContent, toc } = buildSearchContent(
-    processedTree as Root,
+    tree,
     rawToc,
     searchCodeBlocks,
   );

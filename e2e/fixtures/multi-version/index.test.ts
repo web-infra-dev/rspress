@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('Multi version test', async () => {
+test.describe('multi version', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
@@ -16,12 +16,55 @@ test.describe('Multi version test', async () => {
     }
   });
 
+  test('uses the target locale and version on a missing page', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+    await page.getByRole('button', { name: 'Missing localized page' }).click();
+    await expect(page.getByTestId('page-context')).toHaveText('v2|zh');
+    await expect(page.locator('h1')).toHaveText('页面未找到');
+    await expect(
+      page.getByRole('link', { name: 'go to home' }),
+    ).toHaveAttribute('href', '/base/v2/zh/');
+    await page.getByRole('link', { name: 'go to home' }).click();
+    await expect(page.locator('h1')).toContainText('v2 中文');
+  });
+
   test('Default version and default language', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base`, {
       waitUntil: 'networkidle',
     });
     const h1 = page.locator('h1');
     await expect(h1).toContainText('v1');
+  });
+
+  test('language and version switchers work in desktop and tablet navigation', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+
+    const desktopSwitchers = page.locator(
+      '.rp-nav__others > ul > li.rp-nav-menu__item',
+    );
+    await expect(desktopSwitchers).toHaveCount(2);
+    const languageSwitcher = desktopSwitchers.filter({ hasText: 'English' });
+    await languageSwitcher.hover();
+    await expect(
+      languageSwitcher.getByRole('link', { name: '简体中文' }),
+    ).toBeVisible();
+
+    await page.setViewportSize({ width: 1024, height: 768 });
+    await page.locator('.rp-nav-hamburger__md').hover();
+    const versionSwitcher = page.locator(
+      '.rp-nav-hamburger__md + .rp-hover-group ul > li.rp-nav-menu__item',
+    );
+    await versionSwitcher.hover();
+    await versionSwitcher.getByRole('link', { name: 'v2' }).click();
+    await expect(page.locator('h1')).toContainText('v2');
   });
 
   test('Not Default version default language', async ({ page }) => {

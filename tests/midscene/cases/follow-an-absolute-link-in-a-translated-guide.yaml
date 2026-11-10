@@ -1,0 +1,13 @@
+cases:
+  - name: NAV-10 Follow an absolute link in a translated guide
+    tags:
+      [
+        original-locale-links,
+        replacement-batch-2-navigation,
+        replacement-batch-6,
+      ]
+    steps:
+      - app.open: { fixture: i18n, path: /en/guide/basic/quick-start }
+      - aiAssert: The English sidebar displays Basic and the section heading Growth.
+      - aiAct: Follow click by absolute path inside the article, not a sidebar link.
+      - aiAssert: The Install article is visible and the navigation language remains English.

@@ -1,0 +1,9 @@
+cases:
+  - name: DOC-02 Follow the getting-started guide to deployment
+    tags: [navigation]
+    steps:
+      - app.open: { path: / }
+      - aiAct: Open the Getting started article using the sidebar.
+      - aiAssert: The Getting started article contains pnpm install and pnpm dev commands.
+      - aiAct: Follow the Deployment guide link in Next steps.
+      - aiAssert: The Deployment article is open and contains the pnpm build command.

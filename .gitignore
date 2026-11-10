@@ -13,8 +13,6 @@
 *.lcov
 lib-cov
 
-.husky
-
 node_modules/
 .npm
 .lock-wscript
@@ -40,8 +38,6 @@ log/
 
 **/*/typings/auto-generated
 
-.changeset/pre.json
-
 .pnpm-store/
 .agents/skills/
 .cursor/skills/
@@ -51,10 +47,9 @@ modern.config.local.ts
 modern.config.local.js
 modern.config.local.mjs
 
-doc_build/
-.nx/
-.nx-cache/
+doc_build*/
 test-results/
+.rstest/
 
 playwright-report/
 
@@ -69,6 +64,9 @@ e2e/fixtures/plugin-typedoc/multi/doc/api/**/*.md
 meta-json-schema.json
 nav-json-schema.json
 
+# create-rspress generated templates
+packages/create-rspress/template-basic-theme/
+packages/create-rspress/template-i18n-theme/
 
 # website og fonts
 website/og-fonts/

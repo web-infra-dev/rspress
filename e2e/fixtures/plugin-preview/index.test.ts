@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -11,7 +11,7 @@ import {
 
 const HMR_TEST_FILE = path.resolve(import.meta.dirname, 'doc/hmr.mdx');
 
-test.describe('plugin test', async () => {
+test.describe('plugin preview development', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
@@ -142,6 +142,46 @@ test.describe('plugin test', async () => {
     await expect(iframeFollowHtml).not.toHaveClass(/dark/);
     await expect(fixedIframeHtml).not.toHaveClass(/dark/);
   });
+
+  test('iframe-follow resizer', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(`http://localhost:${appPort}/mixed`, {
+      waitUntil: 'networkidle',
+    });
+
+    const block = page.locator('.rp-preview--iframe-follow').first();
+    const resizer = block.locator('.rp-preview--iframe-follow__resizer');
+    const device = block.locator('.rp-preview--iframe-follow__device');
+    await expect(resizer).toBeVisible();
+
+    const initial = (await device.boundingBox())!.width;
+    const box = (await resizer.boundingBox())!;
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x - 50, y, { steps: 5 });
+    await page.mouse.move(x - 100, y, { steps: 5 });
+    await page.mouse.up();
+
+    const resized = (await device.boundingBox())!.width;
+    expect(Math.abs(resized - initial - 100)).toBeLessThanOrEqual(2);
+
+    // keyboard
+    await resizer.focus();
+    await page.keyboard.press('ArrowRight');
+    const afterKey = (await device.boundingBox())!.width;
+    expect(Math.abs(resized - afterKey - 16)).toBeLessThanOrEqual(2);
+
+    // double-click resets
+    await resizer.dblclick();
+    const reset = (await device.boundingBox())!.width;
+    expect(Math.abs(reset - initial)).toBeLessThanOrEqual(2);
+
+    // hidden in column layout
+    await page.setViewportSize({ width: 800, height: 900 });
+    await expect(resizer).toBeHidden();
+  });
 });
 
 test.describe('plugin preview build', async () => {
@@ -184,6 +224,33 @@ test.describe('plugin preview build', async () => {
     expect(internalDemoCodePreview).toBe('Hello World Internal');
     expect(externalDemoCodePreview).toBe('Hello World External');
     expect(transformedCodePreview).toBe('Render from JSON');
+  });
+
+  test('build should skip demo output without iframe previews', async ({
+    page,
+  }) => {
+    const appDir = import.meta.dirname;
+    const noIframePort = await getPort();
+    const distDir = path.join(appDir, 'doc_build');
+
+    await fs.rm(distDir, { recursive: true, force: true });
+    await runBuildCommand(appDir, 'rspress.no-iframe.config.ts');
+    const noIframeApp = await runPreviewCommand(appDir, noIframePort, [
+      '-c',
+      'rspress.no-iframe.config.ts',
+    ]);
+
+    try {
+      await page.goto(`http://localhost:${noIframePort}`, {
+        waitUntil: 'networkidle',
+      });
+      await expect(page.locator('.rp-preview--internal__card')).toContainText(
+        'Internal preview only',
+      );
+      await expect(fs.access(path.join(distDir, '~demo'))).rejects.toThrow();
+    } finally {
+      await killProcess(noIframeApp);
+    }
   });
 });
 

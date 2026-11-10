@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('basic test', async () => {
+test.describe('navigation links with hashes', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
@@ -22,10 +22,10 @@ test.describe('basic test', async () => {
     });
 
     await page.locator('.rp-nav-menu__item a').first().click();
-    expect(page.url()).toContain('/#pageA');
+    await expect(page).toHaveURL(/\/#pageA$/);
 
     await page.locator('.rp-nav-menu__item a').nth(1).click();
-    expect(page.url()).toContain('/#pageB');
+    await expect(page).toHaveURL(/\/#pageB$/);
   });
 
   test('Close the hamburger menu when clicking on an item in mobile view', async ({
@@ -42,6 +42,8 @@ test.describe('basic test', async () => {
     await expect(navScreen).toHaveClass(/rp-nav-screen--open/);
 
     await page.getByRole('link', { name: 'PageC' }).click();
-    expect(await navScreen.isVisible()).toBe(false);
+    await expect(page).toHaveURL(/\/#pageC$/);
+    await expect(navScreen).not.toBeVisible();
+    await expect(page.locator('#pageC')).toBeInViewport();
   });
 });

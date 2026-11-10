@@ -1,10 +1,16 @@
 [
   {
     "text": "Guide",
-    "link": "/guide/"
+    "link": "/guide/",
+    "icon": "<svg viewBox=\"0 0 32 32\" fill=\"currentColor\"><path d=\"M19 10h7v2h-7zm0 5h7v2h-7zm0 5h7v2h-7zM6 10h7v2H6zm0 5h7v2H6zm0 5h7v2H6z\"/><path d=\"M28 5H4a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2ZM4 7h11v18H4V7Zm13 18V7h11v18H17Z\"/></svg>"
   },
   {
     "text": "Api",
     "link": "/api/"
+  },
+  {
+    "text": "Sidebar Icon",
+    "link": "/sidebar-icon/",
+    "icon": "/sidebar-panel.svg"
   }
 ]

@@ -1,9 +1,11 @@
-import Slugger from '@rspress/shared/github-slugger';
+import Slugger, { slug } from '@rspress/shared/github-slugger';
 import { extractTextAndId } from '@rspress/shared/node-utils';
 import type { Root as HastRoot } from 'hast';
 import type { Root as MdastRoot } from 'mdast';
 import type { Plugin } from 'unified';
 import { visitChildren } from 'unist-util-visit-children';
+import type { VFile } from 'vfile';
+import type { RouteService } from '../../route/RouteService';
 import type { PageMeta } from '../types';
 
 export interface TocItem {
@@ -24,24 +26,43 @@ interface Heading {
   children?: ChildNode[];
 }
 
-const extractChildText = (child: ChildNode): string => {
+const extractChildText = (
+  child: ChildNode,
+  preserveInlineMarkdown = true,
+): string => {
   if (child.type === 'link') {
-    return child.children?.map(extractChildText).join('') ?? '';
+    return (
+      child.children
+        ?.map(child => extractChildText(child, preserveInlineMarkdown))
+        .join('') ?? ''
+    );
   }
   if (child.type === 'strong') {
-    return `**${child.children?.map(extractChildText).join('') ?? ''}**`;
+    const text =
+      child.children
+        ?.map(child => extractChildText(child, preserveInlineMarkdown))
+        .join('') ?? '';
+    return preserveInlineMarkdown ? `**${text}**` : text;
   }
   if (child.type === 'emphasis') {
-    return `*${child.children?.map(extractChildText).join('') ?? ''}*`;
+    const text =
+      child.children
+        ?.map(child => extractChildText(child, preserveInlineMarkdown))
+        .join('') ?? '';
+    return preserveInlineMarkdown ? `*${text}*` : text;
   }
   if (child.type === 'delete') {
-    return `~~${child.children?.map(extractChildText).join('') ?? ''}~~`;
+    const text =
+      child.children
+        ?.map(child => extractChildText(child, preserveInlineMarkdown))
+        .join('') ?? '';
+    return preserveInlineMarkdown ? `~~${text}~~` : text;
   }
   if (child.type === 'text') {
     return child.value;
   }
   if (child.type === 'inlineCode') {
-    return `\`${child.value}\``;
+    return preserveInlineMarkdown ? `\`${child.value}\`` : child.value;
   }
   return '';
 };
@@ -49,14 +70,15 @@ const extractChildText = (child: ChildNode): string => {
 export const parseToc = (tree: MdastRoot | HastRoot) => {
   let title = '';
   const toc: TocItem[] = [];
+  const anchorIds: string[] = [];
   const slugger = new Slugger();
   visitChildren((node: Heading) => {
     if (node.type !== 'heading' || !node.depth || !node.children) {
       return;
     }
 
-    // Collect h1 ~ h4
-    if (node.depth >= 1 && node.depth < 5) {
+    // Collect h1 ~ h6 anchor ids, and only expose h2 ~ h4 in TOC.
+    if (node.depth >= 1 && node.depth <= 6) {
       let customId = '';
       const text = node.children
         .map((child: ChildNode) => {
@@ -69,11 +91,23 @@ export const parseToc = (tree: MdastRoot | HastRoot) => {
         })
         .join('')
         .trim();
+      const titleText = node.children
+        .map((child: ChildNode) => {
+          if (child.type === 'text') {
+            const [textPart] = extractTextAndId(child.value);
+            return textPart;
+          }
+          return extractChildText(child, false);
+        })
+        .join('')
+        .trim();
+
+      const id = customId ? customId : slugger.slug(text);
+      anchorIds.push(id);
 
       if (node.depth === 1) {
-        if (!title) title = text;
-      } else {
-        const id = customId ? customId : slugger.slug(text);
+        if (!title) title = titleText;
+      } else if (node.depth < 5) {
         const { depth } = node;
         toc.push({ id, text, depth });
       }
@@ -82,18 +116,42 @@ export const parseToc = (tree: MdastRoot | HastRoot) => {
   return {
     title,
     toc,
+    anchorIds,
   };
 };
 
-export const remarkToc: Plugin<[], HastRoot> = function () {
+interface RemarkTocOptions {
+  routeService?: RouteService | null;
+  fallbackHeadingTitle?: boolean;
+}
+
+export const remarkToc: Plugin<[RemarkTocOptions?], HastRoot> = function (
+  options = {},
+) {
   const data = this.data() as {
     pageMeta: PageMeta;
   };
-  return (tree: HastRoot) => {
-    const { toc, title } = parseToc(tree);
+  return (tree: HastRoot, file: VFile) => {
+    const { toc, title, anchorIds } = parseToc(tree);
     data.pageMeta.toc = toc;
     if (title) {
       data.pageMeta.title = title;
+    }
+    if (file.path) {
+      const registeredAnchorIds = new Set(anchorIds);
+      const fallbackHeadingTitle = data.pageMeta.frontmatter?.title;
+      if (
+        !title &&
+        options.fallbackHeadingTitle !== false &&
+        typeof fallbackHeadingTitle === 'string'
+      ) {
+        const [fallbackHeadingText] = extractTextAndId(fallbackHeadingTitle);
+        const fallbackHeadingAnchorId = slug(fallbackHeadingText.trim());
+        if (fallbackHeadingAnchorId) {
+          registeredAnchorIds.add(fallbackHeadingAnchorId);
+        }
+      }
+      options.routeService?.setRouteAnchorIds(file.path, registeredAnchorIds);
     }
   };
 };

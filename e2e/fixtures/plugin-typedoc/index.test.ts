@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getNavbarItems, getSidebarTexts } from '../../utils/getSideBar';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
@@ -34,7 +34,7 @@ test.describe('plugin-typedoc single entry', async () => {
         'Function: createMiddleware()',
         'Function: mergeMiddlewares()',
         'Types',
-        'Type Alias: Middleware()',
+        'Type Alias: Middleware',
       ].join(','),
     );
   });
@@ -75,7 +75,7 @@ test.describe('plugin-typedoc multi entries', async () => {
         'Module: middleware',
         'Module: raw-link',
         'Types',
-        'Type Alias: Middleware()',
+        'Type Alias: Middleware',
       ].join(','),
     );
   });

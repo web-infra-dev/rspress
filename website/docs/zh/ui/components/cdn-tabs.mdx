@@ -1,0 +1,62 @@
+---
+description: CdnTabs CDN 资源标签组件，用于展示 npm 包中的 CSS 和 JavaScript 文件。
+overviewHeaders: []
+---
+
+import { CdnTabs } from '@rspress/core/theme';
+import { VersionBadge } from '../../../components/VersionBadge';
+
+# CdnTabs
+
+<VersionBadge version="2.1.0" />
+
+`CdnTabs` 会为 npm 包中的 CSS 和 JavaScript 文件生成 CDN 地址及 HTML 标签，默认展示 jsDelivr 和 unpkg 标签页。
+
+## 基础用法
+
+```mdx title="index.mdx"
+import { CdnTabs } from '@rspress/core/theme';
+
+<CdnTabs
+  package="bootstrap@5"
+  files={['dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js']}
+/>
+```
+
+<CdnTabs
+  package="bootstrap@5"
+  files={['dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js']}
+/>
+
+组件会为每个 CSS 文件生成 `<link rel="stylesheet">` 标签，并为每个 JavaScript 文件生成 `<script src>` 标签。文件路径相对于 npm 包根目录。
+
+## 选择 CDN
+
+使用 `cdns` 选择内置 CDN 并设置标签页顺序：
+
+```mdx preview title="index.mdx"
+import { CdnTabs } from '@rspress/core/theme';
+
+<CdnTabs
+  package="bootstrap@5"
+  files={['dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js']}
+  cdns={['unpkg', 'jsdelivr']}
+/>
+```
+
+所有 `CdnTabs` 组件共享 `cdn` 标签组，因此选中的标签页会同步切换。
+
+## 属性
+
+```ts
+type CdnName = 'jsdelivr' | 'unpkg';
+
+type CdnTabsProps = {
+  /** npm 包名和版本，例如 `bootstrap@5`。 */
+  package: string;
+  /** 相对于 npm 包根目录的 CSS 和 JavaScript 文件路径。 */
+  files: ReadonlyArray<string>;
+  /** 要展示的 CDN 及其顺序。默认为 jsDelivr 和 unpkg。 */
+  cdns?: ReadonlyArray<CdnName>;
+};
+```

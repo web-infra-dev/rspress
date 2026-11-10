@@ -1,0 +1,7 @@
+cases:
+  - name: AUDIT-11 Read custom sidebar link labels
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar, path: /api/index.html }
+      - aiAct: Inspect the left sidebar and expand its groups as needed to reveal Rspack Official Docsite and Inner SideBar Rspack Official Docsite. Do not follow these external links.
+      - aiAssert: Both Rspack Official Docsite and Inner SideBar Rspack Official Docsite are readable sidebar entries.

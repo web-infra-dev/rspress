@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [
     pluginPreview({
       iframeOptions: {
+        devPort: Number(process.env.RSPRESS_E2E_PREVIEW_PORT) || 7890,
         framework: 'react',
       },
       defaultPreviewMode: 'iframe-fixed',

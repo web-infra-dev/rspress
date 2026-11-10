@@ -1,12 +1,9 @@
-## Summary
+## Motivation
 
-## Related Issue
+<!-- Explain the problem or motivation and why it matters. Include relevant context and links to issues or discussions. -->
 
-<!--- Provide link of related issues -->
+## Changes
 
-## Checklist
+<!-- Describe how this PR addresses the motivation and what behavior changes. Focus on the key approach rather than a file-by-file summary. -->
 
-<!--- Check and mark with an "x" -->
-
-- [ ] Tests updated (or not required).
-- [ ] Documentation updated (or not required).
+<!-- For visual changes, include before and after screenshots. -->

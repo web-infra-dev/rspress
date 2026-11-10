@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('title-number test', async () => {
+test.describe('title numbering', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
   test.beforeAll(async () => {

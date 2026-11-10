@@ -1,3 +1,4 @@
+import { getShikiTransformers } from '@rspress/core/shiki-transformers';
 import type { CodeBlockProps } from '@rspress/core/theme';
 import { getCustomMDXComponent } from '@rspress/core/theme';
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
@@ -99,6 +100,7 @@ export function CodeBlockRuntime({
         lang,
         theme: cssVariablesTheme,
         ...shikiOptions,
+        transformers: getShikiTransformers(shikiOptions?.transformers),
       });
 
       // 1. for async race condition, only set child if the code is still the same

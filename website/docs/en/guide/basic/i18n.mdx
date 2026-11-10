@@ -1,77 +1,34 @@
 ---
-description: Implement document internationalization with i18n text data, language configuration, multi-language directory structure, and useI18n hook.
+description: Configure languages, organize multilingual docs, and localize navigation, with optional i18n text data and the useI18n hook.
 ---
 
-# Internationalization
+import { Tabs, Tab } from '@rspress/core/theme';
 
-To achieve document internationalization in Rspress, you need to do the following:
+# i18n
 
-1. Define I18n text data.
-1. Configure the language list, `locales` in `rspress.config.ts`.
-1. Configure the default language, `lang` in `rspress.config.ts`.
-1. Create documents in different language versions.
-1. Configure sidebar and navbar.
-1. Use `useI18n` in custom components.
+To internationalize a Rspress documentation site, complete the following steps:
 
-## Define I18n text data
+1. Configure the language list and default language in `rspress.config.ts`.
+1. Create docs and navigation files for each language.
 
-Create a new `i18n.json` in the current workspace, the directory structure is as follows:
+If your custom components need translated text, or you want to change the built-in UI text, see the optional sections below.
 
-```tree
-.
-├── docs
-├── i18n.json
-├── package.json
-├── tsconfig.json
-└── rspress.config.ts
-```
+## Configure `rspress.config.ts`
 
-In this JSON file, you can define the text needed for internationalization, the type definition is as follows:
+Edit `rspress.config.ts` to configure:
 
-```ts
-export interface I18n {
-  // key: text id
-  [key: string]: {
-    // key: language
-    [key: string]: string;
-  };
-}
-```
-
-For example:
-
-```json title="i18n.json"
-{
-  "gettingStarted": {
-    "en": "Getting Started",
-    "zh": "开始"
-  },
-  "features": {
-    "en": "Features",
-    "zh": "特性"
-  },
-  "guide": {
-    "en": "Guide",
-    "zh": "指南"
-  }
-}
-```
-
-These text data are used in both **config file** and **custom components**, which will be introduced in detail later.
-
-## Configure `locales`
-
-In `rspress.config.ts`, `locales` is used to configure the `lang`, `title`, `description` and other information of the site, mainly around the information of the site itself.
+- [`locales`](/api/config/config-basic#locales): The supported languages and site-level information for each language, such as `title` and `description`.
+- [`lang`](/api/config/config-basic#lang): The default site language. Its value should match a `lang` entry in `locales`.
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  // locales is an array of objects
+  lang: 'en',
   locales: [
     {
       lang: 'en',
-      // The label in nav bar to switch language
+      // The label in the navbar language switcher
       label: 'English',
       title: 'Rspress',
       description: 'Static Site Generator',
@@ -86,34 +43,24 @@ export default defineConfig({
 });
 ```
 
-:::tip Note
+:::tip
 
-`themeConfig.locales` also contains all the fields in `locales`. However, it will be removed in the future, please use `locales`.
+Rspress removes the language prefix from routes in the default language. With `lang: 'en'`, `/en/guide/start/introduction` becomes `/guide/start/introduction`, while the Chinese route keeps its prefix: `/zh/guide/start/introduction`.
 
 :::
 
-For other international theme parameters, please refer to [API type](/api/config/config-theme#locales).
+:::warning
 
-## Configure `lang` default language
+`themeConfig.locales` also contains all fields from `locales`, but it will be removed in the future. Use `locales` instead.
 
-After configure `locales`, you need to configure the default language of the document via [lang](/api/config/config-basic#lang), as shown in the following example:
+:::
 
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
+## Create docs for each language
 
-export default defineConfig({
-  lang: 'en',
-});
-```
-
-This is important because **for routes in the default language, Rspress will remove the language prefix**, such as `/en/guide/getting-started` will be converted to `/guide/getting-started`.
-
-## Create documents in different language versions
-
-After the above configuration, we can start to create documents in different language versions. It is very simple. We only need to create the following structure in the document root directory:
+Create a directory for each language under your docs root. The directory names should match the `lang` values in `locales`:
 
 ```tree
-├── doc
+├── docs
 │   ├── en
 │   │   ├── _nav.json
 │   │   ├── api
@@ -134,58 +81,186 @@ After the above configuration, we can start to create documents in different lan
 │       │       ├── introduction.mdx
 │       │       └── quick-start.mdx
 │       └── index.md
-├── i18n.json
 ├── package.json
 ├── rspress.config.ts
 └── tsconfig.json
-
 ```
 
-As you can see, we put documents in different languages in the `en` and `zh` directories under the `docs` directory, so that we can easily distinguish documents in different languages.
+Here, docs for different languages live in the `en` and `zh` directories under `docs`, making each language version easy to distinguish.
 
-## Configure \_nav.json and \_meta.json
-
-Through the \_meta.json file, we can configure the content of the nav bar and sidebar. For details, please refer to [Auto Nav/Sidebar](/guide/basic/auto-nav-sidebar).
+Within each language directory, use `_nav.json` and `_meta.json` to configure the navbar and sidebar. For details, see [Autogenerated navigation](/guide/basic/auto-nav-sidebar).
 
 ### Navigation bar \_nav.json
 
-In the \_nav.json configuration at the navigation bar level, you can specify `text` as an i18n key, for example:
+In each language's `_nav.json`, set `"text"` to the text for that language:
 
-```json title="_nav.json"
+<Tabs>
+<Tab label="docs/en/_nav.json">
+
+```json
 [
   {
-    "text": "guide",
+    "text": "Guide",
     "link": "/guide/start/introduction"
   },
   {
-    "text": "api",
+    "text": "API",
     "link": "/api/"
   }
 ]
 ```
 
-Here, `text` is `guide`, this value will be automatically translated into `指南` or `Guide`, depending on `i18n.json` and the current language.
+</Tab>
+<Tab label="docs/zh/_nav.json">
 
-### Sidebar \_meta.json
-
-In the \_meta.json configuration at the sidebar level, you can specify `label` as an i18n key, for example:
-
-```json title="_meta.json"
+```json
 [
   {
-    "type": "dir",
-    "name": "start",
-    "label": "gettingStarted"
+    "text": "指南",
+    "link": "/guide/start/introduction"
+  },
+  {
+    "text": "API",
+    "link": "/api/"
   }
 ]
 ```
 
-Here, `label` is `gettingStarted`, this value will be automatically translated into `开始` or `Getting Started`, depending on the current language.
+</Tab>
+</Tabs>
 
-## Use `useI18n` in custom components
+### Sidebar \_meta.json
 
-In the process of MDX development or [custom theme](/guide/basic/custom-theme) development, you may write some custom components, which also need to use international text, so how to get it?
+Similarly, set `"label"` to the text for each language:
 
-import UseI18n from '../../fragments/useI18n.mdx';
+<Tabs>
+<Tab label="docs/en/guide/_meta.json">
 
-<UseI18n />
+```json
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "Getting Started"
+  }
+]
+```
+
+</Tab>
+<Tab label="docs/zh/guide/_meta.json">
+
+```json
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "开始"
+  }
+]
+```
+
+</Tab>
+</Tabs>
+
+These language-specific navigation files do not require separate translation data.
+
+## Define translations (optional)
+
+The setup above is enough for a multilingual documentation site. If your custom components need translated text, define a key such as `welcomeMessage` and provide a value for each language.
+
+Rspress accepts the same translation data in two ways.
+
+:::tip
+
+Choose either `i18n.json` or `i18nSource`; you do not need both.
+
+:::
+
+<Tabs>
+<Tab label="i18n.json">
+
+Create `i18n.json` next to `rspress.config.ts`. Each key maps language codes to translated text:
+
+```json title="i18n.json"
+{
+  "welcomeMessage": {
+    "en": "Welcome",
+    "zh": "欢迎"
+  }
+}
+```
+
+</Tab>
+<Tab label="i18nSource">
+
+Alternatively, put the same data in the `i18nSource` option in `rspress.config.ts`. This does not require an `i18n.json` file:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: {
+    welcomeMessage: {
+      en: 'Welcome',
+      zh: '欢迎',
+    },
+  },
+});
+```
+
+</Tab>
+</Tabs>
+
+If you configure both, the object form of `i18nSource` takes precedence for the same key and language; other translations are preserved.
+
+For the function form of `i18nSource`, see the [API reference](/api/config/config-basic#i18nsource). To load the JSON file from another location, use [`i18nSourcePath`](/api/config/config-basic#i18nsourcepath).
+
+## Use `useI18n` in custom components (optional)
+
+In MDX components or a [custom theme](/guide/basic/custom-theme), use `useI18n` to read the translations defined above. The hook works the same whether you use `i18n.json` or `i18nSource`:
+
+```tsx
+import { useI18n } from '@rspress/core/runtime';
+
+const MyComponent = () => {
+  const t = useI18n();
+
+  return <div>{t('welcomeMessage')}</div>;
+};
+```
+
+For more usage details and type hints, see [`useI18n`](/ui/hooks/use-i18n).
+
+## Customize i18n text
+
+Rspress's default theme includes UI translations for several languages. Missing translations fall back to English.
+
+The translation sources described above can also override built-in text: use an existing key instead of defining a new one. For example, add `editLinkText` to your chosen source to customize the edit link text:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  i18nSource: {
+    editLinkText: {
+      en: 'Edit this page on GitLab',
+      zh: '在 GitLab 上编辑此页',
+    },
+  },
+});
+```
+
+If you use `i18n.json`, add the same entry there instead:
+
+```json title="i18n.json"
+{
+  "editLinkText": {
+    "en": "Edit this page on GitLab",
+    "zh": "在 GitLab 上编辑此页"
+  }
+}
+```
+
+To add another language, add its language code and translated text under each text key in `i18nSource` or `i18n.json`, using the same language code as your site configuration. Any built-in text you have not translated will continue to use its English fallback.
+
+Customizing UI text is optional and also works on single-language sites. For the complete list of built-in translation keys, see the [API reference](/api/config/config-basic#i18nsource).

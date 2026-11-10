@@ -1,0 +1,27 @@
+import {
+  createStaticHandler,
+  createStaticRouter,
+} from 'virtual-react-router-server';
+import { createPageRoutes } from './PageRoute';
+import { removeTrailingSlash, withBase } from './utils';
+
+export async function createServerRouter(routePath: string) {
+  const basename = removeTrailingSlash(withBase('/'));
+  const { query, dataRoutes } = createStaticHandler(createPageRoutes(), {
+    basename,
+  });
+  const context = await query(
+    // routePath excludes base, including routes that share its prefix.
+    new Request(new URL(`${basename}${routePath}`, 'http://rspress.local')),
+  );
+  if (context instanceof Response) {
+    throw new Error(
+      `Unexpected response while rendering ${routePath}: ${context.status}`,
+    );
+  }
+  // Surface loader failures to the SSG worker instead of emitting an error page.
+  if (context.errors) {
+    throw Object.values(context.errors)[0];
+  }
+  return { router: createStaticRouter(dataRoutes, context), context };
+}

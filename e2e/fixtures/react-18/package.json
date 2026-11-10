@@ -12,10 +12,12 @@
     "@rspress/core": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-render-to-markdown": "18.3.1",
-    "react-router-dom": "^7.14.2"
+    "react-render-to-markdown": "18.3.2",
+    "react-router-dom": "^7.18.5"
   },
   "devDependencies": {
-    "@types/node": "^22.8.1"
+    "@types/node": "^22.8.1",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7"
   }
 }

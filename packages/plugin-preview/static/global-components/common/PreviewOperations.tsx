@@ -1,4 +1,4 @@
-import { useLang } from '@rspress/core/runtime';
+import { useI18n } from '@rspress/core/runtime';
 import { QRCodeSVG } from 'qrcode.react';
 import {
   type MouseEventHandler,
@@ -7,20 +7,27 @@ import {
   useRef,
   useState,
 } from 'react';
+import type { previewI18n } from '../../i18n';
 import IconLaunch from '../icons/Launch';
 import IconQrcode from '../icons/Qrcode';
 import IconRefresh from '../icons/Refresh';
 import './PreviewOperations.css';
 
-const locales = {
-  zh: {
-    refresh: '刷新页面',
-    open: '在新页面打开',
-  },
-  en: {
-    refresh: 'Refresh',
-    open: 'Open in new page',
-  },
+const contains = function (root: HTMLElement | null, ele: Node | null) {
+  if (!root) {
+    return false;
+  }
+  if (root.contains) {
+    return root.contains(ele);
+  }
+  let node = ele;
+  while (node) {
+    if (node === root) {
+      return true;
+    }
+    node = node.parentNode;
+  }
+  return false;
 };
 
 export default (props: {
@@ -30,45 +37,24 @@ export default (props: {
 }) => {
   const [showQRCode, setShowQRCode] = useState(false);
   const { url, className = '', refresh } = props;
-  const lang = useLang();
+  const t = useI18n<typeof previewI18n>();
   const triggerRef = useRef(null);
-  const t = lang === 'zh' ? locales.zh : locales.en;
 
   const toggleQRCode: MouseEventHandler<HTMLButtonElement> = e => {
     if (!showQRCode) {
       e.currentTarget.blur();
     }
-    setShowQRCode(!showQRCode);
+    setShowQRCode(prevShowQRCode => !prevShowQRCode);
   };
   const openNewPage = () => {
     window.open(url);
   };
 
-  const contains = function (root: HTMLElement | null, ele: Node | null) {
-    if (!root) {
-      return false;
+  const onClickOutside = useCallback((ev: MouseEvent) => {
+    if (!contains(triggerRef.current, ev.target as Node)) {
+      setShowQRCode(false);
     }
-    if (root.contains) {
-      return root.contains(ele);
-    }
-    let node = ele;
-    while (node) {
-      if (node === root) {
-        return true;
-      }
-      node = node.parentNode;
-    }
-    return false;
-  };
-
-  const onClickOutside = useCallback(
-    (ev: MouseEvent) => {
-      if (!contains(triggerRef.current, ev.target as Node)) {
-        setShowQRCode(false);
-      }
-    },
-    [triggerRef],
-  );
+  }, []);
 
   useEffect(() => {
     if (showQRCode) {
@@ -76,6 +62,10 @@ export default (props: {
     } else {
       document.removeEventListener('mousedown', onClickOutside, false);
     }
+
+    return () => {
+      document.removeEventListener('mousedown', onClickOutside, false);
+    };
   }, [showQRCode]);
 
   return (
@@ -85,7 +75,7 @@ export default (props: {
       <button
         className="rp-preview-operations__button"
         onClick={refresh}
-        aria-label={t.refresh}
+        aria-label={t('previewRefresh')}
       >
         <IconRefresh />
       </button>
@@ -105,7 +95,7 @@ export default (props: {
       <button
         className="rp-preview-operations__button"
         onClick={openNewPage}
-        aria-label={t.open}
+        aria-label={t('previewOpen')}
       >
         <IconLaunch />
       </button>

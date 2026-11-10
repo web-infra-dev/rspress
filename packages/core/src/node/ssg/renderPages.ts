@@ -1,3 +1,5 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { RouteMeta, UserConfig } from '@rspress/shared';
 import { chunk } from '@rspress/shared/lodash-es';
 import { logger } from '@rspress/shared/logger';
@@ -6,6 +8,12 @@ import picocolors from 'picocolors';
 
 import { hintSSGFailed } from '../logger/hint';
 import type { RouteService } from '../route/RouteService';
+import type { RouteChunkAssetsManifest } from '../route/routeChunkAssets';
+import {
+  createAlternateLinksByRoute,
+  type AlternateLinksByRoute,
+} from './alternateLinks';
+import { routePath2HtmlFileName } from './htmlFile';
 import { renderHtmlTemplate } from './renderHtmlTemplate';
 import { renderPage } from './renderPage';
 import {
@@ -15,30 +23,21 @@ import {
   SSGWorkerThreadTaskSize,
 } from './ssgEnv';
 
-const routePath2HtmlFileName = (routePath: string) => {
-  let fileName = routePath;
-  if (fileName.endsWith('/')) {
-    fileName = `${routePath}index.html`;
-  } else {
-    fileName = `${routePath}.html`;
-  }
-
-  return fileName.replace(/^\/+/, '');
-};
-
 export async function renderPages(
   routeService: RouteService,
   config: UserConfig,
   ssrBundlePath: string,
   htmlTemplate: string,
   emitAsset: (assetName: string, content: string | Buffer) => void,
+  workerOutputDistPath?: string,
+  routeChunkAssets?: RouteChunkAssetsManifest,
 ) {
-  logger.info('Rendering pages...');
   const startTime = Date.now();
-  const ssg = config.ssg || true;
+  const ssg = config.ssg ?? true;
 
   try {
     const routes = routeService.getRoutes();
+    const alternateLinksByRoute = createAlternateLinksByRoute(routes, config);
     if (!routeService.isExistRoute('/404')) {
       // @ts-expect-error 404 page has no absolutePath attribute, so it is special
       routes.push({ routePath: '/404' });
@@ -70,7 +69,14 @@ export async function renderPages(
         ) {
           csrRoutes.push(route);
           promiseList.push(
-            renderCSRPage(config.head, route, htmlTemplate, emitAsset),
+            renderCSRPage(
+              config.head,
+              route,
+              htmlTemplate,
+              alternateLinksByRoute,
+              emitAsset,
+              routeChunkAssets,
+            ),
           );
         } else {
           ssgRoutes.push(route);
@@ -96,10 +102,16 @@ export async function renderPages(
 
     if (typeof ssg === 'object' && ssg?.experimentalWorker) {
       const numberOfThreads = getNumberOfThreads(routes.length);
+      logger.info(
+        `Rendering pages with experimental SSG worker (${picocolors.yellow(numberOfThreads)} threads)...`,
+      );
       const Tinypool = await import('tinypool').then(m => m.default);
 
       const pool = new Tinypool({
-        filename: new URL('./renderPageWorker.js', import.meta.url).href,
+        filename: path.join(
+          path.dirname(fileURLToPath(import.meta.url)),
+          'renderPageWorker.js',
+        ),
         // chunk tasks manually
         concurrentTasksPerWorker: 1,
         minThreads: numberOfThreads,
@@ -115,6 +127,9 @@ export async function renderPages(
             htmlTemplate,
             head: config.head,
             ssrBundlePath,
+            alternateLinksByRoute,
+            distPath: workerOutputDistPath,
+            routeChunkAssets,
           },
         },
       });
@@ -123,6 +138,9 @@ export async function renderPages(
         chunk(routes, SSGWorkerThreadTaskSize()).map(
           async (routes: RouteMeta[]) => {
             const htmlList = await pool.run({ routes });
+            if (workerOutputDistPath) {
+              return;
+            }
             for (let i = 0; i < routes.length; i++) {
               const route = routes[i];
               const html = htmlList[i];
@@ -135,6 +153,7 @@ export async function renderPages(
 
       await pool.destroy();
     } else {
+      logger.info('Rendering pages...');
       await pMap(
         routes,
         async route => {
@@ -143,6 +162,8 @@ export async function renderPages(
             htmlTemplate,
             config.head,
             ssrBundlePath,
+            alternateLinksByRoute[route.routePath] ?? [],
+            routeChunkAssets,
           );
 
           const fileName = routePath2HtmlFileName(route.routePath);
@@ -170,9 +191,18 @@ async function renderCSRPage(
   head: UserConfig['head'],
   route: RouteMeta,
   htmlTemplate: string,
+  alternateLinksByRoute: AlternateLinksByRoute,
   emitAsset: (assetName: string, content: string | Buffer) => void,
+  routeChunkAssets?: RouteChunkAssetsManifest,
 ) {
-  const html = await renderHtmlTemplate(htmlTemplate, head, route, '');
+  const html = await renderHtmlTemplate(
+    htmlTemplate,
+    head,
+    route,
+    '',
+    alternateLinksByRoute[route.routePath] ?? [],
+    routeChunkAssets,
+  );
   const fileName = routePath2HtmlFileName(route.routePath);
   emitAsset(fileName, html);
 }
@@ -182,8 +212,10 @@ export async function renderCSRPages(
   config: UserConfig,
   htmlTemplate: string,
   emitAsset: (assetName: string, content: string | Buffer) => void,
+  routeChunkAssets?: RouteChunkAssetsManifest,
 ) {
   const routes = routeService.getRoutes();
+  const alternateLinksByRoute = createAlternateLinksByRoute(routes, config);
   if (!routeService.isExistRoute('/404')) {
     // @ts-expect-error 404 page is special
     routes.push({ routePath: '/404' });
@@ -191,7 +223,14 @@ export async function renderCSRPages(
 
   await Promise.all(
     routes.map(route => {
-      return renderCSRPage(config.head, route, htmlTemplate, emitAsset);
+      return renderCSRPage(
+        config.head,
+        route,
+        htmlTemplate,
+        alternateLinksByRoute,
+        emitAsset,
+        routeChunkAssets,
+      );
     }),
   );
 }

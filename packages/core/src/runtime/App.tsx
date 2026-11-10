@@ -1,56 +1,59 @@
 import { PageContext, useLocation } from '@rspress/core/runtime';
-import { Layout, Root } from '@theme';
-import React, { useContext, useLayoutEffect } from 'react';
-import globalComponents from 'virtual-global-components';
 import {
-  consumeCachedPageData,
-  initPageData,
-  setCurrentPageData,
-} from './initPageData';
+  Layout,
+  LlmsHint,
+  Root,
+  useWebMcpSiteInfo,
+  useWebMcpPageList,
+  useWebMcpNavigation,
+  useWebMcpPageReading,
+} from '@rspress/core/theme';
+import React, { useContext } from 'react';
+import { useGlobalComponents } from './hooks/useGlobalComponents';
 
 enum QueryStatus {
   Show = '1',
   Hide = '0',
 }
+const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
+
+// This build-time condition is constant for the lifetime of the app.
+// Keep site-wide tools alongside the app's page, navigation and sidebar context.
+const WebMcpPageReading =
+  import.meta.env.ENABLE_WEBMCP && import.meta.env.ENABLE_SSG_MD
+    ? () => {
+        useWebMcpPageReading();
+        return null;
+      }
+    : null;
+
+const WebMCP =
+  import.meta.env.ENABLE_WEBMCP && !import.meta.env.SSR
+    ? () => {
+        useWebMcpSiteInfo();
+        useWebMcpPageList();
+        useWebMcpNavigation();
+        return WebMcpPageReading ? <WebMcpPageReading /> : null;
+      }
+    : null;
 
 export function App() {
-  const { setData: setPageData, data } = useContext(PageContext);
-  const { pathname, search } = useLocation();
-  useLayoutEffect(() => {
-    const cached = consumeCachedPageData(pathname);
-    if (cached) {
-      setPageData?.(cached);
-      return;
-    }
-    async function refetchData() {
-      try {
-        const pageData = await initPageData(pathname);
-        setCurrentPageData(pathname, pageData);
-        setPageData?.(pageData);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    refetchData();
-  }, [pathname, setPageData]);
+  const globalComponents = useGlobalComponents();
+  const { data } = useContext(PageContext);
+  const location = useLocation();
+  const { search } = location;
 
-  // during csr, data can be null because of using useLayoutEffect to update data
-  if (!data) {
-    return <></>;
-  }
-
-  const frontmatter = data.frontmatter || {};
-  const GLOBAL_COMPONENTS_KEY = 'globalUIComponents';
-
-  const query = new URLSearchParams(search);
   const hideGlobalUIComponents =
-    // Disable global components in frontmatter or query
-    frontmatter[GLOBAL_COMPONENTS_KEY] === false ||
-    query.get(GLOBAL_COMPONENTS_KEY) === QueryStatus.Hide;
+    data?.frontmatter?.[GLOBAL_COMPONENTS_KEY] === false ||
+    (Boolean(search) &&
+      new URLSearchParams(search).get(GLOBAL_COMPONENTS_KEY) ===
+        QueryStatus.Hide);
 
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return (
       <Root>
+        {WebMCP && <WebMCP />}
+        {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
         <Layout />
       </Root>
     );
@@ -58,6 +61,8 @@ export function App() {
 
   return (
     <Root>
+      {WebMCP && <WebMCP />}
+      {import.meta.env.ENABLE_LLMS_HINT && <LlmsHint />}
       <Layout />
       {
         // Global UI

@@ -6,5 +6,5 @@ export * from './flattenMdxContent';
 export * from './fs';
 export * from './getImportAstNode';
 export * from './getPageKey';
-export * from './normalizePath';
 export * from './reactAlias';
+export * from './slash';

@@ -38,7 +38,7 @@ export const SHIKI_TRANSFORMER_META_HIGHLIGHT =
 
 /**
  * Allow using `{1,3-5}` in the code snippet meta to mark highlighted lines.
- * @deprecated This is a workaround when migrating to Rspress 2.0, you should migrate to `import { transformerNotationHighlight } from '@shikijs/transformers'` instead.
+ * @deprecated This is a workaround when migrating to Rspress 2.0, you should migrate to `import { transformerNotationHighlight } from '@rspress/core/shiki-transformers'` instead.
  */
 export function transformerCompatibleMetaHighlight(
   options: TransformerMetaHighlightOptions = {},

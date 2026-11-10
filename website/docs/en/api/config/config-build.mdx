@@ -1,10 +1,14 @@
+---
+description: 'Customize Rsbuild and Markdown compilation in Rspress, including plugins, syntax highlighting, and link validation.'
+---
+
 # Build config
 
 ## builderConfig
 
 - **Type**: `RsbuildConfig`
 
-Used to customize the configurations of Rsbuild. For detailed configurations, please refer to [Rsbuild - Config](https://rsbuild.rs/config/).
+Customizes the Rsbuild configuration. For details, see [Rsbuild - Config](https://rsbuild.rs/config/).
 
 - Example: Use [resolve.alias](https://rsbuild.rs/config/resolve/alias) to configure path aliases:
 
@@ -26,7 +30,7 @@ export default defineConfig({
 export default defineConfig({
   builderConfig: {
     tools: {
-      rspack: async (config) => {
+      rspack: async config => {
         const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
         config.plugins?.push(new ESLintPlugin());
         return config;
@@ -38,7 +42,7 @@ export default defineConfig({
 
 ::: warning
 
-If you want to modify the output directory, please use [outDir](/api/config/config-basic#outdir).
+To modify the output directory, use [outDir](/api/config/config-basic#outdir).
 
 :::
 
@@ -50,7 +54,7 @@ To register [Rsbuild plugins](https://rsbuild.rs/plugins/list/).
 
 You can leverage Rsbuild's extensive plugin ecosystem to enhance and extend your build capabilities.
 
-- Example: Support Vue SFC through [@rsbuild/plugin-vue](https://rsbuild.rs/plugins/list/plugin-vue)
+- Example: Support Vue SFCs with [@rsbuild/plugin-vue](https://rsbuild.rs/plugins/list/plugin-vue)
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -63,7 +67,7 @@ export default defineConfig({
 });
 ```
 
-- Example: Add Google analytics through [rsbuild-plugin-google-analytics](https://github.com/rstackjs/rsbuild-plugin-google-analytics).
+- Example: Add Google Analytics with [rsbuild-plugin-google-analytics](https://github.com/rstackjs/rsbuild-plugin-google-analytics).
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -81,7 +85,7 @@ export default defineConfig({
 });
 ```
 
-- Example: Add Open Graph meta tags through [rsbuild-plugin-open-graph](https://github.com/rstackjs/rsbuild-plugin-open-graph).
+- Example: Add Open Graph meta tags with [rsbuild-plugin-open-graph](https://github.com/rstackjs/rsbuild-plugin-open-graph).
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -121,26 +125,26 @@ export default defineConfig({
 
 ### Default config
 
-If you need to view the default Rspack or Rsbuild configs, you can add the `DEBUG=rsbuild` parameter when running the `rspress dev` or `rspress build` command:
+To inspect the default Rspack or Rsbuild config, set `DEBUG=rsbuild` when running `rspress dev` or `rspress build`:
 
 ```bash
 DEBUG=rsbuild rspress dev
 ```
 
-After execution, the `rsbuild.config.js` file is created in the `doc_build` directory, which contains the complete `builderConfig`.
+After the command runs, Rspress creates `rsbuild.config.js` in the `doc_build` directory. The file contains the complete `builderConfig`.
 
-> Please refer to [Rsbuild - Debug Mode](https://rsbuild.rs/guide/debug/debug-mode) for more information on how to debug the Rsbuild.
+> See [Rsbuild - Debug Mode](https://rsbuild.rs/guide/debug/debug-mode) for more information about debugging Rsbuild.
 
 ## markdown
 
-Configure MDX-related compilation abilities.
+Configures MDX compilation.
 
 ### markdown.remarkPlugins
 
 - **Type**: `Array`
 - **Default**: `[]`
 
-Configure the remark plugins. for example:
+Configures remark plugins. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -163,7 +167,7 @@ export default defineConfig({
 
 - **Type**: `Array`
 
-Configure the rehype plugin. for example:
+Configures rehype plugins. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -206,6 +210,59 @@ const shikiOptions = {
 
 Configure Shiki-related options. For details, see [RehypeShikiOptions](https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts).
 
+#### markdown.shiki.transformers
+
+- **Type**: `import('shiki').ShikiTransformer[]`
+- **Default**:
+
+```ts
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+  transformerRemoveNotationEscape,
+} from '@shikijs/transformers';
+
+const transformers = [
+  transformerNotationHighlight(),
+  transformerNotationWordHighlight(),
+  transformerNotationDiff(),
+  transformerNotationFocus(),
+  transformerNotationErrorLevel(),
+  transformerRemoveNotationEscape(),
+];
+```
+
+These defaults also apply to `CodeBlockRuntime`. Escape annotations as `[\!code ...]` to display them literally.
+
+Custom transformers run before the default notation transformers. A custom transformer with the same `name` replaces the corresponding default; other defaults are preserved. Setting `transformers: []` keeps the defaults enabled.
+
+Import transformers directly from `@rspress/core/shiki-transformers` without installing `@shikijs/transformers` separately. For example, add `transformerMetaWordHighlight` to highlight words using `/word/` in code block meta attributes:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { transformerMetaWordHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerMetaWordHighlight()],
+    },
+  },
+});
+```
+
+````md
+```ts /message/
+const message = 'Hello, Rspress!';
+console.log(message);
+```
+````
+
+See [Shiki transformers](/guide/use-mdx/code-blocks#shiki-transformers) for notation examples and more transformers.
+
 ### markdown.link
 
 - **Type**:
@@ -213,13 +270,13 @@ Configure Shiki-related options. For details, see [RehypeShikiOptions](https://g
 ```ts
 export type RemarkLinkOptions = {
   checkDeadLinks?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
+  checkAnchors?: boolean | { excludes: string[] | ((url: string) => boolean) };
   autoPrefix?: boolean;
 };
 ```
 
-- **Default**: `{ checkDeadLinks: true, autoPrefix: true }`
+- **Default**: `{ checkDeadLinks: true, checkAnchors: true, autoPrefix: true }`
 
 Configure link-related options.
 
@@ -228,9 +285,9 @@ Configure link-related options.
 - **Type**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
 - **Default**: `true`
 
-After enabling this configuration, Rspress will check the links in the document based on convention routing. If an inaccessible link occurs, the build will throw an error and exit.
+When enabled, Rspress checks document links against the conventional routes. If a link is not accessible, the build fails.
 
-If there is a misjudgment of links, you can ignore the error through the `excludes` configuration:
+If a link is reported incorrectly, ignore it with `excludes`:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -246,12 +303,37 @@ export default defineConfig({
 });
 ```
 
+#### markdown.link.checkAnchors
+
+- **Type**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
+- **Default**: `true` (`false` before v2.1.0)
+
+After enabling this configuration, Rspress will check whether internal link anchors exist in the target Markdown or MDX page. It checks same-page anchors, relative links, and absolute links, but skips external URL anchors.
+
+Set this option to `false` to disable anchor checking.
+
+If an anchor is reported incorrectly, ignore it with `excludes`:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkAnchors: {
+        excludes: ['/guide/getting-started#custom-anchor'],
+      },
+    },
+  },
+});
+```
+
 #### markdown.link.autoPrefix
 
 - **Type**: `boolean`
 - **Default**: `true`
 
-After enabling this config, Rspress will automatically add prefixes to links in documents based on the conventional routing about [i18n](/guide/basic/i18n) and [Multi version](/guide/basic/multi-version).
+When enabled, Rspress automatically adds link prefixes based on the conventional routes for [i18n](/guide/basic/i18n) and [multi-version docs](/guide/basic/multi-version).
 
 If a user writes a link `[](/guide/getting-started)` in `docs/zh/guide/index.md`, Rspress will automatically convert it to `[](/zh/guide/getting-started)`.
 
@@ -262,8 +344,7 @@ If a user writes a link `[](/guide/getting-started)` in `docs/zh/guide/index.md`
 ```ts
 export type RemarkImageOptions = {
   checkDeadImages?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
 };
 ```
 
@@ -276,11 +357,11 @@ Configure image-related options.
 - **Type**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
 - **Default**: `true`
 
-After enabling this configuration, Rspress will check the local images in the document. If an image references a non-existent file, the build will throw an error and exit.
+When enabled, Rspress checks local images in documents. If an image references a file that does not exist, the build fails.
 
 For relative image paths (e.g., `./image.png`), the file is resolved relative to the current document. For absolute image paths (e.g., `/image.png`), the file is resolved from the `public` directory.
 
-If there is a misjudgment of images, you can ignore the error through the `excludes` configuration:
+If an image is reported incorrectly, ignore it with `excludes`:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -300,7 +381,7 @@ export default defineConfig({
 
 - **Type**: `boolean`
 
-Whether to display the line number of the code block. Defaults to `false`.
+Controls whether code blocks show line numbers. Defaults to `false`.
 
 When enabled globally, you can use `lineNumbers=false` in the code block meta to disable line numbers for a specific block. Conversely, when disabled globally, you can use `lineNumbers` or `lineNumbers=true` to enable line numbers for a specific block. See [Show code line numbers](/guide/use-mdx/code-blocks#show-code-line-numbers) for details.
 
@@ -308,7 +389,7 @@ When enabled globally, you can use `lineNumbers=false` in the code block meta to
 
 - **Type**: `boolean`
 
-Whether to enable long code line wrapping display by default. Defaults to `false`.
+Controls whether long code lines wrap by default. Defaults to `false`.
 
 When enabled globally, you can use `wrapCode=false` in the code block meta to disable wrapping for a specific block. Conversely, when disabled globally, you can use `wrapCode` or `wrapCode=true` to enable wrapping for a specific block. See [Wrap code](/guide/use-mdx/code-blocks#wrap-code) for details.
 
@@ -361,7 +442,7 @@ export default defineConfig({
 
 - **Type**: `string[]`
 
-Register component to the global scope, which will make it automatically available in every MDX file, without any import statements.For example:
+Registers components globally so they are available in every MDX file without import statements. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -377,7 +458,7 @@ export default defineConfig({
 Then you can use the `Alert` component in any MDX file:
 
 ```mdx title="test.mdx"
-<Alert type="info">This is a info alert</Alert>
+<Alert type="info">This is an info alert</Alert>
 ```
 
 ### markdown.extractDescription

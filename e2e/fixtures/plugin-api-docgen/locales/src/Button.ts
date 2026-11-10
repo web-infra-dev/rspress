@@ -1,4 +1,7 @@
 export type ButtonProps = {
+  /** Accessible label */
+  label: string;
+  className?: string;
   /**
    * Whether to disable the button
    * - This is extra line a

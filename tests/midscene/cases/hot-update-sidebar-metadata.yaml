@@ -1,0 +1,10 @@
+cases:
+  - name: HMR-04 Hot-update sidebar metadata
+    tags: [original-hmr]
+    steps:
+      - app.open: { fixture: hmr, path: /guide/test.html }
+      - aiAct: Look at the left documentation sidebar beside the Test article. If the Test entry is visible, stop immediately. Do not click the site title, Guide navigation, sidebar entries, or any other link; do not reload or navigate away from this article.
+      - aiAssert: The sidebar displays Test.
+      - fixture.update: { part: sidebar }
+      - aiAct: Watch the left sidebar until its Test entry is replaced by Foo. Do not reload or navigate elsewhere; stop if it has not updated within 30 seconds.
+      - aiAssert: The sidebar displays Foo and the Test article remains open.

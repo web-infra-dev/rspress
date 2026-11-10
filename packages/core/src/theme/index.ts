@@ -4,6 +4,11 @@ export { Badge, type BadgeProps } from './components/Badge/index';
 export { Banner, type BannerProps } from './components/Banner/index';
 export { Button, type ButtonProps } from './components/Button/index';
 export { Callout, type CalloutProps } from './components/Callout/index';
+export {
+  CdnTabs,
+  type CdnName,
+  type CdnTabsProps,
+} from './components/CdnTabs/index';
 export { CodeBlock, type CodeBlockProps } from './components/CodeBlock/index';
 export {
   CodeBlockRuntime,
@@ -35,13 +40,16 @@ export {
   type LlmsContainerProps,
   LlmsCopyButton,
   type LlmsCopyButtonProps,
+  LlmsHint,
   LlmsViewOptions,
+  type LlmsViewOptionsItem,
   type LlmsViewOptionsProps,
   useMdUrl,
 } from './components/Llms/index';
 export { LlmsCopyRow } from './components/Llms/LlmsCopyRow';
 export { LlmsOpenRow } from './components/Llms/LlmsOpenRow';
 export { Nav, type NavProps } from './components/Nav/index';
+export { NavList, type NavListProps } from './components/NavList';
 export { NavHamburger } from './components/NavHamburger/index';
 export { NavTitle } from './components/NavTitle/index';
 export { Outline } from './components/Outline/index';
@@ -112,6 +120,10 @@ export { Tag } from './components/Tag/index';
 export { Toc } from './components/Toc';
 export { useActiveAnchor } from './hooks/useActiveAnchor';
 export { useDynamicToc, useWatchToc } from './hooks/useDynamicToc';
+export { useWebMcpNavigation } from './hooks/useWebMcpNavigation';
+export { useWebMcpPageList } from './hooks/useWebMcpPageList';
+export { useWebMcpPageReading } from './hooks/useWebMcpPageReading';
+export { useWebMcpSiteInfo } from './hooks/useWebMcpSiteInfo';
 // icons
 export * from './icons';
 // layout
@@ -119,15 +131,13 @@ export { DocLayout, type DocLayoutProps } from './layout/DocLayout';
 export { HomeLayout, type HomeLayoutProps } from './layout/HomeLayout/index';
 export { Layout, type LayoutProps } from './layout/Layout/index';
 export { NotFoundLayout } from './layout/NotFountLayout/index';
+export { ErrorLayout, type ErrorLayoutProps } from './layout/ErrorLayout/index';
 export { copyToClipboard } from './logic/copyToClipboard';
 export { getCopyableText } from './logic/getCopyableText';
 // logic
 export { mergeRefs } from './logic/mergeRefs';
 export { useFullTextSearch } from './logic/useFullTextSearch';
 export { usePrevNextPage } from './logic/usePrevNextPage';
-export { useRedirect4FirstVisit } from './logic/useRedirect4FirstVisit';
-export { useScrollAfterNav } from './logic/useScrollAfterNav';
-export { useScrollReset } from './logic/useScrollReset';
 export { useSetup } from './logic/useSetup';
 export { useStorageValue } from './logic/useStorageValue';
 export { useThemeState } from './logic/useThemeState';

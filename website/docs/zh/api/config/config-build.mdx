@@ -1,3 +1,7 @@
+---
+description: '定制 Rspress 的 Rsbuild 和 Markdown 编译配置，包括插件、语法高亮和链接校验。'
+---
+
 # 构建配置
 
 ## builderConfig
@@ -26,7 +30,7 @@ export default defineConfig({
 export default defineConfig({
   builderConfig: {
     tools: {
-      rspack: async (config) => {
+      rspack: async config => {
         const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
         config.plugins?.push(new ESLintPlugin());
         return config;
@@ -208,6 +212,59 @@ const shikiOptions = {
 
 配置 Shiki 相关配置。具体可见 [RehypeShikiOptions](https://github.com/shikijs/shiki/blob/main/packages/rehype/src/types.ts)。
 
+#### markdown.shiki.transformers
+
+- **类型**: `import('shiki').ShikiTransformer[]`
+- **默认值**:
+
+```ts
+import {
+  transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+  transformerRemoveNotationEscape,
+} from '@shikijs/transformers';
+
+const transformers = [
+  transformerNotationHighlight(),
+  transformerNotationWordHighlight(),
+  transformerNotationDiff(),
+  transformerNotationFocus(),
+  transformerNotationErrorLevel(),
+  transformerRemoveNotationEscape(),
+];
+```
+
+这些默认项也适用于 `CodeBlockRuntime`。使用 `[\!code ...]` 转义注释可按原文显示。
+
+自定义 transformer 会先于默认的注释语法 transformers 执行。与默认项的 `name` 相同时会替换对应项，其他默认项会保留。设置 `transformers: []` 仍会启用默认项。
+
+可直接从 `@rspress/core/shiki-transformers` 导入 transformers，无需单独安装 `@shikijs/transformers`。例如，添加 `transformerMetaWordHighlight` 后，可以通过代码块 meta 属性中的 `/word/` 高亮单词：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+import { transformerMetaWordHighlight } from '@rspress/core/shiki-transformers';
+
+export default defineConfig({
+  markdown: {
+    shiki: {
+      transformers: [transformerMetaWordHighlight()],
+    },
+  },
+});
+```
+
+````md
+```ts /message/
+const message = 'Hello, Rspress!';
+console.log(message);
+```
+````
+
+注释语法示例和更多 transformers 详见 [Shiki transformers](/zh/guide/use-mdx/code-blocks#shiki-transformers)。
+
 ### markdown.link
 
 - **类型**:
@@ -215,13 +272,13 @@ const shikiOptions = {
 ```ts
 export type RemarkLinkOptions = {
   checkDeadLinks?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
+  checkAnchors?: boolean | { excludes: string[] | ((url: string) => boolean) };
   autoPrefix?: boolean;
 };
 ```
 
-- **默认值**: `{ checkDeadLinks: true, autoPrefix: true }`
+- **默认值**: `{ checkDeadLinks: true, checkAnchors: true, autoPrefix: true }`
 
 配置链接相关的配置。
 
@@ -248,6 +305,31 @@ export default defineConfig({
 });
 ```
 
+#### markdown.link.checkAnchors
+
+- **类型**: `boolean | { excludes: string[] | ((url: string) => boolean) }`
+- **默认值**: `true`（在 v2.1.0 之前是 `false`）
+
+开启这个配置后，Rspress 会检查站内链接中的锚点是否存在于目标 Markdown 或 MDX 页面中。它会检查当前页面锚点、相对路径链接和绝对路径链接，但会跳过外部 URL 中的锚点。
+
+将此选项设置为 `false` 可关闭锚点检查。
+
+如果存在误判锚点的情况，可以通过 `excludes` 配置忽略该错误：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkAnchors: {
+        excludes: ['/guide/getting-started#custom-anchor'],
+      },
+    },
+  },
+});
+```
+
 #### markdown.link.autoPrefix
 
 - **类型**: `boolean`
@@ -264,8 +346,7 @@ export default defineConfig({
 ```ts
 export type RemarkImageOptions = {
   checkDeadImages?:
-    | boolean
-    | { excludes: string[] | ((url: string) => boolean) };
+    boolean | { excludes: string[] | ((url: string) => boolean) };
 };
 ```
 

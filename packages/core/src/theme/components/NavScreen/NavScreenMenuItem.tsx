@@ -19,6 +19,29 @@ export const SvgDown = (props: React.SVGProps<SVGSVGElement>) => {
   return <SvgWrapper icon={IconArrowDown} {...props} />;
 };
 
+function NavScreenMenuItemContent({
+  menuItem,
+}: {
+  menuItem: {
+    icon?: string;
+    tag?: string;
+    text?: string;
+  };
+}) {
+  return (
+    <>
+      {menuItem.icon && (
+        <SvgWrapper
+          icon={menuItem.icon}
+          className="rp-nav-screen-menu-item__icon"
+        />
+      )}
+      {menuItem.text}
+      {menuItem.tag && <Tag tag={menuItem.tag} />}
+    </>
+  );
+}
+
 export function NavScreenMenuItemRaw({
   left,
   right,
@@ -79,12 +102,7 @@ export function NavScreenMenuItemWithLink({
 
   return (
     <NavScreenMenuItemRaw
-      left={
-        <>
-          {menuItem.text}
-          {menuItem.tag && <Tag tag={menuItem.tag} />}
-        </>
-      }
+      left={<NavScreenMenuItemContent menuItem={menuItem} />}
       right={null}
       href={menuItem.link}
       download={menuItem.download}
@@ -105,13 +123,8 @@ export function NavScreenMenuItemWithChildren({
   return (
     <>
       <NavScreenMenuItemRaw
-        left={
-          <>
-            {menuItem.text}
-            {menuItem.tag && <Tag tag={menuItem.tag} />}
-          </>
-        }
-        right={<SvgDown className="rp-nav-screen-menu-item__icon" />}
+        left={<NavScreenMenuItemContent menuItem={menuItem} />}
+        right={<SvgDown className="rp-nav-screen-menu-item__arrow" />}
         isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
         href={'link' in menuItem ? menuItem.link : undefined}
@@ -155,12 +168,7 @@ export function NavScreenMenuItem({ menuItem }: NavScreenMenuItemProps) {
 
   return (
     <NavScreenMenuItemRaw
-      left={
-        <>
-          {menuItem.text}
-          {menuItem.tag && <Tag tag={menuItem.tag} />}
-        </>
-      }
+      left={<NavScreenMenuItemContent menuItem={menuItem} />}
       right={null}
     />
   );

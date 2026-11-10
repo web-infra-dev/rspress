@@ -10,13 +10,7 @@
     },
     "module": "ESNext"
   },
-  "include": [
-    "./rspress.config.ts",
-    "docs/**/*",
-    "src/**/*",
-    "theme/**/*",
-    "search.tsx"
-  ],
+  "include": ["./rspress.config.ts", "docs/**/*", "src/**/*", "theme/**/*"],
   "mdx": {
     "checkMdx": true
   }

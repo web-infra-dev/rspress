@@ -1,0 +1,13 @@
+cases:
+  - name: COMPONENT-03 Package manager selection updates commands
+    tags: [original-package-tabs, replacement-batch-6]
+    steps:
+      - app.open: { fixture: package-manager-tabs, path: / }
+      - aiAct: 'Select pnpm in the PackageManagerTabs create panel near the top of the article. Bring the create and install panels into view together. Do not select tabs in any other panel.'
+      - aiAssert: 'The create panel displays the command "pnpm create rspress@latest" and the install panel displays "pnpm add -D @rspress/core". Each of these panels offers the tabs npm, yarn, pnpm, bun, and deno in that order, with pnpm selected.'
+      - aiAct: 'Scroll to the PackageManagerTabs dlx panel, the example using example-cli-tool. Do not click any tabs.'
+      - aiAssert: 'The PackageManagerTabs dlx panel displays "pnpm dlx example-cli-tool --yes". Each of these panels offers the tabs npm, yarn, pnpm, bun, and deno in that order, with pnpm selected.'
+      - aiAct: 'Scroll to PackageManagerTabs dlx with multiple args and bring its full command into view. Do not click any tabs.'
+      - aiAssert: 'The multiple-args panel displays "pnpm dlx skills add rstackjs/agent-skills --skill migrate-to-rstest". Each of these panels offers the tabs npm, yarn, pnpm, bun, and deno in that order, with pnpm selected.'
+      - aiAct: 'Scroll to the final PackageManagerTabs exec and PackageManagerTabs with custom object panels so both commands are visible. Do not click any tabs.'
+      - aiAssert: 'The exec panel displays "pnpm example-cli-tool --yes" and the custom-object panel displays "pnpm create rspress@latest". Each of these panels offers the tabs npm, yarn, pnpm, bun, and deno in that order, with pnpm selected.'

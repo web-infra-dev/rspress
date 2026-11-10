@@ -5,7 +5,7 @@ export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
   lang: 'en',
   base: '/base/',
-  themeConfig: {
+  route: {
     localeRedirect: 'never',
   },
   locales: [

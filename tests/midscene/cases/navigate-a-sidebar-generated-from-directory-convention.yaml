@@ -1,0 +1,8 @@
+cases:
+  - name: READ-04 Navigate a sidebar generated from directory convention
+    tags: [original-directory-sidebar, replacement-batch-5]
+    steps:
+      - app.open: { fixture: auto-nav-sidebar-dir-convention, path: /guide/ }
+      - aiAssert: The sidebar contains eight entries in order /guide Page, index md convention, index mdx convention, same name, index in meta, Index in meta, no meta md, and no meta mdx.
+      - aiAct: Open index md convention through the sidebar directory link.
+      - aiAssert: The Index md convention article is visible.

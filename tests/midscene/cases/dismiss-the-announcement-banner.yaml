@@ -1,0 +1,7 @@
+cases:
+  - name: COMPONENT-06 Dismiss the announcement banner
+    tags: [original-banner, replacement-batch-2]
+    steps:
+      - app.open: { fixture: banner, path: / }
+      - aiAct: Close the announcement banner using its close button.
+      - aiAssert: The announcement about Rspress 2.0 document development is no longer visible and the article remains visible.

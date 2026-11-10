@@ -1,4 +1,7 @@
 # Custom Dictionary Words
+esbuild
+webmcp
+afdocs
 algoliasearch
 alinks
 analyse
@@ -12,7 +15,6 @@ autohide
 autoreleasepool
 autospace
 bilibili
-biomejs
 Bluch
 brotli
 browserslistrc
@@ -22,6 +24,7 @@ Bytedance
 caniuse
 chunkhash
 Chunktmp
+Cherny
 classname
 codesandbox
 compat
@@ -29,6 +32,7 @@ componentized
 componentp
 consolas
 contentful
+cookieless
 corejs
 corepack
 craco
@@ -42,6 +46,7 @@ domcontentloaded
 envinfo
 estree
 facti
+figtree
 flac
 flexbox
 flexbugs
@@ -54,6 +59,7 @@ fullhash
 fumadocs
 Geass
 giscus
+Graphviz
 htmr
 iconify
 icss
@@ -70,6 +76,7 @@ jsesc
 jsxs
 juejin
 katex
+kazamori
 Kinsta
 koppers
 Lamperouge
@@ -88,6 +95,7 @@ menlo
 metastring
 microhei
 midscene
+Mintlify
 modularly
 napi
 networkidle
@@ -110,6 +118,7 @@ picocolors
 pinkpurple
 Pipeable
 pjpeg
+playlabel
 pluggable
 pmmmwh
 pogodin
@@ -120,12 +129,14 @@ preflights
 prefresh
 preprocessors
 Println
+privatus
 Publint
 pxtorem
 Qrcode
 rebranded
 rehype
 renderable
+resizer
 resvg
 rsbuild
 rsdoctor
@@ -139,6 +150,7 @@ rstack
 rstackjs
 rstest
 selfsign
+seshuk
 shiki
 shikijs
 sirv
@@ -159,30 +171,41 @@ svgr
 swcrc
 systemjs
 tailwindcss
+Tamizh
 taskkill
 templating
 transpiling
+transitionable
 treeshaking
 tsbuildinfo
 tsdoc
 twoslash
 Twoslasher
+typesense
 Unhead
 unocss
 unpatch
 unplugin
 unshift
 upath
+videoid
 watchpack
 webm
 webp
 wechat
 weibo
 weixin
-zeabur
 zhihu
 zhong
 Zovn
 Gitea
 opencode
 привет
+blockedbyclient
+doubao
+quanru
+autoselection
+extname
+typedoc
+shadcn
+Octocat

@@ -1,12 +1,17 @@
 // TODO: do not expose so much pubic API
 
 export type {
+  DarkMode,
   EditLink,
   Feature,
   FrontMatterMeta,
   Header,
   Hero,
   I18nText,
+  LlmsTxtContext,
+  LlmsTxtPage,
+  LlmsTxtRenderer,
+  LlmsTxtSection,
   LocalSearchOptions,
   Nav,
   NavItem,
@@ -24,6 +29,7 @@ export type {
   SidebarGroup,
   SidebarItem,
   SidebarSectionHeader,
+  SitemapOptions,
   SocialLink,
   UserConfig,
 } from '@rspress/shared';
@@ -34,6 +40,7 @@ export {
   RSPRESS_TEMP_DIR,
   removeTrailingSlash,
   withBase,
+  withSiteOrigin,
 } from '@rspress/shared';
 export { logger } from '@rspress/shared/logger';
 export {
@@ -46,7 +53,15 @@ export type { UserConfigAsyncFn } from './config/defineConfig';
 // config
 export { defineConfig } from './config/defineConfig';
 // cli
-export { build, dev, remarkFileCodeBlock, remarkLink, serve } from './node';
+export { type RunCLIOptions, runCLI } from './cli';
+export {
+  build,
+  dev,
+  remarkFileCodeBlock,
+  remarkImage,
+  remarkLink,
+  serve,
+} from './node';
 export type {
   CustomLinkMeta,
   DirSectionHeaderSideMeta,

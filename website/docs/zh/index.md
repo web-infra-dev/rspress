@@ -8,7 +8,7 @@ hero:
   text: |
     快如闪电的
     静态站点生成器
-  tagline: 简单、高性能、易于扩展
+  tagline: 面向人，也面向 AI
   image:
     src: https://assets.rspack.rs/rspress/rspress-logo.svg
     alt: Rspress Logo
@@ -45,4 +45,5 @@ features:
     details: 通过插件和自定义主题机制，你可以轻松的扩展主题 UI 和构建能力。
     icon: /custom.svg
     link: ./guide/basic/custom-theme
+description: '使用 Rspress 构建文档站点，这一基于 Rsbuild 的静态站点生成器支持 MDX、搜索、多语言和面向 AI 的输出。'
 ---

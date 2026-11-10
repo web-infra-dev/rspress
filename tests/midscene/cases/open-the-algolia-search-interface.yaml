@@ -1,0 +1,7 @@
+cases:
+  - name: EXTRA-01 Open the Algolia search interface
+    tags: [original-additional]
+    steps:
+      - app.open: { fixture: search-algolia, path: / }
+      - aiAct: Open the documentation search dialog. Do not submit a query or navigate to a public site.
+      - aiAssert: The search dialog displays its search input.

@@ -21,16 +21,15 @@ export async function runNpmScript(
   extraArgs: string[] = [],
 ) {
   return new Promise((resolve, reject) => {
-    const commandArgs = ['run', commandName];
+    const commandArgs = ['--run', commandName];
 
     if (extraArgs.length) {
       commandArgs.push('--', ...extraArgs);
     }
 
-    const instance = spawn('npm', commandArgs, {
+    const instance = spawn(process.execPath, commandArgs, {
       cwd: options.appDir,
       env: {
-        TEST: '1',
         ...process.env,
         ...options.env,
       },
@@ -58,7 +57,9 @@ export async function runNpmScript(
           resolve(instance);
         }
       }
-      process.stdout.write(message);
+      if (process.env.RSTEST !== 'true') {
+        process.stdout.write(message);
+      }
     }
 
     instance.stdout!.on('data', handleStdout);

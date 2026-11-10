@@ -1,0 +1,178 @@
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginSass } from '@rsbuild/plugin-sass';
+import { pluginSvgr } from '@rsbuild/plugin-svgr';
+import { define } from 'rstack';
+import { pluginPublint } from 'rsbuild-plugin-publint';
+
+const require = createRequire(import.meta.url);
+const configDir = import.meta.dirname;
+const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
+const tinypoolDistPath = path.join(
+  path.dirname(require.resolve('tinypool/package.json')),
+  'dist',
+);
+const tinypoolRuntimeFiles = fs
+  .readdirSync(tinypoolDistPath)
+  .filter(file => /^(common|utils)-.*\.js$/.test(file))
+  .sort();
+
+const COMMON_EXTERNALS = [
+  'virtual-routes',
+  'virtual-site-data',
+  'virtual-page-data',
+  'virtual-global-styles',
+  'virtual-global-components',
+  'virtual-search-hooks',
+  'virtual-i18n-text',
+  // To be externalized when bundling d.ts.
+  '@types/react',
+  '@rspress/core/runtime',
+  '@rspress/core/theme',
+  '@rspress/core/theme-original',
+  '@rspress/core/shiki-transformers',
+  '@rspress/shared',
+  // react
+  'react',
+  'react-dom',
+  'react-router-dom',
+];
+
+// Keep internal import.meta.env flags for the final Rspress app build to replace.
+const PRESERVE_IMPORT_META_ENV = {
+  'import.meta.env': 'import.meta.env',
+};
+
+define.lib({
+  tools: {
+    rspack: {
+      experiments: {
+        runtimeMode: 'rspack',
+      },
+    },
+  },
+  plugins: [pluginPublint()],
+  lib: [
+    {
+      source: {
+        entry: {
+          index: './src/index.ts',
+          'cli/index': './src/cli/index.ts',
+          'shiki-transformers': './src/shiki-transformers.ts',
+
+          // TODO: should add entry by new URL parser in Rspack module graph
+          'node/mdx/loader': './src/node/mdx/loader.ts',
+          'node/ssg/renderPageWorker': './src/node/ssg/renderPageWorker.ts',
+        },
+      },
+      dts: false,
+      syntax: 'es2023',
+      performance: {
+        buildCache: false,
+      },
+      output: {
+        externals: COMMON_EXTERNALS,
+        copy: [
+          {
+            from: 'entry',
+            to: 'entry',
+            context: tinypoolDistPath,
+          },
+          ...tinypoolRuntimeFiles.map(file => ({
+            from: file,
+            to: file,
+            context: tinypoolDistPath,
+          })),
+        ],
+      },
+      tools: {
+        rspack: {
+          output: {
+            library: {
+              type: 'modern-module',
+              preserveModules: path.resolve(configDir, './src'),
+            },
+          },
+        },
+      },
+    },
+    {
+      bundle: false,
+      dts: false,
+      syntax: 'es2022',
+      source: {
+        define: PRESERVE_IMPORT_META_ENV,
+        entry: {
+          index: [
+            './src/runtime/**/*.{tsx,ts}',
+            '!./src/runtime/**/*.test.{ts,tsx}',
+          ],
+        },
+      },
+      output: {
+        target: 'web',
+        distPath: {
+          root: './dist/runtime',
+        },
+      },
+      plugins: [pluginReact()],
+    },
+    {
+      bundle: false,
+      dts: {
+        typescriptPath,
+      },
+      plugins: [
+        pluginReact(),
+        pluginSvgr({ svgrOptions: { exportType: 'default' } }),
+        pluginSass(),
+      ],
+      source: {
+        define: {
+          ...PRESERVE_IMPORT_META_ENV,
+          __WEBPACK_PUBLIC_PATH__: '__webpack_public_path__',
+        },
+        entry: {
+          index: [
+            './src/theme/**',
+            '!./src/theme/**/*.test.{ts,tsx}',
+            '!./src/theme/tsconfig.json',
+          ],
+        },
+      },
+      tools: {
+        rspack: {
+          output: {
+            environment: {
+              // For Circular import of "@theme", https://github.com/web-infra-dev/rsbuild/issues/2862
+              const: false,
+            },
+          },
+        },
+      },
+      output: {
+        target: 'web',
+        distPath: {
+          root: './dist/theme',
+        },
+        externals: COMMON_EXTERNALS,
+        copy: [
+          {
+            from: './theme/components',
+            to: '../eject-theme/components',
+            context: path.join(configDir, 'src'),
+          },
+        ],
+      },
+    },
+  ],
+  performance: {
+    buildCache: false,
+  },
+  source: {
+    tsconfigPath: 'tsconfig.build.json',
+  },
+});

@@ -14,8 +14,6 @@ import {
   type DocLayoutProps,
   Nav,
   type NavProps,
-  useRedirect4FirstVisit,
-  useScrollReset,
   useSetup,
 } from '@rspress/core/theme';
 import { Head, useHead } from '@unhead/react';
@@ -119,6 +117,11 @@ const HeadTags = memo(
   },
 );
 
+const ClientEffects = () => {
+  useSetup();
+  return null;
+};
+
 export function Layout(props: LayoutProps) {
   const {
     top,
@@ -142,6 +145,10 @@ export function Layout(props: LayoutProps) {
     afterHero,
     beforeFeatures,
     afterFeatures,
+    beforeLeftNavItems,
+    afterLeftNavItems,
+    beforeRightNavItems,
+    afterRightNavItems,
     beforeNavMenu,
     afterNavMenu,
     components,
@@ -177,6 +184,8 @@ export function Layout(props: LayoutProps) {
     title: articleTitle,
   } = page;
   const localesData = useLocaleSiteData();
+
+  const { navbar: showNavbar = true } = frontmatter;
 
   // Always show sidebar by default
   // Priority: front matter title > h1 title
@@ -219,20 +228,12 @@ export function Layout(props: LayoutProps) {
     }
   };
 
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return <>{getContentLayout()}</>;
   }
-
-  useSetup();
-  useScrollReset();
-  useRedirect4FirstVisit();
-
-  const {
-    frontmatter: { navbar: showNavbar = true },
-  } = useFrontmatter();
-
   return (
     <>
+      <ClientEffects />
       <HeadTags
         lang={currentLang}
         title={title}
@@ -248,6 +249,10 @@ export function Layout(props: LayoutProps) {
             beforeNavTitle={beforeNavTitle}
             afterNavTitle={afterNavTitle}
             navTitle={navTitle}
+            beforeLeftNavItems={beforeLeftNavItems}
+            afterLeftNavItems={afterLeftNavItems}
+            beforeRightNavItems={beforeRightNavItems}
+            afterRightNavItems={afterRightNavItems}
             beforeNavMenu={beforeNavMenu}
             afterNavMenu={afterNavMenu}
           />

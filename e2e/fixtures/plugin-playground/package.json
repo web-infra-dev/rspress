@@ -11,11 +11,13 @@
   "dependencies": {
     "@rspress/core": "workspace:*",
     "@rspress/plugin-playground": "workspace:*",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "solid-js": "^1.9.12"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "solid-js": "^1.9.18"
   },
   "devDependencies": {
-    "@types/node": "^22.8.1"
+    "@types/node": "^22.8.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0"
   }
 }

@@ -1,0 +1,9 @@
+cases:
+  - name: STYLE-04 Read Markdown warning callouts
+    tags: [original-callout, replacement-batch-3]
+    steps:
+      - app.open: { fixture: github-alert-mdxjs, path: / }
+      - aiAct: Find the Warning callout in the article and bring it into view.
+      - aiAssert: A Warning callout is visible with its warning text and distinct warning styling.
+      - aiAct: Find the Note callout containing Multi-line line 1 and bring all three of its text lines into view.
+      - aiAssert: That Note callout displays Multi-line line 1, Multi-line line 2, and Multi-line line 3.

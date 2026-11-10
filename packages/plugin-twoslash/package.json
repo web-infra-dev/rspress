@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-twoslash",
-  "version": "2.0.10",
+  "version": "2.1.1",
   "description": "A plugin for rspress to applies twoslash to code blocks.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -24,35 +24,34 @@
     "static"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
+    "build": "rs lib",
+    "dev": "rs lib -w",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.7.6",
-    "@shikijs/twoslash": "^4.0.2",
-    "mdast-util-from-markdown": "^2.0.3",
+    "@floating-ui/dom": "^1.8.0",
+    "@shikijs/twoslash": "^4.2.0",
+    "mdast-util-from-markdown": "^2.1.0",
     "mdast-util-gfm": "^3.1.0",
     "mdast-util-to-hast": "^13.2.1",
     "picocolors": "^1.1.1",
-    "twoslash": "^0.3.8"
+    "twoslash": "^0.3.9"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.57.7",
-    "@rslib/core": "0.21.3",
+    "@microsoft/api-extractor": "^7.60.1",
     "@rspress/config": "workspace:*",
-    "@shikijs/types": "^4.0.2",
-    "@types/hast": "^3.0.4",
+    "@shikijs/types": "^4.2.0",
+    "@types/hast": "^3.0.5",
     "@types/mdast": "^4.0.4",
-    "@types/react": "^19.2.14",
-    "react": "^19.2.5",
-    "rsbuild-plugin-publint": "^0.3.4",
-    "typescript": "^5.8.2"
+    "@types/react": "^19.3.0",
+    "react": "^19.3.1",
+    "rsbuild-plugin-publint": "^1.0.0",
+    "typescript": "^6.0.3"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.10",
+    "@rspress/core": "workspace:^2.1.0-beta.2",
     "react": ">=18.0.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.5.0 || ^6.0.0"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

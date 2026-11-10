@@ -1,0 +1,15 @@
+cases:
+  - name: SEARCH-06 Find content inside code blocks
+    tags: [original-code-search, replacement-batch-5]
+    steps:
+      - app.open: { fixture: search-code-blocks, path: / }
+      - aiAct: 'Open search and fill its input with the complete literal query "hello from inline code block". Enter every word; do not shorten it to "hello" or stop merely because a matching result appears. Keep the dialog open and wait for results to update.'
+      - aiAssert: 'The search input contains the complete query "hello from inline code block", and exactly one search result is listed.'
+      - aiAct: 'Select all text in the search input and replace it with the complete literal query "hello from <React.inline />", including the angle brackets and slash. Stay in the search dialog and wait for results to update.'
+      - aiAssert: 'The search input contains "hello from <React.inline />", and exactly one search result is listed.'
+      - aiAct: 'Select all text in the search input and replace it with the complete literal query "hello from js code block". Stay in the search dialog and wait for results to update.'
+      - aiAssert: 'The search input contains "hello from js code block", and exactly one search result is listed.'
+      - aiAct: 'Select all text in the search input and replace it with the complete literal query "<HelloFromJsxCodeBlock />", including the angle brackets and slash. Stay in the search dialog and wait for results to update.'
+      - aiAssert: 'The search input contains "<HelloFromJsxCodeBlock />", and exactly one search result is listed.'
+      - aiAct: Open the search result.
+      - aiAssert: The article shows a JSX code block containing HelloFromJsxCodeBlock.

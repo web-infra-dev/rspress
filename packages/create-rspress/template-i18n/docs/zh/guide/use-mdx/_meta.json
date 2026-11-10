@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "components",
+    "label": "MDX 与 React 组件"
+  },
+  {
+    "type": "dir",
+    "name": "code-blocks",
+    "label": "代码块"
+  },
+  {
+    "type": "file",
+    "name": "container",
+    "label": "容器"
+  }
+]

@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('tabs-component test', async () => {
+test.describe('tabs component', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>> | null;
 
@@ -48,5 +48,28 @@ test.describe('tabs-component test', async () => {
     const contentC = page.locator('.tabs-c > div');
     await expect(tabC).toHaveText('');
     await expect(contentC).toHaveText('');
+
+    // Tab D
+    const tabD = page.locator('.tabs-d');
+    const activeContentD = tabD.locator('.rp-tabs__content__item--active');
+    await expect(tabD.locator('.tab-d-label')).toHaveText('index.markup');
+    await expect(activeContentD).toContainText('content markup');
+    await expect(activeContentD).not.toContainText('content subscribe');
+    await tabD
+      .locator('.rp-tabs__label__item', { hasText: 'index.js' })
+      .click();
+    await expect(activeContentD).toContainText('content subscribe');
+
+    // Tab E
+    const tabE = page.locator('.tabs-e');
+    const activeContentE = tabE.locator('.rp-tabs__content__item--active');
+    await expect(tabE.locator('.rp-tabs__label__item')).toHaveText([
+      'Apple',
+      'Orange',
+      'Banana',
+    ]);
+    await expect(activeContentE).toContainText('This is an orange');
+    await tabE.locator('.rp-tabs__label__item', { hasText: 'Banana' }).click();
+    await expect(activeContentE).toContainText('This is a banana');
   });
 });

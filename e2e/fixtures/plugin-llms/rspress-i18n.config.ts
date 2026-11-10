@@ -5,6 +5,7 @@ import { pluginLlms } from '@rspress/plugin-llms';
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc-i18n'),
   lang: 'en',
+  llms: false,
   themeConfig: {
     darkMode: false,
     locales: [

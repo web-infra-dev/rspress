@@ -7,17 +7,19 @@ export {
 } from '@rspress/shared';
 export { Head, useHead } from '@unhead/react';
 export * from 'react-router-dom';
+export { BrowserOnly, type BrowserOnlyProps } from './BrowserOnly';
 export { Content } from './Content';
 export { useActiveMatcher } from './hooks/useActiveMatcher';
 export { ThemeContext, useDark } from './hooks/useDark';
 export { useFrontmatter } from './hooks/useFrontmatter';
 export { useI18n } from './hooks/useI18n';
+export { useI18nText } from './hooks/useI18nText';
 export { useLang } from './hooks/useLang';
 export { useLocaleSiteData } from './hooks/useLocaleSiteData';
 export { useNav } from './hooks/useNav';
 export { PageContext, usePage } from './hooks/usePage';
 export { usePageData } from './hooks/usePageData';
-export { usePages } from './hooks/usePages';
+export { usePages, searchIndexHash } from './hooks/usePages';
 export {
   getSidebarDataGroup,
   useSidebar,
@@ -25,9 +27,17 @@ export {
 } from './hooks/useSidebar';
 export { useSite } from './hooks/useSite';
 export { useVersion } from './hooks/useVersion';
+export {
+  useWebMcp,
+  type WebMcpOptions,
+  type WebMcpState,
+  type WebMcpExecuteOptions,
+} from './hooks/useWebMcp';
 export { useWindowSize } from './hooks/useWindowSize';
-export { initPageData, warmPageData } from './initPageData';
+export { initPageData } from './initPageData';
 export { NoSSR } from './NoSSR';
+export { safeUse } from './react';
+export { safePreconnect, safePreload, safeBrowserOnly } from './reactDom';
 export { isActive, pathnameToRouteService, preloadLink } from './route';
 export {
   addLeadingSlash,
@@ -41,4 +51,7 @@ export {
   removeTrailingSlash,
   routePathToMdPath,
   withBase,
+  withSiteOrigin,
 } from './utils';
+export { socialLinks } from './socialLinks';
+export { useSearchHooks, type SearchHooks } from './hooks/useSearchHooks';

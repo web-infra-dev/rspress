@@ -1,113 +1,70 @@
 import {
-  cleanUrlByConfig,
-  initPageData,
   isActive,
-  isExternalUrl,
   pathnameToRouteService,
-  removeBase,
   useLocation,
-  useNavigate as useNavigateInner,
-  warmPageData,
-  withBase,
+  useNavigate,
+  useSite,
 } from '@rspress/core/runtime';
-import nprogress from 'nprogress';
-import {
-  startTransition as reactStartTransition,
-  type TransitionStartFunction,
-  useCallback,
-} from 'react';
-
-nprogress.configure({ showSpinner: false });
-
-function isAbsoluteUrl(url: string): boolean {
-  return url.startsWith('/');
-}
-
-type LinkType = 'external' | 'hashOnly' | 'relative' | 'internal';
-
-function getLinkType(href: string): LinkType {
-  if (isExternalUrl(href)) {
-    return 'external';
-  }
-  if (href.startsWith('#')) {
-    return 'hashOnly';
-  }
-
-  if (!isAbsoluteUrl(href)) {
-    return 'relative';
-  }
-
-  return 'internal';
-}
-
-export function getHref(href: string): {
-  withBaseHref: string;
-  removeBaseHref: string;
-  linkType: LinkType;
-} {
-  let withBaseHref;
-  const linkType = getLinkType(href);
-
-  if (linkType === 'external' || linkType === 'hashOnly') {
-    return { linkType: linkType, withBaseHref: href, removeBaseHref: href };
-  }
-
-  if (linkType === 'relative' && !process.env.__SSR__) {
-    withBaseHref = new URL(href, window.location.href).pathname;
-  } else {
-    withBaseHref = withBase(cleanUrlByConfig(href));
-  }
-  const removeBaseHref = removeBase(withBaseHref);
-
-  return { withBaseHref, removeBaseHref, linkType };
-}
+import { type TransitionStartFunction, useCallback } from 'react';
+import { getHref } from './getHref';
 
 /**
- * For import { Link } from '@rspress/core/theme';
- * useNavigate with preload logic
+ * Navigate with Rspress link normalization. The router loader handles page
+ * loading for both this helper and the native useNavigate hook.
  */
-export function useLinkNavigate(
-  { startTransition }: { startTransition?: TransitionStartFunction } = {
-    startTransition: reactStartTransition,
-  },
-): (href: string) => Promise<void> {
-  const { pathname: currPagePathname } = useLocation();
-  const navigate = useNavigateInner();
+export function useLinkNavigate({
+  startTransition,
+}: { startTransition?: TransitionStartFunction } = {}): (
+  href: string,
+) => Promise<void> {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { site } = useSite();
+  const useTransitions = site?.route?.useTransitions;
 
   return useCallback(
     async (href: string) => {
-      const { linkType, removeBaseHref, withBaseHref } = getHref(href);
-      if (linkType === 'external' || linkType === 'hashOnly') {
+      const { linkType, removeBaseHref, routePath, withBaseHref } =
+        getHref(href);
+      if (linkType === 'external') {
         window.location.assign(href);
         return;
       }
+      // Keep same-page links client-side, including on a 404 page, so clicking
+      // a parent menu link does not reload the document and close its submenu.
+      if (
+        linkType !== 'hashOnly' &&
+        !isActive(removeBaseHref, pathname) &&
+        !pathnameToRouteService(routePath)
+      ) {
+        window.location.assign(withBaseHref);
+        return;
+      }
 
-      const preloadChunkThenNavigate = async () => {
-        const inCurrPage = isActive(removeBaseHref, currPagePathname);
-        if (!process.env.__SSR__ && !inCurrPage) {
-          const matchedRoute = pathnameToRouteService(removeBaseHref);
-          if (matchedRoute) {
-            const timer = setTimeout(() => {
-              nprogress.start();
-            }, 200);
-            const data = await initPageData(removeBaseHref);
-            warmPageData(removeBaseHref, data);
-            clearTimeout(timer);
-            nprogress.done();
-          } else {
-            window.location.assign(withBaseHref);
-            return;
-          }
-        }
-        navigate(removeBaseHref, { replace: false });
-      };
+      // Native hash navigation creates history entries without router keys.
+      // Preserve the current query and let the router track each anchor visit.
+      const hashUrl =
+        linkType === 'hashOnly'
+          ? new URL(href, window.location.href)
+          : undefined;
+      const to = hashUrl
+        ? { search: hashUrl.search, hash: hashUrl.hash }
+        : removeBaseHref;
+      const options = hashUrl
+        ? { replace: hashUrl.href === window.location.href }
+        : undefined;
 
-      if (startTransition) {
-        startTransition(preloadChunkThenNavigate);
+      if (useTransitions && startTransition) {
+        let navigation: void | Promise<void> = undefined;
+        startTransition(() => {
+          navigation = navigate(to, options);
+          return navigation;
+        });
+        await navigation;
       } else {
-        preloadChunkThenNavigate();
+        await navigate(to, options);
       }
     },
-    [currPagePathname, navigate],
+    [useTransitions, pathname, navigate, startTransition],
   );
 }

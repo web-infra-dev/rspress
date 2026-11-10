@@ -73,9 +73,15 @@ export async function createMDXOptions(options: {
       remarkGFM,
       cjkFriendlyEmphasis && remarkCjkFriendly,
       cjkFriendlyEmphasis && remarkCjkFriendlyGfmStrikethrough,
-      remarkToc,
+      [
+        remarkToc,
+        {
+          routeService,
+          fallbackHeadingTitle: config?.themeConfig?.fallbackHeadingTitle,
+        },
+      ],
       !isSsgMd && remarkContainerSyntax,
-      [remarkFileCodeBlock, { filepath, addDependency }],
+      [remarkFileCodeBlock, { filepath, docDirectory, addDependency }],
       [
         remarkLink,
         isSsgMd
@@ -85,9 +91,11 @@ export async function createMDXOptions(options: {
               routeService,
               remarkLinkOptions: {
                 checkDeadLinks: false,
+                checkAnchors: false,
                 autoPrefix: true,
               },
               __base: config?.base,
+              __siteOrigin: config?.siteOrigin,
             }
           : {
               // we do cleanUrls in runtime side

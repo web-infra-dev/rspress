@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
 test.describe('search keyboard', async () => {
@@ -80,6 +80,43 @@ test.describe('search keyboard', async () => {
     // Verify search panel is closed
     const searchPanel = await page.$('.rp-search-panel__mask');
     expect(searchPanel).toBeNull();
+  });
+
+  test('page with search: false should be excluded from the index', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+
+    await page.locator('.rp-search-button').click();
+
+    // The Quux keyword only lives on the excluded page, so searching for it
+    // should not return any suggestions.
+    const searchInput = page.locator('.rp-search-panel__input');
+    await expect(searchInput).toBeVisible();
+    await searchInput.fill('Quux');
+
+    await expect(page.locator('.rp-no-search-result')).toBeVisible();
+    await expect(page.locator('.rp-suggest-item')).toHaveCount(0);
+  });
+
+  test('Enter should do nothing while the search panel is closed', async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+    const url = page.url();
+
+    await page.evaluate(() => (document.activeElement as HTMLElement)?.blur());
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(200);
+
+    expect(errors).toEqual([]);
+    expect(page.url()).toBe(url);
   });
 
   test('ESC key should close search panel', async ({ page }) => {

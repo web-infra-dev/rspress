@@ -1,10 +1,15 @@
-import { getCustomMDXComponent, Tab, Tabs } from '@rspress/core/theme';
+import {
+  getCustomMDXComponent,
+  IconBun,
+  IconDeno,
+  IconNpm,
+  IconPnpm,
+  IconYarn,
+  SvgWrapper,
+  Tab,
+  Tabs,
+} from '@rspress/core/theme';
 import { type ReactNode, useMemo } from 'react';
-import { Bun } from './icons/Bun';
-import { Deno } from './icons/Deno';
-import { Npm } from './icons/Npm';
-import { Pnpm } from './icons/Pnpm';
-import { Yarn } from './icons/Yarn';
 
 export type PackageManagerTabProps = (
   | {
@@ -35,6 +40,8 @@ export type PackageManagerTabProps = (
 ) & {
   additionalTabs?: {
     tool: string;
+    /** Full command for this tab, rendered as written. */
+    command?: string;
     icon?: ReactNode;
   }[];
 };
@@ -143,11 +150,11 @@ export function PackageManagerTabs({
   let commandInfo: Record<string, string>;
   // Init Icons
   const packageMangerToIcon: Record<string, ReactNode> = {
-    npm: <Npm />,
-    yarn: <Yarn />,
-    pnpm: <Pnpm />,
-    bun: <Bun />,
-    deno: <Deno />,
+    npm: <SvgWrapper icon={IconNpm} />,
+    yarn: <SvgWrapper icon={IconYarn} />,
+    pnpm: <SvgWrapper icon={IconPnpm} />,
+    bun: <SvgWrapper icon={IconBun} />,
+    deno: <SvgWrapper icon={IconDeno} />,
   };
   additionalTabs.forEach(tab => {
     packageMangerToIcon[tab.tool] = tab.icon;
@@ -215,10 +222,16 @@ export function PackageManagerTabs({
     commandInfo.deno = normalizeCommand(commandInfo.deno);
   } else {
     // When using { "yarn": "", "pnpm": "", "bun": "", "deno": "" } as command we don't normalize anything
-    commandInfo = command;
+    commandInfo = { ...command };
   }
 
-  if (process.env.__SSR_MD__) {
+  additionalTabs.forEach(tab => {
+    if (tab.command !== undefined) {
+      commandInfo[tab.tool] = tab.command;
+    }
+  });
+
+  if (import.meta.env.SSG_MD) {
     return Object.values(commandInfo).reduce((previous, current) => {
       const [packageManager, command] = splitTo2Parts(current);
       return (
@@ -231,27 +244,26 @@ export function PackageManagerTabs({
   }
 
   return (
-    <Tabs
-      groupId="package.manager"
-      values={Object.entries(commandInfo).map(([key]) => (
-        <div
-          key={key}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            fontSize: 15,
-          }}
-        >
-          {packageMangerToIcon[key]}
-          <span style={{ marginLeft: 6, marginBottom: 2 }}>{key}</span>
-        </div>
-      ))}
-    >
+    <Tabs groupId="package.manager">
       {Object.entries(commandInfo).map(([key, value]) => {
         const [packageManager, command] = splitTo2Parts(value);
 
         return (
-          <Tab key={key}>
+          <Tab
+            key={key}
+            label={
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  fontSize: 15,
+                }}
+              >
+                {packageMangerToIcon[key]}
+                <span style={{ marginLeft: 6, marginBottom: 2 }}>{key}</span>
+              </div>
+            }
+          >
             <Pre
               lang="bash"
               className="shiki css-variables"

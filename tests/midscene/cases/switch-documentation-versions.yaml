@@ -1,0 +1,25 @@
+cases:
+  - name: NAV-04 Switch documentation versions
+    tags:
+      [
+        stability-regression,
+        atomic-hover-regression,
+        original-versions,
+        migration-regression,
+        remote-navigation-regression,
+      ]
+    steps:
+      - app.open: { fixture: multi-version, path: /base/ }
+      - aiAssert: The initial article heading is v1, the default version in the default language.
+      - aiHover: The version selector showing v1 in the top navigation, not the article heading.
+      - aiWaitFor: The version menu offers v2.
+      - aiTap: The v2 option in the open version menu.
+      - aiAssert: The article heading is v2.
+      - aiHover: The version selector showing v2 in the top navigation, not the article heading.
+      - aiWaitFor: The version menu offers v1.
+      - aiTap: The v1 option in the open version menu.
+      - aiAssert: The article heading is v1.
+      - aiHover: The English language selector in the top navigation, not the v1 version selector.
+      - aiWaitFor: The language menu offers 简体中文.
+      - aiTap: The 简体中文 option in the open language menu.
+      - aiAssert: The article heading is v1 中文, the selected language is 简体中文, and the selected version is v1.

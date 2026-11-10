@@ -8,6 +8,7 @@ import {
   useWatchToc,
 } from '@rspress/core/theme';
 import clsx from 'clsx';
+// eslint-disable-next-line no-restricted-imports -- Existing cross-directory dependency; retained until this component is eject-safe.
 import { useSidebarMenu } from '../../components/SidebarMenu/useSidebarMenu';
 import './index.scss';
 
@@ -42,6 +43,16 @@ export function DocLayout(props: DocLayoutProps) {
   } = props;
   const { frontmatter } = useFrontmatter();
 
+  const {
+    isOutlineOpen,
+    isSidebarOpen,
+    sidebarMenu,
+    asideLayoutRef,
+    sidebarLayoutRef,
+  } = useSidebarMenu(beforeOutline, afterOutline);
+
+  const { rspressDocRef } = useWatchToc();
+
   const isOverviewPage = frontmatter?.overview ?? false;
 
   const sidebar = frontmatter?.sidebar ?? true;
@@ -55,7 +66,9 @@ export function DocLayout(props: DocLayoutProps) {
     pageType,
   } = frontmatter;
 
-  if (process.env.__SSR_MD__) {
+  const showSidebarMenu = showSidebar || (!isOverviewPage && showOutline);
+
+  if (import.meta.env.SSG_MD) {
     return (
       <>
         {isOverviewPage ? (
@@ -71,21 +84,18 @@ export function DocLayout(props: DocLayoutProps) {
 
   const isDocWide = pageType === 'doc-wide';
 
-  const {
-    isOutlineOpen,
-    isSidebarOpen,
-    sidebarMenu,
-    asideLayoutRef,
-    sidebarLayoutRef,
-  } = useSidebarMenu();
-
-  const { rspressDocRef } = useWatchToc();
-
   return (
     <>
-      <div className="rp-doc-layout__menu">{sidebarMenu}</div>
+      {showSidebarMenu && (
+        <div className="rp-doc-layout__menu">{sidebarMenu}</div>
+      )}
       {beforeDoc}
-      <div className="rp-doc-layout__container">
+      <div
+        className={clsx(
+          'rp-doc-layout__container',
+          !showSidebarMenu && 'rp-doc-layout__container--no-menu',
+        )}
+      >
         {/* Sidebar */}
         {showSidebar ? (
           <aside

@@ -1,4 +1,5 @@
 import path from 'node:path';
+import type { TransformContext } from '@rsbuild/core';
 import {
   addLeadingSlash,
   addTrailingSlash,
@@ -9,6 +10,7 @@ import {
 } from '@rspress/shared';
 import { haveNavSidebarConfig } from './auto-nav-sidebar';
 import type { RouteService } from './route/RouteService';
+import { createI18nDataLoader } from './runtimeModule/i18n/getI18nData';
 import { createError } from './utils';
 
 type RspressPluginHookKeys =
@@ -25,37 +27,41 @@ type RspressPluginHookKeys =
 
 export class PluginDriver {
   #config: UserConfig;
-  #configFilePath: string;
 
   #plugins: RspressPlugin[];
 
   #isProd: boolean;
 
+  #i18nData: ReturnType<typeof createI18nDataLoader>;
+
   haveNavSidebarConfig = false;
 
-  static async create(
+  static create(config: UserConfig, isProd: boolean): Promise<PluginDriver>;
+  // TODO: Remove this overload when the legacy (config, configFilePath, isProd) argument format no longer needs compatibility.
+  static create(
     config: UserConfig,
     configFilePath: string,
     isProd: boolean,
+  ): Promise<PluginDriver>;
+  static async create(
+    config: UserConfig,
+    configFilePathOrIsProd: string | boolean,
+    isProd = false,
   ): Promise<PluginDriver> {
-    const pluginDriver = new PluginDriver(config, configFilePath, isProd);
+    if (typeof configFilePathOrIsProd === 'boolean') {
+      isProd = configFilePathOrIsProd;
+    }
+
+    const pluginDriver = new PluginDriver(config, isProd);
     await pluginDriver.init();
     return pluginDriver;
   }
 
-  private constructor(
-    config: UserConfig,
-    configFilePath: string,
-    isProd: boolean,
-  ) {
+  private constructor(config: UserConfig, isProd: boolean) {
     this.#config = config;
-    this.#configFilePath = configFilePath;
     this.#isProd = isProd;
     this.#plugins = [];
-  }
-
-  getConfigFilePath() {
-    return this.#configFilePath;
+    this.#i18nData = createI18nDataLoader(() => this.#config, this);
   }
 
   // The init function is used to initialize the doc plugins and will execute before the build process.
@@ -64,11 +70,17 @@ export class PluginDriver {
     this.clearPlugins();
     const config = this.#config;
     const themeConfig = config?.themeConfig || {};
-    const enableLastUpdated = themeConfig?.lastUpdated;
+    const lastUpdatedConfig = themeConfig?.lastUpdated;
     const mediumZoomConfig = config?.mediumZoom ?? true;
-    if (enableLastUpdated) {
+    if (lastUpdatedConfig) {
       const { pluginLastUpdated } = await import('./last-updated/index');
-      this.addPlugin(pluginLastUpdated());
+      this.addPlugin(
+        pluginLastUpdated(
+          typeof lastUpdatedConfig === 'object'
+            ? lastUpdatedConfig.author
+            : false,
+        ),
+      );
     }
     if (mediumZoomConfig) {
       const { pluginMediumZoom } = await import('./medium-zoom/index');
@@ -114,7 +126,11 @@ export class PluginDriver {
   private async normalizeConfig() {
     this.#config.root ??= 'docs';
     this.#config.ssg ??= true;
-    this.#config.llms ??= false;
+    this.#config.llms ??= true;
+    this.#config.webMcp ??= true;
+    this.#config.sitemap ??= true;
+    this.#config.route ??= {};
+    this.#config.route.cleanUrls ??= true;
     this.#config.base = addTrailingSlash(
       addLeadingSlash(this.#config.base ?? '/'),
     );
@@ -123,6 +139,7 @@ export class PluginDriver {
   }
 
   async modifyConfig() {
+    this.invalidateI18nData();
     this.normalizeConfig();
 
     let config = this.#config;
@@ -134,6 +151,7 @@ export class PluginDriver {
           config || {},
           {
             addPlugin: this.addPlugin.bind(this),
+            getI18nData: this.getI18nData.bind(this),
             removePlugin: (pluginName: string) => {
               const index = this.#plugins.findIndex(
                 item => item.name === pluginName,
@@ -151,6 +169,16 @@ export class PluginDriver {
     this.#config = config;
     this.haveNavSidebarConfig = haveNavSidebarConfig(config);
     return this.#config;
+  }
+
+  getI18nData(
+    context?: Pick<TransformContext, 'addDependency' | 'addMissingDependency'>,
+  ) {
+    return this.#i18nData.get(context);
+  }
+
+  invalidateI18nData() {
+    this.#i18nData.invalidate();
   }
 
   async beforeBuild() {

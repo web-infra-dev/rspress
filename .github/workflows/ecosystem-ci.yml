@@ -10,42 +10,40 @@ on:
         required: true
         default: 'main'
 
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+permissions: {}
 
 jobs:
   changes:
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rspress' && github.event_name != 'workflow_dispatch'
+    permissions:
+      contents: read
     outputs:
       changed: ${{ steps.changes.outputs.changed }}
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
 
-      - uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3.0.3
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
         id: changes
         with:
-          predicate-quantifier: 'every'
-          filters: |
-            changed:
-              - "!**/*.md"
-              - "!**/*.mdx"
-              - "!**/_meta.json"
-              - "!**/dictionary.txt"
-              - "!document/**"
+          token: ''
+          predicate-quantifier: 'some-with-excludes'
+          filters: .github/filters.yml
 
   ecosystem_ci_dispatch:
     name: Dispatch ecosystem CI
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rspress' && github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
     steps:
       - name: Trigger Ecosystem CI
-        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@main
+        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@ecca2c865c3830f56824fe7a3c6513bac77f5c8f # main
         with:
           github-token: ${{ secrets.REPO_rspress_ECO_CI_GITHUB_TOKEN_NEXT }}
           ecosystem-owner: web-infra-dev
@@ -59,9 +57,11 @@ jobs:
     needs: changes
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rspress' && github.event_name != 'workflow_dispatch' && needs.changes.outputs.changed == 'true'
+    permissions:
+      contents: write
     steps:
       - name: Trigger Ecosystem CI
-        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@main
+        uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@ecca2c865c3830f56824fe7a3c6513bac77f5c8f # main
         with:
           github-token: ${{ secrets.REPO_RSPRESS_ECO_CI_GITHUB_TOKEN_NEXT }}
           ecosystem-owner: web-infra-dev

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -8,9 +8,9 @@ import {
 import fixture from './fixture.json' with { type: 'json' };
 
 const appDir = import.meta.dirname;
-const { siteUrl } = fixture;
+const feedUrl = `${fixture.base}rss/blog.xml`;
 
-test.describe('plugin rss test', async () => {
+test.describe('RSS plugin', async () => {
   let appPort: number;
   let app: unknown;
   let prefix: string;
@@ -30,21 +30,27 @@ test.describe('plugin rss test', async () => {
   test('`link-rss` should add rss <link> to this page', async ({ page }) => {
     await page.goto(`${prefix}`, { waitUntil: 'networkidle' });
 
-    const link = page.locator('link[rel="alternate"]', {});
-
-    await expect(link.getAttribute('href')).resolves.toBe(
-      `${siteUrl}rss/blog.xml`,
+    const link = page.locator(
+      'link[rel="alternate"][type="application/rss+xml"]',
     );
+
+    await expect(link).toHaveAttribute('href', feedUrl);
+    await expect(
+      page.locator('link[rel="alternate"][type="text/markdown"]'),
+    ).toHaveAttribute('href', `${fixture.base}index.md`);
   });
 
   test('should add rss <link> to pages matched', async ({ page }) => {
     await page.goto(`${prefix}blog/foo`, { waitUntil: 'networkidle' });
 
-    const link = page.locator('link[rel="alternate"]', {});
-
-    await expect(link.getAttribute('href')).resolves.toBe(
-      `${siteUrl}rss/blog.xml`,
+    const link = page.locator(
+      'link[rel="alternate"][type="application/rss+xml"]',
     );
+
+    await expect(link).toHaveAttribute('href', feedUrl);
+    await expect(
+      page.locator('link[rel="alternate"][type="text/markdown"]'),
+    ).toHaveAttribute('href', `${fixture.base}blog/foo.md`);
   });
 
   test('should change output dir if dir is given', async ({ page }) => {
@@ -82,7 +88,7 @@ test.describe('plugin rss test', async () => {
 
       await expect(
         page.locator('rss>channel>link').textContent(),
-      ).resolves.toBe(fixture.siteUrl);
+      ).resolves.toBe(fixture.base);
 
       const foo = page
         .locator('rss>channel>item')

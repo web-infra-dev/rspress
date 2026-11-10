@@ -6,6 +6,7 @@ import {
   type HTMLAttributes,
   type ReactNode,
   useCallback,
+  useEffect,
   useState,
 } from 'react';
 
@@ -67,6 +68,9 @@ export default function Playground(props: PlaygroundProps) {
   const direction = useDirection(props);
 
   const [code, setCode] = useState(codeProp);
+  useEffect(() => {
+    setCode(codeProp);
+  }, [codeProp]);
 
   const handleCodeChange = useCallback((e?: string) => {
     setCode(e || '');

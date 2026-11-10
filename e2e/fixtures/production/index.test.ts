@@ -1,6 +1,4 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -8,7 +6,7 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-test.describe('basic test', async () => {
+test.describe('production build', async () => {
   let appPort;
   let app;
   test.beforeAll(async () => {
@@ -37,20 +35,35 @@ test.describe('basic test', async () => {
     await appearanceToggle.click();
     await expect.poll(getIsDark).toBe(!defaultIsDark);
   });
-});
 
-test('SSG should add alt attributes to rendered images', async () => {
-  const appDir = import.meta.dirname;
-  await runBuildCommand(appDir);
+  test('statically renders alt text for Markdown and MDX images', async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false });
 
-  const html = await fs.readFile(path.join(appDir, 'doc_build', 'index.html'), {
-    encoding: 'utf-8',
+    try {
+      const page = await context.newPage();
+      await page.goto(`http://localhost:${appPort}`, {
+        waitUntil: 'domcontentloaded',
+      });
+
+      const images = page.locator('.rp-doc img');
+      await expect(images).toHaveCount(7);
+      expect(
+        await images.evaluateAll(nodes =>
+          nodes.map(node => node.getAttribute('alt')),
+        ),
+      ).toEqual([
+        'Image from relative path',
+        'Image from absolute path',
+        'Image from external path',
+        '',
+        '',
+        '',
+        'Image with spread props',
+      ]);
+    } finally {
+      await context.close();
+    }
   });
-
-  expect(html.match(/<img[^>]*alt=""/g) ?? []).toHaveLength(3);
-  expect(html).toContain('src="/static/image/example-0.');
-  expect(html).toContain('<img src="/example-1.png" alt=""');
-  expect(html).toContain(
-    '<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/rust.png" alt=""',
-  );
 });

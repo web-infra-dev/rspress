@@ -33,6 +33,7 @@ export async function extractInfoFromFrontmatterWithAbsolutePath(
   title: string;
   overviewHeaders: number[] | undefined;
   context: string | undefined;
+  icon: string | undefined;
   tag: string | undefined;
   description: string | undefined;
 }> {
@@ -122,6 +123,7 @@ export async function extractInfoFromFrontmatterWithAbsolutePath(
       )[0],
       overviewHeaders: frontmatter.overviewHeaders,
       context: frontmatter.context,
+      icon: frontmatter.icon,
       tag: frontmatter.tag,
       description: frontmatter.description,
     };

@@ -1,0 +1,62 @@
+---
+description: CdnTabs component for displaying CSS and JavaScript files hosted on a CDN.
+overviewHeaders: []
+---
+
+import { CdnTabs } from '@rspress/core/theme';
+import { VersionBadge } from '../../../components/VersionBadge';
+
+# CdnTabs
+
+<VersionBadge version="2.1.0" />
+
+`CdnTabs` generates CDN URLs and HTML tags for CSS and JavaScript files in an npm package. It displays jsDelivr and unpkg tabs by default.
+
+## Basic usage
+
+```mdx title="index.mdx"
+import { CdnTabs } from '@rspress/core/theme';
+
+<CdnTabs
+  package="bootstrap@5"
+  files={['dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js']}
+/>
+```
+
+<CdnTabs
+  package="bootstrap@5"
+  files={['dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js']}
+/>
+
+The component generates a `<link rel="stylesheet">` tag for each CSS file and a `<script src>` tag for each JavaScript file. File paths are relative to the package root.
+
+## Choose CDNs
+
+Use `cdns` to select built-in CDNs and set their order:
+
+```mdx preview title="index.mdx"
+import { CdnTabs } from '@rspress/core/theme';
+
+<CdnTabs
+  package="bootstrap@5"
+  files={['dist/css/bootstrap.min.css', 'dist/js/bootstrap.min.js']}
+  cdns={['unpkg', 'jsdelivr']}
+/>
+```
+
+All `CdnTabs` components use the `cdn` tab group, so the selected tab is synchronized across them.
+
+## Props
+
+```ts
+type CdnName = 'jsdelivr' | 'unpkg';
+
+type CdnTabsProps = {
+  /** Package name and version, for example `bootstrap@5`. */
+  package: string;
+  /** CSS and JavaScript asset paths relative to the package root. */
+  files: ReadonlyArray<string>;
+  /** CDNs to display, in tab order. Defaults to jsDelivr and unpkg. */
+  cdns?: ReadonlyArray<CdnName>;
+};
+```

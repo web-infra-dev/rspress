@@ -1,0 +1,9 @@
+cases:
+  - name: SEARCH-03 Escape closes the search dialog
+    tags: [original-search, migration-regression]
+    steps:
+      - app.open: { fixture: search, path: /base/ }
+      - aiAct: Open search, enter Foo, then close the dialog by pressing Escape.
+      - aiAssert: The Search hooks article is visible without a search dialog covering it.
+      - aiAct: Press Enter once while the search dialog is closed. Do not reopen search or click another link.
+      - aiAssert: The Search hooks article remains visible and no search dialog is open.

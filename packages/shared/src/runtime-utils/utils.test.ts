@@ -8,10 +8,11 @@ import {
   replaceLang,
   replaceVersion,
   withBase,
+  withSiteOrigin,
   withoutLang,
 } from './utils';
 
-describe('test shared utils', () => {
+describe('shared runtime utils', () => {
   test('withoutLang', () => {
     const langs = ['zh', 'en'];
     expect(withoutLang('/zh/guide/', langs)).toBe('/guide/');
@@ -31,6 +32,28 @@ describe('test shared utils', () => {
     expect(firstResult).toBe('/my-base/guide/');
     const secondResult = withBase(firstResult, base);
     expect(secondResult).toBe('/my-base/guide/');
+
+    // url that only shares a prefix with the base
+    expect(withBase('/docsify/', '/docs/')).toBe('/docs/docsify/');
+  });
+
+  test('withSiteOrigin', () => {
+    expect(withSiteOrigin('/guide/index.md', 'https://example.com')).toBe(
+      'https://example.com/guide/index.md',
+    );
+    expect(withSiteOrigin('/base/guide/index.md', 'https://example.com/')).toBe(
+      'https://example.com/base/guide/index.md',
+    );
+    expect(withSiteOrigin('/foo:bar/index.md', 'https://example.com')).toBe(
+      'https://example.com/foo:bar/index.md',
+    );
+    expect(withSiteOrigin('/', 'https://example.com')).toBe(
+      'https://example.com/',
+    );
+    expect(withSiteOrigin('https://example.com/guide/index.md', '/base/')).toBe(
+      'https://example.com/guide/index.md',
+    );
+    expect(withSiteOrigin('/guide/index.md')).toBe('/guide/index.md');
   });
 
   test('removeBase', () => {
@@ -47,6 +70,9 @@ describe('test shared utils', () => {
     expect(firstResult).toBe('/guide/');
     const secondResult = removeBase(firstResult, base);
     expect(secondResult).toBe('/guide/');
+
+    // url that only shares a prefix with the base
+    expect(removeBase('/docsify/', '/docs/')).toBe('/docsify/');
   });
 
   test('normalizePosix', () => {

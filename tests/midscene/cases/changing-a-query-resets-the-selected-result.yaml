@@ -1,0 +1,9 @@
+cases:
+  - name: SEARCH-05 Changing a query resets the selected result
+    tags: [original-search]
+    steps:
+      - app.open: { fixture: search, path: /base/ }
+      - aiAct: Open search, enter Bar, then use the down arrow to select the second result.
+      - aiAssert: The second search result is visibly selected.
+      - aiAct: Replace the search query with Ba without pressing any arrow keys afterward.
+      - aiAssert: The first search result is visibly selected.

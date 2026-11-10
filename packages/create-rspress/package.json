@@ -1,6 +1,6 @@
 {
   "name": "create-rspress",
-  "version": "2.0.10",
+  "version": "2.1.1",
   "description": "Create a new Rspress project",
   "homepage": "https://rspress.rs",
   "repository": {
@@ -18,24 +18,23 @@
     "create-rspress": "./bin.js"
   },
   "files": [
-    "template-*",
+    "template-*/**",
     "dist",
     "bin.js"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
+    "build": "node ./scripts/generate-theme-templates.mjs && rs lib",
+    "dev": "node ./scripts/generate-theme-templates.mjs && rs lib -w",
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "create-rstack": "1.9.2"
+    "@rstackjs/create-toolkit": "2.2.11"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.57.7",
-    "@rslib/core": "0.21.3",
+    "@microsoft/api-extractor": "^7.60.1",
     "@types/node": "^22.8.1",
-    "rsbuild-plugin-publint": "^0.3.4",
-    "typescript": "^5.8.2"
+    "rsbuild-plugin-publint": "^1.0.0",
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

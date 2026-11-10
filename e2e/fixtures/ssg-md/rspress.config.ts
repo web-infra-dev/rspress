@@ -3,8 +3,8 @@ import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   root: path.join(import.meta.dirname, 'doc'),
-  ssg: true,
-  llms: true,
+  base: '/docs/',
+  siteOrigin: 'https://example.com',
   title: 'Rspress SSG MDX Test',
   description: 'Rspress SSG MDX Test Description',
   markdown: {

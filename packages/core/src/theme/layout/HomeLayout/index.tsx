@@ -64,7 +64,7 @@ function HomeLayoutMarkdown() {
 }
 
 export function HomeLayout(props: HomeLayoutProps) {
-  if (process.env.__SSR_MD__) {
+  if (import.meta.env.SSG_MD) {
     return <HomeLayoutMarkdown />;
   }
 

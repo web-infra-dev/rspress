@@ -3,7 +3,7 @@ import {
   remarkFileCodeBlock,
   remarkLink,
 } from '@rspress/core';
-import type { Root } from 'hast';
+import type { Root } from 'mdast';
 import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
@@ -41,10 +41,12 @@ const mdxToMdPlugin: Plugin<[], Root> = () => {
 function noopPlugin() {}
 
 async function normalizeMdFile(
+  docDirectory: string,
   content: string,
   filepath: string,
   routeService: RouteService,
   base: string,
+  siteOrigin: string | undefined,
   mdxToMd: boolean,
   isMd: boolean,
   remarkPlugins: PluggableList,
@@ -54,6 +56,7 @@ async function normalizeMdFile(
     .use(isMd ? noopPlugin : remarkMdx)
     .use(remarkFileCodeBlock, {
       filepath,
+      docDirectory,
     })
     .use(!isMd && mdxToMd ? mdxToMdPlugin : noopPlugin)
     .use(remarkLink, {
@@ -61,9 +64,11 @@ async function normalizeMdFile(
       routeService,
       remarkLinkOptions: {
         checkDeadLinks: false,
+        checkAnchors: false,
         autoPrefix: true,
       },
       __base: base,
+      __siteOrigin: siteOrigin,
     } satisfies Parameters<typeof remarkLink>[0])
     .use(remarkPlugins)
     .use(remarkStringify);

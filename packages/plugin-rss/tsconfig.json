@@ -2,13 +2,18 @@
   "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "src",
     "rootDir": "."
   },
   "include": ["src"],
   "references": [
-    { "path": "./tsconfig.runtime.json" },
-    { "path": "./tsconfig.tools.json" },
-    { "path": "../core" }
+    {
+      "path": "./tsconfig.runtime.json"
+    },
+    {
+      "path": "./tsconfig.tools.json"
+    },
+    {
+      "path": "../core"
+    }
   ]
 }

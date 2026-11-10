@@ -5,18 +5,22 @@ description: 通过 CSS 变量、BEM 类名覆盖样式，或使用 ESM 重导�
 # 自定义主题
 
 import { Prompt } from '@rspress/core/theme';
+import { SlotPreviewToggle } from '../../../components/SlotPreview';
 
-<Prompt custom>
+<Prompt
+  title="一键创建你的自定义主题"
+  description="把这段 Prompt 发送给你的 AI Agent，让它帮你设计并实现自定义主题。"
+  prompt={`请参考官方自定义主题指南 https://rspress.rs/guide/basic/custom-theme.md，为当前 Rspress 项目创建自定义主题：
 
-如果你正在使用 Coding Agent，可以安装 [`rspress-custom-theme` Agent Skill](https://github.com/rstackjs/agent-skills#rspress-custom-theme)，让 Agent 帮你生成一个全新的主题。
+1. 运行 \`npx skills add rstackjs/agent-skills --skill rspress-custom-theme\`，安装 \`rspress-custom-theme\` skill。
+2. 使用 \`rspress-custom-theme\` skill，先了解项目内容和我的风格需求，再完成主题设计与实现。`}
+   />
 
-如果想了解更多 Rspress AI 辅助开发能力，请查看 [AI 页面](../start/ai.mdx)。
-
-</Prompt>
+{/* Keep this list separate from the numbered steps in the prompt. */}
 
 1. 对于 CSS，Rspress 提供了 [CSS 变量](#css-variables) 和 [BEM 类名](#bem-classname)进行定制。
 
-2. 对于 JS / React，Rspress 基于 ESM 重导出覆盖实现了一套运行时接口，支持对内置组件进行修改或替换，实现自己的首页、侧边栏、搜索组件等。
+2. 对于 JS / React，Rspress 基于 ESM 重导出覆盖实现了一套支持 Tree Shaking 的运行时接口，可对内置组件进行修改或替换，实现自己的首页、侧边栏、搜索组件等。
 
    在此之上有两种使用模式：
    - [**wrap**](#wrap)：通过 props / 插槽来对 Rspress 内置的组件进行 **包装** 并增强。
@@ -166,7 +170,9 @@ export * from '@rspress/core/theme-original';
 
 :::tip
 
-[`Layout`](/ui/layout-components/layout) 组件设计了一系列的插槽 props 专门用于 wrap，你可以通过这些 props 来扩展默认主题的布局：
+[`Layout`](/ui/layout-components/layout) 组件设计了一系列的插槽 props 专门用于 wrap，你可以通过这些 props 来扩展默认主题的布局。点击下方按钮，在当前页面预览各个插槽的位置。
+
+<SlotPreviewToggle />
 
 :::
 

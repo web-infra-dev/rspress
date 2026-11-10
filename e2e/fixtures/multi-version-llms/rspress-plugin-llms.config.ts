@@ -6,6 +6,7 @@ export default defineConfig({
   root: path.join(import.meta.dirname, 'docs'),
   lang: 'en',
   ssg: false,
+  llms: false,
   title: 'Multi Version Plugin LLMS Test',
   description: 'Test multi-version with plugin-llms',
   locales: [

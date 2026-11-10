@@ -17,7 +17,11 @@ export function SearchButton({ setFocused }: SearchButtonProps) {
   }, []);
   return (
     <>
-      <button className="rp-search-button" onClick={() => setFocused(true)}>
+      <button
+        type="button"
+        className="rp-search-button"
+        onClick={() => setFocused(true)}
+      >
         <span className="rp-search-button__content">
           <SvgWrapper icon={IconSearch} className="rp-search-button__icon" />
           <span className="rp-search-button__word">

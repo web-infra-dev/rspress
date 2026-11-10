@@ -1,18 +1,18 @@
 ---
-tag: new
+description: 'Generate llms.txt and Markdown files with @rspress/plugin-llms as a fallback when SSG and SSG-MD cannot be enabled.'
 ---
 
 # @rspress/plugin-llms <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-llms" />
 
 import { SourceCode } from '@rspress/core/theme';
 
-Generate [llms.txt](https://llmstxt.org/) related files for your Rspress site, allowing large language models to better understand your documentation site.
+Generate [llms.txt](https://llmstxt.org/) related files for your Rspress site so large language models can better understand your documentation.
 
 :::warning
 
 `@rspress/plugin-llms` uses remark to process MDX source files, so it does not support rendering dynamic content such as React Hooks or custom components.
 
-This plugin is only intended as a fallback solution when SSG and SSG-MD features cannot be enabled due to code incompatibility with SSR. It is recommended to prioritize using the [SSG-MD](/guide/basic/ssg-md) feature.
+This plugin is intended only as a fallback when SSG and SSG-MD cannot be enabled because the code is incompatible with SSR. Prefer the [SSG-MD](/guide/basic/ssg-md) feature when possible.
 
 :::
 
@@ -24,9 +24,9 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 
 ## Usage
 
-### 1. Install plugin
+### 1. Install the plugin
 
-Add the following configuration to your configuration file:
+Set `llms: false` to disable built-in SSG-MD generation when using this plugin:
 
 ```ts
 // rspress.config.ts
@@ -34,15 +34,16 @@ import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
+  llms: false,
   plugins: [pluginLlms()],
 });
 ```
 
-Then execute the `rspress build` command. While generating the output, the plugin will also generate `llms.txt`, `llms-full.txt`, and corresponding markdown files for each route in the output directory based on the navigation bar and sidebar.
+Then run `rspress build`. During output generation, the plugin also generates `llms.txt`, `llms-full.txt`, and corresponding Markdown files for each route in the output directory, based on the navbar and sidebar.
 
 ### 2. UI display
 
-If you want users reading your documentation site to better utilize large language models to read the documentation, you can add a copy Markdown button at the top of the page with the same effect as this website.
+To help readers use your documentation with large language models, add a copy Markdown button at the top of the page, similar to this website.
 
 #### Using themeConfig (Recommended)
 
@@ -53,11 +54,13 @@ import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
+  llms: false,
   plugins: [pluginLlms()],
   themeConfig: {
     llmsUI: true,
     // Or with custom options:
     // llmsUI: {
+    //   injectLlmsHint: false, // Disable the HTML/Markdown directive hint for LLMs
     //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
     //   placement: 'outline', // Display in outline panel instead of below H1
     // },
@@ -69,7 +72,7 @@ export default defineConfig({
 
 If you need more control, you can use [custom theme](/guide/basic/custom-theme) to add a copy Markdown button.
 
-Add a copy button to all pages, example:
+Add a copy button to all pages:
 
 ```tsx title="theme/index.tsx"
 import { getCustomMDXComponent as basicGetCustomMDXComponent } from '@rspress/core/theme-original';
@@ -89,7 +92,7 @@ function getCustomMDXComponent() {
         {/* [!code highlight:5] */}
         <LlmsContainer>
           <LlmsCopyButton />
-          {/* LlmsViewOptions component can be added as needed  */}
+          {/* Add LlmsViewOptions as needed */}
           <LlmsViewOptions />
         </LlmsContainer>
       </>
@@ -105,14 +108,14 @@ export { getCustomMDXComponent };
 export * from '@rspress/core/theme-original';
 ```
 
-Add a copy button to specific pages, example:
+Add a copy button to specific pages:
 
 ```mdx title="docs/hello-world.mdx"
 # Hello world
 
 <LlmsContainer>
   <LlmsCopyButton />
-  <LlmsViewOptions /> {/* LlmsViewOptions component can be added as needed  */}
+  <LlmsViewOptions /> {/* Add LlmsViewOptions as needed */}
 </LlmsContainer>
 
 This is a sample document.
@@ -120,7 +123,7 @@ This is a sample document.
 
 ## Configuration
 
-This plugin accepts an object parameter with the following type:
+This plugin accepts an options object with the following type:
 
 - **Type**:
 
@@ -210,7 +213,7 @@ export interface LlmsTxt {
 
 - **Default**: `{ name: 'llms.txt' }`
 
-Whether to generate the llms.txt file, or to customize the llms.txt file through hooks.
+Controls whether to generate the `llms.txt` file, or customizes it through hooks.
 
 The default format of an llms.txt file is as follows:
 
@@ -228,11 +231,11 @@ The default format of an llms.txt file is as follows:
 - [{page.title}]({ page.routePath }): {page.frontmatter.description}
 ```
 
-You can modify the specified part through hook.
+You can modify specific parts through hooks:
 
 - `onTitleGenerate`: Customize the generated title and description sections.
-- `onLineGenerate`: Customize each line of the md file.
-- `onAfterLlmsTxtGenerate`: Finally modify the contents of the llms.txt file.
+- `onLineGenerate`: Customize each line of the Markdown file.
+- `onAfterLlmsTxtGenerate`: Modify the final contents of the `llms.txt` file.
 
 For example:
 
@@ -251,7 +254,7 @@ Rspress is a static site generator based on Rsbuild and it can generate llms.txt
 });
 ```
 
-The corresponding generation results are:
+The generated result is:
 
 ```markdown
 # Rspress - llms.txt
@@ -278,14 +281,14 @@ export interface MdFiles {
 
 - **Default**: `{ mdxToMd: false, remarkPlugins: [] }`
 
-Whether to generate a markdown file for the corresponding route. When set to `false`, the markdown file for the corresponding route will not be generated.
+Controls whether to generate a Markdown file for the corresponding route. When set to `false`, the Markdown file for that route is not generated.
 
 #### mdxToMd
 
 - **Type**: `boolean`
 - **Default**: `false`
 
-Whether to convert mdx content to md content. If enabled, mdx files will be converted to md files through a set of default strategies, but there may be some information loss.
+Controls whether to convert MDX content to Markdown. If enabled, MDX files are converted to Markdown files through a set of default strategies, but some information may be lost.
 
 #### remarkPlugins
 
@@ -306,13 +309,13 @@ export interface LlmsFullTxt {
 
 - **Default**: `{ name: 'llms-full.txt' }`
 
-Whether to generate the llms-full.txt file, the `llms-full.txt` file will not be generated when set to `false`.
+Controls whether to generate `llms-full.txt`. When set to `false`, `llms-full.txt` is not generated.
 
 ### include
 
 - **Type**: `(context: { page: PageIndexInfo }) => boolean`
 
-Whether to include certain pages when generated, generally used to simplify llms.txt.
+Controls which pages are included during generation. This is usually used to simplify `llms.txt`.
 
 - Example:
 
@@ -336,7 +339,7 @@ pluginLlms({
 
 - **Type**: `(context: { page: PageIndexInfo }) => boolean`
 
-Whether to exclude certain pages, it will be executed after `include`.
+Controls which pages are excluded. This runs after `include`.
 
 - Example:
 
@@ -371,7 +374,7 @@ interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 - **Type**: `LlmsViewOptionsProps`
 
 ```ts
-type Option =
+type LlmsViewOptionsItem =
   | {
       title: string;
       icon?: React.ReactNode;
@@ -387,16 +390,16 @@ type Option =
   | 'claude';
 
 interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  options?: Option[];
+  options?: LlmsViewOptionsItem[];
 }
 ```
 
 #### options
 
-- **Type**: `Option[]`
+- **Type**: `LlmsViewOptionsItem[]`
 
 ```ts
-type Option =
+type LlmsViewOptionsItem =
   | {
       title: string;
       icon?: React.ReactNode;
@@ -414,11 +417,11 @@ type Option =
 
 - **Default**: `['markdownLink', 'chatgpt', 'claude']`
 
-Customize the options in the dropdown menu. By default, supports "Copy Markdown Link", [ChatGPT](https://chatgpt.com/) and [Claude](https://claude.ai).
+Customizes the options in the dropdown menu. By default, it supports "Copy Markdown Link", [ChatGPT](https://chatgpt.com/), and [Claude](https://claude.ai).
 
 ## Generate multiple groups of `llms.txt` at the same time \{#group}
 
-In some cases, you may generate multiple groups of `llms.txt`, such as i18n sites. At this point, you can do it by passing in an array.
+In some cases, such as i18n sites, you may need to generate multiple `llms.txt` groups. Pass an array to do this.
 
 - Example：
 
@@ -426,6 +429,7 @@ In some cases, you may generate multiple groups of `llms.txt`, such as i18n site
 // rspress.config.ts
 import { defineConfig } from '@rspress/core';
 defineConfig({
+  llms: false,
   lang: 'en',
   plugins: [
     pluginLlms([

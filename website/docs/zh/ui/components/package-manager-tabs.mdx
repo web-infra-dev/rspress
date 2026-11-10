@@ -39,7 +39,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 
 ## 扩展 Tab
 
-通过 `additionalTabs` 可以为其他包管理器添加额外的 tab：
+通过 `additionalTabs` 可以为其他包管理器添加额外的 tab，并为每个 tab 设置完整的 `command`：
 
 ```mdx preview title="index.mdx"
 import { PackageManagerTabs } from '@rspress/core/theme';
@@ -49,6 +49,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
   additionalTabs={[
     {
       tool: 'custom',
+      command: 'custom add --dev @rspress/core',
     },
   ]}
 />
@@ -90,6 +91,8 @@ type PackageManagerTabProps = (
     additionalTabs?: {
       // 用于设置额外的包管理器
       tool: string;
+      // 此 tab 的完整命令，会原样展示
+      command?: string;
       // 用于设置额外包管理器的图标
       icon?: React.ReactNode;
     }[];

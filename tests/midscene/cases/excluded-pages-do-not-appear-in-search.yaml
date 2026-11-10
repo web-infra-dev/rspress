@@ -1,0 +1,9 @@
+cases:
+  - name: SEARCH-02 Excluded pages do not appear in search
+    tags: [original-search, replacement-batch-2]
+    steps:
+      - app.open: { fixture: search, path: /base/ }
+      - aiAct: Open search and enter Quux.
+      - aiAssert: Search shows a no-results message and no result entries.
+      - aiAct: Replace the search query with Foo.
+      - aiAssert: Search results for Foo are visible instead of the no-results message.

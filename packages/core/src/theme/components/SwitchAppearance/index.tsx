@@ -4,6 +4,7 @@ import { type MouseEvent, useContext } from 'react';
 import './global.scss';
 import './index.scss';
 import { flushSync } from 'react-dom';
+import { getClipPath } from './getClipPath';
 
 const supportAppearanceTransition = () => {
   return (
@@ -12,72 +13,73 @@ const supportAppearanceTransition = () => {
   );
 };
 
-// two view-transition name is conflicted, 'flip' and 'root', see https://github.com/web-infra-dev/rspress/pull/1272
-const removeClipViewTransition = () => {
-  const styleDom = document.createElement('style');
-  styleDom.innerHTML = `
-      .rspress-doc {
-        view-transition-name: none !important;
-      }
-  `;
-  document.head.appendChild(styleDom);
-  return () => {
-    document.head.removeChild(styleDom);
-  };
-};
+// Shared by all appearance switches, including the desktop and mobile menus.
+let isAppearanceTransitioning = false;
 
 export function SwitchAppearance({ onClick }: { onClick?: () => void }) {
   const { theme, setTheme = () => {} } = useContext(ThemeContext);
   const { site } = useSite();
 
   const handleClick = (event: MouseEvent) => {
+    if (isAppearanceTransitioning) {
+      return;
+    }
+
     const supported = supportAppearanceTransition();
     const enabled = site?.themeConfig?.enableAppearanceAnimation;
 
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    const isDark = nextTheme === 'dark';
 
     if (supported && enabled) {
+      isAppearanceTransitioning = true;
       const x = event.clientX;
       const y = event.clientY;
+      const clipPath = getClipPath({
+        height: innerHeight,
+        width: innerWidth,
+        x,
+        y,
+      });
+      const root = document.documentElement;
+      root.style.setProperty('--rp-vt-clip-start', clipPath[0]);
+      root.style.setProperty('--rp-vt-clip-end', clipPath[1]);
+      root.classList.add('rp-appearance-transition');
 
-      const endRadius = Math.hypot(
-        Math.max(x, innerWidth - x + 200),
-        Math.max(y, innerHeight - y + 200),
-      );
+      const cleanup = () => {
+        root.classList.remove('rp-appearance-transition');
+        root.style.removeProperty('--rp-vt-clip-start');
+        root.style.removeProperty('--rp-vt-clip-end');
+        isAppearanceTransitioning = false;
+      };
 
-      const dispose = removeClipViewTransition();
-      const transition = document.startViewTransition(async () => {
+      let updated = false;
+      const updateTheme = () => {
+        updated = true;
         flushSync(() => {
           setTheme(nextTheme);
           onClick?.();
         });
-      });
+      };
 
-      const clipPath = [
-        `circle(0px at ${x}px ${y}px)`,
-        `circle(${endRadius}px at ${x}px ${y}px)`,
-      ];
-      transition.ready.then(() => {
-        document.documentElement
-          .animate(
-            {
-              clipPath: isDark ? [...clipPath].reverse() : clipPath,
-            },
-            {
-              duration: 400,
-              easing: 'ease-in',
-              pseudoElement: isDark
-                ? '::view-transition-old(root)'
-                : '::view-transition-new(root)',
-
-              id: '',
-            },
-          )
-          .finished.then(() => {
-            dispose();
-          });
-      });
+      try {
+        const transition = document.startViewTransition(async () => {
+          updateTheme();
+        });
+        transition.updateCallbackDone.catch(() => {
+          transition.skipTransition();
+        });
+        transition.ready.catch(() => {
+          // Skipping still runs the update callback. Keep ownership until
+          // finished settles so a late callback cannot race another switch.
+          transition.skipTransition();
+        });
+        transition.finished.then(cleanup, cleanup);
+      } catch {
+        cleanup();
+        if (!updated) {
+          updateTheme();
+        }
+      }
     } else {
       setTheme(nextTheme);
       onClick?.();

@@ -1,0 +1,9 @@
+cases:
+  - name: PLUGIN-03 Read component previews while changing the theme
+    tags: [original-preview]
+    steps:
+      - app.open: { fixture: plugin-preview, path: /mixed }
+      - aiAct: Stay on the Mixed article. Set the reading theme to dark using the top appearance switch, then bring the first rendered This is a component preview into view. Do not navigate to another article or use search.
+      - aiAssert: The Mixed article uses a dark reading theme and the rendered preview displays This is a component.
+      - aiAct: Stay on the Mixed article. Set the reading theme to light using the appearance switch, then bring the same rendered This is a component preview into view.
+      - aiAssert: The Mixed article uses a light reading theme and the rendered preview displays This is a component.

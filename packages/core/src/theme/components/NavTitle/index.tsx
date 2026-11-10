@@ -22,6 +22,7 @@ export const NavTitle = () => {
   const langRoutePrefix = lang === defaultLang ? '/' : addTrailingSlash(lang);
 
   const { logo: rawLogo, logoText, logoHref } = site;
+  const alt = logoText ? '' : title;
   const logo = useMemo(() => {
     if (!rawLogo) {
       return null;
@@ -30,7 +31,7 @@ export const NavTitle = () => {
       return (
         <img
           src={normalizeImagePath(rawLogo)}
-          alt="logo"
+          alt={alt}
           id="logo"
           className="rspress-logo rp-nav__title__logo-image"
         />
@@ -40,19 +41,22 @@ export const NavTitle = () => {
       <>
         <img
           src={normalizeImagePath(rawLogo.light)}
-          alt="logo"
+          alt={alt}
           id="logo"
+          width={rawLogo.width}
+          height={rawLogo.height}
           className="rspress-logo rp-nav__title__logo-image rp-nav__title__logo-image--light"
         />
         <img
           src={normalizeImagePath(rawLogo.dark)}
-          alt="logo"
-          id="logo"
+          alt={alt}
+          width={rawLogo.width}
+          height={rawLogo.height}
           className="rspress-logo rp-nav__title__logo-image rp-nav__title__logo-image--dark"
         />
       </>
     );
-  }, [rawLogo]);
+  }, [rawLogo, alt]);
 
   return (
     <div className="rp-nav__title">

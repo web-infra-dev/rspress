@@ -1,0 +1,8 @@
+cases:
+  - name: DOC-03 Navigate documentation on a phone
+    tags: [mobile]
+    steps:
+      - app.open: { path: /, viewport: mobile }
+      - aiAct: Open the top-right mobile header navigation menu and choose its Guide link. Guide leads to the Getting started article; do not look for a menu item literally named Getting started.
+      - aiAct: Dismiss the mobile header navigation overlay using its top-right menu toggle, so the Guide and Theme menu rows no longer cover the page. If the overlay is already closed, leave it closed. Bring the Getting started article heading and its pnpm install code block into view. Stop with the article content visible, not a menu.
+      - aiAssert: The Getting started heading and pnpm install command are visible in the article, without a navigation menu covering them.

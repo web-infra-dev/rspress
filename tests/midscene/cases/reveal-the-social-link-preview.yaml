@@ -1,0 +1,18 @@
+cases:
+  - name: AUDIT-12 Reveal the social link preview
+    tags:
+      [
+        stability-regression,
+        atomic-hover-regression,
+        replacement-final-content,
+        remote-regression,
+      ]
+    steps:
+      - app.open: { fixture: basic, path: / }
+      - aiAssert: No illustrated mascot popup is visible beneath the GitHub social icon in the top navigation.
+      - aiHover: The rightmost GitHub Octocat social icon immediately to the right of the sun/theme icon at the far-right end of the header, not the Search field.
+      - aiWaitFor: The white popup beneath the GitHub social icon is fully open and its colored Rspress mascot is clearly visible.
+      - aiAssert: A small white rounded popup beneath the GitHub social icon contains an illustrated Rspress mascot, separate from the article content.
+      - aiHover: The Hello world heading in the main article, away from the GitHub social icon.
+      - aiWaitFor: The mascot popup beneath the GitHub social icon is no longer visible.
+      - aiAssert: The mascot popup beneath the GitHub social icon is no longer visible.

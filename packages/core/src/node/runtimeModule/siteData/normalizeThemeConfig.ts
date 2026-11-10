@@ -4,6 +4,7 @@ import {
   isExternalUrl,
   type NavItem,
   type NormalizedDefaultThemeConfig,
+  type NormalizedLastUpdated,
   type NormalizedSidebarGroup,
   normalizeHref,
   type Sidebar,
@@ -14,11 +15,12 @@ import {
   slash,
   type UserConfig,
 } from '@rspress/shared';
+import type { PluginDriver } from '../../PluginDriver';
 import { applyReplaceRules } from '../../utils/applyReplaceRules';
-import { getI18nData } from '../i18n';
 
 export async function normalizeThemeConfig(
   docConfig: UserConfig,
+  pluginDriver: PluginDriver,
 ): Promise<NormalizedDefaultThemeConfig> {
   const {
     locales: siteLocales,
@@ -31,7 +33,7 @@ export async function normalizeThemeConfig(
   docConfig.themeConfig = docConfig.themeConfig || {};
   const { themeConfig } = docConfig;
   const locales = siteLocales ?? (themeConfig?.locales || []);
-  const i18nTextData = await getI18nData(docConfig);
+  const i18nTextData = await pluginDriver.getI18nData();
   // In following code, we will normalize the theme config reference to the pages data extracted from mdx files
   const normalizeLinkPrefix = (link: string, currentLang: string) => {
     const normalizedLink = slash(link);
@@ -64,6 +66,20 @@ export async function normalizeThemeConfig(
 
   const textReplace = (text: string, currentLang: string) => {
     return applyReplaceRules(getI18nText(text, currentLang), replaceRules);
+  };
+
+  const normalizeLastUpdated = (
+    lastUpdated: DefaultThemeConfig['lastUpdated'],
+  ): NormalizedLastUpdated | undefined => {
+    if (typeof lastUpdated !== 'object' || lastUpdated === null) {
+      return lastUpdated;
+    }
+
+    return {
+      ...lastUpdated,
+      author:
+        typeof lastUpdated.author === 'function' ? true : lastUpdated.author,
+    };
   };
 
   // Normalize sidebar
@@ -107,8 +123,7 @@ export async function normalizeThemeConfig(
           collapsible: item.collapsible ?? true,
           items: item.items.map(subItem => {
             return normalizeSidebarItem(subItem) as
-              | NormalizedSidebarGroup
-              | SidebarItem;
+              NormalizedSidebarGroup | SidebarItem;
           }),
         };
       }
@@ -124,8 +139,7 @@ export async function normalizeThemeConfig(
       Object.keys(sidebar).forEach(key => {
         const value = sidebar[key];
         normalizedSidebar[key] = value.map(normalizeSidebarItem) as (
-          | NormalizedSidebarGroup
-          | SidebarItem
+          NormalizedSidebarGroup | SidebarItem
         )[];
       });
     };
@@ -206,5 +220,8 @@ export async function normalizeThemeConfig(
     themeConfig.sidebar = normalizeSidebar(themeConfig?.sidebar, '');
     themeConfig.nav = normalizeNav(themeConfig?.nav, '');
   }
-  return themeConfig as NormalizedDefaultThemeConfig;
+  return {
+    ...themeConfig,
+    lastUpdated: normalizeLastUpdated(themeConfig.lastUpdated),
+  } as NormalizedDefaultThemeConfig;
 }

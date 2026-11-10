@@ -4,7 +4,7 @@ description: Methods for customizing page layout, global components, styles, and
 
 # Customizing page
 
-Rspress provides several ways for you to customize the content of your pages, including:
+Rspress provides several ways to customize page content:
 
 - Adding custom global components.
 - Adding custom global styles.
@@ -12,11 +12,11 @@ Rspress provides several ways for you to customize the content of your pages, in
 
 ## Custom global components
 
-In some scenarios, you may need to add some custom global components to the page. Rspress provides a config item `globalUIComponents` to achieve this function.
+In some scenarios, you may need custom global components on every page. Use the `globalUIComponents` option for this.
 
 ### How to use
 
-Add the following config in `rspress.config.ts`:
+Add the following configuration in `rspress.config.ts`:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -27,7 +27,7 @@ export default defineConfig({
 });
 ```
 
-Each item of `globalUIComponents` can be a string, representing the file path of the component; or it can be an array, the first item is the file path of the component, and the second item is the props object of the component, such as:
+Each `globalUIComponents` item can be either a component file path string or a tuple. In the tuple form, the first item is the component file path and the second item is the component props. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -50,13 +50,13 @@ import GlobalUIComponents from '@en/fragments/global-ui-components.mdx';
 
 ## Custom layout structure
 
-Rspress provides a `pageType` configuration for you to customize the layout structure of the page.
+Rspress provides `pageType` for customizing page layout.
 
 ### Using pageType
 
-Rspress's convention-based routing supports two types of routes, one is document routing, that is, pages written with md(x) files, and the other is component routing, that is, pages written with `.jsx/.tsx` files.
+Rspress convention-based routing supports two route types: document routes, written with `.md(x)` files, and component routes, written with `.jsx` or `.tsx` files.
 
-For the former, you can add the `pageType` field in the frontmatter to specify the layout structure of the page, such as:
+For document routes, add the `pageType` field in frontmatter to specify the page layout:
 
 ```mdx title="foo.mdx"
 ---
@@ -64,7 +64,7 @@ pageType: custom
 ---
 ```
 
-For the latter, you can add the following export to specify `pageType`:
+For component routes, export `frontmatter` to specify `pageType`:
 
 ```tsx title="foo.tsx"
 export const frontmatter = {
@@ -73,7 +73,7 @@ export const frontmatter = {
 };
 ```
 
-pageType can be configured as the following values:
+`pageType` supports the following values:
 
 import PageType from '@en/fragments/page-type.mdx';
 
@@ -81,13 +81,13 @@ import PageType from '@en/fragments/page-type.mdx';
 
 ### Using fine-grained switches
 
-In addition to the `pageType` page layout level configuration, Rspress also provides more fine-grained switches. You can configure other fields in the frontmatter. These fields and their meanings are as follows:
+In addition to page-level `pageType` configuration, Rspress provides fine-grained frontmatter switches:
 
-- `navbar`: Whether to display the top navigation bar. When you want to hide the top navigation bar, you can set it to `false`.
-- `sidebar`: Whether to display the sidebar. When you want to hide the sidebar, you can set it to `false`.
-- `outline`: Whether to display the outline column. When you want to hide the outline column, you can set it to `false`.
-- `footer`: Whether to display the footer. When you want to hide the footer, you can set it to `false`.
-- `globalComponents`: Whether to display global components. When you want to hide global components, you can set it to `false`.
+- `navbar`: Whether to display the top navbar. Set it to `false` to hide the navbar.
+- `sidebar`: Whether to display the sidebar. Set it to `false` to hide the sidebar.
+- `outline`: Whether to display the outline. Set it to `false` to hide the outline.
+- `footer`: Whether to display the footer. Set it to `false` to hide the footer.
+- `globalComponents`: Whether to display global components. Set it to `false` to hide global components.
 
 Example:
 

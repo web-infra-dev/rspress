@@ -1,28 +1,84 @@
+import { mkdir, writeFile } from 'node:fs/promises';
+import { dirname } from 'node:path';
 import { workerData } from 'node:worker_threads';
 import type { RouteMeta, UserConfig } from '@rspress/shared';
 import pMap from 'p-map';
+import type { RouteChunkAssetsManifest } from '../route/routeChunkAssets';
 import { createError } from '../utils';
+import type { AlternateLinksByRoute } from './alternateLinks';
+import { resolveHtmlFilePath } from './htmlFile';
 import { renderPage } from './renderPage';
 
-interface Args {
-  routes: RouteMeta[];
+interface WorkerDataParams {
   htmlTemplate: string;
   head: UserConfig['head'];
   ssrBundlePath: string;
+  alternateLinksByRoute: AlternateLinksByRoute;
+  distPath?: string;
+  routeChunkAssets?: RouteChunkAssetsManifest;
 }
 
-const params = workerData?.[1]?.params as Omit<Args, 'route'>;
+interface WorkerTask {
+  routes: RouteMeta[];
+}
+
+const params = workerData?.[1]?.params as WorkerDataParams;
 if (!params) {
   throw createError('SSG Worker Thread workerData params missing');
 }
 
-const { htmlTemplate, head, ssrBundlePath } = params;
+const {
+  htmlTemplate,
+  head,
+  ssrBundlePath,
+  alternateLinksByRoute,
+  distPath,
+  routeChunkAssets,
+} = params;
 
-const exportWorkerGlueFn = async ({ routes }: Args): Promise<string[]> => {
+async function writeHtmlFile(routePath: string, html: string) {
+  if (!distPath) {
+    return;
+  }
+
+  const fileAbsolutePath = resolveHtmlFilePath(distPath, routePath);
+  await mkdir(dirname(fileAbsolutePath), { recursive: true });
+  await writeFile(fileAbsolutePath, html);
+}
+
+const exportWorkerGlueFn = async ({
+  routes,
+}: WorkerTask): Promise<string[]> => {
+  if (distPath) {
+    await pMap(
+      routes,
+      async route => {
+        const html = await renderPage(
+          route,
+          htmlTemplate,
+          head,
+          ssrBundlePath,
+          alternateLinksByRoute[route.routePath] ?? [],
+          routeChunkAssets,
+        );
+        await writeHtmlFile(route.routePath, html);
+      },
+      { concurrency: 10 },
+    );
+    return [];
+  }
+
   return pMap(
     routes,
     async route => {
-      const html = await renderPage(route, htmlTemplate, head, ssrBundlePath);
+      const html = await renderPage(
+        route,
+        htmlTemplate,
+        head,
+        ssrBundlePath,
+        alternateLinksByRoute[route.routePath] ?? [],
+        routeChunkAssets,
+      );
       return html;
     },
     { concurrency: 10 },

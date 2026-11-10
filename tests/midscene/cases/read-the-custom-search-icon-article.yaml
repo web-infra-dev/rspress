@@ -1,0 +1,7 @@
+cases:
+  - name: AUDIT-01 Read the custom search icon article
+    tags: [replacement-final-content]
+    steps:
+      - app.open: { fixture: custom-icon, path: / }
+      - aiAct: Bring the main article heading and navigation search control into view.
+      - aiAssert: The article heading reads Hello world and the navigation offers Search.

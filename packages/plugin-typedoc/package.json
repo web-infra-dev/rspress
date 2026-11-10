@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-typedoc",
-  "version": "2.0.10",
+  "version": "2.1.1",
   "description": "A plugin for rspress to integrate typedoc",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -9,46 +9,38 @@
     "directory": "packages/plugin-typedoc"
   },
   "license": "MIT",
-  "sideEffects": [
-    "*.css",
-    "*.less",
-    "*.sass",
-    "*.scss"
-  ],
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/es/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
   },
-  "module": "./dist/es/index.js",
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
+    "build": "rs lib",
+    "dev": "rs lib -w",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "typedoc": "0.28.19",
-    "typedoc-plugin-markdown": "4.9.0"
+    "typedoc": "0.28.20",
+    "typedoc-plugin-markdown": "4.14.1"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.57.7",
-    "@rslib/core": "0.21.3",
+    "@microsoft/api-extractor": "^7.60.1",
     "@rspress/config": "workspace:*",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "react": "^19.2.5",
-    "rsbuild-plugin-publint": "^0.3.4",
-    "typescript": "^5.8.2"
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "rsbuild-plugin-publint": "^1.0.0",
+    "typescript": "^6.0.3"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.10"
+    "@rspress/core": "workspace:^2.1.0-beta.2"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('Inline markdown test', async () => {
+test.describe('inline Markdown', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
@@ -24,7 +24,7 @@ test.describe('Inline markdown test', async () => {
     });
 
     const sidebar = page.locator('.rp-doc-layout__sidebar .rp-sidebar-item');
-    await expect(sidebar).toHaveCount(9);
+    await expect(sidebar).toHaveCount(12);
 
     const sidebarTexts = (await sidebar.allTextContents()).map(text =>
       text.trim(),
@@ -40,6 +40,9 @@ test.describe('Inline markdown test', async () => {
         '-m <number>',
         'delete',
         'link',
+        'Class: Component<P = { }, S = { }, SS = any>',
+        'Class: Foo<T = { }>',
+        'Class: Bar<T = any>',
       ].join(','),
     );
 
@@ -59,10 +62,17 @@ test.describe('Inline markdown test', async () => {
       '-m &lt;number&gt;',
       '<del>delete</del>',
       'link',
+      'Class: Component&lt;P = { }, S = { }, SS = <code>any</code>&gt;',
+      'Class: Foo&lt;T = { }&gt;',
+      'Class: Bar&lt;T = <code>any</code>&gt;',
     ];
     for (const [index, html] of sidebarInnerHtml.entries()) {
       expect(html).toContain(expectedSidebarInnerHtml[index]);
     }
+
+    await expect(
+      sidebar.nth(5).locator('.rp-sidebar-item__left span.rp-doc code'),
+    ).toHaveText('<foo>');
   });
 
   test('Should render inline markdown of overview page correctly', async ({
@@ -86,6 +96,9 @@ test.describe('Inline markdown test', async () => {
         '-m <number>',
         'delete',
         'link',
+        'Class: Component<P = { }, S = { }, SS = any>',
+        'Class: Foo<T = { }>',
+        'Class: Bar<T = any>',
       ].join(','),
     );
 
@@ -105,6 +118,9 @@ test.describe('Inline markdown test', async () => {
         '-m &lt;number&gt;',
         '<del>delete</del>',
         'link',
+        'Class: Component&lt;P = { }, S = { }, SS = <code>any</code>&gt;',
+        'Class: Foo&lt;T = { }&gt;',
+        'Class: Bar&lt;T = <code>any</code>&gt;',
       ].join(','),
     );
 
@@ -120,6 +136,9 @@ test.describe('Inline markdown test', async () => {
       '-m <number>',
       'delete',
       'link',
+      'Class: Component<P = { }, S = { }, SS = any>',
+      'Class: Foo<T = { }>',
+      'Class: Bar<T = any>',
     ]);
 
     const overviewTitlesCount = await overviewTitles.count();
@@ -137,6 +156,9 @@ test.describe('Inline markdown test', async () => {
       '-m &lt;number&gt;',
       '<del>delete</del>',
       'link',
+      'Class: Component&lt;P = { }, S = { }, SS = <code>any</code>&gt;',
+      'Class: Foo&lt;T = { }&gt;',
+      'Class: Bar&lt;T = <code>any</code>&gt;',
     ];
     for (const [index, html] of titleInnerHtml.entries()) {
       expect(html).toContain(expectedTitleInnerHtml[index]);
@@ -155,6 +177,9 @@ test.describe('Inline markdown test', async () => {
       'emphasis',
       'delete',
       'This is a long string to test regex performance',
+      'Class: Bar<T = any>',
+      '**literal**',
+      '&lt;',
       'this is link rsbuild',
       'this is bold link rsbuild',
       'this is code link rsbuild',
@@ -177,6 +202,9 @@ test.describe('Inline markdown test', async () => {
       '<em>emphasis</em>',
       '<del>delete</del>',
       '<code>This is a long string to test regex performance</code>',
+      'Class: Bar&lt;T = <code>any</code>&gt;',
+      '<code>**literal**</code>',
+      '<code>&amp;lt;</code>',
       'this is link rsbuild',
       'this is bold link <strong>rsbuild</strong>',
       'this is code link <code>rsbuild</code>',
@@ -193,7 +221,7 @@ test.describe('Inline markdown test', async () => {
     });
 
     const asideItems = page.locator('.rp-toc-item__text');
-    await expect(asideItems).toHaveCount(9);
+    await expect(asideItems).toHaveCount(12);
 
     const asideTexts = (await asideItems.allTextContents()).map(text =>
       text.trim(),
@@ -209,6 +237,9 @@ test.describe('Inline markdown test', async () => {
         'emphasis',
         'delete',
         'This is a long string to test regex performance',
+        'Class: Bar<T = any>',
+        '**literal**',
+        '&lt;',
       ].join(','),
     );
 
@@ -229,8 +260,21 @@ test.describe('Inline markdown test', async () => {
         '<em>emphasis</em>',
         '<del>delete</del>',
         '<code>This is a long string to test regex performance</code>',
+        'Class: Bar&lt;T = <code>any</code>&gt;',
+        '<code>**literal**</code>',
+        '<code>&amp;lt;</code>',
       ].join(','),
     );
+
+    // The tooltip of an aside item should be its plain text, without any markup
+    const tocItems = page.locator('.rp-toc-item');
+    await expect(tocItems).toHaveCount(asideCount);
+    const asideTitles = await Promise.all(
+      Array.from({ length: asideCount }, (_, index) =>
+        tocItems.nth(index).getAttribute('title'),
+      ),
+    );
+    expect(asideTitles).toEqual(asideTexts);
   });
 
   test('Should generate header anchor and id with inline markdown syntax correctly', async ({
@@ -267,6 +311,26 @@ test.describe('Inline markdown test', async () => {
         `#${selector.split('#')[1]}`,
       );
     }
+  });
+
+  test('Should preserve escaped headings in previous and next page links', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/inline/generic-braces`, {
+      waitUntil: 'networkidle',
+    });
+    const previous = page.locator(
+      '.rp-prev-next-page__prev .rp-prev-next-page__item__title',
+    );
+    const next = page.locator(
+      '.rp-prev-next-page__next .rp-prev-next-page__item__title',
+    );
+    await expect(previous).toHaveText(
+      'Class: Component<P = { }, S = { }, SS = any>',
+    );
+    await expect(previous.locator('code')).toHaveText('any');
+    await expect(next).toHaveText('Class: Bar<T = any>');
+    await expect(next.locator('code')).toHaveText('any');
   });
 
   test('Should render html like <img> with inline markdown syntax correctly', async ({

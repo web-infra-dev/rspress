@@ -1,13 +1,25 @@
-import { type NavItemWithLink, normalizeHref, withBase } from '@rspress/shared';
+import {
+  type LlmsTxtPage,
+  type LlmsTxtRenderer,
+  type LlmsTxtSection,
+  type NavItemWithLink,
+  normalizeHref,
+  withBase,
+  withSiteOrigin,
+} from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { extractInfoFromFrontmatterWithAbsolutePath } from '../../auto-nav-sidebar/utils';
 import type { RouteService } from '../../route/RouteService';
 
-function routePathToMdPath(routePath: string, base: string): string {
+function routePathToMdPath(
+  routePath: string,
+  base: string,
+  siteOrigin?: string,
+): string {
   let url: string = routePath;
   url = normalizeHref(url, false);
   url = url.replace(/\.html$/, '.md');
-  return withBase(url, base);
+  return withSiteOrigin(withBase(url, base), siteOrigin);
 }
 
 async function generateLlmsTxt(
@@ -17,9 +29,95 @@ async function generateLlmsTxt(
   title: string | undefined,
   description: string | undefined,
   base: string,
+  siteOrigin: string | undefined,
   routeService: RouteService,
+  lang: string,
+  version: string,
+  renderLlmsTxt?: LlmsTxtRenderer,
 ): Promise<string> {
-  const lines: string[] = [];
+  async function generateSection(
+    sectionTitle: string,
+    routes: string[],
+  ): Promise<LlmsTxtSection | undefined> {
+    if (routes.length === 0) {
+      return;
+    }
+
+    const pages: LlmsTxtPage[] = (
+      await Promise.all(
+        routes.map(async (route): Promise<LlmsTxtPage | undefined> => {
+          const routePage = routeService.getRoutePageByRoutePath(route)!;
+          const {
+            lang: pageLang,
+            routePath,
+            pureRoutePath,
+            absolutePath,
+            version: pageVersion,
+          } = routePage.routeMeta;
+          if (pureRoutePath === '/') {
+            return;
+          }
+
+          // Prefer pageIndexInfo from RoutePage (set by extractPageData), but
+          // non-MDX pages have an empty indexed title and need file fallback.
+          const pageInfo = routePage.pageIndexInfo;
+          let title = pageInfo?.title;
+          let description = pageInfo?.description;
+
+          if (!title) {
+            const info = await extractInfoFromFrontmatterWithAbsolutePath(
+              absolutePath,
+              routeService.getDocsDir(),
+            );
+            title = info.title;
+            description ??= info.description;
+          }
+
+          return {
+            routePath,
+            link: routePathToMdPath(routePath, base, siteOrigin),
+            title,
+            description,
+            frontmatter: pageInfo?.frontmatter ?? {},
+            lang: pageLang,
+            version: pageVersion,
+          };
+        }),
+      )
+    ).filter((page): page is LlmsTxtPage => Boolean(page));
+
+    if (pages.length === 0) {
+      return;
+    }
+
+    return {
+      title: sectionTitle,
+      pages,
+    };
+  }
+
+  const navSections = await Promise.all(
+    navList.map(async (nav, i) => {
+      const routes = routeGroups[i];
+      return generateSection(nav.text, routes);
+    }),
+  );
+  const otherSection = await generateSection('Others', others);
+  const sections = [...navSections, otherSection].filter(
+    (section): section is LlmsTxtSection => Boolean(section),
+  );
+
+  if (renderLlmsTxt) {
+    return renderLlmsTxt({
+      title,
+      description,
+      lang,
+      version,
+      base,
+      siteOrigin,
+      sections,
+    });
+  }
 
   if (!title) {
     logger.warn(
@@ -30,74 +128,17 @@ async function generateLlmsTxt(
   const summary = title
     ? `# ${title}${description ? `\n\n> ${description}` : ''}`
     : '';
-
-  async function genH2Part(
-    nav: { text: string },
-    routes: string[],
-  ): Promise<string[]> {
-    const lines: string[] = [];
-    const { text } = nav;
-    if (routes.length === 0) {
-      return lines;
-    }
-
-    const routeLines: string[] = (
-      await Promise.all(
-        routes.map(async route => {
-          const routePage = routeService.getRoutePageByRoutePath(route)!;
-          const { lang, routePath, absolutePath } = routePage.routeMeta;
-          if (routePath === '/' || routePath === `/${lang}/`) {
-            return;
-          }
-
-          // Prefer pageIndexInfo from RoutePage (set by extractPageData)
-          const pageInfo = routePage.pageIndexInfo;
-          let title: string;
-          let description: string | undefined;
-
-          if (pageInfo) {
-            title = pageInfo.title;
-            description = pageInfo.description;
-          } else {
-            // Fallback to frontmatter extraction
-            const info = await extractInfoFromFrontmatterWithAbsolutePath(
-              absolutePath,
-              routeService.getDocsDir(),
-            );
-            title = info.title;
-            description = info.description;
-          }
-
-          return `- [${title}](${routePathToMdPath(routePath, base)})${description ? `: ${description}` : ''}`;
-        }),
-      )
-    ).filter((i): i is string => Boolean(i));
-    if (routeLines.length > 0) {
-      const title = text;
-      lines.push(`\n## ${title}\n`);
-      lines.push(...routeLines);
-    }
-
-    return lines;
+  const lines: string[] = [];
+  for (const section of sections) {
+    lines.push(`\n## ${section.title}\n`);
+    lines.push(
+      ...section.pages.map(
+        page =>
+          `- [${page.title}](${page.link})${page.description ? `: ${page.description}` : ''}`,
+      ),
+    );
   }
 
-  const h2Parts = await Promise.all(
-    navList.map(async (nav, i) => {
-      const routes = routeGroups[i];
-      const h2Part = await genH2Part(nav, routes);
-      return h2Part;
-    }),
-  );
-  lines.push(...h2Parts.flat());
-
-  // handle others
-  const otherLines = await genH2Part(
-    {
-      text: 'Others',
-    },
-    others,
-  );
-  lines.push(...otherLines);
   let llmsTxt: string;
   if (summary) {
     llmsTxt = lines.length > 0 ? `${summary}\n${lines.join('\n')}` : summary;
@@ -113,6 +154,7 @@ function generateLlmsFullTxt(
   navList: (NavItemWithLink & { lang: string })[],
   others: string[],
   base: string,
+  siteOrigin: string | undefined,
   mdContents: Map<string, string>,
 ): string {
   const lines: string[] = [];
@@ -124,7 +166,7 @@ function generateLlmsFullTxt(
     }
     for (const routePath of routeGroup) {
       lines.push(`---
-url: ${routePathToMdPath(routePath, base)}
+url: ${routePathToMdPath(routePath, base, siteOrigin)}
 ---
 `);
       lines.push(mdContents.get(routePath) ?? '');
@@ -133,7 +175,7 @@ url: ${routePathToMdPath(routePath, base)}
   }
   for (const routePath of others) {
     lines.push(`---
-url: ${routePathToMdPath(routePath, base)}
+url: ${routePathToMdPath(routePath, base, siteOrigin)}
 ---
 `);
     lines.push(mdContents.get(routePath) ?? '');

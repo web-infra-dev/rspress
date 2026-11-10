@@ -1,14 +1,11 @@
 import path from 'node:path';
 import type { PageIndexInfo, RouteMeta } from '@rspress/shared';
 import { getPageKey } from '../utils/getPageKey';
-import { normalizePath, slash } from '../utils/normalizePath';
+import { slash } from '../utils/slash';
 import { RouteService } from './RouteService';
 
 export class RoutePage {
   routeMeta: RouteMeta;
-  // @ts-expect-error use this field in the future
-  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: use this field in the future
-  #docDir: string;
 
   pageIndexInfo?: PageIndexInfo;
 
@@ -22,7 +19,7 @@ export class RoutePage {
       docsDir,
       RouteService.getInstance(),
     );
-    return new RoutePage(routeMeta, docsDir);
+    return new RoutePage(routeMeta);
   }
 
   static createFromExternal(
@@ -31,12 +28,11 @@ export class RoutePage {
     docDir: string,
   ): RoutePage {
     const routeMeta = RoutePage.generateRouteMeta(routePath, filepath, docDir);
-    return new RoutePage(routeMeta, path.dirname(filepath));
+    return new RoutePage(routeMeta);
   }
 
-  private constructor(routeMeta: RouteMeta, docDir: string) {
+  private constructor(routeMeta: RouteMeta) {
     this.routeMeta = routeMeta;
-    this.#docDir = docDir;
   }
 
   static generateRouteMeta(
@@ -45,15 +41,18 @@ export class RoutePage {
     docDir: string,
   ): RouteMeta {
     const routeService = RouteService.getInstance();
+    const absolutePath = path.normalize(filepath);
     const {
       routePath: normalizedPath,
       lang,
+      pureRoutePath,
       version,
     } = routeService.normalizeRoutePath(routePath);
     return {
       routePath: normalizedPath,
-      absolutePath: normalizePath(filepath),
-      relativePath: absolutePathToRelativePath(filepath, docDir),
+      pureRoutePath,
+      absolutePath,
+      relativePath: absolutePathToRelativePath(absolutePath, docDir),
       pageName: getPageKey(routePath),
       lang,
       version,
@@ -73,14 +72,16 @@ function absolutePathToRouteMeta(
   docsDir: string,
   routeService: RouteService = RouteService.getInstance(),
 ): RouteMeta {
+  absolutePath = path.normalize(absolutePath);
   const relativePath = absolutePathToRelativePath(absolutePath, docsDir);
 
-  const { lang, routePath, version } =
+  const { lang, pureRoutePath, routePath, version } =
     routeService.normalizeRoutePath(relativePath);
   return {
     pageName: getPageKey(relativePath),
     absolutePath,
     lang,
+    pureRoutePath,
     version,
     routePath,
     relativePath,

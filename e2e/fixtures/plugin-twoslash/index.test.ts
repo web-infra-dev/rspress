@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -6,7 +6,7 @@ import {
   runPreviewCommand,
 } from '../../utils/runCommands';
 
-test.describe('plugin twoslash test', async () => {
+test.describe('Twoslash plugin', async () => {
   let appPort: number;
   let app: unknown;
   test.beforeAll(async () => {

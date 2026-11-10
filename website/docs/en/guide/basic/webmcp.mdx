@@ -1,0 +1,65 @@
+import { Prompt } from '@rspress/core/theme';
+import { VersionBadge } from '../../../components/VersionBadge';
+
+# WebMCP
+
+<VersionBadge version="2.1.0" />
+
+Rspress enables [`webMcp`](/api/config/config-agent#webmcp) by default, so agents can use [WebMCP](https://developer.chrome.com/docs/ai/webmcp) to search, read, and navigate Rspress documentation. For more details, see [ChatGPT - Site tools](https://learn.chatgpt.com/docs/webmcp).
+
+<Prompt
+  title="Try WebMCP with your agent"
+  description="Send this prompt to Codex or another agent to see which WebMCP tools the page offers."
+  prompt={`## Task
+
+Open https://rspress.rs in a browser and check which WebMCP tools the current page makes available to you. Use the actual tool names and descriptions returned by the browser to list each tool by name and explain in one sentence what it can do.
+
+## WebMCP connection options
+
+- Native connection: If your agent environment provides a WebMCP browser connection, use it to discover the page's tools.
+- CLI fallback: Run this command to open the page, wait for loading, list its WebMCP tools as JSON, and close the browser:
+
+npx -y agent-browser@latest --session rspress-webmcp --json batch "open https://rspress.rs" "wait --load networkidle" "webmcp list" "close"
+
+If Chrome is missing, run npx -y agent-browser@latest install first, then retry. See https://agent-browser.dev/webmcp for command details.
+
+Read the live tool registry rather than inferring tools from HTML or documentation. If setup or discovery fails, report the actual error; distinguish this from a successfully retrieved empty tool list.`}
+/>
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  webMcp: true, // default value
+});
+```
+
+Set `webMcp: false` to disable the Rspress built-in tools. The [`useWebMcp`](/ui/hooks/use-web-mcp) hook remains available for registering custom tools.
+
+## Built-in tools
+
+| Tool               | Purpose                                                                                                                          |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `get_site_info`    | Site metadata, locales, versions, navigation, and the active sidebar.                                                            |
+| `list_pages`       | Filter and paginate page metadata, defaulting to the active language and version. Works independently of search.                 |
+| `get_page`         | Read metadata, frontmatter, TOC, and Markdown for a known route without navigating (enabled with [SSG-MD](/guide/basic/ssg-md)). |
+| `get_current_page` | Read metadata, frontmatter, TOC, and Markdown for the current page (enabled with [SSG-MD](/guide/basic/ssg-md)).                 |
+| `search_docs`      | Search the local documentation index for the active language and version (default theme local search only).                      |
+| `navigate`         | Navigate to a known internal route, then return committed page metadata, section routes, and previous/next pages.                |
+
+<details>
+<summary>View tool input schemas</summary>
+
+```json file="../../../../../e2e/fixtures/webmcp/toolInputSchemas.json" title="toolInputSchemas.json"
+
+```
+
+</details>
+
+## Cross-origin agents
+
+Use [`webMcp.exposedTo`](/api/config/config-agent#webmcp) to allow specific secure origins to discover tools.
+
+## Custom tools
+
+Use [`useWebMcp`](/ui/hooks/use-web-mcp) from `@rspress/core/runtime` to register tools in your own components. Tools are automatically removed when the component unmounts.

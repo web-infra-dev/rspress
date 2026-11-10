@@ -216,6 +216,68 @@ End of content.`;
     `);
   });
 
+  it('should preserve referenced exports', async () => {
+    const input = `export const a = 1;
+export function Thing() {
+  return <>World</>
+}
+
+# Hello <Thing /> {a}
+
+{a}`;
+
+    const result = await processMdx(input);
+
+    expect(result).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      export const a = 1;
+      export function Thing() {
+        return <>World</>;
+      }
+      function _createMdxContent(props) {
+        return <><>{"# Hello "}<Thing />{" "}{a}</>{"\\n"}{a}</>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
+
+  it('should preserve imports and referenced exports together', async () => {
+    const input = `import Badge from '@components/Badge'
+export const a = 1;
+export function Thing() {
+  return <>World</>
+}
+
+# Hello <Badge /> <Thing /> {a}
+
+{a}`;
+
+    const result = await processMdx(input);
+
+    expect(result).toMatchInlineSnapshot(`
+      "/*@jsxRuntime automatic*/
+      /*@jsxImportSource react*/
+      import Badge from '@components/Badge';
+      export const a = 1;
+      export function Thing() {
+        return <>World</>;
+      }
+      function _createMdxContent(props) {
+        return <><>{"# Hello "}<Badge />{" "}<Thing />{" "}{a}</>{"\\n"}{a}</>;
+      }
+      export default function MDXContent(props = {}) {
+        const {wrapper: MDXLayout} = props.components || ({});
+        return MDXLayout ? <MDXLayout {...props}><_createMdxContent {...props} /></MDXLayout> : _createMdxContent(props);
+      }
+      "
+    `);
+  });
+
   it('should preserve inline mdxTextExpression in headings', async () => {
     const input = `# hello {window.foo}`;
 
@@ -610,7 +672,7 @@ This is a <Button>click me</Button> and <Link href="/test">link</Link> example.`
     `);
 
     const input2 = `
-import { Tabs, Tab } from '@theme';
+import { Tabs, Tab } from '@rspress/core/theme';
 
 <Tabs>
 <Tab>
@@ -630,7 +692,7 @@ import Button from './_button.mdx';
     expect(result2).toMatchInlineSnapshot(`
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
-      import {Tabs, Tab} from '@theme';
+      import {Tabs, Tab} from '@rspress/core/theme';
       import Button from './_button.mdx';
       function _createMdxContent(props) {
         return <Tabs><Tab><Button /></Tab><Tab /></Tabs>;

@@ -6,10 +6,7 @@ import { parseConfigFileTextToJson } from 'typescript';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const templateCommonDir = path.resolve(__dirname, '../template-common');
-const templateCustomThemeDir = path.resolve(
-  __dirname,
-  '../template-custom-theme',
-);
+const templateThemeDir = path.resolve(__dirname, '../scripts/template-theme');
 
 describe('create-rspress template env types', () => {
   test('keeps the generated tsconfig scoped to docs, theme and rspress config', async () => {
@@ -28,8 +25,8 @@ describe('create-rspress template env types', () => {
     ]);
   });
 
-  test('declares CSS and SSG_MD ambient types in the custom theme folder', async () => {
-    const envDtsPath = path.join(templateCustomThemeDir, 'theme/env.d.ts');
+  test('declares CSS and SSG_MD ambient types in the theme template overlay', async () => {
+    const envDtsPath = path.join(templateThemeDir, 'theme/env.d.ts');
     const content = await readFile(envDtsPath, 'utf8');
 
     expect(content).toContain("declare module '*.css';");

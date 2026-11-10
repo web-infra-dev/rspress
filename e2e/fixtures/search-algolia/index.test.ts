@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { getPort, killProcess, runDevCommand } from '../../utils/runCommands';
 
-test.describe('search code blocks test', async () => {
+test.describe('Algolia search', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
 

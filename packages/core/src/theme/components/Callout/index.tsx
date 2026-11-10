@@ -2,7 +2,15 @@ import type { ReactNode } from 'react';
 import './index.scss';
 
 export interface CalloutProps {
-  type: 'tip' | 'note' | 'warning' | 'caution' | 'danger' | 'info' | 'details';
+  type:
+    | 'tip'
+    | 'note'
+    | 'important'
+    | 'warning'
+    | 'caution'
+    | 'danger'
+    | 'info'
+    | 'details';
   title?: string;
   children: ReactNode;
 }

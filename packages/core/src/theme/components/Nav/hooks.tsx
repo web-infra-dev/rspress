@@ -32,7 +32,6 @@ function replaceLang(
 
   let versionPart = '';
   let langPart = '';
-  let purePathPart = '';
 
   const parts = url.split('/').filter(Boolean);
 
@@ -51,7 +50,7 @@ function replaceLang(
     parts.shift();
   }
 
-  purePathPart = parts.join('/') || '';
+  let purePathPart = parts.join('/') || '';
 
   if ((versionPart || langPart) && !purePathPart) {
     purePathPart = cleanUrls ? 'index' : 'index.html';
@@ -79,22 +78,26 @@ export function useLangsMenu() {
   const translationMenuData = hasMultiLanguage
     ? {
         items: localeLanguages.map(item => {
+          const isCurrentLang = item.lang === currentLang;
+
           return {
             text: item?.label,
-            link: replaceLang(
-              pathname + search,
-              {
-                current: currentLang,
-                target: item.lang,
-                default: defaultLang,
-              },
-              {
-                current: currentVersion,
-                default: defaultVersion,
-              },
-              cleanUrls,
-              pageType === '404',
-            ),
+            link: isCurrentLang
+              ? ''
+              : replaceLang(
+                  pathname + search,
+                  {
+                    current: currentLang,
+                    target: item.lang,
+                    default: defaultLang,
+                  },
+                  {
+                    current: currentVersion,
+                    default: defaultVersion,
+                  },
+                  cleanUrls,
+                  pageType === '404',
+                ),
             lang: item.lang,
             rel: 'alternate',
           };

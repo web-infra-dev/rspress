@@ -1,0 +1,11 @@
+cases:
+  - name: TYPEDOC-02 Navigate generated multi-entry API documentation
+    tags: [original-typedoc, replacement-final-existing]
+    steps:
+      - app.open: { fixture: plugin-typedoc/multi, path: /api/ }
+      - aiAct: Bring the generated API sidebar into view, expanding Functions, Modules, and Types if needed.
+      - aiAssert: The sidebar contains ten entries in order @rspress-fixture/rspress-plugin-typedoc-multi, Functions, Function createMiddleware(), Function mergeMiddlewares(), Function getRspressUrl(), Modules, Module middleware, Module raw-link, Types, and Type Alias Middleware.
+      - aiAct: In the generated API sidebar, expand Functions if needed and open getRspressUrl.
+      - aiAssert: The generated getRspressUrl function article is open, with Rspress site displayed in its documentation.
+      - aiAct: Expand Modules in the sidebar to inspect its entries. Stay on this function article.
+      - aiAssert: The sidebar displays middleware and raw-link module entries.

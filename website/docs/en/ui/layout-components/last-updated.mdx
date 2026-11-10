@@ -1,11 +1,11 @@
 ---
-description: LastUpdated component for displaying the page's last updated time.
+description: LastUpdated component for displaying the page's last updated time and author.
 overviewHeaders: []
 ---
 
 # LastUpdated
 
-`LastUpdated` displays the page's last updated time. Typically used with the theme's `lastUpdated` configuration.
+`LastUpdated` displays the page's last updated time, and optionally the last author. Typically used with the theme's `lastUpdated` configuration.
 
 ## Usage
 
@@ -34,5 +34,25 @@ export default defineConfig({
 ```
 
 When `lastUpdated` is enabled, the component automatically reads and formats the page metadata.
+
+### Displaying the author
+
+Configure `lastUpdated.author` to display the last commit author:
+
+```ts title="rspress.config.ts"
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: {
+      // Show the commit author's name:
+      // author: true,
+
+      // Or use custom display text:
+      author: ({ name, email }) => `${name} <${email}>`,
+    },
+  },
+});
+```
+
+The callback receives `{ name, email, filePath }` (the commit author info from `git log` and the source file path) and returns the string to render.
 
 To customize the display text or time format, you can export and modify `theme/components/LastUpdated/index.tsx` using `rspress eject LastUpdated`.

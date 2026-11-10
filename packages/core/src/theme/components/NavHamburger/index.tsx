@@ -6,6 +6,7 @@ import {
 } from '@rspress/core/theme';
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
+import type { NavItemsSlots } from '../Nav';
 import { NavVersions } from '../Nav/NavMenu';
 import { NavScreen, NavScreenDivider } from '../NavScreen';
 import { NavScreenAppearance } from '../NavScreen/NavScreenAppearance';
@@ -13,11 +14,11 @@ import { NavScreenLangs } from '../NavScreen/NavScreenLangs';
 import './index.scss';
 import { useNavScreen } from './useNavScreen';
 
-export function NavHamburger() {
+export function NavHamburger(props: NavItemsSlots) {
   const items = (
     <div className="rp-nav-hamburger__md__hover-group">
       <NavScreenAppearance />
-      <ul className="rp-nav-menu">
+      <ul className="rp-nav-hamburger__md__versions">
         <NavVersions />
       </ul>
       <NavScreenLangs />
@@ -38,19 +39,25 @@ export function NavHamburger() {
     <>
       {isScreenOpen &&
         createPortal(
-          <NavScreen isScreenOpen={isScreenOpen} toggleScreen={toggleScreen} />,
+          <NavScreen
+            beforeLeftNavItems={props.beforeLeftNavItems}
+            afterLeftNavItems={props.afterLeftNavItems}
+            beforeRightNavItems={props.beforeRightNavItems}
+            afterRightNavItems={props.afterRightNavItems}
+            isScreenOpen={isScreenOpen}
+            toggleScreen={toggleScreen}
+          />,
           document.getElementById('__rspress_modal_container')!,
         )}
 
       <button
-        type="button"
         onClick={toggleScreen}
         aria-label="mobile hamburger"
         className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__sm', {
           'rp-nav-hamburger--active': isScreenOpen,
         })}
       >
-        <SvgWrapper icon={IconSmallMenu} />
+        <SvgWrapper icon={IconSmallMenu} width={20} height={20} />
       </button>
 
       <div
@@ -60,11 +67,9 @@ export function NavHamburger() {
       >
         <button
           type="button"
-          onClick={handleMouseEnter}
           aria-label="mobile hamburger"
-          className={clsx('rp-nav-hamburger', 'rp-nav-hamburger__md', {
-            'rp-nav-hamburger--active': isScreenOpen,
-          })}
+          className="rp-nav-hamburger rp-nav-hamburger__md"
+          onClick={handleMouseEnter}
         >
           <SvgWrapper icon={IconSmallMenu} />
         </button>

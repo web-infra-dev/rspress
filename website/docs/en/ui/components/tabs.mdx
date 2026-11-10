@@ -18,7 +18,7 @@ import { Tab, Tabs } from '@rspress/core/theme';
 </Tabs>
 ```
 
-### Code blocks
+## Code blocks
 
 ````mdx title="index.mdx" preview
 import { Tab, Tabs } from '@rspress/core/theme';
@@ -43,21 +43,99 @@ const bar = require('bar');
 </Tabs>
 ````
 
-### Props
+## Group synchronization
+
+Use the same `groupId` to synchronize the active tab across multiple `Tabs`.
+
+```mdx title="index.mdx" preview
+import { Tab, Tabs } from '@rspress/core/theme';
+
+<Tabs groupId="package-manager">
+  <Tab label="npm">npm install rspress</Tab>
+  <Tab label="pnpm">pnpm add rspress</Tab>
+</Tabs>
+
+<Tabs groupId="package-manager">
+  <Tab label="npm">npm run dev</Tab>
+  <Tab label="pnpm">pnpm dev</Tab>
+</Tabs>
+```
+
+## Custom labels
+
+Use `label` on each `Tab` to render custom tab labels.
+
+```mdx title="index.mdx" preview
+import {
+  IconGithub,
+  IconGitlab,
+  SvgWrapper,
+  Tab,
+  Tabs,
+} from '@rspress/core/theme';
+
+<Tabs>
+  <Tab
+    label={
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+        <SvgWrapper icon={IconGithub} width={16} height={16} />
+        GitHub
+      </span>
+    }
+  >
+    GitHub repository settings
+  </Tab>
+  <Tab
+    label={
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+        <SvgWrapper icon={IconGitlab} width={16} height={16} />
+        GitLab
+      </span>
+    }
+  >
+    GitLab project settings
+  </Tab>
+</Tabs>
+```
+
+## Separate labels and content
+
+Use `values` to define tab labels separately from panel content. Each item provides a `value`, and the matching `<Tab value="...">` supplies the content. Use `defaultValue` to preselect a tab by `value`.
+
+```mdx title="index.mdx" preview
+import { Tab, Tabs } from '@rspress/core/theme';
+
+<Tabs
+  defaultValue="apple"
+  values={[
+    { label: 'Apple', value: 'apple' },
+    { label: 'Orange', value: 'orange' },
+    { label: 'Banana', value: 'banana' },
+  ]}
+>
+  <Tab value="apple">This is an apple 🍎</Tab>
+  <Tab value="orange">This is an orange 🍊</Tab>
+  <Tab value="banana">This is a banana 🍌</Tab>
+</Tabs>
+```
+
+## Props
 
 ```ts
 interface TabsProps {
   children: React.ReactNode;
+  values?: Array<{ label: React.ReactNode; value: string }>;
+  defaultIndex?: number;
   defaultValue?: string;
   groupId?: string;
   tabPosition?: 'left' | 'center';
 }
 
 interface TabProps {
-  label: string;
+  label?: React.ReactNode;
   value?: string;
   children: React.ReactNode;
 }
 ```
 
-Use `defaultValue` to preselect a tab (matches `value`); `groupId` syncs selection across multiple `Tabs`; `tabPosition` sets list alignment.
+`label` accepts any renderable React node, so it can include icons or custom markup. Use `defaultIndex` to preselect a tab by index, or `defaultValue` to preselect a tab by `value`; `groupId` syncs selection across multiple `Tabs`; `tabPosition` sets list alignment.

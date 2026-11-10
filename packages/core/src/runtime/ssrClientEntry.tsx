@@ -1,8 +1,9 @@
 import { removeBase } from '@rspress/core/runtime';
 import { startTransition } from 'react';
-import { hydrateRoot } from 'react-dom/client';
-import { ClientApp } from './ClientApp';
-import { initPageData, setCurrentPageData } from './initPageData';
+import { createRoot, hydrateRoot } from 'react-dom/client';
+import { ClientApp, createClientRouter } from './ClientApp';
+import { initPageData } from './initPageData';
+import { redirectToCleanUrl } from './route';
 
 // difference from csrClientEntry.tsx
 // 1. use hydrate instead of createRoot().render()
@@ -10,14 +11,24 @@ import { initPageData, setCurrentPageData } from './initPageData';
 // 3. add onRecoverableError
 
 async function renderInBrowser() {
+  redirectToCleanUrl(window.location, window.history);
+
   const container = document.getElementById('__rspress_root')!;
   const pathname = removeBase(window.location.pathname);
-  const initialPageData = await initPageData(pathname);
-  setCurrentPageData(pathname, initialPageData);
+  let initialPageData;
+  try {
+    initialPageData = await initPageData(pathname);
+  } catch {
+    // Let the data router handle a failed initial chunk just like a failed
+    // client navigation. The server HTML cannot be hydrated without its page.
+    createRoot(container).render(<ClientApp router={createClientRouter()} />);
+    return;
+  }
+  const router = createClientRouter(initialPageData);
   // why startTransition?
   // https://github.com/facebook/docusaurus/pull/9051
   startTransition(() => {
-    hydrateRoot(container, <ClientApp initialPageData={initialPageData} />, {
+    hydrateRoot(container, <ClientApp router={router} />, {
       onRecoverableError(error, errorInfo) {
         if (error instanceof Error) {
           console.warn('hydrateRoot recoverable error:', error, errorInfo);

@@ -1,21 +1,44 @@
 packages:
+  - tests/midscene
   - scripts/config
-  - packages/**
+  - packages/*
   - e2e/**
   - website
   - '!**/compiled/**'
-  - '!**/tests/**'
+  - '!packages/**/tests/**'
+  - '!e2e/**/tests/**'
   - '!packages/create-rspress/template-*'
+
+allowBuilds:
+  esbuild: true
+  sharp: true
 
 hoistPattern: []
 
 linkWorkspacePackages: true
 
-onlyBuiltDependencies:
-  - '@biomejs/biome'
-  - core-js
-  - esbuild
-  - nx
-  - sharp
+# Reduce the risk of installing compromised packages
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - '@swc-next/*'
+  - '@rspack/*'
+  - '@rsbuild/*'
+  - '@rslib/*'
+  - rsbuild-plugin-dts
+  # Reviewed loading strategy option: rstackjs/rsbuild-plugin-google-analytics#82
+  - rsbuild-plugin-google-analytics@1.1.0
+  - '@rspress/*'
+  - '@rstest/*'
+  - '@rsdoctor/*'
+  - '@rslint/*'
+  - '@rstack-dev/*'
+  - '@rstackjs/create-toolkit'
+  - rstack
+  - heading-case
+  # Renovate security update: tinypool@2.1.2
+  - tinypool@2.1.2
+
+# Prevent un-reviewed build scripts
+strictDepBuilds: true
 
 strictPeerDependencies: false

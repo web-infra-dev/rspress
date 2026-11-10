@@ -21,7 +21,15 @@ export function useFullTextSearch(): {
           currentVersion: page.version,
         });
         searchRef.current = searcher;
-        await searcher.init();
+        try {
+          await searcher.init();
+        } catch (error) {
+          console.error(
+            '[Rspress] Failed to initialize full-text search:',
+            error,
+          );
+          return;
+        }
         setInitialized(true);
       }
     }

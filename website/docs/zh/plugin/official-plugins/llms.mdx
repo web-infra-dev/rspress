@@ -1,5 +1,5 @@
 ---
-tag: new
+description: '在无法启用 SSG 和 SSG-MD 时，通过 @rspress/plugin-llms 生成 llms.txt 和 Markdown 文件作为替代方案。'
 ---
 
 # @rspress/plugin-llms <SourceCode href="https://github.com/web-infra-dev/rspress/tree/main/packages/plugin-llms" />
@@ -26,7 +26,7 @@ import { PackageManagerTabs } from '@rspress/core/theme';
 
 ### 1. 安装插件
 
-在配置文件中写入以下的配置：
+使用此插件时，在配置中设置 `llms: false`，关闭内置的 SSG-MD 生成：
 
 ```ts
 // rspress.config.ts
@@ -34,6 +34,7 @@ import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
+  llms: false,
   plugins: [pluginLlms()],
 });
 ```
@@ -53,11 +54,13 @@ import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 
 export default defineConfig({
+  llms: false,
   plugins: [pluginLlms()],
   themeConfig: {
     llmsUI: true,
     // 或者使用自定义选项：
     // llmsUI: {
+    //   injectLlmsHint: false, // 禁用面向大语言模型的 HTML/Markdown directive hint
     //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
     //   placement: 'outline', // 在大纲面板中显示而非 H1 下方
     // },
@@ -370,7 +373,7 @@ interface LlmsCopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 - **类型**：`LlmsViewOptionsProps`
 
 ```ts
-type Option =
+type LlmsViewOptionsItem =
   | {
       title: string;
       icon?: React.ReactNode;
@@ -386,16 +389,16 @@ type Option =
   | 'claude';
 
 interface LlmsViewOptionsProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  options?: Option[];
+  options?: LlmsViewOptionsItem[];
 }
 ```
 
 #### options
 
-- **类型**：`Option[]`
+- **类型**：`LlmsViewOptionsItem[]`
 
 ```ts
-type Option =
+type LlmsViewOptionsItem =
   | {
       title: string;
       icon?: React.ReactNode;
@@ -425,6 +428,7 @@ type Option =
 // rspress.config.ts
 import { defineConfig } from '@rspress/core';
 defineConfig({
+  llms: false,
   lang: 'en',
   plugins: [
     pluginLlms([

@@ -1,6 +1,6 @@
 {
   "name": "@rspress/plugin-playground",
-  "version": "2.0.10",
+  "version": "2.1.1",
   "description": "A plugin for rspress to preview the code block in markdown/mdx file.",
   "bugs": "https://github.com/web-infra-dev/rspress/issues",
   "repository": {
@@ -27,42 +27,40 @@
     "static"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
+    "build": "rs lib",
+    "dev": "rs lib -w",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.1.1",
     "@monaco-editor/react": "~4.7.0",
-    "@oxidation-compiler/napi": "^0.2.0",
+    "@swc-next/parser": "^0.4.1",
     "remark-gfm": "^4.0.1",
     "rspack-plugin-virtual-module": "1.0.1",
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
-    "@babel/types": "^7.29.0",
-    "@rsbuild/plugin-react": "~2.0.0",
-    "@rslib/core": "0.21.3",
+    "@babel/types": "^7.29.11",
+    "@rsbuild/plugin-react": "~2.1.1",
     "@rspress/plugin-playground": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "@types/babel__standalone": "^7.1.9",
     "@types/babel__traverse": "^7.28.0",
     "@types/mdast": "^4.0.4",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "mdast-util-mdx-jsx": "^3.2.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "react-router-dom": "^7.14.2",
-    "rsbuild-plugin-publint": "^0.3.4",
-    "typescript": "^5.8.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "mdast-util-mdx-jsx": "^3.2.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "rsbuild-plugin-publint": "^1.0.0",
+    "typescript": "^6.0.3",
     "unified": "^11.0.5"
   },
   "peerDependencies": {
-    "@rspress/core": "workspace:^2.0.10",
+    "@rspress/core": "workspace:^2.1.0-beta.2",
     "react": ">=18.0.0",
-    "react-router-dom": "^6.8.1"
+    "react-dom": ">=18.0.0"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

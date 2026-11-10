@@ -57,8 +57,7 @@ export function parsePreviewInfoFromMeta(options: {
   if (previewMatch) {
     result.isPreview = true;
     const explicitMode = previewMatch[1] as
-      | Options['defaultPreviewMode']
-      | undefined;
+      Options['defaultPreviewMode'] | undefined;
 
     if (
       explicitMode &&
@@ -75,7 +74,7 @@ export function parsePreviewInfoFromMeta(options: {
   // Check for iframe
   if (meta.includes('iframe')) {
     previewLogger.warn(
-      'The "iframe" meta is deprecated, please use \`\`\`tsx preview="iframe-fixed" or \`\`\`tsx preview="iframe-follow" instead.',
+      'The "iframe" meta is deprecated, please use ```tsx preview="iframe-fixed" or ```tsx preview="iframe-follow" instead.',
     );
   }
 

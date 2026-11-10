@@ -1,0 +1,105 @@
+.router-controls {
+  box-sizing: border-box;
+  width: calc(100% - 48px);
+  max-width: 960px;
+  margin: 24px auto 48px;
+  padding: 24px;
+  border: 1px solid var(--rp-c-divider-light);
+  border-radius: 16px;
+  background: var(--rp-c-bg);
+  color: var(--rp-c-text-1);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.router-controls__header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.router-controls__header p {
+  margin: 6px 0 24px;
+  color: var(--rp-c-text-2);
+}
+
+.router-controls__actions {
+  display: grid;
+  gap: 20px;
+}
+
+.router-controls fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.router-controls legend {
+  margin-bottom: 8px;
+  padding: 0;
+  font-weight: 600;
+}
+
+.router-controls__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.router-controls button {
+  padding: 8px 14px;
+  border: 1px solid var(--rp-c-divider-light);
+  border-radius: 8px;
+  background: var(--rp-c-bg-soft);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.router-controls button:hover {
+  border-color: var(--rp-c-brand);
+  color: var(--rp-c-brand);
+}
+
+.router-controls button:focus-visible {
+  outline: 2px solid var(--rp-c-brand);
+  outline-offset: 2px;
+}
+
+.router-controls__status {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0 0;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--rp-c-bg-soft);
+}
+
+.router-controls__status dt {
+  margin-bottom: 4px;
+  color: var(--rp-c-text-2);
+  font-size: 12px;
+}
+
+.router-controls__status dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--rp-font-family-mono);
+}
+
+.router-controls__page {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .router-controls {
+    width: calc(100% - 32px);
+    padding: 20px;
+  }
+
+  .router-controls__status {
+    grid-template-columns: 1fr;
+  }
+}

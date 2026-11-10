@@ -1,0 +1,9 @@
+cases:
+  - name: FALLBACK-01 Recover from a missing documentation page
+    tags: [original-fallback, replacement-batch-2]
+    steps:
+      - app.open: { fixture: basic, path: /not-a-real-page }
+      - aiAct: Bring the page-not-found message and recovery link into view.
+      - aiAssert: The page displays a 404 or page-not-found message with a way to return home.
+      - aiAct: Follow the home recovery link.
+      - aiAssert: The Hello world home article is visible instead of the page-not-found message.

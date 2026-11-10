@@ -64,7 +64,7 @@ describe('eject command', () => {
 
       // Setup mock file structure
       vol.fromJSON({
-        [`${themePath}/index.tsx`]: `import { Link } from '@theme';\nexport const TestComponent = () => <Link>Test</Link>;`,
+        [`${themePath}/index.tsx`]: `import { Link } from '@rspress/core/theme';\nexport const TestComponent = () => <Link>Test</Link>;`,
         [`${themePath}/styles.scss`]: '.test { color: red; }',
       });
 

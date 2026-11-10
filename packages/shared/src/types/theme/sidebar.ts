@@ -1,15 +1,13 @@
 export interface Sidebar {
   [path: string]: (
-    | SidebarGroup
-    | SidebarItem
-    | SidebarDivider
-    | SidebarSectionHeader
+    SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader
   )[];
 }
 
 export interface SidebarGroup {
   text: string;
   link?: string;
+  icon?: string;
   tag?: string;
   items: (SidebarGroup | SidebarItem | SidebarDivider | SidebarSectionHeader)[];
   collapsible?: boolean;
@@ -25,6 +23,7 @@ export interface SidebarGroup {
 export type SidebarItem = {
   text: string;
   link: string;
+  icon?: string;
   tag?: string;
   /**
    * For hmr usage in development
@@ -38,15 +37,13 @@ export type SidebarDivider = { dividerType: 'dashed' | 'solid' };
 
 export type SidebarSectionHeader = {
   sectionHeaderText: string;
+  icon?: string;
   tag?: string;
 };
 
 // normalized config ---------------------------------------------------------
 export type SidebarData = (
-  | SidebarDivider
-  | SidebarItem
-  | SidebarSectionHeader
-  | NormalizedSidebarGroup
+  SidebarDivider | SidebarItem | SidebarSectionHeader | NormalizedSidebarGroup
 )[];
 
 export interface NormalizedSidebarGroup extends Omit<SidebarGroup, 'items'> {

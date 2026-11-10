@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -5,18 +6,25 @@ import {
   checkCancel,
   create,
   type ESLintTemplateName,
+  type RslintTemplateName,
   select,
-} from 'create-rstack';
+} from '@rstackjs/create-toolkit';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const templates = ['basic', 'custom-theme'] as const;
+const templates = ['basic', 'basic-theme', 'i18n', 'i18n-theme'] as const;
 
 type TemplateName = (typeof templates)[number];
+type I18nChoice = 'basic' | 'i18n';
+type ThemeChoice = 'with-theme' | 'default-theme';
+
+function isTemplateName(templateName: string): templateName is TemplateName {
+  return templates.includes(templateName as TemplateName);
+}
 
 async function getTemplateName(argv: Argv): Promise<TemplateName> {
   if (argv.template) {
-    if (templates.includes(argv.template as TemplateName)) {
-      return argv.template as TemplateName;
+    if (isTemplateName(argv.template)) {
+      return argv.template;
     }
 
     throw new Error(
@@ -24,34 +32,89 @@ async function getTemplateName(argv: Argv): Promise<TemplateName> {
     );
   }
 
-  return checkCancel(
-    await select<TemplateName>({
-      message: 'Would you like to customize the theme styles?',
-      initialValue: 'custom-theme',
+  const i18nChoice = checkCancel<I18nChoice>(
+    await select<I18nChoice>({
+      message: 'Choose documentation language setup',
+      initialValue: 'basic',
       options: [
         {
-          value: 'custom-theme',
-          label: 'Yes, set up a "theme" folder for customization',
-          hint: 'Modify styles and components later.',
+          value: 'basic',
+          label: 'Single language',
+          hint: 'docs',
         },
         {
-          value: 'basic',
-          label: 'No, use the default theme',
+          value: 'i18n',
+          label: 'Multilingual',
+          hint: 'docs/en, docs/zh',
         },
       ],
     }),
   );
+
+  const themeChoice = checkCancel<ThemeChoice>(
+    await select<ThemeChoice>({
+      message: 'Choose theme customization setup',
+      initialValue: 'with-theme',
+      options: [
+        {
+          value: 'with-theme',
+          label: 'Custom theme',
+          hint: 'theme/',
+        },
+        {
+          value: 'default-theme',
+          label: 'Default theme',
+        },
+      ],
+    }),
+  );
+
+  return themeChoice === 'with-theme' ? `${i18nChoice}-theme` : i18nChoice;
 }
 
 function mapESLintTemplate(): ESLintTemplateName {
-  return 'vanilla-ts' as ESLintTemplateName;
+  return 'react-ts' as ESLintTemplateName;
 }
 
+function mapRslintTemplate(): RslintTemplateName {
+  return 'react-ts' as RslintTemplateName;
+}
+
+const root = path.resolve(__dirname, '..');
+const { version } = JSON.parse(
+  fs.readFileSync(path.join(root, 'package.json'), 'utf-8'),
+) as { version: string };
+
 create({
-  root: path.resolve(__dirname, '..'),
+  root,
   name: 'rspress',
-  skipFiles: ['template-placeholder'],
+  banner: `create-rspress v${version}`,
   templates: [...templates],
+  git: !process.argv.includes('--no-git'),
   getTemplateName,
   mapESLintTemplate,
+  mapRslintTemplate,
+  extraSkills: [
+    {
+      value: 'rspress-docs-generator',
+      label: 'rspress-docs-generator',
+      source: 'rstackjs/agent-skills',
+    },
+    {
+      value: 'rspress-best-practices',
+      label: 'rspress-best-practices',
+      source: 'rstackjs/agent-skills',
+    },
+    {
+      value: 'rspress-custom-theme',
+      label: 'rspress-custom-theme',
+      source: 'rstackjs/agent-skills',
+      when: ({ templateName }) => templateName.endsWith('-theme'),
+    },
+    {
+      value: 'rspress-description-generator',
+      label: 'rspress-description-generator',
+      source: 'rstackjs/agent-skills',
+    },
+  ],
 });

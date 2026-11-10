@@ -1,0 +1,9 @@
+cases:
+  - name: HMR-03 Update the navigation label
+    tags: [original-hmr]
+    steps:
+      - app.open: { fixture: hmr, path: / }
+      - aiAct: Open the Test article through Guide navigation.
+      - fixture.update: { part: navigation }
+      - aiAct: Watch the top-right Guide navigation link until its text becomes HMR Guide. The top-left site title HMR fixture should stay unchanged. Do not reload the page or navigate elsewhere; stop if the link has not updated within 30 seconds.
+      - aiAssert: The top navigation displays HMR Guide and the Test article remains visible.

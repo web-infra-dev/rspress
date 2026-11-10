@@ -1,20 +1,20 @@
-When you register global components, Rspress will automatically render these React components in the theme without manually importing and using them.
+When you register global components, Rspress automatically renders these React components in the theme without requiring manual imports.
 
-Through global components, you can complete many custom functions, such as:
+Global components can implement many custom features, such as:
 
 ```tsx title="compUi.tsx"
 import React from 'react';
 
 // Need a default export
-// The props comes from your config
+// Props come from your config
 export default function PluginUI(props?: { foo: string }) {
   return <div>This is a global layout component</div>;
 }
 ```
 
-In this way, the content of the component will be rendered in the theme page, such as adding **BackToTop** button.
+The component content is then rendered in the theme, for example to add a **BackToTop** button.
 
-In the meanwhile, you can also use the global component to register some side effects, such as:
+You can also use a global component to register side effects:
 
 ```tsx title="compSideEffect.tsx"
 import { useEffect } from 'react';
@@ -34,9 +34,8 @@ export default function PluginSideEffect() {
 }
 ```
 
-This way, side effects of components are executed in the theme page. For example, some of the following scenarios require side effects:
+The component side effects then run in the theme. For example, side effects are useful for:
 
-- Redirect for certain page routes.
-- Bind click event on the img tag of the page to implement the image zoom function.
-- When the route changes, the PV data of different pages are reported.
-- ......
+- Redirecting specific page routes.
+- Binding click events on page `img` tags to implement image zoom.
+- Reporting page view data when the route changes.

@@ -1,6 +1,6 @@
 import { access } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import { runBuildCommand } from '../../utils/runCommands';
 
 async function pathExists(path: string): Promise<boolean> {
@@ -17,7 +17,7 @@ test.describe('icon file url', async () => {
     const appDir = import.meta.dirname;
     await runBuildCommand(appDir);
 
-    const existsImg = pathExists(
+    const existsImg = await pathExists(
       path.resolve(appDir, 'doc_build', 'rspress-icon.png'),
     );
     expect(existsImg).toBeTruthy();

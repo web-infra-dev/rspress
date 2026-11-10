@@ -29,21 +29,22 @@ export const rehypeHeaderAnchor: Plugin<[], Root> = () => {
   };
 };
 
-export const collectHeaderText = (node: Element) => {
+export const collectHeaderText = (node: Element, allowCustomId = true) => {
   let text = '';
   let id = '';
   node.children.forEach(child => {
     if (child.type === 'text') {
-      const [textPart, idPart] = extractTextAndId(child.value);
+      const [textPart, idPart] = allowCustomId
+        ? extractTextAndId(child.value)
+        : [child.value, ''];
       child.value = textPart;
       text += textPart;
-      id = idPart;
+      if (idPart) {
+        id = idPart;
+      }
     } else if (child.type === 'element') {
-      child.children.forEach(c => {
-        if (c.type === 'text') {
-          text += c.value;
-        }
-      });
+      const [childText] = collectHeaderText(child, false);
+      text += childText;
     }
   });
   return [text, id];
@@ -64,6 +65,7 @@ function create(node: Element): Element {
     properties: {
       class: 'rp-header-anchor',
       ariaHidden: 'true',
+      tabIndex: -1,
       href: `#${node.properties!.id}`,
     },
     children: [

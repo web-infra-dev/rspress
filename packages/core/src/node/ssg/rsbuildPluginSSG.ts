@@ -5,14 +5,17 @@ import { isDebugMode, type UserConfig } from '@rspress/shared';
 import { logger } from '@rspress/shared/logger';
 import { NODE_SSG_BUNDLE_FOLDER, NODE_SSG_BUNDLE_NAME } from '../constants';
 import type { RouteService } from '../route/RouteService';
+import type { RouteChunkAssetsPlugin } from '../route/routeChunkAssets';
 import { renderPages } from './renderPages';
 
 export const rsbuildPluginSSG = ({
   routeService,
   config,
+  routeChunkAssets,
 }: {
   routeService: RouteService;
   config: UserConfig;
+  routeChunkAssets: RouteChunkAssetsPlugin;
 }): RsbuildPlugin => ({
   name: 'rspress-inner-rsbuild-plugin-ssg',
   async setup(api) {
@@ -48,8 +51,11 @@ export const rsbuildPluginSSG = ({
                 return;
               }
 
-              for (const [assetName, assetSource] of Object.entries(assets)) {
+              // Rspack resolves `assets[name]` through the Rust-JS bridge, so
+              // keep enumeration to names and read the Source only after match.
+              for (const assetName of Object.keys(assets)) {
                 if (assetName === 'index.html') {
+                  const assetSource = assets[assetName];
                   htmlTemplate = assetSource.source().toString();
                   compilation.deleteAsset(assetName);
                   resolveOnce();
@@ -96,8 +102,11 @@ export const rsbuildPluginSSG = ({
 
           await mkdir(ssgFolderPath, { recursive: true });
           await Promise.all(
-            Object.entries(assets).map(async ([assetName, assetSource]) => {
+            // Rspack resolves `assets[name]` through the Rust-JS bridge, so
+            // keep enumeration to names and read the Source only after match.
+            Object.keys(assets).map(async assetName => {
               if (assetName.startsWith(`${NODE_SSG_BUNDLE_FOLDER}/`)) {
+                const assetSource = assets[assetName];
                 const fileAbsolutePath = join(distPath, assetName);
                 await writeFile(
                   fileAbsolutePath,
@@ -118,6 +127,8 @@ export const rsbuildPluginSSG = ({
             mainCjsAbsolutePath,
             htmlTemplate,
             emitAsset,
+            distPath,
+            routeChunkAssets.getManifest(),
           );
 
           if (!isDebugMode()) {

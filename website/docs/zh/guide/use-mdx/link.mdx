@@ -70,7 +70,7 @@ import { Tabs, Tab } from '@rspress/core/theme';
 
 :::tip
 
-当使用绝对路径时，根路径为 [`docs`](/api/config/config-basic#root) 目录。如果项目中使用了 [国际化](/guide/basic/i18n) 或 [多版本](/guide/basic/multi-version)，[`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) 配置项会自动添加前缀，所以在链接中可以省略语言目录。
+当使用绝对路径时，根路径为 [`docs`](/api/config/config-basic#root) 目录。如果项目中使用了 [国际化](/guide/basic/i18n) 或 [多版本](/guide/basic/multi-version)，[`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoprefix) 配置项会自动添加前缀，所以在链接中可以省略语言目录。
 
 比如：
 
@@ -132,7 +132,7 @@ URL 形式的特点是使用完整的 URL 地址来引用到具体的页面。
 
 :::tip
 
-当使用绝对路径时，根路径为 [`docs`](/api/config/config-basic#root) 目录。如果项目中使用了 [国际化](/guide/basic/i18n) 或 [多版本](/guide/basic/multi-version)，[`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoPrefix) 配置项会自动添加前缀，所以在链接中可以省略语言目录。
+当使用绝对路径时，根路径为 [`docs`](/api/config/config-basic#root) 目录。如果项目中使用了 [国际化](/guide/basic/i18n) 或 [多版本](/guide/basic/multi-version)，[`markdown.link.autoPrefix`](/api/config/config-build#markdownlinkautoprefix) 配置项会自动添加前缀，所以在链接中可以省略语言目录。
 
 比如：
 
@@ -217,7 +217,7 @@ Rspress 支持在链接中添加锚点跳转，使用 `#` 符号来指定跳转�
 ```mdx
 [跳转到 #文件路径形式](#文件路径形式)
 
-[跳转到 快速开始#1-初始化项目](../start/getting-started.mdx#1-初始化项目)
+[跳转到 快速开始#创建 Rspress 项目](../start/getting-started.mdx#创建-rspress-项目)
 ```
 
 </Tab>
@@ -225,7 +225,7 @@ Rspress 支持在链接中添加锚点跳转，使用 `#` 符号来指定跳转�
 
 [跳转到 #文件路径形式](#文件路径形式)
 
-[跳转到 快速开始#1-初始化项目](../start/getting-started.mdx#1-初始化项目)
+[跳转到 快速开始#创建 Rspress 项目](../start/getting-started.mdx#创建-rspress-项目)
 
 </Tab>
 </Tabs>
@@ -253,6 +253,24 @@ export default defineConfig({
   markdown: {
     link: {
       checkDeadLinks: true,
+    },
+  },
+});
+```
+
+## 失效锚点检查
+
+Rspress 也可以检查站内链接中的锚点是否存在于目标页面中。它会检查当前页面锚点、相对路径链接和绝对路径链接，但会跳过外部 URL 中的锚点。
+
+锚点检查默认开启。将 [markdown.link.checkAnchors](/api/config/config-build#markdownlinkcheckanchors) 设置为 `false` 可关闭检查：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  markdown: {
+    link: {
+      checkAnchors: false,
     },
   },
 });

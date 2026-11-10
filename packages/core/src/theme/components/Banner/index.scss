@@ -17,11 +17,22 @@
   z-index: 999;
   background: var(--rp-banner-background);
   height: 36px;
+  box-sizing: border-box;
+  padding: 0 3.5rem;
 
   &__link {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
     color: #fff;
     font-weight: 700;
+    line-height: 36px;
+    text-align: center;
     text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     &:hover {
       text-decoration: underline;

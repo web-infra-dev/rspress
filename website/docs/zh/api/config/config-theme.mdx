@@ -1,3 +1,9 @@
+---
+description: '通过 themeConfig 配置 Rspress 默认主题，包括导航、侧边栏、外观、搜索和 llmsUI。'
+---
+
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # 主题配置
 
 主题配置位于 `doc` 配置中的 `themeConfig` 下。例如：
@@ -29,12 +35,16 @@ interface NavItem {
   download?: boolean;
   // 导航栏链接的激活规则
   activeMatch: '^/$|^/';
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在导航栏文本之前的图标
+  icon?: string;
+  // 显示在导航栏文本之后的标签
   tag?: string;
 }
 ```
 
 `activeMatch` 用于匹配当前路由，当路由匹配 `activeMatch` 规则时，nav 项会高亮显示。默认情况下，`activeMatch` 是 nav 项的 `link`。
+
+使用本地图标时，应将图片放在 `public` 目录中，并通过 `/icon.png` 这样的绝对路径引用。此外还支持内联 SVG 字符串、emoji、外链和 data URL。
 
 比如:
 
@@ -47,6 +57,7 @@ export default defineConfig({
       {
         text: 'Home',
         link: '/',
+        icon: '/icon.png',
       },
       {
         text: 'Guide',
@@ -65,7 +76,9 @@ interface NavGroup {
   text: string;
   // 子菜单
   items: NavItem[];
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在导航栏文本之前的图标
+  icon?: string;
+  // 显示在导航栏文本之后的标签
   tag?: string;
 }
 ```
@@ -119,7 +132,9 @@ interface SidebarGroup {
   collapsible?: boolean;
   // 是否默认折叠
   collapsed?: boolean;
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在侧边栏文本之前的图标
+  icon?: string;
+  // 显示在侧边栏文本之后的标签
   tag?: string;
 }
 
@@ -128,7 +143,9 @@ type SidebarItem = {
   text: string;
   // 侧边栏链接
   link: string;
-  // 图标配置(可选)，填入 svg 标签内容或者图片 URL
+  // 显示在侧边栏文本之前的图标
+  icon?: string;
+  // 显示在侧边栏文本之后的标签
   tag?: string;
 };
 ```
@@ -144,10 +161,13 @@ export default defineConfig({
       '/guide/': [
         {
           text: 'Getting Started',
+          icon: '/icon.png',
           items: [
             {
               text: 'Introduction',
               link: '/guide/getting-started/introduction',
+              icon: '<svg>...</svg>',
+              tag: 'new',
             },
             {
               text: 'Installation',
@@ -206,13 +226,46 @@ export default defineConfig({
 });
 ```
 
+## lastUpdated
+
+- **类型**：`boolean | { author?: boolean | ((info: { name: string; email: string; filePath: string }) => string) }`
+- **默认值**： `false`
+
+是否展示每个文档页面的最后更新时间。Rspress 会从文件最新一次 Git 提交中读取该时间。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: true,
+  },
+});
+```
+
+在 CI 中部署时，请确保可以访问完整的 Git 历史。例如在 GitHub Actions 中为 `actions/checkout` 配置 `fetch-depth: 0`。
+
+设置 `author` 可以同时展示最后一次提交的作者，也可以传入函数来自定义展示的作者文本。
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: {
+      author: ({ name, email }) => `${name} <${email}>`,
+    },
+  },
+});
+```
+
 ## socialLinks
 
 - **类型**：`Array`
 - **默认值**： `[]`
 
 你可以通过如下的配置添加相关链接，比如 `github` 链接、`x` 链接等。
-相关链接支持四种模式：`链接模式link` `文本模式text` `图片模式img` `自定义模式dom`，相关例子如下：
+相关链接支持五种模式：`link` `text` `img` `dom` `github-stars`，相关例子如下：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -241,6 +294,11 @@ export default defineConfig({
         content:
           '<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-0904.png" alt="logo" id="logo" class="mr-4 rspress-logo dark:hidden">',
       },
+      {
+        icon: 'github',
+        mode: 'github-stars',
+        content: 'https://github.com/web-infra-dev/rspress',
+      },
     ],
   },
 });
@@ -250,6 +308,7 @@ export default defineConfig({
 - 当`text`模式时，鼠标移到 icon 上会显示弹框，弹框内容是输入的文本。
 - 当`img`模式时，鼠标移到 icon 上会显示弹框，弹框内容是指定的图片，需要注意的是，图片需要放在`public`目录下。
 - 当`dom`模式时，可以直接在 content 字段中传入需要自定义html。使用''进行包裹。
+- 当`github-stars`模式时，`content` 应为 GitHub 仓库 URL。组件会通过 GitHub REST API 拉取仓库的 star 数并显示在 icon 旁边，结果会缓存在 `localStorage` 中 1 小时以避免触发 API 频率限制。请求失败时（离线、被限流或私有仓库）会自动回退为普通链接。
 
 相关链接支持以下几种图片，通过 icon 属性来选择：
 
@@ -297,23 +356,6 @@ export default defineConfig({
 });
 ```
 
-## nextPageText
-
-- **类型**：`string`
-- **默认值**： `Next Page`
-
-下一页的文本。比如:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    nextPageText: 'Next Page',
-  },
-});
-```
-
 ## locales
 
 - **类型**：`Array<LocaleConfig>`
@@ -341,37 +383,36 @@ export interface LocaleConfig {
 
 ## darkMode
 
-- **类型**：`boolean`
+- **类型**：`boolean | 'dark' | 'light' | 'auto' | 'force-light' | 'force-dark' | 'force-auto'`
 - **默认值**： `true`
 
-是否出现暗黑模式/白天模式切换按钮。比如：
+暗黑模式启用时，Rspress 会在 `<html>` 元素上添加 `dark` class。你可以使用 `html.dark` 选择器来自定义暗黑模式样式：
+
+```css
+html.dark .custom-content {
+  color: white;
+}
+```
+
+配置暗黑模式/白天模式的行为：
+
+- `true`：行为和 `'auto'` 一致。
+- `false`：行为和 `'force-light'` 一致。
+- `'light'`：显示切换按钮，当用户没有保存过偏好时默认使用浅色模式。
+- `'dark'`：显示切换按钮，当用户没有保存过偏好时默认使用暗黑模式。
+- `'auto'`：显示切换按钮，当用户没有保存过偏好时默认跟随系统偏好。
+- `'force-light'`：始终使用浅色模式，并隐藏切换按钮。
+- `'force-dark'`：始终使用暗黑模式，并隐藏切换按钮。
+- `'force-auto'`：始终跟随系统偏好，并隐藏切换按钮。
+
+比如，始终使用暗黑模式，并隐藏切换按钮：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    darkMode: true,
-  },
-});
-```
-
-同时，你也可以通过在 HTML 中注入如下的全局变量来指定默认的主题模式：
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  builderConfig: {
-    html: {
-      tags: [
-        {
-          tag: 'script',
-          // 通过 window.RSPRESS_THEME 变量来指定默认的主题模式，可选值为 'dark' 和 'light'
-          children: "window.RSPRESS_THEME = 'dark';",
-        },
-      ],
-    },
+    darkMode: 'force-dark',
   },
 });
 ```
@@ -466,7 +507,7 @@ export default defineConfig({
 ## enableScrollToTop
 
 - **类型**：`boolean`
-- **默认值**： `false`
+- **默认值**： `true`
 
 启用文档上的滚动到顶部按钮. 比如:
 
@@ -480,18 +521,24 @@ export default defineConfig({
 });
 ```
 
-## localeRedirect
+## ~~localeRedirect~~
 
 - **类型**：`'auto' | 'never' | 'only-default-lang'`
 - **默认值**： `'auto'`
 
-是否在访问网站时重定向到最接近 `window.navigator.language` 的语言，默认为 `auto` 表示首次访问时将重定向，`never` 表示不重定向，`only-default-lang` 表示仅在访问默认语言时重定向。比如:
+控制如何根据 `window.navigator.language` 将首次访问的用户重定向到最匹配的已配置语言。
+
+:::warning 配置已迁移
+
+该选项已迁移至 [`route.localeRedirect`](./config-basic#routelocaleredirect)。`themeConfig.localeRedirect` 仍会继续生效以保持向后兼容，但已废弃。请将该选项迁移至 `route`；同时配置两者时，`route.localeRedirect` 优先生效。
+
+:::
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  themeConfig: {
+  route: {
     localeRedirect: 'never',
   },
 });
@@ -530,20 +577,15 @@ title: 文档标题
 type LlmsUI =
   | boolean
   | {
-      viewOptions?: Array<
-        | 'markdownLink'
-        | 'chatgpt'
-        | 'claude'
-        | { title: string; icon?: React.ReactNode; onClick?: () => void }
-        | { title: string; href: string; icon?: React.ReactNode }
-      >;
+      injectLlmsHint?: boolean;
+      viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
       placement?: 'title' | 'outline';
     };
 ```
 
-- **默认值**：`false`（当配置 `llms: true` 时自动设置为 `true`）
+- **默认值**：`true`（当配置 `llms: false` 时为 `false`）
 
-LLMS UI 组件配置。启用后，会自动在所有 H1 标题下方（默认）或右侧大纲面板中添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件。
+通过 `themeConfig.llmsUI` 配置 LLMS UI 组件。启用后，会自动在所有 H1 标题下方（默认）或右侧大纲面板中添加 `LlmsCopyButton` 和 `LlmsViewOptions` 组件。
 
 这在使用 [llms](/guide/basic/ssg-md) 功能生成 llms.txt 文件时非常有用，允许用户轻松复制或在 AI 工具中打开 markdown 内容。
 
@@ -557,23 +599,62 @@ ssg-md 仅在构建过程中生效，因此在 `dev` 模式下复制 Markdown �
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  llms: true, // 这将自动启用 llmsUI
+  llms: true,
   themeConfig: {
-    // 当 llms: true 时，llmsUI 会自动设置为 true
-    // 你也可以显式配置：
-    llmsUI: true,
-    // 或者使用自定义选项：
-    // llmsUI: {
-    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
-    //   placement: 'outline',
-    // },
+    llmsUI: {
+      injectLlmsHint: true,
+      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+      placement: 'outline',
+    },
+  },
+});
+```
+
+### injectLlmsHint
+
+<VersionBadge version="2.0.18" />
+
+- **类型**：`boolean`
+- **默认值**：`true`
+
+此选项用于控制是否在生成的页面中注入面向 LLM 的 directive hint。同一个 `LlmsHint` 组件有两种输出形态：
+
+- 在 SSG HTML 输出中，它会在页面顶部附近渲染一个 visually hidden 的纯文本 DOM 元素。它不会使用 `display: none`、`hidden` 属性、`aria-hidden` 或嵌套链接，这样 agent 在进行 HTML 到 Markdown 转换时可以将该 directive 保留为文本。
+- 在 SSG-MD Markdown 输出中，它会在 Markdown 页面顶部附近渲染为 blockquote 字符串。
+
+假设 [`siteOrigin`](/api/config/config-basic#siteorigin) 是 `https://example.com`，会在 `/guide/` 页面中注入以下 HTML directive：
+
+{/* prettier-ignore */}
+```html
+<div class="rp-llms-hint" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0">For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.</div>
+```
+
+同一页面的 SSG-MD Markdown 输出会以以下内容开头：
+
+```md
+> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt.
+```
+
+其中的 URL 会自动包含配置的 `siteOrigin`、[`base`](/api/config/config-basic#base)、语言和版本前缀。未配置 `siteOrigin` 时，则保留带 `base` 前缀的路径。
+
+将 `injectLlmsHint` 设置为 `false`，可以禁用这一行为：
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      injectLlmsHint: false,
+    },
   },
 });
 ```
 
 ### viewOptions
 
-- **类型**：`Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
+- **类型**：`false | Array<'markdownLink' | 'chatgpt' | 'claude'>`
 - **默认值**：`['markdownLink', 'chatgpt', 'claude']`
 
 LlmsViewOptions 下拉菜单的选项。内置选项包括：
@@ -582,7 +663,7 @@ LlmsViewOptions 下拉菜单的选项。内置选项包括：
 - `'chatgpt'`: 在 ChatGPT 中打开
 - `'claude'`: 在 Claude 中打开
 
-你也可以提供自定义选项，包含 `title`、`href` 或 `onClick`，以及可选的 `icon`。
+将 `viewOptions` 设置为 `false` 或 `[]` 可以隐藏 view options UI。
 
 ### placement
 

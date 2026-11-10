@@ -1,0 +1,11 @@
+cases:
+  - name: TYPEDOC-03 Read a generated raw documentation link
+    tags: [original-typedoc, migration-regression]
+    steps:
+      - app.open:
+          {
+            fixture: plugin-typedoc/multi,
+            path: /api/functions/raw-link.getRspressUrl.html,
+          }
+      - aiAct: Bring the getRspressUrl documentation and its Rspress site link into view without following the external link.
+      - aiAssert: The Returns section displays the external-link label "Rspress site". The visible link text is Rspress site, not a literal URL.

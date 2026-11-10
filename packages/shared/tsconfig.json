@@ -6,7 +6,7 @@
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": "./"
+    "types": ["node", "rstack/types"]
   },
   "include": ["src"],
   "exclude": ["**/node_modules"]

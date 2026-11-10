@@ -1,0 +1,14 @@
+cases:
+  - name: CONTENT-03 Custom navigation slots work on desktop
+    tags: [stability-regression, original-slots, replacement-batch-3-slots]
+    steps:
+      - app.open: { fixture: nav-slots, mode: production, path: / }
+      - aiAssert:
+          prompt: The desktop navigation includes the custom labels BL, L1, L2, AL in that relative order on the left and BR, R1, R2, AR, More in that relative order on the right. This is not an exhaustive list of navigation items; Home, Search, and a theme toggle may also be present.
+          options: { domIncluded: visible-only }
+      - aiHover: The More dropdown trigger near the right end of the top navigation, immediately before the theme toggle.
+      - aiWaitFor: The More dropdown is open and shows the Target link.
+      - aiAssert: The More dropdown is open and shows the Target link.
+      - aiTap: The Target link inside the open More dropdown, not the other navigation links.
+      - app.expectLocation: { path: /target, heading: Target }
+      - aiAssert: The Target article is open with the Navigation destination text.

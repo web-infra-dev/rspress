@@ -1,11 +1,11 @@
 import { preloadLink } from '@rspress/core/runtime';
 import clsx from 'clsx';
-import nprogress from 'nprogress';
 import type React from 'react';
 import type { ComponentProps, TransitionStartFunction } from 'react';
 import { forwardRef } from 'react';
 import './index.scss';
-import { getHref, useLinkNavigate } from './useLinkNavigate';
+import { getHref } from './getHref';
+import { useLinkNavigate } from './useLinkNavigate';
 
 export interface LinkProps extends ComponentProps<'a'> {
   href?: string;
@@ -34,14 +34,12 @@ export interface LinkProps extends ComponentProps<'a'> {
   startTransition?: TransitionStartFunction;
 }
 
-nprogress.configure({ showSpinner: false });
-
 /**
  * What's the difference between <Link> and <a>?
  * Link can tell whether it's in current site or external site.
  * 1. If external, open a new page and navigate to it.
  * 2. If inCurrentPage, scroll to anchor.
- * 3. If inCurrentSite, it will navigate and scroll to anchor, preload the asyncChunk onHover the link
+ * 3. If inCurrentSite, it will navigate and scroll to anchor, prefetch route resources when hovering over the link.
  * 4. Link is styled.
  */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
@@ -55,7 +53,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
     ...otherProps
   } = props;
 
-  const { linkType, removeBaseHref, withBaseHref } = getHref(href);
+  const { linkType, removeBaseHref, routePath, withBaseHref } = getHref(href);
   const navigate = useLinkNavigate({ startTransition });
 
   if (linkType === 'external') {
@@ -75,22 +73,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
     );
   }
 
-  if (linkType === 'hashOnly') {
-    return (
-      <a
-        ref={ref}
-        href={href}
-        className={clsx(className, 'rp-link')}
-        onClick={onClick}
-        onMouseEnter={onMouseEnter}
-        {...otherProps}
-      >
-        {children}
-      </a>
-    );
-  }
-
-  if (linkType === 'relative') {
+  if (linkType === 'hashOnly' || linkType === 'relative') {
     return (
       <a
         ref={ref}
@@ -98,11 +81,20 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
         className={clsx(className, 'rp-link')}
         onMouseEnter={event => {
           onMouseEnter?.(event);
-          preloadLink(removeBaseHref);
+          if (linkType === 'relative') {
+            preloadLink(routePath);
+          }
+        }}
+        onTouchStart={() => {
+          if (linkType === 'relative') {
+            preloadLink(routePath);
+          }
         }}
         onClick={e => {
           onClick?.(e);
           if (
+            e.defaultPrevented ||
+            e.currentTarget.hasAttribute('download') ||
             // left click only
             e.button !== 0 ||
             // `target` are usually used for open link in new window/tab
@@ -132,7 +124,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
       className={clsx(className, 'rp-link')}
       onMouseEnter={event => {
         onMouseEnter?.(event);
-        preloadLink(removeBaseHref);
+        preloadLink(routePath);
+      }}
+      onTouchStart={() => {
+        preloadLink(routePath);
       }}
       onClick={e => {
         onClick?.(e);

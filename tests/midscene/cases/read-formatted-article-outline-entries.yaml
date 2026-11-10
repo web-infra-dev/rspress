@@ -1,0 +1,9 @@
+cases:
+  - name: INLINE-02 Read formatted article outline entries
+    tags: [replacement-final-inline, remote-inline-virtual-regression]
+    steps:
+      - app.open: { fixture: inline-markdown, path: /inline/all }
+      - aiAct: Bring the upper entries of the right On this page outline into view. Focus on the outline, not the left sidebar.
+      - aiAssert: The outline starts with two Class Component<P, S> entries, -m <number>, <foo>, foo <bar> baz, and bold in order.
+      - aiAct: Scroll within the right On this page outline if needed to reveal its lower entries without navigating away.
+      - aiAssert: In the right On this page outline, emphasis is directly above delete. Below delete are This is a long string to test regex performance, Class Bar<T = any>, **literal**, and &lt;, in that top-to-bottom order. The last two entries visibly retain the literal asterisks and the four characters ampersand, l, t, semicolon.

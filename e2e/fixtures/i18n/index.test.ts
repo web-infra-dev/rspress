@@ -1,6 +1,6 @@
-import fs from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/test';
 import {
   getPort,
   killProcess,
@@ -8,7 +8,7 @@ import {
   runDevCommand,
 } from '../../utils/runCommands';
 
-test.describe('i18n test', async () => {
+test.describe('i18n', async () => {
   let appPort: number;
   let app: Awaited<ReturnType<typeof runDevCommand>>;
   test.beforeAll(async () => {
@@ -48,6 +48,20 @@ test.describe('i18n test', async () => {
     await expect(englishOption).toHaveText('English');
   });
 
+  test('Should localize code wrap button title', async ({ page }) => {
+    await page.goto(`http://localhost:${appPort}`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('button[title="切换代码换行"]')).toHaveCount(1);
+
+    await page.goto(`http://localhost:${appPort}/en/`, {
+      waitUntil: 'networkidle',
+    });
+    await expect(page.locator('button[title="Toggle code wrap"]')).toHaveCount(
+      1,
+    );
+  });
+
   test('Add language prefix in route automatically when current language is not default language', async ({
     page,
   }) => {
@@ -61,7 +75,7 @@ test.describe('i18n test', async () => {
     await expect(absoluteLink).toBeVisible();
     await expect(absoluteLink).toHaveAttribute(
       'href',
-      '/en/guide/basic/install.html',
+      '/en/guide/basic/install',
     );
 
     const relativeLink = page.getByRole('link', {
@@ -70,7 +84,7 @@ test.describe('i18n test', async () => {
     await expect(relativeLink).toBeVisible();
     await expect(relativeLink).toHaveAttribute(
       'href',
-      '/en/guide/basic/install.html',
+      '/en/guide/basic/install',
     );
   });
 
@@ -85,19 +99,13 @@ test.describe('i18n test', async () => {
       name: /绝对路径/,
     });
     await expect(absoluteLink).toBeVisible();
-    await expect(absoluteLink).toHaveAttribute(
-      'href',
-      '/guide/basic/install.html',
-    );
+    await expect(absoluteLink).toHaveAttribute('href', '/guide/basic/install');
     // check the compile result of relative link in doc content
     const relativeLink = page.getByRole('link', {
       name: /相对路径/,
     });
     await expect(relativeLink).toBeVisible();
-    await expect(relativeLink).toHaveAttribute(
-      'href',
-      '/guide/basic/install.html',
-    );
+    await expect(relativeLink).toHaveAttribute('href', '/guide/basic/install');
   });
 
   test('Should render sidebar correctly', async ({ page }) => {
@@ -177,10 +185,7 @@ test.describe('i18n test', async () => {
         hasText: 'My Link',
       },
     );
-    await expect(customLinkZh).toHaveAttribute(
-      'href',
-      '/guide/basic/install.html',
-    );
+    await expect(customLinkZh).toHaveAttribute('href', '/guide/basic/install');
 
     await page.goto(`http://localhost:${appPort}/en/guide/basic/quick-start`, {
       waitUntil: 'networkidle',
@@ -193,7 +198,7 @@ test.describe('i18n test', async () => {
     );
     await expect(customLinkEn).toHaveAttribute(
       'href',
-      '/en/guide/basic/install.html',
+      '/en/guide/basic/install',
     );
   });
 
@@ -231,7 +236,7 @@ test.describe('i18n test', async () => {
     expect(overviewContentEn ?? '').not.toContain('zh');
   });
 
-  test('Language switch links should have lang and hrefLang attributes in HoverGroup', async ({
+  test('Language switch should only render non-active languages as links in HoverGroup', async ({
     page,
   }) => {
     await page.goto(`http://localhost:${appPort}`, {
@@ -250,19 +255,56 @@ test.describe('i18n test', async () => {
       .locator('xpath=ancestor::*[contains(@class, "rp-nav")]')
       .locator('.rp-hover-group');
 
-    // Verify English link has correct lang/hreflang attributes
+    // Verify non-active English item has correct lang/hreflang attributes.
     const englishLink = hoverGroup.locator('.rp-hover-group__item a', {
       hasText: 'English',
     });
     await expect(englishLink).toHaveAttribute('lang', 'en');
     await expect(englishLink).toHaveAttribute('hreflang', 'en');
+    await expect(englishLink).toHaveAttribute('rel', 'alternate');
 
-    // Verify Chinese link has correct lang/hreflang attributes
-    const chineseLink = page.locator('.rp-hover-group__item a', {
+    // Verify active Chinese item is not a link.
+    const chineseItem = hoverGroup.locator(
+      '.rp-hover-group__item--active .rp-hover-group__item__link',
+      {
+        hasText: '简体中文',
+      },
+    );
+    const chineseTagName = await chineseItem.evaluate(el => el.tagName);
+    expect(chineseTagName).toBe('DIV');
+    await expect(chineseItem).not.toHaveAttribute('href');
+    await expect(chineseItem).not.toHaveAttribute('hreflang');
+    await expect(chineseItem).not.toHaveAttribute('rel');
+    await expect(
+      hoverGroup.locator('.rp-hover-group__item a', {
+        hasText: '简体中文',
+      }),
+    ).toHaveCount(0);
+  });
+
+  test('Language switch link to default language should keep lang and hrefLang attributes in HoverGroup', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/en/`, {
+      waitUntil: 'networkidle',
+    });
+
+    const languageSwitcher = page.locator(
+      '.rp-nav__others .rp-nav-menu__item__container',
+      { hasText: 'English' },
+    );
+    await languageSwitcher.hover();
+
+    const hoverGroup = languageSwitcher
+      .locator('xpath=ancestor::*[contains(@class, "rp-nav")]')
+      .locator('.rp-hover-group');
+
+    const chineseLink = hoverGroup.locator('.rp-hover-group__item a', {
       hasText: '简体中文',
     });
     await expect(chineseLink).toHaveAttribute('lang', 'zh');
     await expect(chineseLink).toHaveAttribute('hreflang', 'zh');
+    await expect(chineseLink).toHaveAttribute('rel', 'alternate');
   });
 
   test('NavScreen language links should have lang, hrefLang and rel attributes', async ({
@@ -305,21 +347,25 @@ test.describe('i18n test', async () => {
   });
 });
 
-test('SSG should not emit invalid nav nesting markup', async () => {
-  const appDir = import.meta.dirname;
-  await runBuildCommand(appDir);
-
-  const html = await fs.readFile(path.join(appDir, 'doc_build', 'index.html'), {
-    encoding: 'utf-8',
+test.describe('i18n SEO', () => {
+  test.beforeAll(async () => {
+    await runBuildCommand(import.meta.dirname);
   });
 
-  expect(html).toContain(
-    '<div class="rp-nav__others"><div class="rp-nav-menu__divider"></div><ul class="rp-nav-menu">',
-  );
-  expect(html).not.toContain(
-    '<div class="rp-nav__others"><div class="rp-nav-menu__divider"></div><li class="rp-nav-menu__item">',
-  );
-  expect(html).not.toMatch(
-    /<button[^>]*class="[^"]*rp-nav-hamburger__md[^"]*"[\s\S]*?<ul class="rp-hover-group"/,
-  );
+  test('generates reciprocal alternate language links', async () => {
+    const outputDir = path.join(import.meta.dirname, 'doc_build');
+    const [chineseHtml, englishHtml] = await Promise.all([
+      readFile(path.join(outputDir, 'index.html'), 'utf8'),
+      readFile(path.join(outputDir, 'en/index.html'), 'utf8'),
+    ]);
+    const alternateLinks = [
+      '<link rel="alternate" hreflang="zh" href="https://example.com/">',
+      '<link rel="alternate" hreflang="en" href="https://example.com/en/">',
+    ];
+
+    for (const link of alternateLinks) {
+      expect(chineseHtml).toContain(link);
+      expect(englishHtml).toContain(link);
+    }
+  });
 });

@@ -1,0 +1,8 @@
+cases:
+  - name: COMPONENT-05 Open a custom outline on a phone
+    tags: [original-outline, replacement-batch-3]
+    steps:
+      - app.open:
+          { fixture: custom-layout, path: /no-headings, viewport: mobile }
+      - aiAct: Open the mobile On this page outline.
+      - aiAssert: The opened outline displays Before custom outline content and After custom outline content.

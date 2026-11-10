@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "API 概览"
+  },
+  {
+    "type": "file",
+    "name": "commands",
+    "label": "命令"
+  }
+]

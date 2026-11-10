@@ -1,0 +1,10 @@
+cases:
+  - name: PREVIEW-07 Read mixed internal and iframe previews
+    tags: [original-preview-render, replacement-batch-4]
+    steps:
+      - app.open: { fixture: plugin-preview, path: /mixed }
+      - aiAssert: On Mixed, the first standalone internal preview in the main article shows plain This is a component outside its source code. Separately, the floating phone on the far right shows both This is a component and Hello World External below Mixed.
+      - aiAct: Scroll the outer Mixed document down slightly to show the first side-by-side example with colored Component source on the left and plain This is a component in the gray preview pane on the right. Stop when that output text is readable. Keep the pointer over the article margin, outside code editors and the floating phone. Do not click any example or navigate away.
+      - aiAssert: In the main article, black This is a component text is visible in a preview pane beside colored source code. This pane is separate from the floating phone on the far right.
+      - aiAct: Continue down the outer article to the External file section. Show its standalone Hello World External preview and the beginning of the side-by-side example below it, where the gray right pane also displays Hello World External. Position both output lines inside the viewport. Scroll over the article margin, not inside the source editor or floating phone. Stop without clicking an example or navigating away.
+      - aiAssert: In the main article's External file section, the standalone internal preview shows Hello World External. Below it, the gray iframe pane beside the colored HelloWorld source also shows Hello World External. Both are rendered plain output, separate from source code and the floating phone.

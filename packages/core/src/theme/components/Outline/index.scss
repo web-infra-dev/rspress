@@ -35,6 +35,10 @@
     background: var(--rp-c-divider-light);
     margin-top: 16px;
     margin-bottom: 16px;
+
+    &:has(+ .rp-outline__bottom:empty) {
+      display: none;
+    }
   }
 
   &__toc {

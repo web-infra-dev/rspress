@@ -55,8 +55,11 @@ export const rsbuildPluginSSGMD = ({
 
           await mkdir(ssgFolderPath, { recursive: true });
           await Promise.all(
-            Object.entries(assets).map(async ([assetName, assetSource]) => {
+            // Rspack resolves `assets[name]` through the Rust-JS bridge, so
+            // keep enumeration to names and read the Source only after match.
+            Object.keys(assets).map(async assetName => {
               if (assetName.startsWith(`${NODE_SSG_MD_BUNDLE_FOLDER}/`)) {
+                const assetSource = assets[assetName];
                 const fileAbsolutePath = join(distPath, assetName);
                 await writeFile(
                   fileAbsolutePath,

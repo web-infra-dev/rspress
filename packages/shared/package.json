@@ -1,12 +1,13 @@
 {
   "name": "@rspress/shared",
-  "version": "2.0.10",
+  "version": "2.1.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/web-infra-dev/rspress.git",
     "directory": "packages/shared"
   },
   "license": "MIT",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
@@ -44,29 +45,29 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "build:watch": "rslib build -w",
-    "dev": "rslib build -w",
+    "build": "rs lib",
+    "build:watch": "rs lib -w",
+    "dev": "rs lib -w",
     "reset": "rimraf ./**/node_modules"
   },
   "dependencies": {
-    "@rsbuild/core": "^2.0.3",
-    "@shikijs/rehype": "^4.0.2",
+    "@rsbuild/core": "^2.2.14",
+    "@shikijs/rehype": "^4.2.0",
+    "@types/react": "^19.3.0",
+    "mdast-util-mdx-jsx": "^3.2.1",
     "unified": "^11.0.5"
   },
   "devDependencies": {
-    "@rslib/core": "0.21.3",
+    "@rspress/config": "workspace:*",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.8.1",
-    "@types/react": "^19.2.14",
     "github-slugger": "^2.0.0",
     "gray-matter": "4.0.3",
     "lodash-es": "^4.18.1",
-    "mdast-util-mdx-jsx": "^3.2.0",
-    "medium-zoom": "1.1.0",
-    "rimraf": "^6.1.3",
-    "rsbuild-plugin-publint": "^0.3.4",
-    "typescript": "^5.8.2"
+    "medium-zoom": "1.1.2",
+    "rimraf": "^6.1.4",
+    "rsbuild-plugin-publint": "^1.0.0",
+    "typescript": "^6.0.3"
   },
   "publishConfig": {
     "access": "public",

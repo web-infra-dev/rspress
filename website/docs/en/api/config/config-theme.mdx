@@ -1,6 +1,12 @@
+---
+description: 'Configure the Rspress default theme with themeConfig, including navigation, sidebars, appearance, search, and llmsUI.'
+---
+
+import { VersionBadge } from '../../../components/VersionBadge';
+
 # Theme config
 
-Theme config is located under `themeConfig` in the `doc` param. For example:
+Theme configuration is defined under `themeConfig`. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -29,12 +35,16 @@ interface NavItem {
   download?: boolean;
   // Activation rules for navbar links
   activeMatch: '^/$|^/';
-  // svg tag string or image URL(optional)
+  // Icon displayed before the navbar text
+  icon?: string;
+  // Tag displayed after the navbar text
   tag?: string;
 }
 ```
 
-`activeMatch` is used to match the current route, when the route matches the `activeMatch` rule, the nav item will be highlighted. By default, `activeMatch` is the `link` of the nav item.
+`activeMatch` matches the current route. When the route matches the `activeMatch` rule, the nav item is highlighted. By default, `activeMatch` uses the nav item's `link`.
+
+For local icons, place the image in the `public` directory and reference it with an absolute path such as `/icon.png`. Inline SVG strings, emoji, external URLs, and data URLs are also supported.
 
 For example:
 
@@ -47,6 +57,7 @@ export default defineConfig({
       {
         text: 'Home',
         link: '/',
+        icon: '/icon.png',
       },
       {
         text: 'Guide',
@@ -57,19 +68,21 @@ export default defineConfig({
 });
 ```
 
-Of course, multi-level menus can also be configured in the `nav` array with the following types:
+You can also configure multi-level menus in the `nav` array with the following type:
 
 ```ts
 interface NavGroup {
   text: string;
   // submenu
   items: NavItem[];
-  // svg tag string or image URL(optional)
+  // Icon displayed before the navbar text
+  icon?: string;
+  // Tag displayed after the navbar text
   tag?: string;
 }
 ```
 
-For example the following configuration:
+For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -92,7 +105,7 @@ export default defineConfig({
             text: 'Advanced',
             link: '/guide/advanced',
           },
-          // Also support sub group menu
+          // Also supports nested groups
           {
             text: 'Group',
             items: [
@@ -117,7 +130,7 @@ export default defineConfig({
 
 - **Type**: `Object`
 
-The sidebar of the website. The config is an object with the following types:
+Site sidebar configuration. It is an object with the following type:
 
 ```ts
 // The key is the path of SidebarGroup
@@ -128,11 +141,13 @@ interface SidebarGroup {
   text: string;
   link?: string;
   items: SidebarItem[];
-  // whether to be collapsible
+  // Whether the group can be collapsed
   collapsible?: boolean;
   // Whether to be collapsed by default
   collapsed?: boolean;
-  // svg tag string or image URL(optional)
+  // Icon displayed before the sidebar text
+  icon?: string;
+  // Tag displayed after the sidebar text
   tag?: string;
 }
 
@@ -141,7 +156,9 @@ type SidebarItem = {
   text: string;
   // sidebar link
   link: string;
-  // svg tag string or image URL(optional)
+  // Icon displayed before the sidebar text
+  icon?: string;
+  // Tag displayed after the sidebar text
   tag?: string;
 };
 ```
@@ -157,10 +174,13 @@ export default defineConfig({
       '/guide/': [
         {
           text: 'Getting Started',
+          icon: '/icon.png',
           items: [
             {
               text: 'Introduction',
               link: '/guide/getting-started/introduction',
+              icon: '<svg>...</svg>',
+              tag: 'new',
             },
             {
               text: 'Installation',
@@ -192,9 +212,9 @@ export default defineConfig({
 - **Type**: `Object`
 - **Default**: `{}`
 
-The footer of the home page.
+Homepage footer configuration.
 
-The `footer` config is an object of `Footer`, which has the following types:
+The `footer` config is a `Footer` object:
 
 ```ts
 export interface Footer {
@@ -219,13 +239,45 @@ export default defineConfig({
 });
 ```
 
+## lastUpdated
+
+- **Type**: `boolean | { author?: boolean | ((info: { name: string; email: string; filePath: string }) => string) }`
+- **Default**: `false`
+
+Controls whether each doc page shows its last updated time. Rspress reads this value from the file's latest Git commit.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: true,
+  },
+});
+```
+
+When deploying in CI, make sure the Git history is available. For example, use `fetch-depth: 0` with `actions/checkout` on GitHub Actions.
+
+Set `author` to display the last commit author as well. Pass a function to customize the rendered author text.
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  themeConfig: {
+    lastUpdated: {
+      author: ({ name, email }) => `${name} <${email}>`,
+    },
+  },
+});
+```
+
 ## socialLinks
 
 - **Type**: `Array`
 - **Default**: `[]`
 
-You can add related links through the following config, such as `github` links, `x` links, etc.
-Related links support four modes: `link mode` `text mode` `image mode` `dom mode`, for example:
+Add related links, such as GitHub or X links. Related links support five modes: `link`, `text`, `img`, `dom`, and `github-stars`. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -254,17 +306,23 @@ export default defineConfig({
         content:
           '<img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rspress/rspress-navbar-logo-0904.png" alt="logo" id="logo" class="mr-4 rspress-logo dark:hidden">',
       },
+      {
+        icon: 'github',
+        mode: 'github-stars',
+        content: 'https://github.com/web-infra-dev/rspress',
+      },
     ],
   },
 });
 ```
 
-- When in `link` mode, click the icon to jump to the link.
-- When in `text` mode, when the mouse moves over the icon, a pop-up box will be displayed, and the content of the pop-up box is the entered text
-- When in the `img` mode, moving the mouse over the icon will display a bullet box, and the content of the bullet box is the specified picture. It should be noted that the picture needs to be placed in the `public` directory.
-- When in dom mode, html to render can be passed directly into the content field. Use '' for wrapping
+- In `link` mode, clicking the icon opens the link.
+- In `text` mode, hovering over the icon displays a tooltip with the configured text.
+- In `img` mode, hovering over the icon displays a tooltip with the configured image. The image must be placed in the `public` directory.
+- In `dom` mode, pass the HTML string to render directly to `content`. Wrap it in quotes.
+- When in `github-stars` mode, `content` should be the GitHub repository URL. The repository's star count is fetched from the GitHub REST API and rendered next to the icon. The result is cached in `localStorage` for one hour to avoid hitting the API rate limit. If the request fails (offline, rate-limited, private repo), the icon falls back to a plain link.
 
-Related links support the following types of images, which can be selected through the icon attribute:
+Related links support the following icons via the `icon` field:
 
 ```ts
 export type SocialLinkIcon =
@@ -290,7 +348,7 @@ export type SocialLinkIcon =
   | { svg: string };
 ```
 
-If you need to customize the icon, you can pass in an object with `svg attribute`, and the value of svg is the content of the custom icon, for example:
+To use a custom icon, pass an object with an `svg` field. The `svg` value is the custom icon content:
 
 ```js
 import { defineConfig } from '@rspress/core';
@@ -310,29 +368,12 @@ export default defineConfig({
 });
 ```
 
-## nextPageText
-
-- **Type**: `string`
-- **Default**: `Next Page`
-
-Text for the next page. for example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  themeConfig: {
-    nextPageText: 'Next Page',
-  },
-});
-```
-
 ## locales
 
 - **Type**: `Array<LocaleConfig>`
 - **Default**: `undefined`
 
-I18n config. This config is an array, and every item of it is `LocaleConfig`, and the types are as follows:
+I18n configuration. This is an array of `LocaleConfig` objects:
 
 ```ts
 export interface LocaleConfig {
@@ -350,41 +391,40 @@ export interface LocaleConfig {
 }
 ```
 
-`LocaleConfig` contains many of the same configuration options as the theme config, but the former will have a higher priority.
+`LocaleConfig` contains many of the same options as the theme config, but locale-specific values have higher priority.
 
 ## darkMode
 
-- **Type**: `boolean`
+- **Type**: `boolean | 'dark' | 'light' | 'auto' | 'force-light' | 'force-dark' | 'force-auto'`
 - **Default**: `true`
 
-Whether a Dark/Light mode toggle button appears. for example:
+When dark mode is active, Rspress adds the `dark` class to the `<html>` element. You can use the `html.dark` selector to customize dark mode styles:
+
+```css
+html.dark .custom-content {
+  color: white;
+}
+```
+
+Configure the Dark/Light mode behavior:
+
+- `true`: same as `'auto'`.
+- `false`: same as `'force-light'`.
+- `'light'`: show the toggle button and use light mode by default when the user has no saved preference.
+- `'dark'`: show the toggle button and use dark mode by default when the user has no saved preference.
+- `'auto'`: show the toggle button and follow the user's system preference by default when the user has no saved preference.
+- `'force-light'`: always use light mode and hide the toggle button.
+- `'force-dark'`: always use dark mode and hide the toggle button.
+- `'force-auto'`: always follow the user's system preference and hide the toggle button.
+
+For example, always use dark mode and hide the toggle button:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   themeConfig: {
-    darkMode: true,
-  },
-});
-```
-
-You can also specify the default theme mode through inject global variable into html template, for example:
-
-```ts title="rspress.config.ts"
-import { defineConfig } from '@rspress/core';
-
-export default defineConfig({
-  builderConfig: {
-    html: {
-      tags: [
-        {
-          tag: 'script',
-          // Specify the default theme mode, which can be `dark` or `light`
-          children: "window.RSPRESS_THEME = 'dark';",
-        },
-      ],
-    },
+    darkMode: 'force-dark',
   },
 });
 ```
@@ -426,7 +466,7 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `false`
 
-Whether there is animation effect when switching between pages. It is implemented with [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
+Controls whether page transitions are animated. This is implemented with the [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
 
 > The animation is not configurable for now.
 
@@ -445,7 +485,7 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `false`
 
-Whether there is animation effect when switching between light and dark theme. It is implemented with [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
+Controls whether switching between light and dark mode is animated. This is implemented with the [View Transition API](https://developer.mozilla.org/docs/Web/API/View_Transitions_API). For example:
 
 > The animation is not configurable for now.
 
@@ -479,9 +519,9 @@ export default defineConfig({
 ## enableScrollToTop
 
 - **Type**: `boolean`
-- **Default**: `false`
+- **Default**: `true`
 
-Enable scroll to top button on documentation. For example:
+Enables the scroll-to-top button in docs pages. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -493,18 +533,24 @@ export default defineConfig({
 });
 ```
 
-## localeRedirect
+## ~~localeRedirect~~
 
 - **Type**: `'auto' | 'never' | 'only-default-lang'`
 - **Default**: `'auto'`
 
-Whether to redirect to the locale closest to `window.navigator.language` when the user visits the site, the default is `auto`, which means that the user will be redirected on the first visit. If you set it to `never`, the user will not be redirected. If you set it to `only-default-lang`, the user will only be redirected when visiting the default locale. For example:
+Controls how first-time visitors are redirected to the closest configured locale based on `window.navigator.language`.
+
+:::warning Configuration moved
+
+This option has moved to [`route.localeRedirect`](./config-basic#routelocaleredirect). `themeConfig.localeRedirect` remains supported for backward compatibility, but is deprecated. Migrate the option to `route`; when both options are set, `route.localeRedirect` takes precedence.
+
+:::
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  themeConfig: {
+  route: {
     localeRedirect: 'never',
   },
 });
@@ -515,7 +561,7 @@ export default defineConfig({
 - **Type**: `boolean`
 - **Default**: `true`
 
-Whether to use [`frontmatter.title`](./config-frontmatter#title) as fallback when the document does not have an H1 heading. For example:
+Controls whether [`frontmatter.title`](./config-frontmatter#title) is used as a fallback when a document has no H1 heading. For example:
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
@@ -543,25 +589,20 @@ title: Document Title
 type LlmsUI =
   | boolean
   | {
-      viewOptions?: Array<
-        | 'markdownLink'
-        | 'chatgpt'
-        | 'claude'
-        | { title: string; icon?: React.ReactNode; onClick?: () => void }
-        | { title: string; href: string; icon?: React.ReactNode }
-      >;
+      injectLlmsHint?: boolean;
+      viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
       placement?: 'title' | 'outline';
     };
 ```
 
-- **Default**: `false` (automatically set to `true` when `llms: true` is configured)
+- **Default**: `true` (`false` when `llms: false` is configured)
 
-Configuration for LLMS UI components. When enabled, `LlmsCopyButton` and `LlmsViewOptions` components will be automatically added below all H1 headers (default), or as rows in the outline panel.
+Configure the llms UI components through `themeConfig.llmsUI`. When enabled, `LlmsCopyButton` and `LlmsViewOptions` are automatically added below all H1 headings by default, or as rows in the outline panel.
 
-This is useful when using the [llms](/guide/basic/ssg-md) feature to generate llms.txt files, allowing users to easily copy or open the markdown content in AI tools.
+This is useful when using the [llms](/guide/basic/ssg-md) feature to generate llms.txt files, because users can copy or open Markdown content in AI tools.
 
 :::warning
-ssg-md only takes effect during the build process, so copying Markdown content in `dev` mode will not work. Please use `rspress build` first, then debug with `rspress preview`. See [Differences between dev and build](/guide/basic/ssg#differences-between-dev-and-build) for details.
+SSG-MD only runs during builds, so copying Markdown content does not work in `dev` mode. Run `rspress build` first, then debug with `rspress preview`. See [Differences between dev and build](/guide/basic/ssg#differences-between-dev-and-build) for details.
 :::
 
 For example:
@@ -570,23 +611,62 @@ For example:
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
-  llms: true, // This will automatically enable llmsUI
+  llms: true,
   themeConfig: {
-    // llmsUI is automatically set to true when llms: true
-    // You can also explicitly configure it:
-    llmsUI: true,
-    // Or with custom options:
-    // llmsUI: {
-    //   viewOptions: ['markdownLink', 'chatgpt', 'claude'],
-    //   placement: 'outline',
-    // },
+    llmsUI: {
+      injectLlmsHint: true,
+      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+      placement: 'outline',
+    },
+  },
+});
+```
+
+### injectLlmsHint
+
+<VersionBadge version="2.0.18" />
+
+- **Type**: `boolean`
+- **Default**: `true`
+
+This option controls whether an LLM directive hint is injected into generated pages. The same `LlmsHint` component has two output forms:
+
+- In SSG HTML output, it renders a visually hidden plain-text DOM element near the top of the page. It does not use `display: none`, the `hidden` attribute, `aria-hidden`, or nested links, so agent-side HTML-to-Markdown conversion can preserve the directive as text.
+- In SSG-MD Markdown output, it renders a blockquote string near the top of the Markdown page.
+
+Assuming [`siteOrigin`](/api/config/config-basic#siteorigin) is `https://example.com`, the following HTML directive is injected into the `/guide/` page:
+
+{/* prettier-ignore */}
+```html
+<div class="rp-llms-hint" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0">For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt, and this page is available as Markdown at https://example.com/guide/index.md.</div>
+```
+
+The SSG-MD Markdown output for the same page starts with:
+
+```md
+> For AI agents: the complete documentation index is available at https://example.com/llms.txt, the full documentation bundle is available at https://example.com/llms-full.txt.
+```
+
+The URLs automatically include the configured `siteOrigin`, [`base`](/api/config/config-basic#base), locale, and version prefixes. Without `siteOrigin`, the URLs remain base-aware paths.
+
+Set `injectLlmsHint` to `false` to disable this behavior:
+
+```ts title="rspress.config.ts"
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  llms: true,
+  themeConfig: {
+    llmsUI: {
+      injectLlmsHint: false,
+    },
   },
 });
 ```
 
 ### viewOptions
 
-- **Type**: `Array<'markdownLink' | 'chatgpt' | 'claude' | CustomOption>`
+- **Type**: `false | Array<'markdownLink' | 'chatgpt' | 'claude'>`
 - **Default**: `['markdownLink', 'chatgpt', 'claude']`
 
 Options for the LlmsViewOptions dropdown menu. Built-in options include:
@@ -595,7 +675,7 @@ Options for the LlmsViewOptions dropdown menu. Built-in options include:
 - `'chatgpt'`: Open in ChatGPT
 - `'claude'`: Open in Claude
 
-You can also provide custom options with `title`, `href` or `onClick`, and optional `icon`.
+Set `viewOptions` to `false` or `[]` to hide the view options UI.
 
 ### placement
 

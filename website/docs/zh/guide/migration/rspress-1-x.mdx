@@ -2,7 +2,7 @@
 description: 从 Rspress 1.x 升级到 V2 的完整迁移指南，包括包名变更、导入路径、自定义主题、Shiki 代码高亮等重要变更。
 ---
 
-import { PackageManagerTabs } from '@theme';
+import { PackageManagerTabs } from '@rspress/core/theme';
 
 # 从 Rspress 1.x 迁移
 
@@ -173,6 +173,20 @@ import { PackageManagerTabs } from '@theme';
 }
 ```
 
+:::tip
+
+如果你遇到 `@theme` 或 `@rspress/core/theme` 缺少导出的错误，很可能是因为在 theme 文件夹中覆盖主题时没有使用 `@rspress/core/theme-original`，导致了循环引用：
+
+```txt
+× ESModulesLinkingError: export 'SvgWrapper' (imported as 'SvgWrapper') was not found in '@theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
+
+× ESModulesLinkingError: export 'Banner' (imported as 'Banner') was not found in '@rspress/core/theme' (possible exports: HomeLayout, Layout, Search, Tag, getCustomMDXComponent)
+```
+
+请确保在 `theme` 文件夹中使用 `@rspress/core/theme-original`，并正确导出所有组件。
+
+:::
+
 ## [重要] Shiki 代码高亮替代 prism
 
 Rspress V2 默认使用 Shiki v3 进行代码高亮，Prism 已被移除。
@@ -263,13 +277,14 @@ docs/
 
 SSG 现在默认为严格模式，失败时直接退出构建，不再回退到 CSR。`ssg.strict` 配置已移除。
 
-如需跳过 SSG，设置 `ssg: false`：
+如果代码不兼容 SSR，需要同时设置 `ssg: false` 和 `llms: false`，跳过 SSG 和 SSG-MD。自 v2.1.0 起，`llms` 默认开启：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';
 
 export default defineConfig({
   ssg: false,
+  llms: false,
 });
 ```
 

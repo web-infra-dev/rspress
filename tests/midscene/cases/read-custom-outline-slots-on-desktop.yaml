@@ -1,0 +1,7 @@
+cases:
+  - name: LAYOUT-03 Read custom outline slots on desktop
+    tags: [original-layouts, replacement-batch-3]
+    steps:
+      - app.open: { fixture: custom-layout, path: /no-headings }
+      - aiAct: Bring the right-hand outline panel into view.
+      - aiAssert: The On this page outline title, Before custom outline content, and After custom outline content are visible even though there are no article heading entries.

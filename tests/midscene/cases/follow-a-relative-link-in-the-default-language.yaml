@@ -1,0 +1,7 @@
+cases:
+  - name: NAV-14 Follow a relative link in the default language
+    tags: [original-locale-links, replacement-batch-6]
+    steps:
+      - app.open: { fixture: i18n, path: /guide/basic/quick-start }
+      - aiAct: Follow the 相对路径 installation link inside the Chinese article, not a sidebar link.
+      - aiAssert: The 安装 article is visible and the navigation language remains 简体中文.

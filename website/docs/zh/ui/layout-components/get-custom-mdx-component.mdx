@@ -1,0 +1,36 @@
+---
+description: getCustomMDXComponent 主题 API，用于覆盖 Rspress 文档布局中的默认 MDX 元素渲染组件。
+overviewHeaders: []
+---
+
+# getCustomMDXComponent
+
+`getCustomMDXComponent` 用于返回 Rspress 文档布局中渲染原生 Markdown 和 MDX 元素的默认组件。当你需要覆盖标题、链接、代码块、图片、表格等文档元素的渲染方式时，可以在自定义主题中使用它。
+
+## 用法
+
+在自定义主题中从 `@rspress/core/theme-original` 导入原始的 `getCustomMDXComponent`，然后导出一个同名函数：
+
+```tsx title="theme/index.tsx"
+import { getCustomMDXComponent as getBasicCustomMDXComponent } from '@rspress/core/theme-original';
+
+function getCustomMDXComponent() {
+  const mdxComponents = getBasicCustomMDXComponent();
+  const { h1: H1, p: P } = mdxComponents;
+
+  return {
+    ...mdxComponents,
+    h1: props => (
+      <>
+        <H1 {...props} />
+        <P>below h1</P>
+      </>
+    ),
+  };
+}
+
+export { getCustomMDXComponent };
+export * from '@rspress/core/theme-original';
+```
+
+导出的 `getCustomMDXComponent` 会替换站点默认实现。Rspress 渲染文档内容时，会调用这个函数，并把返回的组件映射传给 MDX。上面的示例会保留默认 H1 渲染，并在每个 H1 下方额外渲染一段 `below h1`。

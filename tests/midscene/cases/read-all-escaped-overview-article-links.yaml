@@ -1,0 +1,10 @@
+cases:
+  - name: INLINE-04 Read all escaped overview article links
+    tags:
+      [replacement-final-inline, replacement-final-followup, remote-regression]
+    steps:
+      - app.open: { fixture: inline-markdown, path: /inline/index }
+      - aiAct: Bring the first central overview group titled Class Component<P, S> into view. Focus on its article links, not sidebar entries or the later overview groups.
+      - aiAssert: Within the first wide overview card, ignore its gray title panel on the left and the page sidebar. The white article-link area to the right contains two Class Component<P, S> links and the links -m <number>, <foo>, foo <bar> baz, bold, emphasis, delete, This is a long string to test regex performance, Class Bar<T = any>, **literal**, and &lt;, in that reading order. Wrapped text still belongs to one link.
+      - aiAct: Scroll the central overview to the group named link and bring its four article links into view.
+      - aiAssert: The group lists this is link rsbuild, this is bold link rsbuild, this is code link rsbuild, and this is bold code link rsbuild in order. Formatting does not remove any words.

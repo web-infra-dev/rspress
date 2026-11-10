@@ -9,15 +9,17 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rsbuild/plugin-vue": "^1.2.7",
+    "@rsbuild/plugin-vue": "^2.0.1",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-preview": "workspace:*",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "solid-js": "^1.9.12",
-    "vue": "^3.5.33"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "solid-js": "^1.9.18",
+    "vue": "^3.5.45"
   },
   "devDependencies": {
-    "@types/node": "^22.8.1"
+    "@types/node": "^22.8.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0"
   }
 }

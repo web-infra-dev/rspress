@@ -16,14 +16,14 @@ type Icon = React.FC<React.SVGProps<SVGSVGElement>> | string;
 The following code is an example of how Rspress uses `IconGithub`:
 
 ```mdx preview
-import { SvgWrapper, IconGithub } from '@rspress/core/theme-original';
+import { SvgWrapper, IconGithub } from '@rspress/core/theme';
 
 <SvgWrapper icon={IconGithub} width={24} height={24} />
 ```
 
 ## Usage
 
-When you want to replace Rspress built-in icons, use [Custom Theme - Re-export](/guide/basic/custom-theme#themeindextsx-override-built-in-components-using-esm-re-exports) for replacement.
+When you want to replace Rspress built-in icons, use [Custom Theme - Re-export](/guide/basic/custom-theme#reexport) for replacement.
 
 ```tsx title="theme/index.tsx"
 export { IconGithub } from './my-icons';
@@ -37,6 +37,17 @@ All icons used by Rspress are as follows:
 ```tsx preview
 import {
   SvgWrapper,
+  IconGithub,
+  IconGitlab,
+  IconAnthropic,
+  IconOpenAI,
+  IconNpm,
+  IconYarn,
+  IconPnpm,
+  IconBun,
+  IconDeno,
+  IconJsdelivr,
+  IconUnpkg,
   IconArrowDown,
   IconArrowRight,
   IconClose,
@@ -48,13 +59,13 @@ import {
   IconExperimental,
   IconExternalLink,
   IconFile,
-  IconGithub,
-  IconGitlab,
   IconHeader,
   IconJump,
+  IconLink,
   IconLoading,
   IconMenu,
   IconMoon,
+  IconOpenInChat,
   IconScrollToTop,
   IconSearch,
   IconSmallMenu,
@@ -63,42 +74,70 @@ import {
   IconTitle,
   IconWrap,
   IconWrapped,
-  IconLink,
 } from '@rspress/core/theme';
 
 export default () => {
   return (
-    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', fontSize: 12 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       {[
-        IconArrowDown,
-        IconArrowRight,
-        IconClose,
-        IconCopy,
-        IconDeprecated,
-        IconDown,
-        IconEdit,
-        IconEmpty,
-        IconExperimental,
-        IconExternalLink,
-        IconFile,
-        IconGithub,
-        IconGitlab,
-        IconHeader,
-        IconJump,
-        IconLoading,
-        IconMenu,
-        IconMoon,
-        IconScrollToTop,
-        IconSearch,
-        IconSmallMenu,
-        IconSuccess,
-        IconSun,
-        IconTitle,
-        IconWrap,
-        IconWrapped,
-        IconLink,
-      ].map((Icon, idx) => (
-        <SvgWrapper icon={Icon} key={idx} width={24} height={24} />
+        {
+          label: 'Brand icons',
+          icons: [
+            IconGithub,
+            IconGitlab,
+            IconAnthropic,
+            IconOpenAI,
+            IconNpm,
+            IconYarn,
+            IconPnpm,
+            IconBun,
+            IconDeno,
+            IconJsdelivr,
+            IconUnpkg,
+          ],
+        },
+        {
+          label: 'Interface icons',
+          icons: [
+            IconArrowDown,
+            IconArrowRight,
+            IconClose,
+            IconCopy,
+            IconDeprecated,
+            IconDown,
+            IconEdit,
+            IconEmpty,
+            IconExperimental,
+            IconExternalLink,
+            IconFile,
+            IconHeader,
+            IconJump,
+            IconLink,
+            IconLoading,
+            IconMenu,
+            IconMoon,
+            IconOpenInChat,
+            IconScrollToTop,
+            IconSearch,
+            IconSmallMenu,
+            IconSuccess,
+            IconSun,
+            IconTitle,
+            IconWrap,
+            IconWrapped,
+          ],
+        },
+      ].map(({ label, icons }) => (
+        <div key={label}>
+          <div style={{ fontSize: 12, fontWeight: 500, marginBottom: 8 }}>
+            {label}
+          </div>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {icons.map((Icon, idx) => (
+              <SvgWrapper icon={Icon} key={idx} width={24} height={24} />
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   );

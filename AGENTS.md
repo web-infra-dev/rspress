@@ -2,35 +2,35 @@
 
 ## Project structure & module organization
 
-- Monorepo via `pnpm` + `Nx`.
-- Packages: `packages/core` (CLI + `@rspress/core`), `packages/theme-default` (Default theme), `packages/plugin-*` (Official plugins), `packages/create-rspress` (scaffolder).
-- Tests: `packages/*/tests` (unit) and `e2e/` (end-to-end tests); website examples in `website/`.
-- Key config: `nx.json`, `biome.json`, `.prettierrc`, `playwright.config.ts`, `pnpm-workspace.yaml`.
+- Monorepo via `pnpm` workspaces.
+- Packages: `packages/core` (CLI + `@rspress/core`, including the default theme in `src/theme`), `packages/shared` (shared types and utilities), `packages/plugin-*` (Official plugins), `packages/create-rspress` (project generator).
+- Tests: unit tests are generally colocated with their source files; `packages/core/tests` contains CLI integration tests, and `e2e/` contains end-to-end tests. Website examples are in `website/`.
+- Key config: `rstack.config.mts`, `rstest.e2e.config.mts`, `pnpm-workspace.yaml`.
 
 ## Build, test, and development commands
 
-- Install: `pnpm install` (Node >= 18.0, pnpm >= 10.15).
+- Install: `pnpm install` (use the Node version in `.nvmrc` and the pnpm version in `package.json#packageManager`).
 - Build: `pnpm build` (all) and `pnpm build:website`.
-- Watch dev: `pnpm dev` (all packages) or `pnpm dev:website` (documentation site).
-- Lint/format: `pnpm lint`; auto-fix: `pnpm format`.
-- Tests: `pnpm test`; targeted: `pnpm test:unit` or `pnpm test:e2e`; update snapshots: `pnpm testu`.
+- Watch dev: run `pnpm dev` in the package directory, or `pnpm dev:website` at the repository root for the documentation site.
+- Checks: `pnpm check` (lint, type-check, and formatting) and `pnpm check-spell`; lint only: `pnpm lint`; auto-format: `pnpm format`.
+- Tests: `pnpm test`; targeted: `pnpm test:unit` or `pnpm test:e2e`; update unit test snapshots: `pnpm test:unit --update`.
 
 ## Coding style & naming conventions
 
 - TypeScript + ESM; spaces; single quotes.
-- Biome is canonical linter/formatter; Prettier formats MD/CSS/JSON and `package.json`.
-- Filenames: `camelCase` or `PascalCase` (Biome enforced).
+- Rstack CLI is the canonical linter and formatter; it formats code, MD/CSS/JSON, and `package.json`.
+- Filenames: `camelCase` or `PascalCase`.
 
 ## Testing guidelines
 
-- Unit: `rstest`; E2E: `@playwright/test`.
+- Unit: `rstest`; E2E: `@rstest/playwright`.
 - Naming: `*.test.ts`/`*.test.tsx`; snapshots in `__snapshots__/`.
-- Placement: unit under `packages/*/tests`; e2e under `e2e/`.
+- Placement: colocate unit tests with their source files. Use `packages/core/tests` for CLI integration tests and `e2e/` for end-to-end tests.
 
 ## Commit & pull request guidelines
 
-- Conventional Commits (e.g., `feat(plugin-algolia): ...`); keep commits focused; run lint + tests.
-- User-facing changes need a Changeset (`pnpm changeset`); PRs should include description, linked issues, and doc/example updates when needed.
+- Conventional Commits (e.g., `feat(plugin-algolia): ...`); keep commits focused; run checks + tests.
+- User-facing changes should include description, linked issues, and doc/example updates when needed.
 
 ### PR title format
 
@@ -56,16 +56,16 @@ Examples:
 
 ## Architecture overview
 
-- `packages/core` (`@rspress/core`): CLI `rspress build/dev` (add `--watch`), config via `rspress.config.ts` using `defineConfig`; programmatic `import { defineConfig, loadConfig } from '@rspress/core'`.
-- `packages/core/theme` (`@rspress/core/theme`): Default theme with components and layouts.
+- `packages/core` (`@rspress/core`): CLI `rspress build/dev/preview`, config via `rspress.config.ts` using `defineConfig`; programmatic `import { defineConfig, build, dev } from '@rspress/core'`.
+- `packages/core/src/theme` (`@rspress/core/theme`): Default theme with components and layouts.
 - `packages/plugin-*` (`@rspress/plugin-*`): Official plugins like `plugin-algolia` (search), `plugin-llms` (LLM optimization), `plugin-typedoc` (API docs), etc.
 - `packages/create-rspress` (`create-rspress`): scaffold new projects/templates with `pnpm dlx create-rspress` (or `npx create-rspress`).
 
 ## Documentation standards
 
-- Heading case: Run `npx heading-case --write` to format markdown/mdx heading case before committing documentation changes.
+- Heading case: Run `pnpm format` to format Markdown/MDX heading case before committing documentation changes.
 
 ## Security & configuration tips
 
 - Do not commit build artifacts (`dist/`, `compiled/`).
-- Nx caching is enabled; scripts use `NX_DAEMON=false` for reproducible CI.
+- Package builds use pnpm in dependency order with up to three concurrent builds. After `pnpm build`, CI builds the website with `pnpm --filter @rspress/docs run build` to reuse package outputs.

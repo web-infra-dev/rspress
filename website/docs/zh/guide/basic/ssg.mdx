@@ -49,7 +49,7 @@ rspress build
 build 模式默认启用 SSG，你可以通过 [`ssg` 配置项](#配置选项)来控制：
 
 - `ssg: true` （默认）：启用 SSG，构建时，Rspress 会在 Node.js 环境中执行 React 组件的渲染，将每个页面转换为包含完整内容的 HTML 文件。
-- `ssg: false`：禁用 SSG，使用纯 CSR，生成的 HTML 仅包含空容器，等待客户端渲染。
+- `ssg: false`：禁用 SSG，使用 CSR。生成的 HTML 包含空的页面容器，等待客户端渲染。这不影响 SSG-MD，后者由 `llms` 独立控制。
 
 **构建完成后：**
 
@@ -83,7 +83,7 @@ doc_build/
     └── config.html
 ```
 
-其中 `404.html` 是 Rspress 自动生成的 404 页面，用于处理不存在的路由。该文件在 SPA 部署时有重要作用，详见[「刷新页面时出现 404」](#刷新页面时出现-404)。
+其中 `404.html` 是 Rspress 自动生成的 404 页面，用于处理不存在的路由。该文件在 SPA 部署时有重要作用，详见[「刷新页面时出现 404」](#refresh-404)。
 
 ### HTML 内容差异
 
@@ -138,7 +138,27 @@ doc_build/
 
 **解决方案**：
 
-1. **使用 `useEffect` 延迟执行**：将浏览器 API 的调用放在 `useEffect` 中，确保只在客户端执行
+1. **使用 [`BrowserOnly`](/ui/runtime-components/browser-only) 进行仅浏览器渲染**：把无法在 SSG 阶段运行的代码放在函数中。
+
+   ```tsx
+   import { BrowserOnly } from '@rspress/core/runtime';
+
+   function MyComponent(props) {
+     return (
+       <BrowserOnly fallback={<div>Loading...</div>}>
+         {async () => {
+           const { LibComponent } =
+             await import('some-lib-that-accesses-window');
+           return <LibComponent {...props} />;
+         }}
+       </BrowserOnly>
+     );
+   }
+   ```
+
+   children 必须是函数，而不是 JSX。否则 `window.location.href` 这类表达式仍然会在 React 构建 SSG 渲染树时被求值。
+
+2. **使用 `useEffect` 延迟执行**：将浏览器 API 的调用放在 `useEffect` 中，确保只在客户端执行
 
    ```tsx
    import { useEffect, useState } from 'react';
@@ -155,7 +175,7 @@ doc_build/
    }
    ```
 
-2. **条件检查**：在访问浏览器 API 前检查环境
+3. **条件检查**：在访问浏览器 API 前检查环境
 
    ```tsx
    if (typeof window !== 'undefined') {
@@ -164,7 +184,7 @@ doc_build/
    }
    ```
 
-3. **动态导入**：对于依赖浏览器 API 的第三方库，使用动态导入
+4. **在 `useEffect` 中动态导入**：对于依赖浏览器 API 的第三方库，在 `useEffect` 中使用动态导入
 
    ```tsx
    import { useEffect, useState } from 'react';
@@ -173,7 +193,7 @@ doc_build/
      const [Editor, setEditor] = useState(null);
 
      useEffect(() => {
-       import('some-browser-only-library').then((mod) => {
+       import('some-browser-only-library').then(mod => {
          setEditor(() => mod.default);
        });
      }, []);
@@ -240,7 +260,7 @@ export default defineConfig({
 });
 ```
 
-如果你的站点有特殊需求，可以禁用 SSG：
+如果你的站点有特殊需求，可以禁用 SSG，同时保留 Markdown 生成：
 
 ```ts title="rspress.config.ts"
 import { defineConfig } from '@rspress/core';

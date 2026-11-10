@@ -2,15 +2,15 @@
   "extends": "@rspress/config/tsconfig",
   "compilerOptions": {
     "declarationDir": "dist",
-    "baseUrl": "src",
     "rootDir": "src",
     "composite": true,
-    "lib": ["ESNext", "DOM"]
+    "lib": ["ESNext", "DOM"],
+    "types": ["node", "rstack/types"]
   },
   "include": ["src"],
   "references": [
     {
-      "path": "../shared"
+      "path": "../shared/tsconfig.json"
     }
   ]
 }

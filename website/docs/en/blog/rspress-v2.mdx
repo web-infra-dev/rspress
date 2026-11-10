@@ -3,7 +3,7 @@ date: 2026-01-30
 authors: ['sooniter']
 description: 'Rspress 2.0 is officially released, featuring a brand new theme, AI-native SSG-MD and llms.txt generation, Shiki code highlighting, lazyCompilation, an improved documentation development experience.'
 sidebar: false
-pageType: doc-wide
+pageType: doc
 ---
 
 _January 30, 2026_
@@ -28,11 +28,11 @@ Rspress 1.x already solved the compilation performance problem for documentation
 
 - **AI-native**: Documentation serves not only human readers but also needs to be better understood and used by Agents. Rspress now has built-in [llms.txt](https://llmstxt.org/) generation and the [**SSG-MD**](/guide/basic/ssg-md) capability derived from SSG, generating high-quality Markdown content for Agents to read.
 
-- **lazyCompilation, Instant Startup**: [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation) is enabled by default, combined with resource preloading on link hover, building only the required files when visiting specific routes, achieving **instant startup** regardless of project size.
+- **lazyCompilation, Instant Startup**: [lazyCompilation](https://rspack.rs/guide/features/lazy-compilation) is enabled by default, combined with resource prefetching on link hover, building only the required files when visiting specific routes, achieving **instant startup** regardless of project size.
 
 - **Shiki Code Highlighting**: Shiki is integrated by default, completing **syntax highlighting at build time**, with support for theme switching and transformer extensions like [@rspress/plugin-twoslash](/plugin/official-plugins/twoslash), delivering richer code block display effects.
 
-- **Documentation Development Experience**: Optimized HMR for `_nav.json`, `_meta.json` and other files, added [json schema](/guide/basic/auto-nav-sidebar#json-schema-type-hints) for IDE code hints; dead link checking enabled by default; new file code block syntax supporting external file references; [@rspress/plugin-preview](/plugin/official-plugins/preview) and [@rspress/plugin-playground](https://rspress.rs/plugin/official-plugins/playground) can now be used simultaneously.
+- **Documentation Development Experience**: Optimized HMR for `_nav.json`, `_meta.json` and other files, added [json schema](/guide/basic/auto-nav-sidebar#json-schema-type-hint) for IDE code hints; dead link checking enabled by default; new file code block syntax supporting external file references; [@rspress/plugin-preview](/plugin/official-plugins/preview) and [@rspress/plugin-playground](https://rspress.rs/plugin/official-plugins/playground) can now be used simultaneously.
 
 - **Rslib Integration**: You can now select Rspress as the documentation tool when creating a component library project with `create-rslib`, quickly setting up a component documentation site.
 
@@ -124,9 +124,9 @@ import { Tag } from '@rspress/core/theme';
 
 #### Built-in Multi-language Support
 
-In version 1.x, Rspress only had English text built-in. Using other languages like zh required configuring all text manually, which was cumbersome. Now the 2.0 theme includes built-in translations for zh, en, ja, ko, ru, and more languages. The system automatically performs "Tree Shaking" based on language configuration and usage, bundling only the text and languages you use. Languages not built-in will fall back to en text. You can also extend or override translations through the [`i18nSource`](/api/config/config-basic#i18nsource) configuration option.
+In version 1.x, Rspress included only English UI text. Using other languages such as zh required manually configuring every string, which was cumbersome. The 2.0 theme now includes built-in translations for zh, en, ja, ko, ru, and more languages. The system automatically tree-shakes translations based on language configuration and usage, bundling only the text and languages you use. Languages that are not built in fall back to en text. You can also extend or override translations through the [`i18nSource`](/api/config/config-basic#i18nsource) configuration option.
 
-Rspress will support more built-in languages in the future. If you're interested, please refer to [this contributor's Pull Request](https://github.com/web-infra-dev/rspress/pull/2827).
+Rspress will add more built-in languages in the future. If you're interested, see [this contributor's Pull Request](https://github.com/web-infra-dev/rspress/pull/2827).
 
 ### llms.txt: SSG-MD for High-Quality Markdown content \{#llms-txt-ssg-md}
 
@@ -167,7 +167,7 @@ export default defineConfig({
 });
 ```
 
-After building, the following structure will be generated:
+After the build, Rspress generates the following structure:
 
 ```tree
 doc_build
@@ -231,7 +231,7 @@ Rspress 2.0 is powered by Rsbuild and Rspack 2.0 prerelease, with [lazyCompilati
 
 #### lazyCompilation
 
-[dev.lazyCompilation](https://rsbuild.rs/config/dev/lazy-compilation) is enabled by default — pages are only compiled when you visit them, dramatically improving development startup speed and even achieving millisecond-level cold starts. Rspress also implements a route preload strategy that preloads target route pages when hovering over links, working together with lazyCompilation to provide a lossless development experience.
+[dev.lazyCompilation](https://rsbuild.rs/config/dev/lazy-compilation) is enabled by default — pages are only compiled when you visit them, dramatically improving development startup speed and even achieving millisecond-level cold starts. Rspress also implements a route prefetch strategy that prefetches target route pages when hovering over links, working together with lazyCompilation to provide a lossless development experience.
 
 <div style={{ display: 'flex', justifyContent: 'center' }}>
   <img

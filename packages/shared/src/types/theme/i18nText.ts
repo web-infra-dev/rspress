@@ -21,6 +21,7 @@ export interface I18nText {
 
   // docFooter
   lastUpdatedText?: I18nTextValue;
+  lastUpdatedAuthorText?: I18nTextValue;
   prevPageText?: I18nTextValue;
   nextPageText?: I18nTextValue;
   editLinkText?: I18nTextValue;
@@ -40,10 +41,17 @@ export interface I18nText {
 
   // codeblock
   codeButtonGroupCopyButtonText?: I18nTextValue;
+  codeButtonGroupWrapButtonText?: I18nTextValue;
 
   // NotFoundLayout
   notFoundText?: I18nTextValue;
   takeMeHomeText?: I18nTextValue;
+
+  // ErrorLayout
+  errorTitleText?: I18nTextValue;
+  errorDescriptionText?: I18nTextValue;
+  reloadPageText?: I18nTextValue;
+  errorDetailsText?: I18nTextValue;
 
   // prompt
   promptCopyText?: I18nTextValue;
