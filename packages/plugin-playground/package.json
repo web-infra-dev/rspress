@@ -50,7 +50,7 @@
     "@types/node": "^22.8.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "mdast-util-mdx-jsx": "^3.2.0",
+    "mdast-util-mdx-jsx": "^3.2.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "rsbuild-plugin-publint": "^1.0.0",
