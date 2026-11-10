@@ -1,79 +1,110 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
 
 const SYNC_STORAGE_EVENT_NAME = 'RSPRESS_SYNC_STORAGE_EVENT_NAME';
+
+const getStorageItem = (key: string): string | null => {
+  if (typeof window === 'undefined') return null;
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+};
+
+const setStorageItem = (key: string, value: string | null): void => {
+  if (typeof window === 'undefined') return;
+  try {
+    if (value == null) {
+      window.localStorage.removeItem(key);
+    } else {
+      window.localStorage.setItem(key, value);
+    }
+  } catch (error) {
+    console.warn(
+      `[useStorageValue] Failed to set localStorage key "${key}":`,
+      error,
+    );
+  }
+};
+
+export type StorageAction<T> = T | ((prevState: T) => T);
 
 /**
  * Read/update the value in localStorage, and keeping it in sync with other tabs.
  * @internal
  */
 export const useStorageValue = <T>(key: string, defaultValue: T) => {
-  // Why not `useState(typeof window === 'undefined' ? defaultValue : (localStorage.getItem(key) as T) ?? defaultValue);` ?
-  // Avoid hydration mismatch by initializing with defaultValue and then updating it in useEffect
-  const [value, setValueInternal] = useState<T>(defaultValue);
+  const subscribe = useCallback(
+    (onStoreChange: () => void) => {
+      const handleStorage = (event: StorageEvent) => {
+        // event.key === null handles localStorage.clear()
+        if (event.key === key || event.key === null) {
+          onStoreChange();
+        }
+      };
 
-  // Use useEffect instead of useLayoutEffect for SSR compatibility
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-    const storedValue = localStorage.getItem(key);
-    if (storedValue != null) {
-      setValueInternal(storedValue as T);
-    }
-  }, [key]);
+      const handleCustomEvent = (event: Event) => {
+        const customEvent = event as CustomEvent<{ key: string }>;
+        if (customEvent.detail?.key === key) {
+          onStoreChange();
+        }
+      };
 
-  const setValue = useCallback(
-    (value: T) => {
-      const next = value;
-      if (next == null) {
-        localStorage.removeItem(key);
-      } else {
-        localStorage.setItem(key, next.toString());
-      }
-      setValueInternal(next);
-      dispatchEvent(
-        // send custom event to communicate within same page
-        // importantly this should not be a StorageEvent since those cannot
-        // be constructed with a non-built-in storage area
-        new CustomEvent<{ key: string; newValue: T }>(SYNC_STORAGE_EVENT_NAME, {
-          detail: {
-            key,
-            newValue: next,
-          },
-        }),
-      );
+      window.addEventListener('storage', handleStorage);
+      window.addEventListener(SYNC_STORAGE_EVENT_NAME, handleCustomEvent);
+
+      return () => {
+        window.removeEventListener('storage', handleStorage);
+        window.removeEventListener(SYNC_STORAGE_EVENT_NAME, handleCustomEvent);
+      };
     },
     [key],
   );
 
-  useEffect(() => {
-    const listener = (e: StorageEvent) => {
-      if (e.key === key) {
-        setValueInternal((localStorage.getItem(key) as T) ?? defaultValue);
-      }
-    };
-    window.addEventListener('storage', listener);
-    return () => {
-      window.removeEventListener('storage', listener);
-    };
+  const getSnapshot = useCallback((): T => {
+    const raw = getStorageItem(key);
+    return (raw !== null ? raw : defaultValue) as T;
   }, [key, defaultValue]);
 
-  // from same page
-  useEffect(() => {
-    const listener = (e: CustomEvent) => {
-      const { key: eventKey, newValue } = e.detail;
-      if (eventKey === key) {
-        setValueInternal((newValue as T) ?? defaultValue);
+  const getServerSnapshot = useCallback((): T => defaultValue, [defaultValue]);
+
+  const value = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
+  const setValue = useCallback(
+    (action: StorageAction<T>) => {
+      const currentStored = getStorageItem(key);
+      const currentValue = (
+        currentStored !== null ? currentStored : defaultValue
+      ) as T;
+
+      const nextValue =
+        typeof action === 'function'
+          ? (action as (prevState: T) => T)(currentValue)
+          : action;
+
+      if (nextValue == null) {
+        setStorageItem(key, null);
+      } else {
+        setStorageItem(key, String(nextValue));
       }
-    };
-    window.addEventListener(SYNC_STORAGE_EVENT_NAME, listener as EventListener);
-    return () => {
-      window.removeEventListener(
-        SYNC_STORAGE_EVENT_NAME,
-        listener as EventListener,
-      );
-    };
-  }, []);
+
+      // Synchronously notify all instances of this hook across the current page
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent<{ key: string; newValue: T }>(
+            SYNC_STORAGE_EVENT_NAME,
+            {
+              detail: {
+                key,
+                newValue: nextValue,
+              },
+            },
+          ),
+        );
+      }
+    },
+    [key, defaultValue],
+  );
 
   return [value, setValue] as const;
 };
