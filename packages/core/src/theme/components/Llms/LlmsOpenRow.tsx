@@ -4,6 +4,7 @@ import {
   IconAnthropic,
   IconExternalLink,
   IconLink,
+  IconMarkdown,
   IconOpenAI,
   IconOpenInChat,
   SvgWrapper,
@@ -21,7 +22,12 @@ type MenuItem = {
   onClick?: () => void;
 };
 
-const DEFAULT_OPTIONS = ['markdownLink', 'chatgpt', 'claude'] as const;
+const DEFAULT_OPTIONS = [
+  'markdownLink',
+  'viewMarkdown',
+  'chatgpt',
+  'claude',
+] as const;
 
 export function LlmsOpenRow() {
   const t = useI18n();
@@ -73,6 +79,11 @@ export function LlmsOpenRow() {
           void copyToClipboard(fullMarkdownUrl);
         },
       },
+      viewMarkdown: {
+        title: t('viewMarkdownText'),
+        href: pathname,
+        icon: <SvgWrapper icon={IconMarkdown} />,
+      },
       chatgpt: {
         title: t('openInText', { name: 'ChatGPT' }),
         href: `https://chatgpt.com/?${new URLSearchParams({ hints: 'search', q })}`,
@@ -84,7 +95,7 @@ export function LlmsOpenRow() {
         icon: <SvgWrapper icon={IconAnthropic} />,
       },
     }),
-    [fullMarkdownUrl, t, q],
+    [fullMarkdownUrl, pathname, t, q],
   );
 
   const renderableItems = useMemo(

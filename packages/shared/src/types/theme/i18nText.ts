@@ -12,6 +12,7 @@ export interface I18nText {
   // llms
   copyMarkdownText?: I18nTextValue;
   copyMarkdownLinkText?: I18nTextValue;
+  viewMarkdownText?: I18nTextValue;
   openInText?: I18nTextValue;
 
   // outline

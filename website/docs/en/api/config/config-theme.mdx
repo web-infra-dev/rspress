@@ -590,7 +590,8 @@ type LlmsUI =
   | boolean
   | {
       injectLlmsHint?: boolean;
-      viewOptions?: false | Array<'markdownLink' | 'chatgpt' | 'claude'>;
+      viewOptions?:
+        false | Array<'markdownLink' | 'viewMarkdown' | 'chatgpt' | 'claude'>;
       placement?: 'title' | 'outline';
     };
 ```
@@ -615,7 +616,7 @@ export default defineConfig({
   themeConfig: {
     llmsUI: {
       injectLlmsHint: true,
-      viewOptions: ['markdownLink', 'chatgpt', 'claude'],
+      viewOptions: ['markdownLink', 'viewMarkdown', 'chatgpt', 'claude'],
       placement: 'outline',
     },
   },
@@ -666,12 +667,13 @@ export default defineConfig({
 
 ### viewOptions
 
-- **Type**: `false | Array<'markdownLink' | 'chatgpt' | 'claude'>`
-- **Default**: `['markdownLink', 'chatgpt', 'claude']`
+- **Type**: `false | Array<'markdownLink' | 'viewMarkdown' | 'chatgpt' | 'claude'>`
+- **Default**: `['markdownLink', 'viewMarkdown', 'chatgpt', 'claude']`
 
 Options for the LlmsViewOptions dropdown menu. Built-in options include:
 
-- `'markdownLink'`: Copy markdown file link
+- `'markdownLink'`: Copy Markdown file link
+- `'viewMarkdown'`: Open the page's Markdown file in a new tab
 - `'chatgpt'`: Open in ChatGPT
 - `'claude'`: Open in Claude
 

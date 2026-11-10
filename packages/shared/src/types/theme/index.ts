@@ -7,7 +7,8 @@ import type { SocialLink } from './socialLink';
  * Built-in option item for LlmsViewOptions configured through
  * `rspress.config.ts`.
  */
-export type LlmsViewOption = 'markdownLink' | 'chatgpt' | 'claude';
+export type LlmsViewOption =
+  'markdownLink' | 'viewMarkdown' | 'chatgpt' | 'claude';
 
 /**
  * Configuration for LLMS UI components displayed below H1 headers or in the
@@ -29,7 +30,7 @@ export type LlmsUI =
       /**
        * Options for LlmsViewOptions component dropdown menu.
        * Set to `false` or an empty array to hide the view options UI.
-       * @default ['markdownLink', 'chatgpt', 'claude']
+       * @default ['markdownLink', 'viewMarkdown', 'chatgpt', 'claude']
        */
       viewOptions?: false | LlmsViewOption[];
       /**
