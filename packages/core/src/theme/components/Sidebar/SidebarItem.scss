@@ -65,8 +65,8 @@
     .rp-sidebar-item__left::before {
       content: '';
       position: absolute;
-      top: 4px;
-      bottom: 4px;
+      top: 8px;
+      bottom: 8px;
       left: -7px;
       width: 1px;
       background-color: var(--rp-c-brand);
