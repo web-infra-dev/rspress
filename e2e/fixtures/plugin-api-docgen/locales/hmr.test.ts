@@ -45,6 +45,7 @@ test.describe('API docgen translation updates', () => {
         timeout: ACTION_TIMEOUT,
       })
       .then(socket =>
+        // cspell:ignore framereceived
         socket.waitForEvent('framereceived', {
           predicate: frame => JSON.parse(String(frame.payload)).type === 'ok',
           timeout: ACTION_TIMEOUT,
