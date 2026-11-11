@@ -36,26 +36,32 @@ export async function runNpmScript(
       stdio: ['ignore', 'pipe', 'pipe'],
     });
 
+    let stdoutOutput = '';
     let stderrOutput = '';
     instance.stderr!.on('data', chunk => {
-      stderrOutput += chunk;
+      stderrOutput = (stderrOutput + chunk).slice(-16384);
     });
 
     let didResolve = false;
 
-    async function handleStdout(data) {
+    function handleStdout(data) {
       const message = data.toString();
+      const output = stdoutOutput + message;
+      stdoutOutput = output.slice(-16384);
       const markers = {
         dev: /built in/i,
         preview: /Local:/i,
-        build: /File (web)/,
       };
 
-      if (markers[commandName].test(message)) {
-        if (!didResolve) {
-          didResolve = true;
-          resolve(instance);
-        }
+      // Build completion is its exit status, not a progress/size log. Pipe
+      // chunks can split a server's readiness marker at any byte boundary.
+      if (
+        !didResolve &&
+        commandName !== 'build' &&
+        markers[commandName].test(output)
+      ) {
+        didResolve = true;
+        resolve(instance);
       }
       if (process.env.RSTEST !== 'true') {
         process.stdout.write(message);
@@ -73,10 +79,10 @@ export async function runNpmScript(
       instance.stdout!.removeListener('data', handleStdout);
 
       if (!didResolve) {
-        if (code !== 0) {
+        if (code !== 0 || commandName !== 'build') {
           reject(
             new Error(
-              `process unexpected exit with code: ${code} signal: ${signal}`,
+              `process unexpected exit with code: ${code} signal: ${signal}\nCommand: ${commandName}\n${stdoutOutput}\n${stderrOutput}`,
             ),
           );
         } else {
