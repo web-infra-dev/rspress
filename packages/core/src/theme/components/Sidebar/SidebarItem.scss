@@ -3,12 +3,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 12px;
+  padding: 6px 12px;
   margin-top: 2px;
   position: relative;
-  border: 1px solid transparent;
   border-radius: 8px;
-  line-height: 20px;
+  line-height: 24px;
   font-size: 14px;
   font-weight: 400;
   color: var(--rp-c-text-2);
@@ -41,7 +40,6 @@
   &--active {
     color: var(--rp-c-link);
     background-color: var(--rp-c-brand-tint);
-    font-weight: 600;
     &:hover {
       color: var(--rp-c-link);
       background-color: var(--rp-c-brand-tint);
