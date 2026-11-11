@@ -62,9 +62,9 @@ export function hintBuilderPluginsBreakingChange(config: UserConfig) {
     Array.isArray(config.builderPlugins) &&
     config.builderPlugins.length > 0
   ) {
-    logger.error(
-      `[Rspress v2] The "builderPlugins" option has been renamed to "builderConfig.plugins", please update your config accordingly (https://rspress.rs/api/config/config-build#builderconfigplugins).\n`,
-      `
+    throw new Error(
+      `[Rspress v2] The "builderPlugins" option has been renamed to "builderConfig.plugins", please update your config accordingly (https://rspress.rs/api/config/config-build#builderconfigplugins).\n` +
+        `
 export default defineConfig({
 ${picocolors.redBright(
   `  builderPlugins: [
@@ -78,7 +78,6 @@ ${picocolors.greenBright(`  builderConfig: {
   },`)}
 });`,
     );
-    process.exit(1);
   }
 }
 
@@ -144,16 +143,11 @@ export function hintNavJsonChangeThenPanic(
       return typeof i === 'object' && ('activeMatch' in i || 'text' in i);
     })
   ) {
-    const error = new Error(
-      '[Rspress v2] Detected that you are still using top level `_meta.json` to configure the nav, but it has been changed to `_nav.json` in Rspress v2. Please rename the top level `_meta.json` to `_nav.json` accordingly.',
-    );
-    logger.error(error);
-
     const dir = relative(docsDir, metaJsonDir);
-    logger.info(
-      `Please rename "${picocolors.greenBright(join(dir, '_meta.json'))}" to  "${picocolors.greenBright(join(dir, '_nav.json'))}".`,
+    throw new Error(
+      '[Rspress v2] Detected that you are still using top level `_meta.json` to configure the nav, but it has been changed to `_nav.json` in Rspress v2. Please rename the top level `_meta.json` to `_nav.json` accordingly.\n' +
+        `Please rename "${picocolors.greenBright(join(dir, '_meta.json'))}" to "${picocolors.greenBright(join(dir, '_nav.json'))}".`,
     );
-    process.exit(1);
   }
 }
 
