@@ -1,7 +1,7 @@
 import {
   getSidebarDataGroup,
+  matchNavItem,
   type NavItem,
-  type NavItemWithLink,
   type Sidebar,
   type SidebarDivider,
   type SidebarGroup,
@@ -51,21 +51,33 @@ export async function emitLlmsTxt(
   // Resolve nav for a specific version
   function resolveNavForVersion(
     version: string,
-  ): (NavItemWithLink & { lang: string })[] {
-    return rawNavConfigs
-      .flatMap(({ nav, lang }) => {
-        let navArray: NavItem[];
-        if (Array.isArray(nav)) {
-          navArray = nav;
-        } else {
-          // nav is { [version]: NavItem[] } or { default: NavItem[] }
-          navArray = nav[version] ?? nav[defaultVersion] ?? nav.default ?? [];
-        }
-        return navArray.map(
-          item => ({ ...item, lang }) as NavItemWithLink & { lang: string },
-        );
-      })
-      .filter(i => i.activeMatch || i.link);
+  ): (NavItem & { lang: string })[] {
+    return (
+      rawNavConfigs
+        .flatMap(({ nav, lang }) => {
+          let navArray: NavItem[];
+          if (Array.isArray(nav)) {
+            navArray = nav;
+          } else {
+            // nav is { [version]: NavItem[] } or { default: NavItem[] }
+            navArray = nav[version] ?? nav[defaultVersion] ?? nav.default ?? [];
+          }
+          return navArray.map(
+            item =>
+              ({ ...item, lang }) as NavItem & {
+                lang: string;
+              },
+          );
+        })
+        // Dropdown groups (no `link`) must survive: matchNavItem buckets
+        // their pages through the children's links.
+        .filter(
+          i =>
+            ('activeMatch' in i && i.activeMatch) ||
+            ('link' in i && i.link) ||
+            ('items' in i && i.items.length > 0),
+        )
+    );
   }
 
   // Generate llms files for a specific lang+version combination
@@ -88,12 +100,7 @@ export async function emitLlmsTxt(
       for (let i = 0; i < routeGroups.length; i++) {
         const routeGroup = routeGroups[i];
         const navItem = navList[i];
-        if (
-          lang === navItem.lang &&
-          new RegExp(
-            (navItem.activeMatch ?? navItem.link).replace(/\.html$/, ''),
-          ).test(routePath)
-        ) {
+        if (lang === navItem.lang && matchNavItem(navItem, routePath)) {
           routeGroup.push(routePath);
           return;
         }
