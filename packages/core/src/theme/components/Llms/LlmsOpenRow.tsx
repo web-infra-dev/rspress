@@ -116,7 +116,7 @@ export function LlmsOpenRow() {
     <div ref={containerRef} className="rp-outline__open-in-wrapper">
       <button
         className="rp-outline__action-row"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen(prevOpen => !prevOpen)}
       >
         <SvgWrapper icon={IconOpenInChat} />
         <span>{t('openInText', { name: 'chat' })}</span>

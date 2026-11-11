@@ -106,7 +106,7 @@ export function LlmsViewOptions({
   }, []);
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(prevOpen => !prevOpen);
   };
 
   const { pathname } = useMdUrl();
@@ -189,6 +189,9 @@ export function LlmsViewOptions({
       <button
         ref={dropdownRef}
         onClick={toggleDropdown}
+        aria-label="View options"
+        aria-expanded={isOpen}
+        aria-haspopup="true"
         className={`rp-llms-button rp-llms-view-options__trigger ${
           isOpen ? 'rp-llms-view-options__trigger--active' : ''
         }`}
