@@ -89,13 +89,52 @@ define.lib({
         ],
       },
       tools: {
-        rspack: {
-          output: {
+        rspack(config, { rspack }) {
+          config.plugins ??= [];
+          config.plugins.push({
+            apply(compiler) {
+              compiler.hooks.thisCompilation.tap(
+                'StripTinypoolPackageExports',
+                compilation => {
+                  compilation.hooks.processAssets.tap(
+                    {
+                      name: 'StripTinypoolPackageExports',
+                      stage: rspack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE,
+                    },
+                    () => {
+                      for (const asset of compilation.getAssets()) {
+                        if (!asset.name.endsWith('/package.json')) {
+                          continue;
+                        }
+                        const manifest = JSON.parse(
+                          asset.source.source().toString(),
+                        );
+                        if (manifest.name !== 'tinypool') {
+                          continue;
+                        }
+                        // Tinypool reads its version from this resource. Nested
+                        // package manifests cannot use package exports.
+                        delete manifest.exports;
+                        compilation.updateAsset(
+                          asset.name,
+                          new rspack.sources.RawSource(
+                            JSON.stringify(manifest),
+                          ),
+                        );
+                      }
+                    },
+                  );
+                },
+              );
+            },
+          });
+          config.output = {
+            ...config.output,
             library: {
               type: 'modern-module',
               preserveModules: path.resolve(configDir, './src'),
             },
-          },
+          };
         },
       },
     },

@@ -9,6 +9,7 @@
     "directory": "packages/plugin-rss"
   },
   "license": "MIT",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
