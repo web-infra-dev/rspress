@@ -355,7 +355,7 @@ export function Prompt({ custom = false, ...props }: PromptProps) {
           <strong>{title}</strong>
         </p>
         {description ? <p>{description}</p> : null}
-        {prompt ? <pre>{prompt}</pre> : null}
+        {prompt ? <pre>{`<prompt>\n${prompt}\n</prompt>`}</pre> : null}
       </>
     );
   }

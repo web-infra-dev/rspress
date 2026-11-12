@@ -39,6 +39,7 @@ describe('Prompt Markdown rendering', () => {
 
 
       \`\`\`\`
+      <prompt>
       Follow https://rspress.rs/guide/start/getting-started.md.
 
       1. Run \`create rspress@latest\`.
@@ -47,10 +48,11 @@ describe('Prompt Markdown rendering', () => {
       \`\`\`sh
       pnpm dev
       \`\`\`
+      </prompt>
       \`\`\`\`
       "
     `);
-    expect(markdown).toContain(prompt);
+    expect(markdown).toContain(`<prompt>\n${prompt}\n</prompt>`);
     expect(markdown).toContain('Send this to your **AI agent**.');
     expect(markdown).not.toContain('promptCopyText');
     expect(markdown).not.toContain('For your Agent');
