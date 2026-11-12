@@ -9,6 +9,7 @@
     "directory": "packages/plugin-sitemap"
   },
   "license": "MIT",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {

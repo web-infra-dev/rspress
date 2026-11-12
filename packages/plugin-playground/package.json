@@ -9,6 +9,12 @@
     "directory": "packages/plugin-preview"
   },
   "license": "MIT",
+  "sideEffects": [
+    "*.css",
+    "*.less",
+    "*.sass",
+    "*.scss"
+  ],
   "type": "module",
   "exports": {
     ".": {
