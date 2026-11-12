@@ -116,6 +116,10 @@ export const useWatchToc = () => {
       observer = new MutationObserver(mutationList => {
         let needUpdate: boolean = false;
         check: for (const mutation of mutationList) {
+          if (mutation.type === 'attributes') {
+            needUpdate = true;
+            break;
+          }
           for (const nodes of [mutation.addedNodes, mutation.removedNodes]) {
             for (const node of nodes) {
               if (
@@ -139,6 +143,12 @@ export const useWatchToc = () => {
         needUpdate && updateHeaders(target, pathname);
       });
       observer.observe(target, { childList: true, subtree: true });
+      // PageTabs changes heading visibility through a body attribute. Observe
+      // that state directly so collection runs after the active tab is applied.
+      observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['data-page-tabs-active-index'],
+      });
     }
     return () => {
       observer?.disconnect();
