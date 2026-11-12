@@ -3,6 +3,7 @@
     "type": "section-header",
     "label": "主题"
   },
+  "themes",
   {
     "type": "file",
     "label": "CSS 变量",

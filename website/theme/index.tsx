@@ -31,6 +31,7 @@ import { HeroInteractive } from './components/HeroInteractive';
 import { HomeSections } from './components/HomeSections';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
+import { PresetBreadcrumb, PresetOutline } from './components/PresetDocChrome';
 import './index.css';
 
 function HomeLayout(props: HomeLayoutProps) {
@@ -88,6 +89,7 @@ const DocLayout = (props: DocLayoutProps) => {
       beforeDocContent={
         <SlotPreview name="beforeDocContent">
           <BlogBackButton />
+          <PresetBreadcrumb />
           {props.beforeDocContent}
         </SlotPreview>
       }
@@ -174,5 +176,6 @@ export {
   HomeLayout,
   Layout,
   Search,
+  PresetOutline as Outline,
   Tag,
 };

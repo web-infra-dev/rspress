@@ -1,0 +1,82 @@
+---
+description: Preview Rspress theme presets in one click and copy the CSS to your own documentation site.
+---
+
+# Themes
+
+Choose a look for your documentation. Click a preset to preview it across this site, including the navigation, sidebar, and content. Use the light/dark toggle in the navigation to try both appearances.
+
+import { Steps } from '@rspress/core/theme';
+import { ThemePresetSwitcher } from '../../components/ThemePresetSwitcher';
+
+<ThemePresetSwitcher />
+
+The preview stays active as you navigate to other pages. Select **Rspress** to return to the default preset, or use **Reset** in the floating toolbar to clear all CSS changes. Refreshing the page also clears the preview.
+
+## Ruixen
+
+Inspired by the documentation layout of [Ruixen UI](https://ruixen.com/docs/components/card-carousel-hero), this preset reproduces the three-column layout, Geist typography, sidebar spacing, outline links, document headings, numbered steps, and code tabs. It includes light and dark colors and keeps Rspress's responsive navigation.
+
+The stylesheet uses [CSS variables](/ui/vars) and built-in BEM class names. The accompanying theme entry adds the breadcrumb and Contribute section, which require additional markup. It wraps the default layout and keeps the built-in navigation behavior.
+
+The CSS loads Geist and Geist Mono from a pinned font CDN. You can host these fonts locally by replacing the two `@font-face` URLs.
+
+## Use a preset
+
+<Steps>
+
+### Copy the stylesheet
+
+Copy or <a href="/themes/ruixen.css" download="ruixen.css">download the Ruixen CSS</a> and save it as `theme/ruixen.css` in your project.
+
+### Import the preset
+
+For the complete layout, <a href="/themes/ruixen.tsx" download="ruixen.tsx">download the theme entry</a> as `theme/ruixen.tsx`, then import both files:
+
+```tsx title="theme/index.tsx"
+import './ruixen.css';
+
+export * from './ruixen';
+```
+
+If you already have a custom theme entry, merge the `Layout` and `Outline` exports into it. For stylesheet-only customization, load the CSS with [`globalStyles`](/api/config/config-basic#globalstyles):
+
+```ts title="rspress.config.ts"
+import path from 'node:path';
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  globalStyles: path.join(import.meta.dirname, 'theme/ruixen.css'),
+});
+```
+
+</Steps>
+
+## Customize the colors
+
+Import your overrides after the preset to give it your own accent color. Set colors for both light and dark appearances:
+
+```css title="theme/custom.css"
+:root {
+  --rp-c-brand: #2563eb;
+  --rp-c-brand-light: #3b82f6;
+  --rp-c-brand-dark: #1d4ed8;
+  --rp-c-brand-tint: #eff6ff;
+}
+
+html.rp-dark {
+  --rp-c-brand: #93c5fd;
+  --rp-c-brand-light: #bfdbfe;
+  --rp-c-brand-dark: #60a5fa;
+  --rp-c-brand-tint: #172554;
+}
+```
+
+```tsx title="theme/index.tsx"
+import './ruixen.css';
+import './custom.css';
+
+export * from './ruixen';
+```
+
+See [Custom theme](/guide/basic/custom-theme) for more ways to customize your site.

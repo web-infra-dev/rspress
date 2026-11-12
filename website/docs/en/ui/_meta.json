@@ -3,6 +3,7 @@
     "type": "section-header",
     "label": "Theme"
   },
+  "themes",
   {
     "type": "file",
     "label": "CSS variables",

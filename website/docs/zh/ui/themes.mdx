@@ -1,0 +1,82 @@
+---
+description: 一键预览 Rspress 主题预设，并复制 CSS 应用到自己的文档站点。
+---
+
+# 主题预设
+
+为你的文档选择一种风格。点击预设即可在整个网站中预览，包括导航栏、侧边栏和正文。使用导航栏的亮色 / 暗色切换按钮，查看两种模式下的效果。
+
+import { Steps } from '@rspress/core/theme';
+import { ThemePresetSwitcher } from '../../components/ThemePresetSwitcher';
+
+<ThemePresetSwitcher />
+
+切换到其他页面后，预览仍然生效。选择 **Rspress** 可以恢复默认预设，也可以点击浮动工具栏中的**复原**，清除所有 CSS 修改。刷新页面也会清除预览。
+
+## Ruixen
+
+这套预设参考了 [Ruixen UI](https://ruixen.com/docs/components/card-carousel-hero) 的文档布局，还原三栏布局、Geist 字体、侧边栏间距、右侧目录、正文标题、编号步骤和代码标签页样式。它包含亮色与暗色配色，并保留 Rspress 的响应式导航。
+
+样式通过 [CSS 变量](/ui/vars)和内置 BEM 类名实现。配套主题入口补充面包屑和贡献区域所需的 DOM，通过包装默认布局实现，并保留内置导航行为。
+
+CSS 从固定版本的字体 CDN 加载 Geist 和 Geist Mono。也可以修改两条 `@font-face` URL，将字体托管到自己的站点。
+
+## 使用预设 \{#use-a-preset}
+
+<Steps>
+
+### 复制样式文件 \{#copy-the-stylesheet}
+
+复制或<a href="/themes/ruixen.css" download="ruixen.css">下载 Ruixen CSS</a>，保存到项目的 `theme/ruixen.css`。
+
+### 导入预设 \{#import-the-preset}
+
+需要完整布局时，<a href="/themes/ruixen.tsx" download="ruixen.tsx">下载主题入口</a>并保存为 `theme/ruixen.tsx`，然后导入两个文件：
+
+```tsx title="theme/index.tsx"
+import './ruixen.css';
+
+export * from './ruixen';
+```
+
+如果已有自定义主题入口，将 `Layout` 和 `Outline` 导出合并到现有文件中。仅使用样式时，也可以通过 [`globalStyles`](/api/config/config-basic#globalstyles) 加载预设：
+
+```ts title="rspress.config.ts"
+import path from 'node:path';
+import { defineConfig } from '@rspress/core';
+
+export default defineConfig({
+  globalStyles: path.join(import.meta.dirname, 'theme/ruixen.css'),
+});
+```
+
+</Steps>
+
+## 自定义配色 \{#customize-the-colors}
+
+在预设之后导入自己的样式，即可设置品牌色。分别为亮色与暗色模式指定配色：
+
+```css title="theme/custom.css"
+:root {
+  --rp-c-brand: #2563eb;
+  --rp-c-brand-light: #3b82f6;
+  --rp-c-brand-dark: #1d4ed8;
+  --rp-c-brand-tint: #eff6ff;
+}
+
+html.rp-dark {
+  --rp-c-brand: #93c5fd;
+  --rp-c-brand-light: #bfdbfe;
+  --rp-c-brand-dark: #60a5fa;
+  --rp-c-brand-tint: #172554;
+}
+```
+
+```tsx title="theme/index.tsx"
+import './ruixen.css';
+import './custom.css';
+
+export * from './ruixen';
+```
+
+更多定制方式请参考[自定义主题](/guide/basic/custom-theme)。
