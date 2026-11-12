@@ -54,10 +54,7 @@ interface ExtractPageDataOptions {
  * Reusing the processor avoids the overhead of creating a new instance for each file
  */
 const processor = unified().use(remarkParse).use(remarkGFM);
-const descriptionProcessor = unified()
-  .use(remarkParse)
-  .use(remarkGFM)
-  .use(remarkMdx);
+const mdxProcessor = unified().use(remarkParse).use(remarkGFM).use(remarkMdx);
 
 /**
  * Extract text content from a node recursively
@@ -359,12 +356,12 @@ function extractDescriptionText(node: Node): string {
   return extractTextFromNode(node);
 }
 
-function parseDescriptionTree(content: string, fallback: Root): Root {
+function parsePageTree(content: string): Root {
   try {
-    return descriptionProcessor.parse(content);
+    return mdxProcessor.parse(content);
   } catch {
     // Markdown can contain syntax that is not valid MDX.
-    return fallback;
+    return processor.parse(content);
   }
 }
 
@@ -419,8 +416,8 @@ async function getPageIndexInfoByRoute(
   // Normalize line endings to LF for cross-platform consistency
   content = content.replace(/\r\n/g, '\n');
 
-  // Parse markdown to AST
-  const tree = processor.parse(content);
+  // Reuse one AST for title, TOC, description, and search content.
+  const tree = parsePageTree(content);
 
   // Extract title and TOC from AST (read-only, before plugins modify tree)
   const { title, toc: rawToc } = parseToc(tree);
@@ -429,7 +426,7 @@ async function getPageIndexInfoByRoute(
   const extractedDescription =
     frontmatter.description || !extractDescriptionConfig
       ? ''
-      : extractDescription(parseDescriptionTree(content, tree));
+      : extractDescription(tree);
 
   // Skip search index content generation when search is disabled
   if (!searchEnabled) {
