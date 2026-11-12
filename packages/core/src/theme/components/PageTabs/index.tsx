@@ -1,4 +1,4 @@
-import { useSearchParams } from '@rspress/core/runtime';
+import { useLocation, useSearchParams } from '@rspress/core/runtime';
 import clsx from 'clsx';
 import {
   Children,
@@ -52,26 +52,28 @@ export interface PageTabsProps {
 
 function usePageTabs(id: string, children: ReactElement<PageTabProps>[]) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { search } = useLocation();
 
   const tabValues = useMemo(() => {
     return getTabValuesFromChildren(children);
   }, [children]);
 
   function navigateToTab(index: number) {
+    const nextSearchParams = new URLSearchParams(searchParams);
     if (index === 0) {
-      searchParams.delete(id);
+      nextSearchParams.delete(id);
     } else {
-      searchParams.set(id, String(index));
+      nextSearchParams.set(id, String(index));
     }
-    setSearchParams(searchParams);
+    setSearchParams(nextSearchParams);
   }
 
   useEffect(() => {
-    const currIndex = Number(searchParams.get(id) ?? '0');
+    const currIndex = Number(new URLSearchParams(search).get(id) ?? '0');
     if (!Number.isNaN(currIndex)) {
       document.body.dataset.pageTabsActiveIndex = currIndex.toString();
     }
-  }, [searchParams]);
+  }, [id, search]);
 
   const injectScript = `(function () {
     var searchParams = new URLSearchParams(window.location.search);
@@ -87,8 +89,6 @@ function usePageTabs(id: string, children: ReactElement<PageTabProps>[]) {
     injectScript,
   };
 }
-
-let renderCountForTocUpdate = 0;
 
 export const PageTabs = forwardRef(
   (props: PageTabsProps, ref: ForwardedRef<HTMLDivElement>): ReactElement => {
@@ -110,8 +110,6 @@ export const PageTabs = forwardRef(
       id,
       children,
     );
-
-    renderCountForTocUpdate++;
 
     return (
       <>
@@ -159,14 +157,6 @@ export const PageTabs = forwardRef(
             })}
           </div>
         </div>
-        {/* 
-          Render a hidden <h2> element to trigger a Table of Contents (TOC) update.  
-          This mechanism ensures that the TOC stays in sync with tab content changes,  
-          as some TOC generators rely on heading elements being present in the DOM.  
-        */}
-        {renderCountForTocUpdate % 2 === 0 ? (
-          <h2 style={{ display: 'none' }} />
-        ) : null}
       </>
     );
   },
