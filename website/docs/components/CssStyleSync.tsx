@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useCssModification } from './CssModificationContext';
 
 /**
@@ -8,7 +8,7 @@ import { useCssModification } from './CssModificationContext';
 export function CssStyleSync() {
   const { entries } = useCssModification();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Sync all entries to their corresponding style elements
     entries.forEach((entry, id) => {
       let styleEl = document.getElementById(id) as HTMLStyleElement | null;
