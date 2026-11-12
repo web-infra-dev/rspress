@@ -497,10 +497,6 @@ async function createInternalBuildConfig(
                 : CSR_CLIENT_ENTRY,
           },
           define: {
-            // import.meta.env.SSR is built in Rsbuild v2.0.7
-            // https://github.com/web-infra-dev/rsbuild/pull/7700
-            'process.env.__SSR__': JSON.stringify(false),
-            'process.env.__SSR_MD__': JSON.stringify(false),
             'import.meta.env.SSG_MD': JSON.stringify(false),
           },
         },
@@ -534,8 +530,6 @@ async function createInternalBuildConfig(
                   index: SSR_SERVER_ENTRY,
                 },
                 define: {
-                  'process.env.__SSR__': JSON.stringify(true),
-                  'process.env.__SSR_MD__': JSON.stringify(false),
                   'import.meta.env.SSG_MD': JSON.stringify(false),
                 },
               },
@@ -573,8 +567,6 @@ async function createInternalBuildConfig(
                   index: SSG_MD_SERVER_ENTRY,
                 },
                 define: {
-                  'process.env.__SSR__': JSON.stringify(true),
-                  'process.env.__SSR_MD__': JSON.stringify(true),
                   'import.meta.env.SSG_MD': JSON.stringify(true),
                   'import.meta.env.ENABLE_LLMS_HINT': JSON.stringify(
                     isLlmsHintEnabled(config, enableSSG, 'markdown'),
