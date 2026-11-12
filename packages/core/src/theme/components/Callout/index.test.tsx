@@ -19,15 +19,17 @@ describe('Callout Markdown rendering', () => {
         </p>
       </Callout>,
     );
-    expect(
-      markdown
-        .replace(/^> ?$/gm, '>')
-        .trim()
-        .replace(/(?:\n>)+$/, '')
-        .trim(),
-    ).toBe(
-      '> **Before you begin**\n>\n> Install dependencies.\n>\n> Then run `pnpm dev`.',
-    );
+    expect(markdown).toMatchInlineSnapshot(`
+      "> **Before you begin**
+      > 
+      > Install dependencies.
+      > 
+      > Then run \`pnpm dev\`.
+      > 
+      > 
+
+      "
+    `);
   });
 
   it('exports all details content with the default title', async () => {
@@ -37,12 +39,14 @@ describe('Callout Markdown rendering', () => {
         <p>Hidden in the browser.</p>
       </Callout>,
     );
-    expect(
-      markdown
-        .replace(/^> ?$/gm, '>')
-        .trim()
-        .replace(/(?:\n>)+$/, '')
-        .trim(),
-    ).toBe('> **Details**\n>\n> Hidden in the browser.');
+    expect(markdown).toMatchInlineSnapshot(`
+      "> **Details**
+      > 
+      > Hidden in the browser.
+      > 
+      > 
+
+      "
+    `);
   });
 });

@@ -31,7 +31,15 @@ it('places each page label next to its content in Markdown', async () => {
       </PageTab>
     </PageTabs>,
   );
-  expect(markdown.trim()).toBe(
-    '**API `v2`**\n\nAPI content\n\n**How it works**\n\nImplementation content',
-  );
+  expect(markdown).toMatchInlineSnapshot(`
+    "**API \`v2\`**
+
+    API content
+
+    **How it works**
+
+    Implementation content
+
+    "
+  `);
 });

@@ -569,7 +569,9 @@ describe('getPageIndexInfoByRoute', async () => {
         searchCodeBlocks: false,
       },
     );
-    expect(page.description).toBe('Read the guide. More visible text.');
+    expect(page.description).toMatchInlineSnapshot(
+      `"Read the guide. More visible text."`,
+    );
   });
 
   it('should extract description from first paragraph before h2 when frontmatter.description is not set', async () => {

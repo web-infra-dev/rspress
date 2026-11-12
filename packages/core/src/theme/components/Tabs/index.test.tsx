@@ -85,10 +85,12 @@ describe('Tabs', () => {
         <Tab>Unlabelled content</Tab>
       </Tabs>,
     );
-    expect(markdown).toContain('**GitHub `repo`**');
-    expect(markdown).toContain('Repository settings');
-    expect(markdown).toContain('Unlabelled content');
-    expect(markdown).not.toContain('[object Object]');
-    expect(markdown).not.toContain('undefined');
+    expect(markdown).toMatchInlineSnapshot(`
+      "**GitHub \`repo\`**
+
+      Repository settings
+
+      Unlabelled content"
+    `);
   });
 });
