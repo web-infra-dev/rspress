@@ -329,6 +329,37 @@ function CopyablePrompt({
 }
 
 export function Prompt({ custom = false, ...props }: PromptProps) {
+  if (import.meta.env.SSG_MD) {
+    const {
+      children,
+      description,
+      eyebrow = 'For your Agent',
+      prompt,
+      title = 'Agent Prompt',
+    } = props;
+
+    if (custom) {
+      return (
+        <>
+          <p>
+            <strong>{eyebrow}</strong>
+          </p>
+          {children}
+        </>
+      );
+    }
+
+    return (
+      <>
+        <p>
+          <strong>{title}</strong>
+        </p>
+        {description ? <p>{description}</p> : null}
+        {prompt ? <pre>{prompt}</pre> : null}
+      </>
+    );
+  }
+
   return custom ? <CustomPrompt {...props} /> : <CopyablePrompt {...props} />;
 }
 
