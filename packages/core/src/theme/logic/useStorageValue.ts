@@ -36,6 +36,10 @@ export type StorageAction<T> = T | ((prevState: T) => T);
 export const useStorageValue = <T>(key: string, defaultValue: T) => {
   const subscribe = useCallback(
     (onStoreChange: () => void) => {
+      if (typeof window === 'undefined') {
+        return () => {};
+      }
+
       const handleStorage = (event: StorageEvent) => {
         // event.key === null handles localStorage.clear()
         if (event.key === key || event.key === null) {

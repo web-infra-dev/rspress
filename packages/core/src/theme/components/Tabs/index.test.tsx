@@ -1,10 +1,11 @@
+import { setImmediate } from 'node:timers/promises';
 import { afterEach, describe, expect, it, rs } from '@rstest/core';
+import { Component, type ReactNode } from 'react';
 import { renderToMarkdownString } from 'react-render-to-markdown';
+import { useStorageValue } from '../../logic/useStorageValue';
 import { Tab, Tabs } from './index';
 
-rs.mock('@rspress/core/theme', () => ({
-  useStorageValue: () => ['0', () => {}],
-}));
+rs.mock('@rspress/core/theme', () => ({ useStorageValue }));
 
 const originalSsgMd = import.meta.env.SSG_MD;
 
@@ -24,9 +25,27 @@ afterEach(() => {
 describe('Tabs', () => {
   it('renders every tab as markdown when SSG_MD is enabled', async () => {
     setSsgMd(true);
+    expect(typeof window).toBe('undefined');
 
-    expect(
-      await renderToMarkdownString(
+    const errors: Error[] = [];
+    class ErrorBoundary extends Component<{ children: ReactNode }> {
+      state = { hasError: false };
+
+      static getDerivedStateFromError() {
+        return { hasError: true };
+      }
+
+      componentDidCatch(error: Error) {
+        errors.push(error);
+      }
+
+      render() {
+        return this.state.hasError ? null : this.props.children;
+      }
+    }
+
+    const markdown = await renderToMarkdownString(
+      <ErrorBoundary>
         <Tabs>
           <Tab label="npm" value="npm">
             npm install
@@ -34,9 +53,13 @@ describe('Tabs', () => {
           <Tab label="pnpm" value="pnpm">
             pnpm install
           </Tab>
-        </Tabs>,
-      ),
-    ).toMatchInlineSnapshot(`
+        </Tabs>
+      </ErrorBoundary>,
+    );
+    // Storage subscriptions run after the Markdown renderer resolves its commit.
+    await setImmediate();
+    expect(errors).toEqual([]);
+    expect(markdown).toMatchInlineSnapshot(`
       "
       **npm**
 

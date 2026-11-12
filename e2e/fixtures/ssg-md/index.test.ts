@@ -103,6 +103,16 @@ test('llms should be enabled by default', async () => {
     }
   }
 
+  const componentsMd = await fs.readFile(
+    path.join(docBuildDir, 'components.md'),
+    'utf-8',
+  );
+  expect(componentsMd).toContain('**docs/index.mdx**');
+  expect(componentsMd).toContain('**docs/_mdx-fragment.mdx**');
+  expect(componentsMd).toContain('**docs/_tsx-component.tsx**');
+  expect(componentsMd).toContain('This is **mdx fragment**.');
+  expect(componentsMd).toContain('This is a component from tsx');
+
   const llmsFullTxt = await fs.readFile(
     path.join(docBuildDir, 'llms-full.txt'),
     'utf-8',
