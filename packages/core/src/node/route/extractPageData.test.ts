@@ -559,6 +559,19 @@ describe('getPageIndexInfoByRoute', async () => {
     `);
   });
 
+  it('excludes multiline MDX props and expressions from descriptions', async () => {
+    const page = await getPageIndexInfoByRoute(
+      createRoute('with-mdx-description.mdx', fixtureContentProcessingDir),
+      {
+        alias: {},
+        replaceRules: [],
+        root: fixtureContentProcessingDir,
+        searchCodeBlocks: false,
+      },
+    );
+    expect(page.description).toBe('Read the guide. More visible text.');
+  });
+
   it('should extract description from first paragraph before h2 when frontmatter.description is not set', async () => {
     const pageIndexInfo = await getPageIndexInfoByRoute(
       createRoute('with-description.mdx', fixtureContentProcessingDir),

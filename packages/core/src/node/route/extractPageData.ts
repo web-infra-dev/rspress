@@ -10,6 +10,7 @@ import {
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 import type { Node, Nodes, Root } from 'mdast';
 import remarkGFM from 'remark-gfm';
+import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
 import { importStatementRegex } from '../constants';
@@ -53,6 +54,10 @@ interface ExtractPageDataOptions {
  * Reusing the processor avoids the overhead of creating a new instance for each file
  */
 const processor = unified().use(remarkParse).use(remarkGFM);
+const descriptionProcessor = unified()
+  .use(remarkParse)
+  .use(remarkGFM)
+  .use(remarkMdx);
 
 /**
  * Extract text content from a node recursively
@@ -223,6 +228,9 @@ const SKIP_NODE_TYPES = new Set([
   'html', // Skip HTML
   'mdxjsEsm', // Skip import/export
   'mdxFlowExpression', // Skip JSX expressions
+  'mdxJsxFlowElement', // Skip MDX components and their props
+  'mdxJsxTextElement',
+  'mdxTextExpression',
   'thematicBreak', // Skip ---
   'image', // Skip images
   'table', // Skip tables
@@ -322,7 +330,7 @@ function extractDescription(tree: Root): string {
     }
     // Collect text from content nodes after h1
     if (foundH1) {
-      const text = extractTextFromNode(node).trim();
+      const text = extractDescriptionText(node).trim();
       if (text) {
         textParts.push(text);
       }
@@ -339,6 +347,25 @@ function extractDescription(tree: Root): string {
     .map(l => l.trim())
     .filter(Boolean)
     .join(' ');
+}
+
+function extractDescriptionText(node: Node): string {
+  if (SKIP_NODE_TYPES.has(node.type)) {
+    return '';
+  }
+  if ('children' in node && Array.isArray(node.children)) {
+    return node.children.map(extractDescriptionText).join('');
+  }
+  return extractTextFromNode(node);
+}
+
+function parseDescriptionTree(content: string, fallback: Root): Root {
+  try {
+    return descriptionProcessor.parse(content);
+  } catch {
+    // Markdown can contain syntax that is not valid MDX.
+    return fallback;
+  }
 }
 
 async function getPageIndexInfoByRoute(
@@ -402,7 +429,7 @@ async function getPageIndexInfoByRoute(
   const extractedDescription =
     frontmatter.description || !extractDescriptionConfig
       ? ''
-      : extractDescription(tree);
+      : extractDescription(parseDescriptionTree(content, tree));
 
   // Skip search index content generation when search is disabled
   if (!searchEnabled) {

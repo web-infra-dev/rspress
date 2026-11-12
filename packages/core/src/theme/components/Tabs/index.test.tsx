@@ -60,15 +60,35 @@ describe('Tabs', () => {
     await setImmediate();
     expect(errors).toEqual([]);
     expect(markdown).toMatchInlineSnapshot(`
-      "
-      **npm**
+      "**npm**
 
       npm install
 
       **pnpm**
 
-      pnpm install
-      "
+      pnpm install"
     `);
+  });
+  it('renders React labels and omits missing labels', async () => {
+    setSsgMd(true);
+    const markdown = await renderToMarkdownString(
+      <Tabs>
+        <Tab
+          label={
+            <span>
+              GitHub <code>repo</code>
+            </span>
+          }
+        >
+          Repository settings
+        </Tab>
+        <Tab>Unlabelled content</Tab>
+      </Tabs>,
+    );
+    expect(markdown).toContain('**GitHub `repo`**');
+    expect(markdown).toContain('Repository settings');
+    expect(markdown).toContain('Unlabelled content');
+    expect(markdown).not.toContain('[object Object]');
+    expect(markdown).not.toContain('undefined');
   });
 });
