@@ -42,11 +42,12 @@
     "@monaco-editor/react": "~4.7.0",
     "@swc-next/parser": "^0.6.0",
     "remark-gfm": "^4.0.1",
-    "rspack-plugin-virtual-module": "1.0.1",
+    "rsbuild-plugin-virtual-module": "0.4.5",
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
     "@babel/types": "^7.29.11",
+    "@rsbuild/core": "^2.2.14",
     "@rsbuild/plugin-react": "~2.1.1",
     "@rspress/plugin-playground": "workspace:*",
     "@types/babel__core": "^7.20.5",
