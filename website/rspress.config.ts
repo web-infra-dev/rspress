@@ -132,6 +132,9 @@ export default defineConfig({
     }),
   ],
   builderConfig: {
+    output: {
+      module: true,
+    },
     splitChunks: {
       cacheGroups: {
         // Avoid duplicating the global FileTree component in route chunks.
