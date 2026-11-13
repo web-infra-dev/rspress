@@ -42,6 +42,13 @@ export function DocLayout(props: DocLayoutProps) {
     components,
   } = props;
   const { frontmatter } = useFrontmatter();
+  const isOverviewPage = frontmatter?.overview ?? false;
+  const {
+    outline: showOutline = true,
+    footer: showDocFooter = true,
+    pageType,
+  } = frontmatter;
+  const showPageOutline = !isOverviewPage && showOutline;
 
   const {
     isOutlineOpen,
@@ -49,24 +56,16 @@ export function DocLayout(props: DocLayoutProps) {
     sidebarMenu,
     asideLayoutRef,
     sidebarLayoutRef,
-  } = useSidebarMenu(beforeOutline, afterOutline);
+  } = useSidebarMenu(beforeOutline, afterOutline, showPageOutline);
 
   const { rspressDocRef } = useWatchToc();
-
-  const isOverviewPage = frontmatter?.overview ?? false;
 
   const sidebar = frontmatter?.sidebar ?? true;
   const showSidebar = sidebar === true;
   const showSidebarPlaceholder = sidebar === false || sidebar === 'placeholder';
   const isLegacyPlaceholder = sidebar === 'placeholder';
 
-  const {
-    outline: showOutline = true,
-    footer: showDocFooter = true,
-    pageType,
-  } = frontmatter;
-
-  const showSidebarMenu = showSidebar || (!isOverviewPage && showOutline);
+  const showSidebarMenu = showSidebar || showPageOutline;
 
   if (import.meta.env.SSG_MD) {
     return (
@@ -153,7 +152,7 @@ export function DocLayout(props: DocLayoutProps) {
         )}
 
         {/* Right outline */}
-        {isOverviewPage ? null : showOutline ? (
+        {showPageOutline ? (
           <aside
             className={clsx(
               'rp-doc-layout__outline',
@@ -166,7 +165,7 @@ export function DocLayout(props: DocLayoutProps) {
             <Outline />
             {afterOutline}
           </aside>
-        ) : (
+        ) : isOverviewPage ? null : (
           <aside
             className="rp-doc-layout__outline-placeholder"
             style={isDocWide ? { width: '0' } : {}}

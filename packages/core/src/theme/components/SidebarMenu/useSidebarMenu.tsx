@@ -3,7 +3,11 @@ import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { SidebarMenu } from '.';
 import { useClickOutside } from './useClickOutside';
 
-function useSidebarMenu(beforeOutline?: ReactNode, afterOutline?: ReactNode) {
+function useSidebarMenu(
+  beforeOutline?: ReactNode,
+  afterOutline?: ReactNode,
+  showOutline?: boolean,
+) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isOutlineOpen, setIsOutlineOpen] = useState(false);
 
@@ -41,6 +45,7 @@ function useSidebarMenu(beforeOutline?: ReactNode, afterOutline?: ReactNode) {
         ref={sidebarMenuRef}
         beforeOutline={beforeOutline}
         afterOutline={afterOutline}
+        showOutline={showOutline}
       />
     );
   }, [
@@ -50,6 +55,7 @@ function useSidebarMenu(beforeOutline?: ReactNode, afterOutline?: ReactNode) {
     setIsSidebarOpen,
     beforeOutline,
     afterOutline,
+    showOutline,
   ]);
 
   return {
