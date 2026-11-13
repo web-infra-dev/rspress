@@ -73,6 +73,7 @@ export async function resolveReactAlias(isSSR: boolean) {
     'react',
     'react/jsx-runtime',
     'react/jsx-dev-runtime',
+    'react/compiler-runtime',
     'react/package.json',
     'react-dom',
     'react-dom/client',
@@ -99,6 +100,10 @@ export async function resolveReactAlias(isSSR: boolean) {
 
         alias[lib] = resolved.path;
       } catch (e) {
+        // React versions before 19 do not provide this optional entry.
+        if (lib === 'react/compiler-runtime') {
+          return;
+        }
         if (e instanceof Error) {
           logger.warn(
             `${lib} not found: \n    ${picocolors.gray(e.toString())}`,
@@ -108,6 +113,7 @@ export async function resolveReactAlias(isSSR: boolean) {
       }
     }),
   );
+
   return alias;
 }
 
