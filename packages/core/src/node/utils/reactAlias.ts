@@ -108,6 +108,16 @@ export async function resolveReactAlias(isSSR: boolean) {
       }
     }),
   );
+
+  // React 19 includes this entry, but older React versions do not.
+  const compilerRuntime = await resolver.async(
+    basedir,
+    'react/compiler-runtime',
+  );
+  if (compilerRuntime.path) {
+    alias['react/compiler-runtime'] = compilerRuntime.path;
+  }
+
   return alias;
 }
 
