@@ -229,3 +229,103 @@ test('Should resolve an auto asset prefix for route preload', async () => {
     /<link rel="preload" href="\.\.\/\.\.\/static\/js\/async\/route-[a-f0-9]{12}\..+\.js" as="script">/,
   );
 });
+
+for (const isCrossOrigin of [false, true]) {
+  test.describe(`module route preload (cross-origin=${isCrossOrigin})`, () => {
+    const configFile = isCrossOrigin
+      ? 'rspress-module-credentials.config.ts'
+      : 'rspress-module.config.ts';
+    const outDir = isCrossOrigin
+      ? 'doc_build_module_credentials'
+      : 'doc_build_module';
+    let appPort: number;
+    let app: Awaited<ReturnType<typeof runPreviewCommand>>;
+
+    test.beforeAll(async () => {
+      appPort = await getPort();
+      await runBuildCommand(import.meta.dirname, configFile);
+      app = await runPreviewCommand(import.meta.dirname, appPort, [
+        '-c',
+        configFile,
+      ]);
+    });
+
+    test.afterAll(async () => {
+      if (app) await killProcess(app);
+    });
+
+    test('reuses the route module preload without credentials warnings', async ({
+      page,
+      context,
+    }) => {
+      const warnings: string[] = [];
+      const errors: string[] = [];
+      const routeRequests: string[] = [];
+      const routeCookies: string[] = [];
+      page.on('console', message => {
+        if (/preload.*(?:not used|credentials)/i.test(message.text())) {
+          warnings.push(message.text());
+        }
+      });
+      page.on('pageerror', error => errors.push(error.message));
+      page.on('request', request => {
+        if (/\/route-[a-f0-9]{12}\..+\.js$/.test(request.url())) {
+          routeRequests.push(request.url());
+        }
+      });
+
+      if (isCrossOrigin) {
+        await context.addCookies([
+          {
+            name: 'preload-test',
+            value: 'credential',
+            domain: 'rspress-cdn.example.com',
+            path: '/',
+            secure: true,
+            sameSite: 'None',
+          },
+        ]);
+        await page.route('https://rspress-cdn.example.com/**', async route => {
+          const request = route.request();
+          const filename = new URL(request.url()).pathname.slice(1);
+          if (/\/route-[a-f0-9]{12}\..+\.js$/.test(request.url())) {
+            routeCookies.push((await request.allHeaders()).cookie ?? '');
+          }
+          await route.fulfill({
+            body: await readFile(
+              path.join(import.meta.dirname, outDir, filename),
+            ),
+            contentType: filename.endsWith('.js')
+              ? 'text/javascript'
+              : filename.endsWith('.css')
+                ? 'text/css'
+                : 'application/octet-stream',
+            headers: {
+              'Access-Control-Allow-Origin': `http://localhost:${appPort}`,
+              'Access-Control-Allow-Credentials': 'true',
+            },
+          });
+        });
+      }
+
+      await page.goto(`http://localhost:${appPort}/base/en/guide/quick-start`, {
+        waitUntil: 'networkidle',
+      });
+      const preload = page.locator('link[rel="modulepreload"]');
+      await expect(preload).toHaveCount(1);
+      await expect(preload).not.toHaveAttribute('as');
+      if (isCrossOrigin) {
+        await expect(preload).toHaveAttribute('crossorigin', 'use-credentials');
+        expect(routeCookies).toEqual(['preload-test=credential']);
+      }
+      await expect(page.locator('.rp-doc-layout__sidebar')).toBeVisible();
+      expect(routeRequests).toEqual(
+        [await preload.getAttribute('href')].map(
+          href => new URL(href!, page.url()).href,
+        ),
+      );
+      expect(warnings).toEqual([]);
+      expect(errors).toEqual([]);
+    });
+  });
+}

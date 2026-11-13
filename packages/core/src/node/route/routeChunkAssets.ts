@@ -9,6 +9,8 @@ const ROUTE_CHUNK_HASH_LENGTH = 12;
 
 export interface RouteChunkAssetsManifest {
   assetPrefix: string;
+  isModule: boolean;
+  crossOriginLoading: false | 'anonymous' | 'use-credentials';
   assets: Record<string, string[]>;
 }
 
@@ -19,12 +21,19 @@ export function getRouteChunkName(route: RouteMeta): string {
 export class RouteChunkAssetsPlugin implements Rspack.RspackPluginInstance {
   #assetPrefix = '/';
 
+  #isModule = false;
+
+  #crossOriginLoading: RouteChunkAssetsManifest['crossOriginLoading'] = false;
+
   #chunks = new Map<string, Set<Rspack.Chunk>>();
 
   constructor(private readonly routeService: RouteService) {}
 
   apply(compiler: Rspack.Compiler): void {
     compiler.hooks.thisCompilation.tap(PLUGIN_NAME, compilation => {
+      this.#isModule = Boolean(compilation.outputOptions.module);
+      this.#crossOriginLoading =
+        compilation.outputOptions.crossOriginLoading ?? false;
       this.#assetPrefix =
         typeof compilation.outputOptions.publicPath === 'string'
           ? compilation.outputOptions.publicPath
@@ -61,6 +70,8 @@ export class RouteChunkAssetsPlugin implements Rspack.RspackPluginInstance {
   getManifest(): RouteChunkAssetsManifest {
     return {
       assetPrefix: this.#assetPrefix,
+      isModule: this.#isModule,
+      crossOriginLoading: this.#crossOriginLoading,
       assets: Object.fromEntries(
         [...this.#chunks].map(([routePath, chunks]) => {
           const assets = new Set<string>();
