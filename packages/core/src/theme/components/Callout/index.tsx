@@ -37,6 +37,17 @@ function capitalize(type: string) {
  * </div>
  */
 export function Callout({ type, title, children }: CalloutProps): ReactNode {
+  if (import.meta.env.SSG_MD) {
+    return (
+      <blockquote>
+        <p>
+          <strong>{title ?? capitalize(type)}</strong>
+        </p>
+        {children}
+      </blockquote>
+    );
+  }
+
   const isDetails = type === 'details';
 
   if (isDetails) {

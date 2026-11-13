@@ -10,6 +10,7 @@ import {
 import { extractTextAndId, loadFrontMatter } from '@rspress/shared/node-utils';
 import type { Node, Nodes, Root } from 'mdast';
 import remarkGFM from 'remark-gfm';
+import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import { unified } from 'unified';
 import { importStatementRegex } from '../constants';
@@ -53,6 +54,7 @@ interface ExtractPageDataOptions {
  * Reusing the processor avoids the overhead of creating a new instance for each file
  */
 const processor = unified().use(remarkParse).use(remarkGFM);
+const mdxProcessor = unified().use(remarkParse).use(remarkGFM).use(remarkMdx);
 
 /**
  * Extract text content from a node recursively
@@ -223,6 +225,9 @@ const SKIP_NODE_TYPES = new Set([
   'html', // Skip HTML
   'mdxjsEsm', // Skip import/export
   'mdxFlowExpression', // Skip JSX expressions
+  'mdxJsxFlowElement', // Skip MDX components and their props
+  'mdxJsxTextElement',
+  'mdxTextExpression',
   'thematicBreak', // Skip ---
   'image', // Skip images
   'table', // Skip tables
@@ -322,7 +327,7 @@ function extractDescription(tree: Root): string {
     }
     // Collect text from content nodes after h1
     if (foundH1) {
-      const text = extractTextFromNode(node).trim();
+      const text = extractDescriptionText(node).trim();
       if (text) {
         textParts.push(text);
       }
@@ -339,6 +344,25 @@ function extractDescription(tree: Root): string {
     .map(l => l.trim())
     .filter(Boolean)
     .join(' ');
+}
+
+function extractDescriptionText(node: Node): string {
+  if (SKIP_NODE_TYPES.has(node.type)) {
+    return '';
+  }
+  if ('children' in node && Array.isArray(node.children)) {
+    return node.children.map(extractDescriptionText).join('');
+  }
+  return extractTextFromNode(node);
+}
+
+function parsePageTree(content: string): Root {
+  try {
+    return mdxProcessor.parse(content);
+  } catch {
+    // Markdown can contain syntax that is not valid MDX.
+    return processor.parse(content);
+  }
 }
 
 async function getPageIndexInfoByRoute(
@@ -392,8 +416,8 @@ async function getPageIndexInfoByRoute(
   // Normalize line endings to LF for cross-platform consistency
   content = content.replace(/\r\n/g, '\n');
 
-  // Parse markdown to AST
-  const tree = processor.parse(content);
+  // Reuse one AST for title, TOC, description, and search content.
+  const tree = parsePageTree(content);
 
   // Extract title and TOC from AST (read-only, before plugins modify tree)
   const { title, toc: rawToc } = parseToc(tree);
