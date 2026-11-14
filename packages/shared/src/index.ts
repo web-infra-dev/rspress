@@ -3,6 +3,7 @@ export {
   matchNavbar,
   matchSidebar,
 } from './runtime-utils/sidebar';
+export { isPathPrefix, matchNavPath } from './runtime-utils/path';
 export {
   getDefaultDarkModeValue,
   isDarkModeSwitchEnabled,
