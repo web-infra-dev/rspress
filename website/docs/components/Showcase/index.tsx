@@ -1,9 +1,11 @@
 import { useHead, useLang } from '@rspress/core/runtime';
 import styles from './index.module.scss';
-import { showcaseGroups } from './sites';
+import { showcaseSites } from './sites';
+import { useMasonry } from './useMasonry';
 
 export function Showcase() {
   const isZh = useLang() === 'zh';
+  const galleryRef = useMasonry();
 
   useHead({
     title: 'Showcase - Rspress',
@@ -33,30 +35,28 @@ export function Showcase() {
           {isZh ? '。' : '.'}
         </p>
       </header>
-      {showcaseGroups.map(group => (
-        <ul key={group.id} className={styles.gallery}>
-          {group.sites.map(site => (
-            <li key={site.url} className={styles.card}>
-              <a href={site.url} target="_blank" rel="noopener noreferrer">
-                <h2>
-                  {site.title}
-                  <span aria-hidden="true">↗</span>
-                </h2>
-                <img
-                  src={site.image}
-                  alt={
-                    isZh ? `${site.title} 网站截图` : `${site.title} screenshot`
-                  }
-                  width={site.width}
-                  height={site.height}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </a>
-            </li>
-          ))}
-        </ul>
-      ))}
+      <ul ref={galleryRef} className={styles.gallery}>
+        {showcaseSites.map(site => (
+          <li key={site.url} className={styles.card}>
+            <a href={site.url} target="_blank" rel="noopener noreferrer">
+              <h2>
+                {site.title}
+                <span aria-hidden="true">↗</span>
+              </h2>
+              <img
+                src={site.image}
+                alt={
+                  isZh ? `${site.title} 网站截图` : `${site.title} screenshot`
+                }
+                width={site.width}
+                height={site.height}
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }
