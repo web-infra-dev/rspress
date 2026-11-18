@@ -32,6 +32,8 @@ import { HomeSections } from './components/HomeSections';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
 import { PresetBreadcrumb, PresetOutline } from './components/PresetDocChrome';
+import { defaultThemePresetId, themePresets } from './presets/registry';
+import { ThemePresetProvider } from './presets/ThemePresetProvider';
 import './index.css';
 
 function HomeLayout(props: HomeLayoutProps) {
@@ -65,19 +67,24 @@ const Layout = () => {
 
   return (
     <CssModificationProvider>
-      <CssStyleSync />
-      <SlotPreviewLayout
-        beforeNav={
-          isHomePage ? (
-            <Banner
-              href={t('bannerHref')}
-              message={t('bannerMessage')}
-              storageKey="rp-banner-rspress-custom-theme-v2-closed"
-            />
-          ) : null
-        }
-        beforeNavTitle={<NavIcon />}
-      />
+      <ThemePresetProvider
+        presets={themePresets}
+        defaultPresetId={defaultThemePresetId}
+      >
+        <CssStyleSync />
+        <SlotPreviewLayout
+          beforeNav={
+            isHomePage ? (
+              <Banner
+                href={t('bannerHref')}
+                message={t('bannerMessage')}
+                storageKey="rp-banner-rspress-custom-theme-v2-closed"
+              />
+            ) : null
+          }
+          beforeNavTitle={<NavIcon />}
+        />
+      </ThemePresetProvider>
     </CssModificationProvider>
   );
 };

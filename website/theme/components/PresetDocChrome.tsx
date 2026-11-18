@@ -1,16 +1,14 @@
 import { Outline as OriginalOutline } from '@rspress/core/theme-original';
-import { useCssEntry } from '../../docs/components/CssModificationContext';
-import {
-  Outline as RuixenOutline,
-  RuixenBreadcrumb,
-} from '../../docs/public/themes/ruixen';
+import { useThemePreset } from '../presets/ThemePresetProvider';
 
 export function PresetBreadcrumb() {
-  const [css] = useCssEntry('rspress-theme-preset', '');
-  return css ? <RuixenBreadcrumb /> : null;
+  const { activePreset } = useThemePreset();
+  const Breadcrumb = activePreset.components?.Breadcrumb;
+  return Breadcrumb ? <Breadcrumb /> : null;
 }
 
 export function PresetOutline() {
-  const [css] = useCssEntry('rspress-theme-preset', '');
-  return css ? <RuixenOutline /> : <OriginalOutline />;
+  const { activePreset } = useThemePreset();
+  const Outline = activePreset.components?.Outline ?? OriginalOutline;
+  return <Outline />;
 }

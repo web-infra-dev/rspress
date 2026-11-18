@@ -1,9 +1,9 @@
-import { useLang, withBase } from '@rspress/core/runtime';
+import { useDark, useLang, withBase } from '@rspress/core/runtime';
 import { CodeBlockRuntime, copyToClipboard } from '@rspress/core/theme';
-import { useRef, useState } from 'react';
+import { type CSSProperties, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import ruixenCss from '../public/themes/ruixen.css?raw';
-import { useCssEntry } from './CssModificationContext';
+import { useThemePreset } from '../../theme/presets/ThemePresetProvider';
+import { localizePresetText } from '../../theme/presets/types';
 import styles from './ThemePresetSwitcher.module.scss';
 
 export function ThemePresetSwitcher() {
@@ -11,21 +11,30 @@ export function ThemePresetSwitcher() {
     return null;
   }
 
-  const isZh = useLang() === 'zh';
-  const [css, setCss] = useCssEntry('rspress-theme-preset', '');
-  const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>(
-    'idle',
-  );
+  const lang = useLang();
+  const isZh = lang === 'zh';
+  const isDark = useDark();
+  const { presets, activePreset, selectPreset } = useThemePreset();
+  const stylesheet = activePreset.stylesheet;
+  const downloads = [
+    stylesheet?.download,
+    ...(activePreset.downloads ?? []),
+  ].filter(asset => asset !== undefined);
+  const [copyResult, setCopyResult] = useState<{
+    id: string;
+    status: 'copied' | 'error';
+  }>();
+  const copyStatus =
+    copyResult?.id === activePreset.id ? copyResult.status : 'idle';
   const transitioning = useRef(false);
-  const isRuixen = css === ruixenCss;
 
-  function selectPreset(nextCss: string) {
-    if (nextCss === css || transitioning.current) return;
+  function previewPreset(id: string) {
+    if (id === activePreset.id || transitioning.current) return;
 
     const update = () => {
       flushSync(() => {
-        setCss(nextCss);
-        setCopyStatus('idle');
+        selectPreset(id);
+        setCopyResult(undefined);
       });
     };
     const reducedMotion = window.matchMedia(
@@ -62,24 +71,6 @@ export function ThemePresetSwitcher() {
       if (!updated) update();
     }
   }
-  const presets = [
-    {
-      name: 'Rspress',
-      css: '',
-      description: isZh
-        ? '明亮的蓝色，熟悉的默认主题。'
-        : 'Bright blue. The familiar default theme.',
-      palette: ['#0095ff', '#ffffff', '#f8f8f9', '#242424'],
-    },
-    {
-      name: 'Ruixen',
-      css: ruixenCss,
-      description: isZh
-        ? '黑白灰、细边框与柔和圆角。'
-        : 'Neutral colors, fine borders, and soft corners.',
-      palette: ['#18181b', '#ffffff', '#f4f4f5', '#71717a'],
-    },
-  ];
 
   return (
     <div className={styles.switcher}>
@@ -89,17 +80,26 @@ export function ThemePresetSwitcher() {
         aria-label={isZh ? '主题预设' : 'Theme presets'}
       >
         {presets.map(preset => {
-          const selected = css === preset.css;
+          const selected = activePreset.id === preset.id;
+          const colors = preset.preview[isDark ? 'dark' : 'light'];
+          const previewStyle = Object.fromEntries(
+            Object.entries(colors).map(([key, value]) => [
+              `--preview-${key === 'background' ? 'bg' : key}`,
+              value,
+            ]),
+          ) as CSSProperties;
           return (
             <button
-              key={preset.name}
+              key={preset.id}
               type="button"
               className={styles.card}
               aria-pressed={selected}
-              onClick={() => selectPreset(preset.css)}
+              onClick={() => previewPreset(preset.id)}
             >
               <span
-                className={`${styles.preview} ${preset.name === 'Ruixen' ? styles.neutral : ''}`}
+                className={styles.preview}
+                style={previewStyle}
+                data-dividers={preset.preview.showDividers !== false}
                 aria-hidden="true"
               >
                 <span className={styles.previewNav}>
@@ -144,7 +144,9 @@ export function ThemePresetSwitcher() {
                       : 'Try theme'}
                 </span>
               </span>
-              <span className={styles.description}>{preset.description}</span>
+              <span className={styles.description}>
+                {localizePresetText(preset.description, lang)}
+              </span>
               <span className={styles.palette} aria-hidden="true">
                 {preset.palette.map(color => (
                   <span key={color} style={{ backgroundColor: color }} />
@@ -157,39 +159,40 @@ export function ThemePresetSwitcher() {
       <div className={styles.actions}>
         <span className={styles.status} role="status">
           {isZh
-            ? `当前预览：${isRuixen ? 'Ruixen' : 'Rspress'}`
-            : `Previewing ${isRuixen ? 'Ruixen' : 'Rspress'}`}
+            ? `当前预览：${activePreset.name}`
+            : `Previewing ${activePreset.name}`}
         </span>
-        <button
-          type="button"
-          className={styles.action}
-          onClick={async () => {
-            const copied = await copyToClipboard(ruixenCss);
-            setCopyStatus(copied ? 'copied' : 'error');
-          }}
-        >
-          {copyStatus === 'copied'
-            ? isZh
-              ? '已复制'
-              : 'Copied'
-            : isZh
-              ? '复制 Ruixen CSS'
-              : 'Copy Ruixen CSS'}
-        </button>
-        <a
-          className={styles.action}
-          href={withBase('/themes/ruixen.css')}
-          download="ruixen.css"
-        >
-          {isZh ? '下载 CSS' : 'Download CSS'}
-        </a>
-        <a
-          className={styles.action}
-          href={withBase('/themes/ruixen.tsx')}
-          download="ruixen.tsx"
-        >
-          {isZh ? '下载主题入口' : 'Download theme entry'}
-        </a>
+        {stylesheet ? (
+          <button
+            type="button"
+            className={styles.action}
+            onClick={async () => {
+              const copied = await copyToClipboard(stylesheet.content);
+              setCopyResult({
+                id: activePreset.id,
+                status: copied ? 'copied' : 'error',
+              });
+            }}
+          >
+            {copyStatus === 'copied'
+              ? isZh
+                ? '已复制'
+                : 'Copied'
+              : isZh
+                ? `复制 ${activePreset.name} CSS`
+                : `Copy ${activePreset.name} CSS`}
+          </button>
+        ) : null}
+        {downloads.map(asset => (
+          <a
+            key={asset.href}
+            className={styles.action}
+            href={withBase(asset.href)}
+            download={asset.fileName}
+          >
+            {localizePresetText(asset.label, lang)}
+          </a>
+        ))}
       </div>
       {copyStatus === 'error' ? (
         <p role="alert">
@@ -198,16 +201,20 @@ export function ThemePresetSwitcher() {
             : 'Copy failed. Download the CSS or copy the code below.'}
         </p>
       ) : null}
-      <details className={styles.source}>
-        <summary>
-          {isZh ? '查看 Ruixen preset CSS' : 'View Ruixen preset CSS'}
-        </summary>
-        <CodeBlockRuntime
-          lang="css"
-          code={ruixenCss}
-          title="theme/ruixen.css"
-        />
-      </details>
+      {stylesheet ? (
+        <details className={styles.source} key={activePreset.id}>
+          <summary>
+            {isZh
+              ? `查看 ${activePreset.name} preset CSS`
+              : `View ${activePreset.name} preset CSS`}
+          </summary>
+          <CodeBlockRuntime
+            lang="css"
+            code={stylesheet.content}
+            title={`theme/${stylesheet.download?.fileName ?? `${activePreset.id}.css`}`}
+          />
+        </details>
+      ) : null}
     </div>
   );
 }

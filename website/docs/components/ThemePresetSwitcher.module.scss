@@ -67,13 +67,6 @@
 }
 
 .preview {
-  --preview-accent: #0095ff;
-  --preview-tint: #eaf4ff;
-  --preview-line: #d4d4d8;
-  --preview-bg: #fff;
-  --preview-soft: #fafafa;
-  --preview-border: #e4e4e7;
-  --preview-text: #18181b;
   display: block;
   width: 100%;
   aspect-ratio: 1.6;
@@ -83,10 +76,7 @@
   background: var(--preview-bg);
 }
 
-.neutral {
-  --preview-accent: #18181b;
-  --preview-tint: #f4f4f5;
-
+.preview[data-dividers='false'] {
   .previewNav,
   .previewSidebar {
     border-color: transparent;
@@ -212,23 +202,6 @@
   justify-content: space-between;
   gap: 8px;
   margin: 16px 4px 4px;
-}
-
-:global(.rp-dark) .preview {
-  --preview-bg: #121212;
-  --preview-soft: #191919;
-  --preview-border: #343a46;
-  --preview-line: #52525b;
-  --preview-text: #f4f4f5;
-  --preview-tint: #172554;
-}
-
-:global(.rp-dark) .neutral {
-  --preview-bg: #09090b;
-  --preview-soft: #18181b;
-  --preview-border: #27272a;
-  --preview-accent: #fafafa;
-  --preview-tint: #27272a;
 }
 
 .name {
