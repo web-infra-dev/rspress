@@ -1,8 +1,10 @@
 .showcase {
-  max-width: 1360px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1120px;
   min-height: calc(100vh - var(--rp-nav-height));
   margin: 0 auto;
-  padding: 64px 32px 80px;
+  padding: 64px 48px 80px;
 }
 
 .header {
