@@ -709,8 +709,9 @@ html:root .rp-callout--note .rp-callout__content p {
   line-height: 22.75px;
 }
 
-/* Outline: no left rule or read percentage; active links have a soft pill. */
+/* Style the built-in Outline; preserve its reading progress and actions. */
 html:root .rp-outline {
+  --rp-outline-padding-x: 0px;
   border: 0;
 }
 html:root .rp-outline__title {
@@ -719,9 +720,6 @@ html:root .rp-outline__title {
   line-height: 20px;
   font-size: 14px;
   font-weight: 500;
-}
-html:root .rp-outline__title > svg {
-  display: none;
 }
 html:root .rp-outline__toc {
   flex: none;
@@ -910,9 +908,6 @@ html:root .rp-outline__action-row {
   }
   html:root .rp-outline__bottom {
     gap: 4px;
-  }
-  html:root .rp-sidebar-menu__right .rp-progress-circle {
-    display: none;
   }
 }
 

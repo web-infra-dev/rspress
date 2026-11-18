@@ -68,7 +68,7 @@ These are website integration changes. A normal project imports the theme entry 
 
 ## Bounded component overrides
 
-The website currently switches **Layout** and **Outline** only. Normal `export *` and local component reexports work; other exports continue to use the website's existing components. Algolia Search, Root, routing, and startup hooks are never replaced by a preview.
+The website currently supports **Layout** and **Outline** overrides. Minimal overrides only Layout for its breadcrumb; its Outline is reexported unchanged and styled entirely with CSS, preserving reading progress and built-in actions. Normal `export *` and local component reexports work; other exports continue to use the website's existing components. Algolia Search, Root, routing, and startup hooks are never replaced by a preview.
 
 The extension point is deliberately marked in `types.ts` (`ThemePreviewModule` and `supportedPreviewExports`) and `PresetDocChrome.tsx`. To support `DocFooter`, for example, extend the module type/list, add a wrapper selecting the active module's `DocFooter` with a built-in fallback, export that wrapper from `website/theme/index.tsx`, and test switching/resetting it. Do not infer a component from whether the theme has CSS.
 
@@ -78,4 +78,4 @@ The website-only build transform follows local imports/reexports from an entry m
 
 The provider loads a source module once, then commits its components and collected CSS together. Switching away clears the preset CSS; returning to a cached theme reapplies it. The mounted Layout is keyed by theme ID. URL, runtime context, and preview controls remain outside that keyed subtree. A failed load leaves the previous theme active and allows retry. Reset restores the original website theme, and reload starts from it.
 
-This initial source protocol supports local JS/TS components, regular global CSS/SCSS/Sass imports, relative assets, and SCSS imports inside stylesheets. It does not rewrite CSS Modules or theme-side dynamic component imports; use static local imports for the first supported themes. This is a website implementation limit, not a restriction on Rspress custom themes generally. There are no core changes or new user-facing configuration options.
+This initial source protocol supports local JS/TS components, regular global CSS/SCSS/Sass imports, relative assets, and SCSS imports inside stylesheets. It does not rewrite CSS Modules or theme-side dynamic component imports; use static local imports for the first supported themes. This is a website implementation limit, not a restriction on Rspress custom themes generally. The preview protocol adds no core configuration or runtime changes. The copyable Prompt component uses the existing `rp-not-doc` typography isolation class.

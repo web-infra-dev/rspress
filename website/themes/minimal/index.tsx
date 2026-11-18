@@ -2,22 +2,15 @@ import './index.scss';
 import type { SidebarData } from '@rspress/core';
 import {
   useActiveMatcher,
-  useI18n,
   useLang,
   usePage,
   useSidebar,
-  useSite,
 } from '@rspress/core/runtime';
 import {
-  EditLink,
-  IconScrollToTop,
   Layout as OriginalLayout,
   type LayoutProps,
   Link,
   renderInlineMarkdown,
-  SvgWrapper,
-  Toc,
-  useReadPercent,
 } from '@rspress/core/theme-original';
 export * from '@rspress/core/theme-original';
 
@@ -79,44 +72,6 @@ function MinimalBreadcrumb() {
       ) : null}
       <span aria-current="page">{page.title}</span>
     </nav>
-  );
-}
-
-function BackToTop() {
-  const t = useI18n();
-  const [, scrollTop] = useReadPercent();
-
-  if (scrollTop < 100) return null;
-
-  return (
-    <button
-      type="button"
-      className="rp-outline__action-row rp-scroll-to-top"
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-    >
-      <SvgWrapper icon={IconScrollToTop} width="16" height="16" />
-      <span>{t('scrollToTopText')}</span>
-    </button>
-  );
-}
-
-export function Outline() {
-  const isZh = useLang() === 'zh';
-  const { site } = useSite();
-
-  return (
-    <div className="rp-outline">
-      <div className="rp-outline__title">
-        {isZh ? '本页内容' : 'On This Page'}
-      </div>
-      <nav className="rp-outline__toc rp-scrollbar">
-        <Toc />
-      </nav>
-      <div className="rp-outline__bottom">
-        <EditLink isOutline />
-        {site.themeConfig.enableScrollToTop !== false && <BackToTop />}
-      </div>
-    </div>
   );
 }
 
