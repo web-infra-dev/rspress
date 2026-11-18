@@ -82,31 +82,6 @@ function MinimalBreadcrumb() {
   );
 }
 
-function ContributionIcon({ kind }: { kind: 'issue' | 'feature' }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      {kind === 'issue' ? (
-        <>
-          <rect x="7" y="7" width="10" height="13" rx="5" />
-          <path d="m9 3 2 4m4-4-2 4M3 9h4m10 0h4M3 15h4m10 0h4M4 21l4-3m12 3-4-3M12 7v13" />
-        </>
-      ) : (
-        <>
-          <path d="M9 18h6m-5 3h4M8.5 14a6 6 0 1 1 7 0c-.9.7-1.5 1.7-1.5 3h-4c0-1.3-.6-2.3-1.5-3Z" />
-        </>
-      )}
-    </svg>
-  );
-}
-
 function BackToTop() {
   const t = useI18n();
   const [, scrollTop] = useReadPercent();
@@ -128,9 +103,6 @@ function BackToTop() {
 export function Outline() {
   const isZh = useLang() === 'zh';
   const { site } = useSite();
-  const repository = site.themeConfig.editLink?.docRepoBaseUrl?.match(
-    /https:\/\/github\.com\/[^/]+\/[^/]+/,
-  )?.[0];
 
   return (
     <div className="rp-outline">
@@ -141,31 +113,6 @@ export function Outline() {
         <Toc />
       </nav>
       <div className="rp-outline__bottom">
-        <div className="rp-preset-contribute-title">
-          {isZh ? '参与贡献' : 'Contribute'}
-        </div>
-        {repository ? (
-          <>
-            <a
-              className="rp-outline__action-row"
-              href={`${repository}/issues/new`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <ContributionIcon kind="issue" />
-              {isZh ? '报告问题' : 'Report an issue'}
-            </a>
-            <a
-              className="rp-outline__action-row"
-              href={`${repository}/issues/new`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <ContributionIcon kind="feature" />
-              {isZh ? '建议功能' : 'Request a feature'}
-            </a>
-          </>
-        ) : null}
         <EditLink isOutline />
         {site.themeConfig.enableScrollToTop !== false && <BackToTop />}
       </div>

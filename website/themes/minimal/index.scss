@@ -285,12 +285,13 @@ html:root.rp-dark .rp-badge--outline.rp-badge--danger {
   color: #fda4af;
 }
 
+/* Respect the same rp-not-doc escape hatch as the built-in document styles. */
 /* Document typography, including the title's breadcrumb and lead paragraph. */
 html:root .rp-doc {
   font-size: 16px;
   line-height: 24px;
 }
-html:root .rp-doc h1 {
+html:root .rp-doc h1:not(:where(.rp-not-doc, .rp-not-doc *)) {
   margin: 0 0 8px;
   color: var(--rp-c-text-0);
   font-size: 36px;
@@ -298,7 +299,7 @@ html:root .rp-doc h1 {
   letter-spacing: -0.025em;
   line-height: 40px;
 }
-html:root .rp-doc h2 {
+html:root .rp-doc h2:not(:where(.rp-not-doc, .rp-not-doc *)) {
   margin: 48px 0 0;
   padding-bottom: 8px;
   color: var(--rp-c-text-0);
@@ -307,10 +308,12 @@ html:root .rp-doc h2 {
   letter-spacing: -0.025em;
   line-height: 32px;
 }
-html:root .rp-doc h2:first-of-type::before {
+html:root
+  .rp-doc
+  h2:not(:where(.rp-not-doc, .rp-not-doc *)):first-of-type::before {
   display: none;
 }
-html:root .rp-doc h3 {
+html:root .rp-doc h3:not(:where(.rp-not-doc, .rp-not-doc *)) {
   margin: 32px 0 16px;
   color: var(--rp-c-text-0);
   font-size: 20px;
@@ -318,18 +321,24 @@ html:root .rp-doc h3 {
   letter-spacing: -0.025em;
   line-height: 28px;
 }
-html:root .rp-doc h4 {
+html:root .rp-doc h4:not(:where(.rp-not-doc, .rp-not-doc *)) {
   font-size: 18px;
   line-height: 28px;
   margin: 24px 0 16px;
 }
-html:root .rp-doc p:not(li p) {
+html:root .rp-doc p:not(li p):not(:where(.rp-not-doc, .rp-not-doc *)) {
   margin: 24px 0;
   line-height: 28px;
 }
-html:root .rp-doc h1 + p,
-html:root .rp-doc h1 + .rp-llms-container + p,
-html:root .rp-doc .rp-preset-description {
+html:root .rp-doc h1 + p:not(:where(.rp-not-doc, .rp-not-doc *)),
+html:root
+  .rp-doc
+  h1
+  + .rp-llms-container
+  + p:not(:where(.rp-not-doc, .rp-not-doc *)),
+html:root
+  .rp-doc
+  .rp-preset-description:not(:where(.rp-not-doc, .rp-not-doc *)) {
   margin: 0 0 32px;
   color: var(--rp-c-text-2);
   font-size: 18px;
@@ -392,7 +401,9 @@ html:root .rp-llms-button:focus-visible {
 html:root .rp-doc > h1 {
   padding-right: 180px;
 }
-html:root .rp-doc a.rp-link:not(.rp-header-anchor) {
+html:root
+  .rp-doc
+  a.rp-link:not(.rp-header-anchor):not(:where(.rp-not-doc, .rp-not-doc *)) {
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -400,16 +411,24 @@ html:root .rp-doc a.rp-link:not(.rp-header-anchor) {
     color 150ms ease,
     text-decoration-color 150ms ease;
 }
-html:root .rp-doc a.rp-link:not(.rp-header-anchor):hover {
+html:root
+  .rp-doc
+  a.rp-link:not(.rp-header-anchor):not(
+    :where(.rp-not-doc, .rp-not-doc *)
+  ):hover {
   color: var(--rp-c-text-2);
   text-decoration-color: var(--rp-c-text-3);
 }
-html:root .rp-doc a.rp-link:not(.rp-header-anchor):focus-visible {
+html:root
+  .rp-doc
+  a.rp-link:not(.rp-header-anchor):not(
+    :where(.rp-not-doc, .rp-not-doc *)
+  ):focus-visible {
   outline: 2px solid var(--rp-c-brand);
   outline-offset: 3px;
   border-radius: 2px;
 }
-html:root .rp-doc :not(pre) > code {
+html:root .rp-doc :not(pre) > code:not(:where(.rp-not-doc, .rp-not-doc *)) {
   padding: 3px 6px;
   border: 0;
   border-radius: 4px;
@@ -417,16 +436,16 @@ html:root .rp-doc :not(pre) > code {
   font-weight: 400;
   color: var(--rp-c-text-1);
 }
-html:root .rp-doc ul,
-html:root .rp-doc ol {
+html:root .rp-doc ul:not(:where(.rp-not-doc, .rp-not-doc *)),
+html:root .rp-doc ol:not(:where(.rp-not-doc, .rp-not-doc *)) {
   margin: 24px 0 0;
   padding-left: 24px;
   line-height: 28px;
 }
-html:root .rp-doc li:not(:first-child) {
+html:root .rp-doc li:not(:first-child):not(:where(.rp-not-doc, .rp-not-doc *)) {
   margin-top: 8px;
 }
-html:root .rp-doc blockquote {
+html:root .rp-doc blockquote:not(:where(.rp-not-doc, .rp-not-doc *)) {
   margin: 24px 0 0;
   border-left-width: 2px;
   padding-left: 24px;
@@ -434,7 +453,7 @@ html:root .rp-doc blockquote {
 html:root .rp-callout--note a.rp-link {
   color: inherit;
 }
-html:root .rp-doc hr {
+html:root .rp-doc hr:not(:where(.rp-not-doc, .rp-not-doc *)) {
   margin: 48px 0;
   border-color: var(--rp-c-divider-light);
 }
@@ -744,12 +763,6 @@ html:root .rp-outline__action-row {
   font-size: 14px;
   gap: 8px;
 }
-html:root .rp-preset-contribute-title {
-  margin: 0 0 4px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-}
 
 @media (min-width: 1280px) {
   html:root {
@@ -844,7 +857,7 @@ html:root .rp-preset-contribute-title {
   html:root .rp-search-button {
     min-width: 0;
   }
-  html:root .rp-doc h1 {
+  html:root .rp-doc h1:not(:where(.rp-not-doc, .rp-not-doc *)) {
     font-size: 30px;
     line-height: 36px;
   }
@@ -904,7 +917,9 @@ html:root .rp-preset-contribute-title {
 }
 
 /* Ruixen's links do not append an external-link glyph. */
-html:root .rp-doc a.rp-link[target='_blank']::after {
+html:root
+  .rp-doc
+  a.rp-link[target='_blank']:not(:where(.rp-not-doc, .rp-not-doc *))::after {
   display: none;
 }
 
