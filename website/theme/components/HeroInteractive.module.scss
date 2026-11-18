@@ -382,10 +382,6 @@
   }
 }
 
-:global(.rp-home-hero__badge)::before {
-  animation: breathe 3s ease-in-out infinite reverse;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .container,
   .logo,
@@ -393,8 +389,7 @@
   .sidebarItem > div,
   .skeletonText,
   .glowLeft,
-  .glowRight,
-  :global(.rp-home-hero__badge)::before {
+  .glowRight {
     animation: none;
   }
 }
