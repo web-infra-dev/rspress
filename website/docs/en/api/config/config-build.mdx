@@ -10,6 +10,8 @@ description: 'Customize Rsbuild and Markdown compilation in Rspress, including p
 
 Customizes the Rsbuild configuration. For details, see [Rsbuild - Config](https://rsbuild.rs/config/).
 
+Rspress enables Rspack's [`experiments.runtimeMode: 'rspack'`](https://rspack.rs/config/experiments#experimentsruntimemode) by default for client, SSG, and Markdown builds. To use the webpack-compatible runtime, set `builderConfig.tools.rspack.experiments.runtimeMode` to `'webpack'`.
+
 - Example: Use [resolve.alias](https://rsbuild.rs/config/resolve/alias) to configure path aliases:
 
 ```ts title="rspress.config.ts"
