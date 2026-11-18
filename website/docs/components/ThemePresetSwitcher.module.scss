@@ -34,17 +34,17 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr));
+  gap: 12px;
 }
 
 .card {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid var(--rp-c-divider-light);
-  border-radius: 16px;
+  border-radius: 12px;
   background: var(--rp-c-bg);
   color: var(--rp-c-text-1);
   text-align: left;
@@ -69,10 +69,11 @@
 .preview {
   display: block;
   width: 100%;
-  aspect-ratio: 1.6;
+  aspect-ratio: 2;
+  max-height: 120px;
   overflow: hidden;
   border: 1px solid var(--preview-border);
-  border-radius: 9px;
+  border-radius: 6px;
   background: var(--preview-bg);
 }
 
@@ -86,22 +87,22 @@
 .previewNav {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   height: 20%;
-  padding: 0 10px;
+  padding: 0 6px;
   border-bottom: 1px solid var(--preview-border);
 }
 
 .previewLogo {
   width: 30%;
-  height: 5px;
+  height: 3px;
   border-radius: 2px;
   background: var(--preview-text);
 }
 
 .previewSearch {
   width: 24%;
-  height: 12px;
+  height: 8px;
   margin-left: auto;
   border: 1px solid var(--preview-border);
   border-radius: 4px;
@@ -109,8 +110,8 @@
 }
 
 .previewDot {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: var(--preview-accent);
 }
@@ -124,20 +125,20 @@
 .previewOutline {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   width: 24%;
-  padding: 14px 8px;
+  padding: 8px 5px;
   border-right: 1px solid var(--preview-border);
 
   > span {
     display: block;
-    height: 3px;
+    height: 2px;
     border-radius: 2px;
     background: var(--preview-line);
   }
 
   .previewActive {
-    height: 12px;
+    height: 8px;
     margin: -3px -3px;
     border-radius: 4px;
     background: var(--preview-tint);
@@ -149,19 +150,20 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 10px;
-  padding: 16px 12px;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px;
 }
 
 .previewTitle {
   width: 75%;
-  height: 8px;
+  height: 5px;
   border-radius: 2px;
   background: var(--preview-text);
 }
 
 .previewLine {
-  height: 3px;
+  height: 2px;
   border-radius: 2px;
   background: var(--preview-line);
 }
@@ -170,15 +172,15 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 6px;
-  padding: 9px;
+  gap: 4px;
+  padding: 6px;
   border: 1px solid var(--preview-border);
   border-radius: 6px;
   background: var(--preview-soft);
 
   > span {
     width: 60%;
-    height: 3px;
+    height: 2px;
     border-radius: 2px;
     background: var(--preview-accent);
     opacity: 0.5;
@@ -200,39 +202,40 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  margin: 16px 4px 4px;
+  gap: 4px;
+  margin: 10px 2px 4px;
 }
 
 .name {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .badge {
-  padding: 2px 8px;
+  padding: 2px 6px;
   border-radius: 20px;
   background: var(--rp-c-bg-soft);
   color: var(--rp-c-text-2);
-  font-size: 11px;
+  font-size: 10px;
   white-space: nowrap;
 }
 
 .description {
-  margin: 0 4px;
+  flex: 1;
+  margin: 0 2px;
   color: var(--rp-c-text-2);
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .palette {
   display: flex;
   gap: 6px;
-  margin: 14px 4px 4px;
+  margin: 10px 2px 2px;
 
   > span {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border: 1px solid rgb(127 127 127 / 25%);
     border-radius: 50%;
   }
@@ -243,7 +246,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .status {
@@ -274,7 +277,12 @@
 
 @media (max-width: 600px) {
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .card {
+    padding: 8px;
   }
 
   .status {
