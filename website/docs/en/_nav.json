@@ -28,6 +28,11 @@
     "text": "Version",
     "items": [
       {
+        "text": "Showcase",
+        "link": "/showcase",
+        "activeMatch": "/showcase"
+      },
+      {
         "text": "Changelog",
         "link": "https://github.com/web-infra-dev/rspress/releases"
       },
