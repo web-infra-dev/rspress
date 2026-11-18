@@ -1,14 +1,10 @@
 import { Outline as OriginalOutline } from '@rspress/core/theme-original';
 import { useThemePreset } from '../presets/ThemePresetProvider';
 
-export function PresetBreadcrumb() {
-  const { activePreset } = useThemePreset();
-  const Breadcrumb = activePreset.components?.Breadcrumb;
-  return Breadcrumb ? <Breadcrumb /> : null;
-}
-
+// Add wrappers here for future supportedPreviewExports such as DocFooter.
+// Keep website Search and runtime providers outside this override surface.
 export function PresetOutline() {
-  const { activePreset } = useThemePreset();
-  const Outline = activePreset.components?.Outline ?? OriginalOutline;
+  const { activeModule } = useThemePreset();
+  const Outline = activeModule?.Outline ?? OriginalOutline;
   return <Outline />;
 }

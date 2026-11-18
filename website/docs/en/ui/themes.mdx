@@ -16,7 +16,7 @@ The preview stays active as you navigate to other pages. Select **Rspress** to r
 
 Inspired by the documentation layout of [Ruixen UI](https://ruixen.com/docs/components/card-carousel-hero), this preset reproduces the three-column layout, Geist typography, sidebar spacing, outline links, document headings, numbered steps, and code tabs. It includes light and dark colors and keeps Rspress's responsive navigation.
 
-The stylesheet uses [CSS variables](/ui/vars) and built-in BEM class names. The accompanying theme entry adds the breadcrumb and Contribute section, which require additional markup. It wraps the default layout and keeps the built-in navigation behavior.
+The stylesheet uses [CSS variables](/ui/vars) and built-in BEM class names. The normal custom theme entry adds the breadcrumb and Contribute section, which require additional markup. It imports the stylesheet, wraps the default layout using its slots, and reexports built-in components. The website previews the same source folder.
 
 The CSS loads Geist and Geist Mono from a pinned font CDN. You can host these fonts locally by replacing the two `@font-face` URLs.
 

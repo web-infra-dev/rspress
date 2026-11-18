@@ -1,3 +1,4 @@
+import './index.scss';
 import type { SidebarData } from '@rspress/core';
 import {
   useActiveMatcher,
@@ -11,6 +12,7 @@ import {
   EditLink,
   IconScrollToTop,
   Layout as OriginalLayout,
+  type LayoutProps,
   Link,
   renderInlineMarkdown,
   SvgWrapper,
@@ -43,7 +45,7 @@ function findSidebarParent(
   }
 }
 
-export function MinimalBreadcrumb() {
+function MinimalBreadcrumb() {
   const { page } = usePage();
   const isZh = useLang() === 'zh';
   const sidebar = useSidebar();
@@ -171,6 +173,16 @@ export function Outline() {
   );
 }
 
-export function Layout() {
-  return <OriginalLayout beforeDocContent={<MinimalBreadcrumb />} />;
+export function Layout(props: LayoutProps) {
+  return (
+    <OriginalLayout
+      {...props}
+      beforeDocContent={
+        <>
+          <MinimalBreadcrumb />
+          {props.beforeDocContent}
+        </>
+      }
+    />
+  );
 }

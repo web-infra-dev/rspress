@@ -1,9 +1,9 @@
 import { useDark, useLang } from '@rspress/core/runtime';
 import { copyToClipboard } from '@rspress/core/theme';
-import { type CSSProperties, useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
+import { type CSSProperties, useState } from 'react';
 import { useThemePreset } from '../../theme/presets/ThemePresetProvider';
 import { localizePresetText } from '../../theme/presets/types';
+import { generateThemePrompt } from '../../theme/presets/generateThemePrompt';
 import styles from './ThemePresetSwitcher.module.scss';
 
 export function ThemePresetSwitcher() {
@@ -14,58 +14,14 @@ export function ThemePresetSwitcher() {
   const lang = useLang();
   const isZh = lang === 'zh';
   const isDark = useDark();
-  const { presets, activePreset, selectPreset } = useThemePreset();
+  const { presets, activePreset, selectPreset, loadPreset, loadingId, error } =
+    useThemePreset();
   const [copyResult, setCopyResult] = useState<{
     id: string;
     status: 'copied' | 'error';
   }>();
   const copyStatus =
     copyResult?.id === activePreset.id ? copyResult.status : 'idle';
-  const transitioning = useRef(false);
-
-  function previewPreset(id: string) {
-    if (id === activePreset.id || transitioning.current) return;
-
-    const update = () => {
-      flushSync(() => {
-        selectPreset(id);
-        setCopyResult(undefined);
-      });
-    };
-    const reducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches;
-    if (reducedMotion || !document.startViewTransition) {
-      update();
-      if (!reducedMotion) {
-        document.documentElement.animate([{ opacity: 0.7 }, { opacity: 1 }], {
-          duration: 240,
-          easing: 'ease-out',
-        });
-      }
-      return;
-    }
-
-    transitioning.current = true;
-    const root = document.documentElement;
-    root.classList.add('rp-preset-transition');
-    const cleanup = () => {
-      root.classList.remove('rp-preset-transition');
-      transitioning.current = false;
-    };
-    let updated = false;
-    try {
-      const transition = document.startViewTransition(() => {
-        updated = true;
-        update();
-      });
-      transition.ready.catch(() => transition.skipTransition());
-      transition.finished.then(cleanup, cleanup);
-    } catch {
-      cleanup();
-      if (!updated) update();
-    }
-  }
 
   return (
     <div className={styles.switcher}>
@@ -89,7 +45,10 @@ export function ThemePresetSwitcher() {
               type="button"
               className={styles.card}
               aria-pressed={selected}
-              onClick={() => previewPreset(preset.id)}
+              onClick={() => {
+                setCopyResult(undefined);
+                void selectPreset(preset.id);
+              }}
             >
               <span
                 className={styles.preview}
@@ -130,13 +89,17 @@ export function ThemePresetSwitcher() {
               <span className={styles.cardHeading}>
                 <span className={styles.name}>{preset.name}</span>
                 <span className={styles.badge}>
-                  {selected
+                  {loadingId === preset.id
                     ? isZh
-                      ? '使用中'
-                      : 'Active'
-                    : isZh
-                      ? '点击预览'
-                      : 'Try theme'}
+                      ? '加载中'
+                      : 'Loading'
+                    : selected
+                      ? isZh
+                        ? '使用中'
+                        : 'Active'
+                      : isZh
+                        ? '点击预览'
+                        : 'Try theme'}
                 </span>
               </span>
               <span className={styles.description}>
@@ -161,9 +124,18 @@ export function ThemePresetSwitcher() {
           type="button"
           className={styles.action}
           onClick={async () => {
-            const copied = await copyToClipboard(
-              localizePresetText(activePreset.prompt, lang),
-            );
+            let copied = false;
+            try {
+              copied = await copyToClipboard(
+                generateThemePrompt(
+                  activePreset,
+                  lang,
+                  await loadPreset(activePreset),
+                ),
+              );
+            } catch {
+              /* Report a copy failure if the source module could not load. */
+            }
             setCopyResult({
               id: activePreset.id,
               status: copied ? 'copied' : 'error',
@@ -179,6 +151,13 @@ export function ThemePresetSwitcher() {
               : 'Copy prompt'}
         </button>
       </div>
+      {error ? (
+        <p role="alert">
+          {isZh
+            ? '主题加载失败，请点击卡片重试。'
+            : 'Theme loading failed. Click the card to retry.'}
+        </p>
+      ) : null}
       {copyStatus === 'error' ? (
         <p role="alert">
           {isZh ? '复制失败，请重试。' : 'Copy failed. Please try again.'}

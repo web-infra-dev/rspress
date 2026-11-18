@@ -821,8 +821,9 @@ html:root .rp-preset-contribute-title {
         var(--rp-sidebar-menu-height)
     );
     height: calc(
-      100dvh - var(--rp-nav-height) - var(--rp-banner-height, 0px) -
-        var(--rp-sidebar-menu-height)
+      100dvh - var(--rp-nav-height) - var(--rp-banner-height, 0px) - var(
+          --rp-sidebar-menu-height
+        )
     );
     max-height: none;
   }
@@ -872,8 +873,10 @@ html:root .rp-preset-contribute-title {
     width: min(340px, calc(100vw - 32px));
     margin-top: 0;
     max-height: calc(
-      100dvh - var(--rp-nav-height) - var(--rp-banner-height, 0px) -
-        var(--rp-sidebar-menu-height) - 24px
+      100dvh - var(--rp-nav-height) - var(--rp-banner-height, 0px) - var(
+          --rp-sidebar-menu-height
+        ) -
+        24px
     );
     padding: 20px 24px;
     border: 1px solid var(--rp-c-divider-light);

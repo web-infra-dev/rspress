@@ -16,7 +16,7 @@ import { ThemePresetSwitcher } from '../../components/ThemePresetSwitcher';
 
 这套预设参考了 [Ruixen UI](https://ruixen.com/docs/components/card-carousel-hero) 的文档布局，还原三栏布局、Geist 字体、侧边栏间距、右侧目录、正文标题、编号步骤和代码标签页样式。它包含亮色与暗色配色，并保留 Rspress 的响应式导航。
 
-样式通过 [CSS 变量](/ui/vars)和内置 BEM 类名实现。配套主题入口补充面包屑和贡献区域所需的 DOM，通过包装默认布局实现，并保留内置导航行为。
+样式通过 [CSS 变量](/ui/vars)和内置 BEM 类名实现。普通自定义主题入口补充面包屑和贡献区域所需的 DOM，入口正常导入样式、使用默认布局的插槽并重导出内置组件。官网预览使用同一套源码文件夹。
 
 CSS 从固定版本的字体 CDN 加载 Geist 和 Geist Mono。也可以修改两条 `@font-face` URL，将字体托管到自己的站点。
 

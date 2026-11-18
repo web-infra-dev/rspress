@@ -1,3 +1,4 @@
+import type { LayoutProps, Outline } from '@rspress/core/theme-original';
 import type { ComponentType } from 'react';
 
 export type PresetText = string | { en: string; zh: string };
@@ -12,29 +13,40 @@ export interface ThemePresetColors {
   text: string;
 }
 
-/** Website integration contract; theme implementations may live in another package. */
-export interface ThemePreset {
-  /** Stable identity, independent of the display name and stylesheet contents. */
+/** Portable metadata in each theme's meta.ts; no website imports are required. */
+export interface ThemePresetMeta {
   id: string;
   name: string;
   description: PresetText;
   palette: readonly string[];
-  /** Instructions copied for an agent to apply this preset to a user's project. */
-  prompt: PresetText;
   preview: {
     light: ThemePresetColors;
     dark: ThemePresetColors;
     showDividers?: boolean;
   };
-  /** Omit for the default theme. CSS is bundled so previews work without fetching. */
-  stylesheet?: {
-    content: string;
+  source?: {
+    repository: string;
+    ref: string;
+    directory: string;
   };
-  /** Omitted components fall back to the website's original layout. */
-  components?: {
-    Breadcrumb?: ComponentType;
-    Outline?: ComponentType;
-  };
+}
+
+/**
+ * Deliberately bounded website preview surface, not a core theme API.
+ * To add DocFooter etc., extend this type AND supportedPreviewExports, then
+ * add a resolver wrapper/export in website/theme/index.tsx and test switching.
+ * Search, Root, and startup hooks stay owned by the website runtime.
+ */
+export interface ThemePreviewModule {
+  Layout?: ComponentType<LayoutProps>;
+  Outline?: typeof Outline;
+}
+
+export const supportedPreviewExports = ['Layout', 'Outline'] as const;
+
+export interface ThemePreset extends ThemePresetMeta {
+  /** Normal theme source is built by the website; this query only enables reversible CSS. */
+  load?: () => Promise<ThemePreviewModule>;
 }
 
 export function localizePresetText(text: PresetText, lang: string): string {
