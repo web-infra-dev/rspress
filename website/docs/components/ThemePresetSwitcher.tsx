@@ -1,5 +1,5 @@
-import { useDark, useLang, withBase } from '@rspress/core/runtime';
-import { CodeBlockRuntime, copyToClipboard } from '@rspress/core/theme';
+import { useDark, useLang } from '@rspress/core/runtime';
+import { copyToClipboard } from '@rspress/core/theme';
 import { type CSSProperties, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useThemePreset } from '../../theme/presets/ThemePresetProvider';
@@ -15,11 +15,6 @@ export function ThemePresetSwitcher() {
   const isZh = lang === 'zh';
   const isDark = useDark();
   const { presets, activePreset, selectPreset } = useThemePreset();
-  const stylesheet = activePreset.stylesheet;
-  const downloads = [
-    stylesheet?.download,
-    ...(activePreset.downloads ?? []),
-  ].filter(asset => asset !== undefined);
   const [copyResult, setCopyResult] = useState<{
     id: string;
     status: 'copied' | 'error';
@@ -162,58 +157,32 @@ export function ThemePresetSwitcher() {
             ? `当前预览：${activePreset.name}`
             : `Previewing ${activePreset.name}`}
         </span>
-        {stylesheet ? (
-          <button
-            type="button"
-            className={styles.action}
-            onClick={async () => {
-              const copied = await copyToClipboard(stylesheet.content);
-              setCopyResult({
-                id: activePreset.id,
-                status: copied ? 'copied' : 'error',
-              });
-            }}
-          >
-            {copyStatus === 'copied'
-              ? isZh
-                ? '已复制'
-                : 'Copied'
-              : isZh
-                ? `复制 ${activePreset.name} CSS`
-                : `Copy ${activePreset.name} CSS`}
-          </button>
-        ) : null}
-        {downloads.map(asset => (
-          <a
-            key={asset.href}
-            className={styles.action}
-            href={withBase(asset.href)}
-            download={asset.fileName}
-          >
-            {localizePresetText(asset.label, lang)}
-          </a>
-        ))}
+        <button
+          type="button"
+          className={styles.action}
+          onClick={async () => {
+            const copied = await copyToClipboard(
+              localizePresetText(activePreset.prompt, lang),
+            );
+            setCopyResult({
+              id: activePreset.id,
+              status: copied ? 'copied' : 'error',
+            });
+          }}
+        >
+          {copyStatus === 'copied'
+            ? isZh
+              ? '已复制'
+              : 'Copied'
+            : isZh
+              ? '复制提示词'
+              : 'Copy prompt'}
+        </button>
       </div>
       {copyStatus === 'error' ? (
         <p role="alert">
-          {isZh
-            ? '复制失败，请下载 CSS 或从下方代码中复制。'
-            : 'Copy failed. Download the CSS or copy the code below.'}
+          {isZh ? '复制失败，请重试。' : 'Copy failed. Please try again.'}
         </p>
-      ) : null}
-      {stylesheet ? (
-        <details className={styles.source} key={activePreset.id}>
-          <summary>
-            {isZh
-              ? `查看 ${activePreset.name} preset CSS`
-              : `View ${activePreset.name} preset CSS`}
-          </summary>
-          <CodeBlockRuntime
-            lang="css"
-            code={stylesheet.content}
-            title={`theme/${stylesheet.download?.fileName ?? `${activePreset.id}.css`}`}
-          />
-        </details>
       ) : null}
     </div>
   );

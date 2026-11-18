@@ -1,4 +1,4 @@
-/* Ruixen UI documentation styles, mapped to the Rspress default theme. */
+/* Minimal documentation preset, inspired by Ruixen UI. */
 @font-face {
   font-family: 'Geist';
   src: url('https://cdn.jsdelivr.net/npm/@fontsource-variable/geist@5.3.0/files/geist-latin-wght-normal.woff2')
@@ -20,12 +20,12 @@
 html:root {
   --rp-font-family-base: 'Geist', Arial, sans-serif;
   --rp-font-family-mono: 'Geist Mono', monospace;
-  --rp-ruixen-content-width: 896px;
-  --rp-ruixen-layout-width: 1536px;
-  --rp-ruixen-gutter: 48px;
-  --rp-ruixen-code-header-bg: #f7f7f8;
-  --rp-ruixen-code-bg: #f7f7f8;
-  --rp-ruixen-code-border: #ececef;
+  --rp-minimal-content-width: 896px;
+  --rp-minimal-layout-width: 1536px;
+  --rp-minimal-gutter: 48px;
+  --rp-minimal-code-header-bg: #f7f7f8;
+  --rp-minimal-code-bg: #f7f7f8;
+  --rp-minimal-code-border: #ececef;
   --rp-code-font-size: 14px;
   --rp-steps-gap: 32px;
   --rp-steps-size: 32px;
@@ -57,8 +57,8 @@ html:root {
   --rp-radius: 1rem;
   --rp-radius-small: 0.5rem;
   --rp-radius-large: 1.5rem;
-  --rp-code-title-bg: var(--rp-ruixen-code-header-bg);
-  --rp-code-block-bg: var(--rp-ruixen-code-bg);
+  --rp-code-title-bg: var(--rp-minimal-code-header-bg);
+  --rp-code-block-bg: var(--rp-minimal-code-bg);
   --rp-code-block-color: var(--rp-c-text-1);
   --rp-code-block-border: 1px solid var(--rp-c-divider-light);
   --rp-code-block-shadow: none;
@@ -70,9 +70,9 @@ html:root {
 
 html:root.rp-dark,
 html:root.dark {
-  --rp-ruixen-code-header-bg: #202023;
-  --rp-ruixen-code-bg: #18181b;
-  --rp-ruixen-code-border: #27272a;
+  --rp-minimal-code-header-bg: #202023;
+  --rp-minimal-code-bg: #18181b;
+  --rp-minimal-code-border: #27272a;
   --rp-c-brand: #fafafa;
   --rp-c-brand-light: #ffffff;
   --rp-c-brand-lighter: #52525b;
@@ -102,8 +102,10 @@ html:root .rp-nav {
   background: color-mix(in srgb, var(--rp-c-bg) 90%, transparent);
   backdrop-filter: blur(16px);
   --rp-nav-padding-x: max(
-    var(--rp-ruixen-gutter),
-    calc((100vw - var(--rp-ruixen-layout-width)) / 2 + var(--rp-ruixen-gutter))
+    var(--rp-minimal-gutter),
+    calc(
+      (100vw - var(--rp-minimal-layout-width)) / 2 + var(--rp-minimal-gutter)
+    )
   );
 }
 
@@ -140,7 +142,7 @@ html:root .rp-button--brand {
 html:root .rp-doc-layout__doc-container {
   position: relative;
   width: 100%;
-  max-width: var(--rp-ruixen-content-width);
+  max-width: var(--rp-minimal-content-width);
   margin-inline: auto;
   padding: 32px 24px;
 }
@@ -470,13 +472,13 @@ html:root .rp-codeblock {
   border: 0;
 }
 html:root .rp-codeblock:has(> .rp-codeblock__title) {
-  border: 1px solid var(--rp-ruixen-code-border);
+  border: 1px solid var(--rp-minimal-code-border);
   border-radius: 14px;
 }
 html:root .rp-codeblock__title {
   padding: 10px 16px;
   line-height: 20px;
-  border-bottom: 1px solid var(--rp-ruixen-code-border);
+  border-bottom: 1px solid var(--rp-minimal-code-border);
 }
 html:root .rp-codeblock__content code {
   padding: 16px 0;
@@ -489,7 +491,7 @@ html:root .rp-codeblock .shiki span.line {
 html:root .rp-tabs {
   position: relative;
   margin: 24px 0 32px;
-  border: 1px solid var(--rp-ruixen-code-border);
+  border: 1px solid var(--rp-minimal-code-border);
   border-radius: 14px;
   box-shadow: none;
   overflow: hidden;
@@ -502,8 +504,8 @@ html:root .rp-tabs__label {
   flex-wrap: nowrap;
   overflow-x: auto;
   align-items: flex-start;
-  background: var(--rp-ruixen-code-header-bg);
-  border-bottom: 1px solid var(--rp-ruixen-code-border);
+  background: var(--rp-minimal-code-header-bg);
+  border-bottom: 1px solid var(--rp-minimal-code-border);
 }
 html:root .rp-tabs__label__item {
   height: 27px;
@@ -529,7 +531,7 @@ html:root .rp-tabs__label__item--not-selected:hover {
   color: var(--rp-c-text-1);
 }
 html:root .rp-tabs__content {
-  background: var(--rp-ruixen-code-bg);
+  background: var(--rp-minimal-code-bg);
 }
 html:root
   .rp-tabs__content__item--active:not(:has(> .rp-codeblock:only-child)) {
@@ -759,9 +761,9 @@ html:root .rp-preset-contribute-title {
     display: grid;
     grid-template-columns: 220px minmax(0, 1fr) 220px;
     column-gap: 32px;
-    max-width: var(--rp-ruixen-layout-width);
+    max-width: var(--rp-minimal-layout-width);
     margin-inline: auto;
-    padding-inline: var(--rp-ruixen-gutter);
+    padding-inline: var(--rp-minimal-gutter);
   }
   html:root .rp-doc-layout__sidebar {
     margin-left: 0;
@@ -830,7 +832,7 @@ html:root .rp-preset-contribute-title {
 }
 @media (max-width: 768px) {
   html:root {
-    --rp-ruixen-gutter: 16px;
+    --rp-minimal-gutter: 16px;
   }
   html:root .rp-doc-layout__doc-container {
     padding: 24px;

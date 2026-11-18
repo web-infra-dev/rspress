@@ -43,7 +43,7 @@ function findSidebarParent(
   }
 }
 
-export function RuixenBreadcrumb() {
+export function MinimalBreadcrumb() {
   const { page } = usePage();
   const isZh = useLang() === 'zh';
   const sidebar = useSidebar();
@@ -172,5 +172,5 @@ export function Outline() {
 }
 
 export function Layout() {
-  return <OriginalLayout beforeDocContent={<RuixenBreadcrumb />} />;
+  return <OriginalLayout beforeDocContent={<MinimalBreadcrumb />} />;
 }

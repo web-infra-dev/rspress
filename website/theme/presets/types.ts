@@ -2,13 +2,6 @@ import type { ComponentType } from 'react';
 
 export type PresetText = string | { en: string; zh: string };
 
-export interface ThemePresetAsset {
-  /** A public path (with the site base applied by the switcher) or an absolute URL. */
-  href: string;
-  fileName: string;
-  label: PresetText;
-}
-
 export interface ThemePresetColors {
   accent: string;
   tint: string;
@@ -26,6 +19,8 @@ export interface ThemePreset {
   name: string;
   description: PresetText;
   palette: readonly string[];
+  /** Instructions copied for an agent to apply this preset to a user's project. */
+  prompt: PresetText;
   preview: {
     light: ThemePresetColors;
     dark: ThemePresetColors;
@@ -34,10 +29,7 @@ export interface ThemePreset {
   /** Omit for the default theme. CSS is bundled so previews work without fetching. */
   stylesheet?: {
     content: string;
-    download?: ThemePresetAsset;
   };
-  /** Optional installation files, such as a theme entry, hosted locally or remotely. */
-  downloads?: readonly ThemePresetAsset[];
   /** Omitted components fall back to the website's original layout. */
   components?: {
     Breadcrumb?: ComponentType;
