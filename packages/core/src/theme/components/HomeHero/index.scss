@@ -20,6 +20,9 @@
 
   @media (max-width: 600px) {
     padding: 10px 20px;
+    .rp-home-hero__container {
+      gap: 18px;
+    }
     .rp-home-hero__title {
       font-size: 2.5rem;
     }
