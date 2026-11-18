@@ -1,0 +1,143 @@
+.showcase {
+  max-width: 1360px;
+  min-height: calc(100vh - var(--rp-nav-height));
+  margin: 0 auto;
+  padding: 64px 32px 80px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 40px;
+
+  h1 {
+    margin: 0;
+    color: var(--rp-c-text-1);
+    font-size: clamp(36px, 5vw, 48px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+
+  p {
+    margin: 16px 0 0;
+    color: var(--rp-c-text-2);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+}
+
+.header .contribute {
+  flex-shrink: 0;
+  margin: 0;
+  font-size: 14px;
+
+  a {
+    color: var(--rp-c-link);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+}
+
+.gallery {
+  margin: 0;
+  padding: 0;
+  column-count: 3;
+  column-gap: 24px;
+  list-style: none;
+}
+
+.card {
+  overflow: hidden;
+  break-inside: avoid;
+  margin: 0 0 24px;
+  border: 1px solid var(--rp-c-divider-light);
+  border-radius: var(--rp-radius-small);
+  background: var(--rp-c-bg);
+  transition: border-color 0.2s;
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--rp-c-brand);
+  }
+
+  a {
+    display: block;
+    color: var(--rp-c-text-1);
+    text-decoration: none;
+  }
+
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--rp-c-divider-light);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+
+    span {
+      flex-shrink: 0;
+      color: var(--rp-c-text-2);
+    }
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--rp-c-bg-soft);
+  }
+}
+
+.contribute a:focus-visible {
+  outline: 2px solid var(--rp-c-brand);
+  outline-offset: 4px;
+}
+
+.card a:focus-visible {
+  outline: 2px solid var(--rp-c-brand);
+  outline-offset: -2px;
+}
+
+@media (max-width: 1024px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .showcase {
+    padding: 40px 20px 48px;
+  }
+
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 32px;
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .gallery {
+    column-count: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}

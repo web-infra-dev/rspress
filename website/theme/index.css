@@ -20,6 +20,35 @@
   margin: -0.75rem 0 0;
 }
 
+@media (min-width: 769px) and (max-width: 1100px) {
+  .rp-nav-menu {
+    --rp-nav-menu-item-gap: 16px;
+  }
+
+  .rp-nav-menu__item__container {
+    white-space: nowrap;
+  }
+
+  .rp-nav__right {
+    gap: 16px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 960px) {
+  .rp-nav .DocSearch-Button-Placeholder,
+  .rp-nav .DocSearch-Button-Keys {
+    display: none;
+  }
+
+  .rp-nav .DocSearch-Button {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+  }
+}
+
 @media (max-width: 600px) {
   .home-install {
     max-width: 100%;

@@ -25,6 +25,11 @@
     "activeMatch": "/blog/"
   },
   {
+    "text": "Showcase",
+    "link": "/showcase",
+    "activeMatch": "/showcase"
+  },
+  {
     "text": "版本",
     "items": [
       {
