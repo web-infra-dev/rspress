@@ -9,6 +9,7 @@ import {
 } from '../../utils/runCommands';
 
 const DOC_FILE = new URL('./doc/index.mdx', import.meta.url);
+const CONFIG_FILE = new URL('./rspress.config.ts', import.meta.url);
 const MONACO_PREFIX =
   'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs';
 const MONACO_PRELOAD_URLS = [
@@ -35,11 +36,19 @@ test.describe('plugin playground rendering and HMR', async () => {
   let appPort;
   let app;
   let originalContent: string;
+  let originalConfig: string;
+  let output = '';
   test.beforeAll(async () => {
     const appDir = import.meta.dirname;
     originalContent = await fs.readFile(DOC_FILE, 'utf-8');
+    originalConfig = await fs.readFile(CONFIG_FILE, 'utf-8');
     appPort = await getPort();
     app = await runDevCommand(appDir, appPort);
+    const collectOutput = (chunk: Buffer) => {
+      output += chunk.toString();
+    };
+    app.stdout.on('data', collectOutput);
+    app.stderr.on('data', collectOutput);
   });
 
   test.afterAll(async () => {
@@ -49,6 +58,7 @@ test.describe('plugin playground rendering and HMR', async () => {
       }
     } finally {
       await fs.writeFile(DOC_FILE, originalContent);
+      await fs.writeFile(CONFIG_FILE, originalConfig);
     }
   });
 
@@ -82,16 +92,64 @@ test.describe('plugin playground rendering and HMR', async () => {
       waitUntil: 'networkidle',
     });
 
-    const updatedContent = originalContent.replace(
-      'Hello World Internal (default)',
-      'Hello World Internal (updated)',
-    );
-    await fs.writeFile(DOC_FILE, updatedContent);
+    await page.evaluate(() => {
+      (
+        window as Window & { playgroundHmrMarker?: string }
+      ).playgroundHmrMarker = 'preserved';
+    });
+    for (const label of ['first update', 'second update', 'third update']) {
+      const text = `Hello World Internal (${label})`;
+      await fs.writeFile(
+        DOC_FILE,
+        originalContent.replace('Hello World Internal (default)', text),
+      );
 
-    await expect(
-      page
-        .locator('.rp-playground > .rp-playground-runner > div')
-        .getByText('Hello World Internal (updated)'),
-    ).toHaveCount(1);
+      await expect(
+        page
+          .locator('.rp-playground > .rp-playground-runner > div')
+          .getByText(text, { exact: true }),
+      ).toHaveCount(1);
+      expect(
+        await page.evaluate(
+          () =>
+            (window as Window & { playgroundHmrMarker?: string })
+              .playgroundHmrMarker,
+        ),
+      ).toBe('preserved');
+    }
+  });
+
+  test('Should keep imports available across config restarts', async ({
+    page,
+  }) => {
+    for (const title of [
+      'First playground restart',
+      'Second playground restart',
+    ]) {
+      const previousBuildCount = output.match(/built in/g)?.length ?? 0;
+      await fs.writeFile(
+        CONFIG_FILE,
+        originalConfig.replace(
+          'defineConfig({',
+          `defineConfig({ title: '${title}',`,
+        ),
+      );
+      await expect
+        .poll(() => output.match(/built in/g)?.length ?? 0, { timeout: 30_000 })
+        .toBeGreaterThan(previousBuildCount);
+      await page.goto(`http://localhost:${appPort}/`, {
+        waitUntil: 'networkidle',
+      });
+      await expect(page).toHaveTitle(new RegExp(title));
+      await expect(page.locator('.rp-playground')).toHaveCount(3);
+      await expect(
+        page
+          .locator('.rp-playground-runner')
+          .getByText('Hello World External', {
+            exact: true,
+          }),
+      ).toHaveCount(1);
+    }
+    expect(output).not.toContain("Can't resolve '_rspress_playground_imports'");
   });
 });

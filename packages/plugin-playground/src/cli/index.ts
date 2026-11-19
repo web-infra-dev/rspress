@@ -6,7 +6,7 @@ import type {
 } from '@monaco-editor/react';
 import type { RouteMeta, RspressPlugin } from '@rspress/core';
 import { getNodeAttribute } from '@rspress/core';
-import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
+import { pluginVirtualModule } from 'rsbuild-plugin-virtual-module';
 import { DEFAULT_BABEL_URL } from '../web/constant';
 import { remarkPlugin } from './remarkPlugin';
 import { parseImports } from './utils';
@@ -52,7 +52,7 @@ export function pluginPlayground(
     defaultRenderMode = 'pure',
   } = options || {};
 
-  const playgroundVirtualModule = new RspackVirtualModulePlugin({});
+  let importsCode = '';
   const getRouteMeta = () => routeMeta;
 
   if (render && !/Playground\.(jsx?|tsx?)$/.test(render)) {
@@ -174,7 +174,7 @@ export function pluginPlayground(
       }
 
       const importKeys = Object.keys(imports);
-      const code = [
+      importsCode = [
         ...importKeys.map(
           (x, index) => `import * as i_${index} from '${imports[x]}';`,
         ),
@@ -193,10 +193,18 @@ export function pluginPlayground(
         'export { imports };',
         'export default getImport;',
       ].join('\n');
-
-      playgroundVirtualModule.writeModule('_rspress_playground_imports', code);
     },
     builderConfig: {
+      plugins: [
+        pluginVirtualModule({
+          tempDir: '.rspress/runtime',
+          virtualModules: {
+            // Keep the generated imports in memory so compiler shutdown cannot
+            // remove a module still used by another compiler or dev server.
+            _rspress_playground_imports: () => importsCode,
+          },
+        }),
+      ],
       source: {
         define: {
           __PLAYGROUND_DIRECTION__: JSON.stringify(defaultDirection),
@@ -205,11 +213,6 @@ export function pluginPlayground(
           __PLAYGROUND_BABEL_URL__: JSON.stringify(babelUrl),
         },
         include: [pkgRootPath],
-      },
-      tools: {
-        rspack: {
-          plugins: [playgroundVirtualModule],
-        },
       },
     },
     markdown: {
