@@ -1,5 +1,28 @@
 import type { Page } from 'playwright';
 
+export async function expectMobileMenuItem(
+  page: Page,
+  expected: { item: string; parents?: string[] },
+) {
+  let container = page.locator('.rp-nav-screen--open');
+  await container.waitFor({ state: 'visible' });
+  // Collapsed grid groups keep their descendants in the DOM. Check each
+  // ancestor's expanded state before looking for the item in its own group.
+  for (const parent of expected.parents ?? []) {
+    const row = container
+      .locator('.rp-nav-screen-menu-item--open')
+      .filter({ has: page.getByText(parent, { exact: true }) });
+    await row.waitFor({ state: 'visible' });
+    container = row.locator(
+      'xpath=following-sibling::*[1][contains(@class, "rp-nav-screen-menu-item__group")]',
+    );
+  }
+  await container
+    .locator('.rp-nav-screen-menu-item__left')
+    .getByText(expected.item, { exact: true })
+    .waitFor({ state: 'visible' });
+}
+
 export async function expectLocation(
   page: Page,
   expected: { path: string; heading: string },
