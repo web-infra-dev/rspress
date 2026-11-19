@@ -1,0 +1,36 @@
+---
+description: 一键预览 Rspress 主题预设，并复制提示词，让 AI Agent 应用到自己的文档站点。
+---
+
+# 主题预设
+
+体验 Rspress 的[自定义主题](/guide/basic/custom-theme)能力。本页维护多套主题预设，点击即可切换网站样式，选择适合自己文档的风格。
+
+import { ThemePresetSwitcher } from '../../components/ThemePresetSwitcher';
+import { ThemePresetContent } from '../../components/ThemePresetContent';
+
+<ThemePresetSwitcher />
+
+切换到其他页面后，预览仍然生效。选择 **Rspress** 可以恢复默认预设，也可以点击浮动工具栏中的**复原**，清除所有 CSS 修改。刷新页面也会清除预览。
+
+<ThemePresetContent presetId="minimal">
+
+## Minimal
+
+这套预设参考了 [Ruixen UI](https://ruixen.com/docs/components/card-carousel-hero) 的文档布局，还原三栏布局、Geist 字体、侧边栏间距、右侧目录、正文标题、编号步骤和代码标签页样式。它包含亮色与暗色配色，并保留 Rspress 的响应式导航。
+
+样式通过 [CSS 变量](/ui/vars)和内置 BEM 类名实现。普通自定义主题入口补充面包屑。目录区域直接使用内置 Outline，通过 CSS 调整样式，保留阅读进度、编辑页面和返回顶部功能。入口正常导入样式、使用默认布局的插槽并重导出内置组件。官网预览使用同一套源码文件夹。
+
+CSS 从固定版本的字体 CDN 加载 Geist 和 Geist Mono。也可以修改两条 `@font-face` URL，将字体托管到自己的站点。
+
+</ThemePresetContent>
+
+## 使用预设 \{#use-a-preset}
+
+选择主题后，点击**复制提示词**，将提示词粘贴给当前 Rspress 项目中的 AI Agent。提示词包含应用所选主题的步骤和官方资源，并要求保留项目已有的内容与自定义配置。
+
+**Rspress** 提示词用于恢复默认主题；**Minimal** 提示词用于应用完整预设，包括配套布局组件。
+
+## 自定义配色 \{#customize-the-colors}
+
+可以让 Agent 调整预设的 [CSS 变量](/ui/vars)，为亮色和暗色模式设置你喜欢的配色。更多定制方式请参考[自定义主题](/guide/basic/custom-theme)。

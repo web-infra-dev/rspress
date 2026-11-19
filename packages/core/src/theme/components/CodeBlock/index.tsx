@@ -30,7 +30,7 @@ export type CodeBlockProps = {
   containerElementClassName?: string;
   codeButtonGroupProps?: Omit<
     CodeButtonGroupProps,
-    'preElementRef' | 'wrapCode' | 'toggleWrapCode'
+    'copyElementRef' | 'wrapCode' | 'toggleWrapCode'
   >;
   children?: React.ReactNode;
 };

@@ -31,6 +31,12 @@ import { HeroInteractive } from './components/HeroInteractive';
 import { HomeSections } from './components/HomeSections';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
+import { PresetOutline } from './components/PresetDocChrome';
+import { defaultThemePresetId, themePresets } from './presets/registry';
+import {
+  useThemePreset,
+  ThemePresetProvider,
+} from './presets/ThemePresetProvider';
 import './index.css';
 
 function HomeLayout(props: HomeLayoutProps) {
@@ -57,29 +63,40 @@ const HomeHero = ({ image: _, ...otherProps }: HomeHeroProps) => {
   return <BasicHomeHero image={<HeroInteractive />} {...otherProps} />;
 };
 
-const Layout = () => {
+const Layout = () => (
+  <CssModificationProvider>
+    <ThemePresetProvider
+      presets={themePresets}
+      defaultPresetId={defaultThemePresetId}
+    >
+      <CssStyleSync />
+      <WebsiteLayout />
+    </ThemePresetProvider>
+  </CssModificationProvider>
+);
+
+function WebsiteLayout() {
   const t = useI18n<typeof import('i18n')>();
   const { pathname } = useLocation();
+  const { activePreset, activeModule } = useThemePreset();
   const isHomePage = pathname === '/' || pathname === '/zh/';
-
   return (
-    <CssModificationProvider>
-      <CssStyleSync />
-      <SlotPreviewLayout
-        beforeNav={
-          isHomePage ? (
-            <Banner
-              href={t('bannerHref')}
-              message={t('bannerMessage')}
-              storageKey="rp-banner-rspress-custom-theme-v2-closed"
-            />
-          ) : null
-        }
-        beforeNavTitle={<NavIcon />}
-      />
-    </CssModificationProvider>
+    <SlotPreviewLayout
+      layout={activeModule?.Layout}
+      themeKey={activePreset.id}
+      beforeNav={
+        isHomePage ? (
+          <Banner
+            href={t('bannerHref')}
+            message={t('bannerMessage')}
+            storageKey="rp-banner-rspress-custom-theme-v2-closed"
+          />
+        ) : null
+      }
+      beforeNavTitle={<NavIcon />}
+    />
   );
-};
+}
 
 const DocLayout = (props: DocLayoutProps) => {
   return (
@@ -174,5 +191,6 @@ export {
   HomeLayout,
   Layout,
   Search,
+  PresetOutline as Outline,
   Tag,
 };

@@ -6,8 +6,11 @@ retries. Use one tap for a toggle and wait for its result before the next action
 
 Read-only `app.expectLocation` checks the actual destination URL, heading, and
 closed mobile menu. `search.expectResults` checks exact Japanese input and result
-text independently of visual glyph recognition; AI assertions still verify the
-visible results and highlights. `overview.expectLinks` verifies that command entries have real link destinations
+text independently of visual glyph recognition. `nav.expectMobileMenuItem` checks
+exact item text inside the open mobile menu and its expanded parent groups,
+so collapsed descendants cannot satisfy the check. AI taps still open and navigate
+the menu. Search AI assertions still verify the visible results and highlights.
+`overview.expectLinks` verifies that command entries have real link destinations
 even when styled as gray code. These checks do not change the page or bypass UI
 navigation.
 

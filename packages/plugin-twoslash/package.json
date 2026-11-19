@@ -17,10 +17,7 @@
   ],
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
+    ".": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -39,7 +36,7 @@
     "@shikijs/twoslash": "^4.2.0",
     "mdast-util-from-markdown": "^2.1.0",
     "mdast-util-gfm": "^3.1.0",
-    "mdast-util-to-hast": "^13.2.1",
+    "mdast-util-to-hast": "^13.2.2",
     "picocolors": "^1.1.1",
     "twoslash": "^0.3.9"
   },

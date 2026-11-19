@@ -1,9 +1,6 @@
 .stack {
   position: fixed;
-  top: calc(
-    var(--rp-banner-height, 0px) + var(--rp-nav-height) +
-      var(--rp-sidebar-menu-height) + 12px
-  );
+  bottom: max(16px, env(safe-area-inset-bottom));
   right: max(20px, env(safe-area-inset-right));
   z-index: calc(var(--rp-z-index-nav, 60) + 1);
   display: flex;
@@ -122,7 +119,9 @@
 
 @media (max-width: 767px) {
   .stack {
+    top: auto;
     right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
   }
 
   .toolbar {

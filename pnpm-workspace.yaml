@@ -32,7 +32,7 @@ minimumReleaseAgeExclude:
   - '@rsdoctor/*'
   - '@rslint/*'
   - '@rstack-dev/*'
-  - '@rstackjs/create-toolkit'
+  - '@rstackjs/*'
   - rstack
   - heading-case
   # Renovate security update: tinypool@2.1.2

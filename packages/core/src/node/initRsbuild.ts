@@ -385,6 +385,11 @@ async function createInternalBuildConfig(
       },
     },
     tools: {
+      rspack: {
+        experiments: {
+          runtimeMode: 'rspack',
+        },
+      },
       swc: {
         jsc: {
           transform: {

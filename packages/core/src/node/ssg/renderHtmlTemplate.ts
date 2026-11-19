@@ -83,7 +83,19 @@ function renderRoutePreloadLinks(
               asset,
             )
           : `${manifest.assetPrefix}${asset}`;
-      return `<link rel="preload" href="${escapeHtmlAttribute(href)}" as="script">`;
+      const rel = manifest.isModule ? 'modulepreload' : 'preload';
+      const as = manifest.isModule ? '' : ' as="script"';
+      // Classic chunk loading only sets anonymous CORS for cross-origin URLs.
+      // Module requests always use CORS, including same-origin module preloads.
+      const crossOrigin = manifest.crossOriginLoading;
+      const crossorigin =
+        crossOrigin &&
+        (manifest.isModule ||
+          crossOrigin === 'use-credentials' ||
+          /^(?:[a-z][a-z\d+.-]*:)?\/\//i.test(href))
+          ? ` crossorigin="${crossOrigin}"`
+          : '';
+      return `<link rel="${rel}" href="${escapeHtmlAttribute(href)}"${as}${crossorigin}>`;
     })
     .join('');
 }
