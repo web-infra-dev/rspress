@@ -218,7 +218,8 @@ function CopyablePrompt({
     <div
       {...props}
       ref={cardRef}
-      className={clsx('rp-prompt', className)}
+      // Copyable prompt chrome owns its typography; custom MDX keeps doc styles.
+      className={clsx('rp-prompt', 'rp-not-doc', className)}
       style={
         {
           '--rp-prompt-accent': AGENT_ICONS[iconIndex].color,

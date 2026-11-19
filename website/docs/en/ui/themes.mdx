@@ -1,0 +1,36 @@
+---
+description: Preview Rspress theme presets and copy a prompt for your AI agent to apply one to your documentation site.
+---
+
+# Themes
+
+Explore Rspress's [theme customization](/guide/basic/custom-theme) capabilities. This page brings together a collection of theme presets. Click a preset to switch the site's appearance and choose a style for your documentation.
+
+import { ThemePresetSwitcher } from '../../components/ThemePresetSwitcher';
+import { ThemePresetContent } from '../../components/ThemePresetContent';
+
+<ThemePresetSwitcher />
+
+The preview stays active as you navigate to other pages. Select **Rspress** to return to the default preset, or use **Reset** in the floating toolbar to clear all CSS changes. Refreshing the page also clears the preview.
+
+<ThemePresetContent presetId="minimal">
+
+## Minimal
+
+Inspired by the documentation layout of [Ruixen UI](https://ruixen.com/docs/components/card-carousel-hero), this preset reproduces the three-column layout, Geist typography, sidebar spacing, outline links, document headings, numbered steps, and code tabs. It includes light and dark colors and keeps Rspress's responsive navigation.
+
+The stylesheet uses [CSS variables](/ui/vars) and built-in BEM class names. The normal custom theme entry adds the breadcrumb. CSS styles the built-in outline while preserving reading progress, edit, and back-to-top actions. It imports the stylesheet, wraps the default layout using its slots, and reexports built-in components. The website previews the same source folder.
+
+The CSS loads Geist and Geist Mono from a pinned font CDN. You can host these fonts locally by replacing the two `@font-face` URLs.
+
+</ThemePresetContent>
+
+## Use a preset
+
+Select a theme, then click **Copy prompt**. Paste the prompt into your AI agent in your Rspress project. It includes instructions and the official resources for applying the selected theme while preserving your existing content and customizations.
+
+The **Rspress** prompt helps restore the default theme; the **Minimal** prompt helps apply the complete preset, including its layout components.
+
+## Customize the colors
+
+Ask your agent to adjust the preset's [CSS variables](/ui/vars) for your preferred colors in both light and dark appearances. See [Custom theme](/guide/basic/custom-theme) for more customization options.

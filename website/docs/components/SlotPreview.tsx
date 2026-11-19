@@ -2,6 +2,7 @@ import { useLang } from '@rspress/core/runtime';
 import { Layout, type LayoutProps, Link } from '@rspress/core/theme-original';
 import {
   createContext,
+  type ComponentType,
   type ReactNode,
   useContext,
   useState,
@@ -138,7 +139,11 @@ export function SlotPreviewToggle() {
   );
 }
 
-export function SlotPreviewLayout(props: LayoutProps) {
+export function SlotPreviewLayout({
+  layout: PreviewLayout = Layout,
+  themeKey = 'rspress',
+  ...props
+}: LayoutProps & { layout?: ComponentType<LayoutProps>; themeKey?: string }) {
   const [enabled, setEnabled] = useState(false);
   const isZh = useLang() === 'zh';
   const previewProps = { ...props };
@@ -158,7 +163,7 @@ export function SlotPreviewLayout(props: LayoutProps) {
     <SlotPreviewContext.Provider
       value={{ enabled, toggle: () => setEnabled(value => !value) }}
     >
-      <Layout {...previewProps} />
+      <PreviewLayout key={themeKey} {...previewProps} />
       <div className={toolbarStyles.stack}>
         {enabled ? (
           <FloatingToolbar
