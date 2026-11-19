@@ -133,13 +133,16 @@ export const Tabs = forwardRef(
     if (import.meta.env.SSG_MD) {
       return (
         <>
-          {tabValues.map(({ label, content }) => {
+          {tabValues.map(({ label, content }, index) => {
             return (
-              <>
-                {`\n**${label}**\n\n`}
+              <div key={index}>
+                {label != null && (
+                  <p>
+                    <strong>{label}</strong>
+                  </p>
+                )}
                 {content}
-                {`\n`}
-              </>
+              </div>
             );
           })}
         </>

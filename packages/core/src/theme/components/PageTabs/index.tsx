@@ -111,6 +111,23 @@ export const PageTabs = forwardRef(
       children,
     );
 
+    if (import.meta.env.SSG_MD) {
+      return (
+        <>
+          {tabValues.map(({ label, content }, index) => (
+            <div key={index}>
+              {label != null && (
+                <p>
+                  <strong>{label}</strong>
+                </p>
+              )}
+              {content}
+            </div>
+          ))}
+        </>
+      );
+    }
+
     return (
       <>
         {/* First screen during SSR */}
