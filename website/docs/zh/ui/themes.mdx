@@ -7,10 +7,13 @@ description: 一键预览 Rspress 主题预设，并复制提示词，让 AI Age
 为你的文档选择一种风格。点击预设即可在整个网站中预览，包括导航栏、侧边栏和正文。使用导航栏的亮色 / 暗色切换按钮，查看两种模式下的效果。
 
 import { ThemePresetSwitcher } from '../../components/ThemePresetSwitcher';
+import { ThemePresetContent } from '../../components/ThemePresetContent';
 
 <ThemePresetSwitcher />
 
 切换到其他页面后，预览仍然生效。选择 **Rspress** 可以恢复默认预设，也可以点击浮动工具栏中的**复原**，清除所有 CSS 修改。刷新页面也会清除预览。
+
+<ThemePresetContent presetId="minimal">
 
 ## Minimal
 
@@ -19,6 +22,8 @@ import { ThemePresetSwitcher } from '../../components/ThemePresetSwitcher';
 样式通过 [CSS 变量](/ui/vars)和内置 BEM 类名实现。普通自定义主题入口补充面包屑。目录区域直接使用内置 Outline，通过 CSS 调整样式，保留阅读进度、编辑页面和返回顶部功能。入口正常导入样式、使用默认布局的插槽并重导出内置组件。官网预览使用同一套源码文件夹。
 
 CSS 从固定版本的字体 CDN 加载 Geist 和 Geist Mono。也可以修改两条 `@font-face` URL，将字体托管到自己的站点。
+
+</ThemePresetContent>
 
 ## 使用预设 \{#use-a-preset}
 

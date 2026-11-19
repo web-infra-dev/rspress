@@ -1,5 +1,10 @@
 import { useDark, useLang } from '@rspress/core/runtime';
-import { copyToClipboard } from '@rspress/core/theme';
+import {
+  copyToClipboard,
+  IconCopy,
+  IconSuccess,
+  SvgWrapper,
+} from '@rspress/core/theme';
 import { type CSSProperties, useState } from 'react';
 import { useThemePreset } from '../../theme/presets/ThemePresetProvider';
 import { localizePresetText } from '../../theme/presets/types';
@@ -123,6 +128,7 @@ export function ThemePresetSwitcher() {
         <button
           type="button"
           className={styles.action}
+          data-copied={copyStatus === 'copied'}
           onClick={async () => {
             let copied = false;
             try {
@@ -142,13 +148,20 @@ export function ThemePresetSwitcher() {
             });
           }}
         >
-          {copyStatus === 'copied'
-            ? isZh
-              ? '已复制'
-              : 'Copied'
-            : isZh
-              ? '复制提示词'
-              : 'Copy prompt'}
+          <SvgWrapper
+            icon={copyStatus === 'copied' ? IconSuccess : IconCopy}
+            className={styles.actionIcon}
+            aria-hidden="true"
+          />
+          <span>
+            {copyStatus === 'copied'
+              ? isZh
+                ? '已复制'
+                : 'Copied'
+              : isZh
+                ? '复制提示词'
+                : 'Copy prompt'}
+          </span>
         </button>
       </div>
       {error ? (

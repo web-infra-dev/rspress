@@ -256,23 +256,51 @@
 }
 
 .action {
-  padding: 7px 12px;
-  border: 1px solid var(--rp-c-divider-light);
-  border-radius: 8px;
-  color: var(--rp-c-text-1);
-  background: var(--rp-c-bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 132px;
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 1px solid var(--rp-c-text-1);
+  border-radius: 10px;
+  color: var(--rp-c-bg);
+  background: var(--rp-c-text-1);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
   font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
   text-decoration: none;
   cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 
   &:hover {
+    background: var(--rp-c-text-2);
+    border-color: var(--rp-c-text-2);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 12%);
+  }
+
+  &[data-copied='true'] {
+    color: var(--rp-c-text-1);
     background: var(--rp-c-bg-soft);
+    border-color: var(--rp-c-divider-light);
+    box-shadow: none;
   }
 
   &:focus-visible {
     outline: 2px solid var(--rp-c-brand);
     outline-offset: 2px;
   }
+}
+
+.actionIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 @media (max-width: 600px) {
@@ -291,7 +319,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card {
+  .card,
+  .action {
     transition: none;
   }
 }
