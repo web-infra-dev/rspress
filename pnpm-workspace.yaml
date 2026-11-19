@@ -20,19 +20,6 @@ linkWorkspacePackages: true
 # Reduce the risk of installing compromised packages
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
-  - '@rstackjs/cli-darwin-x64@0.9.3'
-  - '@rstackjs/cli-darwin-arm64@0.9.3'
-  - '@rstackjs/cli-linux-x64-gnu@0.9.3'
-  - '@rstackjs/cli-linux-x64-musl@0.9.3'
-  - '@rstackjs/cli-win32-x64-msvc@0.9.3'
-  - '@rstackjs/cli-linux-arm64-gnu@0.9.3'
-  - '@rstackjs/cli-linux-ppc64-gnu@0.9.3'
-  - '@rstackjs/cli-linux-s390x-gnu@0.9.3'
-  - '@rstackjs/cli-win32-ia32-msvc@0.9.3'
-  - '@rstackjs/cli-linux-arm64-musl@0.9.3'
-  - '@rstackjs/cli-win32-arm64-msvc@0.9.3'
-  - '@rstackjs/cli-linux-riscv64-gnu@0.9.3'
-  - '@rstackjs/cli-linux-riscv64-musl@0.9.3'
   - '@swc-next/*'
   - '@rspack/*'
   - '@rsbuild/*'
@@ -45,7 +32,7 @@ minimumReleaseAgeExclude:
   - '@rsdoctor/*'
   - '@rslint/*'
   - '@rstack-dev/*'
-  - '@rstackjs/create-toolkit'
+  - '@rstackjs/*'
   - rstack
   - heading-case
   # Renovate security update: tinypool@2.1.2
