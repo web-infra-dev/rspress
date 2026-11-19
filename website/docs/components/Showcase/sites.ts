@@ -59,9 +59,9 @@ export const showcaseSites = [
     title: 'byethrow',
     url: 'https://praha-inc.github.io/byethrow/',
     image:
-      'https://github.com/user-attachments/assets/9dd6b30d-eb71-46fb-8363-33683a577364',
-    width: 3600,
-    height: 2576,
+      'https://github.com/user-attachments/assets/4dd9877e-e76b-4916-a775-8558f5f142e0',
+    width: 1265,
+    height: 712,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-14559097',
   },
