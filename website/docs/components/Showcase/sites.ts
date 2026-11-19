@@ -2,15 +2,16 @@
 // Keep GitHub-hosted images and their original dimensions to avoid layout shifts.
 // cspell:words toukey Filenest Alauda byethrow pacwich Taroify Addfox praha URAI geosearch Specta moduix
 // Keep verified Rspress 2 sites before older or unverified submissions.
-// Versions checked against live generator metadata or site dependencies on 2026-11-18.
+// Versions checked against live generator metadata or site dependencies on 2026-11-19.
+// Screenshots refreshed for older submissions now using Rspress 2 on 2026-11-19.
 export const showcaseSites = [
   {
     title: 'Lynx',
     url: 'https://lynxjs.org',
     image:
-      'https://github.com/user-attachments/assets/3c632433-ce3b-48f8-9ce1-8a41d6c3f6de',
-    width: 5088,
-    height: 3642,
+      'https://github.com/user-attachments/assets/0e8944bd-4f12-4565-ae9c-7ff1a55ed1ba',
+    width: 1265,
+    height: 712,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-12478092',
   },
@@ -38,9 +39,9 @@ export const showcaseSites = [
     title: 'Re.Pack',
     url: 'https://re-pack.dev/',
     image:
-      'https://github.com/web-infra-dev/rspress/assets/7237365/f04e7ed5-40de-4e17-ae1c-e22fce694cdb',
-    width: 2992,
-    height: 1626,
+      'https://github.com/user-attachments/assets/cbb2fa93-bf02-45ab-b671-75f1890afa3a',
+    width: 1265,
+    height: 712,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-9329552',
   },
@@ -48,9 +49,9 @@ export const showcaseSites = [
     title: 'Module Federation',
     url: 'https://module-federation.io/',
     image:
-      'https://github.com/web-infra-dev/rspress/assets/27547179/dfbcd160-f863-4816-92f6-d09a34e943f9',
-    width: 1686,
-    height: 1060,
+      'https://github.com/user-attachments/assets/bf33944b-facf-4788-a158-82df41af603f',
+    width: 1265,
+    height: 712,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-9417626',
   },
@@ -88,9 +89,9 @@ export const showcaseSites = [
     title: 'React Native Testing Library',
     url: 'https://oss.callstack.com/react-native-testing-library/',
     image:
-      'https://github.com/web-infra-dev/rspress/assets/7237365/05c390a1-63a1-40ec-836f-e6804fba1d79',
-    width: 2992,
-    height: 1626,
+      'https://github.com/user-attachments/assets/053aee33-a040-4814-baa2-cc97109e6e24',
+    width: 1265,
+    height: 712,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-9554672',
   },
@@ -118,9 +119,9 @@ export const showcaseSites = [
     title: 'LifeOS for Obsidian',
     url: 'https://lifeos.vip',
     image:
-      'https://github.com/user-attachments/assets/52039c3c-75fc-4c26-9df9-36cc353e8f8e',
-    width: 3840,
-    height: 2110,
+      'https://github.com/user-attachments/assets/66a9693d-0e0c-4e77-bb22-282dfc2af1ee',
+    width: 1265,
+    height: 712,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-11411689',
   },
@@ -178,9 +179,9 @@ export const showcaseSites = [
     title: 'Alauda Container Platform',
     url: 'https://docs.alauda.io',
     image:
-      'https://github.com/user-attachments/assets/950b9a02-47b6-4d53-a67f-08f56392cc83',
-    width: 4400,
-    height: 2700,
+      'https://github.com/user-attachments/assets/1588cb2d-2427-4eb8-b183-b70373a805a8',
+    width: 1265,
+    height: 712,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-13002732',
   },
@@ -188,9 +189,9 @@ export const showcaseSites = [
     title: 'FlowGram.AI',
     url: 'https://flowgram.ai/en',
     image:
-      'https://github.com/user-attachments/assets/28d52422-31d6-4854-88b1-ff4f9bcd5ef8',
-    width: 3030,
-    height: 2110,
+      'https://github.com/user-attachments/assets/9a162b02-cb42-465a-af95-d1d193b4de67',
+    width: 1265,
+    height: 712,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-12444692',
   },
@@ -198,9 +199,9 @@ export const showcaseSites = [
     title: 'React Native Bottom Tabs',
     url: 'https://oss.callstack.com/react-native-bottom-tabs/',
     image:
-      'https://github.com/user-attachments/assets/81497b86-ade8-4242-8f0d-1cfe3806f0bf',
-    width: 3018,
-    height: 1646,
+      'https://github.com/user-attachments/assets/455f3898-8d7e-4af8-a708-504040a8b2fa',
+    width: 1265,
+    height: 712,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-11078135',
   },
@@ -208,9 +209,9 @@ export const showcaseSites = [
     title: 'FlutterAds',
     url: 'https://flutterads.top/',
     image:
-      'https://github.com/user-attachments/assets/8d805e90-b97a-4bae-b67c-1f126a2d12a6',
-    width: 3360,
-    height: 1854,
+      'https://github.com/user-attachments/assets/d39e7606-3428-4463-b2b3-e9c007a4c892',
+    width: 1265,
+    height: 712,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-10332905',
   },
