@@ -10,8 +10,6 @@ description: '定制 Rspress 的 Rsbuild 和 Markdown 编译配置，包括插�
 
 用于自定义 Rsbuild 的配置项，完整配置项请查看 [Rsbuild - 配置](https://rsbuild.rs/zh/config/)。
 
-Rspress 在客户端、SSG 和 Markdown 构建中默认启用 Rspack 的 [`experiments.runtimeMode: 'rspack'`](https://rspack.rs/zh/config/experiments#experimentsruntimemode)。如需使用兼容 webpack 的运行时，可将 `builderConfig.tools.rspack.experiments.runtimeMode` 设置为 `'webpack'`。
-
 - 示例：使用 [resolve.alias](https://rsbuild.rs/zh/config/resolve/alias) 配置路径别名：
 
 ```ts title="rspress.config.ts"
