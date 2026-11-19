@@ -1,6 +1,6 @@
 // Community submissions: https://github.com/web-infra-dev/rspress/discussions/607
 // Keep GitHub-hosted images and their original dimensions to avoid layout shifts.
-// cspell:words toukey Filenest Alauda byethrow pacwich Taroify Addfox praha URAI geosearch Specta
+// cspell:words toukey Filenest Alauda byethrow pacwich Taroify Addfox praha URAI geosearch Specta moduix
 // Keep verified Rspress 2 sites before older or unverified submissions.
 // Versions checked against live generator metadata or site dependencies on 2026-11-18.
 export const showcaseSites = [
@@ -23,6 +23,16 @@ export const showcaseSites = [
     height: 1359,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-19703964',
+  },
+  {
+    title: 'moduix',
+    url: 'https://moduix.dev/',
+    image:
+      'https://raw.githubusercontent.com/Blinks44/moduix/5b0db9e3d383781bf93919da3acffd8c7f137e15/website/docs/public/banner.jpg',
+    width: 2560,
+    height: 1280,
+    source:
+      'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-19748750',
   },
   {
     title: 'Re.Pack',
