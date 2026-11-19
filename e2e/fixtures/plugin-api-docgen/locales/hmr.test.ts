@@ -205,7 +205,7 @@ test.describe('API docgen translation updates', () => {
   test(
     'reloads config translations after the dev server restarts',
     { timeout: 120_000 },
-    async ({ page, context }) => {
+    async ({ page }) => {
       await openPage(page);
       await waitForHeaders(page, '组件属性 | 名称\n字段', '参数说明');
       const configPath = path.join(appDir, 'rspress.config.ts');
@@ -215,21 +215,13 @@ test.describe('API docgen translation updates', () => {
         'Updated config property',
       );
       expect(updatedConfig).not.toBe(config);
-      // The old HMR client can reconnect and reload during the next navigation.
-      // Close it before restarting so openPage only observes the new page's socket.
-      await page.close();
       const previousCount = buildCount();
       await writeFile(configPath, updatedConfig);
       await waitForBuild(previousCount);
       expect(output).toContain('restarting server');
       // Navigate once, after the replacement server has compiled.
-      const restartedPage = await context.newPage();
-      await openPage(restartedPage);
-      await waitForHeaders(
-        restartedPage,
-        'Updated config property',
-        '参数说明',
-      );
+      await openPage(page);
+      await waitForHeaders(page, 'Updated config property', '参数说明');
     },
   );
 });
