@@ -14,6 +14,7 @@ import { fixturePolicy } from './scripts/original-fixture-data.js';
 import { startFixtureServer } from './fixture-server.js';
 import {
   expectLocation,
+  expectMobileMenuItem,
   expectOverviewLinks,
   expectSearchResults,
 } from './scripts/page-assertions.js';
@@ -217,6 +218,20 @@ const location = defineNode<typeof locationInput, void, Context>({
     await expectLocation(context.page, input);
   },
 });
+const mobileMenuInput = z.strictObject({
+  item: z.string().min(1),
+  parents: z.array(z.string().min(1)).optional(),
+});
+const mobileMenuItem = defineNode<typeof mobileMenuInput, void, Context>({
+  name: 'nav.expectMobileMenuItem',
+  description:
+    'Verify an item in the open mobile menu and its expanded parent groups without operating the UI.',
+  inputSchema: mobileMenuInput,
+  async execute({ context, input }) {
+    if (!context.page) throw new Error('Call app.open first');
+    await expectMobileMenuItem(context.page, input);
+  },
+});
 const searchInput = z.strictObject({
   query: z.string().min(1),
   count: z.number().int().positive(),
@@ -275,6 +290,7 @@ export default defineTestProject<Context, ProjectContext>({
     open,
     updateFixture,
     location,
+    mobileMenuItem,
     searchResults,
     overviewLinks,
     ...createMidsceneNodes<Context>({
