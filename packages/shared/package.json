@@ -10,34 +10,13 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./constants": {
-      "types": "./dist/constants.d.ts",
-      "default": "./dist/constants.js"
-    },
-    "./logger": {
-      "types": "./dist/logger.d.ts",
-      "default": "./dist/logger.js"
-    },
-    "./node-utils": {
-      "types": "./dist/node-utils.d.ts",
-      "default": "./dist/node-utils.js"
-    },
-    "./lodash-es": {
-      "types": "./dist/lodash-es.d.ts",
-      "default": "./dist/lodash-es.js"
-    },
-    "./github-slugger": {
-      "types": "./dist/github-slugger.d.ts",
-      "default": "./dist/github-slugger.js"
-    },
-    "./gray-matter": {
-      "types": "./dist/gray-matter.d.ts",
-      "default": "./dist/gray-matter.js"
-    }
+    ".": "./dist/index.js",
+    "./constants": "./dist/constants.js",
+    "./github-slugger": "./dist/github-slugger.js",
+    "./gray-matter": "./dist/gray-matter.js",
+    "./lodash-es": "./dist/lodash-es.js",
+    "./logger": "./dist/logger.js",
+    "./node-utils": "./dist/node-utils.js"
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

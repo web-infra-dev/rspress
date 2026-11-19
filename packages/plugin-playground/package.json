@@ -17,14 +17,8 @@
   ],
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/cli/index.d.ts",
-      "default": "./dist/cli/index.js"
-    },
-    "./web": {
-      "types": "./dist/web/index.d.ts",
-      "default": "./dist/web/index.js"
-    }
+    ".": "./dist/cli/index.js",
+    "./web": "./dist/web/web.js"
   },
   "module": "./dist/cli/index.js",
   "types": "./dist/cli/index.d.ts",
