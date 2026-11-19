@@ -20,6 +20,7 @@
     "#theme": "./src/theme/index.ts"
   },
   "exports": {
+    "./shiki-transformers": "./dist/shiki-transformers.js",
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
@@ -37,10 +38,6 @@
     "./runtime": {
       "types": "./dist/runtime/index.d.ts",
       "default": "./dist/runtime/index.js"
-    },
-    "./shiki-transformers": {
-      "types": "./dist/shiki-transformers.d.ts",
-      "default": "./dist/shiki-transformers.js"
     }
   },
   "main": "./dist/index.js",

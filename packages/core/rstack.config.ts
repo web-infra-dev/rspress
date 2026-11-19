@@ -47,10 +47,27 @@ const PRESERVE_IMPORT_META_ENV = {
 };
 
 define.lib({
-  tools: {
-    rspack: {
-      experiments: {
-        runtimeMode: 'rspack',
+  exports: {
+    // Node, runtime, and theme reuse the index entry with different outputs.
+    include: ['shiki-transformers'],
+    custom: {
+      '.': {
+        types: './dist/index.d.ts',
+        import: './dist/index.js',
+      },
+      './dist/*': './dist/*',
+      './package.json': './package.json',
+      './theme': {
+        types: './dist/theme/index.d.ts',
+        default: './dist/theme/index.js',
+      },
+      './theme-original': {
+        types: './dist/theme/index.d.ts',
+        default: './dist/theme/index.js',
+      },
+      './runtime': {
+        types: './dist/runtime/index.d.ts',
+        default: './dist/runtime/index.js',
       },
     },
   },

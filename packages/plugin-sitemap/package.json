@@ -12,10 +12,7 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
+    ".": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",

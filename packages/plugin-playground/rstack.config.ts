@@ -6,13 +6,7 @@ import { pluginPublint } from 'rsbuild-plugin-publint';
 const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
 
 define.lib({
-  tools: {
-    rspack: {
-      experiments: {
-        runtimeMode: 'rspack',
-      },
-    },
-  },
+  exports: true,
   plugins: [pluginPublint()],
   lib: [
     {
@@ -38,7 +32,7 @@ define.lib({
     },
     {
       source: {
-        entry: { index: 'src/web/index.ts' },
+        entry: { web: 'src/web/index.ts' },
       },
       plugins: [pluginReact()],
       output: {
