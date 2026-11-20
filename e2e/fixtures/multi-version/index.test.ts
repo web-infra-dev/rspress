@@ -40,6 +40,33 @@ test.describe('multi version', async () => {
     await expect(h1).toContainText('v1');
   });
 
+  test('language and version switchers work in desktop and tablet navigation', async ({
+    page,
+  }) => {
+    await page.goto(`http://localhost:${appPort}/base/`, {
+      waitUntil: 'networkidle',
+    });
+
+    const desktopSwitchers = page.locator(
+      '.rp-nav__others > ul > li.rp-nav-menu__item',
+    );
+    await expect(desktopSwitchers).toHaveCount(2);
+    const languageSwitcher = desktopSwitchers.filter({ hasText: 'English' });
+    await languageSwitcher.hover();
+    await expect(
+      languageSwitcher.getByRole('link', { name: '简体中文' }),
+    ).toBeVisible();
+
+    await page.setViewportSize({ width: 1024, height: 768 });
+    await page.locator('.rp-nav-hamburger__md').hover();
+    const versionSwitcher = page.locator(
+      '.rp-nav-hamburger__md + .rp-hover-group ul > li.rp-nav-menu__item',
+    );
+    await versionSwitcher.hover();
+    await versionSwitcher.getByRole('link', { name: 'v2' }).click();
+    await expect(page.locator('h1')).toContainText('v2');
+  });
+
   test('Not Default version default language', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/v2`, {
       waitUntil: 'networkidle',
