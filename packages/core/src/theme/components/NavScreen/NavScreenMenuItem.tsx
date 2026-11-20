@@ -4,7 +4,7 @@ import type {
   NavItemWithLink,
   NavItemWithLinkAndChildren,
 } from '@rspress/core';
-import { matchNavbar, useLocation } from '@rspress/core/runtime';
+import { matchNavbar, useLocation, useSite } from '@rspress/core/runtime';
 import { IconArrowDown, Link, SvgWrapper, Tag } from '@rspress/core/theme';
 import clsx from 'clsx';
 import type React from 'react';
@@ -96,9 +96,11 @@ export function NavScreenMenuItemWithLink({
   menuItem,
 }: NavScreenMenuItemWithLinkProps) {
   const { pathname } = useLocation();
+  const { site } = useSite();
+  const versions = site.multiVersion?.versions ?? [];
   const isActive = useMemo(() => {
-    return matchNavbar(menuItem, pathname);
-  }, [menuItem, pathname]);
+    return matchNavbar(menuItem, pathname, versions);
+  }, [menuItem, pathname, versions]);
 
   return (
     <NavScreenMenuItemRaw

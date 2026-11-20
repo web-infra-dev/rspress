@@ -63,8 +63,12 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
   const versions = config.multiVersion?.versions ?? [];
   const base = (config.base ?? '/').replace(/\/$/, '');
   const routePathname = base ? 'cleanPathname' : 'pathname';
+  // Only paths under the base belong to this app — a sibling deployment
+  // sharing a string prefix with the base (e.g. base `/docs` and path
+  // `/docs-admin/foo`) must be left untouched.
+  const underBaseGuard = base ? 'underBase && ' : '';
   const pathDeclarations = base
-    ? `base = ${serializeInlineScriptData(base)}, cleanPathname = pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname, pathSegments = cleanPathname.split('/').filter(Boolean)`
+    ? `base = ${serializeInlineScriptData(base)}, underBase = pathname === base || pathname.startsWith(base + '/'), cleanPathname = underBase ? pathname.slice(base.length) || '/' : pathname, pathSegments = cleanPathname.split('/').filter(Boolean)`
     : `pathSegments = pathname.split('/').filter(Boolean)`;
   const langIndex = versions.length ? 'langIndex' : '0';
   const versionDeclarations = versions.length
@@ -84,12 +88,12 @@ export const getInlineLocaleRedirectScript = (config: UserConfig) => {
   window.location['replace'](${base ? 'base + ' : ''}newPathname + trailingSlash + search)`;
   const redirectScript =
     localeRedirect === 'only-default-lang'
-      ? `if (currentLang === defaultLang && langs.includes(targetLang) && targetLang !== defaultLang) {
+      ? `if (${underBaseGuard}currentLang === defaultLang && langs.includes(targetLang) && targetLang !== defaultLang) {
         var newPathSegments = pathSegments.slice()
         newPathSegments.splice(${langIndex}, 0, targetLang)
         ${replaceLocationScript}
       }`
-      : `if (langs.includes(targetLang) && targetLang !== currentLang) {
+      : `if (${underBaseGuard}langs.includes(targetLang) && targetLang !== currentLang) {
         var newPathSegments = pathSegments.slice()
         if (targetLang === defaultLang) {
           newPathSegments.splice(${langIndex}, 1)
