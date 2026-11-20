@@ -107,6 +107,19 @@ test.describe('Twoslash plugin', async () => {
 
     const errorLine = codeBlock.locator('.twoslash-error-line');
     await expect(errorLine).toBeAttached();
+
+    const bounds = await errorLine.evaluate(node => {
+      const line = node.getBoundingClientRect();
+      const pre = node.closest('pre')!.getBoundingClientRect();
+      return {
+        left: line.left,
+        right: line.right,
+        preLeft: pre.left,
+        preRight: pre.right,
+      };
+    });
+    expect(bounds.left).toBeCloseTo(bounds.preLeft, 1);
+    expect(bounds.right).toBeCloseTo(bounds.preRight, 1);
   });
 
   test('should not apply twoslash to code blocks without twoslash', async ({

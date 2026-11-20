@@ -218,8 +218,8 @@
   border-left: 3px solid var(--twoslash-error-color);
   color: var(--twoslash-error-color);
   padding: 6px 12px;
-  margin: 0.2em 0;
-  min-width: 100%;
+  margin: 0.2em -1.25rem;
+  min-width: calc(100% + 2.5rem);
   width: max-content;
 }
 
@@ -310,11 +310,11 @@
   border-left: 3px solid var(--twoslash-tag-color);
   color: var(--twoslash-tag-color);
   padding: 6px 10px;
-  margin: 0.2em 0;
+  margin: 0.2em -1.25rem;
   display: flex;
   align-items: center;
   gap: 0.3em;
-  min-width: 100%;
+  min-width: calc(100% + 2.5rem);
   width: max-content;
 }
 
