@@ -1,7 +1,6 @@
 /// <reference path="../index.d.ts" />
 
 import NodePath from 'node:path';
-import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo, RspressPlugin, UserConfig } from '@rspress/core';
 import { getIconUrlPath, withBase, withSiteOrigin } from '@rspress/core';
 import { Feed } from 'feed';
@@ -13,6 +12,7 @@ import {
   extractHtmlContent,
   type ResolvedOutput,
   readFile,
+  resolveUrl,
   routePathToHtmlPath,
   writeFile,
 } from './internals';

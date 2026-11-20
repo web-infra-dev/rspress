@@ -1,9 +1,9 @@
-import { resolve as resolveUrl } from 'node:url';
 import type { PageIndexInfo, UserConfig } from '@rspress/core';
 import type { Author, FeedOptions } from 'feed';
 import {
   concatArray,
   type ResolvedOutput,
+  resolveUrl,
   selectNonNullishProperty,
   toDate,
 } from './internals';
