@@ -7,13 +7,14 @@ import {
 const isCI = Boolean(process.env.CI);
 
 export const test = baseTest.extend({
-  playwright: async ({ task }, use) => {
+  playwright: async (_context, use) => {
     await use({
       launchOptions: isCI ? { channel: 'chrome' } : {},
       contextOptions: {
         viewport: { width: 1440, height: 900 },
       },
-      trace: isCI ? (task.retryCount === 1 ? 'on' : 'off') : 'on',
+      // Keep the original failure, even when a later retry passes.
+      trace: isCI ? 'retain-on-failure' : 'on',
     } satisfies PlaywrightOptions);
   },
 });
