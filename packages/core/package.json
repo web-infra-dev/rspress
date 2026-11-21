@@ -116,7 +116,7 @@
     "@types/web": "^0.0.367",
     "cac": "^7.1.0",
     "execa": "8.0.1",
-    "mdast-util-directive": "^3.1.1",
+    "mdast-util-directive": "^3.2.1",
     "mdast-util-mdx-expression": "^2.0.1",
     "memfs": "^4.80.1",
     "p-map": "^7.1.1",
