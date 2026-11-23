@@ -1,0 +1,66 @@
+import { Steps } from '@rspress/core/theme';
+import { Download, PlatformTabs, ReleaseLink } from './_ReleaseLink';
+
+export const version = '4.2.0';
+
+# Nested inline components
+
+Top level: download <ReleaseLink />.
+
+## <ReleaseLink />
+
+- Root list: download <ReleaseLink /> ({version}).
+
+| Download        | Version   |
+| --------------- | --------- |
+| <ReleaseLink /> | {version} |
+
+Root emphasis: **<ReleaseLink />** (_{version}_).
+
+> Root quote: download <ReleaseLink /> ({version}).
+
+2. **<div id="root-download">Download LynxExplorer</div>**
+
+Root component: **<Download />**.
+
+| Download                             | Version   |
+| ------------------------------------ | --------- |
+| **<div>Download LynxExplorer</div>** | {version} |
+| **<Download />**                     | {version} |
+
+<div>
+
+HTML container: download <ReleaseLink />.
+
+Next paragraph: version {version}.
+
+</div>
+
+<Steps>
+
+1. Download the release.
+
+   <PlatformTabs><PlatformTabs.Tab>
+
+   Nested container: download <ReleaseLink />.
+
+   Next nested paragraph: version {version}.
+
+   Code example: `<ReleaseLink /> {version}`.
+
+   ```mdx
+   <ReleaseLink /> {version}
+   ```
+
+   </PlatformTabs.Tab></PlatformTabs>
+
+2. **<div id="download">Download LynxExplorer</div>**
+
+   Steps component: **<Download />**.
+
+   | Download                             | Version   |
+   | ------------------------------------ | --------- |
+   | **<div>Download LynxExplorer</div>** | {version} |
+   | **<Download />**                     | {version} |
+
+</Steps>

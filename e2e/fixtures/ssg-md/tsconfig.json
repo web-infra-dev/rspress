@@ -10,10 +10,13 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
+    "paths": {
+      "@e2e/*": ["../../*"]
+    },
     "useDefineForClassFields": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["docs", "theme", "rspress.config.ts"],
+  "include": ["doc", "theme", "rspress.config.ts", "*.test.ts"],
   "mdx": {
     "checkMdx": true
   }

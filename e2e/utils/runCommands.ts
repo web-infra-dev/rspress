@@ -1,3 +1,4 @@
+import type { ChildProcess } from 'node:child_process';
 import spawn from 'cross-spawn';
 import getRandomPort from 'get-port';
 import treeKill from 'tree-kill';
@@ -20,7 +21,7 @@ export async function runNpmScript(
   options: CommandOptions,
   extraArgs: string[] = [],
 ) {
-  return new Promise((resolve, reject) => {
+  return new Promise<ChildProcess | null>((resolve, reject) => {
     const commandArgs = ['--run', commandName];
 
     if (extraArgs.length) {
@@ -43,7 +44,7 @@ export async function runNpmScript(
 
     let didResolve = false;
 
-    async function handleStdout(data) {
+    async function handleStdout(data: Buffer) {
       const message = data.toString();
       const markers = {
         dev: /built in/i,
@@ -153,10 +154,10 @@ export async function getPort() {
   }
 }
 
-export async function killProcess(instance) {
+export async function killProcess(instance: ChildProcess | null) {
   return new Promise((resolve, reject) => {
-    if (!instance) {
-      resolve(null);
+    if (!instance?.pid) {
+      return resolve(null);
     }
 
     treeKill(instance.pid, err => {
