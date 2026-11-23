@@ -135,6 +135,10 @@ function _createMdxContent() {
 }
 ```
 
+当 Markdown 中包含嵌套组件或表达式时，Rspress 会保留受影响区域的 Markdown 结构，等待 React 求出动态内容后，再统一序列化。这样可以根据真实输出保留列表嵌套、强调边界和表格单元格转义。组件依赖的 import 和 export 声明也会保留。
+
+组件返回的字符串仍按 Markdown 解释；`<a>` 等原生元素内的文本按字面文本处理，`<code>` 保留代码语法。行内位置支持行内内容及其透明容器；如果在行内位置插入多个段落或标题，构建会报错，避免生成结构错误的 Markdown。组件仍在正常的 React Context 和 Hooks 环境中执行。纯 Markdown 和普通 HTML 渲染继续使用原有路径。
+
 3. 提供 `import.meta.env.SSG_MD` 环境变量，方便用户在 React 组件中区分 SSG-MD 渲染和浏览器渲染，从而实现更灵活的内容定制：
 
 ```tsx

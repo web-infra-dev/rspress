@@ -50,7 +50,7 @@ export interface RemarkSplitMdxOptions {
 
 /**
  * Custom remark plugin that wraps markdown content in React Fragment
- * Only processes top-level markdown nodes, keeps JSX elements and their children intact
+ * Mixed Markdown stays structured until executable MDX has resolved.
  */
 export function remarkSplitMdx(
   options: RemarkSplitMdxOptions = {},
@@ -58,6 +58,30 @@ export function remarkSplitMdx(
   return (tree: Root) => {
     const newChildren: RootContent[] = [];
     const { importMap, esmNodes } = collectEsmMetadata(tree);
+
+    // MDX unwraps JSX-only paragraphs; task labels still require a paragraph
+    // for GFM's checkbox handler and must be resolved in inline context.
+    visit(tree, 'listItem', node => {
+      const head = node.children[0];
+      if (
+        typeof node.checked === 'boolean' &&
+        head &&
+        (head.type === 'mdxJsxFlowElement' || head.type === 'mdxFlowExpression')
+      ) {
+        node.children[0] = {
+          type: 'paragraph',
+          children: [
+            {
+              ...head,
+              type:
+                head.type === 'mdxJsxFlowElement'
+                  ? 'mdxJsxTextElement'
+                  : 'mdxTextExpression',
+            } as MdxJsxTextElement | MdxTextExpression,
+          ],
+        };
+      }
+    });
 
     // Keep ESM declarations available to the MDX compiler. They are omitted
     // only when content is stringified to Markdown.
@@ -86,34 +110,9 @@ export function remarkSplitMdx(
         continue;
       }
 
-      // For any other markdown node (heading, paragraph, blockquote, list, code, etc.)
-      // Check if it has JSX children that need to be extracted
-      const hasJsxChildren = (node as any).children?.some(
-        (child: any) =>
-          child.type === 'mdxJsxFlowElement' ||
-          child.type === 'mdxJsxTextElement' ||
-          child.type === 'mdxFlowExpression' ||
-          child.type === 'mdxTextExpression',
-      );
-
-      if (hasJsxChildren) {
-        // Process mixed content nodes (e.g., heading with JSX)
-        const processedChildren = processMixedContent(
-          node,
-          (node as any).children || [],
-          importMap,
-          options,
-        );
-
-        newChildren.push({
-          type: 'mdxJsxFlowElement',
-          name: null, // Fragment
-          attributes: [],
-          // @ts-expect-error mdxJsxFlowElement children type
-          children: processedChildren,
-        });
+      if (containsMdx(node)) {
+        newChildren.push(buildMarkdownRegion([node], importMap, options));
       } else {
-        // Pure markdown node - serialize to text
         newChildren.push(buildMdxFlowExpressionFragment(node));
       }
     }
@@ -151,7 +150,27 @@ function processJsxElement(
   }
 
   // Not kept - convert to text (preserving any JSX children that were kept)
-  return buildMdxFlowExpressionFragment(processedNode);
+  const opening = processedNode.children.length
+    ? serializeOpeningTag(processedNode)
+    : serializeNodeToMarkdown(node).replace(/\n$/, '');
+  return {
+    type: 'mdxJsxFlowElement',
+    name: null,
+    attributes: [],
+    children: [
+      host('rspress-md-literal', { value: opening }, []),
+      ...(processedNode.children.length
+        ? [
+            ...processedNode.children,
+            host(
+              'rspress-md-literal',
+              { value: serializeClosingTag(processedNode) },
+              [],
+            ),
+          ]
+        : []),
+    ] as any,
+  };
 }
 
 /**
@@ -166,48 +185,156 @@ function processJsxChildren(
     return node;
   }
 
-  const processedChildren: RootContent[] = [];
-  let textBuffer: RootContent[] = [];
-
-  const flushTextBuffer = () => {
-    if (textBuffer.length === 0) return;
-
-    // Serialize all accumulated non-JSX content to markdown string
-    const combined = textBuffer
-      .map(child => serializeNodeToMarkdown(child))
-      .join('');
-
-    if (combined) {
-      processedChildren.push(createTextExpression(combined) as any);
-    }
-    textBuffer = [];
-  };
-
-  for (const child of node.children) {
-    if (
-      child.type === 'mdxJsxFlowElement' ||
-      child.type === 'mdxJsxTextElement'
-    ) {
-      // Flush any accumulated text before the JSX element
-      flushTextBuffer();
-      processedChildren.push(processJsxElement(child, importMap, options));
-    } else if (
-      child.type === 'mdxFlowExpression' ||
-      child.type === 'mdxTextExpression'
-    ) {
-      // Preserve MDX expressions as-is
-      flushTextBuffer();
-      processedChildren.push(child as any);
-    } else {
-      // Accumulate non-JSX content to be serialized as string
-      textBuffer.push(child);
-    }
+  // MDX can classify a same-line JSX container as flow while retaining
+  // phrasing children. Keep those siblings in one region as well.
+  if (
+    node.type === 'mdxJsxTextElement' ||
+    (node.children.some(child => !isMdx(child)) &&
+      node.children.every(child =>
+        [
+          'text',
+          'emphasis',
+          'strong',
+          'delete',
+          'link',
+          'linkReference',
+          'inlineCode',
+          'break',
+          'image',
+          'imageReference',
+          'footnoteReference',
+          'mdxJsxTextElement',
+          'mdxTextExpression',
+          'mdxJsxFlowElement',
+          'mdxFlowExpression',
+        ].includes(child.type),
+      ))
+  ) {
+    return {
+      ...node,
+      children: [
+        buildMarkdownRegion(
+          node.children as RootContent[],
+          importMap,
+          options,
+          true,
+        ),
+      ] as any,
+    };
   }
 
-  // Flush any remaining text
-  flushTextBuffer();
-
+  const processedChildren: RootContent[] = [];
+  let buffer: RootContent[] = [];
+  const flush = () => {
+    if (!buffer.length) return;
+    if (buffer.some(containsMdx)) {
+      processedChildren.push(buildMarkdownRegion(buffer, importMap, options));
+    } else {
+      processedChildren.push(
+        createTextExpression(
+          processor.stringify({ type: 'root', children: buffer }),
+        ),
+      );
+    }
+    buffer = [];
+  };
+  for (const child of node.children as RootContent[]) {
+    if (isMdx(child)) {
+      flush();
+      processedChildren.push(
+        isJsx(child) ? processJsxElement(child, importMap, options) : child,
+      );
+    } else {
+      buffer.push(child);
+    }
+  }
+  flush();
   return { ...node, children: processedChildren as any };
+}
+
+function isJsx(
+  node: RootContent,
+): node is MdxJsxFlowElement | MdxJsxTextElement {
+  return node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement';
+}
+
+function isMdx(node: RootContent): boolean {
+  return (
+    isJsx(node) ||
+    node.type === 'mdxFlowExpression' ||
+    node.type === 'mdxTextExpression'
+  );
+}
+
+function containsMdx(node: RootContent): boolean {
+  let found = false;
+  visit(
+    node,
+    [
+      'mdxJsxFlowElement',
+      'mdxJsxTextElement',
+      'mdxFlowExpression',
+      'mdxTextExpression',
+    ],
+    () => {
+      found = true;
+    },
+  );
+  return found;
+}
+
+/**
+ * Keep authored Markdown as a tree of host nodes until React resolves MDX.
+ * Each node owns its children, so nested, duplicated, or suppressed children
+ * do not depend on positional slots or a separate marker registry.
+ */
+function buildMarkdownRegion(
+  children: RootContent[],
+  importMap: Map<string, string>,
+  options: RemarkSplitMdxOptions,
+  inline = false,
+): MdxJsxFlowElement {
+  const build = (node: RootContent): MdxJsxFlowElement => {
+    if (isMdx(node)) {
+      return host(
+        'rspress-md-slot',
+        {
+          inline:
+            node.type === 'mdxJsxTextElement' ||
+            node.type === 'mdxTextExpression',
+        },
+        [isJsx(node) ? processJsxElement(node, importMap, options) : node],
+      );
+    }
+    const {
+      children: descendants,
+      position: _position,
+      data: _data,
+      ...metadata
+    } = node as RootContent & { children?: RootContent[] };
+    return host('rspress-md-node', metadata, descendants?.map(build) ?? []);
+  };
+  return host('rspress-md-region', { inline }, children.map(build));
+}
+
+function host(
+  name: string,
+  metadata: object,
+  children: RootContent[],
+): MdxJsxFlowElement {
+  return {
+    type: 'mdxJsxFlowElement',
+    name,
+    attributes: [
+      {
+        type: 'mdxJsxAttribute',
+        name: 'data-md',
+        value: JSON.stringify(metadata),
+      },
+    ],
+    data: { _mdxExplicitJsx: true } as MdxJsxFlowElement['data'],
+    children: children as any,
+  };
 }
 
 /**
@@ -244,79 +371,7 @@ function getComponentName(name: string | null | any): string | null {
 }
 
 /**
- * Process mixed content that contains both markdown and JSX elements
- * Returns an array of children suitable for a Fragment
- */
-function processMixedContent(
-  parentNode: RootContent,
-  children: RootContent[],
-  importMap: Map<string, string>,
-  options: RemarkSplitMdxOptions,
-): (
-  MdxJsxFlowElement | MdxJsxTextElement | MdxFlowExpression | MdxTextExpression
-)[] {
-  const result: (
-    | MdxJsxFlowElement
-    | MdxJsxTextElement
-    | MdxFlowExpression
-    | MdxTextExpression
-  )[] = [];
-  let textBuffer: string[] = [];
-
-  // Get markdown prefix for certain node types (e.g., heading)
-  const prefix =
-    parentNode.type === 'heading'
-      ? `${'#'.repeat(parentNode.depth || 1)} `
-      : '';
-  let prefixAdded = false;
-
-  const flushTextBuffer = () => {
-    if (textBuffer.length > 0) {
-      let combined = textBuffer.join('');
-      if (!prefixAdded && prefix) {
-        combined = prefix + combined;
-        prefixAdded = true;
-      }
-      if (combined) {
-        result.push(createTextExpression(combined));
-      }
-      textBuffer = [];
-    } else if (!prefixAdded && prefix) {
-      result.push(createTextExpression(prefix.trimEnd()));
-      prefixAdded = true;
-    }
-  };
-
-  for (const child of children) {
-    if (
-      child.type === 'mdxJsxFlowElement' ||
-      child.type === 'mdxJsxTextElement'
-    ) {
-      flushTextBuffer();
-      result.push(processJsxElement(child, importMap, options));
-    } else if (
-      child.type === 'mdxFlowExpression' ||
-      child.type === 'mdxTextExpression'
-    ) {
-      flushTextBuffer();
-      result.push(child as MdxFlowExpression | MdxTextExpression);
-    } else if (child.type === 'text') {
-      textBuffer.push(child.value || '');
-    } else {
-      const serialized = serializeNodeToMarkdown(child);
-      if (serialized) {
-        textBuffer.push(serialized);
-      }
-    }
-  }
-
-  flushTextBuffer();
-  return result;
-}
-
-/**
  * Convert a markdown node to an MDX Fragment containing a Flow Expression
- * If the node contains JSX children (after processing), returns a Fragment with mixed content
  * @example
  * input
  *
@@ -334,24 +389,6 @@ function processMixedContent(
 function buildMdxFlowExpressionFragment(
   node: RootContent,
 ): MdxFlowExpression | MdxJsxFlowElement {
-  // Check if node has children that are JSX elements (after processing)
-  const children = (node as any).children;
-  const hasJsxChildren = children?.some(
-    (child: any) =>
-      child.type === 'mdxJsxFlowElement' ||
-      child.type === 'mdxJsxTextElement' ||
-      child.type === 'mdxFlowExpression' ||
-      child.type === 'mdxTextExpression',
-  );
-
-  if (
-    hasJsxChildren &&
-    (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement')
-  ) {
-    // Build a Fragment with mixed content
-    return buildMixedContentFragment(node, children);
-  }
-
   // Simple case: no JSX children, just serialize to string
   const textContent = serializeNodeToMarkdown(node);
   // <>{"string"}</>
@@ -379,59 +416,6 @@ function buildMdxFlowExpressionFragment(
   };
 
   return fragment;
-}
-
-/**
- * Build a Fragment with mixed content (text strings and JSX components)
- * Used when converting a JSX element to markdown but preserving nested JSX components
- */
-function buildMixedContentFragment(
-  node: MdxJsxFlowElement | MdxJsxTextElement,
-  children: RootContent[],
-): MdxJsxFlowElement {
-  const result: (
-    | MdxFlowExpression
-    | MdxTextExpression
-    | MdxJsxFlowElement
-    | MdxJsxTextElement
-  )[] = [];
-
-  // Add opening tag
-  const openingTag = serializeOpeningTag(node);
-  if (openingTag) {
-    result.push(createTextExpression(openingTag));
-  }
-
-  // Process children
-  for (const child of children) {
-    const isJsxOrExpression =
-      child.type === 'mdxJsxFlowElement' ||
-      child.type === 'mdxJsxTextElement' ||
-      child.type === 'mdxFlowExpression' ||
-      child.type === 'mdxTextExpression';
-
-    if (isJsxOrExpression) {
-      result.push(child as any);
-    } else {
-      const text = serializeNodeToMarkdown(child);
-      if (text) {
-        result.push(createTextExpression(text));
-      }
-    }
-  }
-
-  // Add closing tag
-  const closingTag = serializeClosingTag(node);
-  if (closingTag) {
-    result.push(createTextExpression(closingTag));
-  }
-
-  return {
-    type: 'mdxJsxFlowElement',
-    name: null, // Fragment
-    attributes: [],
-    children: result as any,
-  };
 }
 
 /**

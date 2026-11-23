@@ -167,6 +167,29 @@ test('llms should be enabled by default', async () => {
   );
 });
 
+test('mixed MDX should retain its final Markdown structure', async () => {
+  const appDir = import.meta.dirname;
+  await runBuildCommand(appDir);
+  const markdown = await fs.readFile(
+    path.join(appDir, 'doc_build', 'structured.md'),
+    'utf-8',
+  );
+  expect(markdown).toContain(
+    '2. **Read [release notes](https://example.com/sdk/releases/4.2.0)** for SDK 4.2.0.\n\nNext paragraph.',
+  );
+  expect(markdown).toContain('`left \\| right`');
+  expect(markdown).toContain(
+    '- [x] [release notes](https://example.com/sdk/releases/4.2.0)',
+  );
+  expect(markdown).not.toContain('rspress-md-');
+  const html = await fs.readFile(
+    path.join(appDir, 'doc_build', 'structured.html'),
+    'utf-8',
+  );
+  expect(html).toContain('<p>Y<em>X</em> b</p>');
+  expect(html).not.toContain('rspress-md-');
+});
+
 test('custom llms.txt renderer should be successful', async () => {
   const appDir = import.meta.dirname;
   await runBuildCommand(appDir, 'rspress-custom-llms-txt.config.ts');

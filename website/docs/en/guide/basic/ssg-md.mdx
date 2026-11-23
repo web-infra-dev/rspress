@@ -135,6 +135,10 @@ function _createMdxContent() {
 }
 ```
 
+When Markdown contains nested components or expressions, Rspress keeps the affected Markdown structure until React resolves those values. The completed structure is then serialized together, preserving list nesting, emphasis boundaries, and table-cell escaping. Imports and exports remain available to the components.
+
+Component strings retain their Markdown meaning. Text inside native elements such as `<a>` is treated as literal text, and `<code>` retains code syntax. Inline positions support phrasing output, including a transparent wrapper around it; multiple paragraphs or headings in an inline position produce an error instead of invalid Markdown. Components retain their normal React Context and Hooks. Pure Markdown and ordinary HTML rendering use their existing paths.
+
 3. Rspress provides the `import.meta.env.SSG_MD` environment variable so React components can distinguish SSG-MD rendering from browser rendering and customize their output:
 
 ```tsx

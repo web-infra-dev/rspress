@@ -57,7 +57,7 @@ import Button from '@components/Button'
       /*@jsxImportSource react*/
       import Button from '@components/Button';
       function _createMdxContent(props) {
-        return <>{"# Hello World\\n"}{"\\n"}<Button type="primary" disabled={true}>{"Click me\\n"}</Button></>;
+        return <>{"# Hello World\\n"}{"\\n"}<Button type="primary" disabled={true}><rspress-md-region data-md="{&quot;inline&quot;:true}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Click me&quot;}" /></rspress-md-region></Button></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -153,7 +153,7 @@ console.log('Hello, world!');
       /*@jsxImportSource react*/
       import Card from '@components';
       function _createMdxContent(props) {
-        return <>{"# title\\n"}{"\\n"}<Card>{"Content inside\\n"}</Card>{"\\n"}{"Content outside\\n"}{"\\n"}<Card>{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</Card>{"\\n"}{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</>;
+        return <>{"# title\\n"}{"\\n"}<Card><rspress-md-region data-md="{&quot;inline&quot;:true}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Content inside&quot;}" /></rspress-md-region></Card>{"\\n"}{"Content outside\\n"}{"\\n"}<Card>{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</Card>{"\\n"}{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -236,7 +236,7 @@ export function Thing() {
         return <>World</>;
       }
       function _createMdxContent(props) {
-        return <><>{"# Hello "}<Thing />{" "}{a}</>{"\\n"}{a}</>;
+        return <><rspress-md-region data-md="{&quot;inline&quot;:false}"><rspress-md-node data-md="{&quot;type&quot;:&quot;heading&quot;,&quot;depth&quot;:1}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Hello &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}"><Thing /></rspress-md-slot><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot; &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}">{a}</rspress-md-slot></rspress-md-node></rspress-md-region>{"\\n"}{a}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -268,7 +268,7 @@ export function Thing() {
         return <>World</>;
       }
       function _createMdxContent(props) {
-        return <><>{"# Hello "}<Badge />{" "}<Thing />{" "}{a}</>{"\\n"}{a}</>;
+        return <><rspress-md-region data-md="{&quot;inline&quot;:false}"><rspress-md-node data-md="{&quot;type&quot;:&quot;heading&quot;,&quot;depth&quot;:1}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Hello &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}"><Badge /></rspress-md-slot><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot; &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}"><Thing /></rspress-md-slot><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot; &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}">{a}</rspress-md-slot></rspress-md-node></rspress-md-region>{"\\n"}{a}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -287,7 +287,7 @@ export function Thing() {
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
       function _createMdxContent(props) {
-        return <><>{"# hello "}{window.foo}</></>;
+        return <rspress-md-region data-md="{&quot;inline&quot;:false}"><rspress-md-node data-md="{&quot;type&quot;:&quot;heading&quot;,&quot;depth&quot;:1}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;hello &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}">{window.foo}</rspress-md-slot></rspress-md-node></rspress-md-region>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -306,7 +306,7 @@ export function Thing() {
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
       function _createMdxContent(props) {
-        return <><>{"Hello "}{window.foo}</></>;
+        return <rspress-md-region data-md="{&quot;inline&quot;:false}"><rspress-md-node data-md="{&quot;type&quot;:&quot;paragraph&quot;}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Hello &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}">{window.foo}</rspress-md-slot></rspress-md-node></rspress-md-region>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -328,7 +328,7 @@ export function Thing() {
       /*@jsxImportSource react*/
       import Foo from '@components';
       function _createMdxContent(props) {
-        return <Foo>{"Hello \\n"}{window.bar}</Foo>;
+        return <Foo><rspress-md-region data-md="{&quot;inline&quot;:true}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Hello &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}">{window.bar}</rspress-md-slot></rspress-md-region></Foo>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -366,7 +366,7 @@ import Button from 'react';
       import {Table} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}<>{"<Button>"}{"Click\\n"}{"</Button>"}</></>;
+        return <><Table />{"\\n"}<><rspress-md-literal data-md="{&quot;value&quot;:&quot;<Button>&quot;}" /><rspress-md-region data-md="{&quot;inline&quot;:true}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Click&quot;}" /></rspress-md-region><rspress-md-literal data-md="{&quot;value&quot;:&quot;</Button>&quot;}" /></></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -406,7 +406,7 @@ import Button from 'react';
       import {Table, Card} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}{"<Card />\\n"}{"\\n"}<Button>{"Click\\n"}</Button></>;
+        return <><Table />{"\\n"}<><rspress-md-literal data-md="{&quot;value&quot;:&quot;<Card />&quot;}" /></>{"\\n"}<Button><rspress-md-region data-md="{&quot;inline&quot;:true}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Click&quot;}" /></rspress-md-region></Button></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -442,7 +442,7 @@ import Button from 'react';
       import {Table} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}<>{"<Button>"}{"Click\\n"}{"</Button>"}</></>;
+        return <><Table />{"\\n"}<><rspress-md-literal data-md="{&quot;value&quot;:&quot;<Button>&quot;}" /><rspress-md-region data-md="{&quot;inline&quot;:true}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Click&quot;}" /></rspress-md-region><rspress-md-literal data-md="{&quot;value&quot;:&quot;</Button>&quot;}" /></></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -476,7 +476,7 @@ import Button from 'react';
       /*@jsxImportSource react*/
       import {Table, Card} from '@lynx';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}{"<Card />\\n"}</>;
+        return <><Table />{"\\n"}<><rspress-md-literal data-md="{&quot;value&quot;:&quot;<Card />&quot;}" /></></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -511,7 +511,7 @@ import Button from 'react';
       /*@jsxImportSource react*/
       import {Table as Tab} from '@lynx';
       function _createMdxContent(props) {
-        return <>{"<Tab />\\n"}</>;
+        return <><><rspress-md-literal data-md="{&quot;value&quot;:&quot;<Tab />&quot;}" /></></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -549,7 +549,7 @@ import Button from 'react';
       import {Table, Card} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}{"<Card />\\n"}{"\\n"}<>{"<Button>"}{"Click\\n"}{"</Button>"}</></>;
+        return <><Table />{"\\n"}<><rspress-md-literal data-md="{&quot;value&quot;:&quot;<Card />&quot;}" /></>{"\\n"}<><rspress-md-literal data-md="{&quot;value&quot;:&quot;<Button>&quot;}" /><rspress-md-region data-md="{&quot;inline&quot;:true}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Click&quot;}" /></rspress-md-region><rspress-md-literal data-md="{&quot;value&quot;:&quot;</Button>&quot;}" /></></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -591,7 +591,7 @@ import Card from 'react';
       import {Button} from 'antd';
       import Card from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}<Button />{"\\n"}{"<Card />\\n"}</>;
+        return <><Table />{"\\n"}<Button />{"\\n"}<><rspress-md-literal data-md="{&quot;value&quot;:&quot;<Card />&quot;}" /></></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -619,7 +619,7 @@ Some text here.`;
       /*@jsxImportSource react*/
       import Foo from '@components';
       function _createMdxContent(props) {
-        return <><>{"# title "}<Foo /></>{"\\n"}{"# title [link](./link)\\n"}{"\\n"}<>{"# title [link](./link)\\n "}<Foo /></>{"\\n"}{"Some text here.\\n"}</>;
+        return <><rspress-md-region data-md="{&quot;inline&quot;:false}"><rspress-md-node data-md="{&quot;type&quot;:&quot;heading&quot;,&quot;depth&quot;:1}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;title &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}"><Foo /></rspress-md-slot></rspress-md-node></rspress-md-region>{"\\n"}{"# title [link](./link)\\n"}{"\\n"}<rspress-md-region data-md="{&quot;inline&quot;:false}"><rspress-md-node data-md="{&quot;type&quot;:&quot;heading&quot;,&quot;depth&quot;:1}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;title &quot;}" /><rspress-md-node data-md="{&quot;type&quot;:&quot;link&quot;,&quot;title&quot;:null,&quot;url&quot;:&quot;./link&quot;}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;link&quot;}" /></rspress-md-node><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot; &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}"><Foo /></rspress-md-slot></rspress-md-node></rspress-md-region>{"\\n"}{"Some text here.\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -641,7 +641,7 @@ This is a <Button>click me</Button> and <Link href="/test">link</Link> example.`
       /*@jsxImportSource react*/
       import {Button, Link} from '@components';
       function _createMdxContent(props) {
-        return <><>{"This is a "}<Button>{"click me\\n"}</Button>{" and "}<Link href="/test">{"link\\n"}</Link>{" example."}</></>;
+        return <rspress-md-region data-md="{&quot;inline&quot;:false}"><rspress-md-node data-md="{&quot;type&quot;:&quot;paragraph&quot;}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;This is a &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}"><Button><rspress-md-region data-md="{&quot;inline&quot;:true}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;click me&quot;}" /></rspress-md-region></Button></rspress-md-slot><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot; and &quot;}" /><rspress-md-slot data-md="{&quot;inline&quot;:true}"><Link href="/test"><rspress-md-region data-md="{&quot;inline&quot;:true}"><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;link&quot;}" /></rspress-md-region></Link></rspress-md-slot><rspress-md-node data-md="{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot; example.&quot;}" /></rspress-md-node></rspress-md-region>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -695,7 +695,7 @@ import Button from './_button.mdx';
       import {Tabs, Tab} from '@rspress/core/theme';
       import Button from './_button.mdx';
       function _createMdxContent(props) {
-        return <Tabs><Tab><Button /></Tab><Tab /></Tabs>;
+        return <Tabs><Tab>{""}<Button /></Tab><Tab /></Tabs>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
