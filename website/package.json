@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@rsbuild/plugin-sass": "~2.0.1",
-    "@rsdoctor/core": "2.0.3",
+    "@rsdoctor/core": "2.0.4",
     "@rspress/core": "workspace:*",
     "@rspress/plugin-algolia": "workspace:*",
     "@rspress/plugin-llms": "workspace:*",

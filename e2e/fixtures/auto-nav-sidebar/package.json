@@ -14,7 +14,7 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@rsdoctor/core": "2.0.3",
+    "@rsdoctor/core": "2.0.4",
     "@types/node": "^22.8.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0"

@@ -90,8 +90,8 @@ importers:
         version: 19.3.1(react@19.3.1)
     devDependencies:
       '@rsdoctor/core':
-        specifier: 2.0.3
-        version: 2.0.3(@rspack/core@2.3.3(@swc/helpers@0.5.24))(@types/node@22.19.15)
+        specifier: 2.0.4
+        version: 2.0.4(@rspack/core@2.3.3(@swc/helpers@0.5.24))(@types/node@22.19.15)
       '@types/node':
         specifier: ^22.8.1
         version: 22.19.15
@@ -2674,8 +2674,8 @@ importers:
         specifier: ~2.0.1
         version: 2.0.1(@rsbuild/core@2.3.3)
       '@rsdoctor/core':
-        specifier: 2.0.3
-        version: 2.0.3(@rspack/core@2.3.3(@swc/helpers@0.5.24))(@types/node@22.19.15)
+        specifier: 2.0.4
+        version: 2.0.4(@rspack/core@2.3.3(@swc/helpers@0.5.24))(@types/node@22.19.15)
       '@rspress/core':
         specifier: workspace:*
         version: link:../packages/core
@@ -4132,12 +4132,12 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rsdoctor/client@2.0.3':
-    resolution: {integrity: sha512-3HoKiTFHgmogsoaWdg8CYInD11UW2dS55eIKwf9oQmGrFwBGJVH6ZfAUk16E4h2/C/6N+F7fH/VQPIxsgN6JiQ==}
+  '@rsdoctor/client@2.0.4':
+    resolution: {integrity: sha512-C0SKOgDLN7KYApKiopaBBH8YsUv6nycoTLNNKfCiV/nERRzb0D/7p0TXlGp+diBDLrYPOsusAq+jYRueL3H+qw==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  '@rsdoctor/core@2.0.3':
-    resolution: {integrity: sha512-trKo4rf1oWsEctDImdyMGKkLNTHAr4BUXFStNJwuD7tH0mDGkqLRsvWXMgxNRhSaRNPZPD55uQn9V35ZIQRLFA==}
+  '@rsdoctor/core@2.0.4':
+    resolution: {integrity: sha512-ULWeW2vusZZaw1lIAdwQ7RPghRALDPk14iMOYww4lef+pTcFzy1az4I9ewACAXbDVOExoN75BqCnN/D58yCHoQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@rspack/core': ^2.0.0
@@ -4145,8 +4145,8 @@ packages:
       '@rspack/core':
         optional: true
 
-  '@rsdoctor/shared@2.0.3':
-    resolution: {integrity: sha512-jTfBGuVu+SzzHPfZ2J75T6CAw8hzySkROlD4wfgNDH2dj1lflnXPiqI9ACDCe2QCv/9aSfyGD31WplbtLgLt1g==}
+  '@rsdoctor/shared@2.0.4':
+    resolution: {integrity: sha512-1zdJdB3VZ/LIWPxnLkrjVSdTqn3C4jsnKjQJSE6V4RsSqrJC6DebDneMmcMxOnUnyhVwfh7GvC7DVub4yU00nA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@rspack/core': ^2.0.0
@@ -10375,12 +10375,12 @@ snapshots:
       - '@vue/compiler-sfc'
       - vue
 
-  '@rsdoctor/client@2.0.3': {}
+  '@rsdoctor/client@2.0.4': {}
 
-  '@rsdoctor/core@2.0.3(@rspack/core@2.3.3(@swc/helpers@0.5.24))(@types/node@22.19.15)':
+  '@rsdoctor/core@2.0.4(@rspack/core@2.3.3(@swc/helpers@0.5.24))(@types/node@22.19.15)':
     dependencies:
-      '@rsdoctor/client': 2.0.3
-      '@rsdoctor/shared': 2.0.3(@rspack/core@2.3.3(@swc/helpers@0.5.24))(@types/node@22.19.15)
+      '@rsdoctor/client': 2.0.4
+      '@rsdoctor/shared': 2.0.4(@rspack/core@2.3.3(@swc/helpers@0.5.24))(@types/node@22.19.15)
       '@swc-next/parser': 0.6.1
       caniuse-lite: 1.0.30001826
       sirv: 3.0.2
@@ -10391,7 +10391,7 @@ snapshots:
       - '@swc-next/parser-binding-wasm'
       - '@types/node'
 
-  '@rsdoctor/shared@2.0.3(@rspack/core@2.3.3(@swc/helpers@0.5.24))(@types/node@22.19.15)':
+  '@rsdoctor/shared@2.0.4(@rspack/core@2.3.3(@swc/helpers@0.5.24))(@types/node@22.19.15)':
     dependencies:
       '@rspack/lite-tapable': 1.3.0
       '@streamparser/json': 0.0.26
