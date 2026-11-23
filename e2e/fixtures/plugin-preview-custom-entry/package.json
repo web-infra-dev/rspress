@@ -14,8 +14,8 @@
     "@rspress/plugin-preview": "workspace:*",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "solid-js": "^1.9.19",
-    "vue": "^3.5.45"
+    "solid-js": "^1.9.20",
+    "vue": "^3.5.46"
   },
   "devDependencies": {
     "@types/node": "^22.8.1",
