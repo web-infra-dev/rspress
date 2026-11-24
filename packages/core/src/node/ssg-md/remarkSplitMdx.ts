@@ -60,30 +60,7 @@ export function remarkSplitMdx(
 ): (tree: Root) => void {
   return (tree: Root) => {
     const newChildren: RootContent[] = [];
-    const { importMap, esmNodes } = collectEsmMetadata(tree);
-
-    // Restore JSX-only task paragraphs so GFM keeps the checkbox.
-    visit(tree, 'listItem', node => {
-      const head = node.children[0];
-      if (
-        typeof node.checked === 'boolean' &&
-        (head?.type === 'mdxJsxFlowElement' ||
-          head?.type === 'mdxFlowExpression')
-      ) {
-        node.children[0] = {
-          type: 'paragraph',
-          children: [
-            {
-              ...head,
-              type:
-                head.type === 'mdxJsxFlowElement'
-                  ? 'mdxJsxTextElement'
-                  : 'mdxTextExpression',
-            } as MdxJsxTextElement | MdxTextExpression,
-          ],
-        };
-      }
-    });
+    const { importMap, esmNodes } = prepareTree(tree);
 
     // Keep ESM declarations available to the MDX compiler. They are omitted
     // only when content is stringified to Markdown.
@@ -602,18 +579,38 @@ function serializeNodeToMarkdown(node: RootContent): string {
   return result;
 }
 
-/**
- * Build a map of component names to their import sources
- * Example: { Table: '@lynx', Button: 'react' }
- */
-function collectEsmMetadata(tree: Root): {
+// Collect ESM and restore task paragraphs in one pass.
+function prepareTree(tree: Root): {
   importMap: Map<string, string>;
   esmNodes: Set<MdxjsEsm>;
 } {
   const importMap = new Map<string, string>();
   const esmNodes = new Set<MdxjsEsm>();
 
-  visit(tree, 'mdxjsEsm', node => {
+  visit(tree, ['mdxjsEsm', 'listItem'], node => {
+    if (node.type === 'listItem') {
+      const head = node.children[0];
+      if (
+        typeof node.checked === 'boolean' &&
+        (head?.type === 'mdxJsxFlowElement' ||
+          head?.type === 'mdxFlowExpression')
+      ) {
+        node.children[0] = {
+          type: 'paragraph',
+          children: [
+            {
+              ...head,
+              type:
+                head.type === 'mdxJsxFlowElement'
+                  ? 'mdxJsxTextElement'
+                  : 'mdxTextExpression',
+            } as MdxJsxTextElement | MdxTextExpression,
+          ],
+        };
+      }
+      return;
+    }
+    if (node.type !== 'mdxjsEsm') return;
     esmNodes.add(node);
 
     const estree = node.data?.estree;
