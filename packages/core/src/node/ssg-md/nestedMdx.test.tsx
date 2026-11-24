@@ -4,6 +4,7 @@ import {
   createContext,
   createElement,
   type ReactNode,
+  type ComponentType,
   useContext,
   useState,
 } from 'react';
@@ -12,204 +13,405 @@ import { renderToMarkdownString } from 'react-render-to-markdown';
 import remarkGfm from 'remark-gfm';
 import { remarkSplitMdx, type RemarkSplitMdxOptions } from './remarkSplitMdx';
 
-const Container = ({ children }: { children?: ReactNode }) =>
-  createElement('div', null, children);
-const Inline = ({ children }: { children?: ReactNode }) =>
-  createElement('span', null, children);
-const release = '[release notes](https://example.com/sdk/releases/4.2.0)';
+const sdkComponents = `export const sdkVersion = '4.2.0';
 
-async function render(
-  source: string,
-  components: Record<string, unknown> = {},
-  options: RemarkSplitMdxOptions = {},
-) {
-  const { default: Content } = await evaluate(
-    `export const sdkVersion = '4.2.0';\n\n${source}`,
-    {
-      ...jsxRuntime,
-      remarkPlugins: [remarkGfm, [remarkSplitMdx, options]],
-    },
-  );
-  return (
-    await renderToMarkdownString(
-      createElement(Content, {
-        components: {
-          Container,
-          Inline,
-          ReleaseLink: () =>
-            createElement(
-              'a',
-              { href: 'https://example.com/sdk/releases/4.2.0' },
-              'release notes',
-            ),
-          ...components,
-        },
-      }),
-    )
-  ).trim();
-}
-
-const locations = [
-  ['root', '', ''],
-  ['flow container', '<Container>\n\n', '\n\n</Container>'],
-  ['inline container', 'See <Inline>', '</Inline>.'],
-];
-
-describe('readable nested MDX exports', () => {
-  it.each(locations)(
-    'resolves components and expressions in a %s',
-    async (_name, open, close) => {
-      const output = await render(
-        `${open}**Read <ReleaseLink/>** for SDK {sdkVersion}.${close}`,
-      );
-      expect(output).toContain(`**Read ${release}** for SDK 4.2.0.`);
-      expect(output).not.toContain('<ReleaseLink');
-      expect(output).not.toContain('{sdkVersion}');
-      expect(output).not.toMatch(/rspress[0-9a-f]{32}mdx/);
-    },
-  );
-
-  it('preserves the SDK example and paragraph separators', async () => {
-    const source = `export const ReleaseLink = () => <a href={\`https://example.com/sdk/releases/\${sdkVersion}\`}>release notes</a>;
+export const ReleaseLink = () => (
+  <a href={\`https://example.com/sdk/releases/\${sdkVersion}\`}>release notes</a>
+);
 
 export const Container = ({ children }) => <div>{children}</div>;
 
-<Container>
+export const Inline = ({ children }) => <span>{children}</span>;`;
 
-2. **Read <ReleaseLink/>** for SDK {sdkVersion}.
+async function render(
+  input: string,
+  components: Record<string, ComponentType<any>> = {},
+  options: RemarkSplitMdxOptions = {},
+) {
+  const { default: Content } = await evaluate(input, {
+    ...jsxRuntime,
+    remarkPlugins: [remarkGfm, [remarkSplitMdx, options]],
+  });
+  return (
+    await renderToMarkdownString(createElement(Content, { components }))
+  ).trim();
+}
+
+// Share only component declarations; each case shows its complete page content.
+function renderSdk(input: string) {
+  return render(`${sdkComponents}\n\n${input}`);
+}
+
+describe('SDK content and paragraph exports', () => {
+  it('resolves the SDK inside a flow container', async () => {
+    const input = `<Container>
+
+2. **Read <ReleaseLink />** for SDK {sdkVersion}.
 
 Next paragraph.
 
 </Container>`;
-    expect(await render(source)).toBe(
-      `2. **Read ${release}** for SDK 4.2.0.\n\nNext paragraph.`,
-    );
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(`
+      "2. **Read [release notes](https://example.com/sdk/releases/4.2.0)** for SDK 4.2.0.
+
+      Next paragraph."
+    `);
   });
 
-  it.each([
-    ['heading', '## <ReleaseLink/> {sdkVersion}'],
-    ['list', '3. **<ReleaseLink/>** {sdkVersion}'],
-    ['quote', '> **<ReleaseLink/>** {sdkVersion}'],
-    ['nested list', '- SDK\n  - **<ReleaseLink/>** {sdkVersion}'],
-    [
-      'table',
-      '| Release | Version |\n| --- | --- |\n| <ReleaseLink/> | {sdkVersion} |',
-    ],
-    ['task label', '- [x] <ReleaseLink/>\n- [ ] {sdkVersion}'],
-    ['footnote', 'SDK[^sdk].\n\n[^sdk]: <ReleaseLink/> {sdkVersion}'],
-  ])(
-    'resolves content in a %s at the root and inside containers',
-    async (_name, source) => {
-      for (const input of [
-        source,
-        `<Container>\n\n${source}\n\n</Container>`,
-      ]) {
-        const output = await render(input);
-        expect(output).toContain(release);
-        expect(output).toContain('4.2.0');
-        expect(output).not.toContain('<ReleaseLink');
-        expect(output).not.toContain('{sdkVersion}');
-      }
-    },
-  );
+  it('resolves the SDK inside a root list', async () => {
+    const input = `2. **Read <ReleaseLink />** for SDK {sdkVersion}.
 
-  it('retains paragraph boundaries around flow output', async () => {
-    const Paragraphs = () =>
-      createElement(
-        'div',
-        null,
-        createElement('p', null, 'First.'),
-        createElement('p', null, 'Second.'),
-      );
-    expect(
-      await render(
-        '<Container>\n\nBefore.\n\n<Paragraphs/>\n\nAfter.\n\n</Container>',
-        { Paragraphs },
-      ),
-    ).toBe('Before.\n\nFirst.\n\nSecond.\n\nAfter.');
-    expect(
-      await render('<Container>\n\nFirst.\n\nSecond.\n\n</Container>'),
-    ).toBe('First.\n\nSecond.');
+Next paragraph.`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(`
+      "2. **Read [release notes](https://example.com/sdk/releases/4.2.0)** for SDK 4.2.0.
+
+      Next paragraph."
+    `);
   });
 
-  it('does not split inline content when a component returns a div', async () => {
-    const Download = () => createElement('div', null, 'Download SDK');
-    expect(
-      await render('2. **<Download/>** for {sdkVersion}.', { Download }),
-    ).toBe('2. **Download SDK** for 4.2.0.');
-  });
-
-  it('keeps JSX-looking code examples literal', async () => {
+  it('resolves the SDK inside an inline container', async () => {
     const input =
-      'Example: `<ReleaseLink/> {sdkVersion}`.\n\n```mdx\n<ReleaseLink/> {sdkVersion}\n```\n\nActual: **<ReleaseLink/>**.';
-    expect(await render(`<Container>\n\n${input}\n\n</Container>`)).toContain(
-      '```mdx\n<ReleaseLink/> {sdkVersion}\n```',
+      'See <Inline>**Read <ReleaseLink />** for SDK {sdkVersion}.</Inline>';
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(
+      `"See **Read [release notes](https://example.com/sdk/releases/4.2.0)** for SDK 4.2.0."`,
     );
-    expect(await render(input)).toContain(
-      'Example: `<ReleaseLink/> {sdkVersion}`.',
-    );
-    expect(await render(input)).toContain(`Actual: **${release}**.`);
   });
 
-  it.each([
-    { excludes: [[['Drop'], '@components']] },
-    { includes: [[['Container', 'Keep'], '@components']] },
-    {
-      includes: [[['Container', 'Keep', 'Drop'], '@components']],
+  it('keeps a div-producing link inline inside the list item', async () => {
+    const input = `export const BlockLink = () => (
+  <div>
+    <a href={\`https://example.com/sdk/releases/\${sdkVersion}\`}>release notes</a>
+  </div>
+);
+
+<Container>
+
+2. **Read <BlockLink />** for SDK {sdkVersion}.
+
+</Container>`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(
+      `"2. **Read [release notes](https://example.com/sdk/releases/4.2.0)** for SDK 4.2.0."`,
+    );
+  });
+
+  it('separates adjacent authored paragraphs inside a container', async () => {
+    const input = `<Container>
+
+First paragraph.
+
+Second paragraph.
+
+</Container>`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(`
+      "First paragraph.
+
+      Second paragraph."
+    `);
+  });
+
+  it('retains paragraphs produced by a flow component', async () => {
+    const input = `export const Paragraphs = () => (
+  <div>
+    <p>First paragraph.</p>
+    <p>Second paragraph.</p>
+  </div>
+);
+
+<Container>
+
+Before.
+
+<Paragraphs />
+
+After.
+
+</Container>`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(`
+      "Before.
+
+      First paragraph.
+
+      Second paragraph.
+
+      After."
+    `);
+  });
+
+  it('resolves task labels and retains their checkboxes', async () => {
+    const input = `- [x] <ReleaseLink />
+- [ ] {sdkVersion}`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(`
+      "- [x] [release notes](https://example.com/sdk/releases/4.2.0)
+      - [ ] 4.2.0"
+    `);
+  });
+
+  it('keeps excluded table tags literal and resolves their retained children', async () => {
+    const input = `| Content | Note |
+| --- | --- |
+| <Drop /> | Literal tag |
+| <Drop>before <Keep /> after</Drop> | Retained child |
+
+Download <Drop />.`;
+    const components = { Keep: () => 'kept', Drop: () => 'unexpected' };
+    const options: RemarkSplitMdxOptions = {
       excludes: [[['Drop'], '@components']],
+    };
+
+    const output = await render(input, components, options);
+    expect(output).toMatchInlineSnapshot(`
+      "| Content                                                                  | Note           |
+      | ------------------------------------------------------------------------ | -------------- |
+      | <Drop />                                                                 | Literal tag    |
+      | <Drop>before kept after</Drop> | Retained child |
+
+      Download <Drop />."
+    `);
+  });
+
+  it('keeps code examples literal beside executable content', async () => {
+    const input = `Example: \`<ReleaseLink /> {sdkVersion}\`.
+
+\`\`\`mdx
+<ReleaseLink /> {sdkVersion}
+\`\`\`
+
+Actual: <ReleaseLink /> {sdkVersion}.`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(`
+      "Example: \`<ReleaseLink /> {sdkVersion}\`.
+
+      \`\`\`mdx
+      <ReleaseLink /> {sdkVersion}
+      \`\`\`
+
+      Actual: [release notes](https://example.com/sdk/releases/4.2.0) 4.2.0."
+    `);
+  });
+});
+
+// These snapshots record accepted formatting limits. All component content
+// resolves, but the final Markdown does not preserve every emphasis boundary.
+describe('readable output with known formatting limits', () => {
+  const components = { X: () => 'X', Y: () => 'Y' };
+
+  it('resolves adjacent emphasis content', async () => {
+    const input = '<Y/>*<X/>* b';
+
+    const output = await render(input, components);
+    expect(output).toMatchInlineSnapshot(`"Y_X_ b"`);
+  });
+
+  it('resolves content before strong punctuation', async () => {
+    const input = '<Y/>**!** b';
+
+    const output = await render(input, components);
+    expect(output).toMatchInlineSnapshot(`"Y**!** b"`);
+  });
+
+  it('resolves content before a strong link', async () => {
+    const input = '<Y/>**[link](https://example.com)** b';
+
+    const output = await render(input, components);
+    expect(output).toMatchInlineSnapshot(
+      `"Y**[link](https://example.com)** b"`,
+    );
+  });
+
+  it('resolves expressions inside adjacent emphasis', async () => {
+    const input = '{<Y/>}*{<X/>}* b';
+
+    const output = await render(input, components);
+    expect(output).toMatchInlineSnapshot(`"Y_X_ b"`);
+  });
+
+  it('resolves a component after emphasis', async () => {
+    const input = 'a *text*<Y/>';
+
+    const output = await render(input, components);
+    expect(output).toMatchInlineSnapshot(`"a _tex&#x74;_Y"`);
+  });
+
+  it('resolves a component after strong punctuation', async () => {
+    const input = 'a **!**<Y/>';
+
+    const output = await render(input, components);
+    expect(output).toMatchInlineSnapshot(`"a **!**Y"`);
+  });
+});
+
+describe('other nested Markdown exports', () => {
+  it('resolves a heading', async () => {
+    const input = '## <ReleaseLink /> {sdkVersion}';
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(
+      `"## [release notes](https://example.com/sdk/releases/4.2.0) 4.2.0"`,
+    );
+  });
+
+  it('resolves a blockquote inside a container', async () => {
+    const input = `<Container>
+
+> **<ReleaseLink />** {sdkVersion}
+
+</Container>`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(
+      `"> **[release notes](https://example.com/sdk/releases/4.2.0)** 4.2.0"`,
+    );
+  });
+
+  it('resolves a nested list', async () => {
+    const input = `- SDK
+  - **<ReleaseLink />** {sdkVersion}`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(`
+      "- SDK
+        - **[release notes](https://example.com/sdk/releases/4.2.0)** 4.2.0"
+    `);
+  });
+
+  it('resolves footnote content inside a container', async () => {
+    const input = `<Container>
+
+SDK[^sdk].
+
+[^sdk]: <ReleaseLink /> {sdkVersion}
+
+</Container>`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(`
+      "SDK[^sdk].
+
+      [^sdk]: [release notes](https://example.com/sdk/releases/4.2.0)
+
+          4.2.0"
+    `);
+  });
+
+  it('retains literal code inside a container', async () => {
+    const input = `<Container>
+
+Example: \`<ReleaseLink /> {sdkVersion}\`.
+
+\`\`\`mdx
+<ReleaseLink /> {sdkVersion}
+\`\`\`
+
+Actual: **<ReleaseLink />**.
+
+</Container>`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(`
+      "Example: \`<ReleaseLink /> {sdkVersion}\`.
+
+      \`\`\`mdx
+      <ReleaseLink /> {sdkVersion}
+      \`\`\`
+
+      Actual: **[release notes](https://example.com/sdk/releases/4.2.0)**."
+    `);
+  });
+
+  it('restores multi-digit markers without changing marker-like code', async () => {
+    const input = `\`rspress00000000000000000000000000000000mdx0end\`
+
+Actual: <X/> <X/> <X/> <X/> <X/> <X/> <X/> <X/> <X/> <X/> <X/> <X/>`;
+
+    const output = await render(input, { X: () => 'X' });
+    expect(output).toMatchInlineSnapshot(`
+      "\`rspress00000000000000000000000000000000mdx0end\`
+
+      Actual: X X X X X X X X X X X X"
+    `);
+  });
+});
+
+describe('component execution and filters', () => {
+  const filterCases: { name: string; options: RemarkSplitMdxOptions }[] = [
+    { name: 'excludes', options: { excludes: [[['Drop'], '@components']] } },
+    {
+      name: 'includes',
+      options: { includes: [[['Container', 'Keep'], '@components']] },
     },
-  ] satisfies RemarkSplitMdxOptions[])(
-    'retains filters and content order: %j',
-    async options => {
+    {
+      name: 'excludes take precedence',
+      options: {
+        includes: [[['Container', 'Keep', 'Drop'], '@components']],
+        excludes: [[['Drop'], '@components']],
+      },
+    },
+  ];
+
+  it.each(filterCases)(
+    'executes retained children once with $name',
+    async ({ options }) => {
+      const input = `<Container>
+
+Before <Drop>left <Keep /> right</Drop> after.
+
+</Container>`;
       const calls: string[] = [];
+      const Container = ({ children }: { children?: ReactNode }) => (
+        <div>{children}</div>
+      );
       const Keep = () => {
         calls.push('Keep');
         return 'kept';
       };
       const Drop = () => {
         calls.push('Drop');
-        return 'wrong';
+        return 'unexpected';
       };
-      const source =
-        '<Container>\n\nBefore <Drop>left <Keep/> right</Drop> after.\n\n</Container>';
-      expect(await render(source, { Keep, Drop }, options)).toBe(
-        'Before <Drop>left kept right</Drop> after.',
+
+      const output = await render(input, { Container, Keep, Drop }, options);
+      expect(output).toMatchInlineSnapshot(
+        `"Before <Drop>left kept right</Drop> after."`,
       );
       expect(calls).toEqual(['Keep']);
     },
   );
 
-  it('executes nested components once under the normal Context and Hooks', async () => {
+  it('executes nested components once with Context and Hooks', async () => {
+    const input = `<Provider>
+
+Read **<Read/>** for SDK.
+
+</Provider>`;
     const Value = createContext('default');
     const calls: string[] = [];
-    const Provider = ({ children }: { children?: ReactNode }) =>
-      createElement(Value.Provider, { value: 'provided' }, children);
+    const Provider = ({ children }: { children?: ReactNode }) => (
+      <Value.Provider value="provided">{children}</Value.Provider>
+    );
     const Read = () => {
       const value = useContext(Value);
       const [suffix] = useState('!');
       calls.push(value);
       return value + suffix;
     };
-    expect(
-      await render(
-        '<Provider>\n\nRead **<Read/>** for {sdkVersion}.\n\n</Provider>',
-        { Provider, Read },
-      ),
-    ).toBe('Read **provided!** for 4.2.0.');
-    expect(calls).toEqual(['provided']);
-  });
 
-  it('keeps marker-like authored content and restores multiple components', async () => {
-    const calls: string[] = [];
-    const X = () => {
-      calls.push('X');
-      return 'X';
-    };
-    const example = 'rspress00000000000000000000000000000000mdx0end';
-    const source = `\`${example}\` ${Array.from({ length: 12 }, () => '<X/>').join(' ')}`;
-    expect(await render(source, { X })).toBe(
-      `\`${example}\` ${Array.from({ length: 12 }, () => 'X').join(' ')}`,
-    );
-    expect(calls).toEqual(Array.from({ length: 12 }, () => 'X'));
+    const output = await render(input, { Provider, Read });
+    expect(output).toMatchInlineSnapshot(`"Read **provided!** for SDK."`);
+    expect(calls).toEqual(['provided']);
   });
 });
