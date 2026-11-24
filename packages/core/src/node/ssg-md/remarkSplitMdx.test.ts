@@ -33,7 +33,7 @@ import Foo from '@components'
       /*@jsxImportSource react*/
       import Foo from '@components';
       function _createMdxContent(props) {
-        return <>{"# title\\n"}{"\\n"}<Foo /></>;
+        return <><>{"# title\\n"}<Foo />{"\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -57,7 +57,7 @@ import Button from '@components/Button'
       /*@jsxImportSource react*/
       import Button from '@components/Button';
       function _createMdxContent(props) {
-        return <>{"# Hello World\\n"}{"\\n"}<Button type="primary" disabled={true}>{"Click me\\n"}</Button></>;
+        return <><>{"# Hello World\\n"}<Button type="primary" disabled={true}>{"Click me\\n"}</Button>{"\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -89,7 +89,7 @@ More content.
       import Foo from '@components/Foo';
       import Bar from '@components/Bar';
       function _createMdxContent(props) {
-        return <>{"# Documentation\\n\\nSome text here.\\n"}{"\\n"}<Foo />{"\\n"}{"More content.\\n"}{"\\n"}<Bar prop="value" /></>;
+        return <><>{"# Documentation\\n\\nSome text here.\\n"}<Foo />{"\\nMore content.\\n"}<Bar prop="value" />{"\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -114,7 +114,7 @@ function greet(name: string) {
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
       function _createMdxContent(props) {
-        return <>{"# Code Example\\n\\n\`\`\`tsx\\nconsole.log('Hello, world!');\\nfunction greet(name: string) {\\n  return \`Hello, \${name}!\`;\\n}\\n\`\`\`\\n"}</>;
+        return <><>{"# Code Example\\n\\n\`\`\`tsx\\nconsole.log('Hello, world!');\\nfunction greet(name: string) {\\n  return \`Hello, \${name}!\`;\\n}\\n\`\`\`\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -153,7 +153,7 @@ console.log('Hello, world!');
       /*@jsxImportSource react*/
       import Card from '@components';
       function _createMdxContent(props) {
-        return <>{"# title\\n"}{"\\n"}<Card>{"Content inside\\n"}</Card>{"\\n"}{"Content outside\\n"}{"\\n"}<Card>{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</Card>{"\\n"}{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</>;
+        return <><>{"# title\\n"}<Card>{"Content inside\\n"}</Card>{"\\nContent outside\\n"}<Card>{"\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</Card>{"\\n\`\`\`tsx\\nconsole.log('Hello, world!');\\n\`\`\`\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -185,7 +185,7 @@ End of content.`;
       import Img from '@components/Image';
       import Svg from '@assets/image.svg';
       function _createMdxContent(props) {
-        return <>{"# Image Example\\n\\nHere is an image:\\n"}{"\\n"}<Img src="/path/to/image.jpg" alt="An image" />{"\\n"}<img src={Svg} alt="An SVG image" />{"\\n"}{"End of content.\\n"}</>;
+        return <><>{"# Image Example\\n\\nHere is an image:\\n"}<Img src="/path/to/image.jpg" alt="An image" />{"\\n"}<img src={Svg} alt="An SVG image" />{"\\nEnd of content.\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -206,7 +206,7 @@ End of content.`;
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
       function _createMdxContent(props) {
-        return <>{"# hello\\n"}{"\\n"}{window.foo}</>;
+        return <><>{"# hello\\n"}{window.foo}{"\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -236,7 +236,7 @@ export function Thing() {
         return <>World</>;
       }
       function _createMdxContent(props) {
-        return <><>{"# Hello "}<span><Thing /></span>{" "}<span>{a}</span>{"\\n"}</>{"\\n"}{a}</>;
+        return <><>{"# Hello "}<span><Thing /></span>{" "}<span>{a}</span>{"\\n"}{a}{"\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -268,7 +268,7 @@ export function Thing() {
         return <>World</>;
       }
       function _createMdxContent(props) {
-        return <><>{"# Hello "}<span><Badge /></span>{" "}<span><Thing /></span>{" "}<span>{a}</span>{"\\n"}</>{"\\n"}{a}</>;
+        return <><>{"# Hello "}<span><Badge /></span>{" "}<span><Thing /></span>{" "}<span>{a}</span>{"\\n"}{a}{"\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -328,7 +328,7 @@ export function Thing() {
       /*@jsxImportSource react*/
       import Foo from '@components';
       function _createMdxContent(props) {
-        return <Foo>{"Hello \\n"}{window.bar}</Foo>;
+        return <><><Foo>{"Hello \\n"}<span>{window.bar}</span>{"\\n"}</Foo>{"\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -366,7 +366,7 @@ import Button from 'react';
       import {Table} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}<>{"<Button>"}{"Click\\n"}{"</Button>"}</></>;
+        return <><><Table />{"\\n<Button>Click\\n</Button>\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -406,7 +406,7 @@ import Button from 'react';
       import {Table, Card} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}{"<Card />\\n"}{"\\n"}<Button>{"Click\\n"}</Button></>;
+        return <><><Table />{"\\n<Card />\\n"}<Button>{"Click\\n"}</Button>{"\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -442,7 +442,7 @@ import Button from 'react';
       import {Table} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}<>{"<Button>"}{"Click\\n"}{"</Button>"}</></>;
+        return <><><Table />{"\\n<Button>Click\\n</Button>\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -476,7 +476,7 @@ import Button from 'react';
       /*@jsxImportSource react*/
       import {Table, Card} from '@lynx';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}{"<Card />\\n"}</>;
+        return <><><Table />{"\\n<Card />\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -511,7 +511,7 @@ import Button from 'react';
       /*@jsxImportSource react*/
       import {Table as Tab} from '@lynx';
       function _createMdxContent(props) {
-        return <>{"<Tab />\\n"}</>;
+        return <><>{"<Tab />\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -549,7 +549,7 @@ import Button from 'react';
       import {Table, Card} from '@lynx';
       import Button from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}{"<Card />\\n"}{"\\n"}<>{"<Button>"}{"Click\\n"}{"</Button>"}</></>;
+        return <><><Table />{"\\n<Card />\\n<Button>Click\\n</Button>\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -591,7 +591,7 @@ import Card from 'react';
       import {Button} from 'antd';
       import Card from 'react';
       function _createMdxContent(props) {
-        return <><Table />{"\\n"}<Button />{"\\n"}{"<Card />\\n"}</>;
+        return <><><Table />{"\\n"}<Button />{"\\n<Card />\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -662,7 +662,7 @@ This is a <Button>click me</Button> and <Link href="/test">link</Link> example.`
       /*@jsxImportSource react*/
       import Button from './_button.mdx';
       function _createMdxContent(props) {
-        return <Button />;
+        return <><><Button />{"\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -695,7 +695,7 @@ import Button from './_button.mdx';
       import {Tabs, Tab} from '@rspress/core/theme';
       import Button from './_button.mdx';
       function _createMdxContent(props) {
-        return <Tabs><Tab><Button /></Tab><Tab /></Tabs>;
+        return <><><Tabs><Tab><Button />{"\\n"}</Tab>{"\\n"}<Tab />{"\\n"}</Tabs>{"\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});

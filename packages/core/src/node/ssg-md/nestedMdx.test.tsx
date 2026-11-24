@@ -144,6 +144,7 @@ After.
 
       Second paragraph.
 
+
       After."
     `);
   });
@@ -173,9 +174,9 @@ Download <Drop />.`;
 
     const output = await render(input, components, options);
     expect(output).toMatchInlineSnapshot(`
-      "| Content                                                                  | Note           |
-      | ------------------------------------------------------------------------ | -------------- |
-      | <Drop />                                                                 | Literal tag    |
+      "| Content | Note |
+      | --- | --- |
+      | <Drop /> | Literal tag |
       | <Drop>before kept after</Drop> | Retained child |
 
       Download <Drop />."
@@ -242,7 +243,7 @@ describe('readable output with known formatting limits', () => {
     const input = 'a *text*<Y/>';
 
     const output = await render(input, components);
-    expect(output).toMatchInlineSnapshot(`"a _tex&#x74;_Y"`);
+    expect(output).toMatchInlineSnapshot(`"a _text_Y"`);
   });
 
   it('resolves a component after strong punctuation', async () => {
@@ -376,7 +377,6 @@ After.
       "# SDK
 
       Before.
-
       4.2.0
       After.
 
@@ -407,7 +407,120 @@ Next **<X/>**.
     `);
   });
 
-  it('restores multi-digit markers without changing marker-like code', async () => {
+  it('separates flow component text from following headings and paragraphs', async () => {
+    const input = `export const Label = () => 'new';
+
+# SDK
+
+<Label/>
+
+Next paragraph.
+
+<Label/>
+
+## Install`;
+
+    const output = await render(input);
+    expect(output).toMatchInlineSnapshot(`
+      "# SDK
+      new
+      Next paragraph.
+      new
+      ## Install"
+    `);
+  });
+
+  it('escapes literal Markdown characters beside a component', async () => {
+    const input = 'Literal \\*stars\\* and \\[brackets\\] beside <X/>.';
+
+    const output = await render(input, { X: () => 'X' });
+    expect(output).toMatchInlineSnapshot(
+      `"Literal \\*stars\\* and \\[brackets\\] beside X."`,
+    );
+  });
+
+  it('escapes static table pipes beside an executable cell', async () => {
+    const input = `| Example | Result |
+| :--- | ---: |
+| a \\| b and \`x \\| y\` | <X/> |`;
+
+    const output = await render(input, { X: () => 'X' });
+    expect(output).toMatchInlineSnapshot(`
+      "| Example | Result |
+      | :--- | ---: |
+      | a \\| b and \`x \\| y\` | X |"
+    `);
+  });
+
+  it('preserves link destinations and titles around dynamic labels', async () => {
+    const input = '[<X/>](<https://example.com/a b> "A title")';
+
+    const output = await render(input, { X: () => 'X' });
+    expect(output).toMatchInlineSnapshot(
+      `"[X](<https://example.com/a b> "A title")"`,
+    );
+  });
+
+  it('preserves references with dynamic labels', async () => {
+    const input = `[<X/>][sdk]
+
+[sdk]: https://example.com/sdk "SDK"`;
+
+    const output = await render(input, { X: () => 'X' });
+    expect(output).toMatchInlineSnapshot(`
+      "[X][sdk]
+
+      [sdk]: https://example.com/sdk "SDK""
+    `);
+  });
+
+  it('indents mixed nested task lists and code blocks', async () => {
+    const input = `3. Read <X/>.
+
+   - [x] <X/>
+   - [ ] Next {4}.
+
+   \`\`\`js
+   const value = 4;
+   \`\`\`
+
+4. Finish.`;
+
+    const output = await render(input, { X: () => 'X' });
+    expect(output).toMatchInlineSnapshot(`
+      "3. Read X.
+
+         - [x] X
+         - [ ] Next 4.
+
+         \`\`\`js
+         const value = 4;
+         \`\`\`
+
+      4. Finish."
+    `);
+  });
+
+  it('prefixes each authored line in a mixed blockquote', async () => {
+    const input = `> Read <X/>.
+>
+> Next paragraph.
+>
+> - One
+> - {2}`;
+
+    const output = await render(input, { X: () => 'X' });
+    expect(output).toMatchInlineSnapshot(`
+      "> Read X.
+      >
+      > Next paragraph.
+      >
+      > - One
+      > - 2"
+    `);
+  });
+
+  it('keeps marker-like code literal beside repeated components', async () => {
     const input = `\`rspress00000000000000000000000000000000mdx0end\`
 
 Actual: <X/> <X/> <X/> <X/> <X/> <X/> <X/> <X/> <X/> <X/> <X/> <X/>`;
