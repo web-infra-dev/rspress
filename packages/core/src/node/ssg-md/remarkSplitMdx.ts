@@ -83,6 +83,7 @@ class MarkdownWriter {
   private lineStart = true;
   private prefix = '';
   private inTable = false;
+  private isLiteralText = false;
   private readonly context: TransformContext;
 
   constructor(context: TransformContext) {
@@ -128,8 +129,13 @@ class MarkdownWriter {
   }
 
   flow(children: RootContent[]) {
+    if (this.isLiteralText) {
+      this.phrasing(children);
+      return;
+    }
     let markdown: RootContent[] = [];
-    const flush = () => {
+    let afterMdx = false;
+    const flush = (beforeMdx = false) => {
       if (!markdown.length) return;
       if (markdown.every(node => !this.context.mixedNodes.has(node))) {
         this.write(stringifyMarkdown(markdown));
@@ -137,14 +143,16 @@ class MarkdownWriter {
         this.blocks(markdown);
         this.write('\n');
       }
+      if (beforeMdx) this.write('\n');
       markdown = [];
     };
     for (const node of children) {
       if (node.type === 'mdxjsEsm') continue;
-      if (isMdxNode(node)) {
-        flush();
+      if (afterMdx) this.write('\n');
+      afterMdx = isMdxNode(node);
+      if (afterMdx) {
+        flush(true);
         this.node(node);
-        this.write('\n');
       } else markdown.push(node);
     }
     flush();
@@ -191,6 +199,8 @@ class MarkdownWriter {
     if (!node.children.length) return node;
     const writer = new MarkdownWriter(this.context);
     writer.inTable = this.inTable;
+    writer.isLiteralText =
+      this.isLiteralText || node.name === 'code' || node.name === 'pre';
     if (node.type === 'mdxJsxTextElement')
       writer.phrasing(node.children as RootContent[]);
     else writer.flow(node.children as RootContent[]);
@@ -210,8 +220,16 @@ class MarkdownWriter {
       );
       return;
     }
-    if (inline && node.type === 'text') {
-      this.write(node.value.replace(/[\\`*_[\]<>~]/g, '\\$&'));
+    if ((inline || this.isLiteralText) && node.type === 'text') {
+      this.write(
+        this.isLiteralText
+          ? node.value
+          : node.value.replace(/[\\`*_[\]<>~]/g, '\\$&'),
+      );
+      return;
+    }
+    if (this.isLiteralText && node.type === 'paragraph') {
+      this.phrasing(node.children);
       return;
     }
     if (!this.context.mixedNodes.has(node)) {

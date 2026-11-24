@@ -1,6 +1,7 @@
 import { evaluate } from '@mdx-js/mdx';
 import { describe, expect, it } from '@rstest/core';
 import {
+  Children,
   createContext,
   createElement,
   type ReactNode,
@@ -203,6 +204,45 @@ Actual: <ReleaseLink /> {sdkVersion}.`;
       Actual: [release notes](https://example.com/sdk/releases/4.2.0) 4.2.0."
     `);
   });
+
+  it('preserves literal text inside native code elements', async () => {
+    const input = `<Container>
+
+The <code>&lt;A2UI&gt; &#42;value&#42; \\path {sdkVersion}</code> container.
+
+<pre>&lt;view&gt; {sdkVersion}</pre>
+
+</Container>`;
+
+    const output = await renderSdk(input);
+    expect(output).toMatchInlineSnapshot(`
+      "The \`<A2UI> *value* \\path 4.2.0\` container.
+
+
+      \`\`\`\`
+      <view> 4.2.0
+      \`\`\`\`"
+    `);
+  });
+
+  it('separates a Markdown table from a flow element', async () => {
+    const input = `| App | Size |
+| --- | --- |
+| App A | 1 MB |
+
+<small>
+  Sizes are per-page totals.
+</small>`;
+
+    const output = await render(input);
+    expect(output).toMatchInlineSnapshot(`
+      "| App   | Size |
+      | ----- | ---- |
+      | App A | 1 MB |
+
+      Sizes are per-page totals."
+    `);
+  });
 });
 
 // Record readable content, including known formatting limits.
@@ -377,6 +417,7 @@ After.
       "# SDK
 
       Before.
+
       4.2.0
       After.
 
@@ -423,8 +464,10 @@ Next paragraph.
     const output = await render(input);
     expect(output).toMatchInlineSnapshot(`
       "# SDK
+
       new
       Next paragraph.
+
       new
       ## Install"
     `);
@@ -578,6 +621,20 @@ Before <Drop>left <Keep /> right</Drop> after.
       expect(calls).toEqual(['Keep']);
     },
   );
+
+  it('preserves the only JSX child of a component', async () => {
+    const input = `<Only>
+  <Button>copy-link</Button>
+</Only>`;
+    const Only = ({ children }: { children?: ReactNode }) =>
+      Children.only(children);
+    const Button = ({ children }: { children?: ReactNode }) => (
+      <button>{children}</button>
+    );
+
+    const output = await render(input, { Only, Button });
+    expect(output).toMatchInlineSnapshot(`"copy-link"`);
+  });
 
   it('executes nested components once with Context and Hooks', async () => {
     const input = `<Provider>
