@@ -19,6 +19,8 @@ linkWorkspacePackages: true
 
 # Reduce the risk of installing compromised packages
 minimumReleaseAge: 1440
+# Keep this allowlist at the package level; do not add package@version entries.
+# Packages directly maintained by the Rstack team can be added to this allowlist.
 minimumReleaseAgeExclude:
   - '@swc-next/*'
   - '@rspack/*'
