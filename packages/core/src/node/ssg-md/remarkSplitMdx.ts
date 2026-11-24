@@ -1,4 +1,9 @@
 import { randomUUID } from 'node:crypto';
+import { gfmToMarkdown } from 'mdast-util-gfm';
+import {
+  toMarkdown,
+  type Options as StringifyOptions,
+} from 'mdast-util-to-markdown';
 import type { Root, RootContent } from 'mdast';
 import {
   mdxToMarkdown,
@@ -8,13 +13,6 @@ import {
   type MdxjsEsm,
   type MdxTextExpression,
 } from 'mdast-util-mdx';
-import remarkGfm from 'remark-gfm';
-import remarkMdx from 'remark-mdx';
-import remarkStringify, {
-  type Options as StringifyOptions,
-} from 'remark-stringify';
-import { unified } from 'unified';
-import { visit } from 'unist-util-visit';
 
 /**
  * Filter rule format: [specifiers, source]
@@ -52,6 +50,16 @@ export interface RemarkSplitMdxOptions {
   excludes?: FilterRule[];
 }
 
+type JsxNode = MdxJsxFlowElement | MdxJsxTextElement;
+type MdxNode = JsxNode | MdxFlowExpression | MdxTextExpression;
+
+interface TransformContext {
+  importMap: Map<string, string>;
+  esmNodes: Set<MdxjsEsm>;
+  mixedNodes: WeakSet<RootContent>;
+  options: RemarkSplitMdxOptions;
+}
+
 /**
  * Converts Markdown to text while preserving executable JSX and MDX expressions.
  */
@@ -59,98 +67,60 @@ export function remarkSplitMdx(
   options: RemarkSplitMdxOptions = {},
 ): (tree: Root) => void {
   return (tree: Root) => {
-    const newChildren: RootContent[] = [];
-    const { importMap, esmNodes } = prepareTree(tree);
-
-    // Keep ESM declarations available to the MDX compiler. They are omitted
-    // only when content is stringified to Markdown.
-    newChildren.push(...esmNodes);
+    const context = { ...prepareTree(tree), options };
+    const newChildren: RootContent[] = [...context.esmNodes];
+    let markdown: RootContent[] = [];
+    const flushMarkdown = () => {
+      if (!markdown.length) return;
+      if (markdown.some(node => context.mixedNodes.has(node))) {
+        newChildren.push(
+          createFragment(serializeMarkdownWithMdx(markdown, context)),
+        );
+      } else {
+        newChildren.push({
+          ...createTextExpression(stringifyMarkdown(markdown)),
+          type: 'mdxFlowExpression',
+        });
+      }
+      markdown = [];
+    };
 
     for (const node of tree.children) {
-      if (node.type === 'mdxjsEsm') {
-        continue;
-      }
-
-      // Preserve MDX expressions as-is (e.g., {window.foo})
-      if (
-        node.type === 'mdxFlowExpression' ||
-        node.type === 'mdxTextExpression'
-      ) {
-        newChildren.push(node);
-        continue;
-      }
-
-      // Process JSX elements
-      if (
-        node.type === 'mdxJsxFlowElement' ||
-        node.type === 'mdxJsxTextElement'
-      ) {
-        newChildren.push(processJsxElement(node, importMap, options));
-        continue;
-      }
-
-      // Find executable MDX at any depth.
-      let hasMdxDescendants = false;
-      visit(
-        node,
-        [
-          'mdxJsxFlowElement',
-          'mdxJsxTextElement',
-          'mdxFlowExpression',
-          'mdxTextExpression',
-        ],
-        () => {
-          hasMdxDescendants = true;
-        },
-      );
-
-      if (hasMdxDescendants) {
-        newChildren.push({
-          type: 'mdxJsxFlowElement',
-          name: null, // Fragment
-          attributes: [],
-          // @ts-expect-error mdxJsxFlowElement children type
-          children: serializeMarkdownWithMdx([node], importMap, options),
-        });
+      if (node.type === 'mdxjsEsm') continue;
+      if (isMdxNode(node)) {
+        flushMarkdown();
+        newChildren.push(
+          isJsxNode(node) ? processJsxElement(node, context) : node,
+        );
       } else {
-        // Pure markdown node - serialize to text
-        newChildren.push(buildMdxFlowExpressionFragment(node));
+        markdown.push(node);
       }
     }
+    flushMarkdown();
 
     tree.children = newChildren as any;
   };
 }
 
-/**
- * Process a single JSX element - recursively handle children and decide whether to keep or convert
- */
 function processJsxElement(
-  node: MdxJsxFlowElement | MdxJsxTextElement,
-  importMap: Map<string, string>,
-  options: RemarkSplitMdxOptions,
-):
-  | MdxJsxFlowElement
-  | MdxJsxTextElement
-  | MdxFlowExpression
-  | MdxJsxFlowElement {
-  // Recursively process children first
-  const processedNode = processJsxChildren(node, importMap, options);
+  node: JsxNode,
+  context: TransformContext,
+): JsxNode | MdxTextExpression {
+  const processed = processJsxChildren(node, context);
+  if (shouldKeepJsxElement(node.name, context.importMap, context.options))
+    return processed;
+  if (!node.children.length)
+    return createTextExpression(serializeNodeToMarkdown(node));
 
-  if (shouldKeepJsxElement(node.name, importMap, options)) {
-    return processedNode;
-  }
-
-  // Not kept - convert to text (preserving any JSX children that were kept)
-  return buildMdxFlowExpressionFragment(processedNode);
+  return createFragment([
+    createTextExpression(serializeOpeningTag(node)),
+    ...(processed.children as RootContent[]),
+    createTextExpression(serializeClosingTag(node)),
+  ]);
 }
 
 // Group Markdown children to preserve paragraph separators.
-function processJsxChildren(
-  node: MdxJsxFlowElement | MdxJsxTextElement,
-  importMap: Map<string, string>,
-  options: RemarkSplitMdxOptions,
-): MdxJsxFlowElement | MdxJsxTextElement {
+function processJsxChildren(node: JsxNode, context: TransformContext): JsxNode {
   if (!node.children || node.children.length === 0) {
     return node;
   }
@@ -159,9 +129,8 @@ function processJsxChildren(
     return {
       ...node,
       children: serializeMarkdownWithMdx(
-        node.children,
-        importMap,
-        options,
+        node.children as RootContent[],
+        context,
         node,
       ) as any,
     };
@@ -173,24 +142,16 @@ function processJsxChildren(
   const flushTextBuffer = () => {
     if (textBuffer.length === 0) return;
 
-    processedChildren.push(
-      ...serializeMarkdownWithMdx(textBuffer, importMap, options),
-    );
+    processedChildren.push(...serializeMarkdownWithMdx(textBuffer, context));
     textBuffer = [];
   };
 
   for (const child of node.children as RootContent[]) {
-    if (
-      child.type === 'mdxJsxFlowElement' ||
-      child.type === 'mdxJsxTextElement'
-    ) {
+    if (isJsxNode(child)) {
       // Flush any accumulated text before the JSX element
       flushTextBuffer();
-      processedChildren.push(processJsxElement(child, importMap, options));
-    } else if (
-      child.type === 'mdxFlowExpression' ||
-      child.type === 'mdxTextExpression'
-    ) {
+      processedChildren.push(processJsxElement(child, context));
+    } else if (isMdxNode(child)) {
       // Preserve MDX expressions as-is
       flushTextBuffer();
       processedChildren.push(child as any);
@@ -209,15 +170,13 @@ function processJsxChildren(
 // Serialize Markdown, then restore executable MDX in place.
 function serializeMarkdownWithMdx(
   children: RootContent[],
-  importMap: Map<string, string>,
-  options: RemarkSplitMdxOptions,
+  context: TransformContext,
   inlineParent?: MdxJsxTextElement,
 ): RootContent[] {
-  type MdxNode =
-    | MdxJsxFlowElement
-    | MdxJsxTextElement
-    | MdxFlowExpression
-    | MdxTextExpression;
+  if (!children.some(node => context.mixedNodes.has(node))) {
+    const markdown = stringifyMarkdown(children, undefined, inlineParent);
+    return markdown ? [createTextExpression(markdown)] : [];
+  }
 
   // Give each serialization pass unique markers.
   const prefix = `rspress${randomUUID().replaceAll('-', '')}mdx`;
@@ -238,32 +197,16 @@ function serializeMarkdownWithMdx(
   const handlers: StringifyOptions['handlers'] = {
     mdxJsxFlowElement: preserveMdx,
     mdxJsxTextElement(node, parent, state, info) {
-      return shouldKeepJsxElement(node.name, importMap, options)
+      return shouldKeepJsxElement(node.name, context.importMap, context.options)
         ? preserveMdx(node)
         : mdxJsxTextElementHandler(node, parent, state, info);
     },
     mdxFlowExpression: preserveMdx,
     mdxTextExpression: preserveMdx,
   };
-  let inlineMarkdown: string | undefined;
-  if (inlineParent) {
-    handlers.root = (_node, _parent, state, info) => {
-      const exit = state.enter(inlineParent.type);
-      inlineMarkdown = state.containerPhrasing(inlineParent, {
-        ...info,
-        before: '>',
-        after: '<',
-      });
-      exit();
-      return inlineMarkdown;
-    };
-  }
-  const serialized = createMarkdownProcessor(handlers).stringify({
-    type: 'root',
-    children,
-  });
-  // Inline content must not gain a document newline.
-  const markdown = inlineMarkdown ?? serialized;
+  const markdown = stringifyMarkdown(children, handlers, inlineParent);
+
+  if (!nodes.length) return markdown ? [createTextExpression(markdown)] : [];
 
   const result: RootContent[] = [];
   const restored = new Set<number>();
@@ -283,10 +226,9 @@ function serializeMarkdownWithMdx(
       );
     }
     restored.add(index);
-    const processedNode =
-      node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement'
-        ? processJsxElement(node, importMap, options)
-        : node;
+    const processedNode = isJsxNode(node)
+      ? processJsxElement(node, context)
+      : node;
     if (
       node.type === 'mdxJsxTextElement' ||
       node.type === 'mdxTextExpression'
@@ -316,162 +258,21 @@ function serializeMarkdownWithMdx(
   return result;
 }
 
-/**
- * Get component name from MDX JSX name field
- * Handles both simple strings and member expressions (e.g., PlatformTabs.Tab)
- */
-function getComponentName(name: string | null | any): string | null {
-  if (!name) {
-    return null;
-  }
-
-  if (typeof name === 'string') {
-    // Handle member expression in string form (e.g., "PlatformTabs.Tab")
-    // Extract the root component name before the first dot
-    const dotIndex = name.indexOf('.');
-    if (dotIndex > 0) {
-      return name.substring(0, dotIndex);
-    }
-    return name;
-  }
-
-  // Handle member expression as object (in case MDX AST uses object format)
-  if (typeof name === 'object') {
-    if (
-      name.type === 'mdxJsxMemberExpression' ||
-      name.type === 'mdxJsxNamespacedName'
-    ) {
-      // Get the root object name (e.g., 'PlatformTabs' from 'PlatformTabs.Tab')
-      return getComponentName(name.object);
-    }
-  }
-
-  return null;
+function getComponentName(name: string | null): string | null {
+  if (!name) return null;
+  const dot = name.indexOf('.');
+  return dot === -1 ? name : name.slice(0, dot);
 }
 
-/**
- * Convert a markdown node to an MDX Fragment containing a Flow Expression
- * If the node contains JSX children (after processing), returns a Fragment with mixed content
- * @example
- * input
- *
- * ```mdx
- * # Heading
- * Some **bold** text.
- * ```
- *
- * output
- *
- * ```jsx
- * <>{"# Heading\nSome **bold** text."}</>
- * ```
- */
-function buildMdxFlowExpressionFragment(
-  node: RootContent,
-): MdxFlowExpression | MdxJsxFlowElement {
-  // Check if node has children that are JSX elements (after processing)
-  const children = (node as any).children;
-  const hasJsxChildren = children?.some(
-    (child: any) =>
-      child.type === 'mdxJsxFlowElement' ||
-      child.type === 'mdxJsxTextElement' ||
-      child.type === 'mdxFlowExpression' ||
-      child.type === 'mdxTextExpression',
-  );
-
-  if (
-    hasJsxChildren &&
-    (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement')
-  ) {
-    // Build a Fragment with mixed content
-    return buildMixedContentFragment(node, children);
-  }
-
-  // Simple case: no JSX children, just serialize to string
-  const textContent = serializeNodeToMarkdown(node);
-  // <>{"string"}</>
-  const stringified = JSON.stringify(textContent);
-
-  const fragment: MdxFlowExpression = {
-    type: 'mdxFlowExpression',
-    value: stringified,
-    data: {
-      estree: {
-        type: 'Program',
-        body: [
-          {
-            type: 'ExpressionStatement',
-            expression: {
-              type: 'Literal',
-              value: textContent,
-              raw: stringified,
-            },
-          },
-        ],
-        sourceType: 'module',
-      },
-    },
-  };
-
-  return fragment;
-}
-
-/**
- * Build a Fragment with mixed content (text strings and JSX components)
- * Used when converting a JSX element to markdown but preserving nested JSX components
- */
-function buildMixedContentFragment(
-  node: MdxJsxFlowElement | MdxJsxTextElement,
-  children: RootContent[],
-): MdxJsxFlowElement {
-  const result: (
-    | MdxFlowExpression
-    | MdxTextExpression
-    | MdxJsxFlowElement
-    | MdxJsxTextElement
-  )[] = [];
-
-  // Add opening tag
-  const openingTag = serializeOpeningTag(node);
-  if (openingTag) {
-    result.push(createTextExpression(openingTag));
-  }
-
-  // Process children
-  for (const child of children) {
-    const isJsxOrExpression =
-      child.type === 'mdxJsxFlowElement' ||
-      child.type === 'mdxJsxTextElement' ||
-      child.type === 'mdxFlowExpression' ||
-      child.type === 'mdxTextExpression';
-
-    if (isJsxOrExpression) {
-      result.push(child as any);
-    } else {
-      const text = serializeNodeToMarkdown(child);
-      if (text) {
-        result.push(createTextExpression(text));
-      }
-    }
-  }
-
-  // Add closing tag
-  const closingTag = serializeClosingTag(node);
-  if (closingTag) {
-    result.push(createTextExpression(closingTag));
-  }
-
+function createFragment(children: RootContent[]): MdxJsxFlowElement {
   return {
     type: 'mdxJsxFlowElement',
-    name: null, // Fragment
+    name: null,
     attributes: [],
-    children: result as any,
+    children: children as MdxJsxFlowElement['children'],
   };
 }
 
-/**
- * Create a text expression node
- */
 function createTextExpression(text: string): MdxTextExpression {
   const stringified = JSON.stringify(text);
   return {
@@ -496,9 +297,6 @@ function createTextExpression(text: string): MdxTextExpression {
   };
 }
 
-/**
- * Serialize opening tag of a JSX element
- */
 function serializeOpeningTag(
   node: MdxJsxFlowElement | MdxJsxTextElement,
 ): string {
@@ -527,9 +325,6 @@ function serializeOpeningTag(
   return `<${name}${attrs ? ` ${attrs}` : ''}>`;
 }
 
-/**
- * Serialize closing tag of a JSX element
- */
 function serializeClosingTag(
   node: MdxJsxFlowElement | MdxJsxTextElement,
 ): string {
@@ -538,62 +333,79 @@ function serializeClosingTag(
   return `</${name}>`;
 }
 
-// Use unified with remark-stringify to convert the node back to markdown
-const processor = createMarkdownProcessor();
+const mdxExtension = mdxToMarkdown();
+const markdownOptions: StringifyOptions = {
+  bullet: '-',
+  emphasis: '_',
+  fences: true,
+  incrementListMarker: true,
+  extensions: [mdxExtension, gfmToMarkdown()],
+  handlers: { mdxjsEsm: () => '' },
+};
 
-// Keep filtered tags in their original inline context.
-const mdxJsxTextElementHandler = mdxToMarkdown().extensions!.find(
+const mdxJsxTextElementHandler = mdxExtension.extensions!.find(
   extension => extension.handlers?.mdxJsxTextElement,
 )!.handlers!.mdxJsxTextElement!;
 
-// Isolate handlers between recursive calls.
-function createMarkdownProcessor(handlers: StringifyOptions['handlers'] = {}) {
-  return unified()
-    .use(remarkMdx)
-    .use(remarkGfm)
-    .use(remarkStringify, {
-      bullet: '-',
-      emphasis: '_',
-      fences: true,
-      incrementListMarker: true,
-      handlers: {
-        mdxjsEsm: () => '',
-        ...handlers,
-      },
-    });
-}
+function stringifyMarkdown(
+  children: RootContent[],
+  handlers?: StringifyOptions['handlers'],
+  inlineParent?: MdxJsxTextElement,
+): string {
+  const tree: Root = { type: 'root', children };
+  if (!handlers && !inlineParent) return toMarkdown(tree, markdownOptions);
 
-/**
- * Serialize a markdown node back to its markdown text representation
- * Uses remark-stringify for proper serialization of all node types
- */
-function serializeNodeToMarkdown(node: RootContent): string {
-  // Create a temporary root node containing only this node
-  const tempRoot: Root = {
-    type: 'root',
-    children: [node],
+  let inlineMarkdown: string | undefined;
+  const localHandlers: StringifyOptions['handlers'] = {
+    ...markdownOptions.handlers,
+    ...handlers,
   };
-
-  const result = processor.stringify(tempRoot);
-
-  return result;
+  if (inlineParent) {
+    localHandlers.root = (_node, _parent, state, info) => {
+      const exit = state.enter(inlineParent.type);
+      inlineMarkdown = state.containerPhrasing(inlineParent, {
+        ...info,
+        before: '>',
+        after: '<',
+      });
+      exit();
+      return inlineMarkdown;
+    };
+  }
+  const markdown = toMarkdown(tree, {
+    ...markdownOptions,
+    handlers: localHandlers,
+  });
+  // Inline content must not gain a document newline.
+  return inlineMarkdown ?? markdown;
 }
 
-// Collect ESM and restore task paragraphs in one pass.
-function prepareTree(tree: Root): {
-  importMap: Map<string, string>;
-  esmNodes: Set<MdxjsEsm>;
-} {
+function serializeNodeToMarkdown(node: RootContent): string {
+  return stringifyMarkdown([node]);
+}
+
+// Collect imports, restore task paragraphs, and find mixed subtrees once.
+function prepareTree(tree: Root): Omit<TransformContext, 'options'> {
   const importMap = new Map<string, string>();
   const esmNodes = new Set<MdxjsEsm>();
+  const mixedNodes = new WeakSet<RootContent>();
 
-  visit(tree, ['mdxjsEsm', 'listItem'], node => {
-    if (node.type === 'listItem') {
+  const scan = (node: Root | RootContent): boolean => {
+    if (node.type === 'mdxjsEsm') {
+      esmNodes.add(node);
+      for (const statement of node.data?.estree?.body ?? []) {
+        if (statement.type !== 'ImportDeclaration') continue;
+        for (const specifier of statement.specifiers) {
+          importMap.set(specifier.local.name, String(statement.source.value));
+        }
+      }
+      return false;
+    }
+    if (node.type === 'listItem' && typeof node.checked === 'boolean') {
       const head = node.children[0];
       if (
-        typeof node.checked === 'boolean' &&
-        (head?.type === 'mdxJsxFlowElement' ||
-          head?.type === 'mdxFlowExpression')
+        head?.type === 'mdxJsxFlowElement' ||
+        head?.type === 'mdxFlowExpression'
       ) {
         node.children[0] = {
           type: 'paragraph',
@@ -608,37 +420,34 @@ function prepareTree(tree: Root): {
           ],
         };
       }
-      return;
     }
-    if (node.type !== 'mdxjsEsm') return;
-    esmNodes.add(node);
-
-    const estree = node.data?.estree;
-    if (!estree) {
-      return;
-    }
-
-    for (const statement of estree.body) {
-      if (statement.type !== 'ImportDeclaration') continue;
-
-      const source = statement.source.value;
-      for (const specifier of statement.specifiers) {
-        const localName = specifier.local?.name;
-        if (localName) {
-          importMap.set(localName, source as string);
-        }
+    let mixed = isMdxNode(node);
+    if ('children' in node) {
+      for (const child of node.children) {
+        if (scan(child as RootContent)) mixed = true;
       }
     }
-  });
-
-  return { importMap, esmNodes };
+    if (mixed && node.type !== 'root') mixedNodes.add(node);
+    return mixed;
+  };
+  scan(tree);
+  return { importMap, esmNodes, mixedNodes };
 }
 
-/**
- * Check if a JSX element should be kept based on its component name and import filters
- */
+function isJsxNode(node: Root | RootContent): node is JsxNode {
+  return node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement';
+}
+
+function isMdxNode(node: Root | RootContent): node is MdxNode {
+  return (
+    isJsxNode(node) ||
+    node.type === 'mdxFlowExpression' ||
+    node.type === 'mdxTextExpression'
+  );
+}
+
 function shouldKeepJsxElement(
-  nameField: string | null | any,
+  nameField: string | null,
   importMap: Map<string, string>,
   options: RemarkSplitMdxOptions,
 ): boolean {
@@ -651,12 +460,11 @@ function shouldKeepJsxElement(
   const { includes, excludes } = options;
   const importSource = importMap.get(componentName);
 
-  // If no filters specified, keep all JSX elements
   if (!includes && !excludes) {
     return true;
   }
 
-  // Check excludes first (takes precedence over includes)
+  // Excludes take precedence.
   if (excludes) {
     for (const [excludeSpecifiers, excludeSource] of excludes) {
       if (
@@ -668,7 +476,6 @@ function shouldKeepJsxElement(
     }
   }
 
-  // Check includes
   if (includes) {
     for (const [includeSpecifiers, includeSource] of includes) {
       if (
@@ -678,7 +485,6 @@ function shouldKeepJsxElement(
         return true;
       }
     }
-    // If includes are specified but nothing matches, exclude
     return false;
   }
 

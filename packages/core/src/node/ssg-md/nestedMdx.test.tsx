@@ -331,6 +331,82 @@ Actual: **<ReleaseLink />**.
     `);
   });
 
+  it('preserves block separators when batching root Markdown', async () => {
+    const input = `# SDK
+
+First paragraph.
+
+- First item
+- Second item
+
+> Note.
+
+Last paragraph.`;
+
+    const output = await render(input);
+    expect(output).toMatchInlineSnapshot(`
+      "# SDK
+
+      First paragraph.
+
+      - First item
+      - Second item
+
+      > Note.
+
+      Last paragraph."
+    `);
+  });
+
+  it('keeps expressions between batched Markdown blocks', async () => {
+    const input = `export const version = '4.2.0';
+
+# SDK
+
+Before.
+
+{version}
+
+After.
+
+## Install`;
+
+    const output = await render(input);
+    expect(output).toMatchInlineSnapshot(`
+      "# SDK
+
+      Before.
+
+      4.2.0
+      After.
+
+      ## Install"
+    `);
+  });
+
+  it('keeps nested serializer state isolated', async () => {
+    const input = `export const Container = ({ children }) => <div>{children}</div>;
+
+export const Inline = ({ children }) => <span>{children}</span>;
+
+export const X = () => 'X';
+
+<Container>
+
+Before <Inline>left **<X/>** right</Inline> after <X/>.
+
+Next **<X/>**.
+
+</Container>`;
+
+    const output = await render(input);
+    expect(output).toMatchInlineSnapshot(`
+      "Before left **X** right after X.
+
+      Next **X**."
+    `);
+  });
+
   it('restores multi-digit markers without changing marker-like code', async () => {
     const input = `\`rspress00000000000000000000000000000000mdx0end\`
 

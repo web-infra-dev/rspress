@@ -89,7 +89,7 @@ More content.
       import Foo from '@components/Foo';
       import Bar from '@components/Bar';
       function _createMdxContent(props) {
-        return <>{"# Documentation\\n"}{"\\n"}{"Some text here.\\n"}{"\\n"}<Foo />{"\\n"}{"More content.\\n"}{"\\n"}<Bar prop="value" /></>;
+        return <>{"# Documentation\\n\\nSome text here.\\n"}{"\\n"}<Foo />{"\\n"}{"More content.\\n"}{"\\n"}<Bar prop="value" /></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -114,7 +114,7 @@ function greet(name: string) {
       "/*@jsxRuntime automatic*/
       /*@jsxImportSource react*/
       function _createMdxContent(props) {
-        return <>{"# Code Example\\n"}{"\\n"}{"\`\`\`tsx\\nconsole.log('Hello, world!');\\nfunction greet(name: string) {\\n  return \`Hello, \${name}!\`;\\n}\\n\`\`\`\\n"}</>;
+        return <>{"# Code Example\\n\\n\`\`\`tsx\\nconsole.log('Hello, world!');\\nfunction greet(name: string) {\\n  return \`Hello, \${name}!\`;\\n}\\n\`\`\`\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -185,7 +185,7 @@ End of content.`;
       import Img from '@components/Image';
       import Svg from '@assets/image.svg';
       function _createMdxContent(props) {
-        return <>{"# Image Example\\n"}{"\\n"}{"Here is an image:\\n"}{"\\n"}<Img src="/path/to/image.jpg" alt="An image" />{"\\n"}<img src={Svg} alt="An SVG image" />{"\\n"}{"End of content.\\n"}</>;
+        return <>{"# Image Example\\n\\nHere is an image:\\n"}{"\\n"}<Img src="/path/to/image.jpg" alt="An image" />{"\\n"}<img src={Svg} alt="An SVG image" />{"\\n"}{"End of content.\\n"}</>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
@@ -619,7 +619,7 @@ Some text here.`;
       /*@jsxImportSource react*/
       import Foo from '@components';
       function _createMdxContent(props) {
-        return <><>{"# title "}<span><Foo /></span>{"\\n"}</>{"\\n"}{"# title [link](./link)\\n"}{"\\n"}<>{"# title [link](./link) "}<span><Foo /></span>{"\\n"}</>{"\\n"}{"Some text here.\\n"}</>;
+        return <><>{"# title "}<span><Foo /></span>{"\\n\\n# title [link](./link)\\n\\n# title [link](./link) "}<span><Foo /></span>{"\\n\\nSome text here.\\n"}</></>;
       }
       export default function MDXContent(props = {}) {
         const {wrapper: MDXLayout} = props.components || ({});
