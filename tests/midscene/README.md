@@ -12,7 +12,9 @@ so collapsed descendants cannot satisfy the check. AI taps still open and naviga
 the menu. Search AI assertions still verify the visible results and highlights.
 `overview.expectLinks` verifies that command entries have real link destinations
 even when styled as gray code. These checks do not change the page or bypass UI
-navigation.
+navigation. `overview.expectSection` checks the group, article entry, and exact
+anchor destination; `app.expectLocation` can also verify the destination hash and
+heading level after an AI tap.
 
 ## Run locally
 

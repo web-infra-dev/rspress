@@ -25,11 +25,24 @@ export async function expectMobileMenuItem(
 
 export async function expectLocation(
   page: Page,
-  expected: { path: string; heading: string },
+  expected: {
+    path: string;
+    heading: string;
+    hash?: string;
+    headingLevel?: number;
+  },
 ) {
-  await page.waitForURL(url => url.pathname === expected.path);
+  await page.waitForURL(
+    url =>
+      url.pathname === expected.path &&
+      (expected.hash === undefined || url.hash === expected.hash),
+  );
   await page
-    .getByRole('heading', { level: 1, name: expected.heading, exact: true })
+    .getByRole('heading', {
+      level: expected.headingLevel ?? 1,
+      name: expected.heading,
+      exact: true,
+    })
     .waitFor({ state: 'visible' });
   await page.locator('.rp-nav-screen').waitFor({ state: 'hidden' });
 }
@@ -85,5 +98,34 @@ export async function expectOverviewLinks(page: Page, labels: string[]) {
         `Overview entry "${label}" has no navigation destination`,
       );
     }
+  }
+}
+
+export async function expectOverviewSection(
+  page: Page,
+  expected: { group: string; item: string; link: string; href: string },
+) {
+  const heading = page.locator('.rp-overview').getByRole('heading', {
+    level: 2,
+    name: expected.group,
+    exact: true,
+  });
+  await heading.waitFor({ state: 'visible' });
+  const group = heading.locator(
+    'xpath=following-sibling::*[1][contains(@class, "rp-overview-group")]',
+  );
+  const item = group.locator('.rp-overview-group__item').filter({
+    has: page.locator('.rp-overview-group__item__title').getByRole('link', {
+      name: expected.item,
+      exact: true,
+    }),
+  });
+  const link = item.getByRole('link', { name: expected.link, exact: true });
+  await link.waitFor({ state: 'visible' });
+  const href = await link.getAttribute('href');
+  if (href !== expected.href) {
+    throw new Error(
+      `Overview link "${expected.link}" points to "${href}", expected "${expected.href}"`,
+    );
   }
 }

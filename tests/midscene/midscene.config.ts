@@ -17,6 +17,7 @@ import {
   expectMobileMenuItem,
   expectOverviewLinks,
   expectSearchResults,
+  expectOverviewSection,
 } from './scripts/page-assertions.js';
 import {
   OriginalFixture,
@@ -207,6 +208,8 @@ const updateFixture = defineNode<typeof updateInput, void, Context>({
 const locationInput = z.strictObject({
   path: z.string().startsWith('/'),
   heading: z.string().min(1),
+  hash: z.string().startsWith('#').optional(),
+  headingLevel: z.number().int().min(1).max(6).optional(),
 });
 const location = defineNode<typeof locationInput, void, Context>({
   name: 'app.expectLocation',
@@ -262,6 +265,22 @@ const overviewLinks = defineNode<typeof overviewLinksInput, void, Context>({
     await expectOverviewLinks(context.page, input.labels);
   },
 });
+const overviewSectionInput = z.strictObject({
+  group: z.string().min(1),
+  item: z.string().min(1),
+  link: z.string().min(1),
+  href: z.string().startsWith('/'),
+});
+const overviewSection = defineNode<typeof overviewSectionInput, void, Context>({
+  name: 'overview.expectSection',
+  description:
+    'Verify an overview group, its article entry, and the exact anchor destination without operating the UI.',
+  inputSchema: overviewSectionInput,
+  async execute({ context, input }) {
+    if (!context.page) throw new Error('Call app.open first');
+    await expectOverviewSection(context.page, input);
+  },
+});
 export default defineTestProject<Context, ProjectContext>({
   test: {
     maxConcurrentProjects: 1,
@@ -293,6 +312,7 @@ export default defineTestProject<Context, ProjectContext>({
     mobileMenuItem,
     searchResults,
     overviewLinks,
+    overviewSection,
     ...createMidsceneNodes<Context>({
       agentClass: PlaywrightAgent,
       getAgent({ context }) {
