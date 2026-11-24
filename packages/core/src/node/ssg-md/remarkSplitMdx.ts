@@ -62,9 +62,7 @@ export function remarkSplitMdx(
     const newChildren: RootContent[] = [];
     const { importMap, esmNodes } = collectEsmMetadata(tree);
 
-    // MDX unwraps paragraphs containing only JSX/expressions before user
-    // remark plugins run. GFM emits a checkbox only if the list item's first
-    // child is a paragraph. Restore that context for an unwrapped task label.
+    // Restore JSX-only task paragraphs so GFM keeps the checkbox.
     visit(tree, 'listItem', node => {
       const head = node.children[0];
       if (
@@ -114,10 +112,7 @@ export function remarkSplitMdx(
         continue;
       }
 
-      // Root Markdown can contain MDX at any depth, such as
-      // list -> listItem -> paragraph -> emphasis -> JSX. Serialize the whole
-      // subtree with the same handlers used inside JSX containers so Markdown
-      // structure and filtered inline tags retain their surrounding context.
+      // Find executable MDX at any depth.
       let hasMdxDescendants = false;
       visit(
         node,
@@ -173,23 +168,7 @@ function processJsxElement(
   return buildMdxFlowExpressionFragment(processedNode);
 }
 
-/**
- * Converts a JSX container's children into Markdown text and executable MDX.
- *
- * Direct JSX children recurse through processJsxElement; direct expressions
- * retain their original AST. Consecutive Markdown children are buffered and
- * serialized together so the Markdown serializer supplies block separators.
- * Serializing each paragraph separately and concatenating the results loses
- * the blank line between paragraphs.
- *
- * A buffered Markdown node is not necessarily plain text: a paragraph, list,
- * or emphasis node can contain JSX or expressions deeper in its subtree.
- * serializeMarkdownWithMdx preserves those descendants during serialization.
- * Flushing before each direct MDX child preserves the original content order.
- *
- * Inline containers serialize all children as phrasing content together, so
- * their text and filtered descendants never acquire block separators.
- */
+// Group Markdown children to preserve paragraph separators.
 function processJsxChildren(
   node: MdxJsxFlowElement | MdxJsxTextElement,
   importMap: Map<string, string>,
@@ -239,7 +218,7 @@ function processJsxChildren(
       flushTextBuffer();
       processedChildren.push(child as any);
     } else {
-      // Buffer Markdown subtrees, including any executable MDX descendants.
+      // Buffer Markdown with nested MDX.
       textBuffer.push(child);
     }
   }
@@ -250,11 +229,7 @@ function processJsxChildren(
   return { ...node, children: processedChildren as any };
 }
 
-/**
- * Serialize surrounding Markdown with temporary markers, then restore MDX as
- * executable nodes. Inline spans keep renderer block separators out of inline
- * content. This preserves readable content, not every Markdown boundary rule.
- */
+// Serialize Markdown, then restore executable MDX in place.
 function serializeMarkdownWithMdx(
   children: RootContent[],
   importMap: Map<string, string>,
@@ -267,21 +242,12 @@ function serializeMarkdownWithMdx(
     | MdxFlowExpression
     | MdxTextExpression;
 
-  // The interior identifies this serialization pass and contains no Markdown
-  // syntax. Attention handlers can still encode the first/last letter, either
-  // directly or through containerPhrasing's sibling-boundary handling.
-  // Only those two known character references are part of the marker grammar;
-  // never decode references in authored Markdown to find a marker.
-  // Markers exist only during this compilation pass.
+  // Give each serialization pass unique markers.
   const prefix = `rspress${randomUUID().replaceAll('-', '')}mdx`;
   const nodes: MdxNode[] = [];
   const markers = new Map<MdxNode, string>();
 
-  /**
-   * Assigns one marker per AST node, including repeated visits during the
-   * serializer's lookahead. Recording the node without processing it keeps
-   * lookahead free of recursive JSX transformations.
-   */
+  // Serializer lookahead can visit the same node twice.
   const preserveMdx = (node: MdxNode) => {
     let marker = markers.get(node);
     if (!marker) {
@@ -319,15 +285,13 @@ function serializeMarkdownWithMdx(
     type: 'root',
     children,
   });
-  // Capture phrasing output before remark-stringify adds a document newline.
-  // This preserves authored whitespace, including intentional line breaks.
+  // Inline content must not gain a document newline.
   const markdown = inlineMarkdown ?? serialized;
 
   const result: RootContent[] = [];
   const restored = new Set<number>();
   let offset = 0;
-  // The serializer can encode marker edge characters around emphasis.
-  // Match only this pass's markers, without decoding authored content.
+  // Emphasis handlers can encode marker edges as character references.
   for (const match of markdown.matchAll(
     new RegExp(`(?:r|&#x72;)${prefix.slice(1)}(\\d+)en(?:d|&#x64;)`, 'g'),
   )) {
@@ -354,8 +318,7 @@ function serializeMarkdownWithMdx(
         type: 'mdxJsxTextElement',
         name: 'span',
         attributes: [],
-        // Mark as explicit JSX so MDX cannot replace this renderer boundary
-        // through the user's components.span mapping.
+        // Bypass components.span to keep the native inline boundary.
         data: { _mdxExplicitJsx: true } as MdxJsxTextElement['data'],
         children: [processedNode] as MdxJsxTextElement['children'],
       });
@@ -364,8 +327,7 @@ function serializeMarkdownWithMdx(
     }
     offset = match.index + match[0].length;
   }
-  // A dependency change must fail at compilation instead of silently dropping
-  // an executable component or exposing temporary identifiers in the document.
+  // Never drop components or leak markers.
   if (restored.size !== nodes.length) {
     throw new Error(
       '[SSG-MD] Could not restore all MDX markers after Markdown serialization.',
@@ -602,13 +564,12 @@ function serializeClosingTag(
 // Use unified with remark-stringify to convert the node back to markdown
 const processor = createMarkdownProcessor();
 
-// Reuse the native inline handler with the current serializer state, including
-// its table/phrasing context and our handlers for executable descendants.
+// Keep filtered tags in their original inline context.
 const mdxJsxTextElementHandler = mdxToMarkdown().extensions!.find(
   extension => extension.handlers?.mdxJsxTextElement,
 )!.handlers!.mdxJsxTextElement!;
 
-// Fresh options isolate handler state between recursive serialization passes.
+// Isolate handlers between recursive calls.
 function createMarkdownProcessor(handlers: StringifyOptions['handlers'] = {}) {
   return unified()
     .use(remarkMdx)

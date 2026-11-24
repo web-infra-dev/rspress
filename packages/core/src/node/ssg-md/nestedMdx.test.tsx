@@ -37,7 +37,6 @@ async function render(
   ).trim();
 }
 
-// Share only component declarations; each case shows its complete page content.
 function renderSdk(input: string) {
   return render(`${sdkComponents}\n\n${input}`);
 }
@@ -205,8 +204,7 @@ Actual: <ReleaseLink /> {sdkVersion}.`;
   });
 });
 
-// These snapshots record accepted formatting limits. All component content
-// resolves, but the final Markdown does not preserve every emphasis boundary.
+// Record readable content, including known formatting limits.
 describe('readable output with known formatting limits', () => {
   const components = { X: () => 'X', Y: () => 'Y' };
 
