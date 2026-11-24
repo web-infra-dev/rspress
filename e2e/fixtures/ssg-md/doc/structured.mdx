@@ -1,0 +1,33 @@
+export const sdkVersion = '4.2.0';
+
+export const ReleaseLink = () => (
+  <a href={`https://example.com/sdk/releases/${sdkVersion}`}>release notes</a>
+);
+
+export const Container = ({ children }) => <div>{children}</div>;
+
+export const X = () => 'X';
+
+export const Y = () => 'Y';
+
+export const Pipe = () => <code>left | right</code>;
+
+# Structured MDX
+
+<Container>
+
+2. **Read <ReleaseLink />** for SDK {sdkVersion}.
+
+Next paragraph.
+
+</Container>
+
+<Y />*<X />* b
+
+a _text_<Y/>
+
+| Content |
+| ------- |
+| <Pipe/> |
+
+- [x] <ReleaseLink />
