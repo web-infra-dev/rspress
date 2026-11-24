@@ -19,6 +19,9 @@ linkWorkspacePackages: true
 
 # Reduce the risk of installing compromised packages
 minimumReleaseAge: 1440
+# Keep this allowlist at the package level; do not add package@version entries.
+# Add packages directly maintained by the Rstack team only as needed,
+# rather than adding them all at once.
 minimumReleaseAgeExclude:
   - '@swc-next/*'
   - '@rspack/*'
@@ -35,8 +38,7 @@ minimumReleaseAgeExclude:
   - '@rstackjs/*'
   - rstack
   - heading-case
-  # Renovate security update: tinypool@2.1.2
-  - tinypool@2.1.2
+  - react-render-to-markdown
 
 # Prevent un-reviewed build scripts
 strictDepBuilds: true
