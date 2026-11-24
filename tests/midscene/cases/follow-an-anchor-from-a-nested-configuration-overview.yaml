@@ -1,11 +1,7 @@
 cases:
   - name: OVERVIEW-03 Follow an anchor from a nested configuration overview
     tags:
-      [
-        main-ci-regression,
-        original-overviews,
-        replacement-batch-3-overviews,
-      ]
+      [main-ci-regression, original-overviews, replacement-batch-3-overviews]
     steps:
       - app.open: { fixture: auto-nav-sidebar, path: /api/config/nested.html }
       - overview.expectSection:
