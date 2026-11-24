@@ -3,7 +3,6 @@ import { type Unhead, UnheadProvider } from '@unhead/react/server';
 import { renderToMarkdownString } from 'react-render-to-markdown';
 import { StaticRouterProvider } from 'virtual-react-router-server';
 import { createServerRouter } from './createServerRouter';
-import { markdownRegionOptions } from './serializeMarkdownRegion';
 
 const DEFAULT_THEME = 'light';
 
@@ -23,7 +22,6 @@ export async function render(
         />
       </UnheadProvider>
     </ThemeContext.Provider>,
-    markdownRegionOptions,
   );
 
   return {

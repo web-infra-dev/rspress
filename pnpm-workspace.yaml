@@ -38,9 +38,6 @@ minimumReleaseAgeExclude:
   # Renovate security update: tinypool@2.1.2
   - tinypool@2.1.2
 
-patchedDependencies:
-  react-render-to-markdown@19.1.0: patches/react-render-to-markdown@19.1.0.patch
-
 # Prevent un-reviewed build scripts
 strictDepBuilds: true
 

@@ -167,7 +167,7 @@ test('llms should be enabled by default', async () => {
   );
 });
 
-test('mixed MDX should retain its final Markdown structure', async () => {
+test('nested MDX should export resolved content', async () => {
   const appDir = import.meta.dirname;
   await runBuildCommand(appDir);
   const markdown = await fs.readFile(
@@ -177,11 +177,13 @@ test('mixed MDX should retain its final Markdown structure', async () => {
   expect(markdown).toContain(
     '2. **Read [release notes](https://example.com/sdk/releases/4.2.0)** for SDK 4.2.0.\n\nNext paragraph.',
   );
-  expect(markdown).toContain('`left \\| right`');
+  expect(markdown).toContain('left | right');
   expect(markdown).toContain(
     '- [x] [release notes](https://example.com/sdk/releases/4.2.0)',
   );
-  expect(markdown).not.toContain('rspress-md-');
+  expect(markdown).not.toContain('<ReleaseLink');
+  expect(markdown).not.toContain('{sdkVersion}');
+  expect(markdown).not.toMatch(/rspress[0-9a-f]{32}mdx/);
   const html = await fs.readFile(
     path.join(appDir, 'doc_build', 'structured.html'),
     'utf-8',
