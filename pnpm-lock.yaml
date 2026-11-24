@@ -1984,8 +1984,8 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1
       react-render-to-markdown:
-        specifier: 19.1.0
-        version: 19.1.0(react@19.3.1)
+        specifier: 19.2.0
+        version: 19.2.0(react@19.3.1)
       react-router-dom:
         specifier: ^7.18.6
         version: 7.18.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -7760,8 +7760,8 @@ packages:
     peerDependencies:
       react: '>=18.2.0'
 
-  react-render-to-markdown@19.1.0:
-    resolution: {integrity: sha512-dF9b3tO41ezqdmHP8X92kbHbMexJ6iC7iHw4ykC8fwiO7DgpFc9PhMoKlI+BcPzRxGcWgQSdrixVB9RykhjJpQ==}
+  react-render-to-markdown@19.2.0:
+    resolution: {integrity: sha512-hVF80DyFXazwW8vuUaptMwnW9ZZHMRrLE3WE36U3Iz1M6pPrFbtE8yYcTq8CYRBVn7YdagJUR/2ik3qJD2Rlvg==}
     peerDependencies:
       react: '>=19'
 
@@ -14648,7 +14648,7 @@ snapshots:
       react: 18.3.1
       react-reconciler: 0.29.2(react@18.3.1)
 
-  react-render-to-markdown@19.1.0(react@19.3.1):
+  react-render-to-markdown@19.2.0(react@19.3.1):
     dependencies:
       react: 19.3.1
       react-reconciler: 0.33.0(react@19.3.1)

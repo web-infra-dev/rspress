@@ -35,6 +35,8 @@ minimumReleaseAgeExclude:
   - '@rstackjs/*'
   - rstack
   - heading-case
+  # Reviewed server snapshot and checkbox support: SoonIter/react-render-to-markdown#10 and #9
+  - react-render-to-markdown@19.2.0
   # Renovate security update: tinypool@2.1.2
   - tinypool@2.1.2
 
