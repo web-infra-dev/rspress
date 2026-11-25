@@ -9,6 +9,27 @@ packages:
   - '!e2e/**/tests/**'
   - '!packages/create-rspress/template-*'
 
+skills:
+  dirs:
+    - .agents/skills
+    - .cursor/skills
+
+permissions:
+  '@rstackjs/maintainer-skills':
+    skills:
+      - create-draft-release-notes
+      - pr-creator
+      - rstack-docs-writer
+  '@rstackjs/skills':
+    skills:
+      - rspress-best-practices
+      - rspress-custom-theme
+      - rspress-description-generator
+      - rspress-docs-generator
+  rstack:
+    skills:
+      - rstack-cli-docs
+
 allowBuilds:
   esbuild: true
   sharp: true

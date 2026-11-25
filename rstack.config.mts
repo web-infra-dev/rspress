@@ -1,5 +1,4 @@
 import { define } from 'rstack';
-import skillsJson from './skills.json' with { type: 'json' };
 
 const restrictedVirtualImports = {
   group: ['virtual-*'],
@@ -106,13 +105,6 @@ define.lint(({ globals, js, rstestPlugin, ts }) => [
 
 define.fmt({
   arrowParens: 'avoid',
-  ignorePatterns: [
-    'skills-lock.yaml',
-    // Ignore installed Skills because their formatting may differ from this repository.
-    ...Object.keys(skillsJson.skills).map(
-      name => `${skillsJson.installDir}/${name}`,
-    ),
-  ],
   plugins: ['heading-case'],
   singleQuote: true,
   sortPackageJson: true,

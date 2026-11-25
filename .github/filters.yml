@@ -8,7 +8,7 @@ changed:
   - '!{.agents,.vscode}/**'
   - '!.github/ISSUE_TEMPLATE/**'
   - '!.github/{FUNDING.yml,renovate.json,renovate.json5,PULL_REQUEST_TEMPLATE.md}'
-  - '!{skills-lock.json,skills.json,cspell.config.*}'
+  - '!cspell.config.*'
   - '!scripts/dictionary.txt'
 
 # Inputs that can affect published package contents.
