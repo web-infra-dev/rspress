@@ -9,10 +9,6 @@ packages:
   - '!e2e/**/tests/**'
   - '!packages/create-rspress/template-*'
 
-skills:
-  dirs:
-    - .agents/skills
-
 permissions:
   '@rstackjs/maintainer-skills':
     skills:
