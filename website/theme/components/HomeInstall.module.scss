@@ -10,8 +10,8 @@
 .wrapper {
   --install-accent: var(--rp-c-brand-dark);
   --install-glow: var(--rp-c-brand);
-  width: 100%;
-  max-width: 480px;
+  width: fit-content;
+  max-width: 100%;
   margin-top: -0.75rem;
 
   :global(.rp-dark) & {
@@ -105,9 +105,10 @@
 }
 
 .command {
-  flex: 1;
+  flex: none;
+  gap: 8px;
   border-radius: var(--rp-radius-large) 0 0 var(--rp-radius-large);
-  padding-left: 24px;
+  padding: 0 24px;
   font-family: 'Geist Mono', var(--rp-font-family-mono);
   font-weight: 400;
   letter-spacing: -0.025em;
@@ -127,7 +128,8 @@
   flex-shrink: 0;
   gap: 8px;
   width: 140px;
-  padding: 0 16px;
+  justify-content: flex-start;
+  padding: 0 24px;
   border-radius: 0 var(--rp-radius-large) var(--rp-radius-large) 0;
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -147,8 +149,25 @@
   }
 }
 
+.commandSymbol {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
 .dollar {
   color: var(--rp-c-text-3);
+  transition: opacity 0.2s ease;
+
+  .command:hover &,
+  .command:focus-visible &,
+  .command[data-copied] & {
+    opacity: 0;
+  }
 }
 
 .icon,
@@ -220,6 +239,8 @@
 }
 
 .commandIcon {
+  position: absolute;
+  inset: 0;
   opacity: 0;
   transition: opacity 0.2s ease;
 
@@ -231,7 +252,7 @@
 }
 
 .agentLabel {
-  width: 9ch;
+  width: 64px;
   flex-shrink: 0;
   text-align: center;
   white-space: nowrap;
@@ -265,6 +286,7 @@
 
 @media (max-width: 480px) {
   .wrapper {
+    width: 100%;
     max-width: 340px;
     margin-top: 0;
   }
@@ -302,6 +324,10 @@
 
   .commandIcon {
     opacity: 1;
+  }
+
+  .dollar {
+    opacity: 0;
   }
 
   .agent {
@@ -376,6 +402,7 @@
   .successIcon,
   .sparkle,
   .commandIcon,
+  .dollar,
   .agentLabel > span,
   .agent:hover .agentIcon,
   .agent:focus-visible .agentIcon,

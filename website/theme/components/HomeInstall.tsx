@@ -89,13 +89,15 @@ export function HomeInstall() {
           onClick={event => void handleCopy('command', event)}
         >
           {renderRipple('command')}
-          <span className={styles.dollar} aria-hidden="true">
-            $
+          <span className={styles.commandSymbol} aria-hidden="true">
+            <span className={styles.dollar}>$</span>
+            <span className={styles.commandIcon}>
+              <SvgWrapper
+                icon={copied === 'command' ? IconSuccess : IconCopy}
+              />
+            </span>
           </span>
           <code>{command}</code>
-          <span className={styles.commandIcon} aria-hidden="true">
-            <SvgWrapper icon={copied === 'command' ? IconSuccess : IconCopy} />
-          </span>
         </button>
         <button
           type="button"
