@@ -6,17 +6,13 @@ description: 通过脚手架或手动方式快速创建 Rspress 项目，了解�
 
 import { PackageManagerTabs } from '@rspress/core/theme';
 import { Prompt } from '@rspress/core/theme';
+import { quickStartPrompts } from '../../../../theme/prompts/quickStart';
 
 <Prompt
   title="一键创建 Rspress 项目"
-  description="复制这段 Prompt 发送给你的 AI Agent，它会自动帮你搭建一个全新的 Rspress 站点。"
-  prompt={`按照官方快速开始指南 https://rspress.rs/guide/start/getting-started.md
-创建一个 Rspress 项目。
-
-1. 使用 \`create rspress@latest\` 初始化项目。
-2. 安装依赖。
-3. 启动开发服务器。`}
-   />
+  description="复制这段 Prompt 发送给你的 AI Agent，让它创建站点、选择主题配色并启动开发服务器。"
+  prompt={quickStartPrompts.zh}
+/>
 
 ## 环境准备
 
