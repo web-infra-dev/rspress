@@ -37,7 +37,8 @@ export default defineConfig({
               ...commonRsdoctorConfig,
               output: {
                 ...commonRsdoctorConfig.output,
-                reportDir: `./doc_build/diff-rsdoctor/auto_nav_sidebar_${getRsdoctorReportType(config.name)}`,
+                // The diff workflow uses this fixture to track new-project bundle size.
+                reportDir: `./doc_build/diff-rsdoctor/new_project_${getRsdoctorReportType(config.name)}`,
               },
             }),
           );
