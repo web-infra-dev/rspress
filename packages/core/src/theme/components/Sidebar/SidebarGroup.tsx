@@ -114,7 +114,12 @@ export function SidebarGroup(props: SidebarGroupProps) {
           transition: 'grid-template-rows 0.2s ease-out',
         }}
       >
-        <div style={{ overflow: 'hidden' }}>
+        <div className="rp-sidebar-group__items">
+          <span
+            aria-hidden="true"
+            className="rp-sidebar-group__line"
+            style={{ left: (depth + 1) * 20 - 7 }}
+          />
           {item.items?.map((item, index) =>
             isSidebarGroup(item) ? (
               <SidebarGroup

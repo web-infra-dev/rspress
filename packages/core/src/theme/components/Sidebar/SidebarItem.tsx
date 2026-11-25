@@ -88,7 +88,7 @@ export function SidebarItemRaw({
           className,
         )}
         style={{
-          marginLeft: depth * 24,
+          marginLeft: depth * 20,
         }}
         {...{ 'data-depth': depth }}
         {...(context ? { 'data-context': context } : {})}
@@ -110,7 +110,7 @@ export function SidebarItemRaw({
         className,
       )}
       style={{
-        marginLeft: depth * 24,
+        marginLeft: depth * 20,
       }}
       {...{ 'data-depth': depth }}
       {...(context ? { 'data-context': context } : {})}
