@@ -1,1 +1,5 @@
 pnpm-lock.yaml               merge=ours
+
+# Keep CLI shebangs executable when packing from Windows.
+packages/core/bin/rspress.js text eol=lf
+packages/create-rspress/bin.js text eol=lf
