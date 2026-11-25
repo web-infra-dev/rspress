@@ -89,6 +89,21 @@ test.describe('home pageType', async () => {
     );
   });
 
+  test('Feature cards respect reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto(`http://localhost:${appPort}/base/index.html`, {
+      waitUntil: 'networkidle',
+    });
+
+    const card = page.locator('.rp-home-feature__item-wrapper').first();
+    await card.hover({ position: { x: 30, y: 30 } });
+    await expect(card).not.toHaveCSS('transform', 'none');
+
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect(card).toHaveCSS('transform', 'none');
+    await expect(card.locator('.rp-home-feature__item__shine')).toBeHidden();
+  });
+
   test('Features', async ({ page }) => {
     await page.goto(`http://localhost:${appPort}/base/index.html`, {
       waitUntil: 'networkidle',

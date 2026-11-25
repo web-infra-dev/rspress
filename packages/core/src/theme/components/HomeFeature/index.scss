@@ -59,6 +59,18 @@
     height: 100%;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    &__item,
+    &__item-wrapper {
+      // Override the inline transforms applied by useCardAnimation.
+      transform: none !important;
+    }
+
+    &__item__shine {
+      display: none;
+    }
+  }
+
   &__card {
     height: 100%;
     padding: 2rem;
