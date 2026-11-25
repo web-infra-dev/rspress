@@ -12,7 +12,6 @@ packages:
 skills:
   dirs:
     - .agents/skills
-    - .cursor/skills
 
 permissions:
   '@rstackjs/maintainer-skills':
