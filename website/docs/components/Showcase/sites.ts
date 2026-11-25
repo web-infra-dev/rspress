@@ -1,6 +1,6 @@
 // Community submissions: https://github.com/web-infra-dev/rspress/discussions/607
 // Keep GitHub-hosted images and their original dimensions to avoid layout shifts.
-// cspell:words toukey Filenest Alauda byethrow pacwich Taroify Addfox praha URAI geosearch Specta moduix
+// cspell:words toukey Filenest Alauda byethrow pacwich Taroify Addfox praha URAI geosearch Specta moduix Aora
 // Keep verified Rspress 2 sites before older or unverified submissions.
 // Versions checked against live generator metadata or site dependencies on 2026-11-19.
 // Screenshots refreshed for older submissions now using Rspress 2 on 2026-11-19.
@@ -24,6 +24,16 @@ export const showcaseSites = [
     height: 1359,
     source:
       'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-19703964',
+  },
+  {
+    title: 'Aora Bot',
+    url: 'https://aora-bot.vercel.app/',
+    image:
+      'https://github.com/user-attachments/assets/b1ce5e32-e1d4-434e-8e54-914584d16229',
+    width: 3126,
+    height: 1968,
+    source:
+      'https://github.com/web-infra-dev/rspress/discussions/607#discussioncomment-19889166',
   },
   {
     title: 'moduix',
