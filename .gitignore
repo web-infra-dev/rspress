@@ -41,6 +41,7 @@ log/
 .pnpm-store/
 .agents/skills/*
 !.agents/skills/add-showcase/
+packages/core/skills/
 .cursor/skills/
 .codex
 

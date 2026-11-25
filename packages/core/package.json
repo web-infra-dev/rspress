@@ -54,6 +54,7 @@
     "dist",
     "meta-json-schema.json",
     "nav-json-schema.json",
+    "skills",
     "static",
     "index.html"
   ],
