@@ -39,7 +39,8 @@ log/
 **/*/typings/auto-generated
 
 .pnpm-store/
-.agents/skills/
+.agents/skills/*
+!.agents/skills/add-showcase/
 .cursor/skills/
 .codex
 
