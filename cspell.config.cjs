@@ -13,6 +13,7 @@ module.exports = {
     'dist',
     'dist-*',
     'compiled',
+    'packages/core/skills',
     'coverage',
     'doc_build',
     'playwright-report',

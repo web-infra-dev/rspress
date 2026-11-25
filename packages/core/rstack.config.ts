@@ -11,6 +11,10 @@ import { pluginPublint } from 'rsbuild-plugin-publint';
 const require = createRequire(import.meta.url);
 const configDir = import.meta.dirname;
 const typescriptPath = fileURLToPath(import.meta.resolve('@typescript/native'));
+const skillsDir = path.join(
+  path.dirname(require.resolve('@rstackjs/skills/package.json')),
+  'skills',
+);
 const tinypoolDistPath = path.join(
   path.dirname(require.resolve('tinypool/package.json')),
   'dist',
@@ -69,6 +73,16 @@ define.lib({
       output: {
         externals: COMMON_EXTERNALS,
         copy: [
+          ...[
+            'rspress-best-practices',
+            'rspress-custom-theme',
+            'rspress-description-generator',
+            'rspress-docs-generator',
+          ].map(name => ({
+            from: name,
+            to: path.join(configDir, 'skills', name),
+            context: skillsDir,
+          })),
           {
             from: 'entry',
             to: 'entry',
