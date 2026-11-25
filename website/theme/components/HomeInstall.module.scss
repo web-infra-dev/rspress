@@ -1,0 +1,418 @@
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource-variable/geist-mono@5.3.0/files/geist-mono-latin-wght-normal.woff2')
+    format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+.wrapper {
+  --install-accent: var(--rp-c-brand-dark);
+  --install-glow: var(--rp-c-brand);
+  width: fit-content;
+  max-width: 100%;
+  margin-top: -0.75rem;
+
+  :global(.rp-dark) & {
+    --install-accent: var(--rp-c-brand-light);
+  }
+}
+
+.bar {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--rp-c-text-1) 12%, transparent);
+  border-radius: var(--rp-radius-large);
+  background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
+  backdrop-filter: blur(12px);
+  font-family: var(--rp-font-family-base);
+  font-size: 14px;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(
+        ellipse at top left,
+        color-mix(in srgb, var(--install-glow) 14%, transparent),
+        transparent 65%
+      ),
+      radial-gradient(
+        ellipse at bottom right,
+        color-mix(
+          in srgb,
+          var(--rp-home-hero-secondary-color) 12%,
+          transparent
+        ),
+        transparent 65%
+      );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    content: '';
+  }
+
+  &:hover,
+  &:focus-within {
+    border-color: color-mix(in srgb, var(--install-glow) 32%, transparent);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--install-glow) 6%, transparent);
+
+    &::before {
+      opacity: 0.65;
+    }
+  }
+}
+
+.command,
+.agent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  gap: 12px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 0;
+  background: transparent;
+  color: var(--rp-c-text-1);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+
+  &:hover {
+    background: color-mix(in srgb, var(--install-glow) 5%, transparent);
+    color: var(--install-accent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--rp-c-brand);
+    outline-offset: -3px;
+    border-radius: var(--rp-radius-large);
+  }
+}
+
+.command {
+  flex: none;
+  gap: 8px;
+  border-radius: var(--rp-radius-large) 0 0 var(--rp-radius-large);
+  padding: 0 24px;
+  font-family: 'Geist Mono', var(--rp-font-family-mono);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+
+  &[data-copied] {
+    color: var(--install-accent);
+  }
+
+  code {
+    font: inherit;
+    white-space: nowrap;
+  }
+}
+
+.agent {
+  position: relative;
+  flex-shrink: 0;
+  gap: 8px;
+  width: 140px;
+  justify-content: flex-start;
+  padding: 0 24px;
+  border-radius: 0 var(--rp-radius-large) var(--rp-radius-large) 0;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  &[data-copied] {
+    color: var(--install-accent);
+    background: color-mix(in srgb, var(--install-glow) 7%, transparent);
+  }
+
+  &::before {
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    width: 1px;
+    background: var(--rp-c-divider-light);
+    content: '';
+  }
+}
+
+.commandSymbol {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.dollar {
+  color: var(--rp-c-text-3);
+  transition: opacity 0.2s ease;
+
+  .command:hover &,
+  .command:focus-visible &,
+  .command[data-copied] & {
+    opacity: 0;
+  }
+}
+
+.icon,
+.commandIcon {
+  display: flex;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--rp-c-text-2);
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.icon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  color: var(--rp-c-text-2);
+  transition: color 0.25s ease;
+
+  .agent:hover &,
+  .agent:focus-visible &,
+  .agent[data-copied] & {
+    color: var(--install-accent);
+  }
+}
+
+.agentIcon,
+.successIcon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.agentIcon {
+  .agent:hover &,
+  .agent:focus-visible & {
+    animation: breathe 1.2s ease-in-out;
+  }
+
+  .agent[data-copied] & {
+    animation: none;
+    opacity: 0;
+    transform: scale(0.75);
+  }
+}
+
+.sparkle {
+  .agent:hover &,
+  .agent:focus-visible & {
+    animation: twinkle 1.2s ease-in-out;
+  }
+}
+
+.successIcon {
+  opacity: 0;
+  transform: scale(0.75);
+
+  .agent[data-copied] & {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.commandIcon {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  .command:hover &,
+  .command:focus-visible &,
+  .command[data-copied] & {
+    opacity: 1;
+  }
+}
+
+.agentLabel {
+  width: 64px;
+  flex-shrink: 0;
+  text-align: center;
+  white-space: nowrap;
+
+  > span {
+    display: inline-block;
+    animation: labelIn 0.2s ease;
+  }
+}
+
+.ripple {
+  position: absolute;
+  z-index: -1;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--install-glow) 18%, transparent);
+  pointer-events: none;
+  animation: ripple 0.65s ease-out forwards;
+}
+
+.announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    width: 100%;
+    max-width: 340px;
+    margin-top: 0;
+  }
+
+  .bar {
+    flex-direction: column;
+    gap: 16px;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    backdrop-filter: none;
+    box-shadow: none;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .command {
+    flex: none;
+    width: 100%;
+    min-height: 42px;
+    gap: 10px;
+    padding: 0 16px;
+    border: 1px solid color-mix(in srgb, var(--rp-c-text-1) 12%, transparent);
+    border-radius: var(--rp-radius-large);
+    background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
+
+    &:hover,
+    &:focus-visible {
+      border-color: color-mix(in srgb, var(--install-glow) 32%, transparent);
+    }
+  }
+
+  .commandIcon {
+    opacity: 1;
+  }
+
+  .dollar {
+    opacity: 0;
+  }
+
+  .agent {
+    min-height: 42px;
+    border: 1px solid color-mix(in srgb, var(--rp-c-text-1) 12%, transparent);
+    border-radius: var(--rp-radius-large);
+    background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
+
+    &:hover,
+    &:focus-visible,
+    &[data-copied] {
+      border-color: color-mix(in srgb, var(--install-glow) 32%, transparent);
+      background: color-mix(in srgb, var(--install-glow) 6%, var(--rp-c-bg));
+    }
+
+    &::before {
+      display: none;
+    }
+
+    &:focus-visible {
+      border-radius: var(--rp-radius-large);
+    }
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes labelIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes ripple {
+  from {
+    opacity: 0.65;
+    transform: scale(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(28);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar,
+  .bar::before,
+  .command,
+  .agent,
+  .icon,
+  .agentIcon,
+  .successIcon,
+  .sparkle,
+  .commandIcon,
+  .dollar,
+  .agentLabel > span,
+  .agent:hover .agentIcon,
+  .agent:focus-visible .agentIcon,
+  .agent:hover .sparkle,
+  .agent:focus-visible .sparkle {
+    animation: none;
+    transition: none;
+  }
+
+  .ripple {
+    display: none;
+  }
+}

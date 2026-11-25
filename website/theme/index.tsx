@@ -15,7 +15,6 @@ import {
   type HomeHeroProps,
   type HomeLayoutProps,
   Link,
-  PackageManagerTabs,
 } from '@rspress/core/theme-original';
 import {
   Search as PluginAlgoliaSearch,
@@ -28,6 +27,7 @@ import { CssStyleSync } from '../docs/components/CssStyleSync';
 import { SlotPreview, SlotPreviewLayout } from '../docs/components/SlotPreview';
 import { BlogBackButton } from './components/BlogBackButton';
 import { HeroInteractive } from './components/HeroInteractive';
+import { HomeInstall } from './components/HomeInstall';
 import { HomeSections } from './components/HomeSections';
 import { Tag } from './components/Tag';
 import { ToolStack } from './components/ToolStack';
@@ -50,11 +50,7 @@ function HomeLayout(props: HomeLayoutProps) {
           <ToolStack />
         </SlotPreview>
       }
-      afterHeroActions={
-        <div className="rp-doc home-install">
-          <PackageManagerTabs command="create rspress@latest" />
-        </div>
-      }
+      afterHeroActions={<HomeInstall />}
     />
   );
 }

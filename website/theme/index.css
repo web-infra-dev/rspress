@@ -13,16 +13,3 @@
 .blog-back-button a:focus-visible {
   color: var(--rp-c-brand);
 }
-
-.home-install {
-  width: 100%;
-  max-width: 450px;
-  margin: -0.75rem 0 0;
-}
-
-@media (max-width: 600px) {
-  .home-install {
-    max-width: 100%;
-    margin-top: -0.5rem;
-  }
-}
