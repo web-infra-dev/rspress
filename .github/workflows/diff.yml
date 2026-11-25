@@ -39,10 +39,10 @@ jobs:
         run: |
           pnpm install
 
-      - name: Build Demo Project
+      - name: Build Website Project
         run: RSDOCTOR=1 pnpm --filter @rspress/docs run build
 
-      - name: Build auto-nav-sidebar Project
+      - name: Build New Project
         run: RSDOCTOR=1 pnpm --filter @rspress-fixture/auto-nav-sidebar run build
 
       - name: Report Compressed Size
