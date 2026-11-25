@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource-variable/geist-mono@5.3.0/files/geist-mono-latin-wght-normal.woff2')
+    format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 .wrapper {
   --install-accent: var(--rp-c-brand-dark);
   --install-glow: var(--rp-c-brand);
@@ -20,7 +29,7 @@
   border-radius: 16px;
   background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
   backdrop-filter: blur(12px);
-  font-family: var(--rp-font-family-mono);
+  font-family: var(--rp-font-family-base);
   font-size: 14px;
   transition:
     border-color 0.3s ease,
@@ -98,6 +107,9 @@
 .command {
   flex: 1;
   border-radius: 15px 0 0 15px;
+  font-family: 'Geist Mono', var(--rp-font-family-mono);
+  font-weight: 400;
+  letter-spacing: -0.025em;
 
   &[data-copied] {
     color: var(--install-accent);
@@ -114,6 +126,8 @@
   flex-shrink: 0;
   width: 144px;
   border-radius: 0 15px 15px 0;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   &[data-copied] {
     color: var(--install-accent);
     background: color-mix(in srgb, var(--install-glow) 7%, transparent);
