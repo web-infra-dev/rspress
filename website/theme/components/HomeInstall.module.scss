@@ -11,7 +11,7 @@
   --install-accent: var(--rp-c-brand-dark);
   --install-glow: var(--rp-c-brand);
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
   margin-top: -0.75rem;
 
   :global(.rp-dark) & {
@@ -26,7 +26,7 @@
   align-items: center;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--rp-c-text-1) 12%, transparent);
-  border-radius: 16px;
+  border-radius: var(--rp-radius-large);
   background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
   backdrop-filter: blur(12px);
   font-family: var(--rp-font-family-base);
@@ -80,8 +80,8 @@
   isolation: isolate;
   overflow: hidden;
   gap: 12px;
-  min-height: 58px;
-  padding: 0 18px;
+  min-height: 46px;
+  padding: 0 20px;
   border: 0;
   background: transparent;
   color: var(--rp-c-text-1);
@@ -100,13 +100,14 @@
   &:focus-visible {
     outline: 2px solid var(--rp-c-brand);
     outline-offset: -3px;
-    border-radius: 12px;
+    border-radius: var(--rp-radius-large);
   }
 }
 
 .command {
   flex: 1;
-  border-radius: 15px 0 0 15px;
+  border-radius: var(--rp-radius-large) 0 0 var(--rp-radius-large);
+  padding-left: 24px;
   font-family: 'Geist Mono', var(--rp-font-family-mono);
   font-weight: 400;
   letter-spacing: -0.025em;
@@ -124,8 +125,10 @@
 .agent {
   position: relative;
   flex-shrink: 0;
-  width: 144px;
-  border-radius: 0 15px 15px 0;
+  gap: 8px;
+  width: 140px;
+  padding: 0 16px;
+  border-radius: 0 var(--rp-radius-large) var(--rp-radius-large) 0;
   font-weight: 500;
   letter-spacing: -0.01em;
   &[data-copied] {
@@ -135,8 +138,8 @@
 
   &::before {
     position: absolute;
-    top: 16px;
-    bottom: 16px;
+    top: 12px;
+    bottom: 12px;
     left: 0;
     width: 1px;
     background: var(--rp-c-divider-light);
@@ -263,12 +266,12 @@
 @media (max-width: 480px) {
   .wrapper {
     max-width: 340px;
-    margin-top: -0.5rem;
+    margin-top: 0;
   }
 
   .bar {
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     overflow: visible;
     border: 0;
     border-radius: 0;
@@ -284,9 +287,11 @@
   .command {
     flex: none;
     width: 100%;
-    min-height: 50px;
+    min-height: 42px;
+    gap: 10px;
+    padding: 0 16px;
     border: 1px solid color-mix(in srgb, var(--rp-c-text-1) 12%, transparent);
-    border-radius: 16px;
+    border-radius: var(--rp-radius-large);
     background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
 
     &:hover,
@@ -300,9 +305,9 @@
   }
 
   .agent {
-    min-height: 44px;
+    min-height: 42px;
     border: 1px solid color-mix(in srgb, var(--rp-c-text-1) 12%, transparent);
-    border-radius: 999px;
+    border-radius: var(--rp-radius-large);
     background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
 
     &:hover,
@@ -317,7 +322,7 @@
     }
 
     &:focus-visible {
-      border-radius: 999px;
+      border-radius: var(--rp-radius-large);
     }
   }
 }
