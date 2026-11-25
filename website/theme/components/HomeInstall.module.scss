@@ -1,10 +1,19 @@
 .wrapper {
+  width: 100%;
+  max-width: 500px;
+  margin-top: -0.75rem;
+}
+
+.bar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: fit-content;
-  max-width: 100%;
-  margin-top: -0.5rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--rp-c-text-1) 12%, transparent);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
+  backdrop-filter: blur(12px);
+  font-family: var(--rp-font-family-mono);
+  font-size: 14px;
 }
 
 .command,
@@ -12,38 +21,32 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 0 18px;
+  border: 0;
+  background: transparent;
+  color: var(--rp-c-text-1);
   font: inherit;
   cursor: pointer;
   transition:
     background-color 0.2s,
-    border-color 0.2s,
     color 0.2s;
+
+  &:hover {
+    background: color-mix(in srgb, var(--rp-c-text-1) 4%, transparent);
+    color: var(--rp-c-brand);
+  }
 
   &:focus-visible {
     outline: 2px solid var(--rp-c-brand);
-    outline-offset: 2px;
+    outline-offset: -3px;
+    border-radius: 12px;
   }
 }
 
 .command {
-  flex: 0 0 340px;
-  gap: 10px;
-  height: 44px;
-  padding: 0 10px 0 14px;
-  border: 1px solid var(--rp-c-divider-light);
-  border-radius: 12px;
-  background: var(--rp-c-bg);
-  color: var(--rp-c-text-1);
-  font-family: var(--rp-font-family-mono);
-  font-size: 13px;
-
-  &:hover {
-    border-color: var(--rp-c-brand);
-
-    .commandIcon {
-      color: var(--rp-c-brand);
-    }
-  }
+  flex: 1;
 
   code {
     font: inherit;
@@ -52,26 +55,18 @@
 }
 
 .agent {
+  position: relative;
   flex-shrink: 0;
-  gap: 8px;
-  width: 124px;
-  height: 44px;
-  padding: 0 14px;
-  border: 1px solid color-mix(in srgb, var(--rp-c-brand) 18%, transparent);
-  border-radius: 999px;
-  background: var(--rp-c-brand-tint);
-  color: var(--rp-c-brand-dark);
-  font-family: var(--rp-font-family-base);
-  font-size: 13px;
-  font-weight: 500;
+  width: 144px;
 
-  &:hover {
-    border-color: color-mix(in srgb, var(--rp-c-brand) 45%, transparent);
-    background: color-mix(in srgb, var(--rp-c-brand) 20%, transparent);
-  }
-
-  :global(.rp-dark) & {
-    color: var(--rp-c-brand-light);
+  &::before {
+    position: absolute;
+    top: 16px;
+    bottom: 16px;
+    left: 0;
+    width: 1px;
+    background: var(--rp-c-divider-light);
+    content: '';
   }
 }
 
@@ -79,12 +74,13 @@
   color: var(--rp-c-text-3);
 }
 
-.agentIcon,
+.icon,
 .commandIcon {
   display: flex;
   width: 16px;
   height: 16px;
   flex-shrink: 0;
+  color: var(--rp-c-text-2);
 
   svg {
     width: 100%;
@@ -93,12 +89,17 @@
 }
 
 .commandIcon {
-  margin-left: auto;
-  color: var(--rp-c-text-2);
+  opacity: 0;
+
+  .command:hover &,
+  .command:focus-visible &,
+  .command[data-copied] & {
+    opacity: 1;
+  }
 }
 
 .agentLabel {
-  width: 64px;
+  width: 9ch;
   flex-shrink: 0;
   text-align: center;
   white-space: nowrap;
@@ -113,27 +114,28 @@
   white-space: nowrap;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 480px) {
   .wrapper {
-    flex-wrap: wrap;
-    justify-content: center;
-    width: min(100%, 340px);
-    margin-top: 2px;
+    max-width: 340px;
+    margin-top: -0.5rem;
   }
 
-  .command {
-    flex-basis: 100%;
+  .bar {
+    flex-direction: column;
+  }
+
+  .command,
+  .agent {
+    width: 100%;
+    min-height: 50px;
   }
 
   .agent {
-    height: 40px;
-  }
-}
+    border-top: 1px solid var(--rp-c-divider-light);
 
-@media (max-width: 360px) {
-  .command {
-    padding-left: 10px;
-    font-size: 12px;
+    &::before {
+      display: none;
+    }
   }
 }
 

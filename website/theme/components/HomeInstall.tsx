@@ -46,48 +46,38 @@ export function HomeInstall() {
 
   return (
     <div className={styles.wrapper}>
-      <button
-        type="button"
-        className={styles.command}
-        aria-label={labels.command}
-        title={copied === 'command' ? labels.copied : labels.command}
-        onClick={() => void handleCopy('command')}
-      >
-        <span className={styles.dollar} aria-hidden="true">
-          $
-        </span>
-        <code>{command}</code>
-        <span className={styles.commandIcon} aria-hidden="true">
-          <SvgWrapper icon={copied === 'command' ? IconSuccess : IconCopy} />
-        </span>
-      </button>
-      <button
-        type="button"
-        className={styles.agent}
-        aria-label={labels.agent}
-        title={labels.agent}
-        onClick={() => void handleCopy('agent')}
-      >
-        <span className={styles.agentIcon} aria-hidden="true">
-          {copied === 'agent' ? (
-            <SvgWrapper icon={IconSuccess} />
-          ) : (
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinejoin="round"
-            >
-              <path d="m11 3 1.55 4.45L17 9l-4.45 1.55L11 15l-1.55-4.45L5 9l4.45-1.55L11 3Z" />
-              <path d="m18 14 .75 2.25L21 17l-2.25.75L18 20l-.75-2.25L15 17l2.25-.75L18 14Z" />
-            </svg>
-          )}
-        </span>
-        <span className={styles.agentLabel}>
-          {copied === 'agent' ? labels.copied : 'for Agent'}
-        </span>
-      </button>
+      <div className={styles.bar}>
+        <button
+          type="button"
+          className={styles.command}
+          data-copied={copied === 'command' || undefined}
+          aria-label={labels.command}
+          title={copied === 'command' ? labels.copied : labels.command}
+          onClick={() => void handleCopy('command')}
+        >
+          <span className={styles.dollar} aria-hidden="true">
+            $
+          </span>
+          <code>{command}</code>
+          <span className={styles.commandIcon} aria-hidden="true">
+            <SvgWrapper icon={copied === 'command' ? IconSuccess : IconCopy} />
+          </span>
+        </button>
+        <button
+          type="button"
+          className={styles.agent}
+          aria-label={labels.agent}
+          title={labels.agent}
+          onClick={() => void handleCopy('agent')}
+        >
+          <span className={styles.icon} aria-hidden="true">
+            <SvgWrapper icon={copied === 'agent' ? IconSuccess : IconCopy} />
+          </span>
+          <span className={styles.agentLabel}>
+            {copied === 'agent' ? labels.copied : 'for Agent'}
+          </span>
+        </button>
+      </div>
       <span className={styles.announcement} role="status">
         {announcement}
       </span>
