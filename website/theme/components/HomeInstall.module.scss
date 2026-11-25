@@ -16,9 +16,9 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--install-glow) 28%, transparent);
+  border: 1px solid color-mix(in srgb, var(--rp-c-text-1) 12%, transparent);
   border-radius: 16px;
-  background: color-mix(in srgb, var(--rp-c-bg) 92%, transparent);
+  background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
   backdrop-filter: blur(12px);
   font-family: var(--rp-font-family-mono);
   font-size: 14px;
@@ -45,16 +45,20 @@
         ),
         transparent 65%
       );
-    opacity: 0.55;
-    animation: glow 5s ease-in-out infinite alternate;
+    opacity: 0;
+    transition: opacity 0.3s ease;
     pointer-events: none;
     content: '';
   }
 
   &:hover,
   &:focus-within {
-    border-color: color-mix(in srgb, var(--install-glow) 48%, transparent);
-    box-shadow: 0 0 20px color-mix(in srgb, var(--install-glow) 9%, transparent);
+    border-color: color-mix(in srgb, var(--install-glow) 32%, transparent);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--install-glow) 6%, transparent);
+
+    &::before {
+      opacity: 0.65;
+    }
   }
 }
 
@@ -80,7 +84,7 @@
     box-shadow 0.25s ease;
 
   &:hover {
-    background: color-mix(in srgb, var(--install-glow) 8%, transparent);
+    background: color-mix(in srgb, var(--install-glow) 5%, transparent);
     color: var(--install-accent);
   }
 
@@ -110,11 +114,9 @@
   flex-shrink: 0;
   width: 144px;
   border-radius: 0 15px 15px 0;
-  color: var(--install-accent);
-  background: color-mix(in srgb, var(--install-glow) 5%, transparent);
-
   &[data-copied] {
-    background: color-mix(in srgb, var(--install-glow) 12%, transparent);
+    color: var(--install-accent);
+    background: color-mix(in srgb, var(--install-glow) 7%, transparent);
   }
 
   &::before {
@@ -123,7 +125,7 @@
     bottom: 16px;
     left: 0;
     width: 1px;
-    background: color-mix(in srgb, var(--install-glow) 20%, transparent);
+    background: var(--rp-c-divider-light);
     content: '';
   }
 }
@@ -150,7 +152,14 @@
   position: relative;
   width: 18px;
   height: 18px;
-  color: var(--install-accent);
+  color: var(--rp-c-text-2);
+  transition: color 0.25s ease;
+
+  .agent:hover &,
+  .agent:focus-visible &,
+  .agent[data-copied] & {
+    color: var(--install-accent);
+  }
 }
 
 .agentIcon,
@@ -164,7 +173,10 @@
 }
 
 .agentIcon {
-  animation: breathe 3.5s ease-in-out infinite;
+  .agent:hover &,
+  .agent:focus-visible & {
+    animation: breathe 1.2s ease-in-out;
+  }
 
   .agent[data-copied] & {
     animation: none;
@@ -174,7 +186,10 @@
 }
 
 .sparkle {
-  animation: twinkle 3.5s ease-in-out infinite;
+  .agent:hover &,
+  .agent:focus-visible & {
+    animation: twinkle 1.2s ease-in-out;
+  }
 }
 
 .successIcon {
@@ -217,7 +232,7 @@
   height: 24px;
   margin: -12px 0 0 -12px;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--install-glow) 28%, transparent);
+  background: color-mix(in srgb, var(--install-glow) 18%, transparent);
   pointer-events: none;
   animation: ripple 0.65s ease-out forwards;
 }
@@ -256,9 +271,14 @@
     flex: none;
     width: 100%;
     min-height: 50px;
-    border: 1px solid color-mix(in srgb, var(--install-glow) 22%, transparent);
+    border: 1px solid color-mix(in srgb, var(--rp-c-text-1) 12%, transparent);
     border-radius: 16px;
-    background: color-mix(in srgb, var(--rp-c-bg) 92%, transparent);
+    background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
+
+    &:hover,
+    &:focus-visible {
+      border-color: color-mix(in srgb, var(--install-glow) 32%, transparent);
+    }
   }
 
   .commandIcon {
@@ -267,14 +287,15 @@
 
   .agent {
     min-height: 44px;
-    border: 1px solid color-mix(in srgb, var(--install-glow) 28%, transparent);
+    border: 1px solid color-mix(in srgb, var(--rp-c-text-1) 12%, transparent);
     border-radius: 999px;
-    background: color-mix(in srgb, var(--install-glow) 8%, var(--rp-c-bg));
-    box-shadow: 0 2px 12px
-      color-mix(in srgb, var(--install-glow) 7%, transparent);
+    background: color-mix(in srgb, var(--rp-c-bg) 55%, transparent);
 
-    &:hover {
-      background: color-mix(in srgb, var(--install-glow) 14%, var(--rp-c-bg));
+    &:hover,
+    &:focus-visible,
+    &[data-copied] {
+      border-color: color-mix(in srgb, var(--install-glow) 32%, transparent);
+      background: color-mix(in srgb, var(--install-glow) 6%, var(--rp-c-bg));
     }
 
     &::before {
@@ -284,12 +305,6 @@
     &:focus-visible {
       border-radius: 999px;
     }
-  }
-}
-
-@keyframes glow {
-  to {
-    opacity: 1;
   }
 }
 
@@ -337,11 +352,16 @@
   .bar::before,
   .command,
   .agent,
+  .icon,
   .agentIcon,
   .successIcon,
   .sparkle,
   .commandIcon,
-  .agentLabel > span {
+  .agentLabel > span,
+  .agent:hover .agentIcon,
+  .agent:focus-visible .agentIcon,
+  .agent:hover .sparkle,
+  .agent:focus-visible .sparkle {
     animation: none;
     transition: none;
   }
