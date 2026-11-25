@@ -51,16 +51,6 @@
     outline-offset: -2px;
   }
 
-  &--group-item::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -7px;
-    bottom: 0;
-    width: 1px;
-    background-color: var(--rp-c-divider-light);
-  }
-
   &--group-item.rp-sidebar-item--active {
     .rp-sidebar-item__left::before {
       content: '';

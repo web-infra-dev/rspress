@@ -1,3 +1,17 @@
 .rp-sidebar-group {
   color: var(--rp-c-text-1);
+
+  &__items {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--rp-c-divider-light);
+    pointer-events: none;
+  }
 }
