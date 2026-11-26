@@ -225,6 +225,45 @@ The <code>&lt;A2UI&gt; &#42;value&#42; \\path {sdkVersion}</code> container.
     `);
   });
 
+  it('keeps standalone native inline elements and their text on one line', async () => {
+    const input = `<span>Through <code>overflow: hidden</code>, then use <strong>the <code>list</code></strong>.</span>`;
+
+    expect(await render(input)).toBe(
+      'Through `overflow: hidden`, then use **the `list`**.',
+    );
+  });
+
+  it('keeps inline code and its description together inside a table cell', async () => {
+    const input = `<table>
+  <tbody>
+    <tr>
+      <td>
+        <span><code>linear-gradient</code> to <code>mask-image</code></span>
+      </td>
+      <td>
+        <span>Use <code>overflow: hidden</code> to clip content.</span>
+      </td>
+    </tr>
+  </tbody>
+</table>`;
+
+    expect(await render(input)).toBe(
+      '| `linear-gradient` to `mask-image` | Use `overflow: hidden` to clip content. |',
+    );
+  });
+
+  it('preserves separate Markdown paragraphs written inside an inline tag', async () => {
+    const input = `<span>
+
+First paragraph.
+
+Second paragraph.
+
+</span>`;
+
+    expect(await render(input)).toBe('First paragraph.\n\nSecond paragraph.');
+  });
+
   it('separates a Markdown table from a flow element', async () => {
     const input = `| App | Size |
 | --- | --- |
