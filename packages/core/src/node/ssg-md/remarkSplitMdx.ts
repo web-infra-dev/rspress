@@ -52,6 +52,58 @@ export interface RemarkSplitMdxOptions {
 type JsxNode = MdxJsxFlowElement | MdxJsxTextElement;
 type MdxNode = JsxNode | MdxFlowExpression | MdxTextExpression;
 
+const nativeInlineTags = new Set([
+  'a',
+  'abbr',
+  'b',
+  'bdi',
+  'bdo',
+  'cite',
+  'del',
+  'dfn',
+  'em',
+  'i',
+  'ins',
+  'kbd',
+  'mark',
+  'q',
+  's',
+  'samp',
+  'small',
+  'span',
+  'strong',
+  'sub',
+  'sup',
+  'u',
+  'var',
+]);
+
+const phrasingTypes = new Set<RootContent['type']>([
+  'break',
+  'delete',
+  'emphasis',
+  'footnoteReference',
+  'html',
+  'image',
+  'imageReference',
+  'inlineCode',
+  'link',
+  'linkReference',
+  'mdxJsxTextElement',
+  'mdxTextExpression',
+  'strong',
+  'text',
+]);
+
+function hasInlineChildren(node: JsxNode): boolean {
+  return (
+    node.type === 'mdxJsxTextElement' ||
+    (node.name !== null &&
+      nativeInlineTags.has(node.name) &&
+      node.children.every(child => phrasingTypes.has(child.type)))
+  );
+}
+
 interface TransformContext {
   importMap: Map<string, string>;
   esmNodes: Set<MdxjsEsm>;
@@ -189,7 +241,7 @@ class MarkdownWriter {
         this.write(stringifyMarkdown([node]).replace(/\n$/, ''));
       else {
         this.write(serializeOpeningTag(node));
-        if (node.type === 'mdxJsxTextElement')
+        if (hasInlineChildren(node))
           this.phrasing(node.children as RootContent[]);
         else this.flow(node.children as RootContent[]);
         this.write(serializeClosingTag(node));
@@ -201,7 +253,7 @@ class MarkdownWriter {
     writer.inTable = this.inTable;
     writer.isLiteralText =
       this.isLiteralText || node.name === 'code' || node.name === 'pre';
-    if (node.type === 'mdxJsxTextElement')
+    if (hasInlineChildren(node))
       writer.phrasing(node.children as RootContent[]);
     else writer.flow(node.children as RootContent[]);
     return { ...node, children: writer.finish() } as JsxNode;
