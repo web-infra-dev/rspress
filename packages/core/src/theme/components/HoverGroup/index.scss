@@ -13,7 +13,8 @@
   // style
   border-radius: 8px;
   border: var(--rp-code-block-border);
-  background: var(--rp-c-bg);
+  background: color-mix(in srgb, var(--rp-c-bg) 60%, transparent);
+  backdrop-filter: blur(25px);
   box-shadow: var(--rp-shadow-2);
   transition: opacity 0.3s ease-in-out;
 
