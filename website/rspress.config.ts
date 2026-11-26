@@ -14,6 +14,7 @@ import pluginFileTree from 'rspress-plugin-file-tree';
 import pluginOg from 'rspress-plugin-og';
 import { pluginThemePreview } from './theme/presets/build/pluginThemePreview';
 import minimalMeta from './themes/minimal/meta';
+import rspressV1Meta from './themes/rspress-v1/meta';
 
 // import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 
@@ -154,6 +155,10 @@ export default defineConfig({
         {
           id: minimalMeta.id,
           directory: path.join(import.meta.dirname, 'themes/minimal'),
+        },
+        {
+          id: rspressV1Meta.id,
+          directory: path.join(import.meta.dirname, 'themes/rspress-v1'),
         },
       ]),
       pluginGoogleAnalytics({ id: 'G-66B2Z6KG0J', scriptLoading: 'defer' }),

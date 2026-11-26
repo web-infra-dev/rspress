@@ -1,4 +1,5 @@
 import minimalMeta from '../../themes/minimal/meta';
+import rspressV1Meta from '../../themes/rspress-v1/meta';
 import type { ThemePreset } from './types';
 
 export const themePresets: readonly ThemePreset[] = [
@@ -34,6 +35,10 @@ export const themePresets: readonly ThemePreset[] = [
   {
     ...minimalMeta,
     load: () => import('../../themes/minimal/index?theme-preview'),
+  },
+  {
+    ...rspressV1Meta,
+    load: () => import('../../themes/rspress-v1/index?theme-preview'),
   },
 ];
 

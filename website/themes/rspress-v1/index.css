@@ -1,0 +1,211 @@
+/* Classic Rspress v1 styling, adapted to the v2 theme's CSS variables and BEM classes. */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('https://cdn.jsdelivr.net/npm/@fontsource-variable/open-sans@5.2.6/files/open-sans-latin-wght-normal.woff2')
+    format('woff2');
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+}
+
+html:root {
+  --rp-font-family-base:
+    'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', sans-serif;
+  --rp-font-family-mono: Menlo, Monaco, Consolas, 'Courier New', monospace;
+  --rp-nav-height: 72px;
+  --rp-sidebar-width: 288px;
+  --rp-outline-width: 244px;
+  --rp-content-padding-x: 24px;
+  --rp-content-padding-y: 48px;
+  --rp-content-max-width: 992px;
+  --rp-outline-padding-x: 12px;
+  --rp-radius: 1rem;
+  --rp-radius-small: 0.5rem;
+  --rp-radius-large: 1.5rem;
+
+  --rp-c-brand: #0095ff;
+  --rp-c-brand-light: #33adff;
+  --rp-c-brand-lighter: #66c2ff;
+  --rp-c-brand-dark: #0077ff;
+  --rp-c-brand-darker: #005fcc;
+  --rp-c-brand-tint: #7fa3ff29;
+  --rp-c-bg: #ffffff;
+  --rp-c-bg-soft: #f9f9f9;
+  --rp-c-bg-mute: #f1f1f1;
+  --rp-c-bg-alt: #ffffff;
+  --rp-c-divider: #3c3c3c4a;
+  --rp-c-divider-light: #3c3c3c1a;
+  --rp-c-text-0: #213547;
+  --rp-c-text-1: #213547;
+  --rp-c-text-2: #536171;
+  --rp-c-text-3: #3c3c3c54;
+  --rp-c-text-4: #3c3c3c2e;
+  --rp-c-text-code: #476573;
+  --rp-c-text-code-bg: #99a1b31a;
+  --rp-c-text-code-border: transparent;
+  --rp-c-link: var(--rp-c-brand-dark);
+  --rp-code-font-size: 14px;
+  --rp-code-title-bg: #0063c70d;
+  --rp-code-block-bg: #f6f8fa;
+  --rp-code-block-color: #2e3440;
+  --rp-code-block-border: 1px solid var(--rp-c-divider-light);
+  --rp-code-block-shadow: none;
+  --rp-home-hero-title-color: transparent;
+  --rp-home-hero-title-bg: linear-gradient(
+    120deg,
+    var(--rp-c-brand) 30%,
+    #42d392
+  );
+  --rp-home-background-bg: var(--rp-c-bg);
+  --rp-home-feature-bg: var(--rp-c-bg-soft);
+}
+
+html:root.rp-dark {
+  --rp-c-bg: #191d24;
+  --rp-c-bg-soft: #292e37;
+  --rp-c-bg-mute: #343a46;
+  --rp-c-bg-alt: #000000;
+  --rp-c-divider: #545454a6;
+  --rp-c-divider-light: #5454547a;
+  --rp-c-text-0: #fffff5ed;
+  --rp-c-text-1: #fffff5ed;
+  --rp-c-text-2: #a8b2c1;
+  --rp-c-text-3: #ebebeb61;
+  --rp-c-text-4: #ebebeb2e;
+  --rp-c-text-code: #c9def1;
+  --rp-c-link: var(--rp-c-brand-light);
+  --rp-code-title-bg: #ffffff0a;
+  --rp-code-block-bg: #222934;
+  --rp-code-block-color: #e5e7eb;
+}
+
+html:root .rp-nav,
+html:root .rp-doc-layout__sidebar {
+  border: 0;
+}
+
+html:root .rp-nav {
+  background: color-mix(in srgb, var(--rp-c-bg) 92%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+html:root .rp-search-button {
+  height: 40px;
+  border-radius: var(--rp-radius);
+  background: var(--rp-c-bg-mute);
+}
+
+html:root .rp-sidebar-item {
+  padding: 7px 12px;
+  border-radius: 0 var(--rp-radius) var(--rp-radius) 0;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+}
+
+html:root .rp-sidebar-item--active {
+  font-weight: 700;
+}
+
+html:root .rp-sidebar-item--active::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 1px;
+  background: var(--rp-c-brand);
+}
+
+html:root .rp-sidebar-item--group-item.rp-sidebar-item--active::before {
+  display: none;
+}
+
+html:root
+  .rp-sidebar-item--group-item.rp-sidebar-item--active
+  .rp-sidebar-item__left::before {
+  top: 0;
+  bottom: 0;
+}
+
+html:root .rp-sidebar-section-header {
+  padding: 8px 12px;
+}
+
+html:root .rp-sidebar-section-header__left {
+  font-weight: 700;
+}
+
+html:root .rp-doc h1:not(:where(.rp-not-doc, .rp-not-doc *)) {
+  font-size: 2.25rem;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+html:root .rp-doc h2:not(:where(.rp-not-doc, .rp-not-doc *)) {
+  font-size: 26px;
+  line-height: 36px;
+}
+
+html:root .rp-doc h3:not(:where(.rp-not-doc, .rp-not-doc *)) {
+  font-size: 22px;
+  line-height: 30px;
+}
+
+html:root .rp-doc h4:not(:where(.rp-not-doc, .rp-not-doc *)) {
+  font-size: 1.125rem;
+  line-height: 28px;
+}
+
+html:root .rp-doc :not(pre) > code:not(:where(.rp-not-doc, .rp-not-doc *)) {
+  border: 0;
+  border-radius: var(--rp-radius-small);
+  padding: 3px 6px;
+}
+
+html:root .rp-codeblock,
+html:root .rp-callout {
+  border-radius: var(--rp-radius);
+}
+
+html:root .rp-codeblock__title {
+  border-bottom: 1px solid var(--rp-c-divider-light);
+}
+
+html:root .rp-outline {
+  border: 0;
+}
+
+html:root .rp-outline__title {
+  text-transform: uppercase;
+}
+
+html:root .rp-toc-item {
+  margin-top: 1px;
+  padding-block: 6px;
+  border-radius: var(--rp-radius-small) 0 0 var(--rp-radius-small);
+}
+
+html:root .rp-toc-item__text {
+  display: block;
+  padding-inline: 12px;
+  font-size: 14px;
+}
+
+html:root .rp-toc-item--active {
+  background: var(--rp-c-brand-tint);
+}
+
+html:root .rp-toc-item--active::before {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  html:root .rp-doc-layout__outline {
+    padding-top: 36px;
+    box-shadow: none;
+  }
+
+  html:root .rp-doc-layout__doc-container {
+    padding-inline: 48px;
+  }
+}
