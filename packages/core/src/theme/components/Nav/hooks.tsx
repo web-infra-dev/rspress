@@ -1,6 +1,7 @@
 import {
   addLeadingSlash,
   normalizeHrefInRuntime,
+  pathnameToRouteService,
   removeBase,
   useLocation,
   usePage,
@@ -154,10 +155,10 @@ export function useVersionsMenu() {
   const cleanUrls = site.route?.cleanUrls || false;
   const defaultVersion = site.multiVersion.default || '';
   const versions = site.multiVersion.versions || [];
+  const langPart = site.lang && page.lang !== site.lang ? `${page.lang}/` : '';
   const versionsMenuData = {
-    items: versions.map(version => ({
-      text: version,
-      link: replaceVersion(
+    items: versions.map(version => {
+      const link = replaceVersion(
         pathname,
         {
           current: currentVersion,
@@ -166,8 +167,16 @@ export function useVersionsMenu() {
         },
         cleanUrls,
         page.pageType === '404',
-      ),
-    })),
+      );
+      const versionPart = version === defaultVersion ? '' : `${version}/`;
+      return {
+        text: version,
+        // Go to the version homepage if the page doesn't exist there
+        link: pathnameToRouteService(link)
+          ? link
+          : `/${versionPart}${langPart}`,
+      };
+    }),
     text: currentVersion,
     activeValue: currentVersion,
   };
