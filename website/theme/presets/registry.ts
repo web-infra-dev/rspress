@@ -1,3 +1,4 @@
+import legacyMeta from '../../themes/legacy/meta';
 import minimalMeta from '../../themes/minimal/meta';
 import type { ThemePreset } from './types';
 
@@ -34,6 +35,10 @@ export const themePresets: readonly ThemePreset[] = [
   {
     ...minimalMeta,
     load: () => import('../../themes/minimal/index?theme-preview'),
+  },
+  {
+    ...legacyMeta,
+    load: () => import('../../themes/legacy/index?theme-preview'),
   },
 ];
 
