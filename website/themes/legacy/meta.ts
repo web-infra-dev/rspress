@@ -1,6 +1,6 @@
 export default {
-  id: 'rspress-v1',
-  name: 'Rspress v1',
+  id: 'legacy',
+  name: 'Legacy',
   description: {
     en: 'Classic blue, Open Sans, and slate dark mode. Inspired by Rspress v1.',
     zh: '经典蓝色、Open Sans 字体与蓝灰暗色背景。参考 Rspress v1。',
@@ -30,6 +30,6 @@ export default {
   source: {
     repository: 'https://github.com/web-infra-dev/rspress',
     ref: 'main',
-    directory: 'website/themes/rspress-v1',
+    directory: 'website/themes/legacy',
   },
 } as const;
