@@ -10,6 +10,12 @@
     @media (max-width: 1280px) and (min-width: 769px) {
       display: block;
     }
+
+    > .rp-hover-group {
+      background-color: color-mix(in srgb, var(--rp-c-bg) 60%, transparent);
+      backdrop-filter: blur(25px);
+    }
+
     &__hover-group {
       width: 250px;
       padding: 12px;
