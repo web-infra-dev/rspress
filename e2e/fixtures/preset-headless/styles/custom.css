@@ -1,0 +1,9 @@
+@layer utilities {
+  .rp-nav {
+    border-bottom-color: rgb(20, 184, 166);
+  }
+}
+
+.custom-headless-badge {
+  color: rgb(234, 88, 12);
+}

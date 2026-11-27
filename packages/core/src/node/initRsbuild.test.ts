@@ -2,8 +2,10 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import type { RsbuildConfig } from '@rsbuild/core';
+import type { UserConfig } from '@rspress/shared';
 import { afterEach, beforeEach, expect, it, rs } from '@rstest/core';
 import { normalizeConfigResult } from '../config/loadConfigFile';
+import { HeadlessStylePlugin } from './headlessStylePlugin';
 import { initRsbuild } from './initRsbuild';
 import { PluginDriver } from './PluginDriver';
 import { RouteService } from './route/RouteService';
@@ -21,9 +23,12 @@ afterEach(async () => {
   await rm(directory, { recursive: true, force: true });
 });
 
-async function getConfigs(builderConfig?: RsbuildConfig) {
+async function getConfigs(
+  builderConfig?: RsbuildConfig,
+  extraUserConfig?: Partial<UserConfig>,
+) {
   const driver = await PluginDriver.create(
-    { root: directory, builderConfig },
+    { root: directory, builderConfig, ...extraUserConfig },
     true,
   );
   const config = await driver.modifyConfig();
@@ -80,4 +85,25 @@ it('allows an environment-specific runtime override', async () => {
     'rspack',
     'rspack',
   ]);
+});
+
+it('switches style preEntry and registers HeadlessStylePlugin when preset is headless', async () => {
+  const defaultConfigs = await getConfigs();
+  const webDefaultEntries = JSON.stringify(defaultConfigs[0].entry);
+  expect(webDefaultEntries).toContain('styles/index.js');
+  expect(
+    defaultConfigs[0].plugins?.some(
+      plugin => plugin instanceof HeadlessStylePlugin,
+    ),
+  ).toBe(false);
+
+  const headlessConfigs = await getConfigs(undefined, { preset: 'headless' });
+  const webHeadlessEntries = JSON.stringify(headlessConfigs[0].entry);
+  expect(webHeadlessEntries).toContain('styles/headless.js');
+  expect(webHeadlessEntries).not.toContain('styles/index.js');
+  expect(
+    headlessConfigs.every(config =>
+      config.plugins?.some(plugin => plugin instanceof HeadlessStylePlugin),
+    ),
+  ).toBe(true);
 });

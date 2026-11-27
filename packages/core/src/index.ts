@@ -20,6 +20,7 @@ export type {
   NavItemWithLinkAndChildren,
   NormalizedSidebarGroup,
   PageIndexInfo,
+  Preset,
   RemotePageInfo,
   RouteMeta,
   RspressPlugin,
