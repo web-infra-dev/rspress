@@ -42,6 +42,7 @@ import {
   hintBuilderPluginsBreakingChange,
   hintThemeBreakingChange,
 } from './logger/hint';
+import { HeadlessStylePlugin } from './headlessStylePlugin';
 import { isLlmsHintEnabled, isLlmsUIEnabled } from './llms';
 import type { PluginDriver } from './PluginDriver';
 import type { RouteService } from './route/RouteService';
@@ -114,6 +115,7 @@ async function createInternalBuildConfig(
   const outDir = config?.outDir ?? OUTPUT_DIR;
 
   const base = config?.base ?? '/';
+  const isHeadless = config.preset === 'headless';
   const enableLlmsUI = isLlmsUIEnabled(config);
   const enableLlmsHint = isLlmsHintEnabled(config, enableSSG);
   const localeRedirectScript = getInlineLocaleRedirectScript(config);
@@ -313,7 +315,10 @@ async function createInternalBuildConfig(
     source: {
       preEntry: [
         // ensure CSS orders and access @theme before @rspress/theme-default to avoid circular dependency
-        path.join(DEFAULT_THEME, './styles/index.js'), // 1. @rspress/theme-default global styles
+        path.join(
+          DEFAULT_THEME,
+          isHeadless ? './styles/headless.js' : './styles/index.js',
+        ), // 1. @rspress/theme-default global styles
         'virtual-global-styles', // 2. virtual-global-styles
         '@theme', // 3. import './index.css'; from 'theme/index.tsx'
       ],
@@ -364,8 +369,9 @@ async function createInternalBuildConfig(
                   },
                 ),
 
-                // add rspress version to persistent cache digest to make it more safe
+                // add rspress version and preset to persistent cache digest to make it more safe
                 rspressVersion,
+                config.preset ?? 'default',
               ],
             },
           }
@@ -386,6 +392,7 @@ async function createInternalBuildConfig(
     },
     tools: {
       rspack: {
+        plugins: isHeadless ? [new HeadlessStylePlugin()] : [],
         experiments: {
           runtimeMode: 'rspack',
         },

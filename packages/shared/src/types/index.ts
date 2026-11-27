@@ -53,6 +53,8 @@ export type { DefaultThemeConfig, NormalizedDefaultThemeConfig };
 
 export type { AdditionalPage, RspressPlugin, RspressPlugin as Plugin };
 
+export type Preset = 'default' | 'headless';
+
 export interface Route {
   path: string;
   element: ReactElement;
@@ -211,6 +213,13 @@ export interface Locale {
 }
 
 export interface UserConfig {
+  /**
+   * Style preset of Rspress.
+   * - `'default'`: built-in default theme styles
+   * - `'headless'`: minimal structural and functional styles without opinionated visual skin or global CSS reset
+   * @default 'default'
+   */
+  preset?: Preset;
   /**
    * The root directory of the site.
    * @default 'docs'
