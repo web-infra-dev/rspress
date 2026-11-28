@@ -122,30 +122,30 @@ describe('RouteService', async () => {
       const loadRoute5 = () => import(/* webpackChunkName: "route-2308615ee227" */ "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx")
       const Route5 = lazyWithPreload(loadRoute5)
       export const routes = [
-      { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
+      { path: "/a", element: React.createElement(Route0), filePath: "a.mdx", preload: async () => {
               await Route0.preload();
               return loadRoute0();
-            }, lang: '', version: '' },
-      { path: '/guide/__e', element: React.createElement(Route1), filePath: 'guide/__e.mdx', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/guide/__e", element: React.createElement(Route1), filePath: "guide/__e.mdx", preload: async () => {
               await Route1.preload();
               return loadRoute1();
-            }, lang: '', version: '' },
-      { path: '/guide/b', element: React.createElement(Route2), filePath: 'guide/b.mdx', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/guide/b", element: React.createElement(Route2), filePath: "guide/b.mdx", preload: async () => {
               await Route2.preload();
               return loadRoute2();
-            }, lang: '', version: '' },
-      { path: '/guide/c', element: React.createElement(Route3), filePath: 'guide/c.tsx', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/guide/c", element: React.createElement(Route3), filePath: "guide/c.tsx", preload: async () => {
               await Route3.preload();
               return loadRoute3();
-            }, lang: '', version: '' },
-      { path: '/guide/', element: React.createElement(Route4), filePath: 'guide/index.md', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/guide/", element: React.createElement(Route4), filePath: "guide/index.md", preload: async () => {
               await Route4.preload();
               return loadRoute4();
-            }, lang: '', version: '' },
-      { path: '/', element: React.createElement(Route5), filePath: 'index.mdx', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/", element: React.createElement(Route5), filePath: "index.mdx", preload: async () => {
               await Route5.preload();
               return loadRoute5();
-            }, lang: '', version: '' }
+            }, lang: "", version: "" }
       ];
       "
     `);
@@ -261,26 +261,26 @@ describe('RouteService', async () => {
       const loadRoute4 = () => import(/* webpackChunkName: "route-2308615ee227" */ "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx")
       const Route4 = lazyWithPreload(loadRoute4)
       export const routes = [
-      { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
+      { path: "/a", element: React.createElement(Route0), filePath: "a.mdx", preload: async () => {
               await Route0.preload();
               return loadRoute0();
-            }, lang: '', version: '' },
-      { path: '/guide/__e', element: React.createElement(Route1), filePath: 'guide/__e.mdx', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/guide/__e", element: React.createElement(Route1), filePath: "guide/__e.mdx", preload: async () => {
               await Route1.preload();
               return loadRoute1();
-            }, lang: '', version: '' },
-      { path: '/guide/c', element: React.createElement(Route2), filePath: 'guide/c.tsx', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/guide/c", element: React.createElement(Route2), filePath: "guide/c.tsx", preload: async () => {
               await Route2.preload();
               return loadRoute2();
-            }, lang: '', version: '' },
-      { path: '/guide/', element: React.createElement(Route3), filePath: 'guide/index.md', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/guide/", element: React.createElement(Route3), filePath: "guide/index.md", preload: async () => {
               await Route3.preload();
               return loadRoute3();
-            }, lang: '', version: '' },
-      { path: '/', element: React.createElement(Route4), filePath: 'index.mdx', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/", element: React.createElement(Route4), filePath: "index.mdx", preload: async () => {
               await Route4.preload();
               return loadRoute4();
-            }, lang: '', version: '' }
+            }, lang: "", version: "" }
       ];
       "
     `);
@@ -371,26 +371,26 @@ describe('RouteService', async () => {
       const loadRoute4 = () => import(/* webpackChunkName: "route-2308615ee227" */ "<ROOT>/packages/core/src/node/route/fixtures/basic/index.mdx")
       const Route4 = lazyWithPreload(loadRoute4)
       export const routes = [
-      { path: '/a', element: React.createElement(Route0), filePath: 'a.mdx', preload: async () => {
+      { path: "/a", element: React.createElement(Route0), filePath: "a.mdx", preload: async () => {
               await Route0.preload();
               return loadRoute0();
-            }, lang: '', version: '' },
-      { path: '/guide/__e', element: React.createElement(Route1), filePath: 'guide/__e.mdx', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/guide/__e", element: React.createElement(Route1), filePath: "guide/__e.mdx", preload: async () => {
               await Route1.preload();
               return loadRoute1();
-            }, lang: '', version: '' },
-      { path: '/guide/b', element: React.createElement(Route2), filePath: 'guide/b.mdx', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/guide/b", element: React.createElement(Route2), filePath: "guide/b.mdx", preload: async () => {
               await Route2.preload();
               return loadRoute2();
-            }, lang: '', version: '' },
-      { path: '/guide/', element: React.createElement(Route3), filePath: 'guide/index.md', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/guide/", element: React.createElement(Route3), filePath: "guide/index.md", preload: async () => {
               await Route3.preload();
               return loadRoute3();
-            }, lang: '', version: '' },
-      { path: '/', element: React.createElement(Route4), filePath: 'index.mdx', preload: async () => {
+            }, lang: "", version: "" },
+      { path: "/", element: React.createElement(Route4), filePath: "index.mdx", preload: async () => {
               await Route4.preload();
               return loadRoute4();
-            }, lang: '', version: '' }
+            }, lang: "", version: "" }
       ];
       "
     `);
