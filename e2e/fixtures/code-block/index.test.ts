@@ -1,30 +1,25 @@
-import { expect, test } from '@e2e/test';
-import {
-  getPort,
-  killProcess,
-  runBuildCommand,
-  runPreviewCommand,
-} from '../../utils/runCommands';
+import path from 'node:path';
+import { expect, test as baseTest } from '@e2e/test';
+import { runBuildCommand } from '../../utils/runCommands';
+
+const test = baseTest.extend<{ appUrl: string }>({
+  appUrl: async ({ serve }, use) => {
+    const { url } = await serve(path.join(import.meta.dirname, 'doc_build'));
+    await use(url);
+  },
+});
 
 test.describe('Shiki code blocks', async () => {
-  let appPort: number;
-  let app: unknown;
   test.beforeAll(async () => {
-    const appDir = import.meta.dirname;
-    appPort = await getPort();
-    await runBuildCommand(appDir);
-    app = await runPreviewCommand(appDir, appPort);
+    await runBuildCommand(import.meta.dirname);
   });
 
-  test.afterAll(async () => {
-    if (app) {
-      await killProcess(app);
-    }
-  });
-
-  test('should render shiki code block successfully', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}`, {
-      waitUntil: 'networkidle',
+  test('should render shiki code block successfully', async ({
+    page,
+    appUrl,
+  }) => {
+    await page.goto(appUrl, {
+      waitUntil: 'load',
     });
     const shikiDoms = page.locator('.rp-codeblock__content');
     await expect(shikiDoms).toHaveCount(7);
@@ -47,27 +42,18 @@ test.describe('Shiki code blocks', async () => {
 
     const firstShikiDom = shikiDoms.first();
 
-    expect(
-      await firstShikiDom
-        .locator('code')
-        .evaluate(node =>
-          node.computedStyleMap().get('white-space')?.toString(),
-        ),
-    ).toBe('pre');
+    const code = firstShikiDom.locator('code');
+    await expect(code).toHaveCSS('white-space', 'pre');
 
-    await firstShikiDom.locator('button[title="Toggle code wrap"]').click();
-    expect(
-      await firstShikiDom
-        .locator('code')
-        .evaluate(node =>
-          node.computedStyleMap().get('white-space')?.toString(),
-        ),
-    ).toBe('pre-wrap');
+    await firstShikiDom
+      .getByRole('button', { name: 'Toggle code wrap' })
+      .click();
+    await expect(code).toHaveCSS('white-space', 'pre-wrap');
   });
 
-  test('langAlias', async ({ page }) => {
-    await page.goto(`http://localhost:${appPort}/langAlias`, {
-      waitUntil: 'networkidle',
+  test('langAlias', async ({ page, appUrl }) => {
+    await page.goto(`${appUrl}/langAlias.html`, {
+      waitUntil: 'load',
     });
     const shikiDoms = page.locator('.rp-codeblock__content');
     await expect(shikiDoms).toHaveCount(1);
@@ -75,9 +61,10 @@ test.describe('Shiki code blocks', async () => {
 
   test('should support lineNumbers and wrapCode meta attributes', async ({
     page,
+    appUrl,
   }) => {
-    await page.goto(`http://localhost:${appPort}/metaAttributes`, {
-      waitUntil: 'networkidle',
+    await page.goto(`${appUrl}/metaAttributes.html`, {
+      waitUntil: 'load',
     });
 
     // First code block has lineNumbers meta - check if lineNumbers property is set

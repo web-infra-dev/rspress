@@ -3,6 +3,7 @@ import getRandomPort from 'get-port';
 import treeKill from 'tree-kill';
 
 const portMap = new Map();
+const expectedExits = new WeakSet<ReturnType<typeof spawn>>();
 
 export interface CommandOptions {
   appDir: string;
@@ -36,26 +37,22 @@ export async function runNpmScript(
       stdio: ['ignore', 'pipe', 'pipe'],
     });
 
+    let stdoutOutput = '';
     let stderrOutput = '';
     instance.stderr!.on('data', chunk => {
-      stderrOutput += chunk;
+      stderrOutput = (stderrOutput + chunk).slice(-64 * 1024);
     });
 
     let didResolve = false;
 
-    async function handleStdout(data) {
+    function handleStdout(data) {
       const message = data.toString();
-      const markers = {
-        dev: /built in/i,
-        preview: /Local:/i,
-        build: /File (web)/,
-      };
+      stdoutOutput = (stdoutOutput + message).slice(-64 * 1024);
+      const marker = commandName === 'dev' ? /built in/i : /Local:/i;
 
-      if (markers[commandName].test(message)) {
-        if (!didResolve) {
-          didResolve = true;
-          resolve(instance);
-        }
+      if (commandName !== 'build' && !didResolve && marker.test(stdoutOutput)) {
+        didResolve = true;
+        resolve(instance);
       }
       if (process.env.RSTEST !== 'true') {
         process.stdout.write(message);
@@ -65,24 +62,27 @@ export async function runNpmScript(
     instance.stdout!.on('data', handleStdout);
 
     instance.on('error', error => {
+      didResolve = true;
       reject(error);
-      process.stderr.write(stderrOutput);
     });
 
     instance.on('close', (code, signal) => {
       instance.stdout!.removeListener('data', handleStdout);
 
+      const error = new Error(
+        `process unexpected exit with code: ${code} signal: ${signal}\nCommand ${commandName} in ${options.appDir}\n${stdoutOutput}\n${stderrOutput}`,
+      );
       if (!didResolve) {
-        if (code !== 0) {
-          reject(
-            new Error(
-              `process unexpected exit with code: ${code} signal: ${signal}`,
-            ),
-          );
-        } else {
-          resolve(null);
-        }
         didResolve = true;
+        // Build summaries can precede plugins and final writes. Only process
+        // completion confirms that the output is ready and the build succeeded.
+        if (commandName === 'build' && code === 0) {
+          resolve(null);
+        } else {
+          reject(error);
+        }
+      } else if (!expectedExits.has(instance)) {
+        process.stderr.write(`${error.message}\n`);
       }
     });
   });
@@ -100,6 +100,9 @@ export async function runDevCommand(
       appDir,
       env: {
         PORT: port.toString(),
+        // Preview fixtures also launch an iframe server. Parallel projects must
+        // not share the plugin's default port.
+        RSPRESS_E2E_PREVIEW_PORT: (await getPort()).toString(),
         // FIXME: Rspack's buildDependencies should collected the dependencies of rspress.config.ts, plugins change can not trigger the cache invalidate now
         RSPRESS_PERSISTENT_CACHE: 'false',
 
@@ -155,10 +158,16 @@ export async function getPort() {
 
 export async function killProcess(instance) {
   return new Promise((resolve, reject) => {
-    if (!instance) {
+    if (
+      !instance ||
+      instance.exitCode !== null ||
+      instance.signalCode !== null
+    ) {
       resolve(null);
+      return;
     }
 
+    expectedExits.add(instance);
     treeKill(instance.pid, err => {
       if (err) {
         if (
