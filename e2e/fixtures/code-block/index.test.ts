@@ -73,6 +73,44 @@ test.describe('Shiki code blocks', async () => {
     await expect(shikiDoms).toHaveCount(1);
   });
 
+  test('should keep line backgrounds full width without selection gaps', async ({
+    page,
+  }) => {
+    for (const width of [1440, 375]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(`http://localhost:${appPort}`, {
+        waitUntil: 'networkidle',
+      });
+
+      const lines = await page.locator('.shiki .line').evaluateAll(nodes =>
+        nodes.map(node => {
+          const range = document.createRange();
+          range.selectNodeContents(node);
+          const rect = node.getBoundingClientRect();
+          const pre = node.closest('pre')!.getBoundingClientRect();
+          return {
+            decorated: node.matches('.diff, .highlighted'),
+            left: rect.left,
+            right: rect.right,
+            width: rect.width,
+            textWidth: range.getBoundingClientRect().width,
+            preLeft: pre.left,
+            preRight: pre.right,
+          };
+        }),
+      );
+
+      for (const line of lines) {
+        if (line.decorated) {
+          expect(line.left).toBeCloseTo(line.preLeft, 1);
+          expect(line.right).toBeCloseTo(line.preRight, 1);
+        } else {
+          expect(line.width).toBeCloseTo(line.textWidth, 1);
+        }
+      }
+    }
+  });
+
   test('should support lineNumbers and wrapCode meta attributes', async ({
     page,
   }) => {

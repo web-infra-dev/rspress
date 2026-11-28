@@ -3,8 +3,13 @@
  * reference: https://github.com/shikijs/shiki/blob/main/docs/themes.md
  * -------------------------------------------------------------------------- */
 .shiki span.line {
-  padding: 0 1.25rem;
   display: inline-block;
+}
+
+.shiki .line:is(.diff, .code-line-highlighted, .highlighted) {
+  width: calc(100% + 2.5rem);
+  margin: 0 -1.25rem;
+  padding: 0 1.25rem;
 }
 
 .code-line-highlighted {
@@ -14,8 +19,6 @@
 .diff,
 .code-line-highlighted {
   transition: background-color 0.5s;
-  padding: 0 20px;
-  width: 100%;
   display: inline-block;
   position: relative;
 }
@@ -38,17 +41,14 @@
 
 .shiki.has-diff code .diff.add {
   background-color: rgba(16, 185, 129, 0.1);
-  padding: 0 20px 0 19px;
 }
 
 .shiki.has-diff code .diff.remove {
   background-color: rgba(244, 63, 94, 0.1);
-  padding: 0 20px 0 19px;
 }
 
 .shiki.has-highlighted {
   .line.highlighted {
-    width: 100%;
     position: static;
     display: inline-block;
   }
