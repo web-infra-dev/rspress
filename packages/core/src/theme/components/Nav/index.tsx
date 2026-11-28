@@ -72,8 +72,10 @@ export function Nav(props: NavProps) {
         />
         <div className="rp-nav__others">
           <NavMenuDivider />
-          <NavLangs />
-          <NavVersions />
+          <ul className="rp-nav__switchers">
+            <NavLangs />
+            <NavVersions />
+          </ul>
           {hasAppearanceSwitch && <SwitchAppearance />}
           <SocialLinks />
         </div>

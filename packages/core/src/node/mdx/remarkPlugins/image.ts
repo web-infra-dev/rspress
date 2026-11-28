@@ -165,13 +165,13 @@ export const remarkImage =
         name: 'img',
         children: [],
         attributes: [
-          alt && {
+          {
             type: 'mdxJsxAttribute',
             name: 'alt',
-            value: alt,
+            value: alt ?? '',
           },
           getMdxSrcAttribute(tempVariableName),
-        ].filter(Boolean),
+        ],
       });
 
       images.push(getDefaultImportAstNode(tempVariableName, imagePath));
@@ -185,6 +185,15 @@ export const remarkImage =
         node.name !== 'img'
       ) {
         return;
+      }
+
+      if (!lint && !getNodeAttribute(node, 'alt', true)) {
+        // An authored JSX spread can still provide its own alt text.
+        node.attributes.unshift({
+          type: 'mdxJsxAttribute',
+          name: 'alt',
+          value: '',
+        });
       }
 
       const srcAttr = getNodeAttribute(node, 'src', true);

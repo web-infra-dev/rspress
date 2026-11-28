@@ -372,7 +372,9 @@ test.describe('Nav SSG', () => {
 
       await page.setViewportSize({ width: 1024, height: 768 });
       const hamburger = page.locator('.rp-nav-hamburger__md');
-      const hamburgerDropdown = hamburger.locator('.rp-hover-group');
+      const hamburgerDropdown = page.locator(
+        '.rp-nav-hamburger__md + div.rp-hover-group',
+      );
 
       await expect(hamburger).toBeVisible();
       await expect(hamburgerDropdown).toHaveClass(/rp-hover-group--hidden/);
