@@ -15,6 +15,7 @@ autohide
 autoreleasepool
 autospace
 bilibili
+Bingbot
 Bluch
 brotli
 browserslistrc
@@ -59,6 +60,7 @@ fullhash
 fumadocs
 Geass
 giscus
+Googlebot
 Graphviz
 htmr
 iconify
