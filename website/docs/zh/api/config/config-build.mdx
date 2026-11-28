@@ -46,6 +46,37 @@ export default defineConfig({
 
 :::
 
+### 构建报告 \{#build-report}
+
+Rspress 使用 Rsbuild 的 [performance.printFileSize.total](https://rsbuild.rs/zh/config/performance/print-file-size#total) 回调，按目录汇总各构建环境的编译产物：
+
+```text
+Output (node): doc_build/ (4 files)
+├─ guide/ (3 files, 3.0 kB)
+│  ├─ api/ (1 file, 0.50 kB)
+│  └─ (files) (2 files, 2.5 kB)
+└─ (files) (1 file, 1.0 kB)
+Total size (node): 4.0 kB (0.80 kB gzipped)
+```
+
+目录体积为未压缩大小。`(files)` 汇总同时含有子目录的目录下的直接文件。总体积和压缩体积由 Rsbuild 在应用 `include` 和 `exclude` 过滤后计算。
+
+SSG HTML 通常属于 `node` 环境，Markdown 和 `llms*.txt` 属于 `node_md`，客户端资源属于 `web`；CSR HTML 也计入 `web`。报告只统计 Rsbuild 回调提供的产物，不包含实验性 SSG Worker 直接写入磁盘的 HTML，也不包含 Rspress `afterBuild` 钩子对文件的修改。
+
+目录汇总适用于 `detail: false`（Rspress 默认值）、未设置 `total` 且未启用 `diff` 的情况。所有 Rsbuild 配置和环境级覆盖仍然可用：`printFileSize: false` 关闭报告；`detail: true` 恢复文件列表；显式设置 `total` 或 `diff: true` 则使用 Rsbuild 配置的报告。
+
+例如，仅保留 Rsbuild 原有的总体积汇总：
+
+```ts title="rspress.config.ts"
+export default defineConfig({
+  builderConfig: {
+    performance: {
+      printFileSize: { total: true },
+    },
+  },
+});
+```
+
 ## builderConfig.plugins
 
 - **类型**: `RsbuildPlugin[]`
