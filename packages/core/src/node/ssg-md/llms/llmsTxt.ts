@@ -2,7 +2,7 @@ import {
   type LlmsTxtPage,
   type LlmsTxtRenderer,
   type LlmsTxtSection,
-  type NavItemWithLink,
+  type NavItem,
   normalizeHref,
   withBase,
   withSiteOrigin,
@@ -25,7 +25,7 @@ function routePathToMdPath(
 async function generateLlmsTxt(
   routeGroups: string[][],
   others: string[],
-  navList: { text: string }[],
+  navList: (NavItem & { lang: string })[],
   title: string | undefined,
   description: string | undefined,
   base: string,
@@ -99,7 +99,7 @@ async function generateLlmsTxt(
   const navSections = await Promise.all(
     navList.map(async (nav, i) => {
       const routes = routeGroups[i];
-      return generateSection(nav.text, routes);
+      return generateSection(nav.text ?? 'Others', routes);
     }),
   );
   const otherSection = await generateSection('Others', others);
@@ -151,7 +151,7 @@ async function generateLlmsTxt(
 
 function generateLlmsFullTxt(
   routeGroups: string[][],
-  navList: (NavItemWithLink & { lang: string })[],
+  navList: (NavItem & { lang: string })[],
   others: string[],
   base: string,
   siteOrigin: string | undefined,
