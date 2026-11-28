@@ -138,14 +138,11 @@ export async function ejectComponent(
   // Check if component exists
   const exists = await componentExists(componentName);
   if (!exists) {
-    logger.error(
-      `Component ${picocolors.cyan(componentName)} not found in theme.`,
-    );
     const available = await getAvailableComponents();
-    logger.info(
-      `\nAvailable components:\n${available.map(c => `  - ${c}`).join('\n')}`,
+    throw new Error(
+      `Component ${picocolors.cyan(componentName)} not found in theme.\n` +
+        `\nAvailable components:\n${available.map(c => `  - ${c}`).join('\n')}`,
     );
-    process.exit(1);
   }
 
   // Set up paths
